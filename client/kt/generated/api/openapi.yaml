@@ -1,0 +1,3654 @@
+openapi: 3.0.1
+info:
+  title: Kntrl API
+  version: "1.0"
+servers:
+- url: /
+tags:
+- name: token
+- name: server
+- name: session
+- name: user
+- name: authorisation
+- name: signature
+paths:
+  /api/token/refresh:
+    post:
+      operationId: refreshToken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshTokenReq'
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefreshTokenRes'
+          description: Success
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+          description: Client error
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+          description: Server error
+      tags:
+      - token
+      x-content-type: application/json
+      x-accepts: application/json
+  /api/server/cfg:
+    get:
+      operationId: cfg
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppCfg'
+          description: Success
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+          description: Client error
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+          description: Server error
+      tags:
+      - server
+      x-accepts: application/json
+  /api/server/health:
+    get:
+      operationId: health
+      parameters:
+      - explode: true
+        in: query
+        name: key
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthRes'
+          description: Success
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+          description: Client error
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+          description: Server error
+      tags:
+      - server
+      x-accepts: application/json
+  /api/session:
+    delete:
+      operationId: signOut
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignOutRes'
+          description: Success
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+          description: Client error
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+          description: Server error
+      security:
+      - access-token: []
+      tags:
+      - session
+      x-accepts: application/json
+    get:
+      operationId: getSession
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+          description: Success
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+          description: Client error
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+          description: Server error
+      security:
+      - access-token: []
+      tags:
+      - session
+      x-accepts: application/json
+    patch:
+      operationId: authenticate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthenticateReq'
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthenticateRes'
+          description: Success
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+          description: Client error
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+          description: Server error
+      security:
+      - access-token: []
+      tags:
+      - session
+      x-content-type: application/json
+      x-accepts: application/json
+    post:
+      operationId: newSession
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewSessionReq'
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthenticateRes'
+          description: Success
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+          description: Client error
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+          description: Server error
+      tags:
+      - session
+      x-content-type: application/json
+      x-accepts: application/json
+  /api/session/auth/confirm:
+    post:
+      operationId: confirmSessionAuths
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfirmSessionAuthsReq'
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthenticateRes'
+          description: Success
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+          description: Client error
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+          description: Server error
+      security:
+      - access-token: []
+      tags:
+      - session
+      x-content-type: application/json
+      x-accepts: application/json
+  /api/session/{session-id}:
+    delete:
+      operationId: delSession
+      parameters:
+      - explode: false
+        in: path
+        name: session-id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignOutRes'
+          description: Success
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+          description: Client error
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+          description: Server error
+      security:
+      - access-token: []
+      tags:
+      - session
+      x-accepts: application/json
+  /api/session/all:
+    get:
+      operationId: getAll
+      parameters:
+      - explode: true
+        in: query
+        name: entry
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: userId
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindSessionsRes'
+          description: Success
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+          description: Client error
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+          description: Server error
+      security:
+      - access-token: []
+      tags:
+      - session
+      x-accepts: application/json
+  /api/user/auth/confirm:
+    post:
+      operationId: confirmUserAuths
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfirmUserAuthsReq'
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaveUserRes'
+          description: Success
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+          description: Client error
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+          description: Server error
+      security:
+      - access-token: []
+      tags:
+      - user
+      x-content-type: application/json
+      x-accepts: application/json
+  /api/user/{id}:
+    patch:
+      operationId: editUser
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditUserReq'
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaveUserRes'
+          description: Success
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+          description: Client error
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+          description: Server error
+      security:
+      - access-token: []
+      tags:
+      - user
+      x-content-type: application/json
+      x-accepts: application/json
+  /api/user:
+    get:
+      operationId: getUser
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: Success
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+          description: Client error
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+          description: Server error
+      security:
+      - access-token: []
+      tags:
+      - user
+      x-accepts: application/json
+    patch:
+      operationId: saveUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaveUserReq'
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaveUserRes'
+          description: Success
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+          description: Client error
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+          description: Server error
+      security:
+      - access-token: []
+      tags:
+      - user
+      x-content-type: application/json
+      x-accepts: application/json
+  /api/authorise:
+    post:
+      operationId: authorize
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthoriseReq'
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthoriseRes'
+          description: Success
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+          description: Client error
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+          description: Server error
+      security:
+      - access-token: []
+      tags:
+      - authorisation
+      x-content-type: application/json
+      x-accepts: application/json
+  /api/rate-limiter/limit:
+    post:
+      operationId: limit
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RateLimiterReq'
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthoriseRes'
+          description: Success
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+          description: Client error
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+          description: Server error
+      tags:
+      - authorisation
+      x-content-type: application/json
+      x-accepts: application/json
+  /api/signature/public-key:
+    get:
+      operationId: getPublicKey
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Success
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+          description: Client error
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+          description: Server error
+      security:
+      - access-token: []
+      tags:
+      - signature
+      x-accepts: application/json
+  /api/signature/sign:
+    post:
+      operationId: sign
+      parameters:
+      - explode: true
+        in: query
+        name: secret
+        required: false
+        schema:
+          type: string
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Success
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+          description: Client error
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+          description: Server error
+      tags:
+      - signature
+      x-content-type: application/json
+      x-accepts: application/json
+  /api/signature/verify:
+    post:
+      operationId: verify
+      parameters:
+      - explode: true
+        in: query
+        name: signature
+        required: true
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: secret
+        required: false
+        schema:
+          type: string
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+      responses:
+        default:
+          content:
+            application/json: {}
+          description: Success
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+          description: Client error
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+          description: Server error
+      tags:
+      - signature
+      x-content-type: application/json
+      x-accepts: application/json
+components:
+  schemas:
+    Err:
+      discriminator:
+        mapping:
+          CLIENT_ERR: '#/components/schemas/ClientErr'
+          SERVER_ERR: '#/components/schemas/ServerErr'
+          INTEGRATION_ERR: '#/components/schemas/IntegrationErr'
+          ANY_ERR: '#/components/schemas/AnyErr'
+          AUTH_IS_NOT_ENABLED: '#/components/schemas/AuthIsNotEnabled'
+          AUTH_REQUIRES_ANOTHER: '#/components/schemas/AuthRequiresAnother'
+          IP_NEW: '#/components/schemas/IpNew'
+          SIGNATURE_IS_INCORRECT: '#/components/schemas/SignatureIsIncorrect'
+          EMAIL_IS_INCORRECT: '#/components/schemas/EmailIsIncorrect'
+          CODE_IS_EXPIRED: '#/components/schemas/CodeIsExpired'
+          CODE_IS_INCORRECT: '#/components/schemas/CodeIsIncorrect'
+          PASSWORD_IS_INCORRECT: '#/components/schemas/PasswordIsIncorrect'
+          QUESTIONS_ANSWERS_INVALID: '#/components/schemas/QuestionsAnswersInvalid'
+          QUESTIONS_ANSWERS_INCORRECT: '#/components/schemas/QuestionsAnswersIncorrect'
+          PASSWORD_IS_INVALID: '#/components/schemas/PasswordIsInvalid'
+          AUTH_IS_NOT_CONFIRMED: '#/components/schemas/AuthIsNotConfirmed'
+          UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
+          TOO_MANY_REQS: '#/components/schemas/TooManyReqs'
+          PLUGIN_CLIENT_ERR: '#/components/schemas/PluginClientErr'
+          CODE_TOO_MANY_ATTEMPTS: '#/components/schemas/CodeTooManyAttempts'
+          USER_LOGIN_ALREADY_TAKEN: '#/components/schemas/UserLoginAlreadyTaken'
+          PLUGIN_ERR: '#/components/schemas/PluginErr'
+          NO_AUTH_AVAILABLE_FOR_FACTOR: '#/components/schemas/NoAuthAvailableForFactor'
+          TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
+          ACCESS_DENIED: '#/components/schemas/AccessDenied'
+          USER_NOT_FOUND: '#/components/schemas/UserNotFound'
+          SESSION_EXPIRED: '#/components/schemas/SessionExpired'
+        propertyName: code
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          x-required: true
+        msg:
+          type: string
+          x-nullable: true
+      required:
+      - devMsg
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/err-base.kt0
+    AccessDenied:
+      properties:
+        code:
+          type: string
+        msg:
+          type: string
+          x-nullable: true
+        devMsg:
+          type: string
+      required:
+      - devMsg
+      type: object
+      x-required: true
+      x-order: kntrl/core/app/err.kt1
+      x-super: '#/components/schemas/Unauthenticated'
+    AnswerErr:
+      properties:
+        tooShort:
+          type: boolean
+          x-required: true
+        tooLong:
+          type: boolean
+          x-required: true
+      required:
+      - tooLong
+      - tooShort
+      type: object
+      x-required: true
+      x-order: kntrl/core/infra/err.kt9
+    AnyErr:
+      additionalProperties: true
+      properties:
+        code:
+          type: string
+        devMsg:
+          additionalProperties: true
+          type: object
+          x-required: true
+        msg:
+          type: string
+          x-nullable: true
+      required:
+      - devMsg
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/err-base.kt5
+      x-super: '#/components/schemas/Err'
+    AuthIsNotConfirmed:
+      properties:
+        code:
+          type: string
+        msg:
+          type: string
+          x-nullable: true
+        devMsg:
+          type: string
+          x-required: true
+      required:
+      - devMsg
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/err.kt2
+      x-super: '#/components/schemas/ClientErr'
+    AuthIsNotEnabled:
+      properties:
+        code:
+          type: string
+        msg:
+          type: string
+          x-nullable: true
+        devMsg:
+          type: string
+          x-required: true
+      required:
+      - devMsg
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/err.kt1
+      x-super: '#/components/schemas/ClientErr'
+    AuthRequiresAnother:
+      properties:
+        code:
+          type: string
+        msg:
+          type: string
+          x-nullable: true
+        devMsg:
+          type: string
+          x-required: true
+      required:
+      - devMsg
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/err.kt4
+      x-super: '#/components/schemas/ClientErr'
+    ClientErr:
+      discriminator:
+        mapping:
+          AUTH_IS_NOT_ENABLED: '#/components/schemas/AuthIsNotEnabled'
+          AUTH_REQUIRES_ANOTHER: '#/components/schemas/AuthRequiresAnother'
+          IP_NEW: '#/components/schemas/IpNew'
+          SIGNATURE_IS_INCORRECT: '#/components/schemas/SignatureIsIncorrect'
+          EMAIL_IS_INCORRECT: '#/components/schemas/EmailIsIncorrect'
+          CODE_IS_EXPIRED: '#/components/schemas/CodeIsExpired'
+          CODE_IS_INCORRECT: '#/components/schemas/CodeIsIncorrect'
+          PASSWORD_IS_INCORRECT: '#/components/schemas/PasswordIsIncorrect'
+          QUESTIONS_ANSWERS_INVALID: '#/components/schemas/QuestionsAnswersInvalid'
+          QUESTIONS_ANSWERS_INCORRECT: '#/components/schemas/QuestionsAnswersIncorrect'
+          PASSWORD_IS_INVALID: '#/components/schemas/PasswordIsInvalid'
+          AUTH_IS_NOT_CONFIRMED: '#/components/schemas/AuthIsNotConfirmed'
+          UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
+          TOO_MANY_REQS: '#/components/schemas/TooManyReqs'
+          PLUGIN_CLIENT_ERR: '#/components/schemas/PluginClientErr'
+          CODE_TOO_MANY_ATTEMPTS: '#/components/schemas/CodeTooManyAttempts'
+          USER_LOGIN_ALREADY_TAKEN: '#/components/schemas/UserLoginAlreadyTaken'
+          TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
+          ACCESS_DENIED: '#/components/schemas/AccessDenied'
+          USER_NOT_FOUND: '#/components/schemas/UserNotFound'
+          SESSION_EXPIRED: '#/components/schemas/SessionExpired'
+        propertyName: code
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          x-required: true
+        msg:
+          type: string
+          x-nullable: true
+      required:
+      - devMsg
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/err-base.kt4
+      x-super: '#/components/schemas/Err'
+    CodeIsExpired:
+      properties:
+        code:
+          type: string
+        msg:
+          type: string
+          x-nullable: true
+        devMsg:
+          type: string
+          x-required: true
+      required:
+      - devMsg
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/err.kt5
+      x-super: '#/components/schemas/ClientErr'
+    CodeIsIncorrect:
+      properties:
+        code:
+          type: string
+        msg:
+          type: string
+          x-nullable: true
+        devMsg:
+          type: string
+          x-required: true
+      required:
+      - devMsg
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/err.kt7
+      x-super: '#/components/schemas/ClientErr'
+    CodeTooManyAttempts:
+      properties:
+        code:
+          type: string
+        msg:
+          type: string
+          x-nullable: true
+        devMsg:
+          type: string
+          x-required: true
+      required:
+      - devMsg
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/err.kt6
+      x-super: '#/components/schemas/ClientErr'
+    EmailIsIncorrect:
+      properties:
+        code:
+          type: string
+        msg:
+          type: string
+          x-nullable: true
+        devMsg:
+          type: string
+          x-required: true
+      required:
+      - devMsg
+      type: object
+      x-required: true
+      x-order: kntrl/core/infra/err.kt5
+      x-super: '#/components/schemas/ClientErr'
+    Instant:
+      format: int64
+      type: integer
+    IntegrationErr:
+      discriminator:
+        mapping:
+          NO_AUTH_AVAILABLE_FOR_FACTOR: '#/components/schemas/NoAuthAvailableForFactor'
+          INTEGRATION_ERR: '#/components/schemas/IntegrationErr'
+        propertyName: code
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          x-required: true
+        msg:
+          type: string
+          x-nullable: true
+      required:
+      - devMsg
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/err-base.kt3
+      x-super: '#/components/schemas/Err'
+    IpNew:
+      properties:
+        code:
+          type: string
+        msg:
+          type: string
+          x-nullable: true
+        devMsg:
+          type: string
+          x-required: true
+      required:
+      - devMsg
+      type: object
+      x-required: true
+      x-order: kntrl/core/infra/err.kt6
+      x-super: '#/components/schemas/ClientErr'
+    LoginId:
+      example:
+        type: type
+        login: login
+      properties:
+        type:
+          type: string
+          x-required: true
+        login:
+          type: string
+          x-required: true
+      required:
+      - login
+      - type
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/user/Login.kt2
+    NoAuthAvailableForFactor:
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          x-required: true
+        msg:
+          type: string
+          x-nullable: true
+      required:
+      - devMsg
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/err.kt3
+      x-super: '#/components/schemas/IntegrationErr'
+    PasswordIsIncorrect:
+      properties:
+        code:
+          type: string
+        msg:
+          type: string
+          x-nullable: true
+        devMsg:
+          type: string
+          x-required: true
+        changedAt:
+          format: int64
+          type: integer
+          x-nullable: true
+        changedDaysAgo:
+          format: int64
+          type: integer
+          x-nullable: true
+      required:
+      - devMsg
+      type: object
+      x-required: true
+      x-order: kntrl/core/infra/err.kt3
+      x-super: '#/components/schemas/ClientErr'
+    PasswordIsInvalid:
+      properties:
+        code:
+          type: string
+        msg:
+          type: string
+          x-nullable: true
+        devMsg:
+          type: string
+          x-required: true
+        tooLong:
+          type: boolean
+          x-required: true
+        tooShort:
+          type: boolean
+          x-required: true
+        missingNumber:
+          type: boolean
+          x-required: true
+        missingSymbol:
+          type: boolean
+          x-required: true
+        missingUpperCase:
+          type: boolean
+          x-required: true
+        missingLowerCase:
+          type: boolean
+          x-required: true
+        commonPassword:
+          type: boolean
+          x-required: true
+        wasUsedBeforeAt:
+          format: int64
+          type: integer
+          x-nullable: true
+        matchesLogin:
+          $ref: '#/components/schemas/LoginId'
+        passwordsMismatch:
+          type: boolean
+          x-required: true
+        strength:
+          type: string
+          x-nullable: true
+        wasUsedDaysAgo:
+          format: int64
+          type: integer
+      required:
+      - commonPassword
+      - devMsg
+      - missingLowerCase
+      - missingNumber
+      - missingSymbol
+      - missingUpperCase
+      - passwordsMismatch
+      - tooLong
+      - tooShort
+      type: object
+      x-required: true
+      x-order: kntrl/core/infra/err.kt4
+      x-super: '#/components/schemas/ClientErr'
+    PluginClientErr:
+      properties:
+        code:
+          type: string
+        msg:
+          type: string
+          x-nullable: true
+        devMsg:
+          type: string
+          x-required: true
+        data:
+          additionalProperties:
+            type: object
+          type: object
+          writeOnly: true
+      required:
+      - devMsg
+      type: object
+      x-required: true
+      x-order: kntrl/core/infra/err.kt2
+      x-super: '#/components/schemas/ClientErr'
+    PluginErr:
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          x-required: true
+        msg:
+          type: string
+          x-nullable: true
+      required:
+      - devMsg
+      type: object
+      x-required: true
+      x-order: kntrl/core/infra/err.kt1
+      x-super: '#/components/schemas/ServerErr'
+    QuestionsAnswersIncorrect:
+      properties:
+        code:
+          type: string
+        msg:
+          type: string
+          x-nullable: true
+        devMsg:
+          type: string
+          x-required: true
+        incorrectAnswers:
+          items:
+            type: string
+          type: array
+          x-required: true
+        requiresMoreAnswers:
+          type: boolean
+          x-required: true
+        questionsNotFound:
+          items:
+            type: string
+          type: array
+          x-required: true
+      required:
+      - devMsg
+      - incorrectAnswers
+      - questionsNotFound
+      - requiresMoreAnswers
+      type: object
+      x-required: true
+      x-order: kntrl/core/infra/err.kt7
+      x-super: '#/components/schemas/ClientErr'
+    QuestionsAnswersInvalid:
+      properties:
+        code:
+          type: string
+        msg:
+          type: string
+          x-nullable: true
+        devMsg:
+          type: string
+          x-required: true
+        invalidAnswers:
+          additionalProperties:
+            $ref: '#/components/schemas/AnswerErr'
+          type: object
+          x-required: true
+        tooManyAnswers:
+          type: boolean
+          x-required: true
+      required:
+      - devMsg
+      - invalidAnswers
+      - tooManyAnswers
+      type: object
+      x-required: true
+      x-order: kntrl/core/infra/err.kt8
+      x-super: '#/components/schemas/ClientErr'
+    ServerErr:
+      discriminator:
+        mapping:
+          PLUGIN_ERR: '#/components/schemas/PluginErr'
+          SERVER_ERR: '#/components/schemas/ServerErr'
+        propertyName: code
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          x-required: true
+        msg:
+          type: string
+          x-nullable: true
+      required:
+      - devMsg
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/err-base.kt2
+      x-super: '#/components/schemas/Err'
+    SessionExpired:
+      properties:
+        code:
+          type: string
+        msg:
+          type: string
+          x-nullable: true
+        devMsg:
+          type: string
+          x-required: true
+      required:
+      - devMsg
+      type: object
+      x-required: true
+      x-order: kntrl/core/app/err.kt0
+      x-super: '#/components/schemas/Unauthenticated'
+    SignatureIsIncorrect:
+      properties:
+        code:
+          type: string
+        msg:
+          type: string
+          x-nullable: true
+        devMsg:
+          type: string
+          x-required: true
+      required:
+      - devMsg
+      type: object
+      x-required: true
+      x-order: kntrl/core/app/err.kt3
+      x-super: '#/components/schemas/ClientErr'
+    TokenExpired:
+      properties:
+        code:
+          type: string
+        msg:
+          type: string
+          x-nullable: true
+        devMsg:
+          type: string
+          x-required: true
+        expiredAt:
+          format: int64
+          type: integer
+          x-nullable: true
+      required:
+      - devMsg
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/err.kt10
+      x-super: '#/components/schemas/Unauthenticated'
+    TooManyReqs:
+      properties:
+        code:
+          type: string
+        msg:
+          type: string
+          x-nullable: true
+        devMsg:
+          type: string
+          x-required: true
+        waitTimeMs:
+          format: int32
+          type: integer
+          x-nullable: true
+        waitTimeSeconds:
+          format: int32
+          type: integer
+          x-nullable: true
+        waitTimeMinutes:
+          format: int32
+          type: integer
+          x-nullable: true
+      required:
+      - devMsg
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/err.kt11
+      x-super: '#/components/schemas/ClientErr'
+    Unauthenticated:
+      discriminator:
+        mapping:
+          TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
+          ACCESS_DENIED: '#/components/schemas/AccessDenied'
+          USER_NOT_FOUND: '#/components/schemas/UserNotFound'
+          SESSION_EXPIRED: '#/components/schemas/SessionExpired'
+          UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
+        propertyName: code
+      properties:
+        code:
+          type: string
+        msg:
+          type: string
+          x-nullable: true
+        devMsg:
+          type: string
+          x-required: true
+      required:
+      - devMsg
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/err.kt8
+      x-super: '#/components/schemas/ClientErr'
+    UserLoginAlreadyTaken:
+      properties:
+        code:
+          type: string
+        msg:
+          type: string
+          x-nullable: true
+        devMsg:
+          type: string
+          x-required: true
+      required:
+      - devMsg
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/err.kt0
+      x-super: '#/components/schemas/ClientErr'
+    UserNotFound:
+      properties:
+        code:
+          type: string
+        msg:
+          type: string
+          x-nullable: true
+        devMsg:
+          type: string
+          x-required: true
+      required:
+      - devMsg
+      type: object
+      x-required: true
+      x-order: kntrl/core/app/err.kt2
+      x-super: '#/components/schemas/Unauthenticated'
+    AccessToken:
+      properties:
+        createdAt:
+          format: int64
+          type: integer
+          x-required: true
+        signedInAt:
+          format: int64
+          type: integer
+          x-required: true
+        expiresAt:
+          format: int64
+          type: integer
+          x-required: true
+        entry:
+          type: string
+          x-required: true
+        sessionId:
+          type: string
+          x-required: true
+        session:
+          $ref: '#/components/schemas/Session'
+      required:
+      - createdAt
+      - entry
+      - expiresAt
+      - sessionId
+      - signedInAt
+      type: string
+      x-required: true
+      x-order: kntrl/core/domain/token/Token.kt3
+    CodeVerifier:
+      example:
+        attemptsLeft: 5
+        usedAttempts: 1
+        hasAttemptsLeft: true
+        validUntil: 6
+        id: id
+        sentAt: 5
+      properties:
+        id:
+          type: string
+        validUntil:
+          format: int64
+          type: integer
+          x-required: true
+        usedAttempts:
+          format: int32
+          type: integer
+          x-required: true
+        attemptsLeft:
+          format: int32
+          type: integer
+          x-required: true
+        sentAt:
+          format: int64
+          type: integer
+          x-required: true
+        hasAttemptsLeft:
+          type: boolean
+      required:
+      - attemptsLeft
+      - sentAt
+      - usedAttempts
+      - validUntil
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/confirm/CodeVerifier.kt0
+    Device:
+      example:
+        browser: browser
+        mobile: true
+        userAgent: userAgent
+        type: type
+      properties:
+        type:
+          type: string
+          x-nullable: true
+        browser:
+          type: string
+          x-nullable: true
+        userAgent:
+          type: string
+          x-required: true
+        mobile:
+          type: boolean
+      required:
+      - userAgent
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/session/Device.kt0
+    NextFactor:
+      example:
+        supportedAuths:
+        - supportedAuths
+        - supportedAuths
+        factor: factor
+      properties:
+        factor:
+          type: string
+          x-required: true
+        supportedAuths:
+          items:
+            type: string
+          type: array
+          uniqueItems: true
+          x-required: true
+      required:
+      - factor
+      - supportedAuths
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/session/NextFactors.kt0
+    RefreshToken:
+      properties:
+        id:
+          format: int64
+          type: integer
+          x-required: true
+        createdAt:
+          format: int64
+          type: integer
+          x-required: true
+        signedInAt:
+          format: int64
+          type: integer
+          x-required: true
+        expiresAt:
+          format: int64
+          type: integer
+          x-required: true
+        entry:
+          type: string
+          x-required: true
+        sessionId:
+          type: string
+          x-required: true
+      required:
+      - createdAt
+      - entry
+      - expiresAt
+      - id
+      - sessionId
+      - signedInAt
+      type: string
+      x-required: true
+      x-order: kntrl/core/domain/token/Token.kt5
+    RefreshTokenRes:
+      example:
+        session:
+          authenticated: true
+          systemAccess: true
+          signedInAt: 2
+          userId: userId
+          expiresAt: 7
+          nextFactors:
+          - supportedAuths:
+            - supportedAuths
+            - supportedAuths
+            factor: factor
+          - supportedAuths:
+            - supportedAuths
+            - supportedAuths
+            factor: factor
+          entry: entry
+          expired: true
+          authenticatedBy:
+            key: authenticatedBy
+          newUser: true
+          refreshedAt: 9
+          id: id
+          identifiedBy:
+          - type: type
+            login: login
+          - type: type
+            login: login
+          unconfirmedAuths:
+            key:
+              sentCodes:
+              - attemptsLeft: 5
+                usedAttempts: 1
+                hasAttemptsLeft: true
+                validUntil: 6
+                id: id
+                sentAt: 5
+              - attemptsLeft: 5
+                usedAttempts: 1
+                hasAttemptsLeft: true
+                validUntil: 6
+                id: id
+                sentAt: 5
+          device:
+            browser: browser
+            mobile: true
+            userAgent: userAgent
+            type: type
+        tokens:
+          access: access
+          accessTokenExpiresAt: 0
+          refresh: refresh
+      properties:
+        tokens:
+          $ref: '#/components/schemas/Tokens'
+        session:
+          $ref: '#/components/schemas/Session'
+      required:
+      - session
+      - tokens
+      type: object
+      x-required: true
+      x-order: kntrl/core/app/TokenMng.kt2
+    Session:
+      example:
+        authenticated: true
+        systemAccess: true
+        signedInAt: 2
+        userId: userId
+        expiresAt: 7
+        nextFactors:
+        - supportedAuths:
+          - supportedAuths
+          - supportedAuths
+          factor: factor
+        - supportedAuths:
+          - supportedAuths
+          - supportedAuths
+          factor: factor
+        entry: entry
+        expired: true
+        authenticatedBy:
+          key: authenticatedBy
+        newUser: true
+        refreshedAt: 9
+        id: id
+        identifiedBy:
+        - type: type
+          login: login
+        - type: type
+          login: login
+        unconfirmedAuths:
+          key:
+            sentCodes:
+            - attemptsLeft: 5
+              usedAttempts: 1
+              hasAttemptsLeft: true
+              validUntil: 6
+              id: id
+              sentAt: 5
+            - attemptsLeft: 5
+              usedAttempts: 1
+              hasAttemptsLeft: true
+              validUntil: 6
+              id: id
+              sentAt: 5
+        device:
+          browser: browser
+          mobile: true
+          userAgent: userAgent
+          type: type
+      properties:
+        id:
+          type: string
+          x-required: true
+        entry:
+          type: string
+          x-required: true
+        identifiedBy:
+          items:
+            $ref: '#/components/schemas/LoginId'
+          type: array
+          x-required: true
+        userId:
+          type: string
+          x-nullable: true
+        authenticatedBy:
+          additionalProperties:
+            type: string
+            x-additionalPropertiesName: factor
+          type: object
+          x-required: true
+        unconfirmedAuths:
+          additionalProperties:
+            $ref: '#/components/schemas/UnconfirmedAuth'
+          type: object
+          x-required: true
+        nextFactors:
+          items:
+            $ref: '#/components/schemas/NextFactor'
+          type: array
+          x-required: true
+        signedInAt:
+          format: int64
+          type: integer
+          x-required: true
+        expiresAt:
+          format: int64
+          type: integer
+          x-required: true
+        refreshedAt:
+          format: int64
+          type: integer
+          x-required: true
+        newUser:
+          type: boolean
+          x-required: true
+        device:
+          $ref: '#/components/schemas/Device'
+        systemAccess:
+          type: boolean
+          x-required: true
+        expired:
+          type: boolean
+        authenticated:
+          type: boolean
+      required:
+      - authenticatedBy
+      - device
+      - entry
+      - expiresAt
+      - id
+      - identifiedBy
+      - newUser
+      - nextFactors
+      - refreshedAt
+      - signedInAt
+      - systemAccess
+      - unconfirmedAuths
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/session/Session.kt0
+    Tokens:
+      example:
+        access: access
+        accessTokenExpiresAt: 0
+        refresh: refresh
+      properties:
+        access:
+          properties:
+            createdAt:
+              format: int64
+              type: integer
+              x-required: true
+            signedInAt:
+              format: int64
+              type: integer
+              x-required: true
+            expiresAt:
+              format: int64
+              type: integer
+              x-required: true
+            entry:
+              type: string
+              x-required: true
+            sessionId:
+              type: string
+              x-required: true
+            session:
+              $ref: '#/components/schemas/Session'
+          required:
+          - createdAt
+          - entry
+          - expiresAt
+          - sessionId
+          - signedInAt
+          type: string
+          x-required: true
+          x-order: kntrl/core/domain/token/Token.kt3
+        refresh:
+          properties:
+            id:
+              format: int64
+              type: integer
+              x-required: true
+            createdAt:
+              format: int64
+              type: integer
+              x-required: true
+            signedInAt:
+              format: int64
+              type: integer
+              x-required: true
+            expiresAt:
+              format: int64
+              type: integer
+              x-required: true
+            entry:
+              type: string
+              x-required: true
+            sessionId:
+              type: string
+              x-required: true
+          required:
+          - createdAt
+          - entry
+          - expiresAt
+          - id
+          - sessionId
+          - signedInAt
+          type: string
+          x-required: true
+          x-order: kntrl/core/domain/token/Token.kt5
+        accessTokenExpiresAt:
+          format: int64
+          type: integer
+      required:
+      - access
+      - refresh
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/token/Token.kt0
+    UnconfirmedAuth:
+      example:
+        sentCodes:
+        - attemptsLeft: 5
+          usedAttempts: 1
+          hasAttemptsLeft: true
+          validUntil: 6
+          id: id
+          sentAt: 5
+        - attemptsLeft: 5
+          usedAttempts: 1
+          hasAttemptsLeft: true
+          validUntil: 6
+          id: id
+          sentAt: 5
+      properties:
+        sentCodes:
+          items:
+            $ref: '#/components/schemas/CodeVerifier'
+          type: array
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/session/UnconfirmedAuth.kt0
+    RefreshTokenReq:
+      example:
+        refreshToken: refreshToken
+      properties:
+        refreshToken:
+          properties:
+            id:
+              format: int64
+              type: integer
+              x-required: true
+            createdAt:
+              format: int64
+              type: integer
+              x-required: true
+            signedInAt:
+              format: int64
+              type: integer
+              x-required: true
+            expiresAt:
+              format: int64
+              type: integer
+              x-required: true
+            entry:
+              type: string
+              x-required: true
+            sessionId:
+              type: string
+              x-required: true
+          required:
+          - createdAt
+          - entry
+          - expiresAt
+          - id
+          - sessionId
+          - signedInAt
+          type: string
+          x-required: true
+          x-order: kntrl/core/domain/token/Token.kt5
+      required:
+      - refreshToken
+      type: object
+      x-required: true
+      x-order: kntrl/core/app/TokenMng.kt1
+    AccessTokenCfg:
+      example:
+        cache: null
+        cookie: true
+        cacheUnauthenticated: true
+        ttl: ttl
+      properties:
+        cookie:
+          type: boolean
+        cache:
+          $ref: '#/components/schemas/Cache'
+        cacheUnauthenticated:
+          type: boolean
+        ttl:
+          type: string
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/cfg/TokenCfg.kt1
+    AppCfg:
+      example:
+        entries:
+          key:
+            editAccount: true
+            factorsRequired:
+              key:
+              - factorsRequired
+              - factorsRequired
+            factorsOptional:
+              key:
+              - factorsOptional
+              - factorsOptional
+            requiresEntry:
+            - requiresEntry
+            - requiresEntry
+            accessToken:
+              cache: true
+              ttl: ttl
+            ttl: ttl
+        healthCheckKey: healthCheckKey
+        auths:
+          key:
+            requiresAuth:
+            - - requiresAuth
+              - requiresAuth
+            - - requiresAuth
+              - requiresAuth
+            rateLimiter: rateLimiter
+            skipOnFail: true
+            burnQuota: 0.8008281904610115
+        http:
+          proxy: true
+        rateLimiters:
+          key:
+            parent: parent
+            period: period
+            ip: true
+            quota: 6.027456183070403
+            alignLoad: true
+            userId: true
+        secret: secret
+        logins:
+        - logins
+        - logins
+        db:
+          rateLimiter: "{}"
+          session: "{}"
+          user: "{}"
+        i18n:
+          default: default
+          dir: dir
+        token:
+          access:
+            cache: null
+            cookie: true
+            cacheUnauthenticated: true
+            ttl: ttl
+          sameUserAgent: true
+          refresh:
+            allowReuse: true
+            unauthenticatedTtl: unauthenticatedTtl
+            maxTtl: maxTtl
+            ttl: ttl
+      properties:
+        http:
+          $ref: '#/components/schemas/HttpCfg'
+        logins:
+          description: list of logins
+          items:
+            type: string
+          type: array
+          uniqueItems: true
+          x-required: true
+        auths:
+          additionalProperties:
+            $ref: '#/components/schemas/AuthCfg'
+          type: object
+          x-required: true
+        entries:
+          additionalProperties:
+            $ref: '#/components/schemas/EntryCfg'
+          type: object
+          x-required: true
+        db:
+          $ref: '#/components/schemas/DbsCfg'
+        token:
+          $ref: '#/components/schemas/TokenCfg'
+        rateLimiters:
+          additionalProperties:
+            $ref: '#/components/schemas/RateLimiterCfg'
+          type: object
+        secret:
+          type: string
+        healthCheckKey:
+          type: string
+          x-nullable: true
+        i18n:
+          $ref: '#/components/schemas/I18nCfg'
+      required:
+      - auths
+      - db
+      - entries
+      - logins
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/cfg/AppCfg.kt0
+    AppSecretAuthCfg:
+      properties:
+        requiresAuth:
+          items:
+            items:
+              type: string
+            type: array
+          type: array
+        skipOnFail:
+          type: boolean
+        rateLimiter:
+          type: string
+          x-nullable: true
+        burnQuota:
+          format: double
+          type: number
+      type: object
+      x-required: true
+      x-order: kntrl/core/infra/impl/auth/builtin/AppSecretAuth.kt2
+      x-super: '#/components/schemas/BuiltInAuthCfg'
+    AuthCfg:
+      example:
+        requiresAuth:
+        - - requiresAuth
+          - requiresAuth
+        - - requiresAuth
+          - requiresAuth
+        rateLimiter: rateLimiter
+        skipOnFail: true
+        burnQuota: 0.8008281904610115
+      properties:
+        requiresAuth:
+          items:
+            items:
+              type: string
+            type: array
+          type: array
+        skipOnFail:
+          type: boolean
+        rateLimiter:
+          type: string
+          x-nullable: true
+        burnQuota:
+          format: double
+          type: number
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/cfg/AuthCfg.kt0
+    AuthCodeHandlerCfg:
+      properties:
+        tokenUrl:
+          type: string
+          x-required: true
+        clientId:
+          type: string
+          x-required: true
+        clientSecret:
+          type: string
+          x-nullable: true
+      required:
+      - clientId
+      - tokenUrl
+      type: object
+      x-required: true
+      x-order: kntrl/core/infra/impl/auth/builtin/OAuth.kt4
+    BuiltInAuthCfg:
+      properties:
+        requiresAuth:
+          items:
+            items:
+              type: string
+            type: array
+          type: array
+        skipOnFail:
+          type: boolean
+        rateLimiter:
+          type: string
+          x-nullable: true
+        burnQuota:
+          format: double
+          type: number
+      type: object
+      x-required: true
+      x-order: kntrl/core/infra/impl/auth/builtin/BuiltInAuthCfg.kt0
+      x-super: '#/components/schemas/AuthCfg'
+    Cache:
+      enum:
+      - JWT
+      - ENCODED
+      type: string
+    CodeCfg:
+      properties:
+        length:
+          format: int32
+          type: integer
+        ttl:
+          type: string
+        alphabet:
+          type: string
+        easyToRemember:
+          type: boolean
+        maxAttempts:
+          format: int32
+          type: integer
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/cfg/AuthCfg.kt1
+    DbCfg:
+      type: object
+      x-required: true
+      x-order: kntrl/core/infra/impl/repo/DbCfg.kt0
+    DbsCfg:
+      example:
+        rateLimiter: "{}"
+        session: "{}"
+        user: "{}"
+      properties:
+        user:
+          type: object
+          x-required: true
+          x-order: kntrl/core/infra/impl/repo/DbCfg.kt0
+        session:
+          type: object
+          x-required: true
+          x-order: kntrl/core/infra/impl/repo/DbCfg.kt0
+        rateLimiter:
+          type: object
+          x-required: true
+          x-order: kntrl/core/infra/impl/repo/DbCfg.kt0
+      required:
+      - rateLimiter
+      - session
+      - user
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/cfg/AppCfg.kt3
+    Duration:
+      type: string
+    EmailAuthCfg:
+      properties:
+        server:
+          type: string
+          x-required: true
+        username:
+          type: string
+          x-nullable: true
+        password:
+          type: string
+          x-nullable: true
+        sender:
+          type: string
+          x-required: true
+        confirmationUrl:
+          type: string
+          x-nullable: true
+        templates:
+          additionalProperties:
+            type: string
+            x-additionalPropertiesName: templateName
+          type: object
+        templateParams:
+          additionalProperties:
+            type: string
+            x-additionalPropertiesName: paramName
+          type: object
+        code:
+          $ref: '#/components/schemas/CodeCfg'
+        requiresAuth:
+          items:
+            items:
+              type: string
+            type: array
+          type: array
+        skipOnFail:
+          type: boolean
+        rateLimiter:
+          type: string
+          x-nullable: true
+        burnQuota:
+          format: double
+          type: number
+      required:
+      - sender
+      - server
+      type: object
+      x-required: true
+      x-order: kntrl/core/infra/impl/auth/builtin/EmailAuth.kt2
+      x-super: '#/components/schemas/BuiltInAuthCfg'
+    EntryAccessTokenCfg:
+      example:
+        cache: true
+        ttl: ttl
+      properties:
+        ttl:
+          type: string
+          x-nullable: true
+        cache:
+          type: boolean
+          x-nullable: true
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/cfg/EntryCfg.kt1
+    EntryCfg:
+      example:
+        editAccount: true
+        factorsRequired:
+          key:
+          - factorsRequired
+          - factorsRequired
+        factorsOptional:
+          key:
+          - factorsOptional
+          - factorsOptional
+        requiresEntry:
+        - requiresEntry
+        - requiresEntry
+        accessToken:
+          cache: true
+          ttl: ttl
+        ttl: ttl
+      properties:
+        factorsRequired:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+            x-additionalPropertiesName: factor
+          type: object
+        factorsOptional:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+            x-additionalPropertiesName: factor
+          type: object
+        requiresEntry:
+          items:
+            type: string
+          type: array
+        accessToken:
+          $ref: '#/components/schemas/EntryAccessTokenCfg'
+        ttl:
+          type: string
+          x-nullable: true
+        editAccount:
+          type: boolean
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/cfg/EntryCfg.kt0
+    HttpCfg:
+      example:
+        proxy: true
+      properties:
+        proxy:
+          type: boolean
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/cfg/AppCfg.kt2
+    I18nCfg:
+      example:
+        default: default
+        dir: dir
+      properties:
+        dir:
+          type: string
+          x-nullable: true
+        default:
+          type: string
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/cfg/AppCfg.kt4
+    InMemoryCfg:
+      properties:
+        inMemory:
+          type: boolean
+      type: object
+      x-required: true
+      x-order: kntrl/core/infra/impl/repo/in-memory.kt3
+      x-super: '#/components/schemas/DbCfg'
+    InTokenCfg:
+      properties:
+        inToken:
+          type: boolean
+      type: object
+      x-required: true
+      x-order: kntrl/core/infra/impl/repo/in-token.kt1
+      x-super: '#/components/schemas/DbCfg'
+    IpAuthCfg:
+      properties:
+        ipBytesToIgnore:
+          format: int32
+          type: integer
+        historySize:
+          format: int32
+          type: integer
+        requiresAuth:
+          items:
+            items:
+              type: string
+            type: array
+          type: array
+        skipOnFail:
+          type: boolean
+        rateLimiter:
+          type: string
+          x-nullable: true
+        burnQuota:
+          format: double
+          type: number
+      type: object
+      x-required: true
+      x-order: kntrl/core/infra/impl/auth/builtin/IpAuth.kt1
+      x-super: '#/components/schemas/BuiltInAuthCfg'
+    JdbcCfg:
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        maxConnections:
+          format: int32
+          type: integer
+      type: object
+      x-required: true
+      x-order: kntrl/core/infra/impl/repo/jdbc/jdbc.kt0
+      x-super: '#/components/schemas/DbCfg'
+    MariadbCfg:
+      properties:
+        mariadb:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+        maxConnections:
+          format: int32
+          type: integer
+      type: object
+      x-required: true
+      x-order: kntrl/core/infra/impl/repo/jdbc/mariadb.kt2
+      x-super: '#/components/schemas/JdbcCfg'
+    MongoCfg:
+      properties:
+        mongodb:
+          type: string
+          x-required: true
+        database:
+          type: string
+          x-required: true
+      required:
+      - database
+      - mongodb
+      type: object
+      x-required: true
+      x-order: kntrl/core/infra/impl/repo/mongo/mongo.kt0
+      x-super: '#/components/schemas/DbCfg'
+    MysqlCfg:
+      properties:
+        mysql:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+        maxConnections:
+          format: int32
+          type: integer
+      type: object
+      x-required: true
+      x-order: kntrl/core/infra/impl/repo/jdbc/mysql.kt2
+      x-super: '#/components/schemas/JdbcCfg'
+    OAuthCfg:
+      properties:
+        tokenUrl:
+          type: string
+          x-required: true
+        clientId:
+          type: string
+          x-required: true
+        clientSecret:
+          type: string
+          x-nullable: true
+        userInfoUrl:
+          type: string
+          x-required: true
+        sendTokenInQuery:
+          type: string
+          x-nullable: true
+        sendTokenInHeader:
+          type: boolean
+        extractLogin:
+          type: string
+          x-required: true
+        extractPublicData:
+          additionalProperties:
+            type: string
+          type: object
+        requiresAuth:
+          items:
+            items:
+              type: string
+            type: array
+          type: array
+        skipOnFail:
+          type: boolean
+        rateLimiter:
+          type: string
+          x-nullable: true
+        burnQuota:
+          format: double
+          type: number
+      required:
+      - clientId
+      - extractLogin
+      - tokenUrl
+      - userInfoUrl
+      type: object
+      x-required: true
+      x-order: kntrl/core/infra/impl/auth/builtin/OAuth.kt3
+      x-super: '#/components/schemas/BuiltInAuthCfg'
+    PasswordAuthCfg:
+      properties:
+        maxLength:
+          format: int32
+          type: integer
+        minLength:
+          format: int32
+          type: integer
+        requireNumber:
+          type: boolean
+        requireSymbol:
+          type: boolean
+        requireUpperCase:
+          type: boolean
+        forbidCommonPasswords:
+          type: boolean
+        forbidLoginAsPassword:
+          type: boolean
+        forbidReusingPassword:
+          $ref: '#/components/schemas/PasswordHistoryCfg'
+        strength:
+          additionalProperties:
+            $ref: '#/components/schemas/PasswordStrengthRequirements'
+          type: object
+        requiresAuth:
+          items:
+            items:
+              type: string
+            type: array
+          type: array
+        skipOnFail:
+          type: boolean
+        rateLimiter:
+          type: string
+          x-nullable: true
+        burnQuota:
+          format: double
+          type: number
+      type: object
+      x-required: true
+      x-order: kntrl/core/infra/impl/auth/builtin/password/PasswordAuth.kt2
+      x-super: '#/components/schemas/BuiltInAuthCfg'
+    PasswordHistoryCfg:
+      properties:
+        passwordHistorySize:
+          format: int32
+          type: integer
+        passwordHistoryTtl:
+          type: string
+      type: object
+      x-required: true
+      x-order: kntrl/core/infra/impl/auth/builtin/password/PasswordHistory.kt2
+    PasswordStrengthRequirements:
+      properties:
+        minLength:
+          format: int32
+          type: integer
+        requireNumber:
+          type: boolean
+        requireSymbol:
+          type: boolean
+        requireUpperCase:
+          type: boolean
+        forbidCommonPasswords:
+          type: boolean
+        forbidLoginAsPassword:
+          type: boolean
+      type: object
+      x-required: true
+      x-order: kntrl/core/infra/impl/auth/builtin/password/PasswordAuth.kt3
+    PostgresCfg:
+      properties:
+        postgres:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+        maxConnections:
+          format: int32
+          type: integer
+      type: object
+      x-required: true
+      x-order: kntrl/core/infra/impl/repo/jdbc/postgres.kt2
+      x-super: '#/components/schemas/JdbcCfg'
+    QuestionsAuthCfg:
+      properties:
+        lowercase:
+          type: boolean
+        removeSymbols:
+          type: boolean
+        removeSpaces:
+          type: boolean
+        minLength:
+          format: int32
+          type: integer
+        maxLength:
+          format: int32
+          type: integer
+        answersRequired:
+          format: int32
+          type: integer
+        maxAnswers:
+          format: int32
+          type: integer
+        requiresAuth:
+          items:
+            items:
+              type: string
+            type: array
+          type: array
+        skipOnFail:
+          type: boolean
+        rateLimiter:
+          type: string
+          x-nullable: true
+        burnQuota:
+          format: double
+          type: number
+      type: object
+      x-required: true
+      x-order: kntrl/core/infra/impl/auth/builtin/QuestionsAuth.kt1
+      x-super: '#/components/schemas/BuiltInAuthCfg'
+    RateLimiterCfg:
+      example:
+        parent: parent
+        period: period
+        ip: true
+        quota: 6.027456183070403
+        alignLoad: true
+        userId: true
+      properties:
+        userId:
+          type: boolean
+        ip:
+          type: boolean
+        quota:
+          format: double
+          type: number
+        period:
+          type: string
+        alignLoad:
+          type: boolean
+        parent:
+          type: string
+          x-nullable: true
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/cfg/RateLimiterCfg.kt0
+    RedisCfg:
+      properties:
+        redis:
+          items:
+            type: string
+          type: array
+          x-required: true
+        cluster:
+          type: boolean
+        database:
+          format: int32
+          type: integer
+        user:
+          type: string
+          x-nullable: true
+        password:
+          type: string
+          x-nullable: true
+        ssl:
+          type: boolean
+        maxConnections:
+          format: int32
+          type: integer
+      required:
+      - redis
+      type: object
+      x-required: true
+      x-order: kntrl/core/infra/impl/repo/redis/redis.kt0
+      x-super: '#/components/schemas/DbCfg'
+    RefreshTokenCfg:
+      example:
+        allowReuse: true
+        unauthenticatedTtl: unauthenticatedTtl
+        maxTtl: maxTtl
+        ttl: ttl
+      properties:
+        ttl:
+          type: string
+        maxTtl:
+          type: string
+        unauthenticatedTtl:
+          type: string
+        allowReuse:
+          type: boolean
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/cfg/TokenCfg.kt5
+    RemoteAuthCfg:
+      properties:
+        remote:
+          type: string
+          x-required: true
+        code:
+          $ref: '#/components/schemas/CodeCfg'
+        query:
+          additionalProperties:
+            type: string
+            x-additionalPropertiesName: queryParam
+          type: object
+          x-required: true
+        headers:
+          additionalProperties:
+            type: string
+            x-additionalPropertiesName: header
+          type: object
+          x-required: true
+        requiresAuth:
+          items:
+            items:
+              type: string
+            type: array
+          type: array
+        skipOnFail:
+          type: boolean
+        rateLimiter:
+          type: string
+          x-nullable: true
+        burnQuota:
+          format: double
+          type: number
+      required:
+      - headers
+      - query
+      - remote
+      type: object
+      x-required: true
+      x-order: kntrl/core/infra/impl/auth/remote.kt0
+      x-super: '#/components/schemas/AuthCfg'
+    RemoteDbCfg:
+      properties:
+        remote:
+          type: string
+          x-required: true
+        query:
+          additionalProperties:
+            type: string
+          type: object
+          x-required: true
+        headers:
+          additionalProperties:
+            type: string
+          type: object
+          x-required: true
+      required:
+      - headers
+      - query
+      - remote
+      type: object
+      x-required: true
+      x-order: kntrl/core/infra/impl/repo/remote.kt0
+      x-super: '#/components/schemas/DbCfg'
+    SHHttpCfg:
+      properties:
+        port:
+          format: int32
+          type: integer
+        bind:
+          type: string
+        proxy:
+          type: boolean
+      type: object
+      x-required: true
+      x-order: kntrl/selfhosted/infra/cfg/SelfHostedAppCfg.kt1
+    SelfHostedAppCfg:
+      properties:
+        http:
+          $ref: '#/components/schemas/HttpCfg'
+        logins:
+          description: list of logins
+          items:
+            type: string
+          type: array
+          uniqueItems: true
+          x-required: true
+        auths:
+          additionalProperties:
+            $ref: '#/components/schemas/AuthCfg'
+          type: object
+          x-required: true
+        entries:
+          additionalProperties:
+            $ref: '#/components/schemas/EntryCfg'
+          type: object
+          x-required: true
+        db:
+          $ref: '#/components/schemas/DbsCfg'
+        token:
+          $ref: '#/components/schemas/TokenCfg'
+        rateLimiters:
+          additionalProperties:
+            $ref: '#/components/schemas/RateLimiterCfg'
+          type: object
+        secret:
+          type: string
+        healthCheckKey:
+          type: string
+          x-nullable: true
+        i18n:
+          $ref: '#/components/schemas/I18nCfg'
+      required:
+      - auths
+      - db
+      - entries
+      - logins
+      type: object
+      x-required: true
+      x-order: kntrl/selfhosted/infra/cfg/SelfHostedAppCfg.kt0
+      x-super: '#/components/schemas/AppCfg'
+    SqliteCfg:
+      properties:
+        sqlite:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+        maxConnections:
+          format: int32
+          type: integer
+      type: object
+      x-required: true
+      x-order: kntrl/core/infra/impl/repo/jdbc/sqlite.kt3
+      x-super: '#/components/schemas/JdbcCfg'
+    TokenCfg:
+      example:
+        access:
+          cache: null
+          cookie: true
+          cacheUnauthenticated: true
+          ttl: ttl
+        sameUserAgent: true
+        refresh:
+          allowReuse: true
+          unauthenticatedTtl: unauthenticatedTtl
+          maxTtl: maxTtl
+          ttl: ttl
+      properties:
+        access:
+          $ref: '#/components/schemas/AccessTokenCfg'
+        refresh:
+          $ref: '#/components/schemas/RefreshTokenCfg'
+        sameUserAgent:
+          type: boolean
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/cfg/TokenCfg.kt0
+    TokenHandlerCfg:
+      properties:
+        userInfoUrl:
+          type: string
+          x-required: true
+        sendTokenInQuery:
+          type: string
+          x-nullable: true
+        sendTokenInHeader:
+          type: boolean
+      required:
+      - userInfoUrl
+      type: object
+      x-required: true
+      x-order: kntrl/core/infra/impl/auth/builtin/OAuth.kt5
+    DbHealthRes:
+      example:
+        rateLimiter:
+          msg: msg
+          status: null
+        session:
+          msg: msg
+          status: null
+        user:
+          msg: msg
+          status: null
+      properties:
+        user:
+          $ref: '#/components/schemas/HealthStatusRes'
+        session:
+          $ref: '#/components/schemas/HealthStatusRes'
+        rateLimiter:
+          $ref: '#/components/schemas/HealthStatusRes'
+      required:
+      - rateLimiter
+      - session
+      - user
+      type: object
+      x-required: true
+      x-order: kntrl/core/app/server/ServerSvc.kt2
+    HealthRes:
+      example:
+        msg: msg
+        auth:
+          key:
+            msg: msg
+            status: null
+        db:
+          rateLimiter:
+            msg: msg
+            status: null
+          session:
+            msg: msg
+            status: null
+          user:
+            msg: msg
+            status: null
+        status: null
+      properties:
+        db:
+          $ref: '#/components/schemas/DbHealthRes'
+        auth:
+          additionalProperties:
+            $ref: '#/components/schemas/HealthStatusRes'
+          type: object
+          x-required: true
+        status:
+          $ref: '#/components/schemas/HealthStatus'
+        msg:
+          type: string
+          x-nullable: true
+      required:
+      - auth
+      - db
+      - status
+      type: object
+      x-required: true
+      x-order: kntrl/core/app/server/ServerSvc.kt1
+    HealthStatus:
+      enum:
+      - HEALTHY
+      - UNAVAILABLE
+      - ERR
+      type: string
+    HealthStatusRes:
+      example:
+        msg: msg
+        status: null
+      properties:
+        status:
+          $ref: '#/components/schemas/HealthStatus'
+        msg:
+          type: string
+          x-nullable: true
+      required:
+      - status
+      type: object
+      x-required: true
+      x-order: kntrl/core/app/server/HasHealthStatus.kt1
+    AuthData:
+      example:
+        public: "{}"
+        login: login
+      properties:
+        public:
+          type: object
+        login:
+          type: string
+          x-nullable: true
+      required:
+      - public
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/user/AuthUserCfg.kt3
+    AuthExecRes:
+      discriminator:
+        mapping:
+          OK: '#/components/schemas/OkAuthExecRes'
+          ERR: '#/components/schemas/ErrAuthExecRes'
+          SKIPPED: '#/components/schemas/SkippedAuthExecRes'
+        propertyName: status
+      example:
+        sentCode:
+          attemptsLeft: 5
+          usedAttempts: 5
+          hasAttemptsLeft: true
+          validUntil: 1
+          id: id
+          sentAt: 2
+        status: status
+      properties:
+        status:
+          type: string
+        sentCode:
+          $ref: '#/components/schemas/Code'
+      type: object
+      x-required: true
+      x-order: kntrl/core/app/auth/AuthExec.kt2
+    AuthUserCfg:
+      example:
+        data:
+          public: "{}"
+          login: login
+        sentCodes:
+        - code:
+            attemptsLeft: 5
+            usedAttempts: 1
+            hasAttemptsLeft: true
+            validUntil: 6
+            id: id
+            sentAt: 5
+          data:
+            public: "{}"
+            login: login
+        - code:
+            attemptsLeft: 5
+            usedAttempts: 1
+            hasAttemptsLeft: true
+            validUntil: 6
+            id: id
+            sentAt: 5
+          data:
+            public: "{}"
+            login: login
+        confirmed: true
+      properties:
+        data:
+          $ref: '#/components/schemas/AuthData'
+        sentCodes:
+          items:
+            $ref: '#/components/schemas/UnconfirmedAuthData'
+          type: array
+        confirmed:
+          type: boolean
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/user/AuthUserCfg.kt0
+    AuthenticateRes:
+      example:
+        session:
+          authenticated: true
+          systemAccess: true
+          signedInAt: 2
+          userId: userId
+          expiresAt: 7
+          nextFactors:
+          - supportedAuths:
+            - supportedAuths
+            - supportedAuths
+            factor: factor
+          - supportedAuths:
+            - supportedAuths
+            - supportedAuths
+            factor: factor
+          entry: entry
+          expired: true
+          authenticatedBy:
+            key: authenticatedBy
+          newUser: true
+          refreshedAt: 9
+          id: id
+          identifiedBy:
+          - type: type
+            login: login
+          - type: type
+            login: login
+          unconfirmedAuths:
+            key:
+              sentCodes:
+              - attemptsLeft: 5
+                usedAttempts: 1
+                hasAttemptsLeft: true
+                validUntil: 6
+                id: id
+                sentAt: 5
+              - attemptsLeft: 5
+                usedAttempts: 1
+                hasAttemptsLeft: true
+                validUntil: 6
+                id: id
+                sentAt: 5
+          device:
+            browser: browser
+            mobile: true
+            userAgent: userAgent
+            type: type
+        tokens:
+          access: access
+          accessTokenExpiresAt: 0
+          refresh: refresh
+        user:
+          new: true
+          signedUpAt: 0
+          systemAccess: true
+          auths:
+            key:
+              data:
+                public: "{}"
+                login: login
+              sentCodes:
+              - code:
+                  attemptsLeft: 5
+                  usedAttempts: 1
+                  hasAttemptsLeft: true
+                  validUntil: 6
+                  id: id
+                  sentAt: 5
+                data:
+                  public: "{}"
+                  login: login
+              - code:
+                  attemptsLeft: 5
+                  usedAttempts: 1
+                  hasAttemptsLeft: true
+                  validUntil: 6
+                  id: id
+                  sentAt: 5
+                data:
+                  public: "{}"
+                  login: login
+              confirmed: true
+          id: 2c24704f-198a-4bc4-9718-306ccc97bbdc
+          logins:
+          - unconfirmedLogin: unconfirmedLogin
+            type: type
+            login: login
+            confirmed: true
+          - unconfirmedLogin: unconfirmedLogin
+            type: type
+            login: login
+            confirmed: true
+          factors:
+          - factors
+          - factors
+          updatedAt: 6
+        authRes:
+          key:
+            sentCode:
+              attemptsLeft: 5
+              usedAttempts: 5
+              hasAttemptsLeft: true
+              validUntil: 1
+              id: id
+              sentAt: 2
+            status: status
+      properties:
+        tokens:
+          $ref: '#/components/schemas/Tokens'
+        session:
+          $ref: '#/components/schemas/Session'
+        user:
+          $ref: '#/components/schemas/User'
+        authRes:
+          additionalProperties:
+            $ref: '#/components/schemas/AuthExecRes'
+          type: object
+          x-required: true
+      required:
+      - authRes
+      type: object
+      x-required: true
+      x-order: kntrl/core/app/session/SessionMng.kt3
+    Code:
+      example:
+        attemptsLeft: 5
+        usedAttempts: 5
+        hasAttemptsLeft: true
+        validUntil: 1
+        id: id
+        sentAt: 2
+      properties:
+        id:
+          type: string
+        validUntil:
+          format: int64
+          type: integer
+          x-required: true
+        usedAttempts:
+          format: int32
+          type: integer
+          x-required: true
+        attemptsLeft:
+          format: int32
+          type: integer
+          x-required: true
+        sentAt:
+          format: int64
+          type: integer
+          x-required: true
+        hasAttemptsLeft:
+          type: boolean
+      required:
+      - attemptsLeft
+      - sentAt
+      - usedAttempts
+      - validUntil
+      type: object
+      x-required: true
+      x-order: kntrl/core/app/auth/Auth.kt3
+    ErrAuthExecRes:
+      properties:
+        status:
+          type: string
+        sentCode:
+          $ref: '#/components/schemas/Code'
+        err:
+          $ref: '#/components/schemas/Err'
+      required:
+      - err
+      type: object
+      x-required: true
+      x-order: kntrl/core/app/auth/AuthExec.kt4
+      x-super: '#/components/schemas/AuthExecRes'
+    Login:
+      example:
+        unconfirmedLogin: unconfirmedLogin
+        type: type
+        login: login
+        confirmed: true
+      properties:
+        type:
+          type: string
+          x-required: true
+        login:
+          type: string
+          x-required: true
+        unconfirmedLogin:
+          type: string
+          x-nullable: true
+        confirmed:
+          type: boolean
+      required:
+      - login
+      - type
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/user/Login.kt0
+    OkAuthExecRes:
+      properties:
+        status:
+          type: string
+        sentCode:
+          $ref: '#/components/schemas/Code'
+        resData:
+          type: object
+      type: object
+      x-required: true
+      x-order: kntrl/core/app/auth/AuthExec.kt3
+      x-super: '#/components/schemas/AuthExecRes'
+    SkippedAuthExecRes:
+      properties:
+        status:
+          type: string
+        sentCode:
+          $ref: '#/components/schemas/Code'
+      type: object
+      x-required: true
+      x-order: kntrl/core/app/auth/AuthExec.kt5
+      x-super: '#/components/schemas/AuthExecRes'
+    UnconfirmedAuthData:
+      example:
+        code:
+          attemptsLeft: 5
+          usedAttempts: 1
+          hasAttemptsLeft: true
+          validUntil: 6
+          id: id
+          sentAt: 5
+        data:
+          public: "{}"
+          login: login
+      properties:
+        data:
+          $ref: '#/components/schemas/AuthData'
+        code:
+          $ref: '#/components/schemas/CodeVerifier'
+      required:
+      - code
+      - data
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/user/AuthUserCfg.kt4
+    User:
+      example:
+        new: true
+        signedUpAt: 0
+        systemAccess: true
+        auths:
+          key:
+            data:
+              public: "{}"
+              login: login
+            sentCodes:
+            - code:
+                attemptsLeft: 5
+                usedAttempts: 1
+                hasAttemptsLeft: true
+                validUntil: 6
+                id: id
+                sentAt: 5
+              data:
+                public: "{}"
+                login: login
+            - code:
+                attemptsLeft: 5
+                usedAttempts: 1
+                hasAttemptsLeft: true
+                validUntil: 6
+                id: id
+                sentAt: 5
+              data:
+                public: "{}"
+                login: login
+            confirmed: true
+        id: 2c24704f-198a-4bc4-9718-306ccc97bbdc
+        logins:
+        - unconfirmedLogin: unconfirmedLogin
+          type: type
+          login: login
+          confirmed: true
+        - unconfirmedLogin: unconfirmedLogin
+          type: type
+          login: login
+          confirmed: true
+        factors:
+        - factors
+        - factors
+        updatedAt: 6
+      properties:
+        id:
+          description: |
+            Generated user uuid
+          example: 2c24704f-198a-4bc4-9718-306ccc97bbdc
+          type: string
+          x-required: true
+        logins:
+          items:
+            $ref: '#/components/schemas/Login'
+          type: array
+          x-required: true
+        auths:
+          additionalProperties:
+            $ref: '#/components/schemas/AuthUserCfg'
+          type: object
+          x-required: true
+        factors:
+          items:
+            type: string
+          type: array
+          uniqueItems: true
+          x-required: true
+        signedUpAt:
+          format: int64
+          type: integer
+          x-required: true
+        updatedAt:
+          format: int64
+          type: integer
+          x-required: true
+        systemAccess:
+          type: boolean
+        new:
+          type: boolean
+      required:
+      - auths
+      - factors
+      - id
+      - logins
+      - signedUpAt
+      - updatedAt
+      type: object
+      x-required: true
+      x-order: kntrl/core/domain/user/User.kt0
+    json:
+      type: object
+    AuthenticateReq:
+      example:
+        authReqs:
+          key: null
+        dryRun: true
+        factors:
+          key: factors
+      properties:
+        factors:
+          additionalProperties:
+            type: string
+            x-additionalPropertiesName: factor
+          type: object
+        authReqs:
+          additionalProperties:
+            $ref: '#/components/schemas/json'
+          type: object
+        dryRun:
+          type: boolean
+      type: object
+      x-required: true
+      x-order: kntrl/core/app/session/SessionMng.kt2
+    NewSessionReq:
+      example:
+        authReqs:
+          key: null
+        entry: entry
+        dryRun: true
+        signIn: true
+        logins:
+          key: logins
+        signUp: true
+        factors:
+          key: factors
+      properties:
+        entry:
+          type: string
+          x-required: true
+        logins:
+          additionalProperties:
+            type: string
+            x-additionalPropertiesName: loginType
+          type: object
+        factors:
+          additionalProperties:
+            type: string
+            x-additionalPropertiesName: factor
+          type: object
+        authReqs:
+          additionalProperties:
+            $ref: '#/components/schemas/json'
+          type: object
+        signIn:
+          type: boolean
+        signUp:
+          type: boolean
+        dryRun:
+          type: boolean
+      required:
+      - entry
+      type: object
+      x-required: true
+      x-order: kntrl/core/app/session/SessionMng.kt1
+    ConfirmSessionAuthsReq:
+      example:
+        receivedCodes:
+          key:
+            key: receivedCodes
+        sessionId: sessionId
+      properties:
+        sessionId:
+          type: string
+          x-nullable: true
+        receivedCodes:
+          additionalProperties:
+            additionalProperties:
+              type: string
+              x-additionalPropertiesName: codeId
+            type: object
+            x-additionalPropertiesName: auth
+          type: object
+          x-required: true
+      required:
+      - receivedCodes
+      type: object
+      x-required: true
+      x-order: kntrl/core/app/session/SessionMng.kt4
+    SignOutRes:
+      type: object
+      x-required: true
+      x-order: kntrl/core/app/session/SessionMng.kt5
+    FindSessionsRes:
+      example:
+        sessions:
+        - authenticated: true
+          systemAccess: true
+          signedInAt: 2
+          userId: userId
+          expiresAt: 7
+          nextFactors:
+          - supportedAuths:
+            - supportedAuths
+            - supportedAuths
+            factor: factor
+          - supportedAuths:
+            - supportedAuths
+            - supportedAuths
+            factor: factor
+          entry: entry
+          expired: true
+          authenticatedBy:
+            key: authenticatedBy
+          newUser: true
+          refreshedAt: 9
+          id: id
+          identifiedBy:
+          - type: type
+            login: login
+          - type: type
+            login: login
+          unconfirmedAuths:
+            key:
+              sentCodes:
+              - attemptsLeft: 5
+                usedAttempts: 1
+                hasAttemptsLeft: true
+                validUntil: 6
+                id: id
+                sentAt: 5
+              - attemptsLeft: 5
+                usedAttempts: 1
+                hasAttemptsLeft: true
+                validUntil: 6
+                id: id
+                sentAt: 5
+          device:
+            browser: browser
+            mobile: true
+            userAgent: userAgent
+            type: type
+        - authenticated: true
+          systemAccess: true
+          signedInAt: 2
+          userId: userId
+          expiresAt: 7
+          nextFactors:
+          - supportedAuths:
+            - supportedAuths
+            - supportedAuths
+            factor: factor
+          - supportedAuths:
+            - supportedAuths
+            - supportedAuths
+            factor: factor
+          entry: entry
+          expired: true
+          authenticatedBy:
+            key: authenticatedBy
+          newUser: true
+          refreshedAt: 9
+          id: id
+          identifiedBy:
+          - type: type
+            login: login
+          - type: type
+            login: login
+          unconfirmedAuths:
+            key:
+              sentCodes:
+              - attemptsLeft: 5
+                usedAttempts: 1
+                hasAttemptsLeft: true
+                validUntil: 6
+                id: id
+                sentAt: 5
+              - attemptsLeft: 5
+                usedAttempts: 1
+                hasAttemptsLeft: true
+                validUntil: 6
+                id: id
+                sentAt: 5
+          device:
+            browser: browser
+            mobile: true
+            userAgent: userAgent
+            type: type
+        tooManySessions: true
+      properties:
+        sessions:
+          items:
+            $ref: '#/components/schemas/Session'
+          type: array
+          x-required: true
+        tooManySessions:
+          type: boolean
+      required:
+      - sessions
+      type: object
+      x-required: true
+      x-order: kntrl/core/app/session/SessionRepo.kt4
+    SaveUserRes:
+      example:
+        user:
+          new: true
+          signedUpAt: 0
+          systemAccess: true
+          auths:
+            key:
+              data:
+                public: "{}"
+                login: login
+              sentCodes:
+              - code:
+                  attemptsLeft: 5
+                  usedAttempts: 1
+                  hasAttemptsLeft: true
+                  validUntil: 6
+                  id: id
+                  sentAt: 5
+                data:
+                  public: "{}"
+                  login: login
+              - code:
+                  attemptsLeft: 5
+                  usedAttempts: 1
+                  hasAttemptsLeft: true
+                  validUntil: 6
+                  id: id
+                  sentAt: 5
+                data:
+                  public: "{}"
+                  login: login
+              confirmed: true
+          id: 2c24704f-198a-4bc4-9718-306ccc97bbdc
+          logins:
+          - unconfirmedLogin: unconfirmedLogin
+            type: type
+            login: login
+            confirmed: true
+          - unconfirmedLogin: unconfirmedLogin
+            type: type
+            login: login
+            confirmed: true
+          factors:
+          - factors
+          - factors
+          updatedAt: 6
+        authRes:
+          key:
+            sentCode:
+              attemptsLeft: 5
+              usedAttempts: 5
+              hasAttemptsLeft: true
+              validUntil: 1
+              id: id
+              sentAt: 2
+            status: status
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+        authRes:
+          additionalProperties:
+            $ref: '#/components/schemas/AuthExecRes'
+          type: object
+          x-required: true
+      required:
+      - authRes
+      type: object
+      x-required: true
+      x-order: kntrl/core/app/user/UserMng.kt2
+    ConfirmUserAuthsReq:
+      example:
+        receivedCodes:
+          key:
+            key: receivedCodes
+        userId: userId
+      properties:
+        userId:
+          type: string
+          x-nullable: true
+        receivedCodes:
+          additionalProperties:
+            additionalProperties:
+              type: string
+              x-additionalPropertiesName: codeId
+            type: object
+            x-additionalPropertiesName: auth
+          type: object
+          x-required: true
+      required:
+      - receivedCodes
+      type: object
+      x-required: true
+      x-order: kntrl/core/app/user/UserMng.kt4
+    EditUserReq:
+      example:
+        authReqs:
+          key: null
+        systemAccess: true
+        dryRun: true
+        logins:
+          key: logins
+        factors:
+          key: true
+      properties:
+        systemAccess:
+          type: boolean
+          x-nullable: true
+        factors:
+          additionalProperties:
+            type: boolean
+            x-additionalPropertiesName: factor
+          description: "Optional factors to enable/disable. If factor marked as required\
+            \ in config, it will be considered enabled\nby default and this request\
+            \ doesn't change this.\n"
+          type: object
+        logins:
+          additionalProperties:
+            type: string
+            x-additionalPropertiesName: loginType
+          type: object
+        authReqs:
+          additionalProperties:
+            $ref: '#/components/schemas/json'
+          type: object
+        dryRun:
+          type: boolean
+      type: object
+      x-required: true
+      x-order: kntrl/core/app/user/UserMng.kt3
+      x-super: '#/components/schemas/SaveUserReq'
+    SaveUserReq:
+      example:
+        authReqs:
+          key: null
+        dryRun: true
+        logins:
+          key: logins
+        factors:
+          key: true
+      properties:
+        factors:
+          additionalProperties:
+            type: boolean
+            x-additionalPropertiesName: factor
+          description: "Optional factors to enable/disable. If factor marked as required\
+            \ in config, it will be considered enabled\nby default and this request\
+            \ doesn't change this.\n"
+          type: object
+        logins:
+          additionalProperties:
+            type: string
+            x-additionalPropertiesName: loginType
+          type: object
+        authReqs:
+          additionalProperties:
+            $ref: '#/components/schemas/json'
+          type: object
+        dryRun:
+          type: boolean
+      type: object
+      x-required: true
+      x-order: kntrl/core/app/user/UserMng.kt1
+    AuthoriseRes:
+      example:
+        session:
+          authenticated: true
+          systemAccess: true
+          signedInAt: 2
+          userId: userId
+          expiresAt: 7
+          nextFactors:
+          - supportedAuths:
+            - supportedAuths
+            - supportedAuths
+            factor: factor
+          - supportedAuths:
+            - supportedAuths
+            - supportedAuths
+            factor: factor
+          entry: entry
+          expired: true
+          authenticatedBy:
+            key: authenticatedBy
+          newUser: true
+          refreshedAt: 9
+          id: id
+          identifiedBy:
+          - type: type
+            login: login
+          - type: type
+            login: login
+          unconfirmedAuths:
+            key:
+              sentCodes:
+              - attemptsLeft: 5
+                usedAttempts: 1
+                hasAttemptsLeft: true
+                validUntil: 6
+                id: id
+                sentAt: 5
+              - attemptsLeft: 5
+                usedAttempts: 1
+                hasAttemptsLeft: true
+                validUntil: 6
+                id: id
+                sentAt: 5
+          device:
+            browser: browser
+            mobile: true
+            userAgent: userAgent
+            type: type
+      properties:
+        session:
+          $ref: '#/components/schemas/Session'
+      type: object
+      x-required: true
+      x-order: kntrl/core/app/utils/AuthorisationSvc.kt2
+    AuthoriseReq:
+      example:
+        rateLimiter:
+          quotaToBurn: 0.8008281904610115
+          id: id
+      properties:
+        rateLimiter:
+          $ref: '#/components/schemas/RateLimiterReq'
+      type: object
+      x-required: true
+      x-order: kntrl/core/app/utils/AuthorisationSvc.kt1
+    RateLimiterReq:
+      example:
+        quotaToBurn: 0.8008281904610115
+        id: id
+      properties:
+        id:
+          type: string
+          x-required: true
+        quotaToBurn:
+          format: double
+          type: number
+          x-required: true
+      required:
+      - id
+      - quotaToBurn
+      type: object
+      x-required: true
+      x-order: kntrl/core/app/utils/AuthorisationSvc.kt3
+  securitySchemes:
+    access-token:
+      in: query
+      name: access-token
+      type: apiKey
+x-tagGroups:
+- name: Api
+  tags:
+  - session
+  - token
+  - authorisation
+  - user
+  - server
+  - signature
+
