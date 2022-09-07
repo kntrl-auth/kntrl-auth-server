@@ -3,7 +3,6 @@
   "type": "module",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.js",
   "scripts": {
     "generate-api": "openapi-generator-cli generate -i ../../backend/core/build/resources/main/static/openapi-simple.yaml -o ./generated -g typescript-axios"
   },

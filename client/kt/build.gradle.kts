@@ -2,6 +2,7 @@ import org.hidetake.gradle.swagger.generator.GenerateSwaggerCode
 
 plugins {
     kotlin("jvm") version "1.6.21"
+    id("org.hidetake.swagger.generator") version "2.19.2"
 }
 
 group = "kntrl"

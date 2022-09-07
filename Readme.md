@@ -42,7 +42,7 @@ java -jar kntrl.jar
 ```
 
 #### Option 2 - run with docker compose
-- create `docker-compose.yml` file:
+- Create `docker-compose.yml` file:
 ```yml
 version: "3.1"
 services:
@@ -97,7 +97,7 @@ services:
 
 #### Option 3 - Override config by command line args:
 ```shell
-java -jar kntrl.jar --auths "{ password: { minLength: 8, requireNumber: true } }" --kntrl.db.user.sqlte "./user-db"
+java -jar kntrl.jar --auths "{ password: { minLength: 8, requireNumber: true } }" --db.user.sqlte "./user-db"
 ```
 
 ## Learn by example
