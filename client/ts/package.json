@@ -1,0 +1,21 @@
+{
+  "name": "ts",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "generate-api": "openapi-generator-cli generate -i ../../backend/core/build/resources/main/static/openapi-simple.yaml -o ./generated -g typescript-axios"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.5.1",
+    "form-data": "^4.0.0",
+    "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "@types/node": "^16.0.1",
+    "axios": "^0.21.1"
+  }
+}
