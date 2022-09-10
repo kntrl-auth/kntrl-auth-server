@@ -1,0 +1,1473 @@
+openapi: 3.0.1
+info:
+  title: Kntrl plugin API
+  description: |+
+    This is the API that Kntrl server uses for integration with plugins.
+    To implement plugin you must add next http endpoints to your server
+
+  version: "1.0"
+tags:
+- name: plugin/rate-limiter
+  x-displayName: []
+- name: plugin/auth
+  x-displayName: []
+- name: plugin/repo/session
+  x-displayName: []
+- name: plugin/repo/user
+  x-displayName: []
+paths:
+  /plugin/rate-limiter/{id}/burn-quota:
+    post:
+      tags:
+      - plugin/rate-limiter
+      operationId: burnQuota
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/RateLimiterStateId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BurnQuotaReq'
+        required: true
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimiterState'
+        "4XX":
+          description: Client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+        "5XX":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+      x-order: 1
+  /plugin/auth/authenticate/dry-run:
+    post:
+      tags:
+      - plugin/auth
+      operationId: authenticateDryRun
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthReq'
+        required: true
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DryRunAuthRes'
+        "4XX":
+          description: Client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+        "5XX":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+      x-order: 1
+  /plugin/repository/session/{id}:
+    get:
+      tags:
+      - plugin/repo/session
+      operationId: findSession
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindSessionRes'
+        "4XX":
+          description: Client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+        "5XX":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+      x-order: 1
+  /plugin/repository/user:
+    get:
+      tags:
+      - plugin/repo/user
+      operationId: findUser
+      parameters:
+      - name: login-type
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: login
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindUserRes'
+        "4XX":
+          description: Client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+        "5XX":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+      x-order: 1
+    post:
+      tags:
+      - plugin/repo/user
+      operationId: saveUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaveUserReq'
+        required: true
+      responses:
+        default:
+          description: Success
+          content:
+            application/json: {}
+        "4XX":
+          description: Client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+        "5XX":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+      x-order: 2
+  /plugin/auth/authenticate:
+    post:
+      tags:
+      - plugin/auth
+      operationId: authenticate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthReq'
+        required: true
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthRes'
+        "4XX":
+          description: Client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+        "5XX":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+      security:
+      - access-token: []
+      x-order: 2
+  /plugin/repository/session:
+    get:
+      tags:
+      - plugin/repo/session
+      operationId: findSessions
+      parameters:
+      - name: userId
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: entry
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindSessionsRes'
+        "4XX":
+          description: Client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+        "5XX":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+      x-order: 2
+    post:
+      tags:
+      - plugin/repo/session
+      operationId: saveSession
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaveSessionReq'
+        required: true
+      responses:
+        default:
+          description: Success
+          content:
+            application/json: {}
+        "4XX":
+          description: Client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+        "5XX":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+      x-order: 3
+  /plugin/auth/update/dry-run:
+    post:
+      tags:
+      - plugin/auth
+      operationId: updateAuthDryRun
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthReq'
+        required: true
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DryRunAuthRes'
+        "4XX":
+          description: Client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+        "5XX":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+      x-order: 3
+  /plugin/auth/update:
+    post:
+      tags:
+      - plugin/auth
+      operationId: updateAuth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthReq'
+        required: true
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthRes'
+        "4XX":
+          description: Client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+        "5XX":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+      x-order: 4
+components:
+  schemas:
+    Err:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      discriminator:
+        propertyName: code
+        mapping:
+          SESSION_EXPIRED: '#/components/schemas/SessionExpired'
+          ACCESS_DENIED: '#/components/schemas/AccessDenied'
+          USER_NOT_FOUND: '#/components/schemas/UserNotFound'
+          SIGNATURE_IS_INCORRECT: '#/components/schemas/SignatureIsIncorrect'
+          SERVER_ERR: '#/components/schemas/ServerErr'
+          INTEGRATION_ERR: '#/components/schemas/IntegrationErr'
+          ANY_ERR: '#/components/schemas/AnyErr'
+          USER_LOGIN_ALREADY_TAKEN: '#/components/schemas/UserLoginAlreadyTaken'
+          AUTH_IS_NOT_ENABLED: '#/components/schemas/AuthIsNotEnabled'
+          TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
+          TOO_MANY_REQS: '#/components/schemas/TooManyReqs'
+          AUTH_IS_NOT_CONFIRMED: '#/components/schemas/AuthIsNotConfirmed'
+          NO_AUTH_AVAILABLE_FOR_FACTOR: '#/components/schemas/NoAuthAvailableForFactor'
+          AUTH_REQUIRES_ANOTHER: '#/components/schemas/AuthRequiresAnother'
+          CODE_IS_EXPIRED: '#/components/schemas/CodeIsExpired'
+          CODE_TOO_MANY_ATTEMPTS: '#/components/schemas/CodeTooManyAttempts'
+          CODE_IS_INCORRECT: '#/components/schemas/CodeIsIncorrect'
+          UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
+          PLUGIN_ERR: '#/components/schemas/PluginErr'
+          PLUGIN_CLIENT_ERR: '#/components/schemas/PluginClientErr'
+          PASSWORD_IS_INCORRECT: '#/components/schemas/PasswordIsIncorrect'
+          PASSWORD_IS_INVALID: '#/components/schemas/PasswordIsInvalid'
+          EMAIL_IS_INCORRECT: '#/components/schemas/EmailIsIncorrect'
+          IP_NEW: '#/components/schemas/IpNew'
+          QUESTIONS_ANSWERS_INCORRECT: '#/components/schemas/QuestionsAnswersIncorrect'
+          QUESTIONS_ANSWERS_INVALID: '#/components/schemas/QuestionsAnswersInvalid'
+      x-order: kntrl/core/domain/err-base.kt0
+      x-sealed: false
+    AccessDenied:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      x-order: kntrl/core/app/err.kt1
+      x-super: '#/components/schemas/Unauthenticated'
+    AnswerErr:
+      required:
+      - tooLong
+      - tooShort
+      type: object
+      properties:
+        tooShort:
+          type: boolean
+        tooLong:
+          type: boolean
+      x-order: kntrl/core/infra/err.kt9
+    AnyErr:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      additionalProperties: true
+      x-order: kntrl/core/domain/err-base.kt5
+      x-super: '#/components/schemas/Err'
+    AuthIsNotConfirmed:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      x-order: kntrl/core/domain/err.kt2
+      x-super: '#/components/schemas/ClientErr'
+    AuthIsNotEnabled:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      x-order: kntrl/core/domain/err.kt1
+      x-super: '#/components/schemas/ClientErr'
+    AuthRequiresAnother:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      x-order: kntrl/core/domain/err.kt4
+      x-super: '#/components/schemas/ClientErr'
+    ClientErr:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      discriminator:
+        propertyName: code
+        mapping:
+          SESSION_EXPIRED: '#/components/schemas/SessionExpired'
+          ACCESS_DENIED: '#/components/schemas/AccessDenied'
+          USER_NOT_FOUND: '#/components/schemas/UserNotFound'
+          SIGNATURE_IS_INCORRECT: '#/components/schemas/SignatureIsIncorrect'
+          USER_LOGIN_ALREADY_TAKEN: '#/components/schemas/UserLoginAlreadyTaken'
+          AUTH_IS_NOT_ENABLED: '#/components/schemas/AuthIsNotEnabled'
+          TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
+          TOO_MANY_REQS: '#/components/schemas/TooManyReqs'
+          AUTH_IS_NOT_CONFIRMED: '#/components/schemas/AuthIsNotConfirmed'
+          AUTH_REQUIRES_ANOTHER: '#/components/schemas/AuthRequiresAnother'
+          CODE_IS_EXPIRED: '#/components/schemas/CodeIsExpired'
+          CODE_TOO_MANY_ATTEMPTS: '#/components/schemas/CodeTooManyAttempts'
+          CODE_IS_INCORRECT: '#/components/schemas/CodeIsIncorrect'
+          UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
+          PLUGIN_CLIENT_ERR: '#/components/schemas/PluginClientErr'
+          PASSWORD_IS_INCORRECT: '#/components/schemas/PasswordIsIncorrect'
+          PASSWORD_IS_INVALID: '#/components/schemas/PasswordIsInvalid'
+          EMAIL_IS_INCORRECT: '#/components/schemas/EmailIsIncorrect'
+          IP_NEW: '#/components/schemas/IpNew'
+          QUESTIONS_ANSWERS_INCORRECT: '#/components/schemas/QuestionsAnswersIncorrect'
+          QUESTIONS_ANSWERS_INVALID: '#/components/schemas/QuestionsAnswersInvalid'
+      x-order: kntrl/core/domain/err-base.kt4
+      x-sealed: false
+      x-super: '#/components/schemas/Err'
+    CodeIsExpired:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      x-order: kntrl/core/domain/err.kt5
+      x-super: '#/components/schemas/ClientErr'
+    CodeIsIncorrect:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      x-order: kntrl/core/domain/err.kt7
+      x-super: '#/components/schemas/ClientErr'
+    CodeTooManyAttempts:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      x-order: kntrl/core/domain/err.kt6
+      x-super: '#/components/schemas/ClientErr'
+    EmailIsIncorrect:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      x-order: kntrl/core/infra/err.kt5
+      x-super: '#/components/schemas/ClientErr'
+    Instant:
+      type: integer
+      format: int64
+    IntegrationErr:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      discriminator:
+        propertyName: code
+        mapping:
+          INTEGRATION_ERR: '#/components/schemas/IntegrationErr'
+          NO_AUTH_AVAILABLE_FOR_FACTOR: '#/components/schemas/NoAuthAvailableForFactor'
+      x-order: kntrl/core/domain/err-base.kt3
+      x-sealed: false
+      x-super: '#/components/schemas/Err'
+    IpNew:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      x-order: kntrl/core/infra/err.kt6
+      x-super: '#/components/schemas/ClientErr'
+    LoginId:
+      required:
+      - login
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type of login
+        login:
+          type: string
+          description: "User unique identifier, email, username, etc."
+      x-order: kntrl/core/domain/user/Login.kt2
+    NoAuthAvailableForFactor:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      x-order: kntrl/core/domain/err.kt3
+      x-super: '#/components/schemas/IntegrationErr'
+    PasswordIsIncorrect:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+        changedAt:
+          type: integer
+          format: int64
+          x-nullable: true
+        changedDaysAgo:
+          type: integer
+          format: int64
+          x-nullable: true
+      x-order: kntrl/core/infra/err.kt3
+      x-super: '#/components/schemas/ClientErr'
+    PasswordIsInvalid:
+      required:
+      - code
+      - commonPassword
+      - devMsg
+      - missingLowerCase
+      - missingNumber
+      - missingSymbol
+      - missingUpperCase
+      - passwordsMismatch
+      - tooLong
+      - tooShort
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+        tooLong:
+          type: boolean
+        tooShort:
+          type: boolean
+        missingNumber:
+          type: boolean
+        missingSymbol:
+          type: boolean
+        missingUpperCase:
+          type: boolean
+        missingLowerCase:
+          type: boolean
+        commonPassword:
+          type: boolean
+        wasUsedBeforeAt:
+          type: integer
+          format: int64
+          x-nullable: true
+        matchesLogin:
+          $ref: '#/components/schemas/LoginId'
+        passwordsMismatch:
+          type: boolean
+        strength:
+          type: string
+          x-nullable: true
+        wasUsedDaysAgo:
+          type: integer
+          format: int64
+      x-order: kntrl/core/infra/err.kt4
+      x-super: '#/components/schemas/ClientErr'
+    PluginClientErr:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+        data:
+          type: object
+          additionalProperties:
+            type: object
+          writeOnly: true
+      x-order: kntrl/core/infra/err.kt2
+      x-super: '#/components/schemas/ClientErr'
+    PluginErr:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      x-order: kntrl/core/infra/err.kt1
+      x-super: '#/components/schemas/ServerErr'
+    QuestionsAnswersIncorrect:
+      required:
+      - code
+      - devMsg
+      - incorrectAnswers
+      - questionsNotFound
+      - requiresMoreAnswers
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+        incorrectAnswers:
+          type: array
+          items:
+            type: string
+        requiresMoreAnswers:
+          type: boolean
+        questionsNotFound:
+          type: array
+          items:
+            type: string
+      x-order: kntrl/core/infra/err.kt7
+      x-super: '#/components/schemas/ClientErr'
+    QuestionsAnswersInvalid:
+      required:
+      - code
+      - devMsg
+      - invalidAnswers
+      - tooManyAnswers
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+        invalidAnswers:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/AnswerErr'
+        tooManyAnswers:
+          type: boolean
+      x-order: kntrl/core/infra/err.kt8
+      x-super: '#/components/schemas/ClientErr'
+    ServerErr:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      discriminator:
+        propertyName: code
+        mapping:
+          SERVER_ERR: '#/components/schemas/ServerErr'
+          PLUGIN_ERR: '#/components/schemas/PluginErr'
+      x-order: kntrl/core/domain/err-base.kt2
+      x-sealed: false
+      x-super: '#/components/schemas/Err'
+    SessionExpired:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      x-order: kntrl/core/app/err.kt0
+      x-super: '#/components/schemas/Unauthenticated'
+    SignatureIsIncorrect:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      x-order: kntrl/core/app/err.kt3
+      x-super: '#/components/schemas/ClientErr'
+    TokenExpired:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+        expiredAt:
+          type: integer
+          format: int64
+          x-nullable: true
+      x-order: kntrl/core/domain/err.kt10
+      x-super: '#/components/schemas/Unauthenticated'
+    TooManyReqs:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+        waitTimeMs:
+          type: integer
+          format: int32
+          x-nullable: true
+        waitTimeSeconds:
+          type: integer
+          format: int32
+          x-nullable: true
+        waitTimeMinutes:
+          type: integer
+          format: int32
+          x-nullable: true
+      x-order: kntrl/core/domain/err.kt11
+      x-super: '#/components/schemas/ClientErr'
+    Unauthenticated:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      discriminator:
+        propertyName: code
+        mapping:
+          SESSION_EXPIRED: '#/components/schemas/SessionExpired'
+          ACCESS_DENIED: '#/components/schemas/AccessDenied'
+          USER_NOT_FOUND: '#/components/schemas/UserNotFound'
+          TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
+          UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
+      x-order: kntrl/core/domain/err.kt8
+      x-sealed: false
+      x-super: '#/components/schemas/ClientErr'
+    UserLoginAlreadyTaken:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      x-order: kntrl/core/domain/err.kt0
+      x-super: '#/components/schemas/ClientErr'
+    UserNotFound:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      x-order: kntrl/core/app/err.kt2
+      x-super: '#/components/schemas/Unauthenticated'
+    RateLimiterState:
+      required:
+      - burntQuota
+      - id
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/RateLimiterStateId'
+        burntQuota:
+          type: number
+          format: double
+      x-order: kntrl/core/domain/RateLimiterState.kt0
+    RateLimiterStateId:
+      required:
+      - rateLimiter
+      - user
+      - window
+      type: object
+      properties:
+        rateLimiter:
+          type: string
+        user:
+          $ref: '#/components/schemas/RateLimiterUser'
+        window:
+          $ref: '#/components/schemas/TimeWindow'
+      x-order: kntrl/core/domain/RateLimiterState.kt2
+    RateLimiterUser:
+      type: object
+      properties:
+        userId:
+          type: string
+          x-nullable: true
+        ip:
+          type: string
+          x-nullable: true
+      x-order: kntrl/core/domain/RateLimiterState.kt4
+    TimeWindow:
+      required:
+      - end
+      - start
+      type: object
+      properties:
+        start:
+          type: integer
+          format: int64
+        end:
+          type: integer
+          format: int64
+      x-order: kntrl/core/domain/RateLimiterState.kt6
+    BurnQuotaReq:
+      required:
+      - quota
+      type: object
+      properties:
+        quota:
+          type: number
+          format: double
+      x-order: kntrl/core/app/RateLimiter.kt1
+    AuthData:
+      required:
+      - private
+      - public
+      type: object
+      properties:
+        public:
+          $ref: '#/components/schemas/json'
+        private:
+          $ref: '#/components/schemas/json'
+        login:
+          type: string
+          x-nullable: true
+      x-order: kntrl/core/domain/user/AuthUserCfg.kt3
+    AuthRes:
+      required:
+      - authData
+      type: object
+      properties:
+        authData:
+          $ref: '#/components/schemas/AuthData'
+        resData:
+          type: object
+          x-nullable: true
+      x-order: kntrl/core/app/auth/Auth.kt6
+    AuthReq:
+      required:
+      - ctx
+      - reqData
+      type: object
+      properties:
+        dryRunAuthResData:
+          type: object
+          x-nullable: true
+        user:
+          $ref: '#/components/schemas/User'
+        session:
+          $ref: '#/components/schemas/Session'
+        authData:
+          $ref: '#/components/schemas/AuthData'
+        codeToSend:
+          $ref: '#/components/schemas/Code'
+        reqData:
+          type: object
+        ctx:
+          $ref: '#/components/schemas/ReqCtx'
+      x-order: kntrl/core/app/auth/Auth.kt2
+    AuthUserCfg:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AuthData'
+        sentCodes:
+          type: array
+          description: |
+            List of auths that wait for confirmation.
+          items:
+            $ref: '#/components/schemas/UnconfirmedAuthData'
+      x-order: kntrl/core/domain/user/AuthUserCfg.kt0
+    Code:
+      required:
+      - attemptsLeft
+      - code
+      - codeHash
+      - sentAt
+      - usedAttempts
+      - validUntil
+      type: object
+      properties:
+        validUntil:
+          type: integer
+          format: int64
+        usedAttempts:
+          type: integer
+          format: int32
+        attemptsLeft:
+          type: integer
+          format: int32
+        codeHash:
+          type: string
+        sentAt:
+          type: integer
+          format: int64
+        code:
+          type: string
+      x-order: kntrl/core/app/auth/Auth.kt3
+    CodeVerifier:
+      required:
+      - attemptsLeft
+      - codeHash
+      - sentAt
+      - usedAttempts
+      - validUntil
+      type: object
+      properties:
+        validUntil:
+          type: integer
+          format: int64
+        usedAttempts:
+          type: integer
+          format: int32
+        attemptsLeft:
+          type: integer
+          format: int32
+        codeHash:
+          type: string
+        sentAt:
+          type: integer
+          format: int64
+      x-order: kntrl/core/domain/confirm/CodeVerifier.kt0
+    Device:
+      required:
+      - userAgent
+      type: object
+      properties:
+        type:
+          type: string
+          x-nullable: true
+        browser:
+          type: string
+          x-nullable: true
+        userAgent:
+          type: string
+        mobile:
+          type: boolean
+      x-order: kntrl/core/domain/session/Device.kt0
+    Login:
+      required:
+      - login
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type of login
+        login:
+          type: string
+          description: "User unique identifier, email, username, etc."
+        unconfirmedLogin:
+          type: string
+          x-nullable: true
+      x-order: kntrl/core/domain/user/Login.kt0
+    NextFactor:
+      required:
+      - factor
+      - supportedAuths
+      type: object
+      properties:
+        factor:
+          type: string
+        supportedAuths:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+      x-order: kntrl/core/domain/session/NextFactors.kt0
+    ReqCtx:
+      required:
+      - device
+      - headers
+      - ip
+      type: object
+      properties:
+        lang:
+          type: string
+          x-nullable: true
+        ip:
+          type: string
+        device:
+          $ref: '#/components/schemas/Device'
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+      x-order: kntrl/core/app/utils/ReqCtx.kt0
+    Session:
+      required:
+      - authenticatedBy
+      - device
+      - entry
+      - expiresAt
+      - id
+      - identifiedBy
+      - newUser
+      - nextFactors
+      - refreshedAt
+      - signedInAt
+      - systemAccess
+      - unconfirmedAuths
+      type: object
+      properties:
+        id:
+          type: string
+        entry:
+          type: string
+          description: Entry that authenticates this session
+        identifiedBy:
+          type: array
+          description: Login used to identify this user
+          items:
+            $ref: '#/components/schemas/LoginId'
+        userId:
+          type: string
+          x-nullable: true
+        authenticatedBy:
+          type: object
+          additionalProperties:
+            type: string
+            x-additionalPropertiesName: factor
+          description: |
+            Authenticator used for factors
+        unconfirmedAuths:
+          type: object
+          additionalProperties:
+            x-additionalPropertiesName: auth
+            $ref: '#/components/schemas/UnconfirmedAuth'
+          description: |
+            Auths that waiting for confirmation
+        nextFactors:
+          type: array
+          description: List of factors needed to authenticate this session
+          items:
+            $ref: '#/components/schemas/NextFactor'
+        signedInAt:
+          type: integer
+          format: int64
+        expiresAt:
+          type: integer
+          format: int64
+        refreshedAt:
+          type: integer
+          format: int64
+        newUser:
+          type: boolean
+        device:
+          $ref: '#/components/schemas/Device'
+        systemAccess:
+          type: boolean
+        authenticated:
+          type: boolean
+      x-order: kntrl/core/domain/session/Session.kt0
+    UnconfirmedAuth:
+      type: object
+      properties:
+        sentCodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/CodeVerifier'
+      x-order: kntrl/core/domain/session/UnconfirmedAuth.kt0
+    UnconfirmedAuthData:
+      required:
+      - code
+      - data
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AuthData'
+        code:
+          $ref: '#/components/schemas/CodeVerifier'
+      x-order: kntrl/core/domain/user/AuthUserCfg.kt4
+    User:
+      required:
+      - auths
+      - factors
+      - id
+      - logins
+      - signedUpAt
+      - updatedAt
+      type: object
+      properties:
+        id:
+          type: string
+          description: |
+            Generated user uuid
+          example: 2c24704f-198a-4bc4-9718-306ccc97bbdc
+        logins:
+          type: array
+          items:
+            $ref: '#/components/schemas/Login'
+        auths:
+          type: object
+          additionalProperties:
+            x-additionalPropertiesName: auth
+            $ref: '#/components/schemas/AuthUserCfg'
+          description: |
+            Public data of confirmed auths and sent codes for unconfirmed auths.
+        factors:
+          uniqueItems: true
+          type: array
+          description: Enabled factors
+          items:
+            type: string
+        signedUpAt:
+          type: integer
+          format: int64
+        updatedAt:
+          type: integer
+          format: int64
+        systemAccess:
+          type: boolean
+          description: Allows to access to any user in the app.
+        new:
+          type: boolean
+      x-order: kntrl/core/domain/user/User.kt0
+    json:
+      type: object
+    BaseAuthData:
+      type: object
+      properties:
+        login:
+          type: string
+          x-nullable: true
+      x-order: kntrl/core/domain/user/AuthUserCfg.kt2
+    DryRunAuthRes:
+      type: object
+      properties:
+        authData:
+          oneOf:
+          - $ref: '#/components/schemas/AuthData'
+          - $ref: '#/components/schemas/BaseAuthData'
+          x-nullable: true
+        resData:
+          type: object
+          x-nullable: true
+      x-order: kntrl/core/app/auth/Auth.kt5
+    FindSessionRes:
+      type: object
+      properties:
+        session:
+          $ref: '#/components/schemas/Session'
+      x-order: kntrl/core/app/session/SessionRepo.kt2
+    FindSessionsRes:
+      required:
+      - sessions
+      type: object
+      properties:
+        sessions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Session'
+        tooManySessions:
+          type: boolean
+      x-order: kntrl/core/app/session/SessionRepo.kt4
+    SaveSessionReq:
+      required:
+      - removed
+      type: object
+      properties:
+        userId:
+          type: string
+          x-nullable: true
+        updated:
+          $ref: '#/components/schemas/Session'
+        new:
+          $ref: '#/components/schemas/Session'
+        removed:
+          type: array
+          items:
+            type: string
+      x-order: kntrl/core/app/session/SessionRepo.kt3
+    FindUserRes:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+      x-order: kntrl/core/app/user/UserRepo.kt1
+    SaveUserReq:
+      required:
+      - newLogins
+      - newUsers
+      - removedLogins
+      - updatedLogins
+      - updatedUsers
+      - updatedUsersOrLogins
+      type: object
+      properties:
+        removedLogins:
+          type: array
+          items:
+            $ref: '#/components/schemas/LoginId'
+        updatedUsers:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        newUsers:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        updatedLogins:
+          type: array
+          items:
+            $ref: '#/components/schemas/Login'
+        newLogins:
+          type: array
+          items:
+            $ref: '#/components/schemas/Login'
+        updatedUsersOrLogins:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+      x-order: kntrl/core/app/user/UserRepo.kt2
+x-tagGroups:
+- name: Api
+  tags:
+  - plugin/auth
+  - plugin/repo/user
+  - plugin/repo/session
+  - plugin/rate-limiter
