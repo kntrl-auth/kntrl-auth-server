@@ -54,7 +54,7 @@ services:
 ### Test setup
 Execute HTTP request:
 ```shell
-
+curl -X 'GET' 'http://localhost:9876/api/server/health' -H 'accept: application/json'
 ```
 
 
