@@ -12,7 +12,7 @@ integration with existing database and codebase via plugins, action confirmation
 </div>
 
 
-## Features
+## ⭐ Features
 
 - Authenticate by **password, email, IP, secret questions**, **Facebook** OAuth2, **Google** OAuth2, etc.
 - **API key** management supported
@@ -28,18 +28,18 @@ integration with existing database and codebase via plugins, action confirmation
 - Easy integration. Generate any language client using **OpenAPI** generators
 
 
-## Getting started
+## 🚀 Getting started
 
 ### Run
 
-#### Option 1 - run Java app
+#### ☕ Option 1 - run Java app
 - Download the latest distribution from  [Releases](../../../releases)
 - Start application:
 ```shell
 java -jar kntrl.jar
 ```
 
-#### Option 2 - run with docker compose
+#### 🐳 Option 2 - run with docker compose
 - Create `docker-compose.yml` file:
 ```yml
 version: "3.1"
@@ -109,18 +109,18 @@ java -jar kntrl.jar
 java -jar kntrl.jar --auths "{ password: { minLength: 8, requireNumber: true } }" --db.user.sqlte "./user-db"
 ```
 
-## Learn by example
+## 📖 Learn by example
 Read guide in [examples folder](examples/Readme.md). It contains configuration and integration examples for common cases.
 
-## Integrate with frontend/backend
+## 🛠️ Integrate with frontend/backend
 
-### Option 1 - using SDK
+### Get/create Kntrl API client
+
+#### Option 1 - use existing SDK
 - [Java/Kotlin client](client/kotlin/Readme.md)
 - [JavaScript/TypeScript client](client/typescript/Readme.md)
 
-Check corresponding files in [examples folder](examples/Readme.md) for usage examples.
-
-### Option 2 - using OpenAPI generator
+#### Option 2 - use OpenAPI generator
 Generate HTTP client for any other language by any OpenApi generator (e.g. [this](https://openapi-generator.tech)).
 OpenAPI specification is located in [client folder](client):
 
@@ -133,8 +133,15 @@ OpenAPI specification is located in [client folder](client):
 openapi-generator-cli generate -i client/openapi-no-discriminators.yaml -g go -o /generated/client
 ```
 
+#### Option 3 - call HTTP API manually
+Check [API docs](#api-docs) for HTTP API documentation.
 
-## API docs
+
+### Use client
+Check corresponding files in [examples folder](examples/Readme.md) for usage examples.
+
+
+## 📑 API docs
 
 For full specification of app features, check these docs:
 
@@ -143,7 +150,7 @@ For full specification of app features, check these docs:
 - [Plugin API](#api-docs)
 
 
-## License
+## 🔒 License
 
 This repo includes clients for Kntrl authentication server, examples of usage distributed under MIT license. You can do 
 whatever you want with this.
@@ -151,8 +158,8 @@ whatever you want with this.
 Self-hosted Kntrl server (that you download from releases page) is proprietary, you're not allowed to modify, sell,
 you can use it for any kind of software but not for Software as a Service.
 
-### Is app sources available anywhere?
+#### Is app sources available anywhere?
 
-Right now no sources provided, but likely this will be open sourced in the near future.
+Right now no sources provided, but likely the app will be open sourced in the near future.
 
-if maintenance of this product is finished - all the sources will be published.
+if maintenance of this product is finished - all the sources will be published immediately.
