@@ -1,0 +1,6 @@
+version: "3"
+services:
+  kntrl:
+    image: kntrl:0.9
+    volumes:
+    - "kntrl.json5:/kntrl/kntrl.json5"
