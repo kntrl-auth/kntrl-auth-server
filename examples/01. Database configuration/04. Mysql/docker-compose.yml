@@ -4,3 +4,16 @@ services:
     image: kntrl:0.9
     volumes:
     - "kntrl.json5:/kntrl/kntrl.json5"
+
+  mysql:
+    image: mysql
+    environment:
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_ROOT_PASSWORD: test-pass
+      MYSQL_DATABASE: test
+      MYSQL_USER: test-user
+      MYSQL_PASSWORD: test-pass
+    volumes:
+      - "./mysql:/var/lib/mysql"
+    ports:
+      - "3306:3306"

@@ -56,6 +56,8 @@ Execute HTTP request:
 ```shell
 curl -X 'GET' 'http://localhost:9876/api/server/health' -H 'accept: application/json'
 ```
+P.S. It's recommended to set `healthCheckKey` property in config to make health API require `key` query-param and
+restrict access to this endpoint.
 
 
 ### Configure
@@ -110,7 +112,7 @@ java -jar kntrl.jar --auths "{ password: { minLength: 8, requireNumber: true } }
 ```
 
 ## 📖 Learn by example
-Read guide in [examples folder](examples/Readme.md). It contains configuration and integration examples for common cases.
+Read guide in [examples folder](examples). It contains configuration and integration examples for common cases.
 
 ## 🛠️ Integrate with frontend/backend
 
@@ -138,7 +140,7 @@ Check [API docs](#api-docs) for HTTP API documentation.
 
 
 ### Use client
-Check corresponding files in [examples folder](examples/Readme.md) for usage examples.
+Check corresponding files in [examples folder](examples) for usage examples.
 
 
 ## 📑 API docs
@@ -155,7 +157,7 @@ For full specification of app features, check these docs:
 This repo includes clients for Kntrl authentication server, examples of usage distributed under MIT license. You can do 
 whatever you want with this.
 
-Self-hosted Kntrl server (that you download from releases page) is proprietary, you're not allowed to modify, sell,
+Self-hosted Kntrl server (that you download from releases page) is proprietary, you're not allowed to modify or sell it;
 you can use it for any kind of software but not for Software as a Service.
 
 #### Is app sources available anywhere?

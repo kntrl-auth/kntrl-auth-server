@@ -1,13 +1,13 @@
 {
   db: {
     user: {
-
+      sqlite: './sqlite-db-file'
     },
     session: {
-      // inMemory by default
+      sqlite: './sqlite-db-file'
     },
     rateLimiter: {
-      // inMemory by default
+      // Rate limiter doesn't support sqlite
     }
   }
 }

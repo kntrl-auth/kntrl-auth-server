@@ -1,0 +1,15 @@
+{
+  db: {
+    user: {
+      mongodb: "mongodb://test-user:test-pass@localhost:27017/",
+      database: "test"
+    },
+    session: {
+      mongodb: "mongodb://test-user:test-pass@localhost:27017/",
+      database: "test"
+    },
+    rateLimiter: {
+      // Rate limiter doesn't support mongodb
+    }
+  }
+}

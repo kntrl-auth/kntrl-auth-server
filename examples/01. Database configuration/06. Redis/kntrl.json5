@@ -1,0 +1,16 @@
+{
+  db: {
+    user: {
+      redis: "localhost:6379",
+      password: 'test-pass'
+    },
+    session: {
+      redis: "localhost:6379",
+      password: 'test-pass'
+    },
+    rateLimiter: {
+      redis: "localhost:6379",
+      password: 'test-pass'
+    }
+  }
+}

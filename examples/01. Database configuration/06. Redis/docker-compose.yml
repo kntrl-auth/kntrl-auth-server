@@ -4,3 +4,10 @@ services:
     image: kntrl:0.9
     volumes:
     - "kntrl.json5:/kntrl/kntrl.json5"
+
+  redis:
+    image: 'bitnami/redis:latest'
+    environment:
+      REDIS_PASSWORD: test-pass
+    ports:
+      - "6379:6379"
