@@ -1,0 +1,38 @@
+{
+  logins: [ "username" ],
+
+  auths: {
+    password: {
+      minLength: 6,
+      maxLength: 256,
+      requireUpperCase: true,
+      forbidCommonPasswords: true,
+      forbidLoginAsPassword: true,
+
+      // Forbid to use password that was already used during last year
+      forbidReusingPassword: {
+        passwordHistorySize: 2,
+        passwordHistoryTtl: "1y",
+      },
+
+      strength: {
+        weak: {
+          minLength: 8
+        },
+        strong: {
+          minLength: 12,
+          requireNumber: true,
+          requireSymbol: true
+        },
+      }
+    },
+  },
+
+  entries: {
+    app: {
+      factorsRequired: {
+        first: [ "password" ]
+      }
+    }
+  }
+}

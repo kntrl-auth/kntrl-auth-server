@@ -1,0 +1,30 @@
+{
+  logins: [ "username", "email" ],
+
+  auths: {
+    password: {
+      // use default config
+    },
+    email: {
+      server: "localhost:1025",
+      sender: "test@test.com"
+    },
+  },
+
+  entries: {
+    app: {
+      factorsRequired: {
+        first: [ "password" ]
+      }
+    },
+
+    // If user has "second" factor enabled - "payment" entry will require additional confirmation by code from email
+    payment: {
+      factorsOptional: {
+        second: [ "email" ]
+      },
+      // Requires user to be authenticated by "app" entry first
+      requiresEntry: "app"
+    }
+  }
+}

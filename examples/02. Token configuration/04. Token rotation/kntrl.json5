@@ -1,0 +1,24 @@
+{
+  token: {
+    access: {
+      // Enable access token caching/signing
+      cache: "BINARY",
+
+      // Access token will be cached only for 15 minutes
+      ttl: "15m"
+    },
+
+    refresh: {
+      // Refresh token always loads session from database
+
+      // Session must be authenticated within 1 hour
+      unauthenticatedTtl: "1h",
+
+      // Refresh token allowed to be used during 10 days
+      ttl: "10d",
+
+      // When refresh token is used, it's prolonged up to max ttl (30 days here)
+      maxTtl: "30d"
+    }
+  }
+}

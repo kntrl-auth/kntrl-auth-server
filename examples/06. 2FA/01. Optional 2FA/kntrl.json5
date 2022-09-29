@@ -1,0 +1,27 @@
+{
+  logins: [ "email" ],
+
+  auths: {
+    password: {
+      // use default config
+    },
+    email: {
+      server: "localhost:1025",
+      sender: "test@test.com",
+
+      // Optional. Forbid to add email, until password is added
+      requiresAuth: "password"
+    }
+  },
+
+  entries: {
+    app: {
+      factorsRequired: {
+        first: [ "password" ]
+      },
+      factorsOptional: {
+        second: [ "email" ]
+      }
+    }
+  }
+}

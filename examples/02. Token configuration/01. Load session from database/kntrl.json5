@@ -1,0 +1,8 @@
+{
+  token: {
+    access: {
+      // Disable caching so session will always be loaded from database
+      cache: null,
+    },
+  }
+}

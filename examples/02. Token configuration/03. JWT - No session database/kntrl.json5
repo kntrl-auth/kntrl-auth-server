@@ -1,0 +1,27 @@
+{
+  // This config allows handling session without database, using signed token.
+  // This approach doesn't support session removal as token can't be revoked.
+
+  db: {
+    session: {
+      // No session database, always use cached session from signed token
+      inToken: true
+    },
+  },
+
+  token: {
+    access: {
+      cache: "BINARY", // or "JWT"
+
+      // Optionally, required only if you can't authenticate user within single request
+      cacheUnauthenticated: true,
+
+      ttl: "10d"
+    },
+    refresh: {
+      // Refresh token will not be used, but this config still required for adjusting access-token ttl
+      ttl: "10d",
+      maxTtl: "10d"
+    }
+  }
+}

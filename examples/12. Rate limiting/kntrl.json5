@@ -1,0 +1,46 @@
+{
+  logins: [ "email" ],
+
+  auths: {
+    email: {
+      server: "localhost:1025",
+      sender: "test@test.com",
+
+      // Apply "short" rate limiter to every execution of "email" auth
+      rateLimiter: "short",
+      // Every call to "email" authenticator will burn 1.0 of rate-limiter allocated quote.
+      burnQuota: 1
+    },
+  },
+
+  entries: {
+    app: {
+      factorsRequired: {
+        first: [ "email" ]
+      }
+    }
+  },
+
+  rateLimiters: {
+    // Allow 10 request during the day
+    long: {
+      quota: 10,
+      period: "1d"
+    },
+
+    // Allow one request per 10 seconds
+    short: {
+      parent: "long",
+      quota: 1,
+
+      // Different IPs will have different rate-limiters
+      ip: true,
+
+      // All timeline will be split to 10s time windows, every time window will receive 1.0 of quota
+      period: "10s",
+
+      // If request comes too fast - it will be delayed according to current time window
+      alignLoad: true
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  logins: [ "email" ],
+
+  auths: {
+    email: {
+      server: "localhost:1025",
+      sender: "test@test.com",
+      code: {},
+    },
+    password: {}
+  },
+
+  entries: {
+    app: {
+      factorsRequired: {
+        first: [ "email", "password" ]
+      },
+      editAccount: true
+    }
+  }
+}

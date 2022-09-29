@@ -6,9 +6,9 @@
 that supports custom authenticators, multifactor authentication, 
 integration with existing database and codebase via plugins, action confirmation and many more
 
-[Getting started](#getting-started) •
+[Getting started](#🚀-Getting started) •
 [Learn by example](#learn-by-example) •
-[API docs](#api-docs)
+[API docs](#📑-API-docs)
 </div>
 
 
@@ -111,8 +111,14 @@ java -jar kntrl.jar
 java -jar kntrl.jar --auths "{ password: { minLength: 8, requireNumber: true } }" --db.user.sqlte "./user-db"
 ```
 
-## 📖 Learn by example
-Read guide in [examples folder](examples). It contains configuration and integration examples for common cases.
+## 📖 Guides
+
+### Architecture/API overview
+Read [app architecture overview](arch.md) to grasp main concepts.
+
+### Learn by example
+Then read guide in [examples folder](examples). It contains configuration and integration examples for common cases.
+
 
 ## 🛠️ Integrate with frontend/backend
 
@@ -126,9 +132,9 @@ Read guide in [examples folder](examples). It contains configuration and integra
 Generate HTTP client for any other language by any OpenApi generator (e.g. [this](https://openapi-generator.tech)).
 OpenAPI specification is located in [client folder](client):
 
-- [openapi.yaml](client/openapi.yaml) - specification with discriminators and inheritance. Most of the generators produce incorrect code for this. 
-- [openapi-no-inheritance.yaml](client/openapi-no-inheritance.yaml) - simplified specification (without inheritance). Some generators support this.
 - [openapi-no-discriminators.yaml](client/openapi-no-discriminators.yaml) - simplified specification (without inheritance and discriminators). All generators should support this specification.
+- [openapi-no-inheritance.yaml](client/openapi-no-inheritance.yaml) - simplified specification (without inheritance). Some generators support this.
+- [openapi.yaml](client/openapi.yaml) - specification with discriminators and inheritance. Most of the generators produce incorrect code for this.
 
 **TL;DR;** if you're not sure which specification to use, just use [openapi-no-discriminators.yaml](client/openapi-no-discriminators.yaml), e.g.:
 ```shell
@@ -158,9 +164,9 @@ This repo includes clients for Kntrl authentication server, examples of usage di
 whatever you want with this.
 
 Self-hosted Kntrl server (that you download from releases page) is proprietary, you're not allowed to modify or sell it;
-you can use it for any kind of software but not for Software as a Service.
+you can use it for any kind of software, but you are not allowed to use it for Software as a Service.
 
-#### Is app sources available anywhere?
+#### Is the app sources available anywhere?
 
 Right now no sources provided, but likely the app will be open sourced in the near future.
 

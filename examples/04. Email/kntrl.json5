@@ -1,0 +1,43 @@
+{
+  logins: [ "email" ],
+
+  auths: {
+    email: {
+      server: "localhost:1025",
+      sender: "test@test.com",
+
+      // Just for example, this url doesn't exist. App expects that this url will bring user to email confirmation UI.
+      // userId, sessionId, codeId, code etc will be provided as query-params
+      confirmationUrl: "http://localhost:8080/email/confirm",
+
+      // Confirmation code
+      code: {
+        length: 6,
+        ttl: "2h",
+        alphabet: "1234567890",
+        easyToRemember: true, // every second letter will be the same, that allows the codes to rhyme.
+        maxAttempts: 2
+      },
+
+      templates: {
+        welcome: "./templates/welcome.hbs",
+      }
+    },
+
+    password: {}
+  },
+
+  entries: {
+    app: {
+      factorsRequired: {
+        first: [ "email", "password" ]
+      },
+      editAccount: true
+    }
+  },
+
+  i18n: {
+    dir: "./i18n",
+    default: "ua"
+  }
+}

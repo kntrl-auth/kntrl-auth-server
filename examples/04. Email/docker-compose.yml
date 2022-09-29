@@ -4,3 +4,9 @@ services:
     image: kntrl:0.9
     volumes:
     - "kntrl.json5:/kntrl/kntrl.json5"
+
+  maildev:
+    image: maildev/maildev
+    ports:
+    - "1080:1080"
+    - "1025:1025"

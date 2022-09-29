@@ -1,0 +1,17 @@
+{
+  logins: [ "sms" ],
+
+  auths: {
+    sms: {
+      remote: "localhost:9877"
+    },
+  },
+
+  entries: {
+    app: {
+      factorsRequired: {
+        first: [ "sms" ]
+      }
+    }
+  }
+}
