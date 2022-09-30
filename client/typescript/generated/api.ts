@@ -204,7 +204,7 @@ export interface AuthCodeHandlerCfg {
      */
     'clientId': string;
     /**
-     * OAuth client secret.
+     * OAuth .client secret.
      * @type {string}
      * @memberof AuthCodeHandlerCfg
      */
@@ -1015,7 +1015,7 @@ export interface EntryAccessTokenCfg {
      */
     'ttl'?: string;
     /**
-     * Enable or disable client-side caching of access token
+     * Enable or disable .client-side caching of access token
      * @type {boolean}
      * @memberof EntryAccessTokenCfg
      */
@@ -1610,13 +1610,13 @@ export interface OAuthCfg {
      */
     'tokenUrl'?: string;
     /**
-     * OAuth client id. Client must be registered on OAuth provider (e.g. facebook, google)
+     * OAuth .client id. Client must be registered on OAuth provider (e.g. facebook, google)
      * @type {string}
      * @memberof OAuthCfg
      */
     'clientId'?: string;
     /**
-     * OAuth client secret.
+     * OAuth .client secret.
      * @type {string}
      * @memberof OAuthCfg
      */
@@ -2553,7 +2553,7 @@ export interface SHHttpCfg {
      */
     'bind'?: string;
     /**
-     * If true, X-Forwarded-For header is used to get client\'s IP address
+     * If true, X-Forwarded-For header is used to get .client\'s IP address
      * @type {boolean}
      * @memberof SHHttpCfg
      */

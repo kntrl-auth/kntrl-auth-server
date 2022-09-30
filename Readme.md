@@ -6,9 +6,9 @@
 that supports custom authenticators, multifactor authentication, 
 integration with existing database and codebase via plugins, action confirmation and many more
 
-[Getting started](#🚀-Getting started) •
+[Getting started](#-getting-started) •
 [Learn by example](#learn-by-example) •
-[API docs](#📑-API-docs)
+[API docs](#-api-docs)
 </div>
 
 
@@ -45,7 +45,7 @@ java -jar kntrl.jar
 version: "3.1"
 services:
   kntrl:
-    image: kntrl/kntrl-sh
+    image: kntrl/self-hosted
     ports:
     - "9876:9876"
 ```
@@ -72,7 +72,7 @@ If you're using docker, make sure you have specified volume:
 version: "3.1"
 services:
   kntrl:
-    image: kntrl/kntrl-sh
+    image: kntrl/self-hosted
     ports:
     - "9876:9876"
     volumes:
@@ -87,7 +87,7 @@ You can override any config value using `KNTRL_<UPPER_CASE_PATH>` styled path. E
 version: "3.1"
 services:
   kntrl:
-    image: kntrl/kntrl-sh
+    image: kntrl/self-hosted
     ports:
     - "9876:9876"
     environment:
@@ -138,7 +138,7 @@ OpenAPI specification is located in [client folder](client):
 
 **TL;DR;** if you're not sure which specification to use, just use [openapi-no-discriminators.yaml](client/openapi-no-discriminators.yaml), e.g.:
 ```shell
-openapi-generator-cli generate -i client/openapi-no-discriminators.yaml -g go -o /generated/client
+openapi-generator-cli generate -i .client/openapi-no-discriminators.yaml -g go -o /generated/.client
 ```
 
 #### Option 3 - call HTTP API manually
@@ -168,6 +168,6 @@ you can use it for any kind of software, but you are not allowed to use it for S
 
 #### Is the app sources available anywhere?
 
-Right now no sources provided, but likely the app will be open sourced in the near future.
+Right now no sources provided, but the app will likely be open sourced in the near future.
 
-if maintenance of this product is finished - all the sources will be published immediately.
+If maintenance of this product is finished - all the sources will be published immediately.

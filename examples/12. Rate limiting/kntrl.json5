@@ -22,7 +22,7 @@
   },
 
   rateLimiters: {
-    // Allow 10 request during the day
+    // Allow 10 requests during the day
     long: {
       quota: 10,
       period: "1d"
