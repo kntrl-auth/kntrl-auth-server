@@ -2,7 +2,7 @@ plugins {
     id 'application'
 }
 
-group = 'kntrl'
+group = 'app.kntrl'
 
 repositories {
     mavenCentral()
@@ -10,4 +10,16 @@ repositories {
 
 dependencies {
     implementation 'app.kntrl:client:0.9'
+}
+
+static Collection<File> exampleDirs(File root) {
+    root.listFiles().findAll {
+        !it.path.contains('/.') && it.isDirectory() &&
+                it.listFiles().every { it.isFile() || it.path.contains('/.') }
+    } + root.listFiles()
+            .findAll {it.isDirectory() && it.listFiles().any { it.isDirectory() } }
+            .collectMany { exampleDirs(it) }
+}
+sourceSets.create('example').java {
+    srcDirs(exampleDirs(file('../')))
 }
