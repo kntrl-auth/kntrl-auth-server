@@ -13,7 +13,7 @@ export class Kntrl {
         return new Session(this, undefined, tokens)
     }
 
-    serverHealth(key: string): Promise<HealthRes> {
+    serverHealth(key?: string): Promise<HealthRes> {
         return this.session().server.health(key);
     }
     _axiosCfg(): AxiosRequestConfig {

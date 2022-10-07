@@ -20,6 +20,6 @@ static Collection<File> exampleDirs(File root) {
             .findAll {it.isDirectory() && it.listFiles().any { it.isDirectory() } }
             .collectMany { exampleDirs(it) }
 }
-sourceSets.create('example').java {
+sourceSets.main.java {
     srcDirs(exampleDirs(file('../')))
 }

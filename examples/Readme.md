@@ -10,3 +10,7 @@ Example folders may contain:
 
 1. Start server:
 open example folder `$ cd <example>`, start via docker compose: `$ docker compose up`
+
+2. Import client project from `examples/.client`. This folder contains build files for gradle and npm.
+
+3. Run corresponding client file from example folder.

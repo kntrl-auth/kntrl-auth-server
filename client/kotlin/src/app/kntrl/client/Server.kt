@@ -3,19 +3,13 @@ package app.kntrl.client
 import app.kntrl.client.generated.api.ServerApi
 import app.kntrl.client.generated.infra.ApiClient
 import app.kntrl.client.generated.infra.ApiException
-import app.kntrl.client.generated.model.DbHealthRes
-import app.kntrl.client.generated.model.HealthRes
-import app.kntrl.client.generated.model.HealthStatus
-import app.kntrl.client.generated.model.HealthStatusRes
-import kntrl.client.generated.model.*
+import app.kntrl.client.generated.model.*
 
 class Server(client: ApiClient) {
     private val api = ServerApi(client)
 
-    fun health(): HealthRes = try {
-        handleErr {
-            api.health()
-        }
+    fun health(key: String): HealthRes = try {
+        handleErr { api.health(key) }
     } catch (ex: ApiException) {
         if (ex.code != 0) throw ex
 
@@ -27,6 +21,7 @@ class Server(client: ApiClient) {
             db = DbHealthRes().apply {
                 user = status
                 session = status
+                rateLimiter = status
             }
             auth = emptyMap()
             this.status = status.status
@@ -34,5 +29,5 @@ class Server(client: ApiClient) {
         }
     }
 
-    fun cfg(): AppCfg = handleErr { api.cfg() }
+    fun cfg(): SHAppCfg = handleErr { api.cfg() }
 }

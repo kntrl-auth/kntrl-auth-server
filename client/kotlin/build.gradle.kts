@@ -25,7 +25,7 @@ dependencies {
 tasks.register<GenerateSwaggerCode>("generateApi") {
     group = "openapi"
     language = "java"
-    inputFile = file("../openapi-no-inheritance.yaml")
+    inputFile = file("../openapi.yaml")
     outputDir = project.projectDir.resolve("generated")
     additionalProperties = mapOf(
         "apiPackage" to "app.kntrl.client.generated.api",

@@ -4,8 +4,6 @@ import app.kntrl.client.generated.api.SessionApi
 import app.kntrl.client.generated.api.TokenApi
 import app.kntrl.client.generated.infra.ApiClient
 import app.kntrl.client.generated.model.*
-import java.time.OffsetDateTime
-import java.time.ZoneOffset
 import app.kntrl.client.generated.model.Session as SessionModel
 
 class Session(
@@ -22,11 +20,17 @@ class Session(
         id = ""
         entry = newSessionReq?.entry ?: ""
         identifiedBy = emptyList()
+        userId = ""
         authenticatedBy = emptyMap()
         unconfirmedAuths = emptyMap()
         nextFactors = emptyList()
-        signedInAt = OffsetDateTime.now(ZoneOffset.UTC)
+        signedInAt = 0
+        expiresAt = 0
+        refreshedAt = 0
         newUser = false
+        device = Device().type("").userAgent("").browser("").mobile(false)
+        systemAccess = false
+        expired = false
         authenticated = false
     }
 
@@ -68,7 +72,7 @@ class Session(
     }
 
     fun refresh(refreshToken: String): RefreshTokenRes = handleErr {
-        val res = TokenApi(client).refreshToken(refreshToken)
+        val res = TokenApi(client).refreshToken(RefreshTokenReq().refreshToken(refreshToken))
         update(res.tokens, res.session)
         res
     }
@@ -82,11 +86,17 @@ class Session(
             id = it.id
             entry = it.entry
             identifiedBy = it.identifiedBy
+            userId = it.userId
             authenticatedBy = it.authenticatedBy
             unconfirmedAuths = it.unconfirmedAuths
             nextFactors = it.nextFactors
             signedInAt = it.signedInAt
+            expiresAt = it.expiresAt
+            refreshedAt = it.refreshedAt
             newUser = it.newUser
+            device = it.device
+            systemAccess = it.systemAccess
+            expired = it.expired
             authenticated = it.authenticated
         }
     }
