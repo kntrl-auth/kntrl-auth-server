@@ -3,7 +3,9 @@ services:
   kntrl:
     image: kntrl/self-hosted:0.9
     volumes:
-    - "kntrl.json5:/kntrl/kntrl.json5"
+    - "./kntrl.json5:/kntrl/kntrl.json5"
+    ports:
+    - "9876:9876"
 
   mongo:
     image: mongo
