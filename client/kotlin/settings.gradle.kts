@@ -1,4 +1,4 @@
-rootProject.name = "kotlin-client"
+rootProject.name = "client"
 
 if (file("generated").exists()) {
     includeBuild("generated")

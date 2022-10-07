@@ -5,8 +5,8 @@ plugins {
     id("org.hidetake.swagger.generator") version "2.19.2"
 }
 
-group = "kntrl"
-version = "1.0"
+group = "app.kntrl"
+version = "0.9"
 
 sourceSets.main {
     java.srcDirs("./src")
@@ -18,7 +18,7 @@ repositories {
 
 dependencies {
     swaggerCodegen("org.openapitools:openapi-generator-cli:6.0.0")
-    implementation("kntrl:client:1.0")
+    api("app.kntrl:openapi-client:0.9")
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
 }
 
@@ -28,12 +28,12 @@ tasks.register<GenerateSwaggerCode>("generateApi") {
     inputFile = file("../openapi-no-inheritance.yaml")
     outputDir = project.projectDir.resolve("generated")
     additionalProperties = mapOf(
-        "apiPackage" to "kntrl.client.generated.api",
-        "invokerPackage" to "kntrl.client.generated.infra",
-        "modelPackage" to "kntrl.client.generated.model",
-        "groupId" to "kntrl",
-        "artifactId" to "client",
-        "artifactVersion" to "1.0",
+        "apiPackage" to "app.kntrl.client.generated.api",
+        "invokerPackage" to "app.kntrl.client.generated.infra",
+        "modelPackage" to "app.kntrl.client.generated.model",
+        "groupId" to "app.kntrl",
+        "artifactId" to "openapi-client",
+        "artifactVersion" to "0.9",
     )
     doLast {
         file("generated/docs").walk(FileWalkDirection.BOTTOM_UP).forEach(File::delete)

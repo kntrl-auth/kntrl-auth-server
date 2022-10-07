@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>kntrl</groupId>
-    <artifactId>client</artifactId>
+    <groupId>app.kntrl</groupId>
+    <artifactId>openapi-client</artifactId>
     <packaging>jar</packaging>
-    <name>client</name>
-    <version>1.0</version>
+    <name>openapi-client</name>
+    <version>0.9</version>
     <url>https://github.com/openapitools/openapi-generator</url>
     <description>OpenAPI Java</description>
     <scm>

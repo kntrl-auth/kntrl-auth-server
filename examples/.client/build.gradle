@@ -1,0 +1,13 @@
+plugins {
+    id 'application'
+}
+
+group = 'kntrl'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'app.kntrl:client:0.9'
+}

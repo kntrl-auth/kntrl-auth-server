@@ -1,0 +1,3 @@
+rootProject.name = "client-example"
+
+includeBuild("../../client/kotlin")
