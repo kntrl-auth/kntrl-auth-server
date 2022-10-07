@@ -20,6 +20,7 @@ import app.kntrl.client.generated.model.CodeCfg;
 import app.kntrl.client.generated.model.EmailAuthCfg;
 import app.kntrl.client.generated.model.IpAuthCfg;
 import app.kntrl.client.generated.model.OAuthCfg;
+import app.kntrl.client.generated.model.OneOfPasswordStrengthRequirements;
 import app.kntrl.client.generated.model.PasswordAuthCfg;
 import app.kntrl.client.generated.model.PasswordHistoryCfg;
 import app.kntrl.client.generated.model.PasswordStrengthRequirements;
@@ -71,7 +72,7 @@ import com.google.gson.JsonParseException;
 
 import app.kntrl.client.generated.infra.JSON;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T14:36:53.211699+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T19:30:17.809690+03:00[Europe/Kiev]")
 public class SHAppCfgAuthsValue extends AbstractOpenApiSchema {
     private static final Logger log = Logger.getLogger(SHAppCfgAuthsValue.class.getName());
 

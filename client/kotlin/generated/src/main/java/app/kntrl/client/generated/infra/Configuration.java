@@ -13,7 +13,7 @@
 
 package app.kntrl.client.generated.infra;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T14:36:53.211699+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T19:30:17.809690+03:00[Europe/Kiev]")
 public class Configuration {
     private static ApiClient defaultApiClient = new ApiClient();
 

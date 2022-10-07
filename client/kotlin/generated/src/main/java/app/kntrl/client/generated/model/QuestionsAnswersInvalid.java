@@ -15,7 +15,31 @@ package app.kntrl.client.generated.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import app.kntrl.client.generated.model.AccessDenied;
 import app.kntrl.client.generated.model.AnswerErr;
+import app.kntrl.client.generated.model.AuthIsNotConfirmed;
+import app.kntrl.client.generated.model.AuthIsNotEnabled;
+import app.kntrl.client.generated.model.AuthRequiresAnother;
+import app.kntrl.client.generated.model.ClientErr;
+import app.kntrl.client.generated.model.CodeIsExpired;
+import app.kntrl.client.generated.model.CodeIsIncorrect;
+import app.kntrl.client.generated.model.CodeTooManyAttempts;
+import app.kntrl.client.generated.model.EmailIsIncorrect;
+import app.kntrl.client.generated.model.IpNew;
+import app.kntrl.client.generated.model.OneOfAnswerErr;
+import app.kntrl.client.generated.model.PasswordIsIncorrect;
+import app.kntrl.client.generated.model.PasswordIsInvalid;
+import app.kntrl.client.generated.model.PluginClientErr;
+import app.kntrl.client.generated.model.QuestionsAnswersIncorrect;
+import app.kntrl.client.generated.model.QuestionsAnswersInvalid;
+import app.kntrl.client.generated.model.QuestionsAnswersInvalidAllOf;
+import app.kntrl.client.generated.model.SessionExpired;
+import app.kntrl.client.generated.model.SignatureIsIncorrect;
+import app.kntrl.client.generated.model.TokenExpired;
+import app.kntrl.client.generated.model.TooManyReqs;
+import app.kntrl.client.generated.model.Unauthenticated;
+import app.kntrl.client.generated.model.UserLoginAlreadyTaken;
+import app.kntrl.client.generated.model.UserNotFound;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -51,107 +75,27 @@ import app.kntrl.client.generated.infra.JSON;
 /**
  * QuestionsAnswersInvalid
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T14:36:53.211699+03:00[Europe/Kiev]")
-public class QuestionsAnswersInvalid {
-  public static final String SERIALIZED_NAME_CODE = "code";
-  @SerializedName(SERIALIZED_NAME_CODE)
-  private String code;
-
-  public static final String SERIALIZED_NAME_DEV_MSG = "devMsg";
-  @SerializedName(SERIALIZED_NAME_DEV_MSG)
-  private String devMsg;
-
-  public static final String SERIALIZED_NAME_MSG = "msg";
-  @SerializedName(SERIALIZED_NAME_MSG)
-  private String msg;
-
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T19:30:17.809690+03:00[Europe/Kiev]")
+public class QuestionsAnswersInvalid extends ClientErr {
   public static final String SERIALIZED_NAME_INVALID_ANSWERS = "invalidAnswers";
   @SerializedName(SERIALIZED_NAME_INVALID_ANSWERS)
-  private Map<String, AnswerErr> invalidAnswers = new HashMap<>();
+  private Map<String, OneOfAnswerErr> invalidAnswers = new HashMap<>();
 
   public static final String SERIALIZED_NAME_TOO_MANY_ANSWERS = "tooManyAnswers";
   @SerializedName(SERIALIZED_NAME_TOO_MANY_ANSWERS)
   private Boolean tooManyAnswers;
 
   public QuestionsAnswersInvalid() { 
+    this.code = this.getClass().getSimpleName();
   }
 
-  public QuestionsAnswersInvalid code(String code) {
-    
-    this.code = code;
-    return this;
-  }
-
-   /**
-   * Get code
-   * @return code
-  **/
-  @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
-
-  public String getCode() {
-    return code;
-  }
-
-
-  public void setCode(String code) {
-    this.code = code;
-  }
-
-
-  public QuestionsAnswersInvalid devMsg(String devMsg) {
-    
-    this.devMsg = devMsg;
-    return this;
-  }
-
-   /**
-   * Message for developers.
-   * @return devMsg
-  **/
-  @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Message for developers.")
-
-  public String getDevMsg() {
-    return devMsg;
-  }
-
-
-  public void setDevMsg(String devMsg) {
-    this.devMsg = devMsg;
-  }
-
-
-  public QuestionsAnswersInvalid msg(String msg) {
-    
-    this.msg = msg;
-    return this;
-  }
-
-   /**
-   * Localised message suitable for UI.
-   * @return msg
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "Localised message suitable for UI.")
-
-  public String getMsg() {
-    return msg;
-  }
-
-
-  public void setMsg(String msg) {
-    this.msg = msg;
-  }
-
-
-  public QuestionsAnswersInvalid invalidAnswers(Map<String, AnswerErr> invalidAnswers) {
+  public QuestionsAnswersInvalid invalidAnswers(Map<String, OneOfAnswerErr> invalidAnswers) {
     
     this.invalidAnswers = invalidAnswers;
     return this;
   }
 
-  public QuestionsAnswersInvalid putInvalidAnswersItem(String key, AnswerErr invalidAnswersItem) {
+  public QuestionsAnswersInvalid putInvalidAnswersItem(String key, OneOfAnswerErr invalidAnswersItem) {
     this.invalidAnswers.put(key, invalidAnswersItem);
     return this;
   }
@@ -163,12 +107,12 @@ public class QuestionsAnswersInvalid {
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "")
 
-  public Map<String, AnswerErr> getInvalidAnswers() {
+  public Map<String, OneOfAnswerErr> getInvalidAnswers() {
     return invalidAnswers;
   }
 
 
-  public void setInvalidAnswers(Map<String, AnswerErr> invalidAnswers) {
+  public void setInvalidAnswers(Map<String, OneOfAnswerErr> invalidAnswers) {
     this.invalidAnswers = invalidAnswers;
   }
 
@@ -206,25 +150,21 @@ public class QuestionsAnswersInvalid {
       return false;
     }
     QuestionsAnswersInvalid questionsAnswersInvalid = (QuestionsAnswersInvalid) o;
-    return Objects.equals(this.code, questionsAnswersInvalid.code) &&
-        Objects.equals(this.devMsg, questionsAnswersInvalid.devMsg) &&
-        Objects.equals(this.msg, questionsAnswersInvalid.msg) &&
-        Objects.equals(this.invalidAnswers, questionsAnswersInvalid.invalidAnswers) &&
-        Objects.equals(this.tooManyAnswers, questionsAnswersInvalid.tooManyAnswers);
+    return Objects.equals(this.invalidAnswers, questionsAnswersInvalid.invalidAnswers) &&
+        Objects.equals(this.tooManyAnswers, questionsAnswersInvalid.tooManyAnswers) &&
+        super.equals(o);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(code, devMsg, msg, invalidAnswers, tooManyAnswers);
+    return Objects.hash(invalidAnswers, tooManyAnswers, super.hashCode());
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class QuestionsAnswersInvalid {\n");
-    sb.append("    code: ").append(toIndentedString(code)).append("\n");
-    sb.append("    devMsg: ").append(toIndentedString(devMsg)).append("\n");
-    sb.append("    msg: ").append(toIndentedString(msg)).append("\n");
+    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    invalidAnswers: ").append(toIndentedString(invalidAnswers)).append("\n");
     sb.append("    tooManyAnswers: ").append(toIndentedString(tooManyAnswers)).append("\n");
     sb.append("}");
@@ -257,10 +197,10 @@ public class QuestionsAnswersInvalid {
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
-    openapiRequiredFields.add("code");
-    openapiRequiredFields.add("devMsg");
     openapiRequiredFields.add("invalidAnswers");
     openapiRequiredFields.add("tooManyAnswers");
+    openapiRequiredFields.add("code");
+    openapiRequiredFields.add("devMsg");
   }
 
  /**
@@ -291,15 +231,6 @@ public class QuestionsAnswersInvalid {
         if (jsonObj.get(requiredField) == null) {
           throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonObj.toString()));
         }
-      }
-      if (jsonObj.get("code") != null && !jsonObj.get("code").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `code` to be a primitive type in the JSON string but got `%s`", jsonObj.get("code").toString()));
-      }
-      if (jsonObj.get("devMsg") != null && !jsonObj.get("devMsg").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `devMsg` to be a primitive type in the JSON string but got `%s`", jsonObj.get("devMsg").toString()));
-      }
-      if (jsonObj.get("msg") != null && !jsonObj.get("msg").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `msg` to be a primitive type in the JSON string but got `%s`", jsonObj.get("msg").toString()));
       }
   }
 

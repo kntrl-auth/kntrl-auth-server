@@ -15,6 +15,29 @@ package app.kntrl.client.generated.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import app.kntrl.client.generated.model.AccessDenied;
+import app.kntrl.client.generated.model.AuthIsNotConfirmed;
+import app.kntrl.client.generated.model.AuthIsNotEnabled;
+import app.kntrl.client.generated.model.AuthRequiresAnother;
+import app.kntrl.client.generated.model.ClientErr;
+import app.kntrl.client.generated.model.CodeIsExpired;
+import app.kntrl.client.generated.model.CodeIsIncorrect;
+import app.kntrl.client.generated.model.CodeTooManyAttempts;
+import app.kntrl.client.generated.model.EmailIsIncorrect;
+import app.kntrl.client.generated.model.IpNew;
+import app.kntrl.client.generated.model.PasswordIsIncorrect;
+import app.kntrl.client.generated.model.PasswordIsInvalid;
+import app.kntrl.client.generated.model.PluginClientErr;
+import app.kntrl.client.generated.model.QuestionsAnswersIncorrect;
+import app.kntrl.client.generated.model.QuestionsAnswersInvalid;
+import app.kntrl.client.generated.model.SessionExpired;
+import app.kntrl.client.generated.model.SignatureIsIncorrect;
+import app.kntrl.client.generated.model.TokenExpired;
+import app.kntrl.client.generated.model.TooManyReqs;
+import app.kntrl.client.generated.model.TooManyReqsAllOf;
+import app.kntrl.client.generated.model.Unauthenticated;
+import app.kntrl.client.generated.model.UserLoginAlreadyTaken;
+import app.kntrl.client.generated.model.UserNotFound;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -47,20 +70,8 @@ import app.kntrl.client.generated.infra.JSON;
 /**
  * TooManyReqs
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T14:36:53.211699+03:00[Europe/Kiev]")
-public class TooManyReqs {
-  public static final String SERIALIZED_NAME_CODE = "code";
-  @SerializedName(SERIALIZED_NAME_CODE)
-  private String code;
-
-  public static final String SERIALIZED_NAME_DEV_MSG = "devMsg";
-  @SerializedName(SERIALIZED_NAME_DEV_MSG)
-  private String devMsg;
-
-  public static final String SERIALIZED_NAME_MSG = "msg";
-  @SerializedName(SERIALIZED_NAME_MSG)
-  private String msg;
-
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T19:30:17.809690+03:00[Europe/Kiev]")
+public class TooManyReqs extends ClientErr {
   public static final String SERIALIZED_NAME_WAIT_TIME_MS = "waitTimeMs";
   @SerializedName(SERIALIZED_NAME_WAIT_TIME_MS)
   private Integer waitTimeMs;
@@ -74,76 +85,8 @@ public class TooManyReqs {
   private Integer waitTimeMinutes;
 
   public TooManyReqs() { 
+    this.code = this.getClass().getSimpleName();
   }
-
-  public TooManyReqs code(String code) {
-    
-    this.code = code;
-    return this;
-  }
-
-   /**
-   * Get code
-   * @return code
-  **/
-  @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
-
-  public String getCode() {
-    return code;
-  }
-
-
-  public void setCode(String code) {
-    this.code = code;
-  }
-
-
-  public TooManyReqs devMsg(String devMsg) {
-    
-    this.devMsg = devMsg;
-    return this;
-  }
-
-   /**
-   * Message for developers.
-   * @return devMsg
-  **/
-  @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Message for developers.")
-
-  public String getDevMsg() {
-    return devMsg;
-  }
-
-
-  public void setDevMsg(String devMsg) {
-    this.devMsg = devMsg;
-  }
-
-
-  public TooManyReqs msg(String msg) {
-    
-    this.msg = msg;
-    return this;
-  }
-
-   /**
-   * Localised message suitable for UI.
-   * @return msg
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "Localised message suitable for UI.")
-
-  public String getMsg() {
-    return msg;
-  }
-
-
-  public void setMsg(String msg) {
-    this.msg = msg;
-  }
-
 
   public TooManyReqs waitTimeMs(Integer waitTimeMs) {
     
@@ -224,26 +167,22 @@ public class TooManyReqs {
       return false;
     }
     TooManyReqs tooManyReqs = (TooManyReqs) o;
-    return Objects.equals(this.code, tooManyReqs.code) &&
-        Objects.equals(this.devMsg, tooManyReqs.devMsg) &&
-        Objects.equals(this.msg, tooManyReqs.msg) &&
-        Objects.equals(this.waitTimeMs, tooManyReqs.waitTimeMs) &&
+    return Objects.equals(this.waitTimeMs, tooManyReqs.waitTimeMs) &&
         Objects.equals(this.waitTimeSeconds, tooManyReqs.waitTimeSeconds) &&
-        Objects.equals(this.waitTimeMinutes, tooManyReqs.waitTimeMinutes);
+        Objects.equals(this.waitTimeMinutes, tooManyReqs.waitTimeMinutes) &&
+        super.equals(o);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(code, devMsg, msg, waitTimeMs, waitTimeSeconds, waitTimeMinutes);
+    return Objects.hash(waitTimeMs, waitTimeSeconds, waitTimeMinutes, super.hashCode());
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class TooManyReqs {\n");
-    sb.append("    code: ").append(toIndentedString(code)).append("\n");
-    sb.append("    devMsg: ").append(toIndentedString(devMsg)).append("\n");
-    sb.append("    msg: ").append(toIndentedString(msg)).append("\n");
+    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    waitTimeMs: ").append(toIndentedString(waitTimeMs)).append("\n");
     sb.append("    waitTimeSeconds: ").append(toIndentedString(waitTimeSeconds)).append("\n");
     sb.append("    waitTimeMinutes: ").append(toIndentedString(waitTimeMinutes)).append("\n");
@@ -310,15 +249,6 @@ public class TooManyReqs {
         if (jsonObj.get(requiredField) == null) {
           throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonObj.toString()));
         }
-      }
-      if (jsonObj.get("code") != null && !jsonObj.get("code").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `code` to be a primitive type in the JSON string but got `%s`", jsonObj.get("code").toString()));
-      }
-      if (jsonObj.get("devMsg") != null && !jsonObj.get("devMsg").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `devMsg` to be a primitive type in the JSON string but got `%s`", jsonObj.get("devMsg").toString()));
-      }
-      if (jsonObj.get("msg") != null && !jsonObj.get("msg").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `msg` to be a primitive type in the JSON string but got `%s`", jsonObj.get("msg").toString()));
       }
   }
 

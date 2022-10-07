@@ -18,7 +18,7 @@ import java.util.Arrays;
 import app.kntrl.client.generated.model.Device;
 import app.kntrl.client.generated.model.LoginId;
 import app.kntrl.client.generated.model.NextFactor;
-import app.kntrl.client.generated.model.UnconfirmedAuth;
+import app.kntrl.client.generated.model.SessionUnconfirmedAuthsValue;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -55,7 +55,7 @@ import app.kntrl.client.generated.infra.JSON;
 /**
  * Session
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T14:36:53.211699+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T19:30:17.809690+03:00[Europe/Kiev]")
 public class Session {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
@@ -79,7 +79,7 @@ public class Session {
 
   public static final String SERIALIZED_NAME_UNCONFIRMED_AUTHS = "unconfirmedAuths";
   @SerializedName(SERIALIZED_NAME_UNCONFIRMED_AUTHS)
-  private Map<String, UnconfirmedAuth> unconfirmedAuths = new HashMap<>();
+  private Map<String, SessionUnconfirmedAuthsValue> unconfirmedAuths = new HashMap<>();
 
   public static final String SERIALIZED_NAME_NEXT_FACTORS = "nextFactors";
   @SerializedName(SERIALIZED_NAME_NEXT_FACTORS)
@@ -245,13 +245,13 @@ public class Session {
   }
 
 
-  public Session unconfirmedAuths(Map<String, UnconfirmedAuth> unconfirmedAuths) {
+  public Session unconfirmedAuths(Map<String, SessionUnconfirmedAuthsValue> unconfirmedAuths) {
     
     this.unconfirmedAuths = unconfirmedAuths;
     return this;
   }
 
-  public Session putUnconfirmedAuthsItem(String key, UnconfirmedAuth unconfirmedAuthsItem) {
+  public Session putUnconfirmedAuthsItem(String key, SessionUnconfirmedAuthsValue unconfirmedAuthsItem) {
     this.unconfirmedAuths.put(key, unconfirmedAuthsItem);
     return this;
   }
@@ -263,12 +263,12 @@ public class Session {
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "Auths that waiting for confirmation ")
 
-  public Map<String, UnconfirmedAuth> getUnconfirmedAuths() {
+  public Map<String, SessionUnconfirmedAuthsValue> getUnconfirmedAuths() {
     return unconfirmedAuths;
   }
 
 
-  public void setUnconfirmedAuths(Map<String, UnconfirmedAuth> unconfirmedAuths) {
+  public void setUnconfirmedAuths(Map<String, SessionUnconfirmedAuthsValue> unconfirmedAuths) {
     this.unconfirmedAuths = unconfirmedAuths;
   }
 

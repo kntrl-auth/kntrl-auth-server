@@ -16,6 +16,8 @@ class Session(
     }
     private val sessionApi = SessionApi(this.client)
 
+    val server = Server(client)
+
     init {
         id = ""
         entry = newSessionReq?.entry ?: ""

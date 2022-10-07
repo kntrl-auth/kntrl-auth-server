@@ -15,6 +15,34 @@ package app.kntrl.client.generated.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import app.kntrl.client.generated.model.AccessDenied;
+import app.kntrl.client.generated.model.AnyErr;
+import app.kntrl.client.generated.model.AnyErrAllOf;
+import app.kntrl.client.generated.model.AuthIsNotConfirmed;
+import app.kntrl.client.generated.model.AuthIsNotEnabled;
+import app.kntrl.client.generated.model.AuthRequiresAnother;
+import app.kntrl.client.generated.model.CodeIsExpired;
+import app.kntrl.client.generated.model.CodeIsIncorrect;
+import app.kntrl.client.generated.model.CodeTooManyAttempts;
+import app.kntrl.client.generated.model.EmailIsIncorrect;
+import app.kntrl.client.generated.model.Err;
+import app.kntrl.client.generated.model.IntegrationErr;
+import app.kntrl.client.generated.model.IpNew;
+import app.kntrl.client.generated.model.NoAuthAvailableForFactor;
+import app.kntrl.client.generated.model.PasswordIsIncorrect;
+import app.kntrl.client.generated.model.PasswordIsInvalid;
+import app.kntrl.client.generated.model.PluginClientErr;
+import app.kntrl.client.generated.model.PluginErr;
+import app.kntrl.client.generated.model.QuestionsAnswersIncorrect;
+import app.kntrl.client.generated.model.QuestionsAnswersInvalid;
+import app.kntrl.client.generated.model.ServerErr;
+import app.kntrl.client.generated.model.SessionExpired;
+import app.kntrl.client.generated.model.SignatureIsIncorrect;
+import app.kntrl.client.generated.model.TokenExpired;
+import app.kntrl.client.generated.model.TooManyReqs;
+import app.kntrl.client.generated.model.Unauthenticated;
+import app.kntrl.client.generated.model.UserLoginAlreadyTaken;
+import app.kntrl.client.generated.model.UserNotFound;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -47,11 +75,11 @@ import app.kntrl.client.generated.infra.JSON;
 /**
  * AnyErr
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T14:36:53.211699+03:00[Europe/Kiev]")
-public class AnyErr {
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T19:30:17.809690+03:00[Europe/Kiev]")
+public class AnyErr extends Err {
   public static final String SERIALIZED_NAME_CODE = "code";
   @SerializedName(SERIALIZED_NAME_CODE)
-  private String code;
+  protected String code;
 
   public static final String SERIALIZED_NAME_DEV_MSG = "devMsg";
   @SerializedName(SERIALIZED_NAME_DEV_MSG)
@@ -62,6 +90,7 @@ public class AnyErr {
   private String msg;
 
   public AnyErr() { 
+    this.code = this.getClass().getSimpleName();
   }
 
   public AnyErr code(String code) {
@@ -181,18 +210,20 @@ public class AnyErr {
     return Objects.equals(this.code, anyErr.code) &&
         Objects.equals(this.devMsg, anyErr.devMsg) &&
         Objects.equals(this.msg, anyErr.msg)&&
-        Objects.equals(this.additionalProperties, anyErr.additionalProperties);
+        Objects.equals(this.additionalProperties, anyErr.additionalProperties) &&
+        super.equals(o);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(code, devMsg, msg, additionalProperties);
+    return Objects.hash(code, devMsg, msg, super.hashCode(), additionalProperties);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class AnyErr {\n");
+    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    devMsg: ").append(toIndentedString(devMsg)).append("\n");
     sb.append("    msg: ").append(toIndentedString(msg)).append("\n");
@@ -225,8 +256,8 @@ public class AnyErr {
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
-    openapiRequiredFields.add("code");
     openapiRequiredFields.add("devMsg");
+    openapiRequiredFields.add("code");
   }
 
  /**
@@ -249,15 +280,6 @@ public class AnyErr {
         if (jsonObj.get(requiredField) == null) {
           throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonObj.toString()));
         }
-      }
-      if (jsonObj.get("code") != null && !jsonObj.get("code").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `code` to be a primitive type in the JSON string but got `%s`", jsonObj.get("code").toString()));
-      }
-      if (jsonObj.get("devMsg") != null && !jsonObj.get("devMsg").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `devMsg` to be a primitive type in the JSON string but got `%s`", jsonObj.get("devMsg").toString()));
-      }
-      if (jsonObj.get("msg") != null && !jsonObj.get("msg").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `msg` to be a primitive type in the JSON string but got `%s`", jsonObj.get("msg").toString()));
       }
   }
 

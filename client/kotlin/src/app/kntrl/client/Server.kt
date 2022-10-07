@@ -8,7 +8,7 @@ import app.kntrl.client.generated.model.*
 class Server(client: ApiClient) {
     private val api = ServerApi(client)
 
-    fun health(key: String): HealthRes = try {
+    fun health(key: String? = null): HealthRes = try {
         handleErr { api.health(key) }
     } catch (ex: ApiException) {
         if (ex.code != 0) throw ex

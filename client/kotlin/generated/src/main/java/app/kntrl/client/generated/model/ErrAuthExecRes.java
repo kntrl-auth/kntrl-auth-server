@@ -15,8 +15,13 @@ package app.kntrl.client.generated.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import app.kntrl.client.generated.model.AuthExecRes;
 import app.kntrl.client.generated.model.Code;
 import app.kntrl.client.generated.model.Err;
+import app.kntrl.client.generated.model.ErrAuthExecRes;
+import app.kntrl.client.generated.model.ErrAuthExecResAllOf;
+import app.kntrl.client.generated.model.OkAuthExecRes;
+import app.kntrl.client.generated.model.SkippedAuthExecRes;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -49,12 +54,8 @@ import app.kntrl.client.generated.infra.JSON;
 /**
  * ErrAuthExecRes
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T14:36:53.211699+03:00[Europe/Kiev]")
-public class ErrAuthExecRes {
-  public static final String SERIALIZED_NAME_STATUS = "status";
-  @SerializedName(SERIALIZED_NAME_STATUS)
-  private String status;
-
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T19:30:17.809690+03:00[Europe/Kiev]")
+public class ErrAuthExecRes extends AuthExecRes {
   public static final String SERIALIZED_NAME_SENT_CODE = "sentCode";
   @SerializedName(SERIALIZED_NAME_SENT_CODE)
   private Code sentCode;
@@ -64,30 +65,8 @@ public class ErrAuthExecRes {
   private Err err;
 
   public ErrAuthExecRes() { 
+    this.status = this.getClass().getSimpleName();
   }
-
-  public ErrAuthExecRes status(String status) {
-    
-    this.status = status;
-    return this;
-  }
-
-   /**
-   * Get status
-   * @return status
-  **/
-  @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
-
-  public String getStatus() {
-    return status;
-  }
-
-
-  public void setStatus(String status) {
-    this.status = status;
-  }
-
 
   public ErrAuthExecRes sentCode(Code sentCode) {
     
@@ -145,21 +124,21 @@ public class ErrAuthExecRes {
       return false;
     }
     ErrAuthExecRes errAuthExecRes = (ErrAuthExecRes) o;
-    return Objects.equals(this.status, errAuthExecRes.status) &&
-        Objects.equals(this.sentCode, errAuthExecRes.sentCode) &&
-        Objects.equals(this.err, errAuthExecRes.err);
+    return Objects.equals(this.sentCode, errAuthExecRes.sentCode) &&
+        Objects.equals(this.err, errAuthExecRes.err) &&
+        super.equals(o);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(status, sentCode, err);
+    return Objects.hash(sentCode, err, super.hashCode());
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class ErrAuthExecRes {\n");
-    sb.append("    status: ").append(toIndentedString(status)).append("\n");
+    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    sentCode: ").append(toIndentedString(sentCode)).append("\n");
     sb.append("    err: ").append(toIndentedString(err)).append("\n");
     sb.append("}");
@@ -190,8 +169,8 @@ public class ErrAuthExecRes {
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
-    openapiRequiredFields.add("status");
     openapiRequiredFields.add("err");
+    openapiRequiredFields.add("status");
   }
 
  /**
@@ -222,17 +201,6 @@ public class ErrAuthExecRes {
         if (jsonObj.get(requiredField) == null) {
           throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonObj.toString()));
         }
-      }
-      if (jsonObj.get("status") != null && !jsonObj.get("status").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `status` to be a primitive type in the JSON string but got `%s`", jsonObj.get("status").toString()));
-      }
-      // validate the optional field `sentCode`
-      if (jsonObj.getAsJsonObject("sentCode") != null) {
-        Code.validateJsonObject(jsonObj.getAsJsonObject("sentCode"));
-      }
-      // validate the optional field `err`
-      if (jsonObj.getAsJsonObject("err") != null) {
-        Err.validateJsonObject(jsonObj.getAsJsonObject("err"));
       }
   }
 

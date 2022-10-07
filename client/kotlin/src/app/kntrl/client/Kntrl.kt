@@ -22,6 +22,8 @@ class Kntrl(serverUrl: String = "http://localhost:9876") {
 
     fun session(accessToken: String? = null) = Session(client, accessToken, null)
 
+    fun serverHealth(key: String? = null) = session().server.health(key)
+
     class Logins : LinkedHashMap<String, String>() {
         fun login(type: String, login: String): Logins {
             put(type, login)

@@ -16,8 +16,8 @@ package app.kntrl.client.generated.model;
 import java.util.Objects;
 import java.util.Arrays;
 import app.kntrl.client.generated.model.DbHealthRes;
+import app.kntrl.client.generated.model.HealthResAuthValue;
 import app.kntrl.client.generated.model.HealthStatus;
-import app.kntrl.client.generated.model.HealthStatusRes;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -53,7 +53,7 @@ import app.kntrl.client.generated.infra.JSON;
 /**
  * HealthRes
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T14:36:53.211699+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T19:30:17.809690+03:00[Europe/Kiev]")
 public class HealthRes {
   public static final String SERIALIZED_NAME_DB = "db";
   @SerializedName(SERIALIZED_NAME_DB)
@@ -61,7 +61,7 @@ public class HealthRes {
 
   public static final String SERIALIZED_NAME_AUTH = "auth";
   @SerializedName(SERIALIZED_NAME_AUTH)
-  private Map<String, HealthStatusRes> auth = new HashMap<>();
+  private Map<String, HealthResAuthValue> auth = new HashMap<>();
 
   public static final String SERIALIZED_NAME_STATUS = "status";
   @SerializedName(SERIALIZED_NAME_STATUS)
@@ -97,13 +97,13 @@ public class HealthRes {
   }
 
 
-  public HealthRes auth(Map<String, HealthStatusRes> auth) {
+  public HealthRes auth(Map<String, HealthResAuthValue> auth) {
     
     this.auth = auth;
     return this;
   }
 
-  public HealthRes putAuthItem(String key, HealthStatusRes authItem) {
+  public HealthRes putAuthItem(String key, HealthResAuthValue authItem) {
     this.auth.put(key, authItem);
     return this;
   }
@@ -115,12 +115,12 @@ public class HealthRes {
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "")
 
-  public Map<String, HealthStatusRes> getAuth() {
+  public Map<String, HealthResAuthValue> getAuth() {
     return auth;
   }
 
 
-  public void setAuth(Map<String, HealthStatusRes> auth) {
+  public void setAuth(Map<String, HealthResAuthValue> auth) {
     this.auth = auth;
   }
 

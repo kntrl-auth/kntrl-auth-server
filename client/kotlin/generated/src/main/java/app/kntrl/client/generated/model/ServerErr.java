@@ -15,6 +15,8 @@ package app.kntrl.client.generated.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import app.kntrl.client.generated.model.AnyErrAllOf;
+import app.kntrl.client.generated.model.Err;
 import app.kntrl.client.generated.model.PluginErr;
 import app.kntrl.client.generated.model.ServerErr;
 import com.google.gson.TypeAdapter;
@@ -49,8 +51,8 @@ import app.kntrl.client.generated.infra.JSON;
 /**
  * ServerErr
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T14:36:53.211699+03:00[Europe/Kiev]")
-public class ServerErr {
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T19:30:17.809690+03:00[Europe/Kiev]")
+public class ServerErr extends Err {
   public static final String SERIALIZED_NAME_CODE = "code";
   @SerializedName(SERIALIZED_NAME_CODE)
   protected String code;
@@ -148,18 +150,20 @@ public class ServerErr {
     ServerErr serverErr = (ServerErr) o;
     return Objects.equals(this.code, serverErr.code) &&
         Objects.equals(this.devMsg, serverErr.devMsg) &&
-        Objects.equals(this.msg, serverErr.msg);
+        Objects.equals(this.msg, serverErr.msg) &&
+        super.equals(o);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(code, devMsg, msg);
+    return Objects.hash(code, devMsg, msg, super.hashCode());
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class ServerErr {\n");
+    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    devMsg: ").append(toIndentedString(devMsg)).append("\n");
     sb.append("    msg: ").append(toIndentedString(msg)).append("\n");
@@ -210,50 +214,22 @@ public class ServerErr {
         }
       }
 
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
-      // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
-        if (!ServerErr.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `ServerErr` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
-        }
-      }
-
-      // check to make sure all required properties/fields are present in the JSON string
-      for (String requiredField : ServerErr.openapiRequiredFields) {
-        if (jsonObj.get(requiredField) == null) {
-          throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonObj.toString()));
-        }
+      String discriminatorValue = jsonObj.get("code").getAsString();
+      switch (discriminatorValue) {
+        case "PLUGIN_ERR":
+          PluginErr.validateJsonObject(jsonObj);
+          break;
+        case "PluginErr":
+          PluginErr.validateJsonObject(jsonObj);
+          break;
+        case "SERVER_ERR":
+          ServerErr.validateJsonObject(jsonObj);
+          break;
+        default: 
+          throw new IllegalArgumentException(String.format("The value of the `code` field `%s` does not match any key defined in the discriminator's mapping.", discriminatorValue));
       }
   }
 
-  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!ServerErr.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'ServerErr' and its subtypes
-       }
-       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<ServerErr> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(ServerErr.class));
-
-       return (TypeAdapter<T>) new TypeAdapter<ServerErr>() {
-           @Override
-           public void write(JsonWriter out, ServerErr value) throws IOException {
-             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
-             elementAdapter.write(out, obj);
-           }
-
-           @Override
-           public ServerErr read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
-           }
-
-       }.nullSafe();
-    }
-  }
 
  /**
   * Create an instance of ServerErr given an JSON string

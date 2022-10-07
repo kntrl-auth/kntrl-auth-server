@@ -15,7 +15,12 @@ package app.kntrl.client.generated.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import app.kntrl.client.generated.model.AuthExecRes;
 import app.kntrl.client.generated.model.Code;
+import app.kntrl.client.generated.model.ErrAuthExecRes;
+import app.kntrl.client.generated.model.OkAuthExecRes;
+import app.kntrl.client.generated.model.OkAuthExecResAllOf;
+import app.kntrl.client.generated.model.SkippedAuthExecRes;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -48,12 +53,8 @@ import app.kntrl.client.generated.infra.JSON;
 /**
  * OkAuthExecRes
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T14:36:53.211699+03:00[Europe/Kiev]")
-public class OkAuthExecRes {
-  public static final String SERIALIZED_NAME_STATUS = "status";
-  @SerializedName(SERIALIZED_NAME_STATUS)
-  private String status;
-
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T19:30:17.809690+03:00[Europe/Kiev]")
+public class OkAuthExecRes extends AuthExecRes {
   public static final String SERIALIZED_NAME_SENT_CODE = "sentCode";
   @SerializedName(SERIALIZED_NAME_SENT_CODE)
   private Code sentCode;
@@ -63,30 +64,8 @@ public class OkAuthExecRes {
   private Object resData;
 
   public OkAuthExecRes() { 
+    this.status = this.getClass().getSimpleName();
   }
-
-  public OkAuthExecRes status(String status) {
-    
-    this.status = status;
-    return this;
-  }
-
-   /**
-   * Get status
-   * @return status
-  **/
-  @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
-
-  public String getStatus() {
-    return status;
-  }
-
-
-  public void setStatus(String status) {
-    this.status = status;
-  }
-
 
   public OkAuthExecRes sentCode(Code sentCode) {
     
@@ -144,21 +123,21 @@ public class OkAuthExecRes {
       return false;
     }
     OkAuthExecRes okAuthExecRes = (OkAuthExecRes) o;
-    return Objects.equals(this.status, okAuthExecRes.status) &&
-        Objects.equals(this.sentCode, okAuthExecRes.sentCode) &&
-        Objects.equals(this.resData, okAuthExecRes.resData);
+    return Objects.equals(this.sentCode, okAuthExecRes.sentCode) &&
+        Objects.equals(this.resData, okAuthExecRes.resData) &&
+        super.equals(o);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(status, sentCode, resData);
+    return Objects.hash(sentCode, resData, super.hashCode());
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class OkAuthExecRes {\n");
-    sb.append("    status: ").append(toIndentedString(status)).append("\n");
+    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    sentCode: ").append(toIndentedString(sentCode)).append("\n");
     sb.append("    resData: ").append(toIndentedString(resData)).append("\n");
     sb.append("}");
@@ -220,13 +199,6 @@ public class OkAuthExecRes {
         if (jsonObj.get(requiredField) == null) {
           throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonObj.toString()));
         }
-      }
-      if (jsonObj.get("status") != null && !jsonObj.get("status").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `status` to be a primitive type in the JSON string but got `%s`", jsonObj.get("status").toString()));
-      }
-      // validate the optional field `sentCode`
-      if (jsonObj.getAsJsonObject("sentCode") != null) {
-        Code.validateJsonObject(jsonObj.getAsJsonObject("sentCode"));
       }
   }
 

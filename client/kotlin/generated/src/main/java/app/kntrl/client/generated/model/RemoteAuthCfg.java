@@ -15,7 +15,9 @@ package app.kntrl.client.generated.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import app.kntrl.client.generated.model.AuthCfg;
 import app.kntrl.client.generated.model.CodeCfg;
+import app.kntrl.client.generated.model.RemoteAuthCfgAllOf;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -53,12 +55,8 @@ import app.kntrl.client.generated.infra.JSON;
  * Authentication implementation config
  */
 @ApiModel(description = "Authentication implementation config")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T14:36:53.211699+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T19:30:17.809690+03:00[Europe/Kiev]")
 public class RemoteAuthCfg {
-  public static final String SERIALIZED_NAME_REMOTE = "remote";
-  @SerializedName(SERIALIZED_NAME_REMOTE)
-  private String remote;
-
   public static final String SERIALIZED_NAME_REQUIRES_AUTH = "requiresAuth";
   @SerializedName(SERIALIZED_NAME_REQUIRES_AUTH)
   private List<List<String>> requiresAuth = null;
@@ -75,6 +73,10 @@ public class RemoteAuthCfg {
   @SerializedName(SERIALIZED_NAME_BURN_QUOTA)
   private Double burnQuota;
 
+  public static final String SERIALIZED_NAME_REMOTE = "remote";
+  @SerializedName(SERIALIZED_NAME_REMOTE)
+  private String remote;
+
   public static final String SERIALIZED_NAME_QUERY = "query";
   @SerializedName(SERIALIZED_NAME_QUERY)
   private Map<String, String> query = null;
@@ -89,29 +91,6 @@ public class RemoteAuthCfg {
 
   public RemoteAuthCfg() { 
   }
-
-  public RemoteAuthCfg remote(String remote) {
-    
-    this.remote = remote;
-    return this;
-  }
-
-   /**
-   * Path to the API that implements plugin.
-   * @return remote
-  **/
-  @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Path to the API that implements plugin.")
-
-  public String getRemote() {
-    return remote;
-  }
-
-
-  public void setRemote(String remote) {
-    this.remote = remote;
-  }
-
 
   public RemoteAuthCfg requiresAuth(List<List<String>> requiresAuth) {
     
@@ -213,6 +192,29 @@ public class RemoteAuthCfg {
   }
 
 
+  public RemoteAuthCfg remote(String remote) {
+    
+    this.remote = remote;
+    return this;
+  }
+
+   /**
+   * Path to the API that implements plugin.
+   * @return remote
+  **/
+  @javax.annotation.Nonnull
+  @ApiModelProperty(required = true, value = "Path to the API that implements plugin.")
+
+  public String getRemote() {
+    return remote;
+  }
+
+
+  public void setRemote(String remote) {
+    this.remote = remote;
+  }
+
+
   public RemoteAuthCfg query(Map<String, String> query) {
     
     this.query = query;
@@ -308,11 +310,11 @@ public class RemoteAuthCfg {
       return false;
     }
     RemoteAuthCfg remoteAuthCfg = (RemoteAuthCfg) o;
-    return Objects.equals(this.remote, remoteAuthCfg.remote) &&
-        Objects.equals(this.requiresAuth, remoteAuthCfg.requiresAuth) &&
+    return Objects.equals(this.requiresAuth, remoteAuthCfg.requiresAuth) &&
         Objects.equals(this.skipOnFail, remoteAuthCfg.skipOnFail) &&
         Objects.equals(this.rateLimiter, remoteAuthCfg.rateLimiter) &&
         Objects.equals(this.burnQuota, remoteAuthCfg.burnQuota) &&
+        Objects.equals(this.remote, remoteAuthCfg.remote) &&
         Objects.equals(this.query, remoteAuthCfg.query) &&
         Objects.equals(this.headers, remoteAuthCfg.headers) &&
         Objects.equals(this.code, remoteAuthCfg.code);
@@ -320,18 +322,18 @@ public class RemoteAuthCfg {
 
   @Override
   public int hashCode() {
-    return Objects.hash(remote, requiresAuth, skipOnFail, rateLimiter, burnQuota, query, headers, code);
+    return Objects.hash(requiresAuth, skipOnFail, rateLimiter, burnQuota, remote, query, headers, code);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class RemoteAuthCfg {\n");
-    sb.append("    remote: ").append(toIndentedString(remote)).append("\n");
     sb.append("    requiresAuth: ").append(toIndentedString(requiresAuth)).append("\n");
     sb.append("    skipOnFail: ").append(toIndentedString(skipOnFail)).append("\n");
     sb.append("    rateLimiter: ").append(toIndentedString(rateLimiter)).append("\n");
     sb.append("    burnQuota: ").append(toIndentedString(burnQuota)).append("\n");
+    sb.append("    remote: ").append(toIndentedString(remote)).append("\n");
     sb.append("    query: ").append(toIndentedString(query)).append("\n");
     sb.append("    headers: ").append(toIndentedString(headers)).append("\n");
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
@@ -357,11 +359,11 @@ public class RemoteAuthCfg {
   static {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
-    openapiFields.add("remote");
     openapiFields.add("requiresAuth");
     openapiFields.add("skipOnFail");
     openapiFields.add("rateLimiter");
     openapiFields.add("burnQuota");
+    openapiFields.add("remote");
     openapiFields.add("query");
     openapiFields.add("headers");
     openapiFields.add("code");
@@ -400,15 +402,15 @@ public class RemoteAuthCfg {
           throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonObj.toString()));
         }
       }
-      if (jsonObj.get("remote") != null && !jsonObj.get("remote").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `remote` to be a primitive type in the JSON string but got `%s`", jsonObj.get("remote").toString()));
-      }
       // ensure the json data is an array
       if (jsonObj.get("requiresAuth") != null && !jsonObj.get("requiresAuth").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `requiresAuth` to be an array in the JSON string but got `%s`", jsonObj.get("requiresAuth").toString()));
       }
       if (jsonObj.get("rateLimiter") != null && !jsonObj.get("rateLimiter").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `rateLimiter` to be a primitive type in the JSON string but got `%s`", jsonObj.get("rateLimiter").toString()));
+      }
+      if (jsonObj.get("remote") != null && !jsonObj.get("remote").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `remote` to be a primitive type in the JSON string but got `%s`", jsonObj.get("remote").toString()));
       }
       // validate the optional field `code`
       if (jsonObj.getAsJsonObject("code") != null) {

@@ -15,8 +15,8 @@ package app.kntrl.client.generated.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import app.kntrl.client.generated.model.AuthUserCfg;
 import app.kntrl.client.generated.model.Login;
+import app.kntrl.client.generated.model.UserAuthsValue;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -55,7 +55,7 @@ import app.kntrl.client.generated.infra.JSON;
 /**
  * User
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T14:36:53.211699+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T19:30:17.809690+03:00[Europe/Kiev]")
 public class User {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
@@ -67,7 +67,7 @@ public class User {
 
   public static final String SERIALIZED_NAME_AUTHS = "auths";
   @SerializedName(SERIALIZED_NAME_AUTHS)
-  private Map<String, AuthUserCfg> auths = new HashMap<>();
+  private Map<String, UserAuthsValue> auths = new HashMap<>();
 
   public static final String SERIALIZED_NAME_FACTORS = "factors";
   @SerializedName(SERIALIZED_NAME_FACTORS)
@@ -147,13 +147,13 @@ public class User {
   }
 
 
-  public User auths(Map<String, AuthUserCfg> auths) {
+  public User auths(Map<String, UserAuthsValue> auths) {
     
     this.auths = auths;
     return this;
   }
 
-  public User putAuthsItem(String key, AuthUserCfg authsItem) {
+  public User putAuthsItem(String key, UserAuthsValue authsItem) {
     this.auths.put(key, authsItem);
     return this;
   }
@@ -165,12 +165,12 @@ public class User {
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "Public data of confirmed auths and sent codes for unconfirmed auths. ")
 
-  public Map<String, AuthUserCfg> getAuths() {
+  public Map<String, UserAuthsValue> getAuths() {
     return auths;
   }
 
 
-  public void setAuths(Map<String, AuthUserCfg> auths) {
+  public void setAuths(Map<String, UserAuthsValue> auths) {
     this.auths = auths;
   }
 
