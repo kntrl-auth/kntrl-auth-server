@@ -25,7 +25,7 @@ dependencies {
 tasks.register<GenerateSwaggerCode>("generateApi") {
     group = "openapi"
     language = "java"
-    inputFile = file("../openapi.yaml")
+    inputFile = file("../openapi-no-inheritance.yaml")
     outputDir = project.projectDir.resolve("generated")
     additionalProperties = mapOf(
         "apiPackage" to "app.kntrl.client.generated.api",
@@ -34,6 +34,7 @@ tasks.register<GenerateSwaggerCode>("generateApi") {
         "groupId" to "app.kntrl",
         "artifactId" to "openapi-client",
         "artifactVersion" to "0.9",
+        "hideGenerationTimestamp" to "true",
     )
     doLast {
         file("generated/docs").walk(FileWalkDirection.BOTTOM_UP).forEach(File::delete)

@@ -51,7 +51,7 @@ import app.kntrl.client.generated.infra.JSON;
 /**
  * AuthExecRes
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T19:30:17.809690+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class AuthExecRes {
   public static final String SERIALIZED_NAME_STATUS = "status";
   @SerializedName(SERIALIZED_NAME_STATUS)
@@ -181,31 +181,50 @@ public class AuthExecRes {
         }
       }
 
-      String discriminatorValue = jsonObj.get("status").getAsString();
-      switch (discriminatorValue) {
-        case "ERR":
-          ErrAuthExecRes.validateJsonObject(jsonObj);
-          break;
-        case "ErrAuthExecRes":
-          ErrAuthExecRes.validateJsonObject(jsonObj);
-          break;
-        case "OK":
-          OkAuthExecRes.validateJsonObject(jsonObj);
-          break;
-        case "OkAuthExecRes":
-          OkAuthExecRes.validateJsonObject(jsonObj);
-          break;
-        case "SKIPPED":
-          SkippedAuthExecRes.validateJsonObject(jsonObj);
-          break;
-        case "SkippedAuthExecRes":
-          SkippedAuthExecRes.validateJsonObject(jsonObj);
-          break;
-        default: 
-          throw new IllegalArgumentException(String.format("The value of the `status` field `%s` does not match any key defined in the discriminator's mapping.", discriminatorValue));
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!AuthExecRes.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `AuthExecRes` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+
+      // check to make sure all required properties/fields are present in the JSON string
+      for (String requiredField : AuthExecRes.openapiRequiredFields) {
+        if (jsonObj.get(requiredField) == null) {
+          throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonObj.toString()));
+        }
       }
   }
 
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!AuthExecRes.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'AuthExecRes' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<AuthExecRes> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(AuthExecRes.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<AuthExecRes>() {
+           @Override
+           public void write(JsonWriter out, AuthExecRes value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public AuthExecRes read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
 
  /**
   * Create an instance of AuthExecRes given an JSON string

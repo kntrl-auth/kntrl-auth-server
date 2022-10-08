@@ -2,8 +2,6 @@ package app.kntrl.client
 
 import app.kntrl.client.generated.infra.ApiException
 import app.kntrl.client.generated.model.AnyErr
-import app.kntrl.client.generated.model.ClientErr
-import app.kntrl.client.generated.model.Err
 
 fun <T> handleErr(action: () -> T): T {
     fun parseAnyErr(ex: ApiException): Nothing = try {
@@ -12,22 +10,14 @@ fun <T> handleErr(action: () -> T): T {
         throw ex
     }
 
-    fun parseErr(ex: ApiException): Nothing = try {
-        throw KntrlErr(Err.fromJson(ex.responseBody))
-    } catch (th: Throwable) {
-        parseAnyErr(ex)
-    }
-
     try {
         return action()
     } catch (ex: ApiException) {
-        parseErr(ex)
+        parseAnyErr(ex)
     }
 }
 
-class KntrlErr(val err: Err) : RuntimeException("Kntrl api error") {
-    val clientErr: ClientErr? = err as? ClientErr
-}
+class KntrlErr(val err: AnyErr) : RuntimeException("Kntrl api error")
 
 
 class ReceivedCodes : LinkedHashMap<String, MutableMap<String, String>>() {

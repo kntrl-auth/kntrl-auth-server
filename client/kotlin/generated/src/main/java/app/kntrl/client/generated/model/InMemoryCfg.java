@@ -15,7 +15,6 @@ package app.kntrl.client.generated.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import app.kntrl.client.generated.model.InMemoryCfgAllOf;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -48,7 +47,7 @@ import app.kntrl.client.generated.infra.JSON;
 /**
  * InMemoryCfg
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T19:30:17.809690+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class InMemoryCfg {
   public static final String SERIALIZED_NAME_IN_MEMORY = "inMemory";
   @SerializedName(SERIALIZED_NAME_IN_MEMORY)

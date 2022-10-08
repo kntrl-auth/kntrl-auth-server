@@ -15,8 +15,6 @@ package app.kntrl.client.generated.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import app.kntrl.client.generated.model.AnyErrAllOf;
-import app.kntrl.client.generated.model.Err;
 import app.kntrl.client.generated.model.IntegrationErr;
 import app.kntrl.client.generated.model.NoAuthAvailableForFactor;
 import com.google.gson.TypeAdapter;
@@ -51,8 +49,8 @@ import app.kntrl.client.generated.infra.JSON;
 /**
  * IntegrationErr
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T19:30:17.809690+03:00[Europe/Kiev]")
-public class IntegrationErr extends Err {
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+public class IntegrationErr {
   public static final String SERIALIZED_NAME_CODE = "code";
   @SerializedName(SERIALIZED_NAME_CODE)
   protected String code;
@@ -150,20 +148,18 @@ public class IntegrationErr extends Err {
     IntegrationErr integrationErr = (IntegrationErr) o;
     return Objects.equals(this.code, integrationErr.code) &&
         Objects.equals(this.devMsg, integrationErr.devMsg) &&
-        Objects.equals(this.msg, integrationErr.msg) &&
-        super.equals(o);
+        Objects.equals(this.msg, integrationErr.msg);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(code, devMsg, msg, super.hashCode());
+    return Objects.hash(code, devMsg, msg);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class IntegrationErr {\n");
-    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    devMsg: ").append(toIndentedString(devMsg)).append("\n");
     sb.append("    msg: ").append(toIndentedString(msg)).append("\n");
@@ -214,22 +210,50 @@ public class IntegrationErr extends Err {
         }
       }
 
-      String discriminatorValue = jsonObj.get("code").getAsString();
-      switch (discriminatorValue) {
-        case "INTEGRATION_ERR":
-          IntegrationErr.validateJsonObject(jsonObj);
-          break;
-        case "NO_AUTH_AVAILABLE_FOR_FACTOR":
-          NoAuthAvailableForFactor.validateJsonObject(jsonObj);
-          break;
-        case "NoAuthAvailableForFactor":
-          NoAuthAvailableForFactor.validateJsonObject(jsonObj);
-          break;
-        default: 
-          throw new IllegalArgumentException(String.format("The value of the `code` field `%s` does not match any key defined in the discriminator's mapping.", discriminatorValue));
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!IntegrationErr.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `IntegrationErr` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+
+      // check to make sure all required properties/fields are present in the JSON string
+      for (String requiredField : IntegrationErr.openapiRequiredFields) {
+        if (jsonObj.get(requiredField) == null) {
+          throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonObj.toString()));
+        }
       }
   }
 
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!IntegrationErr.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'IntegrationErr' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<IntegrationErr> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(IntegrationErr.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<IntegrationErr>() {
+           @Override
+           public void write(JsonWriter out, IntegrationErr value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public IntegrationErr read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
 
  /**
   * Create an instance of IntegrationErr given an JSON string

@@ -15,8 +15,6 @@ package app.kntrl.client.generated.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import app.kntrl.client.generated.model.JdbcCfg;
-import app.kntrl.client.generated.model.PostgresCfgAllOf;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -49,26 +47,49 @@ import app.kntrl.client.generated.infra.JSON;
 /**
  * PostgresCfg
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T19:30:17.809690+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class PostgresCfg {
+  public static final String SERIALIZED_NAME_POSTGRES = "postgres";
+  @SerializedName(SERIALIZED_NAME_POSTGRES)
+  private String postgres;
+
   public static final String SERIALIZED_NAME_USERNAME = "username";
   @SerializedName(SERIALIZED_NAME_USERNAME)
   private String username;
-
-  public static final String SERIALIZED_NAME_PASSWORD = "password";
-  @SerializedName(SERIALIZED_NAME_PASSWORD)
-  private String password;
 
   public static final String SERIALIZED_NAME_MAX_CONNECTIONS = "maxConnections";
   @SerializedName(SERIALIZED_NAME_MAX_CONNECTIONS)
   private Integer maxConnections;
 
-  public static final String SERIALIZED_NAME_POSTGRES = "postgres";
-  @SerializedName(SERIALIZED_NAME_POSTGRES)
-  private String postgres;
+  public static final String SERIALIZED_NAME_PASSWORD = "password";
+  @SerializedName(SERIALIZED_NAME_PASSWORD)
+  private String password;
 
   public PostgresCfg() { 
   }
+
+  public PostgresCfg postgres(String postgres) {
+    
+    this.postgres = postgres;
+    return this;
+  }
+
+   /**
+   * Get postgres
+   * @return postgres
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public String getPostgres() {
+    return postgres;
+  }
+
+
+  public void setPostgres(String postgres) {
+    this.postgres = postgres;
+  }
+
 
   public PostgresCfg username(String username) {
     
@@ -90,29 +111,6 @@ public class PostgresCfg {
 
   public void setUsername(String username) {
     this.username = username;
-  }
-
-
-  public PostgresCfg password(String password) {
-    
-    this.password = password;
-    return this;
-  }
-
-   /**
-   * Get password
-   * @return password
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
-
-  public String getPassword() {
-    return password;
-  }
-
-
-  public void setPassword(String password) {
-    this.password = password;
   }
 
 
@@ -139,26 +137,26 @@ public class PostgresCfg {
   }
 
 
-  public PostgresCfg postgres(String postgres) {
+  public PostgresCfg password(String password) {
     
-    this.postgres = postgres;
+    this.password = password;
     return this;
   }
 
    /**
-   * Get postgres
-   * @return postgres
+   * Get password
+   * @return password
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
 
-  public String getPostgres() {
-    return postgres;
+  public String getPassword() {
+    return password;
   }
 
 
-  public void setPostgres(String postgres) {
-    this.postgres = postgres;
+  public void setPassword(String password) {
+    this.password = password;
   }
 
 
@@ -172,25 +170,25 @@ public class PostgresCfg {
       return false;
     }
     PostgresCfg postgresCfg = (PostgresCfg) o;
-    return Objects.equals(this.username, postgresCfg.username) &&
-        Objects.equals(this.password, postgresCfg.password) &&
+    return Objects.equals(this.postgres, postgresCfg.postgres) &&
+        Objects.equals(this.username, postgresCfg.username) &&
         Objects.equals(this.maxConnections, postgresCfg.maxConnections) &&
-        Objects.equals(this.postgres, postgresCfg.postgres);
+        Objects.equals(this.password, postgresCfg.password);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(username, password, maxConnections, postgres);
+    return Objects.hash(postgres, username, maxConnections, password);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class PostgresCfg {\n");
-    sb.append("    username: ").append(toIndentedString(username)).append("\n");
-    sb.append("    password: ").append(toIndentedString(password)).append("\n");
-    sb.append("    maxConnections: ").append(toIndentedString(maxConnections)).append("\n");
     sb.append("    postgres: ").append(toIndentedString(postgres)).append("\n");
+    sb.append("    username: ").append(toIndentedString(username)).append("\n");
+    sb.append("    maxConnections: ").append(toIndentedString(maxConnections)).append("\n");
+    sb.append("    password: ").append(toIndentedString(password)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -213,10 +211,10 @@ public class PostgresCfg {
   static {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
-    openapiFields.add("username");
-    openapiFields.add("password");
-    openapiFields.add("maxConnections");
     openapiFields.add("postgres");
+    openapiFields.add("username");
+    openapiFields.add("maxConnections");
+    openapiFields.add("password");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -244,14 +242,14 @@ public class PostgresCfg {
           throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `PostgresCfg` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
         }
       }
+      if (jsonObj.get("postgres") != null && !jsonObj.get("postgres").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `postgres` to be a primitive type in the JSON string but got `%s`", jsonObj.get("postgres").toString()));
+      }
       if (jsonObj.get("username") != null && !jsonObj.get("username").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `username` to be a primitive type in the JSON string but got `%s`", jsonObj.get("username").toString()));
       }
       if (jsonObj.get("password") != null && !jsonObj.get("password").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `password` to be a primitive type in the JSON string but got `%s`", jsonObj.get("password").toString()));
-      }
-      if (jsonObj.get("postgres") != null && !jsonObj.get("postgres").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `postgres` to be a primitive type in the JSON string but got `%s`", jsonObj.get("postgres").toString()));
       }
   }
 

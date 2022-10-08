@@ -15,7 +15,7 @@ class Server(client: ApiClient) {
 
         val status = HealthStatusRes().apply {
             status = HealthStatus.ERR
-            msg = ex.message
+            msg = ex.cause?.message
         }
         HealthRes().apply {
             db = DbHealthRes().apply {

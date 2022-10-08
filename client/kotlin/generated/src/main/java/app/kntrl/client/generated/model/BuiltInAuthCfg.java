@@ -15,8 +15,6 @@ package app.kntrl.client.generated.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import app.kntrl.client.generated.model.AuthCfg;
-import app.kntrl.client.generated.model.BuiltInAuthCfgAllOf;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -52,7 +50,7 @@ import app.kntrl.client.generated.infra.JSON;
  * Authentication implementation config
  */
 @ApiModel(description = "Authentication implementation config")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T19:30:17.809690+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class BuiltInAuthCfg {
   public static final String SERIALIZED_NAME_REQUIRES_AUTH = "requiresAuth";
   @SerializedName(SERIALIZED_NAME_REQUIRES_AUTH)

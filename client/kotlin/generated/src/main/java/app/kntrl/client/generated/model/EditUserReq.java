@@ -15,8 +15,6 @@ package app.kntrl.client.generated.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import app.kntrl.client.generated.model.EditUserReqAllOf;
-import app.kntrl.client.generated.model.SaveUserReq;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -52,7 +50,7 @@ import app.kntrl.client.generated.infra.JSON;
 /**
  * EditUserReq
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T19:30:17.809690+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class EditUserReq {
   public static final String SERIALIZED_NAME_FACTORS = "factors";
   @SerializedName(SERIALIZED_NAME_FACTORS)

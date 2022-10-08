@@ -16,10 +16,10 @@ package app.kntrl.client.generated.model;
 import java.util.Objects;
 import java.util.Arrays;
 import app.kntrl.client.generated.model.DbsCfg;
+import app.kntrl.client.generated.model.EntryCfg;
 import app.kntrl.client.generated.model.I18nCfg;
+import app.kntrl.client.generated.model.RateLimiterCfg;
 import app.kntrl.client.generated.model.SHAppCfgAuthsValue;
-import app.kntrl.client.generated.model.SHAppCfgEntriesValue;
-import app.kntrl.client.generated.model.SHAppCfgRateLimitersValue;
 import app.kntrl.client.generated.model.SHHttpCfg;
 import app.kntrl.client.generated.model.TokenCfg;
 import com.google.gson.TypeAdapter;
@@ -59,7 +59,7 @@ import app.kntrl.client.generated.infra.JSON;
 /**
  * SHAppCfg
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T19:30:17.809690+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class SHAppCfg {
   public static final String SERIALIZED_NAME_HTTP = "http";
   @SerializedName(SERIALIZED_NAME_HTTP)
@@ -75,7 +75,7 @@ public class SHAppCfg {
 
   public static final String SERIALIZED_NAME_ENTRIES = "entries";
   @SerializedName(SERIALIZED_NAME_ENTRIES)
-  private Map<String, SHAppCfgEntriesValue> entries = null;
+  private Map<String, EntryCfg> entries = null;
 
   public static final String SERIALIZED_NAME_DB = "db";
   @SerializedName(SERIALIZED_NAME_DB)
@@ -87,7 +87,7 @@ public class SHAppCfg {
 
   public static final String SERIALIZED_NAME_RATE_LIMITERS = "rateLimiters";
   @SerializedName(SERIALIZED_NAME_RATE_LIMITERS)
-  private Map<String, SHAppCfgRateLimitersValue> rateLimiters = null;
+  private Map<String, RateLimiterCfg> rateLimiters = null;
 
   public static final String SERIALIZED_NAME_SECRET = "secret";
   @SerializedName(SERIALIZED_NAME_SECRET)
@@ -193,13 +193,13 @@ public class SHAppCfg {
   }
 
 
-  public SHAppCfg entries(Map<String, SHAppCfgEntriesValue> entries) {
+  public SHAppCfg entries(Map<String, EntryCfg> entries) {
     
     this.entries = entries;
     return this;
   }
 
-  public SHAppCfg putEntriesItem(String key, SHAppCfgEntriesValue entriesItem) {
+  public SHAppCfg putEntriesItem(String key, EntryCfg entriesItem) {
     if (this.entries == null) {
       this.entries = new HashMap<>();
     }
@@ -214,12 +214,12 @@ public class SHAppCfg {
   @javax.annotation.Nullable
   @ApiModelProperty(value = "List of app entries. Entry usually represents UI used for signing in/up or additional authentication before action. E.g.: - app: main entry that requests user login/email + password and 2fa (if enabled) - api: entry that allows user to generate API keys and connect third-party app - action: additional authentication (e.g. code from sms) requested before e.g. payment ")
 
-  public Map<String, SHAppCfgEntriesValue> getEntries() {
+  public Map<String, EntryCfg> getEntries() {
     return entries;
   }
 
 
-  public void setEntries(Map<String, SHAppCfgEntriesValue> entries) {
+  public void setEntries(Map<String, EntryCfg> entries) {
     this.entries = entries;
   }
 
@@ -270,13 +270,13 @@ public class SHAppCfg {
   }
 
 
-  public SHAppCfg rateLimiters(Map<String, SHAppCfgRateLimitersValue> rateLimiters) {
+  public SHAppCfg rateLimiters(Map<String, RateLimiterCfg> rateLimiters) {
     
     this.rateLimiters = rateLimiters;
     return this;
   }
 
-  public SHAppCfg putRateLimitersItem(String key, SHAppCfgRateLimitersValue rateLimitersItem) {
+  public SHAppCfg putRateLimitersItem(String key, RateLimiterCfg rateLimitersItem) {
     if (this.rateLimiters == null) {
       this.rateLimiters = new HashMap<>();
     }
@@ -291,12 +291,12 @@ public class SHAppCfg {
   @javax.annotation.Nullable
   @ApiModelProperty(value = "List of rate limiters ")
 
-  public Map<String, SHAppCfgRateLimitersValue> getRateLimiters() {
+  public Map<String, RateLimiterCfg> getRateLimiters() {
     return rateLimiters;
   }
 
 
-  public void setRateLimiters(Map<String, SHAppCfgRateLimitersValue> rateLimiters) {
+  public void setRateLimiters(Map<String, RateLimiterCfg> rateLimiters) {
     this.rateLimiters = rateLimiters;
   }
 

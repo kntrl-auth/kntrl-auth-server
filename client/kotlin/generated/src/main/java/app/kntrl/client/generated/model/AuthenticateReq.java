@@ -50,7 +50,7 @@ import app.kntrl.client.generated.infra.JSON;
 /**
  * AuthenticateReq
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T19:30:17.809690+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class AuthenticateReq {
   public static final String SERIALIZED_NAME_FACTORS = "factors";
   @SerializedName(SERIALIZED_NAME_FACTORS)

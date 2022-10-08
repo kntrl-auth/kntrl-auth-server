@@ -755,10 +755,22 @@ components:
       x-order: kntrl/core/domain/err-base.kt0
       x-sealed: false
     AccessDenied:
-      allOf:
-      - $ref: '#/components/schemas/Unauthenticated'
+      properties:
+        code:
+          type: string
+        devMsg:
+          description: Message for developers.
+          type: string
+        msg:
+          description: Localised message suitable for UI.
+          type: string
+          x-nullable: true
+      required:
+      - code
+      - devMsg
       type: object
       x-order: kntrl/core/app/err.kt1
+      x-super: '#/components/schemas/Unauthenticated'
     AnswerErr:
       properties:
         tooShort:
@@ -772,32 +784,74 @@ components:
       x-order: kntrl/core/infra/err.kt9
     AnyErr:
       additionalProperties: true
-      allOf:
-      - $ref: '#/components/schemas/Err'
-      - $ref: '#/components/schemas/AnyErr_allOf'
+      properties:
+        code:
+          type: string
+        devMsg:
+          description: Message for developers.
+          type: string
+        msg:
+          description: Localised message suitable for UI.
+          type: string
+          x-nullable: true
       required:
+      - code
       - devMsg
       type: object
       x-order: kntrl/core/domain/err-base.kt5
+      x-super: '#/components/schemas/Err'
     AuthIsNotConfirmed:
-      allOf:
-      - $ref: '#/components/schemas/ClientErr'
+      properties:
+        code:
+          type: string
+        devMsg:
+          description: Message for developers.
+          type: string
+        msg:
+          description: Localised message suitable for UI.
+          type: string
+          x-nullable: true
+      required:
+      - code
+      - devMsg
       type: object
       x-order: kntrl/core/domain/err.kt2
+      x-super: '#/components/schemas/ClientErr'
     AuthIsNotEnabled:
-      allOf:
-      - $ref: '#/components/schemas/ClientErr'
+      properties:
+        code:
+          type: string
+        devMsg:
+          description: Message for developers.
+          type: string
+        msg:
+          description: Localised message suitable for UI.
+          type: string
+          x-nullable: true
+      required:
+      - code
+      - devMsg
       type: object
       x-order: kntrl/core/domain/err.kt1
+      x-super: '#/components/schemas/ClientErr'
     AuthRequiresAnother:
-      allOf:
-      - $ref: '#/components/schemas/ClientErr'
+      properties:
+        code:
+          type: string
+        devMsg:
+          description: Message for developers.
+          type: string
+        msg:
+          description: Localised message suitable for UI.
+          type: string
+          x-nullable: true
+      required:
+      - code
+      - devMsg
       type: object
       x-order: kntrl/core/domain/err.kt4
+      x-super: '#/components/schemas/ClientErr'
     ClientErr:
-      allOf:
-      - $ref: '#/components/schemas/Err'
-      - $ref: '#/components/schemas/AnyErr_allOf'
       discriminator:
         mapping:
           SESSION_EXPIRED: '#/components/schemas/SessionExpired'
@@ -822,55 +876,134 @@ components:
           QUESTIONS_ANSWERS_INCORRECT: '#/components/schemas/QuestionsAnswersIncorrect'
           QUESTIONS_ANSWERS_INVALID: '#/components/schemas/QuestionsAnswersInvalid'
         propertyName: code
+      properties:
+        code:
+          type: string
+        devMsg:
+          description: Message for developers.
+          type: string
+        msg:
+          description: Localised message suitable for UI.
+          type: string
+          x-nullable: true
       required:
       - code
       - devMsg
       type: object
       x-order: kntrl/core/domain/err-base.kt4
       x-sealed: false
+      x-super: '#/components/schemas/Err'
     CodeIsExpired:
-      allOf:
-      - $ref: '#/components/schemas/ClientErr'
+      properties:
+        code:
+          type: string
+        devMsg:
+          description: Message for developers.
+          type: string
+        msg:
+          description: Localised message suitable for UI.
+          type: string
+          x-nullable: true
+      required:
+      - code
+      - devMsg
       type: object
       x-order: kntrl/core/domain/err.kt5
+      x-super: '#/components/schemas/ClientErr'
     CodeIsIncorrect:
-      allOf:
-      - $ref: '#/components/schemas/ClientErr'
+      properties:
+        code:
+          type: string
+        devMsg:
+          description: Message for developers.
+          type: string
+        msg:
+          description: Localised message suitable for UI.
+          type: string
+          x-nullable: true
+      required:
+      - code
+      - devMsg
       type: object
       x-order: kntrl/core/domain/err.kt7
+      x-super: '#/components/schemas/ClientErr'
     CodeTooManyAttempts:
-      allOf:
-      - $ref: '#/components/schemas/ClientErr'
+      properties:
+        code:
+          type: string
+        devMsg:
+          description: Message for developers.
+          type: string
+        msg:
+          description: Localised message suitable for UI.
+          type: string
+          x-nullable: true
+      required:
+      - code
+      - devMsg
       type: object
       x-order: kntrl/core/domain/err.kt6
+      x-super: '#/components/schemas/ClientErr'
     EmailIsIncorrect:
-      allOf:
-      - $ref: '#/components/schemas/ClientErr'
+      properties:
+        code:
+          type: string
+        devMsg:
+          description: Message for developers.
+          type: string
+        msg:
+          description: Localised message suitable for UI.
+          type: string
+          x-nullable: true
+      required:
+      - code
+      - devMsg
       type: object
       x-order: kntrl/core/infra/err.kt5
+      x-super: '#/components/schemas/ClientErr'
     Instant:
       format: int64
       type: integer
     IntegrationErr:
-      allOf:
-      - $ref: '#/components/schemas/Err'
-      - $ref: '#/components/schemas/AnyErr_allOf'
       discriminator:
         mapping:
           INTEGRATION_ERR: '#/components/schemas/IntegrationErr'
           NO_AUTH_AVAILABLE_FOR_FACTOR: '#/components/schemas/NoAuthAvailableForFactor'
         propertyName: code
+      properties:
+        code:
+          type: string
+        devMsg:
+          description: Message for developers.
+          type: string
+        msg:
+          description: Localised message suitable for UI.
+          type: string
+          x-nullable: true
       required:
       - code
       - devMsg
       type: object
       x-order: kntrl/core/domain/err-base.kt3
       x-sealed: false
+      x-super: '#/components/schemas/Err'
     IpNew:
-      allOf:
-      - $ref: '#/components/schemas/ClientErr'
+      properties:
+        code:
+          type: string
+        devMsg:
+          description: Message for developers.
+          type: string
+        msg:
+          description: Localised message suitable for UI.
+          type: string
+          x-nullable: true
+      required:
+      - code
+      - devMsg
       type: object
       x-order: kntrl/core/infra/err.kt6
+      x-super: '#/components/schemas/ClientErr'
     LoginId:
       example:
         type: type
@@ -888,22 +1021,90 @@ components:
       type: object
       x-order: kntrl/core/domain/user/Login.kt2
     NoAuthAvailableForFactor:
-      allOf:
-      - $ref: '#/components/schemas/IntegrationErr'
+      properties:
+        code:
+          type: string
+        devMsg:
+          description: Message for developers.
+          type: string
+        msg:
+          description: Localised message suitable for UI.
+          type: string
+          x-nullable: true
+      required:
+      - code
+      - devMsg
       type: object
       x-order: kntrl/core/domain/err.kt3
+      x-super: '#/components/schemas/IntegrationErr'
     PasswordIsIncorrect:
-      allOf:
-      - $ref: '#/components/schemas/ClientErr'
-      - $ref: '#/components/schemas/PasswordIsIncorrect_allOf'
+      properties:
+        code:
+          type: string
+        devMsg:
+          description: Message for developers.
+          type: string
+        msg:
+          description: Localised message suitable for UI.
+          type: string
+          x-nullable: true
+        changedAt:
+          format: int64
+          type: integer
+          x-nullable: true
+        changedDaysAgo:
+          format: int64
+          type: integer
+          x-nullable: true
+      required:
+      - code
+      - devMsg
       type: object
       x-order: kntrl/core/infra/err.kt3
+      x-super: '#/components/schemas/ClientErr'
     PasswordIsInvalid:
-      allOf:
-      - $ref: '#/components/schemas/ClientErr'
-      - $ref: '#/components/schemas/PasswordIsInvalid_allOf'
+      properties:
+        code:
+          type: string
+        devMsg:
+          description: Message for developers.
+          type: string
+        msg:
+          description: Localised message suitable for UI.
+          type: string
+          x-nullable: true
+        tooLong:
+          type: boolean
+        tooShort:
+          type: boolean
+        missingNumber:
+          type: boolean
+        missingSymbol:
+          type: boolean
+        missingUpperCase:
+          type: boolean
+        missingLowerCase:
+          type: boolean
+        commonPassword:
+          type: boolean
+        wasUsedBeforeAt:
+          format: int64
+          type: integer
+          x-nullable: true
+        matchesLogin:
+          $ref: '#/components/schemas/LoginId'
+        passwordsMismatch:
+          type: boolean
+        strength:
+          type: string
+          x-nullable: true
+        wasUsedDaysAgo:
+          format: int64
+          type: integer
       required:
+      - code
       - commonPassword
+      - devMsg
       - missingLowerCase
       - missingNumber
       - missingSymbol
@@ -913,76 +1114,209 @@ components:
       - tooShort
       type: object
       x-order: kntrl/core/infra/err.kt4
+      x-super: '#/components/schemas/ClientErr'
     PluginClientErr:
-      allOf:
-      - $ref: '#/components/schemas/ClientErr'
-      - $ref: '#/components/schemas/PluginClientErr_allOf'
+      properties:
+        code:
+          type: string
+        devMsg:
+          description: Message for developers.
+          type: string
+        msg:
+          description: Localised message suitable for UI.
+          type: string
+          x-nullable: true
+        data:
+          additionalProperties:
+            type: object
+          type: object
+          writeOnly: true
+      required:
+      - code
+      - devMsg
       type: object
       x-order: kntrl/core/infra/err.kt2
+      x-super: '#/components/schemas/ClientErr'
     PluginErr:
-      allOf:
-      - $ref: '#/components/schemas/ServerErr'
+      properties:
+        code:
+          type: string
+        devMsg:
+          description: Message for developers.
+          type: string
+        msg:
+          description: Localised message suitable for UI.
+          type: string
+          x-nullable: true
+      required:
+      - code
+      - devMsg
       type: object
       x-order: kntrl/core/infra/err.kt1
+      x-super: '#/components/schemas/ServerErr'
     QuestionsAnswersIncorrect:
-      allOf:
-      - $ref: '#/components/schemas/ClientErr'
-      - $ref: '#/components/schemas/QuestionsAnswersIncorrect_allOf'
+      properties:
+        code:
+          type: string
+        devMsg:
+          description: Message for developers.
+          type: string
+        msg:
+          description: Localised message suitable for UI.
+          type: string
+          x-nullable: true
+        incorrectAnswers:
+          items:
+            type: string
+          type: array
+        requiresMoreAnswers:
+          type: boolean
+        questionsNotFound:
+          items:
+            type: string
+          type: array
       required:
+      - code
+      - devMsg
       - incorrectAnswers
       - questionsNotFound
       - requiresMoreAnswers
       type: object
       x-order: kntrl/core/infra/err.kt7
+      x-super: '#/components/schemas/ClientErr'
     QuestionsAnswersInvalid:
-      allOf:
-      - $ref: '#/components/schemas/ClientErr'
-      - $ref: '#/components/schemas/QuestionsAnswersInvalid_allOf'
+      properties:
+        code:
+          type: string
+        devMsg:
+          description: Message for developers.
+          type: string
+        msg:
+          description: Localised message suitable for UI.
+          type: string
+          x-nullable: true
+        invalidAnswers:
+          additionalProperties:
+            $ref: '#/components/schemas/AnswerErr'
+          type: object
+        tooManyAnswers:
+          type: boolean
       required:
+      - code
+      - devMsg
       - invalidAnswers
       - tooManyAnswers
       type: object
       x-order: kntrl/core/infra/err.kt8
+      x-super: '#/components/schemas/ClientErr'
     ServerErr:
-      allOf:
-      - $ref: '#/components/schemas/Err'
-      - $ref: '#/components/schemas/AnyErr_allOf'
       discriminator:
         mapping:
           SERVER_ERR: '#/components/schemas/ServerErr'
           PLUGIN_ERR: '#/components/schemas/PluginErr'
         propertyName: code
+      properties:
+        code:
+          type: string
+        devMsg:
+          description: Message for developers.
+          type: string
+        msg:
+          description: Localised message suitable for UI.
+          type: string
+          x-nullable: true
       required:
       - code
       - devMsg
       type: object
       x-order: kntrl/core/domain/err-base.kt2
       x-sealed: false
+      x-super: '#/components/schemas/Err'
     SessionExpired:
-      allOf:
-      - $ref: '#/components/schemas/Unauthenticated'
+      properties:
+        code:
+          type: string
+        devMsg:
+          description: Message for developers.
+          type: string
+        msg:
+          description: Localised message suitable for UI.
+          type: string
+          x-nullable: true
+      required:
+      - code
+      - devMsg
       type: object
       x-order: kntrl/core/app/err.kt0
+      x-super: '#/components/schemas/Unauthenticated'
     SignatureIsIncorrect:
-      allOf:
-      - $ref: '#/components/schemas/ClientErr'
+      properties:
+        code:
+          type: string
+        devMsg:
+          description: Message for developers.
+          type: string
+        msg:
+          description: Localised message suitable for UI.
+          type: string
+          x-nullable: true
+      required:
+      - code
+      - devMsg
       type: object
       x-order: kntrl/core/app/err.kt3
+      x-super: '#/components/schemas/ClientErr'
     TokenExpired:
-      allOf:
-      - $ref: '#/components/schemas/Unauthenticated'
-      - $ref: '#/components/schemas/TokenExpired_allOf'
+      properties:
+        code:
+          type: string
+        devMsg:
+          description: Message for developers.
+          type: string
+        msg:
+          description: Localised message suitable for UI.
+          type: string
+          x-nullable: true
+        expiredAt:
+          format: int64
+          type: integer
+          x-nullable: true
+      required:
+      - code
+      - devMsg
       type: object
       x-order: kntrl/core/domain/err.kt10
+      x-super: '#/components/schemas/Unauthenticated'
     TooManyReqs:
-      allOf:
-      - $ref: '#/components/schemas/ClientErr'
-      - $ref: '#/components/schemas/TooManyReqs_allOf'
+      properties:
+        code:
+          type: string
+        devMsg:
+          description: Message for developers.
+          type: string
+        msg:
+          description: Localised message suitable for UI.
+          type: string
+          x-nullable: true
+        waitTimeMs:
+          format: int32
+          type: integer
+          x-nullable: true
+        waitTimeSeconds:
+          format: int32
+          type: integer
+          x-nullable: true
+        waitTimeMinutes:
+          format: int32
+          type: integer
+          x-nullable: true
+      required:
+      - code
+      - devMsg
       type: object
       x-order: kntrl/core/domain/err.kt11
+      x-super: '#/components/schemas/ClientErr'
     Unauthenticated:
-      allOf:
-      - $ref: '#/components/schemas/ClientErr'
       discriminator:
         mapping:
           SESSION_EXPIRED: '#/components/schemas/SessionExpired'
@@ -991,25 +1325,68 @@ components:
           TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
           UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
         propertyName: code
+      properties:
+        code:
+          type: string
+        devMsg:
+          description: Message for developers.
+          type: string
+        msg:
+          description: Localised message suitable for UI.
+          type: string
+          x-nullable: true
       required:
       - code
+      - devMsg
       type: object
       x-order: kntrl/core/domain/err.kt8
       x-sealed: false
+      x-super: '#/components/schemas/ClientErr'
     UserLoginAlreadyTaken:
-      allOf:
-      - $ref: '#/components/schemas/ClientErr'
+      properties:
+        code:
+          type: string
+        devMsg:
+          description: Message for developers.
+          type: string
+        msg:
+          description: Localised message suitable for UI.
+          type: string
+          x-nullable: true
+      required:
+      - code
+      - devMsg
       type: object
       x-order: kntrl/core/domain/err.kt0
+      x-super: '#/components/schemas/ClientErr'
     UserNotFound:
-      allOf:
-      - $ref: '#/components/schemas/Unauthenticated'
+      properties:
+        code:
+          type: string
+        devMsg:
+          description: Message for developers.
+          type: string
+        msg:
+          description: Localised message suitable for UI.
+          type: string
+          x-nullable: true
+      required:
+      - code
+      - devMsg
       type: object
       x-order: kntrl/core/app/err.kt2
+      x-super: '#/components/schemas/Unauthenticated'
     AccessToken:
       type: string
       x-order: kntrl/core/domain/token/Token.kt3
     CodeVerifier:
+      example:
+        attemptsLeft: 1
+        usedAttempts: 6
+        hasAttemptsLeft: true
+        validUntil: 0
+        id: id
+        sentAt: 5
       properties:
         id:
           type: string
@@ -1082,9 +1459,9 @@ components:
         session:
           authenticated: true
           systemAccess: true
-          signedInAt: 0
+          signedInAt: 5
           userId: userId
-          expiresAt: 6
+          expiresAt: 2
           nextFactors:
           - supportedAuths:
             - supportedAuths
@@ -1099,7 +1476,7 @@ components:
           authenticatedBy:
             key: authenticatedBy
           newUser: true
-          refreshedAt: 1
+          refreshedAt: 7
           id: id
           identifiedBy:
           - type: type
@@ -1107,7 +1484,20 @@ components:
           - type: type
             login: login
           unconfirmedAuths:
-            key: null
+            key:
+              sentCodes:
+              - attemptsLeft: 1
+                usedAttempts: 6
+                hasAttemptsLeft: true
+                validUntil: 0
+                id: id
+                sentAt: 5
+              - attemptsLeft: 1
+                usedAttempts: 6
+                hasAttemptsLeft: true
+                validUntil: 0
+                id: id
+                sentAt: 5
           device:
             browser: browser
             mobile: true
@@ -1131,9 +1521,9 @@ components:
       example:
         authenticated: true
         systemAccess: true
-        signedInAt: 0
+        signedInAt: 5
         userId: userId
-        expiresAt: 6
+        expiresAt: 2
         nextFactors:
         - supportedAuths:
           - supportedAuths
@@ -1148,7 +1538,7 @@ components:
         authenticatedBy:
           key: authenticatedBy
         newUser: true
-        refreshedAt: 1
+        refreshedAt: 7
         id: id
         identifiedBy:
         - type: type
@@ -1156,7 +1546,20 @@ components:
         - type: type
           login: login
         unconfirmedAuths:
-          key: null
+          key:
+            sentCodes:
+            - attemptsLeft: 1
+              usedAttempts: 6
+              hasAttemptsLeft: true
+              validUntil: 0
+              id: id
+              sentAt: 5
+            - attemptsLeft: 1
+              usedAttempts: 6
+              hasAttemptsLeft: true
+              validUntil: 0
+              id: id
+              sentAt: 5
         device:
           browser: browser
           mobile: true
@@ -1185,7 +1588,7 @@ components:
           type: object
         unconfirmedAuths:
           additionalProperties:
-            $ref: '#/components/schemas/Session_unconfirmedAuths_value'
+            $ref: '#/components/schemas/UnconfirmedAuth'
           description: |
             Auths that waiting for confirmation
           type: object
@@ -1249,6 +1652,20 @@ components:
       type: object
       x-order: kntrl/core/domain/token/Token.kt0
     UnconfirmedAuth:
+      example:
+        sentCodes:
+        - attemptsLeft: 1
+          usedAttempts: 6
+          hasAttemptsLeft: true
+          validUntil: 0
+          id: id
+          sentAt: 5
+        - attemptsLeft: 1
+          usedAttempts: 6
+          hasAttemptsLeft: true
+          validUntil: 0
+          id: id
+          sentAt: 5
       properties:
         sentCodes:
           items:
@@ -1295,7 +1712,9 @@ components:
       example:
         msg: msg
         auth:
-          key: null
+          key:
+            msg: msg
+            status: null
         db:
           rateLimiter:
             msg: msg
@@ -1312,7 +1731,7 @@ components:
           $ref: '#/components/schemas/DbHealthRes'
         auth:
           additionalProperties:
-            $ref: '#/components/schemas/HealthRes_auth_value'
+            $ref: '#/components/schemas/HealthStatusRes'
           type: object
         status:
           $ref: '#/components/schemas/HealthStatus'
@@ -1346,6 +1765,9 @@ components:
       type: object
       x-order: kntrl/core/app/server/HasHealthStatus.kt1
     AuthData:
+      example:
+        public: "{}"
+        login: login
       properties:
         public:
           type: object
@@ -1383,6 +1805,32 @@ components:
       x-order: kntrl/core/app/auth/AuthExec.kt2
       x-sealed: true
     AuthUserCfg:
+      example:
+        data:
+          public: "{}"
+          login: login
+        sentCodes:
+        - code:
+            attemptsLeft: 1
+            usedAttempts: 6
+            hasAttemptsLeft: true
+            validUntil: 0
+            id: id
+            sentAt: 5
+          data:
+            public: "{}"
+            login: login
+        - code:
+            attemptsLeft: 1
+            usedAttempts: 6
+            hasAttemptsLeft: true
+            validUntil: 0
+            id: id
+            sentAt: 5
+          data:
+            public: "{}"
+            login: login
+        confirmed: true
       properties:
         data:
           $ref: '#/components/schemas/AuthData'
@@ -1401,9 +1849,9 @@ components:
         session:
           authenticated: true
           systemAccess: true
-          signedInAt: 0
+          signedInAt: 5
           userId: userId
-          expiresAt: 6
+          expiresAt: 2
           nextFactors:
           - supportedAuths:
             - supportedAuths
@@ -1418,7 +1866,7 @@ components:
           authenticatedBy:
             key: authenticatedBy
           newUser: true
-          refreshedAt: 1
+          refreshedAt: 7
           id: id
           identifiedBy:
           - type: type
@@ -1426,7 +1874,20 @@ components:
           - type: type
             login: login
           unconfirmedAuths:
-            key: null
+            key:
+              sentCodes:
+              - attemptsLeft: 1
+                usedAttempts: 6
+                hasAttemptsLeft: true
+                validUntil: 0
+                id: id
+                sentAt: 5
+              - attemptsLeft: 1
+                usedAttempts: 6
+                hasAttemptsLeft: true
+                validUntil: 0
+                id: id
+                sentAt: 5
           device:
             browser: browser
             mobile: true
@@ -1441,7 +1902,32 @@ components:
           signedUpAt: 6
           systemAccess: true
           auths:
-            key: null
+            key:
+              data:
+                public: "{}"
+                login: login
+              sentCodes:
+              - code:
+                  attemptsLeft: 1
+                  usedAttempts: 6
+                  hasAttemptsLeft: true
+                  validUntil: 0
+                  id: id
+                  sentAt: 5
+                data:
+                  public: "{}"
+                  login: login
+              - code:
+                  attemptsLeft: 1
+                  usedAttempts: 6
+                  hasAttemptsLeft: true
+                  validUntil: 0
+                  id: id
+                  sentAt: 5
+                data:
+                  public: "{}"
+                  login: login
+              confirmed: true
           id: 2c24704f-198a-4bc4-9718-306ccc97bbdc
           isNew: true
           logins:
@@ -1515,13 +2001,19 @@ components:
       type: object
       x-order: kntrl/core/app/auth/Auth.kt3
     ErrAuthExecRes:
-      allOf:
-      - $ref: '#/components/schemas/AuthExecRes'
-      - $ref: '#/components/schemas/ErrAuthExecRes_allOf'
+      properties:
+        status:
+          type: string
+        sentCode:
+          $ref: '#/components/schemas/Code'
+        err:
+          $ref: '#/components/schemas/Err'
       required:
       - err
+      - status
       type: object
       x-order: kntrl/core/app/auth/AuthExec.kt4
+      x-super: '#/components/schemas/AuthExecRes'
     Login:
       example:
         unconfirmedLogin: unconfirmedLogin
@@ -1546,18 +2038,41 @@ components:
       type: object
       x-order: kntrl/core/domain/user/Login.kt0
     OkAuthExecRes:
-      allOf:
-      - $ref: '#/components/schemas/AuthExecRes'
-      - $ref: '#/components/schemas/OkAuthExecRes_allOf'
+      properties:
+        status:
+          type: string
+        sentCode:
+          $ref: '#/components/schemas/Code'
+        resData:
+          type: object
+      required:
+      - status
       type: object
       x-order: kntrl/core/app/auth/AuthExec.kt3
+      x-super: '#/components/schemas/AuthExecRes'
     SkippedAuthExecRes:
-      allOf:
-      - $ref: '#/components/schemas/AuthExecRes'
-      - $ref: '#/components/schemas/SkippedAuthExecRes_allOf'
+      properties:
+        status:
+          type: string
+        sentCode:
+          $ref: '#/components/schemas/Code'
+      required:
+      - status
       type: object
       x-order: kntrl/core/app/auth/AuthExec.kt5
+      x-super: '#/components/schemas/AuthExecRes'
     UnconfirmedAuthData:
+      example:
+        code:
+          attemptsLeft: 1
+          usedAttempts: 6
+          hasAttemptsLeft: true
+          validUntil: 0
+          id: id
+          sentAt: 5
+        data:
+          public: "{}"
+          login: login
       properties:
         data:
           $ref: '#/components/schemas/AuthData'
@@ -1574,7 +2089,32 @@ components:
         signedUpAt: 6
         systemAccess: true
         auths:
-          key: null
+          key:
+            data:
+              public: "{}"
+              login: login
+            sentCodes:
+            - code:
+                attemptsLeft: 1
+                usedAttempts: 6
+                hasAttemptsLeft: true
+                validUntil: 0
+                id: id
+                sentAt: 5
+              data:
+                public: "{}"
+                login: login
+            - code:
+                attemptsLeft: 1
+                usedAttempts: 6
+                hasAttemptsLeft: true
+                validUntil: 0
+                id: id
+                sentAt: 5
+              data:
+                public: "{}"
+                login: login
+            confirmed: true
         id: 2c24704f-198a-4bc4-9718-306ccc97bbdc
         isNew: true
         logins:
@@ -1602,7 +2142,7 @@ components:
           type: array
         auths:
           additionalProperties:
-            $ref: '#/components/schemas/User_auths_value'
+            $ref: '#/components/schemas/AuthUserCfg'
           description: |
             Public data of confirmed auths and sent codes for unconfirmed auths.
           type: object
@@ -1639,7 +2179,7 @@ components:
     AuthenticateReq:
       example:
         authReqs:
-          key: ""
+          key: "{}"
         dryRun: true
         factors:
           key: factors
@@ -1651,6 +2191,7 @@ components:
           type: object
         authReqs:
           additionalProperties:
+            type: object
             x-additionalPropertiesName: auth
           description: |
             Request for authenticators
@@ -1662,7 +2203,7 @@ components:
     NewSessionReq:
       example:
         authReqs:
-          key: ""
+          key: "{}"
         entry: entry
         dryRun: true
         signIn: true
@@ -1685,6 +2226,7 @@ components:
           type: object
         authReqs:
           additionalProperties:
+            type: object
             x-additionalPropertiesName: auth
           description: |
             Authenticator requests
@@ -1730,9 +2272,9 @@ components:
         sessions:
         - authenticated: true
           systemAccess: true
-          signedInAt: 0
+          signedInAt: 5
           userId: userId
-          expiresAt: 6
+          expiresAt: 2
           nextFactors:
           - supportedAuths:
             - supportedAuths
@@ -1747,7 +2289,7 @@ components:
           authenticatedBy:
             key: authenticatedBy
           newUser: true
-          refreshedAt: 1
+          refreshedAt: 7
           id: id
           identifiedBy:
           - type: type
@@ -1755,7 +2297,20 @@ components:
           - type: type
             login: login
           unconfirmedAuths:
-            key: null
+            key:
+              sentCodes:
+              - attemptsLeft: 1
+                usedAttempts: 6
+                hasAttemptsLeft: true
+                validUntil: 0
+                id: id
+                sentAt: 5
+              - attemptsLeft: 1
+                usedAttempts: 6
+                hasAttemptsLeft: true
+                validUntil: 0
+                id: id
+                sentAt: 5
           device:
             browser: browser
             mobile: true
@@ -1763,9 +2318,9 @@ components:
             type: type
         - authenticated: true
           systemAccess: true
-          signedInAt: 0
+          signedInAt: 5
           userId: userId
-          expiresAt: 6
+          expiresAt: 2
           nextFactors:
           - supportedAuths:
             - supportedAuths
@@ -1780,7 +2335,7 @@ components:
           authenticatedBy:
             key: authenticatedBy
           newUser: true
-          refreshedAt: 1
+          refreshedAt: 7
           id: id
           identifiedBy:
           - type: type
@@ -1788,7 +2343,20 @@ components:
           - type: type
             login: login
           unconfirmedAuths:
-            key: null
+            key:
+              sentCodes:
+              - attemptsLeft: 1
+                usedAttempts: 6
+                hasAttemptsLeft: true
+                validUntil: 0
+                id: id
+                sentAt: 5
+              - attemptsLeft: 1
+                usedAttempts: 6
+                hasAttemptsLeft: true
+                validUntil: 0
+                id: id
+                sentAt: 5
           device:
             browser: browser
             mobile: true
@@ -1813,7 +2381,32 @@ components:
           signedUpAt: 6
           systemAccess: true
           auths:
-            key: null
+            key:
+              data:
+                public: "{}"
+                login: login
+              sentCodes:
+              - code:
+                  attemptsLeft: 1
+                  usedAttempts: 6
+                  hasAttemptsLeft: true
+                  validUntil: 0
+                  id: id
+                  sentAt: 5
+                data:
+                  public: "{}"
+                  login: login
+              - code:
+                  attemptsLeft: 1
+                  usedAttempts: 6
+                  hasAttemptsLeft: true
+                  validUntil: 0
+                  id: id
+                  sentAt: 5
+                data:
+                  public: "{}"
+                  login: login
+              confirmed: true
           id: 2c24704f-198a-4bc4-9718-306ccc97bbdc
           isNew: true
           logins:
@@ -1873,15 +2466,46 @@ components:
       type: object
       x-order: kntrl/core/app/user/UserMng.kt4
     EditUserReq:
-      allOf:
-      - $ref: '#/components/schemas/SaveUserReq'
-      - $ref: '#/components/schemas/EditUserReq_allOf'
+      example:
+        authReqs:
+          key: "{}"
+        dryRun: true
+        systemAccess: true
+        logins:
+          key: logins
+        factors:
+          key: true
+      properties:
+        factors:
+          additionalProperties:
+            type: boolean
+            x-additionalPropertiesName: factor
+          description: "Optional factors to enable/disable. If factor marked as required\
+            \ in config, it will be considered enabled\nby default and this request\
+            \ doesn't change this.\n"
+          type: object
+        logins:
+          additionalProperties:
+            type: string
+            x-additionalPropertiesName: loginType
+          type: object
+        authReqs:
+          additionalProperties:
+            type: object
+            x-additionalPropertiesName: auth
+          type: object
+        dryRun:
+          type: boolean
+        systemAccess:
+          type: boolean
+          x-nullable: true
       type: object
       x-order: kntrl/core/app/user/UserMng.kt3
+      x-super: '#/components/schemas/SaveUserReq'
     SaveUserReq:
       example:
         authReqs:
-          key: ""
+          key: "{}"
         dryRun: true
         logins:
           key: logins
@@ -1903,6 +2527,7 @@ components:
           type: object
         authReqs:
           additionalProperties:
+            type: object
             x-additionalPropertiesName: auth
           type: object
         dryRun:
@@ -1914,9 +2539,9 @@ components:
         session:
           authenticated: true
           systemAccess: true
-          signedInAt: 0
+          signedInAt: 5
           userId: userId
-          expiresAt: 6
+          expiresAt: 2
           nextFactors:
           - supportedAuths:
             - supportedAuths
@@ -1931,7 +2556,7 @@ components:
           authenticatedBy:
             key: authenticatedBy
           newUser: true
-          refreshedAt: 1
+          refreshedAt: 7
           id: id
           identifiedBy:
           - type: type
@@ -1939,7 +2564,20 @@ components:
           - type: type
             login: login
           unconfirmedAuths:
-            key: null
+            key:
+              sentCodes:
+              - attemptsLeft: 1
+                usedAttempts: 6
+                hasAttemptsLeft: true
+                validUntil: 0
+                id: id
+                sentAt: 5
+              - attemptsLeft: 1
+                usedAttempts: 6
+                hasAttemptsLeft: true
+                validUntil: 0
+                id: id
+                sentAt: 5
           device:
             browser: browser
             mobile: true
@@ -1998,10 +2636,38 @@ components:
       type: object
       x-order: kntrl/core/domain/cfg/TokenCfg.kt1
     AppSecretAuthCfg:
-      allOf:
-      - $ref: '#/components/schemas/BuiltInAuthCfg'
+      properties:
+        requiresAuth:
+          description: "If this is not null, app forbids to add this auth until listed\
+            \ auth enabled.\n- if this a string -> require specified auth to be enabled\
+            \ before this.\n- array of strings -> require any of listed auths to be\
+            \ enabled\n- array of arrays of strings -> works as `[ [ \"auth1\" and\
+            \ \"auth2\" ] or [ \"auth1\" and \"auth2\" ] ]`"
+          items:
+            items:
+              type: string
+            type: array
+          type: array
+          x-nullable: true
+        skipOnFail:
+          description: |-
+            When this is set to true app will attempt next auth in case of error on current.
+            It's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be
+            executed only when IP auth is failed.
+            If set to false any error on this auth will stop the whole request execution.
+          type: boolean
+        rateLimiter:
+          description: Apply rate limiter for this auth.
+          type: string
+          x-nullable: true
+        burnQuota:
+          description: Every auth execution will burn this amount of quota. Takes
+            place only when rate limiter is specified
+          format: double
+          type: number
       type: object
       x-order: kntrl/core/infra/impl/auth/builtin/AppSecretAuth.kt2
+      x-super: '#/components/schemas/BuiltInAuthCfg'
     AuthCfg:
       description: Authentication implementation config
       properties:
@@ -2054,12 +2720,39 @@ components:
       type: object
       x-order: kntrl/core/infra/impl/auth/builtin/OAuth.kt5
     BuiltInAuthCfg:
-      allOf:
-      - $ref: '#/components/schemas/AuthCfg'
-      - $ref: '#/components/schemas/BuiltInAuthCfg_allOf'
       description: Authentication implementation config
+      properties:
+        requiresAuth:
+          description: "If this is not null, app forbids to add this auth until listed\
+            \ auth enabled.\n- if this a string -> require specified auth to be enabled\
+            \ before this.\n- array of strings -> require any of listed auths to be\
+            \ enabled\n- array of arrays of strings -> works as `[ [ \"auth1\" and\
+            \ \"auth2\" ] or [ \"auth1\" and \"auth2\" ] ]`"
+          items:
+            items:
+              type: string
+            type: array
+          type: array
+          x-nullable: true
+        skipOnFail:
+          description: |-
+            When this is set to true app will attempt next auth in case of error on current.
+            It's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be
+            executed only when IP auth is failed.
+            If set to false any error on this auth will stop the whole request execution.
+          type: boolean
+        rateLimiter:
+          description: Apply rate limiter for this auth.
+          type: string
+          x-nullable: true
+        burnQuota:
+          description: Every auth execution will burn this amount of quota. Takes
+            place only when rate limiter is specified
+          format: double
+          type: number
       type: object
       x-order: kntrl/core/infra/impl/auth/builtin/BuiltInAuthCfg.kt0
+      x-super: '#/components/schemas/AuthCfg'
     Cache:
       enum:
       - JWT
@@ -2113,15 +2806,92 @@ components:
     Duration:
       type: string
     EmailAuthCfg:
-      allOf:
-      - $ref: '#/components/schemas/BuiltInAuthCfg'
-      - $ref: '#/components/schemas/EmailAuthCfg_allOf'
+      properties:
+        requiresAuth:
+          description: "If this is not null, app forbids to add this auth until listed\
+            \ auth enabled.\n- if this a string -> require specified auth to be enabled\
+            \ before this.\n- array of strings -> require any of listed auths to be\
+            \ enabled\n- array of arrays of strings -> works as `[ [ \"auth1\" and\
+            \ \"auth2\" ] or [ \"auth1\" and \"auth2\" ] ]`"
+          items:
+            items:
+              type: string
+            type: array
+          type: array
+          x-nullable: true
+        skipOnFail:
+          description: |-
+            When this is set to true app will attempt next auth in case of error on current.
+            It's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be
+            executed only when IP auth is failed.
+            If set to false any error on this auth will stop the whole request execution.
+          type: boolean
+        rateLimiter:
+          description: Apply rate limiter for this auth.
+          type: string
+          x-nullable: true
+        burnQuota:
+          description: Every auth execution will burn this amount of quota. Takes
+            place only when rate limiter is specified
+          format: double
+          type: number
+        server:
+          description: Email server address/IP.
+          type: string
+        sender:
+          description: Email address of sender.
+          type: string
+        username:
+          description: SMTP username.
+          type: string
+          x-nullable: true
+        password:
+          description: SMTP password.
+          type: string
+          x-nullable: true
+        confirmationUrl:
+          description: "If not null, server will create template param `confirmationUrl`\
+            \ that will contain query parameters with\nconfirmation code, session\
+            \ id, etc."
+          type: string
+          x-nullable: true
+        templates:
+          additionalProperties:
+            type: string
+            x-additionalPropertiesName: templateName
+          description: "List of email templates. Key - name of template (can be used\
+            \ lately on frontend), value - path to template.\nApp uses handlebars\
+            \ templates to generate emails. See docs here https://handlebarsjs.com\n\
+            \nEmail templates received `confirmationUrl`, `action`, `user`, `session`,\
+            \ `codeId`, `code`, `lang`, `headers`\nas template params, e.g. you can\
+            \ print user id as `{{ user.id }}`.\n\nTemplate engine also provides `i18n`\
+            \ helper for localisation. E.g. `{{i18n 'confirmationButton' default='Confirm'}}`\n\
+            searches key `confirmationButton` in files specified by `i18n.dir` config.\n\
+            \nIt allows setting subject of email using `title` html tag, e.g. `<title>Email\
+            \ subject</title>`.\n\n"
+          example:
+            welcome: ./welcome.html.hbs
+            restoreAccess: ./restore.html.hbs
+          type: object
+        templateParams:
+          additionalProperties:
+            type: string
+            x-additionalPropertiesName: paramName
+          description: |
+            Additional params for template.
+          type: object
+        code:
+          $ref: '#/components/schemas/CodeCfg'
       required:
       - sender
       - server
       type: object
       x-order: kntrl/core/infra/impl/auth/builtin/EmailAuth.kt6
+      x-super: '#/components/schemas/BuiltInAuthCfg'
     EntryAccessTokenCfg:
+      example:
+        cache: true
+        ttl: ttl
       properties:
         ttl:
           description: Override access token ttl
@@ -2135,6 +2905,23 @@ components:
       x-order: kntrl/core/domain/cfg/EntryCfg.kt1
     EntryCfg:
       description: Configuration for app entry.
+      example:
+        editAccount: true
+        factorsRequired:
+          first:
+          - password
+          - facebook
+          - email
+        factorsOptional:
+          second:
+          - sms
+        requiresEntry:
+        - requiresEntry
+        - requiresEntry
+        accessToken:
+          cache: true
+          ttl: ttl
+        ttl: 3M
       properties:
         factorsRequired:
           additionalProperties:
@@ -2214,60 +3001,240 @@ components:
       type: object
       x-order: kntrl/core/domain/cfg/AppCfg.kt4
     InMemoryCfg:
-      allOf:
-      - $ref: '#/components/schemas/DbCfg'
-      - $ref: '#/components/schemas/InMemoryCfg_allOf'
+      properties:
+        inMemory:
+          type: boolean
       type: object
       x-order: kntrl/core/infra/impl/repo/in-memory.kt3
+      x-super: '#/components/schemas/DbCfg'
     InTokenCfg:
-      allOf:
-      - $ref: '#/components/schemas/DbCfg'
-      - $ref: '#/components/schemas/InTokenCfg_allOf'
+      properties:
+        inToken:
+          type: boolean
       type: object
       x-order: kntrl/core/infra/impl/repo/in-token.kt1
+      x-super: '#/components/schemas/DbCfg'
     IpAuthCfg:
-      allOf:
-      - $ref: '#/components/schemas/BuiltInAuthCfg'
-      - $ref: '#/components/schemas/IpAuthCfg_allOf'
+      properties:
+        requiresAuth:
+          description: "If this is not null, app forbids to add this auth until listed\
+            \ auth enabled.\n- if this a string -> require specified auth to be enabled\
+            \ before this.\n- array of strings -> require any of listed auths to be\
+            \ enabled\n- array of arrays of strings -> works as `[ [ \"auth1\" and\
+            \ \"auth2\" ] or [ \"auth1\" and \"auth2\" ] ]`"
+          items:
+            items:
+              type: string
+            type: array
+          type: array
+          x-nullable: true
+        skipOnFail:
+          description: |-
+            When this is set to true app will attempt next auth in case of error on current.
+            It's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be
+            executed only when IP auth is failed.
+            If set to false any error on this auth will stop the whole request execution.
+          type: boolean
+        rateLimiter:
+          description: Apply rate limiter for this auth.
+          type: string
+          x-nullable: true
+        burnQuota:
+          description: Every auth execution will burn this amount of quota. Takes
+            place only when rate limiter is specified
+          format: double
+          type: number
+        ipBytesToIgnore:
+          description: "This allows to drop last bytes of IP. So it allows to authenticate\
+            \ factor when ip has rough match, e.g.\nthe same country, same city, or\
+            \ same internet provider."
+          format: int32
+          type: integer
+        historySize:
+          description: |-
+            History of IP addresses user used to sign-in. Authenticated when user attempts to sign in with one of stored
+            IPs.
+          format: int32
+          type: integer
       type: object
       x-order: kntrl/core/infra/impl/auth/builtin/IpAuth.kt2
+      x-super: '#/components/schemas/BuiltInAuthCfg'
     JdbcCfg:
-      allOf:
-      - $ref: '#/components/schemas/DbCfg'
-      - $ref: '#/components/schemas/JdbcCfg_allOf'
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        maxConnections:
+          format: int32
+          type: integer
       type: object
       x-order: kntrl/core/infra/impl/repo/jdbc/jdbc.kt0
+      x-super: '#/components/schemas/DbCfg'
     MongoCfg:
-      allOf:
-      - $ref: '#/components/schemas/DbCfg'
-      - $ref: '#/components/schemas/MongoCfg_allOf'
+      properties:
+        mongodb:
+          type: string
+        database:
+          type: string
       required:
       - database
       - mongodb
       type: object
       x-order: kntrl/core/infra/impl/repo/mongo/mongo.kt0
+      x-super: '#/components/schemas/DbCfg'
     MysqlCfg:
-      allOf:
-      - $ref: '#/components/schemas/JdbcCfg'
-      - $ref: '#/components/schemas/MysqlCfg_allOf'
+      properties:
+        mysql:
+          type: string
+        username:
+          type: string
+        maxConnections:
+          format: int32
+          type: integer
+        password:
+          type: string
       type: object
       x-order: kntrl/core/infra/impl/repo/jdbc/mysql.kt2
+      x-super: '#/components/schemas/JdbcCfg'
     OAuthCfg:
-      allOf:
-      - $ref: '#/components/schemas/BuiltInAuthCfg'
-      - $ref: '#/components/schemas/OAuthCfg_allOf'
+      properties:
+        requiresAuth:
+          description: "If this is not null, app forbids to add this auth until listed\
+            \ auth enabled.\n- if this a string -> require specified auth to be enabled\
+            \ before this.\n- array of strings -> require any of listed auths to be\
+            \ enabled\n- array of arrays of strings -> works as `[ [ \"auth1\" and\
+            \ \"auth2\" ] or [ \"auth1\" and \"auth2\" ] ]`"
+          items:
+            items:
+              type: string
+            type: array
+          type: array
+          x-nullable: true
+        skipOnFail:
+          description: |-
+            When this is set to true app will attempt next auth in case of error on current.
+            It's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be
+            executed only when IP auth is failed.
+            If set to false any error on this auth will stop the whole request execution.
+          type: boolean
+        rateLimiter:
+          description: Apply rate limiter for this auth.
+          type: string
+          x-nullable: true
+        burnQuota:
+          description: Every auth execution will burn this amount of quota. Takes
+            place only when rate limiter is specified
+          format: double
+          type: number
+        extractLogin:
+          description: "Path for login in id-token or user-info endpoint response.\n\
+            e.g. `res.user.id` extracts user login from `{ \"res\": { \"user\": {\
+            \ \"id\": \"...\" } } }`"
+          type: string
+        tokenUrl:
+          description: Url to get access token by authorisation code.
+          type: string
+        clientId:
+          description: "OAuth client id. Client must be registered on OAuth provider\
+            \ (e.g. facebook, google)"
+          type: string
+        clientSecret:
+          description: OAuth client secret.
+          type: string
+          x-nullable: true
+        userInfoUrl:
+          description: "If access token provided in request, app tries to extract\
+            \ user id from user-info endpoint."
+          type: string
+        sendTokenInQuery:
+          description: Send token in query param.
+          type: string
+          x-nullable: true
+        sendTokenInHeader:
+          description: Send token in Authorisation header.
+          type: boolean
+        extractPublicData:
+          additionalProperties:
+            type: string
+          description: Can fill public data by a response of user-info or id-token.
+          type: object
       required:
       - extractLogin
       type: object
       x-order: kntrl/core/infra/impl/auth/builtin/OAuth.kt4
+      x-super: '#/components/schemas/BuiltInAuthCfg'
     PasswordAuthCfg:
-      allOf:
-      - $ref: '#/components/schemas/BuiltInAuthCfg'
-      - $ref: '#/components/schemas/PasswordAuthCfg_allOf'
       description: "Password authentication. To enable this auth set auth name to\
         \ \"password\" or use \"builtin\": \"password\" param."
+      properties:
+        requiresAuth:
+          description: "If this is not null, app forbids to add this auth until listed\
+            \ auth enabled.\n- if this a string -> require specified auth to be enabled\
+            \ before this.\n- array of strings -> require any of listed auths to be\
+            \ enabled\n- array of arrays of strings -> works as `[ [ \"auth1\" and\
+            \ \"auth2\" ] or [ \"auth1\" and \"auth2\" ] ]`"
+          items:
+            items:
+              type: string
+            type: array
+          type: array
+          x-nullable: true
+        skipOnFail:
+          description: |-
+            When this is set to true app will attempt next auth in case of error on current.
+            It's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be
+            executed only when IP auth is failed.
+            If set to false any error on this auth will stop the whole request execution.
+          type: boolean
+        rateLimiter:
+          description: Apply rate limiter for this auth.
+          type: string
+          x-nullable: true
+        burnQuota:
+          description: Every auth execution will burn this amount of quota. Takes
+            place only when rate limiter is specified
+          format: double
+          type: number
+        maxLength:
+          description: Max allowed Length of the password.
+          format: int32
+          type: integer
+        minLength:
+          description: Minimal length of password
+          format: int32
+          type: integer
+        requireNumber:
+          description: Require password to contain at least one digit.
+          type: boolean
+        requireSymbol:
+          description: "Require password to contain at least one symbol e.g. @, !,\
+            \ &..."
+          type: boolean
+        requireUpperCase:
+          description: This requires password to contain both lowercase and uppercase
+            letters.
+          type: boolean
+        forbidCommonPasswords:
+          description: "Password will be checked against table 1,000,000 of most overused\
+            \ passwords."
+          type: boolean
+        forbidLoginAsPassword:
+          description: "Rejects passwords that match username, email, anything that\
+            \ used as a login according to logins config."
+          type: boolean
+        forbidReusingPassword:
+          $ref: '#/components/schemas/PasswordHistoryCfg'
+        strength:
+          additionalProperties:
+            $ref: '#/components/schemas/PasswordStrengthRequirements'
+          description: |
+            Allows to calculate password strength based on mentioned criteria. Requirements will be checked one by one
+            until first failed.
+          type: object
       type: object
       x-order: kntrl/core/infra/impl/auth/builtin/password/PasswordAuth.kt6
+      x-super: '#/components/schemas/BuiltInAuthCfg'
     PasswordHistoryCfg:
       description: Forbids user to change password to the old one. Useful if you force
         user to change password regularly.
@@ -2311,19 +3278,88 @@ components:
       type: object
       x-order: kntrl/core/infra/impl/auth/builtin/password/PasswordAuth.kt7
     PostgresCfg:
-      allOf:
-      - $ref: '#/components/schemas/JdbcCfg'
-      - $ref: '#/components/schemas/PostgresCfg_allOf'
+      properties:
+        postgres:
+          type: string
+        username:
+          type: string
+        maxConnections:
+          format: int32
+          type: integer
+        password:
+          type: string
       type: object
       x-order: kntrl/core/infra/impl/repo/jdbc/postgres.kt2
+      x-super: '#/components/schemas/JdbcCfg'
     QuestionsAuthCfg:
-      allOf:
-      - $ref: '#/components/schemas/BuiltInAuthCfg'
-      - $ref: '#/components/schemas/QuestionsAuthCfg_allOf'
+      properties:
+        requiresAuth:
+          description: "If this is not null, app forbids to add this auth until listed\
+            \ auth enabled.\n- if this a string -> require specified auth to be enabled\
+            \ before this.\n- array of strings -> require any of listed auths to be\
+            \ enabled\n- array of arrays of strings -> works as `[ [ \"auth1\" and\
+            \ \"auth2\" ] or [ \"auth1\" and \"auth2\" ] ]`"
+          items:
+            items:
+              type: string
+            type: array
+          type: array
+          x-nullable: true
+        skipOnFail:
+          description: |-
+            When this is set to true app will attempt next auth in case of error on current.
+            It's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be
+            executed only when IP auth is failed.
+            If set to false any error on this auth will stop the whole request execution.
+          type: boolean
+        rateLimiter:
+          description: Apply rate limiter for this auth.
+          type: string
+          x-nullable: true
+        burnQuota:
+          description: Every auth execution will burn this amount of quota. Takes
+            place only when rate limiter is specified
+          format: double
+          type: number
+        lowercase:
+          description: "Transform user answer to lowercase letters. This allows user\
+            \ still pass a check when he wrote name or city\nwith different cases.\
+            \ `false` means strict match, so \"John\" != \"john\""
+          type: boolean
+        removeSymbols:
+          description: Remove all non-letters from user answer.
+          type: boolean
+        removeSpaces:
+          description: Remove all spaces from user answer.
+          type: boolean
+        minLength:
+          description: Min length of answer. Length are checked after all answer transformation.
+          format: int32
+          type: integer
+        maxLength:
+          description: Max length of answer.
+          format: int32
+          type: integer
+        answersRequired:
+          description: Min number of answers required to pass this check.
+          format: int32
+          type: integer
+        maxAnswers:
+          description: Max answers that user can save.
+          format: int32
+          type: integer
       type: object
       x-order: kntrl/core/infra/impl/auth/builtin/QuestionsAuth.kt5
+      x-super: '#/components/schemas/BuiltInAuthCfg'
     RateLimiterCfg:
       description: Rate limiter configuration
+      example:
+        parent: parent
+        period: 30s
+        ip: true
+        quota: 0.8008281904610115
+        alignLoad: true
+        userId: true
       properties:
         userId:
           description: Create different rate limiters for different users.
@@ -2356,11 +3392,30 @@ components:
       type: object
       x-order: kntrl/core/domain/cfg/RateLimiterCfg.kt0
     RedisCfg:
-      allOf:
-      - $ref: '#/components/schemas/DbCfg'
-      - $ref: '#/components/schemas/RedisCfg_allOf'
+      properties:
+        redis:
+          items:
+            type: string
+          type: array
+        cluster:
+          type: boolean
+        database:
+          format: int32
+          type: integer
+        user:
+          type: string
+          x-nullable: true
+        password:
+          type: string
+          x-nullable: true
+        ssl:
+          type: boolean
+        maxConnections:
+          format: int32
+          type: integer
       type: object
       x-order: kntrl/core/infra/impl/repo/redis/redis.kt0
+      x-super: '#/components/schemas/DbCfg'
     RefreshTokenCfg:
       description: |-
         Long-living token used for generation of new access token.
@@ -2392,26 +3447,97 @@ components:
       type: object
       x-order: kntrl/core/domain/cfg/TokenCfg.kt5
     RemoteAuthCfg:
-      allOf:
-      - $ref: '#/components/schemas/AuthCfg'
-      - $ref: '#/components/schemas/RemoteAuthCfg_allOf'
       description: Authentication implementation config
+      properties:
+        remote:
+          description: Path to the API that implements plugin.
+          type: string
+        requiresAuth:
+          description: "If this is not null, app forbids to add this auth until listed\
+            \ auth enabled.\n- if this a string -> require specified auth to be enabled\
+            \ before this.\n- array of strings -> require any of listed auths to be\
+            \ enabled\n- array of arrays of strings -> works as `[ [ \"auth1\" and\
+            \ \"auth2\" ] or [ \"auth1\" and \"auth2\" ] ]`"
+          items:
+            items:
+              type: string
+            type: array
+          type: array
+          x-nullable: true
+        skipOnFail:
+          description: |-
+            When this is set to true app will attempt next auth in case of error on current.
+            It's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be
+            executed only when IP auth is failed.
+            If set to false any error on this auth will stop the whole request execution.
+          type: boolean
+        rateLimiter:
+          description: Apply rate limiter for this auth.
+          type: string
+          x-nullable: true
+        burnQuota:
+          description: Every auth execution will burn this amount of quota. Takes
+            place only when rate limiter is specified
+          format: double
+          type: number
+        query:
+          additionalProperties:
+            type: string
+            x-additionalPropertiesName: queryParam
+          description: |
+            Add query params after `?` symbol in url.
+          type: object
+        headers:
+          additionalProperties:
+            type: string
+            x-additionalPropertiesName: header
+          description: |
+            Add headers to request.
+          type: object
+        code:
+          $ref: '#/components/schemas/CodeCfg'
       required:
       - remote
       type: object
       x-order: kntrl/core/infra/impl/auth/remote.kt0
+      x-super: '#/components/schemas/AuthCfg'
     RemoteDbCfg:
-      allOf:
-      - $ref: '#/components/schemas/DbCfg'
-      - $ref: '#/components/schemas/RemoteDbCfg_allOf'
+      properties:
+        remote:
+          type: string
+        query:
+          additionalProperties:
+            type: string
+          type: object
+        headers:
+          additionalProperties:
+            type: string
+          type: object
       required:
       - remote
       type: object
       x-order: kntrl/core/infra/impl/repo/remote.kt0
+      x-super: '#/components/schemas/DbCfg'
     SHAppCfg:
       example:
         entries:
-          key: null
+          key:
+            editAccount: true
+            factorsRequired:
+              first:
+              - password
+              - facebook
+              - email
+            factorsOptional:
+              second:
+              - sms
+            requiresEntry:
+            - requiresEntry
+            - requiresEntry
+            accessToken:
+              cache: true
+              ttl: ttl
+            ttl: 3M
         healthCheckKey: healthCheckKey
         $schema: $schema
         auths:
@@ -2424,7 +3550,13 @@ components:
           bind: 127.0.0.1
           port: 9876
         rateLimiters:
-          key: null
+          key:
+            parent: parent
+            period: 30s
+            ip: true
+            quota: 0.8008281904610115
+            alignLoad: true
+            userId: true
         secret: secret
         logins:
         - username
@@ -2481,7 +3613,7 @@ components:
           type: object
         entries:
           additionalProperties:
-            $ref: '#/components/schemas/SHAppCfg_entries_value'
+            $ref: '#/components/schemas/EntryCfg'
           description: "List of app entries. Entry usually represents UI used for\
             \ signing in/up or additional authentication\nbefore action. E.g.:\n-\
             \ app: main entry that requests user login/email + password and 2fa (if\
@@ -2495,7 +3627,7 @@ components:
           $ref: '#/components/schemas/TokenCfg'
         rateLimiters:
           additionalProperties:
-            $ref: '#/components/schemas/SHAppCfg_rateLimiters_value'
+            $ref: '#/components/schemas/RateLimiterCfg'
           description: |
             List of rate limiters
           type: object
@@ -2539,11 +3671,19 @@ components:
       type: object
       x-order: kntrl/selfhosted/infra/cfg/SHAppCfg.kt1
     SqliteCfg:
-      allOf:
-      - $ref: '#/components/schemas/JdbcCfg'
-      - $ref: '#/components/schemas/SqliteCfg_allOf'
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        maxConnections:
+          format: int32
+          type: integer
+        sqlite:
+          type: string
       type: object
       x-order: kntrl/core/infra/impl/repo/jdbc/sqlite.kt3
+      x-super: '#/components/schemas/JdbcCfg'
     TokenCfg:
       description: Token lifetime config.
       example:
@@ -2585,200 +3725,6 @@ components:
       - userInfoUrl
       type: object
       x-order: kntrl/core/infra/impl/auth/builtin/OAuth.kt6
-    AnyErr_allOf:
-      properties:
-        code:
-          type: string
-        devMsg:
-          description: Message for developers.
-          type: string
-        msg:
-          description: Localised message suitable for UI.
-          type: string
-          x-nullable: true
-      type: object
-    PasswordIsIncorrect_allOf:
-      properties:
-        changedAt:
-          format: int64
-          type: integer
-          x-nullable: true
-        changedDaysAgo:
-          format: int64
-          type: integer
-          x-nullable: true
-      type: object
-    PasswordIsInvalid_allOf:
-      properties:
-        tooLong:
-          type: boolean
-        tooShort:
-          type: boolean
-        missingNumber:
-          type: boolean
-        missingSymbol:
-          type: boolean
-        missingUpperCase:
-          type: boolean
-        missingLowerCase:
-          type: boolean
-        commonPassword:
-          type: boolean
-        wasUsedBeforeAt:
-          format: int64
-          type: integer
-          x-nullable: true
-        matchesLogin:
-          $ref: '#/components/schemas/LoginId'
-        passwordsMismatch:
-          type: boolean
-        strength:
-          type: string
-          x-nullable: true
-        wasUsedDaysAgo:
-          format: int64
-          type: integer
-      type: object
-    PluginClientErr_allOf:
-      properties:
-        data:
-          additionalProperties:
-            type: object
-          type: object
-          writeOnly: true
-      type: object
-    QuestionsAnswersIncorrect_allOf:
-      properties:
-        incorrectAnswers:
-          items:
-            type: string
-          type: array
-        requiresMoreAnswers:
-          type: boolean
-        questionsNotFound:
-          items:
-            type: string
-          type: array
-      type: object
-    QuestionsAnswersInvalid_allOf:
-      properties:
-        invalidAnswers:
-          additionalProperties:
-            oneOf:
-            - $ref: '#/components/schemas/AnswerErr'
-          type: object
-        tooManyAnswers:
-          type: boolean
-      type: object
-    TokenExpired_allOf:
-      properties:
-        expiredAt:
-          format: int64
-          type: integer
-          x-nullable: true
-      type: object
-    TooManyReqs_allOf:
-      properties:
-        waitTimeMs:
-          format: int32
-          type: integer
-          x-nullable: true
-        waitTimeSeconds:
-          format: int32
-          type: integer
-          x-nullable: true
-        waitTimeMinutes:
-          format: int32
-          type: integer
-          x-nullable: true
-      type: object
-    Session_unconfirmedAuths_value:
-      oneOf:
-      - $ref: '#/components/schemas/UnconfirmedAuth'
-      x-additionalPropertiesName: auth
-    HealthRes_auth_value:
-      oneOf:
-      - $ref: '#/components/schemas/HealthStatusRes'
-      x-additionalPropertiesName: auth
-    ErrAuthExecRes_allOf:
-      properties:
-        sentCode:
-          $ref: '#/components/schemas/Code'
-        err:
-          $ref: '#/components/schemas/Err'
-      type: object
-    OkAuthExecRes_allOf:
-      properties:
-        sentCode:
-          $ref: '#/components/schemas/Code'
-        resData:
-          type: object
-      type: object
-    SkippedAuthExecRes_allOf:
-      properties:
-        sentCode:
-          $ref: '#/components/schemas/Code'
-      type: object
-    User_auths_value:
-      oneOf:
-      - $ref: '#/components/schemas/AuthUserCfg'
-      x-additionalPropertiesName: auth
-    EditUserReq_allOf:
-      properties:
-        factors:
-          additionalProperties:
-            type: boolean
-            x-additionalPropertiesName: factor
-          description: "Optional factors to enable/disable. If factor marked as required\
-            \ in config, it will be considered enabled\nby default and this request\
-            \ doesn't change this.\n"
-          type: object
-        logins:
-          additionalProperties:
-            type: string
-            x-additionalPropertiesName: loginType
-          type: object
-        authReqs:
-          additionalProperties:
-            x-additionalPropertiesName: auth
-          type: object
-        dryRun:
-          type: boolean
-        systemAccess:
-          type: boolean
-          x-nullable: true
-      type: object
-    BuiltInAuthCfg_allOf:
-      properties:
-        requiresAuth:
-          description: "If this is not null, app forbids to add this auth until listed\
-            \ auth enabled.\n- if this a string -> require specified auth to be enabled\
-            \ before this.\n- array of strings -> require any of listed auths to be\
-            \ enabled\n- array of arrays of strings -> works as `[ [ \"auth1\" and\
-            \ \"auth2\" ] or [ \"auth1\" and \"auth2\" ] ]`"
-          items:
-            items:
-              type: string
-            type: array
-          type: array
-          x-nullable: true
-        skipOnFail:
-          description: |-
-            When this is set to true app will attempt next auth in case of error on current.
-            It's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be
-            executed only when IP auth is failed.
-            If set to false any error on this auth will stop the whole request execution.
-          type: boolean
-        rateLimiter:
-          description: Apply rate limiter for this auth.
-          type: string
-          x-nullable: true
-        burnQuota:
-          description: Every auth execution will burn this amount of quota. Takes
-            place only when rate limiter is specified
-          format: double
-          type: number
-      type: object
     DbsCfg_user:
       description: User database config
       oneOf:
@@ -2816,314 +3762,6 @@ components:
       - $ref: '#/components/schemas/MysqlCfg'
       - $ref: '#/components/schemas/PostgresCfg'
       - $ref: '#/components/schemas/SqliteCfg'
-    EmailAuthCfg_allOf:
-      properties:
-        server:
-          description: Email server address/IP.
-          type: string
-        sender:
-          description: Email address of sender.
-          type: string
-        username:
-          description: SMTP username.
-          type: string
-          x-nullable: true
-        password:
-          description: SMTP password.
-          type: string
-          x-nullable: true
-        confirmationUrl:
-          description: "If not null, server will create template param `confirmationUrl`\
-            \ that will contain query parameters with\nconfirmation code, session\
-            \ id, etc."
-          type: string
-          x-nullable: true
-        templates:
-          additionalProperties:
-            type: string
-            x-additionalPropertiesName: templateName
-          description: "List of email templates. Key - name of template (can be used\
-            \ lately on frontend), value - path to template.\nApp uses handlebars\
-            \ templates to generate emails. See docs here https://handlebarsjs.com\n\
-            \nEmail templates received `confirmationUrl`, `action`, `user`, `session`,\
-            \ `codeId`, `code`, `lang`, `headers`\nas template params, e.g. you can\
-            \ print user id as `{{ user.id }}`.\n\nTemplate engine also provides `i18n`\
-            \ helper for localisation. E.g. `{{i18n 'confirmationButton' default='Confirm'}}`\n\
-            searches key `confirmationButton` in files specified by `i18n.dir` config.\n\
-            \nIt allows setting subject of email using `title` html tag, e.g. `<title>Email\
-            \ subject</title>`.\n\n"
-          example:
-            welcome: ./welcome.html.hbs
-            restoreAccess: ./restore.html.hbs
-          type: object
-        templateParams:
-          additionalProperties:
-            type: string
-            x-additionalPropertiesName: paramName
-          description: |
-            Additional params for template.
-          type: object
-        code:
-          $ref: '#/components/schemas/CodeCfg'
-      type: object
-    InMemoryCfg_allOf:
-      properties:
-        inMemory:
-          type: boolean
-      type: object
-    InTokenCfg_allOf:
-      properties:
-        inToken:
-          type: boolean
-      type: object
-    IpAuthCfg_allOf:
-      properties:
-        ipBytesToIgnore:
-          description: "This allows to drop last bytes of IP. So it allows to authenticate\
-            \ factor when ip has rough match, e.g.\nthe same country, same city, or\
-            \ same internet provider."
-          format: int32
-          type: integer
-        historySize:
-          description: |-
-            History of IP addresses user used to sign-in. Authenticated when user attempts to sign in with one of stored
-            IPs.
-          format: int32
-          type: integer
-      type: object
-    JdbcCfg_allOf:
-      properties:
-        username:
-          type: string
-        password:
-          type: string
-        maxConnections:
-          format: int32
-          type: integer
-      type: object
-    MongoCfg_allOf:
-      properties:
-        mongodb:
-          type: string
-        database:
-          type: string
-      type: object
-    MysqlCfg_allOf:
-      properties:
-        mysql:
-          type: string
-        username:
-          type: string
-        maxConnections:
-          format: int32
-          type: integer
-        password:
-          type: string
-      type: object
-    OAuthCfg_allOf:
-      properties:
-        extractLogin:
-          description: "Path for login in id-token or user-info endpoint response.\n\
-            e.g. `res.user.id` extracts user login from `{ \"res\": { \"user\": {\
-            \ \"id\": \"...\" } } }`"
-          type: string
-        tokenUrl:
-          description: Url to get access token by authorisation code.
-          type: string
-        clientId:
-          description: "OAuth client id. Client must be registered on OAuth provider\
-            \ (e.g. facebook, google)"
-          type: string
-        clientSecret:
-          description: OAuth client secret.
-          type: string
-          x-nullable: true
-        userInfoUrl:
-          description: "If access token provided in request, app tries to extract\
-            \ user id from user-info endpoint."
-          type: string
-        sendTokenInQuery:
-          description: Send token in query param.
-          type: string
-          x-nullable: true
-        sendTokenInHeader:
-          description: Send token in Authorisation header.
-          type: boolean
-        extractPublicData:
-          additionalProperties:
-            type: string
-          description: Can fill public data by a response of user-info or id-token.
-          type: object
-      type: object
-    PasswordAuthCfg_allOf:
-      properties:
-        maxLength:
-          description: Max allowed Length of the password.
-          format: int32
-          type: integer
-        minLength:
-          description: Minimal length of password
-          format: int32
-          type: integer
-        requireNumber:
-          description: Require password to contain at least one digit.
-          type: boolean
-        requireSymbol:
-          description: "Require password to contain at least one symbol e.g. @, !,\
-            \ &..."
-          type: boolean
-        requireUpperCase:
-          description: This requires password to contain both lowercase and uppercase
-            letters.
-          type: boolean
-        forbidCommonPasswords:
-          description: "Password will be checked against table 1,000,000 of most overused\
-            \ passwords."
-          type: boolean
-        forbidLoginAsPassword:
-          description: "Rejects passwords that match username, email, anything that\
-            \ used as a login according to logins config."
-          type: boolean
-        forbidReusingPassword:
-          $ref: '#/components/schemas/PasswordHistoryCfg'
-        strength:
-          additionalProperties:
-            oneOf:
-            - $ref: '#/components/schemas/PasswordStrengthRequirements'
-            x-additionalPropertiesName: PASSWORD_STRENGTH
-          description: |
-            Allows to calculate password strength based on mentioned criteria. Requirements will be checked one by one
-            until first failed.
-          type: object
-      type: object
-    PostgresCfg_allOf:
-      properties:
-        postgres:
-          type: string
-        username:
-          type: string
-        maxConnections:
-          format: int32
-          type: integer
-        password:
-          type: string
-      type: object
-    QuestionsAuthCfg_allOf:
-      properties:
-        lowercase:
-          description: "Transform user answer to lowercase letters. This allows user\
-            \ still pass a check when he wrote name or city\nwith different cases.\
-            \ `false` means strict match, so \"John\" != \"john\""
-          type: boolean
-        removeSymbols:
-          description: Remove all non-letters from user answer.
-          type: boolean
-        removeSpaces:
-          description: Remove all spaces from user answer.
-          type: boolean
-        minLength:
-          description: Min length of answer. Length are checked after all answer transformation.
-          format: int32
-          type: integer
-        maxLength:
-          description: Max length of answer.
-          format: int32
-          type: integer
-        answersRequired:
-          description: Min number of answers required to pass this check.
-          format: int32
-          type: integer
-        maxAnswers:
-          description: Max answers that user can save.
-          format: int32
-          type: integer
-      type: object
-    RedisCfg_allOf:
-      properties:
-        redis:
-          items:
-            type: string
-          type: array
-        cluster:
-          type: boolean
-        database:
-          format: int32
-          type: integer
-        user:
-          type: string
-          x-nullable: true
-        password:
-          type: string
-          x-nullable: true
-        ssl:
-          type: boolean
-        maxConnections:
-          format: int32
-          type: integer
-      type: object
-    RemoteAuthCfg_allOf:
-      properties:
-        remote:
-          description: Path to the API that implements plugin.
-          type: string
-        requiresAuth:
-          description: "If this is not null, app forbids to add this auth until listed\
-            \ auth enabled.\n- if this a string -> require specified auth to be enabled\
-            \ before this.\n- array of strings -> require any of listed auths to be\
-            \ enabled\n- array of arrays of strings -> works as `[ [ \"auth1\" and\
-            \ \"auth2\" ] or [ \"auth1\" and \"auth2\" ] ]`"
-          items:
-            items:
-              type: string
-            type: array
-          type: array
-          x-nullable: true
-        skipOnFail:
-          description: |-
-            When this is set to true app will attempt next auth in case of error on current.
-            It's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be
-            executed only when IP auth is failed.
-            If set to false any error on this auth will stop the whole request execution.
-          type: boolean
-        rateLimiter:
-          description: Apply rate limiter for this auth.
-          type: string
-          x-nullable: true
-        burnQuota:
-          description: Every auth execution will burn this amount of quota. Takes
-            place only when rate limiter is specified
-          format: double
-          type: number
-        query:
-          additionalProperties:
-            type: string
-            x-additionalPropertiesName: queryParam
-          description: |
-            Add query params after `?` symbol in url.
-          type: object
-        headers:
-          additionalProperties:
-            type: string
-            x-additionalPropertiesName: header
-          description: |
-            Add headers to request.
-          type: object
-        code:
-          $ref: '#/components/schemas/CodeCfg'
-      type: object
-    RemoteDbCfg_allOf:
-      properties:
-        remote:
-          type: string
-        query:
-          additionalProperties:
-            type: string
-          type: object
-        headers:
-          additionalProperties:
-            type: string
-          type: object
-      type: object
     SHAppCfg_auths_value:
       oneOf:
       - $ref: '#/components/schemas/RemoteAuthCfg'
@@ -3134,26 +3772,6 @@ components:
       - $ref: '#/components/schemas/PasswordAuthCfg'
       - $ref: '#/components/schemas/QuestionsAuthCfg'
       x-additionalPropertiesName: auth
-    SHAppCfg_entries_value:
-      oneOf:
-      - $ref: '#/components/schemas/EntryCfg'
-      x-additionalPropertiesName: entry
-    SHAppCfg_rateLimiters_value:
-      oneOf:
-      - $ref: '#/components/schemas/RateLimiterCfg'
-      x-additionalPropertiesName: rate-limiter id
-    SqliteCfg_allOf:
-      properties:
-        username:
-          type: string
-        password:
-          type: string
-        maxConnections:
-          format: int32
-          type: integer
-        sqlite:
-          type: string
-      type: object
   securitySchemes:
     access-token:
       in: query

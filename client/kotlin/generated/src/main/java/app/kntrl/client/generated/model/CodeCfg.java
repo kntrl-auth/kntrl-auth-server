@@ -48,7 +48,7 @@ import app.kntrl.client.generated.infra.JSON;
  * If specified - app generates code and requires auth to be confirmed
  */
 @ApiModel(description = "If specified - app generates code and requires auth to be confirmed")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T19:30:17.809690+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class CodeCfg {
   public static final String SERIALIZED_NAME_LENGTH = "length";
   @SerializedName(SERIALIZED_NAME_LENGTH)

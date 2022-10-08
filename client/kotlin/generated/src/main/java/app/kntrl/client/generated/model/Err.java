@@ -20,7 +20,6 @@ import app.kntrl.client.generated.model.AnyErr;
 import app.kntrl.client.generated.model.AuthIsNotConfirmed;
 import app.kntrl.client.generated.model.AuthIsNotEnabled;
 import app.kntrl.client.generated.model.AuthRequiresAnother;
-import app.kntrl.client.generated.model.ClientErr;
 import app.kntrl.client.generated.model.CodeIsExpired;
 import app.kntrl.client.generated.model.CodeIsIncorrect;
 import app.kntrl.client.generated.model.CodeTooManyAttempts;
@@ -74,7 +73,7 @@ import app.kntrl.client.generated.infra.JSON;
 /**
  * Err
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T19:30:17.809690+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class Err {
   public static final String SERIALIZED_NAME_CODE = "code";
   @SerializedName(SERIALIZED_NAME_CODE)
@@ -235,172 +234,50 @@ public class Err {
         }
       }
 
-      String discriminatorValue = jsonObj.get("code").getAsString();
-      switch (discriminatorValue) {
-        case "ACCESS_DENIED":
-          AccessDenied.validateJsonObject(jsonObj);
-          break;
-        case "ANY_ERR":
-          AnyErr.validateJsonObject(jsonObj);
-          break;
-        case "AUTH_IS_NOT_CONFIRMED":
-          AuthIsNotConfirmed.validateJsonObject(jsonObj);
-          break;
-        case "AUTH_IS_NOT_ENABLED":
-          AuthIsNotEnabled.validateJsonObject(jsonObj);
-          break;
-        case "AUTH_REQUIRES_ANOTHER":
-          AuthRequiresAnother.validateJsonObject(jsonObj);
-          break;
-        case "AccessDenied":
-          AccessDenied.validateJsonObject(jsonObj);
-          break;
-        case "AnyErr":
-          AnyErr.validateJsonObject(jsonObj);
-          break;
-        case "AuthIsNotConfirmed":
-          AuthIsNotConfirmed.validateJsonObject(jsonObj);
-          break;
-        case "AuthIsNotEnabled":
-          AuthIsNotEnabled.validateJsonObject(jsonObj);
-          break;
-        case "AuthRequiresAnother":
-          AuthRequiresAnother.validateJsonObject(jsonObj);
-          break;
-        case "CODE_IS_EXPIRED":
-          CodeIsExpired.validateJsonObject(jsonObj);
-          break;
-        case "CODE_IS_INCORRECT":
-          CodeIsIncorrect.validateJsonObject(jsonObj);
-          break;
-        case "CODE_TOO_MANY_ATTEMPTS":
-          CodeTooManyAttempts.validateJsonObject(jsonObj);
-          break;
-        case "ClientErr":
-          ClientErr.validateJsonObject(jsonObj);
-          break;
-        case "CodeIsExpired":
-          CodeIsExpired.validateJsonObject(jsonObj);
-          break;
-        case "CodeIsIncorrect":
-          CodeIsIncorrect.validateJsonObject(jsonObj);
-          break;
-        case "CodeTooManyAttempts":
-          CodeTooManyAttempts.validateJsonObject(jsonObj);
-          break;
-        case "EMAIL_IS_INCORRECT":
-          EmailIsIncorrect.validateJsonObject(jsonObj);
-          break;
-        case "EmailIsIncorrect":
-          EmailIsIncorrect.validateJsonObject(jsonObj);
-          break;
-        case "INTEGRATION_ERR":
-          IntegrationErr.validateJsonObject(jsonObj);
-          break;
-        case "IP_NEW":
-          IpNew.validateJsonObject(jsonObj);
-          break;
-        case "IntegrationErr":
-          IntegrationErr.validateJsonObject(jsonObj);
-          break;
-        case "IpNew":
-          IpNew.validateJsonObject(jsonObj);
-          break;
-        case "NO_AUTH_AVAILABLE_FOR_FACTOR":
-          NoAuthAvailableForFactor.validateJsonObject(jsonObj);
-          break;
-        case "NoAuthAvailableForFactor":
-          NoAuthAvailableForFactor.validateJsonObject(jsonObj);
-          break;
-        case "PASSWORD_IS_INCORRECT":
-          PasswordIsIncorrect.validateJsonObject(jsonObj);
-          break;
-        case "PASSWORD_IS_INVALID":
-          PasswordIsInvalid.validateJsonObject(jsonObj);
-          break;
-        case "PLUGIN_CLIENT_ERR":
-          PluginClientErr.validateJsonObject(jsonObj);
-          break;
-        case "PLUGIN_ERR":
-          PluginErr.validateJsonObject(jsonObj);
-          break;
-        case "PasswordIsIncorrect":
-          PasswordIsIncorrect.validateJsonObject(jsonObj);
-          break;
-        case "PasswordIsInvalid":
-          PasswordIsInvalid.validateJsonObject(jsonObj);
-          break;
-        case "PluginClientErr":
-          PluginClientErr.validateJsonObject(jsonObj);
-          break;
-        case "PluginErr":
-          PluginErr.validateJsonObject(jsonObj);
-          break;
-        case "QUESTIONS_ANSWERS_INCORRECT":
-          QuestionsAnswersIncorrect.validateJsonObject(jsonObj);
-          break;
-        case "QUESTIONS_ANSWERS_INVALID":
-          QuestionsAnswersInvalid.validateJsonObject(jsonObj);
-          break;
-        case "QuestionsAnswersIncorrect":
-          QuestionsAnswersIncorrect.validateJsonObject(jsonObj);
-          break;
-        case "QuestionsAnswersInvalid":
-          QuestionsAnswersInvalid.validateJsonObject(jsonObj);
-          break;
-        case "SERVER_ERR":
-          ServerErr.validateJsonObject(jsonObj);
-          break;
-        case "SESSION_EXPIRED":
-          SessionExpired.validateJsonObject(jsonObj);
-          break;
-        case "SIGNATURE_IS_INCORRECT":
-          SignatureIsIncorrect.validateJsonObject(jsonObj);
-          break;
-        case "ServerErr":
-          ServerErr.validateJsonObject(jsonObj);
-          break;
-        case "SessionExpired":
-          SessionExpired.validateJsonObject(jsonObj);
-          break;
-        case "SignatureIsIncorrect":
-          SignatureIsIncorrect.validateJsonObject(jsonObj);
-          break;
-        case "TOKEN_EXPIRED":
-          TokenExpired.validateJsonObject(jsonObj);
-          break;
-        case "TOO_MANY_REQS":
-          TooManyReqs.validateJsonObject(jsonObj);
-          break;
-        case "TokenExpired":
-          TokenExpired.validateJsonObject(jsonObj);
-          break;
-        case "TooManyReqs":
-          TooManyReqs.validateJsonObject(jsonObj);
-          break;
-        case "UNAUTHENTICATED":
-          Unauthenticated.validateJsonObject(jsonObj);
-          break;
-        case "USER_LOGIN_ALREADY_TAKEN":
-          UserLoginAlreadyTaken.validateJsonObject(jsonObj);
-          break;
-        case "USER_NOT_FOUND":
-          UserNotFound.validateJsonObject(jsonObj);
-          break;
-        case "Unauthenticated":
-          Unauthenticated.validateJsonObject(jsonObj);
-          break;
-        case "UserLoginAlreadyTaken":
-          UserLoginAlreadyTaken.validateJsonObject(jsonObj);
-          break;
-        case "UserNotFound":
-          UserNotFound.validateJsonObject(jsonObj);
-          break;
-        default: 
-          throw new IllegalArgumentException(String.format("The value of the `code` field `%s` does not match any key defined in the discriminator's mapping.", discriminatorValue));
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!Err.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `Err` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+
+      // check to make sure all required properties/fields are present in the JSON string
+      for (String requiredField : Err.openapiRequiredFields) {
+        if (jsonObj.get(requiredField) == null) {
+          throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonObj.toString()));
+        }
       }
   }
 
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!Err.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'Err' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<Err> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(Err.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<Err>() {
+           @Override
+           public void write(JsonWriter out, Err value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public Err read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
 
  /**
   * Create an instance of Err given an JSON string

@@ -15,9 +15,6 @@ package app.kntrl.client.generated.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import app.kntrl.client.generated.model.BuiltInAuthCfg;
-import app.kntrl.client.generated.model.OneOfPasswordStrengthRequirements;
-import app.kntrl.client.generated.model.PasswordAuthCfgAllOf;
 import app.kntrl.client.generated.model.PasswordHistoryCfg;
 import app.kntrl.client.generated.model.PasswordStrengthRequirements;
 import com.google.gson.TypeAdapter;
@@ -57,7 +54,7 @@ import app.kntrl.client.generated.infra.JSON;
  * Password authentication. To enable this auth set auth name to \&quot;password\&quot; or use \&quot;builtin\&quot;: \&quot;password\&quot; param.
  */
 @ApiModel(description = "Password authentication. To enable this auth set auth name to \"password\" or use \"builtin\": \"password\" param.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T19:30:17.809690+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class PasswordAuthCfg {
   public static final String SERIALIZED_NAME_REQUIRES_AUTH = "requiresAuth";
   @SerializedName(SERIALIZED_NAME_REQUIRES_AUTH)
@@ -109,7 +106,7 @@ public class PasswordAuthCfg {
 
   public static final String SERIALIZED_NAME_STRENGTH = "strength";
   @SerializedName(SERIALIZED_NAME_STRENGTH)
-  private Map<String, OneOfPasswordStrengthRequirements> strength = null;
+  private Map<String, PasswordStrengthRequirements> strength = null;
 
   public PasswordAuthCfg() { 
   }
@@ -398,13 +395,13 @@ public class PasswordAuthCfg {
   }
 
 
-  public PasswordAuthCfg strength(Map<String, OneOfPasswordStrengthRequirements> strength) {
+  public PasswordAuthCfg strength(Map<String, PasswordStrengthRequirements> strength) {
     
     this.strength = strength;
     return this;
   }
 
-  public PasswordAuthCfg putStrengthItem(String key, OneOfPasswordStrengthRequirements strengthItem) {
+  public PasswordAuthCfg putStrengthItem(String key, PasswordStrengthRequirements strengthItem) {
     if (this.strength == null) {
       this.strength = new HashMap<>();
     }
@@ -419,12 +416,12 @@ public class PasswordAuthCfg {
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Allows to calculate password strength based on mentioned criteria. Requirements will be checked one by one until first failed. ")
 
-  public Map<String, OneOfPasswordStrengthRequirements> getStrength() {
+  public Map<String, PasswordStrengthRequirements> getStrength() {
     return strength;
   }
 
 
-  public void setStrength(Map<String, OneOfPasswordStrengthRequirements> strength) {
+  public void setStrength(Map<String, PasswordStrengthRequirements> strength) {
     this.strength = strength;
   }
 

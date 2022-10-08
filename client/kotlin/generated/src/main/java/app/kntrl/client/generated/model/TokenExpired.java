@@ -15,12 +15,6 @@ package app.kntrl.client.generated.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import app.kntrl.client.generated.model.AccessDenied;
-import app.kntrl.client.generated.model.SessionExpired;
-import app.kntrl.client.generated.model.TokenExpired;
-import app.kntrl.client.generated.model.TokenExpiredAllOf;
-import app.kntrl.client.generated.model.Unauthenticated;
-import app.kntrl.client.generated.model.UserNotFound;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -53,15 +47,95 @@ import app.kntrl.client.generated.infra.JSON;
 /**
  * TokenExpired
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T19:30:17.809690+03:00[Europe/Kiev]")
-public class TokenExpired extends Unauthenticated {
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+public class TokenExpired {
+  public static final String SERIALIZED_NAME_CODE = "code";
+  @SerializedName(SERIALIZED_NAME_CODE)
+  private String code;
+
+  public static final String SERIALIZED_NAME_DEV_MSG = "devMsg";
+  @SerializedName(SERIALIZED_NAME_DEV_MSG)
+  private String devMsg;
+
+  public static final String SERIALIZED_NAME_MSG = "msg";
+  @SerializedName(SERIALIZED_NAME_MSG)
+  private String msg;
+
   public static final String SERIALIZED_NAME_EXPIRED_AT = "expiredAt";
   @SerializedName(SERIALIZED_NAME_EXPIRED_AT)
   private Long expiredAt;
 
   public TokenExpired() { 
-    this.code = this.getClass().getSimpleName();
   }
+
+  public TokenExpired code(String code) {
+    
+    this.code = code;
+    return this;
+  }
+
+   /**
+   * Get code
+   * @return code
+  **/
+  @javax.annotation.Nonnull
+  @ApiModelProperty(required = true, value = "")
+
+  public String getCode() {
+    return code;
+  }
+
+
+  public void setCode(String code) {
+    this.code = code;
+  }
+
+
+  public TokenExpired devMsg(String devMsg) {
+    
+    this.devMsg = devMsg;
+    return this;
+  }
+
+   /**
+   * Message for developers.
+   * @return devMsg
+  **/
+  @javax.annotation.Nonnull
+  @ApiModelProperty(required = true, value = "Message for developers.")
+
+  public String getDevMsg() {
+    return devMsg;
+  }
+
+
+  public void setDevMsg(String devMsg) {
+    this.devMsg = devMsg;
+  }
+
+
+  public TokenExpired msg(String msg) {
+    
+    this.msg = msg;
+    return this;
+  }
+
+   /**
+   * Localised message suitable for UI.
+   * @return msg
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Localised message suitable for UI.")
+
+  public String getMsg() {
+    return msg;
+  }
+
+
+  public void setMsg(String msg) {
+    this.msg = msg;
+  }
+
 
   public TokenExpired expiredAt(Long expiredAt) {
     
@@ -96,20 +170,24 @@ public class TokenExpired extends Unauthenticated {
       return false;
     }
     TokenExpired tokenExpired = (TokenExpired) o;
-    return Objects.equals(this.expiredAt, tokenExpired.expiredAt) &&
-        super.equals(o);
+    return Objects.equals(this.code, tokenExpired.code) &&
+        Objects.equals(this.devMsg, tokenExpired.devMsg) &&
+        Objects.equals(this.msg, tokenExpired.msg) &&
+        Objects.equals(this.expiredAt, tokenExpired.expiredAt);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(expiredAt, super.hashCode());
+    return Objects.hash(code, devMsg, msg, expiredAt);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class TokenExpired {\n");
-    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
+    sb.append("    code: ").append(toIndentedString(code)).append("\n");
+    sb.append("    devMsg: ").append(toIndentedString(devMsg)).append("\n");
+    sb.append("    msg: ").append(toIndentedString(msg)).append("\n");
     sb.append("    expiredAt: ").append(toIndentedString(expiredAt)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -172,6 +250,15 @@ public class TokenExpired extends Unauthenticated {
         if (jsonObj.get(requiredField) == null) {
           throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonObj.toString()));
         }
+      }
+      if (jsonObj.get("code") != null && !jsonObj.get("code").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `code` to be a primitive type in the JSON string but got `%s`", jsonObj.get("code").toString()));
+      }
+      if (jsonObj.get("devMsg") != null && !jsonObj.get("devMsg").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `devMsg` to be a primitive type in the JSON string but got `%s`", jsonObj.get("devMsg").toString()));
+      }
+      if (jsonObj.get("msg") != null && !jsonObj.get("msg").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `msg` to be a primitive type in the JSON string but got `%s`", jsonObj.get("msg").toString()));
       }
   }
 

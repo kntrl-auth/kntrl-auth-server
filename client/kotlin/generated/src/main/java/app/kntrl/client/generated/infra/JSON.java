@@ -58,158 +58,16 @@ public class JSON {
     @SuppressWarnings("unchecked")
     public static GsonBuilder createGson() {
         GsonFireBuilder fireBuilder = new GsonFireBuilder()
-                .registerTypeSelector(app.kntrl.client.generated.model.AccessDenied.class, new TypeSelector<app.kntrl.client.generated.model.AccessDenied>() {
-                    @Override
-                    public Class<? extends app.kntrl.client.generated.model.AccessDenied> getClassForElement(JsonElement readElement) {
-                        Map<String, Class> classByDiscriminatorValue = new HashMap<String, Class>();
-                        classByDiscriminatorValue.put("ACCESS_DENIED", app.kntrl.client.generated.model.AccessDenied.class);
-                        classByDiscriminatorValue.put("SESSION_EXPIRED", app.kntrl.client.generated.model.SessionExpired.class);
-                        classByDiscriminatorValue.put("TOKEN_EXPIRED", app.kntrl.client.generated.model.TokenExpired.class);
-                        classByDiscriminatorValue.put("UNAUTHENTICATED", app.kntrl.client.generated.model.Unauthenticated.class);
-                        classByDiscriminatorValue.put("USER_NOT_FOUND", app.kntrl.client.generated.model.UserNotFound.class);
-                        classByDiscriminatorValue.put("AccessDenied", app.kntrl.client.generated.model.AccessDenied.class);
-                        return getClassByDiscriminator(classByDiscriminatorValue,
-                                getDiscriminatorValue(readElement, "code"));
-                    }
-          })
-                .registerTypeSelector(app.kntrl.client.generated.model.AnyErr.class, new TypeSelector<app.kntrl.client.generated.model.AnyErr>() {
-                    @Override
-                    public Class<? extends app.kntrl.client.generated.model.AnyErr> getClassForElement(JsonElement readElement) {
-                        Map<String, Class> classByDiscriminatorValue = new HashMap<String, Class>();
-                        classByDiscriminatorValue.put("ACCESS_DENIED", app.kntrl.client.generated.model.AccessDenied.class);
-                        classByDiscriminatorValue.put("ANY_ERR", app.kntrl.client.generated.model.AnyErr.class);
-                        classByDiscriminatorValue.put("AUTH_IS_NOT_CONFIRMED", app.kntrl.client.generated.model.AuthIsNotConfirmed.class);
-                        classByDiscriminatorValue.put("AUTH_IS_NOT_ENABLED", app.kntrl.client.generated.model.AuthIsNotEnabled.class);
-                        classByDiscriminatorValue.put("AUTH_REQUIRES_ANOTHER", app.kntrl.client.generated.model.AuthRequiresAnother.class);
-                        classByDiscriminatorValue.put("CODE_IS_EXPIRED", app.kntrl.client.generated.model.CodeIsExpired.class);
-                        classByDiscriminatorValue.put("CODE_IS_INCORRECT", app.kntrl.client.generated.model.CodeIsIncorrect.class);
-                        classByDiscriminatorValue.put("CODE_TOO_MANY_ATTEMPTS", app.kntrl.client.generated.model.CodeTooManyAttempts.class);
-                        classByDiscriminatorValue.put("EMAIL_IS_INCORRECT", app.kntrl.client.generated.model.EmailIsIncorrect.class);
-                        classByDiscriminatorValue.put("INTEGRATION_ERR", app.kntrl.client.generated.model.IntegrationErr.class);
-                        classByDiscriminatorValue.put("IP_NEW", app.kntrl.client.generated.model.IpNew.class);
-                        classByDiscriminatorValue.put("NO_AUTH_AVAILABLE_FOR_FACTOR", app.kntrl.client.generated.model.NoAuthAvailableForFactor.class);
-                        classByDiscriminatorValue.put("PASSWORD_IS_INCORRECT", app.kntrl.client.generated.model.PasswordIsIncorrect.class);
-                        classByDiscriminatorValue.put("PASSWORD_IS_INVALID", app.kntrl.client.generated.model.PasswordIsInvalid.class);
-                        classByDiscriminatorValue.put("PLUGIN_CLIENT_ERR", app.kntrl.client.generated.model.PluginClientErr.class);
-                        classByDiscriminatorValue.put("PLUGIN_ERR", app.kntrl.client.generated.model.PluginErr.class);
-                        classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INCORRECT", app.kntrl.client.generated.model.QuestionsAnswersIncorrect.class);
-                        classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INVALID", app.kntrl.client.generated.model.QuestionsAnswersInvalid.class);
-                        classByDiscriminatorValue.put("SERVER_ERR", app.kntrl.client.generated.model.ServerErr.class);
-                        classByDiscriminatorValue.put("SESSION_EXPIRED", app.kntrl.client.generated.model.SessionExpired.class);
-                        classByDiscriminatorValue.put("SIGNATURE_IS_INCORRECT", app.kntrl.client.generated.model.SignatureIsIncorrect.class);
-                        classByDiscriminatorValue.put("TOKEN_EXPIRED", app.kntrl.client.generated.model.TokenExpired.class);
-                        classByDiscriminatorValue.put("TOO_MANY_REQS", app.kntrl.client.generated.model.TooManyReqs.class);
-                        classByDiscriminatorValue.put("UNAUTHENTICATED", app.kntrl.client.generated.model.Unauthenticated.class);
-                        classByDiscriminatorValue.put("USER_LOGIN_ALREADY_TAKEN", app.kntrl.client.generated.model.UserLoginAlreadyTaken.class);
-                        classByDiscriminatorValue.put("USER_NOT_FOUND", app.kntrl.client.generated.model.UserNotFound.class);
-                        classByDiscriminatorValue.put("AnyErr", app.kntrl.client.generated.model.AnyErr.class);
-                        return getClassByDiscriminator(classByDiscriminatorValue,
-                                getDiscriminatorValue(readElement, "code"));
-                    }
-          })
                 .registerTypeSelector(app.kntrl.client.generated.model.AuthExecRes.class, new TypeSelector<app.kntrl.client.generated.model.AuthExecRes>() {
                     @Override
                     public Class<? extends app.kntrl.client.generated.model.AuthExecRes> getClassForElement(JsonElement readElement) {
                         Map<String, Class> classByDiscriminatorValue = new HashMap<String, Class>();
                         classByDiscriminatorValue.put("ERR", app.kntrl.client.generated.model.ErrAuthExecRes.class);
-                        classByDiscriminatorValue.put("ErrAuthExecRes", app.kntrl.client.generated.model.ErrAuthExecRes.class);
                         classByDiscriminatorValue.put("OK", app.kntrl.client.generated.model.OkAuthExecRes.class);
-                        classByDiscriminatorValue.put("OkAuthExecRes", app.kntrl.client.generated.model.OkAuthExecRes.class);
                         classByDiscriminatorValue.put("SKIPPED", app.kntrl.client.generated.model.SkippedAuthExecRes.class);
-                        classByDiscriminatorValue.put("SkippedAuthExecRes", app.kntrl.client.generated.model.SkippedAuthExecRes.class);
                         classByDiscriminatorValue.put("AuthExecRes", app.kntrl.client.generated.model.AuthExecRes.class);
                         return getClassByDiscriminator(classByDiscriminatorValue,
                                 getDiscriminatorValue(readElement, "status"));
-                    }
-          })
-                .registerTypeSelector(app.kntrl.client.generated.model.AuthIsNotConfirmed.class, new TypeSelector<app.kntrl.client.generated.model.AuthIsNotConfirmed>() {
-                    @Override
-                    public Class<? extends app.kntrl.client.generated.model.AuthIsNotConfirmed> getClassForElement(JsonElement readElement) {
-                        Map<String, Class> classByDiscriminatorValue = new HashMap<String, Class>();
-                        classByDiscriminatorValue.put("ACCESS_DENIED", app.kntrl.client.generated.model.AccessDenied.class);
-                        classByDiscriminatorValue.put("AUTH_IS_NOT_CONFIRMED", app.kntrl.client.generated.model.AuthIsNotConfirmed.class);
-                        classByDiscriminatorValue.put("AUTH_IS_NOT_ENABLED", app.kntrl.client.generated.model.AuthIsNotEnabled.class);
-                        classByDiscriminatorValue.put("AUTH_REQUIRES_ANOTHER", app.kntrl.client.generated.model.AuthRequiresAnother.class);
-                        classByDiscriminatorValue.put("CODE_IS_EXPIRED", app.kntrl.client.generated.model.CodeIsExpired.class);
-                        classByDiscriminatorValue.put("CODE_IS_INCORRECT", app.kntrl.client.generated.model.CodeIsIncorrect.class);
-                        classByDiscriminatorValue.put("CODE_TOO_MANY_ATTEMPTS", app.kntrl.client.generated.model.CodeTooManyAttempts.class);
-                        classByDiscriminatorValue.put("EMAIL_IS_INCORRECT", app.kntrl.client.generated.model.EmailIsIncorrect.class);
-                        classByDiscriminatorValue.put("IP_NEW", app.kntrl.client.generated.model.IpNew.class);
-                        classByDiscriminatorValue.put("PASSWORD_IS_INCORRECT", app.kntrl.client.generated.model.PasswordIsIncorrect.class);
-                        classByDiscriminatorValue.put("PASSWORD_IS_INVALID", app.kntrl.client.generated.model.PasswordIsInvalid.class);
-                        classByDiscriminatorValue.put("PLUGIN_CLIENT_ERR", app.kntrl.client.generated.model.PluginClientErr.class);
-                        classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INCORRECT", app.kntrl.client.generated.model.QuestionsAnswersIncorrect.class);
-                        classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INVALID", app.kntrl.client.generated.model.QuestionsAnswersInvalid.class);
-                        classByDiscriminatorValue.put("SESSION_EXPIRED", app.kntrl.client.generated.model.SessionExpired.class);
-                        classByDiscriminatorValue.put("SIGNATURE_IS_INCORRECT", app.kntrl.client.generated.model.SignatureIsIncorrect.class);
-                        classByDiscriminatorValue.put("TOKEN_EXPIRED", app.kntrl.client.generated.model.TokenExpired.class);
-                        classByDiscriminatorValue.put("TOO_MANY_REQS", app.kntrl.client.generated.model.TooManyReqs.class);
-                        classByDiscriminatorValue.put("UNAUTHENTICATED", app.kntrl.client.generated.model.Unauthenticated.class);
-                        classByDiscriminatorValue.put("USER_LOGIN_ALREADY_TAKEN", app.kntrl.client.generated.model.UserLoginAlreadyTaken.class);
-                        classByDiscriminatorValue.put("USER_NOT_FOUND", app.kntrl.client.generated.model.UserNotFound.class);
-                        classByDiscriminatorValue.put("AuthIsNotConfirmed", app.kntrl.client.generated.model.AuthIsNotConfirmed.class);
-                        return getClassByDiscriminator(classByDiscriminatorValue,
-                                getDiscriminatorValue(readElement, "code"));
-                    }
-          })
-                .registerTypeSelector(app.kntrl.client.generated.model.AuthIsNotEnabled.class, new TypeSelector<app.kntrl.client.generated.model.AuthIsNotEnabled>() {
-                    @Override
-                    public Class<? extends app.kntrl.client.generated.model.AuthIsNotEnabled> getClassForElement(JsonElement readElement) {
-                        Map<String, Class> classByDiscriminatorValue = new HashMap<String, Class>();
-                        classByDiscriminatorValue.put("ACCESS_DENIED", app.kntrl.client.generated.model.AccessDenied.class);
-                        classByDiscriminatorValue.put("AUTH_IS_NOT_CONFIRMED", app.kntrl.client.generated.model.AuthIsNotConfirmed.class);
-                        classByDiscriminatorValue.put("AUTH_IS_NOT_ENABLED", app.kntrl.client.generated.model.AuthIsNotEnabled.class);
-                        classByDiscriminatorValue.put("AUTH_REQUIRES_ANOTHER", app.kntrl.client.generated.model.AuthRequiresAnother.class);
-                        classByDiscriminatorValue.put("CODE_IS_EXPIRED", app.kntrl.client.generated.model.CodeIsExpired.class);
-                        classByDiscriminatorValue.put("CODE_IS_INCORRECT", app.kntrl.client.generated.model.CodeIsIncorrect.class);
-                        classByDiscriminatorValue.put("CODE_TOO_MANY_ATTEMPTS", app.kntrl.client.generated.model.CodeTooManyAttempts.class);
-                        classByDiscriminatorValue.put("EMAIL_IS_INCORRECT", app.kntrl.client.generated.model.EmailIsIncorrect.class);
-                        classByDiscriminatorValue.put("IP_NEW", app.kntrl.client.generated.model.IpNew.class);
-                        classByDiscriminatorValue.put("PASSWORD_IS_INCORRECT", app.kntrl.client.generated.model.PasswordIsIncorrect.class);
-                        classByDiscriminatorValue.put("PASSWORD_IS_INVALID", app.kntrl.client.generated.model.PasswordIsInvalid.class);
-                        classByDiscriminatorValue.put("PLUGIN_CLIENT_ERR", app.kntrl.client.generated.model.PluginClientErr.class);
-                        classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INCORRECT", app.kntrl.client.generated.model.QuestionsAnswersIncorrect.class);
-                        classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INVALID", app.kntrl.client.generated.model.QuestionsAnswersInvalid.class);
-                        classByDiscriminatorValue.put("SESSION_EXPIRED", app.kntrl.client.generated.model.SessionExpired.class);
-                        classByDiscriminatorValue.put("SIGNATURE_IS_INCORRECT", app.kntrl.client.generated.model.SignatureIsIncorrect.class);
-                        classByDiscriminatorValue.put("TOKEN_EXPIRED", app.kntrl.client.generated.model.TokenExpired.class);
-                        classByDiscriminatorValue.put("TOO_MANY_REQS", app.kntrl.client.generated.model.TooManyReqs.class);
-                        classByDiscriminatorValue.put("UNAUTHENTICATED", app.kntrl.client.generated.model.Unauthenticated.class);
-                        classByDiscriminatorValue.put("USER_LOGIN_ALREADY_TAKEN", app.kntrl.client.generated.model.UserLoginAlreadyTaken.class);
-                        classByDiscriminatorValue.put("USER_NOT_FOUND", app.kntrl.client.generated.model.UserNotFound.class);
-                        classByDiscriminatorValue.put("AuthIsNotEnabled", app.kntrl.client.generated.model.AuthIsNotEnabled.class);
-                        return getClassByDiscriminator(classByDiscriminatorValue,
-                                getDiscriminatorValue(readElement, "code"));
-                    }
-          })
-                .registerTypeSelector(app.kntrl.client.generated.model.AuthRequiresAnother.class, new TypeSelector<app.kntrl.client.generated.model.AuthRequiresAnother>() {
-                    @Override
-                    public Class<? extends app.kntrl.client.generated.model.AuthRequiresAnother> getClassForElement(JsonElement readElement) {
-                        Map<String, Class> classByDiscriminatorValue = new HashMap<String, Class>();
-                        classByDiscriminatorValue.put("ACCESS_DENIED", app.kntrl.client.generated.model.AccessDenied.class);
-                        classByDiscriminatorValue.put("AUTH_IS_NOT_CONFIRMED", app.kntrl.client.generated.model.AuthIsNotConfirmed.class);
-                        classByDiscriminatorValue.put("AUTH_IS_NOT_ENABLED", app.kntrl.client.generated.model.AuthIsNotEnabled.class);
-                        classByDiscriminatorValue.put("AUTH_REQUIRES_ANOTHER", app.kntrl.client.generated.model.AuthRequiresAnother.class);
-                        classByDiscriminatorValue.put("CODE_IS_EXPIRED", app.kntrl.client.generated.model.CodeIsExpired.class);
-                        classByDiscriminatorValue.put("CODE_IS_INCORRECT", app.kntrl.client.generated.model.CodeIsIncorrect.class);
-                        classByDiscriminatorValue.put("CODE_TOO_MANY_ATTEMPTS", app.kntrl.client.generated.model.CodeTooManyAttempts.class);
-                        classByDiscriminatorValue.put("EMAIL_IS_INCORRECT", app.kntrl.client.generated.model.EmailIsIncorrect.class);
-                        classByDiscriminatorValue.put("IP_NEW", app.kntrl.client.generated.model.IpNew.class);
-                        classByDiscriminatorValue.put("PASSWORD_IS_INCORRECT", app.kntrl.client.generated.model.PasswordIsIncorrect.class);
-                        classByDiscriminatorValue.put("PASSWORD_IS_INVALID", app.kntrl.client.generated.model.PasswordIsInvalid.class);
-                        classByDiscriminatorValue.put("PLUGIN_CLIENT_ERR", app.kntrl.client.generated.model.PluginClientErr.class);
-                        classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INCORRECT", app.kntrl.client.generated.model.QuestionsAnswersIncorrect.class);
-                        classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INVALID", app.kntrl.client.generated.model.QuestionsAnswersInvalid.class);
-                        classByDiscriminatorValue.put("SESSION_EXPIRED", app.kntrl.client.generated.model.SessionExpired.class);
-                        classByDiscriminatorValue.put("SIGNATURE_IS_INCORRECT", app.kntrl.client.generated.model.SignatureIsIncorrect.class);
-                        classByDiscriminatorValue.put("TOKEN_EXPIRED", app.kntrl.client.generated.model.TokenExpired.class);
-                        classByDiscriminatorValue.put("TOO_MANY_REQS", app.kntrl.client.generated.model.TooManyReqs.class);
-                        classByDiscriminatorValue.put("UNAUTHENTICATED", app.kntrl.client.generated.model.Unauthenticated.class);
-                        classByDiscriminatorValue.put("USER_LOGIN_ALREADY_TAKEN", app.kntrl.client.generated.model.UserLoginAlreadyTaken.class);
-                        classByDiscriminatorValue.put("USER_NOT_FOUND", app.kntrl.client.generated.model.UserNotFound.class);
-                        classByDiscriminatorValue.put("AuthRequiresAnother", app.kntrl.client.generated.model.AuthRequiresAnother.class);
-                        return getClassByDiscriminator(classByDiscriminatorValue,
-                                getDiscriminatorValue(readElement, "code"));
                     }
           })
                 .registerTypeSelector(app.kntrl.client.generated.model.ClientErr.class, new TypeSelector<app.kntrl.client.generated.model.ClientErr>() {
@@ -220,165 +78,24 @@ public class JSON {
                         classByDiscriminatorValue.put("AUTH_IS_NOT_CONFIRMED", app.kntrl.client.generated.model.AuthIsNotConfirmed.class);
                         classByDiscriminatorValue.put("AUTH_IS_NOT_ENABLED", app.kntrl.client.generated.model.AuthIsNotEnabled.class);
                         classByDiscriminatorValue.put("AUTH_REQUIRES_ANOTHER", app.kntrl.client.generated.model.AuthRequiresAnother.class);
-                        classByDiscriminatorValue.put("AccessDenied", app.kntrl.client.generated.model.AccessDenied.class);
-                        classByDiscriminatorValue.put("AuthIsNotConfirmed", app.kntrl.client.generated.model.AuthIsNotConfirmed.class);
-                        classByDiscriminatorValue.put("AuthIsNotEnabled", app.kntrl.client.generated.model.AuthIsNotEnabled.class);
-                        classByDiscriminatorValue.put("AuthRequiresAnother", app.kntrl.client.generated.model.AuthRequiresAnother.class);
                         classByDiscriminatorValue.put("CODE_IS_EXPIRED", app.kntrl.client.generated.model.CodeIsExpired.class);
                         classByDiscriminatorValue.put("CODE_IS_INCORRECT", app.kntrl.client.generated.model.CodeIsIncorrect.class);
                         classByDiscriminatorValue.put("CODE_TOO_MANY_ATTEMPTS", app.kntrl.client.generated.model.CodeTooManyAttempts.class);
-                        classByDiscriminatorValue.put("CodeIsExpired", app.kntrl.client.generated.model.CodeIsExpired.class);
-                        classByDiscriminatorValue.put("CodeIsIncorrect", app.kntrl.client.generated.model.CodeIsIncorrect.class);
-                        classByDiscriminatorValue.put("CodeTooManyAttempts", app.kntrl.client.generated.model.CodeTooManyAttempts.class);
                         classByDiscriminatorValue.put("EMAIL_IS_INCORRECT", app.kntrl.client.generated.model.EmailIsIncorrect.class);
-                        classByDiscriminatorValue.put("EmailIsIncorrect", app.kntrl.client.generated.model.EmailIsIncorrect.class);
                         classByDiscriminatorValue.put("IP_NEW", app.kntrl.client.generated.model.IpNew.class);
-                        classByDiscriminatorValue.put("IpNew", app.kntrl.client.generated.model.IpNew.class);
                         classByDiscriminatorValue.put("PASSWORD_IS_INCORRECT", app.kntrl.client.generated.model.PasswordIsIncorrect.class);
                         classByDiscriminatorValue.put("PASSWORD_IS_INVALID", app.kntrl.client.generated.model.PasswordIsInvalid.class);
                         classByDiscriminatorValue.put("PLUGIN_CLIENT_ERR", app.kntrl.client.generated.model.PluginClientErr.class);
-                        classByDiscriminatorValue.put("PasswordIsIncorrect", app.kntrl.client.generated.model.PasswordIsIncorrect.class);
-                        classByDiscriminatorValue.put("PasswordIsInvalid", app.kntrl.client.generated.model.PasswordIsInvalid.class);
-                        classByDiscriminatorValue.put("PluginClientErr", app.kntrl.client.generated.model.PluginClientErr.class);
                         classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INCORRECT", app.kntrl.client.generated.model.QuestionsAnswersIncorrect.class);
                         classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INVALID", app.kntrl.client.generated.model.QuestionsAnswersInvalid.class);
-                        classByDiscriminatorValue.put("QuestionsAnswersIncorrect", app.kntrl.client.generated.model.QuestionsAnswersIncorrect.class);
-                        classByDiscriminatorValue.put("QuestionsAnswersInvalid", app.kntrl.client.generated.model.QuestionsAnswersInvalid.class);
                         classByDiscriminatorValue.put("SESSION_EXPIRED", app.kntrl.client.generated.model.SessionExpired.class);
                         classByDiscriminatorValue.put("SIGNATURE_IS_INCORRECT", app.kntrl.client.generated.model.SignatureIsIncorrect.class);
-                        classByDiscriminatorValue.put("SessionExpired", app.kntrl.client.generated.model.SessionExpired.class);
-                        classByDiscriminatorValue.put("SignatureIsIncorrect", app.kntrl.client.generated.model.SignatureIsIncorrect.class);
                         classByDiscriminatorValue.put("TOKEN_EXPIRED", app.kntrl.client.generated.model.TokenExpired.class);
                         classByDiscriminatorValue.put("TOO_MANY_REQS", app.kntrl.client.generated.model.TooManyReqs.class);
-                        classByDiscriminatorValue.put("TokenExpired", app.kntrl.client.generated.model.TokenExpired.class);
-                        classByDiscriminatorValue.put("TooManyReqs", app.kntrl.client.generated.model.TooManyReqs.class);
                         classByDiscriminatorValue.put("UNAUTHENTICATED", app.kntrl.client.generated.model.Unauthenticated.class);
                         classByDiscriminatorValue.put("USER_LOGIN_ALREADY_TAKEN", app.kntrl.client.generated.model.UserLoginAlreadyTaken.class);
                         classByDiscriminatorValue.put("USER_NOT_FOUND", app.kntrl.client.generated.model.UserNotFound.class);
-                        classByDiscriminatorValue.put("Unauthenticated", app.kntrl.client.generated.model.Unauthenticated.class);
-                        classByDiscriminatorValue.put("UserLoginAlreadyTaken", app.kntrl.client.generated.model.UserLoginAlreadyTaken.class);
-                        classByDiscriminatorValue.put("UserNotFound", app.kntrl.client.generated.model.UserNotFound.class);
                         classByDiscriminatorValue.put("ClientErr", app.kntrl.client.generated.model.ClientErr.class);
-                        return getClassByDiscriminator(classByDiscriminatorValue,
-                                getDiscriminatorValue(readElement, "code"));
-                    }
-          })
-                .registerTypeSelector(app.kntrl.client.generated.model.CodeIsExpired.class, new TypeSelector<app.kntrl.client.generated.model.CodeIsExpired>() {
-                    @Override
-                    public Class<? extends app.kntrl.client.generated.model.CodeIsExpired> getClassForElement(JsonElement readElement) {
-                        Map<String, Class> classByDiscriminatorValue = new HashMap<String, Class>();
-                        classByDiscriminatorValue.put("ACCESS_DENIED", app.kntrl.client.generated.model.AccessDenied.class);
-                        classByDiscriminatorValue.put("AUTH_IS_NOT_CONFIRMED", app.kntrl.client.generated.model.AuthIsNotConfirmed.class);
-                        classByDiscriminatorValue.put("AUTH_IS_NOT_ENABLED", app.kntrl.client.generated.model.AuthIsNotEnabled.class);
-                        classByDiscriminatorValue.put("AUTH_REQUIRES_ANOTHER", app.kntrl.client.generated.model.AuthRequiresAnother.class);
-                        classByDiscriminatorValue.put("CODE_IS_EXPIRED", app.kntrl.client.generated.model.CodeIsExpired.class);
-                        classByDiscriminatorValue.put("CODE_IS_INCORRECT", app.kntrl.client.generated.model.CodeIsIncorrect.class);
-                        classByDiscriminatorValue.put("CODE_TOO_MANY_ATTEMPTS", app.kntrl.client.generated.model.CodeTooManyAttempts.class);
-                        classByDiscriminatorValue.put("EMAIL_IS_INCORRECT", app.kntrl.client.generated.model.EmailIsIncorrect.class);
-                        classByDiscriminatorValue.put("IP_NEW", app.kntrl.client.generated.model.IpNew.class);
-                        classByDiscriminatorValue.put("PASSWORD_IS_INCORRECT", app.kntrl.client.generated.model.PasswordIsIncorrect.class);
-                        classByDiscriminatorValue.put("PASSWORD_IS_INVALID", app.kntrl.client.generated.model.PasswordIsInvalid.class);
-                        classByDiscriminatorValue.put("PLUGIN_CLIENT_ERR", app.kntrl.client.generated.model.PluginClientErr.class);
-                        classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INCORRECT", app.kntrl.client.generated.model.QuestionsAnswersIncorrect.class);
-                        classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INVALID", app.kntrl.client.generated.model.QuestionsAnswersInvalid.class);
-                        classByDiscriminatorValue.put("SESSION_EXPIRED", app.kntrl.client.generated.model.SessionExpired.class);
-                        classByDiscriminatorValue.put("SIGNATURE_IS_INCORRECT", app.kntrl.client.generated.model.SignatureIsIncorrect.class);
-                        classByDiscriminatorValue.put("TOKEN_EXPIRED", app.kntrl.client.generated.model.TokenExpired.class);
-                        classByDiscriminatorValue.put("TOO_MANY_REQS", app.kntrl.client.generated.model.TooManyReqs.class);
-                        classByDiscriminatorValue.put("UNAUTHENTICATED", app.kntrl.client.generated.model.Unauthenticated.class);
-                        classByDiscriminatorValue.put("USER_LOGIN_ALREADY_TAKEN", app.kntrl.client.generated.model.UserLoginAlreadyTaken.class);
-                        classByDiscriminatorValue.put("USER_NOT_FOUND", app.kntrl.client.generated.model.UserNotFound.class);
-                        classByDiscriminatorValue.put("CodeIsExpired", app.kntrl.client.generated.model.CodeIsExpired.class);
-                        return getClassByDiscriminator(classByDiscriminatorValue,
-                                getDiscriminatorValue(readElement, "code"));
-                    }
-          })
-                .registerTypeSelector(app.kntrl.client.generated.model.CodeIsIncorrect.class, new TypeSelector<app.kntrl.client.generated.model.CodeIsIncorrect>() {
-                    @Override
-                    public Class<? extends app.kntrl.client.generated.model.CodeIsIncorrect> getClassForElement(JsonElement readElement) {
-                        Map<String, Class> classByDiscriminatorValue = new HashMap<String, Class>();
-                        classByDiscriminatorValue.put("ACCESS_DENIED", app.kntrl.client.generated.model.AccessDenied.class);
-                        classByDiscriminatorValue.put("AUTH_IS_NOT_CONFIRMED", app.kntrl.client.generated.model.AuthIsNotConfirmed.class);
-                        classByDiscriminatorValue.put("AUTH_IS_NOT_ENABLED", app.kntrl.client.generated.model.AuthIsNotEnabled.class);
-                        classByDiscriminatorValue.put("AUTH_REQUIRES_ANOTHER", app.kntrl.client.generated.model.AuthRequiresAnother.class);
-                        classByDiscriminatorValue.put("CODE_IS_EXPIRED", app.kntrl.client.generated.model.CodeIsExpired.class);
-                        classByDiscriminatorValue.put("CODE_IS_INCORRECT", app.kntrl.client.generated.model.CodeIsIncorrect.class);
-                        classByDiscriminatorValue.put("CODE_TOO_MANY_ATTEMPTS", app.kntrl.client.generated.model.CodeTooManyAttempts.class);
-                        classByDiscriminatorValue.put("EMAIL_IS_INCORRECT", app.kntrl.client.generated.model.EmailIsIncorrect.class);
-                        classByDiscriminatorValue.put("IP_NEW", app.kntrl.client.generated.model.IpNew.class);
-                        classByDiscriminatorValue.put("PASSWORD_IS_INCORRECT", app.kntrl.client.generated.model.PasswordIsIncorrect.class);
-                        classByDiscriminatorValue.put("PASSWORD_IS_INVALID", app.kntrl.client.generated.model.PasswordIsInvalid.class);
-                        classByDiscriminatorValue.put("PLUGIN_CLIENT_ERR", app.kntrl.client.generated.model.PluginClientErr.class);
-                        classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INCORRECT", app.kntrl.client.generated.model.QuestionsAnswersIncorrect.class);
-                        classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INVALID", app.kntrl.client.generated.model.QuestionsAnswersInvalid.class);
-                        classByDiscriminatorValue.put("SESSION_EXPIRED", app.kntrl.client.generated.model.SessionExpired.class);
-                        classByDiscriminatorValue.put("SIGNATURE_IS_INCORRECT", app.kntrl.client.generated.model.SignatureIsIncorrect.class);
-                        classByDiscriminatorValue.put("TOKEN_EXPIRED", app.kntrl.client.generated.model.TokenExpired.class);
-                        classByDiscriminatorValue.put("TOO_MANY_REQS", app.kntrl.client.generated.model.TooManyReqs.class);
-                        classByDiscriminatorValue.put("UNAUTHENTICATED", app.kntrl.client.generated.model.Unauthenticated.class);
-                        classByDiscriminatorValue.put("USER_LOGIN_ALREADY_TAKEN", app.kntrl.client.generated.model.UserLoginAlreadyTaken.class);
-                        classByDiscriminatorValue.put("USER_NOT_FOUND", app.kntrl.client.generated.model.UserNotFound.class);
-                        classByDiscriminatorValue.put("CodeIsIncorrect", app.kntrl.client.generated.model.CodeIsIncorrect.class);
-                        return getClassByDiscriminator(classByDiscriminatorValue,
-                                getDiscriminatorValue(readElement, "code"));
-                    }
-          })
-                .registerTypeSelector(app.kntrl.client.generated.model.CodeTooManyAttempts.class, new TypeSelector<app.kntrl.client.generated.model.CodeTooManyAttempts>() {
-                    @Override
-                    public Class<? extends app.kntrl.client.generated.model.CodeTooManyAttempts> getClassForElement(JsonElement readElement) {
-                        Map<String, Class> classByDiscriminatorValue = new HashMap<String, Class>();
-                        classByDiscriminatorValue.put("ACCESS_DENIED", app.kntrl.client.generated.model.AccessDenied.class);
-                        classByDiscriminatorValue.put("AUTH_IS_NOT_CONFIRMED", app.kntrl.client.generated.model.AuthIsNotConfirmed.class);
-                        classByDiscriminatorValue.put("AUTH_IS_NOT_ENABLED", app.kntrl.client.generated.model.AuthIsNotEnabled.class);
-                        classByDiscriminatorValue.put("AUTH_REQUIRES_ANOTHER", app.kntrl.client.generated.model.AuthRequiresAnother.class);
-                        classByDiscriminatorValue.put("CODE_IS_EXPIRED", app.kntrl.client.generated.model.CodeIsExpired.class);
-                        classByDiscriminatorValue.put("CODE_IS_INCORRECT", app.kntrl.client.generated.model.CodeIsIncorrect.class);
-                        classByDiscriminatorValue.put("CODE_TOO_MANY_ATTEMPTS", app.kntrl.client.generated.model.CodeTooManyAttempts.class);
-                        classByDiscriminatorValue.put("EMAIL_IS_INCORRECT", app.kntrl.client.generated.model.EmailIsIncorrect.class);
-                        classByDiscriminatorValue.put("IP_NEW", app.kntrl.client.generated.model.IpNew.class);
-                        classByDiscriminatorValue.put("PASSWORD_IS_INCORRECT", app.kntrl.client.generated.model.PasswordIsIncorrect.class);
-                        classByDiscriminatorValue.put("PASSWORD_IS_INVALID", app.kntrl.client.generated.model.PasswordIsInvalid.class);
-                        classByDiscriminatorValue.put("PLUGIN_CLIENT_ERR", app.kntrl.client.generated.model.PluginClientErr.class);
-                        classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INCORRECT", app.kntrl.client.generated.model.QuestionsAnswersIncorrect.class);
-                        classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INVALID", app.kntrl.client.generated.model.QuestionsAnswersInvalid.class);
-                        classByDiscriminatorValue.put("SESSION_EXPIRED", app.kntrl.client.generated.model.SessionExpired.class);
-                        classByDiscriminatorValue.put("SIGNATURE_IS_INCORRECT", app.kntrl.client.generated.model.SignatureIsIncorrect.class);
-                        classByDiscriminatorValue.put("TOKEN_EXPIRED", app.kntrl.client.generated.model.TokenExpired.class);
-                        classByDiscriminatorValue.put("TOO_MANY_REQS", app.kntrl.client.generated.model.TooManyReqs.class);
-                        classByDiscriminatorValue.put("UNAUTHENTICATED", app.kntrl.client.generated.model.Unauthenticated.class);
-                        classByDiscriminatorValue.put("USER_LOGIN_ALREADY_TAKEN", app.kntrl.client.generated.model.UserLoginAlreadyTaken.class);
-                        classByDiscriminatorValue.put("USER_NOT_FOUND", app.kntrl.client.generated.model.UserNotFound.class);
-                        classByDiscriminatorValue.put("CodeTooManyAttempts", app.kntrl.client.generated.model.CodeTooManyAttempts.class);
-                        return getClassByDiscriminator(classByDiscriminatorValue,
-                                getDiscriminatorValue(readElement, "code"));
-                    }
-          })
-                .registerTypeSelector(app.kntrl.client.generated.model.EmailIsIncorrect.class, new TypeSelector<app.kntrl.client.generated.model.EmailIsIncorrect>() {
-                    @Override
-                    public Class<? extends app.kntrl.client.generated.model.EmailIsIncorrect> getClassForElement(JsonElement readElement) {
-                        Map<String, Class> classByDiscriminatorValue = new HashMap<String, Class>();
-                        classByDiscriminatorValue.put("ACCESS_DENIED", app.kntrl.client.generated.model.AccessDenied.class);
-                        classByDiscriminatorValue.put("AUTH_IS_NOT_CONFIRMED", app.kntrl.client.generated.model.AuthIsNotConfirmed.class);
-                        classByDiscriminatorValue.put("AUTH_IS_NOT_ENABLED", app.kntrl.client.generated.model.AuthIsNotEnabled.class);
-                        classByDiscriminatorValue.put("AUTH_REQUIRES_ANOTHER", app.kntrl.client.generated.model.AuthRequiresAnother.class);
-                        classByDiscriminatorValue.put("CODE_IS_EXPIRED", app.kntrl.client.generated.model.CodeIsExpired.class);
-                        classByDiscriminatorValue.put("CODE_IS_INCORRECT", app.kntrl.client.generated.model.CodeIsIncorrect.class);
-                        classByDiscriminatorValue.put("CODE_TOO_MANY_ATTEMPTS", app.kntrl.client.generated.model.CodeTooManyAttempts.class);
-                        classByDiscriminatorValue.put("EMAIL_IS_INCORRECT", app.kntrl.client.generated.model.EmailIsIncorrect.class);
-                        classByDiscriminatorValue.put("IP_NEW", app.kntrl.client.generated.model.IpNew.class);
-                        classByDiscriminatorValue.put("PASSWORD_IS_INCORRECT", app.kntrl.client.generated.model.PasswordIsIncorrect.class);
-                        classByDiscriminatorValue.put("PASSWORD_IS_INVALID", app.kntrl.client.generated.model.PasswordIsInvalid.class);
-                        classByDiscriminatorValue.put("PLUGIN_CLIENT_ERR", app.kntrl.client.generated.model.PluginClientErr.class);
-                        classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INCORRECT", app.kntrl.client.generated.model.QuestionsAnswersIncorrect.class);
-                        classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INVALID", app.kntrl.client.generated.model.QuestionsAnswersInvalid.class);
-                        classByDiscriminatorValue.put("SESSION_EXPIRED", app.kntrl.client.generated.model.SessionExpired.class);
-                        classByDiscriminatorValue.put("SIGNATURE_IS_INCORRECT", app.kntrl.client.generated.model.SignatureIsIncorrect.class);
-                        classByDiscriminatorValue.put("TOKEN_EXPIRED", app.kntrl.client.generated.model.TokenExpired.class);
-                        classByDiscriminatorValue.put("TOO_MANY_REQS", app.kntrl.client.generated.model.TooManyReqs.class);
-                        classByDiscriminatorValue.put("UNAUTHENTICATED", app.kntrl.client.generated.model.Unauthenticated.class);
-                        classByDiscriminatorValue.put("USER_LOGIN_ALREADY_TAKEN", app.kntrl.client.generated.model.UserLoginAlreadyTaken.class);
-                        classByDiscriminatorValue.put("USER_NOT_FOUND", app.kntrl.client.generated.model.UserNotFound.class);
-                        classByDiscriminatorValue.put("EmailIsIncorrect", app.kntrl.client.generated.model.EmailIsIncorrect.class);
                         return getClassByDiscriminator(classByDiscriminatorValue,
                                 getDiscriminatorValue(readElement, "code"));
                     }
@@ -392,69 +109,30 @@ public class JSON {
                         classByDiscriminatorValue.put("AUTH_IS_NOT_CONFIRMED", app.kntrl.client.generated.model.AuthIsNotConfirmed.class);
                         classByDiscriminatorValue.put("AUTH_IS_NOT_ENABLED", app.kntrl.client.generated.model.AuthIsNotEnabled.class);
                         classByDiscriminatorValue.put("AUTH_REQUIRES_ANOTHER", app.kntrl.client.generated.model.AuthRequiresAnother.class);
-                        classByDiscriminatorValue.put("AccessDenied", app.kntrl.client.generated.model.AccessDenied.class);
-                        classByDiscriminatorValue.put("AnyErr", app.kntrl.client.generated.model.AnyErr.class);
-                        classByDiscriminatorValue.put("AuthIsNotConfirmed", app.kntrl.client.generated.model.AuthIsNotConfirmed.class);
-                        classByDiscriminatorValue.put("AuthIsNotEnabled", app.kntrl.client.generated.model.AuthIsNotEnabled.class);
-                        classByDiscriminatorValue.put("AuthRequiresAnother", app.kntrl.client.generated.model.AuthRequiresAnother.class);
                         classByDiscriminatorValue.put("CODE_IS_EXPIRED", app.kntrl.client.generated.model.CodeIsExpired.class);
                         classByDiscriminatorValue.put("CODE_IS_INCORRECT", app.kntrl.client.generated.model.CodeIsIncorrect.class);
                         classByDiscriminatorValue.put("CODE_TOO_MANY_ATTEMPTS", app.kntrl.client.generated.model.CodeTooManyAttempts.class);
-                        classByDiscriminatorValue.put("ClientErr", app.kntrl.client.generated.model.ClientErr.class);
-                        classByDiscriminatorValue.put("CodeIsExpired", app.kntrl.client.generated.model.CodeIsExpired.class);
-                        classByDiscriminatorValue.put("CodeIsIncorrect", app.kntrl.client.generated.model.CodeIsIncorrect.class);
-                        classByDiscriminatorValue.put("CodeTooManyAttempts", app.kntrl.client.generated.model.CodeTooManyAttempts.class);
                         classByDiscriminatorValue.put("EMAIL_IS_INCORRECT", app.kntrl.client.generated.model.EmailIsIncorrect.class);
-                        classByDiscriminatorValue.put("EmailIsIncorrect", app.kntrl.client.generated.model.EmailIsIncorrect.class);
                         classByDiscriminatorValue.put("INTEGRATION_ERR", app.kntrl.client.generated.model.IntegrationErr.class);
                         classByDiscriminatorValue.put("IP_NEW", app.kntrl.client.generated.model.IpNew.class);
-                        classByDiscriminatorValue.put("IntegrationErr", app.kntrl.client.generated.model.IntegrationErr.class);
-                        classByDiscriminatorValue.put("IpNew", app.kntrl.client.generated.model.IpNew.class);
                         classByDiscriminatorValue.put("NO_AUTH_AVAILABLE_FOR_FACTOR", app.kntrl.client.generated.model.NoAuthAvailableForFactor.class);
-                        classByDiscriminatorValue.put("NoAuthAvailableForFactor", app.kntrl.client.generated.model.NoAuthAvailableForFactor.class);
                         classByDiscriminatorValue.put("PASSWORD_IS_INCORRECT", app.kntrl.client.generated.model.PasswordIsIncorrect.class);
                         classByDiscriminatorValue.put("PASSWORD_IS_INVALID", app.kntrl.client.generated.model.PasswordIsInvalid.class);
                         classByDiscriminatorValue.put("PLUGIN_CLIENT_ERR", app.kntrl.client.generated.model.PluginClientErr.class);
                         classByDiscriminatorValue.put("PLUGIN_ERR", app.kntrl.client.generated.model.PluginErr.class);
-                        classByDiscriminatorValue.put("PasswordIsIncorrect", app.kntrl.client.generated.model.PasswordIsIncorrect.class);
-                        classByDiscriminatorValue.put("PasswordIsInvalid", app.kntrl.client.generated.model.PasswordIsInvalid.class);
-                        classByDiscriminatorValue.put("PluginClientErr", app.kntrl.client.generated.model.PluginClientErr.class);
-                        classByDiscriminatorValue.put("PluginErr", app.kntrl.client.generated.model.PluginErr.class);
                         classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INCORRECT", app.kntrl.client.generated.model.QuestionsAnswersIncorrect.class);
                         classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INVALID", app.kntrl.client.generated.model.QuestionsAnswersInvalid.class);
-                        classByDiscriminatorValue.put("QuestionsAnswersIncorrect", app.kntrl.client.generated.model.QuestionsAnswersIncorrect.class);
-                        classByDiscriminatorValue.put("QuestionsAnswersInvalid", app.kntrl.client.generated.model.QuestionsAnswersInvalid.class);
                         classByDiscriminatorValue.put("SERVER_ERR", app.kntrl.client.generated.model.ServerErr.class);
                         classByDiscriminatorValue.put("SESSION_EXPIRED", app.kntrl.client.generated.model.SessionExpired.class);
                         classByDiscriminatorValue.put("SIGNATURE_IS_INCORRECT", app.kntrl.client.generated.model.SignatureIsIncorrect.class);
-                        classByDiscriminatorValue.put("ServerErr", app.kntrl.client.generated.model.ServerErr.class);
-                        classByDiscriminatorValue.put("SessionExpired", app.kntrl.client.generated.model.SessionExpired.class);
-                        classByDiscriminatorValue.put("SignatureIsIncorrect", app.kntrl.client.generated.model.SignatureIsIncorrect.class);
                         classByDiscriminatorValue.put("TOKEN_EXPIRED", app.kntrl.client.generated.model.TokenExpired.class);
                         classByDiscriminatorValue.put("TOO_MANY_REQS", app.kntrl.client.generated.model.TooManyReqs.class);
-                        classByDiscriminatorValue.put("TokenExpired", app.kntrl.client.generated.model.TokenExpired.class);
-                        classByDiscriminatorValue.put("TooManyReqs", app.kntrl.client.generated.model.TooManyReqs.class);
                         classByDiscriminatorValue.put("UNAUTHENTICATED", app.kntrl.client.generated.model.Unauthenticated.class);
                         classByDiscriminatorValue.put("USER_LOGIN_ALREADY_TAKEN", app.kntrl.client.generated.model.UserLoginAlreadyTaken.class);
                         classByDiscriminatorValue.put("USER_NOT_FOUND", app.kntrl.client.generated.model.UserNotFound.class);
-                        classByDiscriminatorValue.put("Unauthenticated", app.kntrl.client.generated.model.Unauthenticated.class);
-                        classByDiscriminatorValue.put("UserLoginAlreadyTaken", app.kntrl.client.generated.model.UserLoginAlreadyTaken.class);
-                        classByDiscriminatorValue.put("UserNotFound", app.kntrl.client.generated.model.UserNotFound.class);
                         classByDiscriminatorValue.put("Err", app.kntrl.client.generated.model.Err.class);
                         return getClassByDiscriminator(classByDiscriminatorValue,
                                 getDiscriminatorValue(readElement, "code"));
-                    }
-          })
-                .registerTypeSelector(app.kntrl.client.generated.model.ErrAuthExecRes.class, new TypeSelector<app.kntrl.client.generated.model.ErrAuthExecRes>() {
-                    @Override
-                    public Class<? extends app.kntrl.client.generated.model.ErrAuthExecRes> getClassForElement(JsonElement readElement) {
-                        Map<String, Class> classByDiscriminatorValue = new HashMap<String, Class>();
-                        classByDiscriminatorValue.put("ERR", app.kntrl.client.generated.model.ErrAuthExecRes.class);
-                        classByDiscriminatorValue.put("OK", app.kntrl.client.generated.model.OkAuthExecRes.class);
-                        classByDiscriminatorValue.put("SKIPPED", app.kntrl.client.generated.model.SkippedAuthExecRes.class);
-                        classByDiscriminatorValue.put("ErrAuthExecRes", app.kntrl.client.generated.model.ErrAuthExecRes.class);
-                        return getClassByDiscriminator(classByDiscriminatorValue,
-                                getDiscriminatorValue(readElement, "status"));
                     }
           })
                 .registerTypeSelector(app.kntrl.client.generated.model.IntegrationErr.class, new TypeSelector<app.kntrl.client.generated.model.IntegrationErr>() {
@@ -463,222 +141,7 @@ public class JSON {
                         Map<String, Class> classByDiscriminatorValue = new HashMap<String, Class>();
                         classByDiscriminatorValue.put("INTEGRATION_ERR", app.kntrl.client.generated.model.IntegrationErr.class);
                         classByDiscriminatorValue.put("NO_AUTH_AVAILABLE_FOR_FACTOR", app.kntrl.client.generated.model.NoAuthAvailableForFactor.class);
-                        classByDiscriminatorValue.put("NoAuthAvailableForFactor", app.kntrl.client.generated.model.NoAuthAvailableForFactor.class);
                         classByDiscriminatorValue.put("IntegrationErr", app.kntrl.client.generated.model.IntegrationErr.class);
-                        return getClassByDiscriminator(classByDiscriminatorValue,
-                                getDiscriminatorValue(readElement, "code"));
-                    }
-          })
-                .registerTypeSelector(app.kntrl.client.generated.model.IpNew.class, new TypeSelector<app.kntrl.client.generated.model.IpNew>() {
-                    @Override
-                    public Class<? extends app.kntrl.client.generated.model.IpNew> getClassForElement(JsonElement readElement) {
-                        Map<String, Class> classByDiscriminatorValue = new HashMap<String, Class>();
-                        classByDiscriminatorValue.put("ACCESS_DENIED", app.kntrl.client.generated.model.AccessDenied.class);
-                        classByDiscriminatorValue.put("AUTH_IS_NOT_CONFIRMED", app.kntrl.client.generated.model.AuthIsNotConfirmed.class);
-                        classByDiscriminatorValue.put("AUTH_IS_NOT_ENABLED", app.kntrl.client.generated.model.AuthIsNotEnabled.class);
-                        classByDiscriminatorValue.put("AUTH_REQUIRES_ANOTHER", app.kntrl.client.generated.model.AuthRequiresAnother.class);
-                        classByDiscriminatorValue.put("CODE_IS_EXPIRED", app.kntrl.client.generated.model.CodeIsExpired.class);
-                        classByDiscriminatorValue.put("CODE_IS_INCORRECT", app.kntrl.client.generated.model.CodeIsIncorrect.class);
-                        classByDiscriminatorValue.put("CODE_TOO_MANY_ATTEMPTS", app.kntrl.client.generated.model.CodeTooManyAttempts.class);
-                        classByDiscriminatorValue.put("EMAIL_IS_INCORRECT", app.kntrl.client.generated.model.EmailIsIncorrect.class);
-                        classByDiscriminatorValue.put("IP_NEW", app.kntrl.client.generated.model.IpNew.class);
-                        classByDiscriminatorValue.put("PASSWORD_IS_INCORRECT", app.kntrl.client.generated.model.PasswordIsIncorrect.class);
-                        classByDiscriminatorValue.put("PASSWORD_IS_INVALID", app.kntrl.client.generated.model.PasswordIsInvalid.class);
-                        classByDiscriminatorValue.put("PLUGIN_CLIENT_ERR", app.kntrl.client.generated.model.PluginClientErr.class);
-                        classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INCORRECT", app.kntrl.client.generated.model.QuestionsAnswersIncorrect.class);
-                        classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INVALID", app.kntrl.client.generated.model.QuestionsAnswersInvalid.class);
-                        classByDiscriminatorValue.put("SESSION_EXPIRED", app.kntrl.client.generated.model.SessionExpired.class);
-                        classByDiscriminatorValue.put("SIGNATURE_IS_INCORRECT", app.kntrl.client.generated.model.SignatureIsIncorrect.class);
-                        classByDiscriminatorValue.put("TOKEN_EXPIRED", app.kntrl.client.generated.model.TokenExpired.class);
-                        classByDiscriminatorValue.put("TOO_MANY_REQS", app.kntrl.client.generated.model.TooManyReqs.class);
-                        classByDiscriminatorValue.put("UNAUTHENTICATED", app.kntrl.client.generated.model.Unauthenticated.class);
-                        classByDiscriminatorValue.put("USER_LOGIN_ALREADY_TAKEN", app.kntrl.client.generated.model.UserLoginAlreadyTaken.class);
-                        classByDiscriminatorValue.put("USER_NOT_FOUND", app.kntrl.client.generated.model.UserNotFound.class);
-                        classByDiscriminatorValue.put("IpNew", app.kntrl.client.generated.model.IpNew.class);
-                        return getClassByDiscriminator(classByDiscriminatorValue,
-                                getDiscriminatorValue(readElement, "code"));
-                    }
-          })
-                .registerTypeSelector(app.kntrl.client.generated.model.NoAuthAvailableForFactor.class, new TypeSelector<app.kntrl.client.generated.model.NoAuthAvailableForFactor>() {
-                    @Override
-                    public Class<? extends app.kntrl.client.generated.model.NoAuthAvailableForFactor> getClassForElement(JsonElement readElement) {
-                        Map<String, Class> classByDiscriminatorValue = new HashMap<String, Class>();
-                        classByDiscriminatorValue.put("INTEGRATION_ERR", app.kntrl.client.generated.model.IntegrationErr.class);
-                        classByDiscriminatorValue.put("NO_AUTH_AVAILABLE_FOR_FACTOR", app.kntrl.client.generated.model.NoAuthAvailableForFactor.class);
-                        classByDiscriminatorValue.put("NoAuthAvailableForFactor", app.kntrl.client.generated.model.NoAuthAvailableForFactor.class);
-                        return getClassByDiscriminator(classByDiscriminatorValue,
-                                getDiscriminatorValue(readElement, "code"));
-                    }
-          })
-                .registerTypeSelector(app.kntrl.client.generated.model.OkAuthExecRes.class, new TypeSelector<app.kntrl.client.generated.model.OkAuthExecRes>() {
-                    @Override
-                    public Class<? extends app.kntrl.client.generated.model.OkAuthExecRes> getClassForElement(JsonElement readElement) {
-                        Map<String, Class> classByDiscriminatorValue = new HashMap<String, Class>();
-                        classByDiscriminatorValue.put("ERR", app.kntrl.client.generated.model.ErrAuthExecRes.class);
-                        classByDiscriminatorValue.put("OK", app.kntrl.client.generated.model.OkAuthExecRes.class);
-                        classByDiscriminatorValue.put("SKIPPED", app.kntrl.client.generated.model.SkippedAuthExecRes.class);
-                        classByDiscriminatorValue.put("OkAuthExecRes", app.kntrl.client.generated.model.OkAuthExecRes.class);
-                        return getClassByDiscriminator(classByDiscriminatorValue,
-                                getDiscriminatorValue(readElement, "status"));
-                    }
-          })
-                .registerTypeSelector(app.kntrl.client.generated.model.PasswordIsIncorrect.class, new TypeSelector<app.kntrl.client.generated.model.PasswordIsIncorrect>() {
-                    @Override
-                    public Class<? extends app.kntrl.client.generated.model.PasswordIsIncorrect> getClassForElement(JsonElement readElement) {
-                        Map<String, Class> classByDiscriminatorValue = new HashMap<String, Class>();
-                        classByDiscriminatorValue.put("ACCESS_DENIED", app.kntrl.client.generated.model.AccessDenied.class);
-                        classByDiscriminatorValue.put("AUTH_IS_NOT_CONFIRMED", app.kntrl.client.generated.model.AuthIsNotConfirmed.class);
-                        classByDiscriminatorValue.put("AUTH_IS_NOT_ENABLED", app.kntrl.client.generated.model.AuthIsNotEnabled.class);
-                        classByDiscriminatorValue.put("AUTH_REQUIRES_ANOTHER", app.kntrl.client.generated.model.AuthRequiresAnother.class);
-                        classByDiscriminatorValue.put("CODE_IS_EXPIRED", app.kntrl.client.generated.model.CodeIsExpired.class);
-                        classByDiscriminatorValue.put("CODE_IS_INCORRECT", app.kntrl.client.generated.model.CodeIsIncorrect.class);
-                        classByDiscriminatorValue.put("CODE_TOO_MANY_ATTEMPTS", app.kntrl.client.generated.model.CodeTooManyAttempts.class);
-                        classByDiscriminatorValue.put("EMAIL_IS_INCORRECT", app.kntrl.client.generated.model.EmailIsIncorrect.class);
-                        classByDiscriminatorValue.put("IP_NEW", app.kntrl.client.generated.model.IpNew.class);
-                        classByDiscriminatorValue.put("PASSWORD_IS_INCORRECT", app.kntrl.client.generated.model.PasswordIsIncorrect.class);
-                        classByDiscriminatorValue.put("PASSWORD_IS_INVALID", app.kntrl.client.generated.model.PasswordIsInvalid.class);
-                        classByDiscriminatorValue.put("PLUGIN_CLIENT_ERR", app.kntrl.client.generated.model.PluginClientErr.class);
-                        classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INCORRECT", app.kntrl.client.generated.model.QuestionsAnswersIncorrect.class);
-                        classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INVALID", app.kntrl.client.generated.model.QuestionsAnswersInvalid.class);
-                        classByDiscriminatorValue.put("SESSION_EXPIRED", app.kntrl.client.generated.model.SessionExpired.class);
-                        classByDiscriminatorValue.put("SIGNATURE_IS_INCORRECT", app.kntrl.client.generated.model.SignatureIsIncorrect.class);
-                        classByDiscriminatorValue.put("TOKEN_EXPIRED", app.kntrl.client.generated.model.TokenExpired.class);
-                        classByDiscriminatorValue.put("TOO_MANY_REQS", app.kntrl.client.generated.model.TooManyReqs.class);
-                        classByDiscriminatorValue.put("UNAUTHENTICATED", app.kntrl.client.generated.model.Unauthenticated.class);
-                        classByDiscriminatorValue.put("USER_LOGIN_ALREADY_TAKEN", app.kntrl.client.generated.model.UserLoginAlreadyTaken.class);
-                        classByDiscriminatorValue.put("USER_NOT_FOUND", app.kntrl.client.generated.model.UserNotFound.class);
-                        classByDiscriminatorValue.put("PasswordIsIncorrect", app.kntrl.client.generated.model.PasswordIsIncorrect.class);
-                        return getClassByDiscriminator(classByDiscriminatorValue,
-                                getDiscriminatorValue(readElement, "code"));
-                    }
-          })
-                .registerTypeSelector(app.kntrl.client.generated.model.PasswordIsInvalid.class, new TypeSelector<app.kntrl.client.generated.model.PasswordIsInvalid>() {
-                    @Override
-                    public Class<? extends app.kntrl.client.generated.model.PasswordIsInvalid> getClassForElement(JsonElement readElement) {
-                        Map<String, Class> classByDiscriminatorValue = new HashMap<String, Class>();
-                        classByDiscriminatorValue.put("ACCESS_DENIED", app.kntrl.client.generated.model.AccessDenied.class);
-                        classByDiscriminatorValue.put("AUTH_IS_NOT_CONFIRMED", app.kntrl.client.generated.model.AuthIsNotConfirmed.class);
-                        classByDiscriminatorValue.put("AUTH_IS_NOT_ENABLED", app.kntrl.client.generated.model.AuthIsNotEnabled.class);
-                        classByDiscriminatorValue.put("AUTH_REQUIRES_ANOTHER", app.kntrl.client.generated.model.AuthRequiresAnother.class);
-                        classByDiscriminatorValue.put("CODE_IS_EXPIRED", app.kntrl.client.generated.model.CodeIsExpired.class);
-                        classByDiscriminatorValue.put("CODE_IS_INCORRECT", app.kntrl.client.generated.model.CodeIsIncorrect.class);
-                        classByDiscriminatorValue.put("CODE_TOO_MANY_ATTEMPTS", app.kntrl.client.generated.model.CodeTooManyAttempts.class);
-                        classByDiscriminatorValue.put("EMAIL_IS_INCORRECT", app.kntrl.client.generated.model.EmailIsIncorrect.class);
-                        classByDiscriminatorValue.put("IP_NEW", app.kntrl.client.generated.model.IpNew.class);
-                        classByDiscriminatorValue.put("PASSWORD_IS_INCORRECT", app.kntrl.client.generated.model.PasswordIsIncorrect.class);
-                        classByDiscriminatorValue.put("PASSWORD_IS_INVALID", app.kntrl.client.generated.model.PasswordIsInvalid.class);
-                        classByDiscriminatorValue.put("PLUGIN_CLIENT_ERR", app.kntrl.client.generated.model.PluginClientErr.class);
-                        classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INCORRECT", app.kntrl.client.generated.model.QuestionsAnswersIncorrect.class);
-                        classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INVALID", app.kntrl.client.generated.model.QuestionsAnswersInvalid.class);
-                        classByDiscriminatorValue.put("SESSION_EXPIRED", app.kntrl.client.generated.model.SessionExpired.class);
-                        classByDiscriminatorValue.put("SIGNATURE_IS_INCORRECT", app.kntrl.client.generated.model.SignatureIsIncorrect.class);
-                        classByDiscriminatorValue.put("TOKEN_EXPIRED", app.kntrl.client.generated.model.TokenExpired.class);
-                        classByDiscriminatorValue.put("TOO_MANY_REQS", app.kntrl.client.generated.model.TooManyReqs.class);
-                        classByDiscriminatorValue.put("UNAUTHENTICATED", app.kntrl.client.generated.model.Unauthenticated.class);
-                        classByDiscriminatorValue.put("USER_LOGIN_ALREADY_TAKEN", app.kntrl.client.generated.model.UserLoginAlreadyTaken.class);
-                        classByDiscriminatorValue.put("USER_NOT_FOUND", app.kntrl.client.generated.model.UserNotFound.class);
-                        classByDiscriminatorValue.put("PasswordIsInvalid", app.kntrl.client.generated.model.PasswordIsInvalid.class);
-                        return getClassByDiscriminator(classByDiscriminatorValue,
-                                getDiscriminatorValue(readElement, "code"));
-                    }
-          })
-                .registerTypeSelector(app.kntrl.client.generated.model.PluginClientErr.class, new TypeSelector<app.kntrl.client.generated.model.PluginClientErr>() {
-                    @Override
-                    public Class<? extends app.kntrl.client.generated.model.PluginClientErr> getClassForElement(JsonElement readElement) {
-                        Map<String, Class> classByDiscriminatorValue = new HashMap<String, Class>();
-                        classByDiscriminatorValue.put("ACCESS_DENIED", app.kntrl.client.generated.model.AccessDenied.class);
-                        classByDiscriminatorValue.put("AUTH_IS_NOT_CONFIRMED", app.kntrl.client.generated.model.AuthIsNotConfirmed.class);
-                        classByDiscriminatorValue.put("AUTH_IS_NOT_ENABLED", app.kntrl.client.generated.model.AuthIsNotEnabled.class);
-                        classByDiscriminatorValue.put("AUTH_REQUIRES_ANOTHER", app.kntrl.client.generated.model.AuthRequiresAnother.class);
-                        classByDiscriminatorValue.put("CODE_IS_EXPIRED", app.kntrl.client.generated.model.CodeIsExpired.class);
-                        classByDiscriminatorValue.put("CODE_IS_INCORRECT", app.kntrl.client.generated.model.CodeIsIncorrect.class);
-                        classByDiscriminatorValue.put("CODE_TOO_MANY_ATTEMPTS", app.kntrl.client.generated.model.CodeTooManyAttempts.class);
-                        classByDiscriminatorValue.put("EMAIL_IS_INCORRECT", app.kntrl.client.generated.model.EmailIsIncorrect.class);
-                        classByDiscriminatorValue.put("IP_NEW", app.kntrl.client.generated.model.IpNew.class);
-                        classByDiscriminatorValue.put("PASSWORD_IS_INCORRECT", app.kntrl.client.generated.model.PasswordIsIncorrect.class);
-                        classByDiscriminatorValue.put("PASSWORD_IS_INVALID", app.kntrl.client.generated.model.PasswordIsInvalid.class);
-                        classByDiscriminatorValue.put("PLUGIN_CLIENT_ERR", app.kntrl.client.generated.model.PluginClientErr.class);
-                        classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INCORRECT", app.kntrl.client.generated.model.QuestionsAnswersIncorrect.class);
-                        classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INVALID", app.kntrl.client.generated.model.QuestionsAnswersInvalid.class);
-                        classByDiscriminatorValue.put("SESSION_EXPIRED", app.kntrl.client.generated.model.SessionExpired.class);
-                        classByDiscriminatorValue.put("SIGNATURE_IS_INCORRECT", app.kntrl.client.generated.model.SignatureIsIncorrect.class);
-                        classByDiscriminatorValue.put("TOKEN_EXPIRED", app.kntrl.client.generated.model.TokenExpired.class);
-                        classByDiscriminatorValue.put("TOO_MANY_REQS", app.kntrl.client.generated.model.TooManyReqs.class);
-                        classByDiscriminatorValue.put("UNAUTHENTICATED", app.kntrl.client.generated.model.Unauthenticated.class);
-                        classByDiscriminatorValue.put("USER_LOGIN_ALREADY_TAKEN", app.kntrl.client.generated.model.UserLoginAlreadyTaken.class);
-                        classByDiscriminatorValue.put("USER_NOT_FOUND", app.kntrl.client.generated.model.UserNotFound.class);
-                        classByDiscriminatorValue.put("PluginClientErr", app.kntrl.client.generated.model.PluginClientErr.class);
-                        return getClassByDiscriminator(classByDiscriminatorValue,
-                                getDiscriminatorValue(readElement, "code"));
-                    }
-          })
-                .registerTypeSelector(app.kntrl.client.generated.model.PluginErr.class, new TypeSelector<app.kntrl.client.generated.model.PluginErr>() {
-                    @Override
-                    public Class<? extends app.kntrl.client.generated.model.PluginErr> getClassForElement(JsonElement readElement) {
-                        Map<String, Class> classByDiscriminatorValue = new HashMap<String, Class>();
-                        classByDiscriminatorValue.put("PLUGIN_ERR", app.kntrl.client.generated.model.PluginErr.class);
-                        classByDiscriminatorValue.put("SERVER_ERR", app.kntrl.client.generated.model.ServerErr.class);
-                        classByDiscriminatorValue.put("PluginErr", app.kntrl.client.generated.model.PluginErr.class);
-                        return getClassByDiscriminator(classByDiscriminatorValue,
-                                getDiscriminatorValue(readElement, "code"));
-                    }
-          })
-                .registerTypeSelector(app.kntrl.client.generated.model.QuestionsAnswersIncorrect.class, new TypeSelector<app.kntrl.client.generated.model.QuestionsAnswersIncorrect>() {
-                    @Override
-                    public Class<? extends app.kntrl.client.generated.model.QuestionsAnswersIncorrect> getClassForElement(JsonElement readElement) {
-                        Map<String, Class> classByDiscriminatorValue = new HashMap<String, Class>();
-                        classByDiscriminatorValue.put("ACCESS_DENIED", app.kntrl.client.generated.model.AccessDenied.class);
-                        classByDiscriminatorValue.put("AUTH_IS_NOT_CONFIRMED", app.kntrl.client.generated.model.AuthIsNotConfirmed.class);
-                        classByDiscriminatorValue.put("AUTH_IS_NOT_ENABLED", app.kntrl.client.generated.model.AuthIsNotEnabled.class);
-                        classByDiscriminatorValue.put("AUTH_REQUIRES_ANOTHER", app.kntrl.client.generated.model.AuthRequiresAnother.class);
-                        classByDiscriminatorValue.put("CODE_IS_EXPIRED", app.kntrl.client.generated.model.CodeIsExpired.class);
-                        classByDiscriminatorValue.put("CODE_IS_INCORRECT", app.kntrl.client.generated.model.CodeIsIncorrect.class);
-                        classByDiscriminatorValue.put("CODE_TOO_MANY_ATTEMPTS", app.kntrl.client.generated.model.CodeTooManyAttempts.class);
-                        classByDiscriminatorValue.put("EMAIL_IS_INCORRECT", app.kntrl.client.generated.model.EmailIsIncorrect.class);
-                        classByDiscriminatorValue.put("IP_NEW", app.kntrl.client.generated.model.IpNew.class);
-                        classByDiscriminatorValue.put("PASSWORD_IS_INCORRECT", app.kntrl.client.generated.model.PasswordIsIncorrect.class);
-                        classByDiscriminatorValue.put("PASSWORD_IS_INVALID", app.kntrl.client.generated.model.PasswordIsInvalid.class);
-                        classByDiscriminatorValue.put("PLUGIN_CLIENT_ERR", app.kntrl.client.generated.model.PluginClientErr.class);
-                        classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INCORRECT", app.kntrl.client.generated.model.QuestionsAnswersIncorrect.class);
-                        classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INVALID", app.kntrl.client.generated.model.QuestionsAnswersInvalid.class);
-                        classByDiscriminatorValue.put("SESSION_EXPIRED", app.kntrl.client.generated.model.SessionExpired.class);
-                        classByDiscriminatorValue.put("SIGNATURE_IS_INCORRECT", app.kntrl.client.generated.model.SignatureIsIncorrect.class);
-                        classByDiscriminatorValue.put("TOKEN_EXPIRED", app.kntrl.client.generated.model.TokenExpired.class);
-                        classByDiscriminatorValue.put("TOO_MANY_REQS", app.kntrl.client.generated.model.TooManyReqs.class);
-                        classByDiscriminatorValue.put("UNAUTHENTICATED", app.kntrl.client.generated.model.Unauthenticated.class);
-                        classByDiscriminatorValue.put("USER_LOGIN_ALREADY_TAKEN", app.kntrl.client.generated.model.UserLoginAlreadyTaken.class);
-                        classByDiscriminatorValue.put("USER_NOT_FOUND", app.kntrl.client.generated.model.UserNotFound.class);
-                        classByDiscriminatorValue.put("QuestionsAnswersIncorrect", app.kntrl.client.generated.model.QuestionsAnswersIncorrect.class);
-                        return getClassByDiscriminator(classByDiscriminatorValue,
-                                getDiscriminatorValue(readElement, "code"));
-                    }
-          })
-                .registerTypeSelector(app.kntrl.client.generated.model.QuestionsAnswersInvalid.class, new TypeSelector<app.kntrl.client.generated.model.QuestionsAnswersInvalid>() {
-                    @Override
-                    public Class<? extends app.kntrl.client.generated.model.QuestionsAnswersInvalid> getClassForElement(JsonElement readElement) {
-                        Map<String, Class> classByDiscriminatorValue = new HashMap<String, Class>();
-                        classByDiscriminatorValue.put("ACCESS_DENIED", app.kntrl.client.generated.model.AccessDenied.class);
-                        classByDiscriminatorValue.put("AUTH_IS_NOT_CONFIRMED", app.kntrl.client.generated.model.AuthIsNotConfirmed.class);
-                        classByDiscriminatorValue.put("AUTH_IS_NOT_ENABLED", app.kntrl.client.generated.model.AuthIsNotEnabled.class);
-                        classByDiscriminatorValue.put("AUTH_REQUIRES_ANOTHER", app.kntrl.client.generated.model.AuthRequiresAnother.class);
-                        classByDiscriminatorValue.put("CODE_IS_EXPIRED", app.kntrl.client.generated.model.CodeIsExpired.class);
-                        classByDiscriminatorValue.put("CODE_IS_INCORRECT", app.kntrl.client.generated.model.CodeIsIncorrect.class);
-                        classByDiscriminatorValue.put("CODE_TOO_MANY_ATTEMPTS", app.kntrl.client.generated.model.CodeTooManyAttempts.class);
-                        classByDiscriminatorValue.put("EMAIL_IS_INCORRECT", app.kntrl.client.generated.model.EmailIsIncorrect.class);
-                        classByDiscriminatorValue.put("IP_NEW", app.kntrl.client.generated.model.IpNew.class);
-                        classByDiscriminatorValue.put("PASSWORD_IS_INCORRECT", app.kntrl.client.generated.model.PasswordIsIncorrect.class);
-                        classByDiscriminatorValue.put("PASSWORD_IS_INVALID", app.kntrl.client.generated.model.PasswordIsInvalid.class);
-                        classByDiscriminatorValue.put("PLUGIN_CLIENT_ERR", app.kntrl.client.generated.model.PluginClientErr.class);
-                        classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INCORRECT", app.kntrl.client.generated.model.QuestionsAnswersIncorrect.class);
-                        classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INVALID", app.kntrl.client.generated.model.QuestionsAnswersInvalid.class);
-                        classByDiscriminatorValue.put("SESSION_EXPIRED", app.kntrl.client.generated.model.SessionExpired.class);
-                        classByDiscriminatorValue.put("SIGNATURE_IS_INCORRECT", app.kntrl.client.generated.model.SignatureIsIncorrect.class);
-                        classByDiscriminatorValue.put("TOKEN_EXPIRED", app.kntrl.client.generated.model.TokenExpired.class);
-                        classByDiscriminatorValue.put("TOO_MANY_REQS", app.kntrl.client.generated.model.TooManyReqs.class);
-                        classByDiscriminatorValue.put("UNAUTHENTICATED", app.kntrl.client.generated.model.Unauthenticated.class);
-                        classByDiscriminatorValue.put("USER_LOGIN_ALREADY_TAKEN", app.kntrl.client.generated.model.UserLoginAlreadyTaken.class);
-                        classByDiscriminatorValue.put("USER_NOT_FOUND", app.kntrl.client.generated.model.UserNotFound.class);
-                        classByDiscriminatorValue.put("QuestionsAnswersInvalid", app.kntrl.client.generated.model.QuestionsAnswersInvalid.class);
                         return getClassByDiscriminator(classByDiscriminatorValue,
                                 getDiscriminatorValue(readElement, "code"));
                     }
@@ -688,109 +151,8 @@ public class JSON {
                     public Class<? extends app.kntrl.client.generated.model.ServerErr> getClassForElement(JsonElement readElement) {
                         Map<String, Class> classByDiscriminatorValue = new HashMap<String, Class>();
                         classByDiscriminatorValue.put("PLUGIN_ERR", app.kntrl.client.generated.model.PluginErr.class);
-                        classByDiscriminatorValue.put("PluginErr", app.kntrl.client.generated.model.PluginErr.class);
                         classByDiscriminatorValue.put("SERVER_ERR", app.kntrl.client.generated.model.ServerErr.class);
                         classByDiscriminatorValue.put("ServerErr", app.kntrl.client.generated.model.ServerErr.class);
-                        return getClassByDiscriminator(classByDiscriminatorValue,
-                                getDiscriminatorValue(readElement, "code"));
-                    }
-          })
-                .registerTypeSelector(app.kntrl.client.generated.model.SessionExpired.class, new TypeSelector<app.kntrl.client.generated.model.SessionExpired>() {
-                    @Override
-                    public Class<? extends app.kntrl.client.generated.model.SessionExpired> getClassForElement(JsonElement readElement) {
-                        Map<String, Class> classByDiscriminatorValue = new HashMap<String, Class>();
-                        classByDiscriminatorValue.put("ACCESS_DENIED", app.kntrl.client.generated.model.AccessDenied.class);
-                        classByDiscriminatorValue.put("SESSION_EXPIRED", app.kntrl.client.generated.model.SessionExpired.class);
-                        classByDiscriminatorValue.put("TOKEN_EXPIRED", app.kntrl.client.generated.model.TokenExpired.class);
-                        classByDiscriminatorValue.put("UNAUTHENTICATED", app.kntrl.client.generated.model.Unauthenticated.class);
-                        classByDiscriminatorValue.put("USER_NOT_FOUND", app.kntrl.client.generated.model.UserNotFound.class);
-                        classByDiscriminatorValue.put("SessionExpired", app.kntrl.client.generated.model.SessionExpired.class);
-                        return getClassByDiscriminator(classByDiscriminatorValue,
-                                getDiscriminatorValue(readElement, "code"));
-                    }
-          })
-                .registerTypeSelector(app.kntrl.client.generated.model.SignatureIsIncorrect.class, new TypeSelector<app.kntrl.client.generated.model.SignatureIsIncorrect>() {
-                    @Override
-                    public Class<? extends app.kntrl.client.generated.model.SignatureIsIncorrect> getClassForElement(JsonElement readElement) {
-                        Map<String, Class> classByDiscriminatorValue = new HashMap<String, Class>();
-                        classByDiscriminatorValue.put("ACCESS_DENIED", app.kntrl.client.generated.model.AccessDenied.class);
-                        classByDiscriminatorValue.put("AUTH_IS_NOT_CONFIRMED", app.kntrl.client.generated.model.AuthIsNotConfirmed.class);
-                        classByDiscriminatorValue.put("AUTH_IS_NOT_ENABLED", app.kntrl.client.generated.model.AuthIsNotEnabled.class);
-                        classByDiscriminatorValue.put("AUTH_REQUIRES_ANOTHER", app.kntrl.client.generated.model.AuthRequiresAnother.class);
-                        classByDiscriminatorValue.put("CODE_IS_EXPIRED", app.kntrl.client.generated.model.CodeIsExpired.class);
-                        classByDiscriminatorValue.put("CODE_IS_INCORRECT", app.kntrl.client.generated.model.CodeIsIncorrect.class);
-                        classByDiscriminatorValue.put("CODE_TOO_MANY_ATTEMPTS", app.kntrl.client.generated.model.CodeTooManyAttempts.class);
-                        classByDiscriminatorValue.put("EMAIL_IS_INCORRECT", app.kntrl.client.generated.model.EmailIsIncorrect.class);
-                        classByDiscriminatorValue.put("IP_NEW", app.kntrl.client.generated.model.IpNew.class);
-                        classByDiscriminatorValue.put("PASSWORD_IS_INCORRECT", app.kntrl.client.generated.model.PasswordIsIncorrect.class);
-                        classByDiscriminatorValue.put("PASSWORD_IS_INVALID", app.kntrl.client.generated.model.PasswordIsInvalid.class);
-                        classByDiscriminatorValue.put("PLUGIN_CLIENT_ERR", app.kntrl.client.generated.model.PluginClientErr.class);
-                        classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INCORRECT", app.kntrl.client.generated.model.QuestionsAnswersIncorrect.class);
-                        classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INVALID", app.kntrl.client.generated.model.QuestionsAnswersInvalid.class);
-                        classByDiscriminatorValue.put("SESSION_EXPIRED", app.kntrl.client.generated.model.SessionExpired.class);
-                        classByDiscriminatorValue.put("SIGNATURE_IS_INCORRECT", app.kntrl.client.generated.model.SignatureIsIncorrect.class);
-                        classByDiscriminatorValue.put("TOKEN_EXPIRED", app.kntrl.client.generated.model.TokenExpired.class);
-                        classByDiscriminatorValue.put("TOO_MANY_REQS", app.kntrl.client.generated.model.TooManyReqs.class);
-                        classByDiscriminatorValue.put("UNAUTHENTICATED", app.kntrl.client.generated.model.Unauthenticated.class);
-                        classByDiscriminatorValue.put("USER_LOGIN_ALREADY_TAKEN", app.kntrl.client.generated.model.UserLoginAlreadyTaken.class);
-                        classByDiscriminatorValue.put("USER_NOT_FOUND", app.kntrl.client.generated.model.UserNotFound.class);
-                        classByDiscriminatorValue.put("SignatureIsIncorrect", app.kntrl.client.generated.model.SignatureIsIncorrect.class);
-                        return getClassByDiscriminator(classByDiscriminatorValue,
-                                getDiscriminatorValue(readElement, "code"));
-                    }
-          })
-                .registerTypeSelector(app.kntrl.client.generated.model.SkippedAuthExecRes.class, new TypeSelector<app.kntrl.client.generated.model.SkippedAuthExecRes>() {
-                    @Override
-                    public Class<? extends app.kntrl.client.generated.model.SkippedAuthExecRes> getClassForElement(JsonElement readElement) {
-                        Map<String, Class> classByDiscriminatorValue = new HashMap<String, Class>();
-                        classByDiscriminatorValue.put("ERR", app.kntrl.client.generated.model.ErrAuthExecRes.class);
-                        classByDiscriminatorValue.put("OK", app.kntrl.client.generated.model.OkAuthExecRes.class);
-                        classByDiscriminatorValue.put("SKIPPED", app.kntrl.client.generated.model.SkippedAuthExecRes.class);
-                        classByDiscriminatorValue.put("SkippedAuthExecRes", app.kntrl.client.generated.model.SkippedAuthExecRes.class);
-                        return getClassByDiscriminator(classByDiscriminatorValue,
-                                getDiscriminatorValue(readElement, "status"));
-                    }
-          })
-                .registerTypeSelector(app.kntrl.client.generated.model.TokenExpired.class, new TypeSelector<app.kntrl.client.generated.model.TokenExpired>() {
-                    @Override
-                    public Class<? extends app.kntrl.client.generated.model.TokenExpired> getClassForElement(JsonElement readElement) {
-                        Map<String, Class> classByDiscriminatorValue = new HashMap<String, Class>();
-                        classByDiscriminatorValue.put("ACCESS_DENIED", app.kntrl.client.generated.model.AccessDenied.class);
-                        classByDiscriminatorValue.put("SESSION_EXPIRED", app.kntrl.client.generated.model.SessionExpired.class);
-                        classByDiscriminatorValue.put("TOKEN_EXPIRED", app.kntrl.client.generated.model.TokenExpired.class);
-                        classByDiscriminatorValue.put("UNAUTHENTICATED", app.kntrl.client.generated.model.Unauthenticated.class);
-                        classByDiscriminatorValue.put("USER_NOT_FOUND", app.kntrl.client.generated.model.UserNotFound.class);
-                        classByDiscriminatorValue.put("TokenExpired", app.kntrl.client.generated.model.TokenExpired.class);
-                        return getClassByDiscriminator(classByDiscriminatorValue,
-                                getDiscriminatorValue(readElement, "code"));
-                    }
-          })
-                .registerTypeSelector(app.kntrl.client.generated.model.TooManyReqs.class, new TypeSelector<app.kntrl.client.generated.model.TooManyReqs>() {
-                    @Override
-                    public Class<? extends app.kntrl.client.generated.model.TooManyReqs> getClassForElement(JsonElement readElement) {
-                        Map<String, Class> classByDiscriminatorValue = new HashMap<String, Class>();
-                        classByDiscriminatorValue.put("ACCESS_DENIED", app.kntrl.client.generated.model.AccessDenied.class);
-                        classByDiscriminatorValue.put("AUTH_IS_NOT_CONFIRMED", app.kntrl.client.generated.model.AuthIsNotConfirmed.class);
-                        classByDiscriminatorValue.put("AUTH_IS_NOT_ENABLED", app.kntrl.client.generated.model.AuthIsNotEnabled.class);
-                        classByDiscriminatorValue.put("AUTH_REQUIRES_ANOTHER", app.kntrl.client.generated.model.AuthRequiresAnother.class);
-                        classByDiscriminatorValue.put("CODE_IS_EXPIRED", app.kntrl.client.generated.model.CodeIsExpired.class);
-                        classByDiscriminatorValue.put("CODE_IS_INCORRECT", app.kntrl.client.generated.model.CodeIsIncorrect.class);
-                        classByDiscriminatorValue.put("CODE_TOO_MANY_ATTEMPTS", app.kntrl.client.generated.model.CodeTooManyAttempts.class);
-                        classByDiscriminatorValue.put("EMAIL_IS_INCORRECT", app.kntrl.client.generated.model.EmailIsIncorrect.class);
-                        classByDiscriminatorValue.put("IP_NEW", app.kntrl.client.generated.model.IpNew.class);
-                        classByDiscriminatorValue.put("PASSWORD_IS_INCORRECT", app.kntrl.client.generated.model.PasswordIsIncorrect.class);
-                        classByDiscriminatorValue.put("PASSWORD_IS_INVALID", app.kntrl.client.generated.model.PasswordIsInvalid.class);
-                        classByDiscriminatorValue.put("PLUGIN_CLIENT_ERR", app.kntrl.client.generated.model.PluginClientErr.class);
-                        classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INCORRECT", app.kntrl.client.generated.model.QuestionsAnswersIncorrect.class);
-                        classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INVALID", app.kntrl.client.generated.model.QuestionsAnswersInvalid.class);
-                        classByDiscriminatorValue.put("SESSION_EXPIRED", app.kntrl.client.generated.model.SessionExpired.class);
-                        classByDiscriminatorValue.put("SIGNATURE_IS_INCORRECT", app.kntrl.client.generated.model.SignatureIsIncorrect.class);
-                        classByDiscriminatorValue.put("TOKEN_EXPIRED", app.kntrl.client.generated.model.TokenExpired.class);
-                        classByDiscriminatorValue.put("TOO_MANY_REQS", app.kntrl.client.generated.model.TooManyReqs.class);
-                        classByDiscriminatorValue.put("UNAUTHENTICATED", app.kntrl.client.generated.model.Unauthenticated.class);
-                        classByDiscriminatorValue.put("USER_LOGIN_ALREADY_TAKEN", app.kntrl.client.generated.model.UserLoginAlreadyTaken.class);
-                        classByDiscriminatorValue.put("USER_NOT_FOUND", app.kntrl.client.generated.model.UserNotFound.class);
-                        classByDiscriminatorValue.put("TooManyReqs", app.kntrl.client.generated.model.TooManyReqs.class);
                         return getClassByDiscriminator(classByDiscriminatorValue,
                                 getDiscriminatorValue(readElement, "code"));
                     }
@@ -800,59 +162,11 @@ public class JSON {
                     public Class<? extends app.kntrl.client.generated.model.Unauthenticated> getClassForElement(JsonElement readElement) {
                         Map<String, Class> classByDiscriminatorValue = new HashMap<String, Class>();
                         classByDiscriminatorValue.put("ACCESS_DENIED", app.kntrl.client.generated.model.AccessDenied.class);
-                        classByDiscriminatorValue.put("AccessDenied", app.kntrl.client.generated.model.AccessDenied.class);
                         classByDiscriminatorValue.put("SESSION_EXPIRED", app.kntrl.client.generated.model.SessionExpired.class);
-                        classByDiscriminatorValue.put("SessionExpired", app.kntrl.client.generated.model.SessionExpired.class);
                         classByDiscriminatorValue.put("TOKEN_EXPIRED", app.kntrl.client.generated.model.TokenExpired.class);
-                        classByDiscriminatorValue.put("TokenExpired", app.kntrl.client.generated.model.TokenExpired.class);
                         classByDiscriminatorValue.put("UNAUTHENTICATED", app.kntrl.client.generated.model.Unauthenticated.class);
                         classByDiscriminatorValue.put("USER_NOT_FOUND", app.kntrl.client.generated.model.UserNotFound.class);
-                        classByDiscriminatorValue.put("UserNotFound", app.kntrl.client.generated.model.UserNotFound.class);
                         classByDiscriminatorValue.put("Unauthenticated", app.kntrl.client.generated.model.Unauthenticated.class);
-                        return getClassByDiscriminator(classByDiscriminatorValue,
-                                getDiscriminatorValue(readElement, "code"));
-                    }
-          })
-                .registerTypeSelector(app.kntrl.client.generated.model.UserLoginAlreadyTaken.class, new TypeSelector<app.kntrl.client.generated.model.UserLoginAlreadyTaken>() {
-                    @Override
-                    public Class<? extends app.kntrl.client.generated.model.UserLoginAlreadyTaken> getClassForElement(JsonElement readElement) {
-                        Map<String, Class> classByDiscriminatorValue = new HashMap<String, Class>();
-                        classByDiscriminatorValue.put("ACCESS_DENIED", app.kntrl.client.generated.model.AccessDenied.class);
-                        classByDiscriminatorValue.put("AUTH_IS_NOT_CONFIRMED", app.kntrl.client.generated.model.AuthIsNotConfirmed.class);
-                        classByDiscriminatorValue.put("AUTH_IS_NOT_ENABLED", app.kntrl.client.generated.model.AuthIsNotEnabled.class);
-                        classByDiscriminatorValue.put("AUTH_REQUIRES_ANOTHER", app.kntrl.client.generated.model.AuthRequiresAnother.class);
-                        classByDiscriminatorValue.put("CODE_IS_EXPIRED", app.kntrl.client.generated.model.CodeIsExpired.class);
-                        classByDiscriminatorValue.put("CODE_IS_INCORRECT", app.kntrl.client.generated.model.CodeIsIncorrect.class);
-                        classByDiscriminatorValue.put("CODE_TOO_MANY_ATTEMPTS", app.kntrl.client.generated.model.CodeTooManyAttempts.class);
-                        classByDiscriminatorValue.put("EMAIL_IS_INCORRECT", app.kntrl.client.generated.model.EmailIsIncorrect.class);
-                        classByDiscriminatorValue.put("IP_NEW", app.kntrl.client.generated.model.IpNew.class);
-                        classByDiscriminatorValue.put("PASSWORD_IS_INCORRECT", app.kntrl.client.generated.model.PasswordIsIncorrect.class);
-                        classByDiscriminatorValue.put("PASSWORD_IS_INVALID", app.kntrl.client.generated.model.PasswordIsInvalid.class);
-                        classByDiscriminatorValue.put("PLUGIN_CLIENT_ERR", app.kntrl.client.generated.model.PluginClientErr.class);
-                        classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INCORRECT", app.kntrl.client.generated.model.QuestionsAnswersIncorrect.class);
-                        classByDiscriminatorValue.put("QUESTIONS_ANSWERS_INVALID", app.kntrl.client.generated.model.QuestionsAnswersInvalid.class);
-                        classByDiscriminatorValue.put("SESSION_EXPIRED", app.kntrl.client.generated.model.SessionExpired.class);
-                        classByDiscriminatorValue.put("SIGNATURE_IS_INCORRECT", app.kntrl.client.generated.model.SignatureIsIncorrect.class);
-                        classByDiscriminatorValue.put("TOKEN_EXPIRED", app.kntrl.client.generated.model.TokenExpired.class);
-                        classByDiscriminatorValue.put("TOO_MANY_REQS", app.kntrl.client.generated.model.TooManyReqs.class);
-                        classByDiscriminatorValue.put("UNAUTHENTICATED", app.kntrl.client.generated.model.Unauthenticated.class);
-                        classByDiscriminatorValue.put("USER_LOGIN_ALREADY_TAKEN", app.kntrl.client.generated.model.UserLoginAlreadyTaken.class);
-                        classByDiscriminatorValue.put("USER_NOT_FOUND", app.kntrl.client.generated.model.UserNotFound.class);
-                        classByDiscriminatorValue.put("UserLoginAlreadyTaken", app.kntrl.client.generated.model.UserLoginAlreadyTaken.class);
-                        return getClassByDiscriminator(classByDiscriminatorValue,
-                                getDiscriminatorValue(readElement, "code"));
-                    }
-          })
-                .registerTypeSelector(app.kntrl.client.generated.model.UserNotFound.class, new TypeSelector<app.kntrl.client.generated.model.UserNotFound>() {
-                    @Override
-                    public Class<? extends app.kntrl.client.generated.model.UserNotFound> getClassForElement(JsonElement readElement) {
-                        Map<String, Class> classByDiscriminatorValue = new HashMap<String, Class>();
-                        classByDiscriminatorValue.put("ACCESS_DENIED", app.kntrl.client.generated.model.AccessDenied.class);
-                        classByDiscriminatorValue.put("SESSION_EXPIRED", app.kntrl.client.generated.model.SessionExpired.class);
-                        classByDiscriminatorValue.put("TOKEN_EXPIRED", app.kntrl.client.generated.model.TokenExpired.class);
-                        classByDiscriminatorValue.put("UNAUTHENTICATED", app.kntrl.client.generated.model.Unauthenticated.class);
-                        classByDiscriminatorValue.put("USER_NOT_FOUND", app.kntrl.client.generated.model.UserNotFound.class);
-                        classByDiscriminatorValue.put("UserNotFound", app.kntrl.client.generated.model.UserNotFound.class);
                         return getClassByDiscriminator(classByDiscriminatorValue,
                                 getDiscriminatorValue(readElement, "code"));
                     }
@@ -896,11 +210,11 @@ public class JSON {
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.AccessTokenCfg.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.AnswerErr.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.AnyErr.CustomTypeAdapterFactory())
-            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.AnyErrAllOf.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.AppSecretAuthCfg.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.AuthCfg.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.AuthCodeHandlerCfg.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.AuthData.CustomTypeAdapterFactory())
+            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.AuthExecRes.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.AuthIsNotConfirmed.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.AuthIsNotEnabled.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.AuthRequiresAnother.CustomTypeAdapterFactory())
@@ -910,7 +224,7 @@ public class JSON {
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.AuthoriseReq.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.AuthoriseRes.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.BuiltInAuthCfg.CustomTypeAdapterFactory())
-            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.BuiltInAuthCfgAllOf.CustomTypeAdapterFactory())
+            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.ClientErr.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.Code.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.CodeCfg.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.CodeIsExpired.CustomTypeAdapterFactory())
@@ -926,97 +240,70 @@ public class JSON {
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.DbsCfgUser.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.Device.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.EditUserReq.CustomTypeAdapterFactory())
-            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.EditUserReqAllOf.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.EmailAuthCfg.CustomTypeAdapterFactory())
-            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.EmailAuthCfgAllOf.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.EmailIsIncorrect.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.EntryAccessTokenCfg.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.EntryCfg.CustomTypeAdapterFactory())
+            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.Err.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.ErrAuthExecRes.CustomTypeAdapterFactory())
-            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.ErrAuthExecResAllOf.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.FindSessionsRes.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.HealthRes.CustomTypeAdapterFactory())
-            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.HealthResAuthValue.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.HealthStatusRes.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.I18nCfg.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.InMemoryCfg.CustomTypeAdapterFactory())
-            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.InMemoryCfgAllOf.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.InTokenCfg.CustomTypeAdapterFactory())
-            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.InTokenCfgAllOf.CustomTypeAdapterFactory())
+            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.IntegrationErr.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.IpAuthCfg.CustomTypeAdapterFactory())
-            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.IpAuthCfgAllOf.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.IpNew.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.JdbcCfg.CustomTypeAdapterFactory())
-            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.JdbcCfgAllOf.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.Login.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.LoginId.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.MongoCfg.CustomTypeAdapterFactory())
-            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.MongoCfgAllOf.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.MysqlCfg.CustomTypeAdapterFactory())
-            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.MysqlCfgAllOf.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.NewSessionReq.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.NextFactor.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.NoAuthAvailableForFactor.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.OAuthCfg.CustomTypeAdapterFactory())
-            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.OAuthCfgAllOf.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.OkAuthExecRes.CustomTypeAdapterFactory())
-            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.OkAuthExecResAllOf.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.PasswordAuthCfg.CustomTypeAdapterFactory())
-            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.PasswordAuthCfgAllOf.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.PasswordHistoryCfg.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.PasswordIsIncorrect.CustomTypeAdapterFactory())
-            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.PasswordIsIncorrectAllOf.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.PasswordIsInvalid.CustomTypeAdapterFactory())
-            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.PasswordIsInvalidAllOf.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.PasswordStrengthRequirements.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.PluginClientErr.CustomTypeAdapterFactory())
-            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.PluginClientErrAllOf.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.PluginErr.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.PostgresCfg.CustomTypeAdapterFactory())
-            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.PostgresCfgAllOf.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.QuestionsAnswersIncorrect.CustomTypeAdapterFactory())
-            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.QuestionsAnswersIncorrectAllOf.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.QuestionsAnswersInvalid.CustomTypeAdapterFactory())
-            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.QuestionsAnswersInvalidAllOf.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.QuestionsAuthCfg.CustomTypeAdapterFactory())
-            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.QuestionsAuthCfgAllOf.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.RateLimiterCfg.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.RateLimiterReq.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.RedisCfg.CustomTypeAdapterFactory())
-            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.RedisCfgAllOf.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.RefreshTokenCfg.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.RefreshTokenReq.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.RefreshTokenRes.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.RemoteAuthCfg.CustomTypeAdapterFactory())
-            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.RemoteAuthCfgAllOf.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.RemoteDbCfg.CustomTypeAdapterFactory())
-            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.RemoteDbCfgAllOf.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.SHAppCfg.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.SHAppCfgAuthsValue.CustomTypeAdapterFactory())
-            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.SHAppCfgEntriesValue.CustomTypeAdapterFactory())
-            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.SHAppCfgRateLimitersValue.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.SHHttpCfg.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.SaveUserReq.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.SaveUserRes.CustomTypeAdapterFactory())
+            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.ServerErr.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.Session.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.SessionExpired.CustomTypeAdapterFactory())
-            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.SessionUnconfirmedAuthsValue.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.SignatureIsIncorrect.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.SkippedAuthExecRes.CustomTypeAdapterFactory())
-            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.SkippedAuthExecResAllOf.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.SqliteCfg.CustomTypeAdapterFactory())
-            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.SqliteCfgAllOf.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.TokenCfg.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.TokenExpired.CustomTypeAdapterFactory())
-            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.TokenExpiredAllOf.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.TokenHandlerCfg.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.Tokens.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.TooManyReqs.CustomTypeAdapterFactory())
-            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.TooManyReqsAllOf.CustomTypeAdapterFactory())
+            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.Unauthenticated.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.UnconfirmedAuth.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.UnconfirmedAuthData.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.User.CustomTypeAdapterFactory())
-            .registerTypeAdapterFactory(new app.kntrl.client.generated.model.UserAuthsValue.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.UserLoginAlreadyTaken.CustomTypeAdapterFactory())
             .registerTypeAdapterFactory(new app.kntrl.client.generated.model.UserNotFound.CustomTypeAdapterFactory())
             .create();

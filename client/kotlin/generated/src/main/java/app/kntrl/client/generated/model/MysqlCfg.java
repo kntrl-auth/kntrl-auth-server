@@ -15,8 +15,6 @@ package app.kntrl.client.generated.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import app.kntrl.client.generated.model.JdbcCfg;
-import app.kntrl.client.generated.model.MysqlCfgAllOf;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -49,26 +47,49 @@ import app.kntrl.client.generated.infra.JSON;
 /**
  * MysqlCfg
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T19:30:17.809690+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class MysqlCfg {
+  public static final String SERIALIZED_NAME_MYSQL = "mysql";
+  @SerializedName(SERIALIZED_NAME_MYSQL)
+  private String mysql;
+
   public static final String SERIALIZED_NAME_USERNAME = "username";
   @SerializedName(SERIALIZED_NAME_USERNAME)
   private String username;
-
-  public static final String SERIALIZED_NAME_PASSWORD = "password";
-  @SerializedName(SERIALIZED_NAME_PASSWORD)
-  private String password;
 
   public static final String SERIALIZED_NAME_MAX_CONNECTIONS = "maxConnections";
   @SerializedName(SERIALIZED_NAME_MAX_CONNECTIONS)
   private Integer maxConnections;
 
-  public static final String SERIALIZED_NAME_MYSQL = "mysql";
-  @SerializedName(SERIALIZED_NAME_MYSQL)
-  private String mysql;
+  public static final String SERIALIZED_NAME_PASSWORD = "password";
+  @SerializedName(SERIALIZED_NAME_PASSWORD)
+  private String password;
 
   public MysqlCfg() { 
   }
+
+  public MysqlCfg mysql(String mysql) {
+    
+    this.mysql = mysql;
+    return this;
+  }
+
+   /**
+   * Get mysql
+   * @return mysql
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public String getMysql() {
+    return mysql;
+  }
+
+
+  public void setMysql(String mysql) {
+    this.mysql = mysql;
+  }
+
 
   public MysqlCfg username(String username) {
     
@@ -90,29 +111,6 @@ public class MysqlCfg {
 
   public void setUsername(String username) {
     this.username = username;
-  }
-
-
-  public MysqlCfg password(String password) {
-    
-    this.password = password;
-    return this;
-  }
-
-   /**
-   * Get password
-   * @return password
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
-
-  public String getPassword() {
-    return password;
-  }
-
-
-  public void setPassword(String password) {
-    this.password = password;
   }
 
 
@@ -139,26 +137,26 @@ public class MysqlCfg {
   }
 
 
-  public MysqlCfg mysql(String mysql) {
+  public MysqlCfg password(String password) {
     
-    this.mysql = mysql;
+    this.password = password;
     return this;
   }
 
    /**
-   * Get mysql
-   * @return mysql
+   * Get password
+   * @return password
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
 
-  public String getMysql() {
-    return mysql;
+  public String getPassword() {
+    return password;
   }
 
 
-  public void setMysql(String mysql) {
-    this.mysql = mysql;
+  public void setPassword(String password) {
+    this.password = password;
   }
 
 
@@ -172,25 +170,25 @@ public class MysqlCfg {
       return false;
     }
     MysqlCfg mysqlCfg = (MysqlCfg) o;
-    return Objects.equals(this.username, mysqlCfg.username) &&
-        Objects.equals(this.password, mysqlCfg.password) &&
+    return Objects.equals(this.mysql, mysqlCfg.mysql) &&
+        Objects.equals(this.username, mysqlCfg.username) &&
         Objects.equals(this.maxConnections, mysqlCfg.maxConnections) &&
-        Objects.equals(this.mysql, mysqlCfg.mysql);
+        Objects.equals(this.password, mysqlCfg.password);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(username, password, maxConnections, mysql);
+    return Objects.hash(mysql, username, maxConnections, password);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class MysqlCfg {\n");
-    sb.append("    username: ").append(toIndentedString(username)).append("\n");
-    sb.append("    password: ").append(toIndentedString(password)).append("\n");
-    sb.append("    maxConnections: ").append(toIndentedString(maxConnections)).append("\n");
     sb.append("    mysql: ").append(toIndentedString(mysql)).append("\n");
+    sb.append("    username: ").append(toIndentedString(username)).append("\n");
+    sb.append("    maxConnections: ").append(toIndentedString(maxConnections)).append("\n");
+    sb.append("    password: ").append(toIndentedString(password)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -213,10 +211,10 @@ public class MysqlCfg {
   static {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
-    openapiFields.add("username");
-    openapiFields.add("password");
-    openapiFields.add("maxConnections");
     openapiFields.add("mysql");
+    openapiFields.add("username");
+    openapiFields.add("maxConnections");
+    openapiFields.add("password");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -244,14 +242,14 @@ public class MysqlCfg {
           throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `MysqlCfg` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
         }
       }
+      if (jsonObj.get("mysql") != null && !jsonObj.get("mysql").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `mysql` to be a primitive type in the JSON string but got `%s`", jsonObj.get("mysql").toString()));
+      }
       if (jsonObj.get("username") != null && !jsonObj.get("username").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `username` to be a primitive type in the JSON string but got `%s`", jsonObj.get("username").toString()));
       }
       if (jsonObj.get("password") != null && !jsonObj.get("password").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `password` to be a primitive type in the JSON string but got `%s`", jsonObj.get("password").toString()));
-      }
-      if (jsonObj.get("mysql") != null && !jsonObj.get("mysql").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `mysql` to be a primitive type in the JSON string but got `%s`", jsonObj.get("mysql").toString()));
       }
   }
 

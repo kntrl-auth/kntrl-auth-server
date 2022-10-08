@@ -15,30 +15,7 @@ package app.kntrl.client.generated.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import app.kntrl.client.generated.model.AccessDenied;
-import app.kntrl.client.generated.model.AuthIsNotConfirmed;
-import app.kntrl.client.generated.model.AuthIsNotEnabled;
-import app.kntrl.client.generated.model.AuthRequiresAnother;
-import app.kntrl.client.generated.model.ClientErr;
-import app.kntrl.client.generated.model.CodeIsExpired;
-import app.kntrl.client.generated.model.CodeIsIncorrect;
-import app.kntrl.client.generated.model.CodeTooManyAttempts;
-import app.kntrl.client.generated.model.EmailIsIncorrect;
-import app.kntrl.client.generated.model.IpNew;
 import app.kntrl.client.generated.model.LoginId;
-import app.kntrl.client.generated.model.PasswordIsIncorrect;
-import app.kntrl.client.generated.model.PasswordIsInvalid;
-import app.kntrl.client.generated.model.PasswordIsInvalidAllOf;
-import app.kntrl.client.generated.model.PluginClientErr;
-import app.kntrl.client.generated.model.QuestionsAnswersIncorrect;
-import app.kntrl.client.generated.model.QuestionsAnswersInvalid;
-import app.kntrl.client.generated.model.SessionExpired;
-import app.kntrl.client.generated.model.SignatureIsIncorrect;
-import app.kntrl.client.generated.model.TokenExpired;
-import app.kntrl.client.generated.model.TooManyReqs;
-import app.kntrl.client.generated.model.Unauthenticated;
-import app.kntrl.client.generated.model.UserLoginAlreadyTaken;
-import app.kntrl.client.generated.model.UserNotFound;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -71,8 +48,20 @@ import app.kntrl.client.generated.infra.JSON;
 /**
  * PasswordIsInvalid
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-10-07T19:30:17.809690+03:00[Europe/Kiev]")
-public class PasswordIsInvalid extends ClientErr {
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
+public class PasswordIsInvalid {
+  public static final String SERIALIZED_NAME_CODE = "code";
+  @SerializedName(SERIALIZED_NAME_CODE)
+  private String code;
+
+  public static final String SERIALIZED_NAME_DEV_MSG = "devMsg";
+  @SerializedName(SERIALIZED_NAME_DEV_MSG)
+  private String devMsg;
+
+  public static final String SERIALIZED_NAME_MSG = "msg";
+  @SerializedName(SERIALIZED_NAME_MSG)
+  private String msg;
+
   public static final String SERIALIZED_NAME_TOO_LONG = "tooLong";
   @SerializedName(SERIALIZED_NAME_TOO_LONG)
   private Boolean tooLong;
@@ -122,8 +111,76 @@ public class PasswordIsInvalid extends ClientErr {
   private Long wasUsedDaysAgo;
 
   public PasswordIsInvalid() { 
-    this.code = this.getClass().getSimpleName();
   }
+
+  public PasswordIsInvalid code(String code) {
+    
+    this.code = code;
+    return this;
+  }
+
+   /**
+   * Get code
+   * @return code
+  **/
+  @javax.annotation.Nonnull
+  @ApiModelProperty(required = true, value = "")
+
+  public String getCode() {
+    return code;
+  }
+
+
+  public void setCode(String code) {
+    this.code = code;
+  }
+
+
+  public PasswordIsInvalid devMsg(String devMsg) {
+    
+    this.devMsg = devMsg;
+    return this;
+  }
+
+   /**
+   * Message for developers.
+   * @return devMsg
+  **/
+  @javax.annotation.Nonnull
+  @ApiModelProperty(required = true, value = "Message for developers.")
+
+  public String getDevMsg() {
+    return devMsg;
+  }
+
+
+  public void setDevMsg(String devMsg) {
+    this.devMsg = devMsg;
+  }
+
+
+  public PasswordIsInvalid msg(String msg) {
+    
+    this.msg = msg;
+    return this;
+  }
+
+   /**
+   * Localised message suitable for UI.
+   * @return msg
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Localised message suitable for UI.")
+
+  public String getMsg() {
+    return msg;
+  }
+
+
+  public void setMsg(String msg) {
+    this.msg = msg;
+  }
+
 
   public PasswordIsInvalid tooLong(Boolean tooLong) {
     
@@ -411,7 +468,10 @@ public class PasswordIsInvalid extends ClientErr {
       return false;
     }
     PasswordIsInvalid passwordIsInvalid = (PasswordIsInvalid) o;
-    return Objects.equals(this.tooLong, passwordIsInvalid.tooLong) &&
+    return Objects.equals(this.code, passwordIsInvalid.code) &&
+        Objects.equals(this.devMsg, passwordIsInvalid.devMsg) &&
+        Objects.equals(this.msg, passwordIsInvalid.msg) &&
+        Objects.equals(this.tooLong, passwordIsInvalid.tooLong) &&
         Objects.equals(this.tooShort, passwordIsInvalid.tooShort) &&
         Objects.equals(this.missingNumber, passwordIsInvalid.missingNumber) &&
         Objects.equals(this.missingSymbol, passwordIsInvalid.missingSymbol) &&
@@ -422,20 +482,21 @@ public class PasswordIsInvalid extends ClientErr {
         Objects.equals(this.matchesLogin, passwordIsInvalid.matchesLogin) &&
         Objects.equals(this.passwordsMismatch, passwordIsInvalid.passwordsMismatch) &&
         Objects.equals(this.strength, passwordIsInvalid.strength) &&
-        Objects.equals(this.wasUsedDaysAgo, passwordIsInvalid.wasUsedDaysAgo) &&
-        super.equals(o);
+        Objects.equals(this.wasUsedDaysAgo, passwordIsInvalid.wasUsedDaysAgo);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(tooLong, tooShort, missingNumber, missingSymbol, missingUpperCase, missingLowerCase, commonPassword, wasUsedBeforeAt, matchesLogin, passwordsMismatch, strength, wasUsedDaysAgo, super.hashCode());
+    return Objects.hash(code, devMsg, msg, tooLong, tooShort, missingNumber, missingSymbol, missingUpperCase, missingLowerCase, commonPassword, wasUsedBeforeAt, matchesLogin, passwordsMismatch, strength, wasUsedDaysAgo);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class PasswordIsInvalid {\n");
-    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
+    sb.append("    code: ").append(toIndentedString(code)).append("\n");
+    sb.append("    devMsg: ").append(toIndentedString(devMsg)).append("\n");
+    sb.append("    msg: ").append(toIndentedString(msg)).append("\n");
     sb.append("    tooLong: ").append(toIndentedString(tooLong)).append("\n");
     sb.append("    tooShort: ").append(toIndentedString(tooShort)).append("\n");
     sb.append("    missingNumber: ").append(toIndentedString(missingNumber)).append("\n");
@@ -488,6 +549,8 @@ public class PasswordIsInvalid extends ClientErr {
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
+    openapiRequiredFields.add("code");
+    openapiRequiredFields.add("devMsg");
     openapiRequiredFields.add("tooLong");
     openapiRequiredFields.add("tooShort");
     openapiRequiredFields.add("missingNumber");
@@ -496,8 +559,6 @@ public class PasswordIsInvalid extends ClientErr {
     openapiRequiredFields.add("missingLowerCase");
     openapiRequiredFields.add("commonPassword");
     openapiRequiredFields.add("passwordsMismatch");
-    openapiRequiredFields.add("code");
-    openapiRequiredFields.add("devMsg");
   }
 
  /**
@@ -528,6 +589,22 @@ public class PasswordIsInvalid extends ClientErr {
         if (jsonObj.get(requiredField) == null) {
           throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonObj.toString()));
         }
+      }
+      if (jsonObj.get("code") != null && !jsonObj.get("code").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `code` to be a primitive type in the JSON string but got `%s`", jsonObj.get("code").toString()));
+      }
+      if (jsonObj.get("devMsg") != null && !jsonObj.get("devMsg").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `devMsg` to be a primitive type in the JSON string but got `%s`", jsonObj.get("devMsg").toString()));
+      }
+      if (jsonObj.get("msg") != null && !jsonObj.get("msg").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `msg` to be a primitive type in the JSON string but got `%s`", jsonObj.get("msg").toString()));
+      }
+      // validate the optional field `matchesLogin`
+      if (jsonObj.getAsJsonObject("matchesLogin") != null) {
+        LoginId.validateJsonObject(jsonObj.getAsJsonObject("matchesLogin"));
+      }
+      if (jsonObj.get("strength") != null && !jsonObj.get("strength").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `strength` to be a primitive type in the JSON string but got `%s`", jsonObj.get("strength").toString()));
       }
   }
 
