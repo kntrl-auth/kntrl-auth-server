@@ -19,9 +19,11 @@
       ttl: "10d"
     },
     refresh: {
-      // Refresh token will not be used, but this config still required for adjusting access-token ttl
       ttl: "10d",
-      maxTtl: "10d"
+      maxTtl: "10d",
+
+      // Without database there is no way to check that refresh token isn't reused
+      allowReuse: true
     }
   }
 }

@@ -10,8 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.merge = exports.handleErr = void 0;
-function handleErr(action, retryOnExpiredToken) {
-    var _a, _b, _c;
+function handleErr(action, retryOnExpiredTokenOn) {
+    var _a, _b, _c, _d;
     return __awaiter(this, void 0, void 0, function* () {
         try {
             if (typeof action === 'function')
@@ -19,11 +19,11 @@ function handleErr(action, retryOnExpiredToken) {
             return (yield action).data;
         }
         catch (error) {
-            if (((_b = (_a = error.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.code) == 'TOKEN_EXPIRED' && retryOnExpiredToken) {
-                yield retryOnExpiredToken.refreshAccessToken(undefined, true);
+            if (((_b = (_a = error.response) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.code) == 'TOKEN_EXPIRED' && retryOnExpiredTokenOn) {
+                yield retryOnExpiredTokenOn.refreshAccessToken(undefined, (_c = error.response) === null || _c === void 0 ? void 0 : _c.data);
                 return yield handleErr(action);
             }
-            throw ((_c = error.response) === null || _c === void 0 ? void 0 : _c.data) || error;
+            throw ((_d = error.response) === null || _d === void 0 ? void 0 : _d.data) || error;
         }
     });
 }

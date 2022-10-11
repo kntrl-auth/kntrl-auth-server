@@ -3,14 +3,14 @@ import { Session } from './session';
 
 export async function handleErr<T>(
     action: AxiosPromise<T> | (() => AxiosPromise<T>),
-    retryOnExpiredToken?: Session,
+    retryOnExpiredTokenOn?: Session,
 ): Promise<T> {
     try {
         if (typeof action === 'function') return (await action()).data
         return (await action).data
     } catch (error) {
-        if (error.response?.data?.code == 'TOKEN_EXPIRED' && retryOnExpiredToken) {
-            await retryOnExpiredToken.refreshAccessToken(undefined, true)
+        if (error.response?.data?.code == 'TOKEN_EXPIRED' && retryOnExpiredTokenOn) {
+            await retryOnExpiredTokenOn.refreshAccessToken(undefined, error.response?.data)
             return await handleErr(action)
         }
         throw error.response?.data || error;
