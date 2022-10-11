@@ -1,0 +1,6 @@
+{
+  "files": [ "../**" ],
+  "dependencies": {
+    "kntrl-client": "file:../../client/typescript/dist"
+  }
+}

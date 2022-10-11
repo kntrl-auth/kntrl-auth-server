@@ -1,0 +1,1 @@
+curl --request GET --url 'http://localhost:9876/api/server/health'

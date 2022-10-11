@@ -1,7 +1,7 @@
 import app.kntrl.client.Kntrl;
 import app.kntrl.client.generated.model.HealthRes;
 
-public class client {
+class Example0101 {
     public static void main(String[] args) {
         HealthRes serverHealth = new Kntrl().serverHealth(null);
         System.out.println("User database health: " + serverHealth.getDb().getUser().getStatus().name());

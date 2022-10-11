@@ -709,35 +709,11 @@ paths:
 components:
   schemas:
     Err:
-      discriminator:
-        mapping:
-          SESSION_EXPIRED: '#/components/schemas/SessionExpired'
-          ACCESS_DENIED: '#/components/schemas/AccessDenied'
-          USER_NOT_FOUND: '#/components/schemas/UserNotFound'
-          SIGNATURE_IS_INCORRECT: '#/components/schemas/SignatureIsIncorrect'
-          SERVER_ERR: '#/components/schemas/ServerErr'
-          INTEGRATION_ERR: '#/components/schemas/IntegrationErr'
-          ANY_ERR: '#/components/schemas/AnyErr'
-          USER_LOGIN_ALREADY_TAKEN: '#/components/schemas/UserLoginAlreadyTaken'
-          AUTH_IS_NOT_ENABLED: '#/components/schemas/AuthIsNotEnabled'
-          TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
-          TOO_MANY_REQS: '#/components/schemas/TooManyReqs'
-          AUTH_IS_NOT_CONFIRMED: '#/components/schemas/AuthIsNotConfirmed'
-          NO_AUTH_AVAILABLE_FOR_FACTOR: '#/components/schemas/NoAuthAvailableForFactor'
-          AUTH_REQUIRES_ANOTHER: '#/components/schemas/AuthRequiresAnother'
-          CODE_IS_EXPIRED: '#/components/schemas/CodeIsExpired'
-          CODE_TOO_MANY_ATTEMPTS: '#/components/schemas/CodeTooManyAttempts'
-          CODE_IS_INCORRECT: '#/components/schemas/CodeIsIncorrect'
-          UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
-          PLUGIN_ERR: '#/components/schemas/PluginErr'
-          PLUGIN_CLIENT_ERR: '#/components/schemas/PluginClientErr'
-          PASSWORD_IS_INCORRECT: '#/components/schemas/PasswordIsIncorrect'
-          PASSWORD_IS_INVALID: '#/components/schemas/PasswordIsInvalid'
-          EMAIL_IS_INCORRECT: '#/components/schemas/EmailIsIncorrect'
-          IP_NEW: '#/components/schemas/IpNew'
-          QUESTIONS_ANSWERS_INCORRECT: '#/components/schemas/QuestionsAnswersIncorrect'
-          QUESTIONS_ANSWERS_INVALID: '#/components/schemas/QuestionsAnswersInvalid'
-        propertyName: code
+      additionalProperties: true
+      example:
+        msg: msg
+        code: code
+        devMsg: devMsg
       properties:
         code:
           type: string
@@ -852,30 +828,7 @@ components:
       x-order: kntrl/core/domain/err.kt4
       x-super: '#/components/schemas/ClientErr'
     ClientErr:
-      discriminator:
-        mapping:
-          SESSION_EXPIRED: '#/components/schemas/SessionExpired'
-          ACCESS_DENIED: '#/components/schemas/AccessDenied'
-          USER_NOT_FOUND: '#/components/schemas/UserNotFound'
-          SIGNATURE_IS_INCORRECT: '#/components/schemas/SignatureIsIncorrect'
-          USER_LOGIN_ALREADY_TAKEN: '#/components/schemas/UserLoginAlreadyTaken'
-          AUTH_IS_NOT_ENABLED: '#/components/schemas/AuthIsNotEnabled'
-          TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
-          TOO_MANY_REQS: '#/components/schemas/TooManyReqs'
-          AUTH_IS_NOT_CONFIRMED: '#/components/schemas/AuthIsNotConfirmed'
-          AUTH_REQUIRES_ANOTHER: '#/components/schemas/AuthRequiresAnother'
-          CODE_IS_EXPIRED: '#/components/schemas/CodeIsExpired'
-          CODE_TOO_MANY_ATTEMPTS: '#/components/schemas/CodeTooManyAttempts'
-          CODE_IS_INCORRECT: '#/components/schemas/CodeIsIncorrect'
-          UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
-          PLUGIN_CLIENT_ERR: '#/components/schemas/PluginClientErr'
-          PASSWORD_IS_INCORRECT: '#/components/schemas/PasswordIsIncorrect'
-          PASSWORD_IS_INVALID: '#/components/schemas/PasswordIsInvalid'
-          EMAIL_IS_INCORRECT: '#/components/schemas/EmailIsIncorrect'
-          IP_NEW: '#/components/schemas/IpNew'
-          QUESTIONS_ANSWERS_INCORRECT: '#/components/schemas/QuestionsAnswersIncorrect'
-          QUESTIONS_ANSWERS_INVALID: '#/components/schemas/QuestionsAnswersInvalid'
-        propertyName: code
+      additionalProperties: true
       properties:
         code:
           type: string
@@ -965,11 +918,7 @@ components:
       format: int64
       type: integer
     IntegrationErr:
-      discriminator:
-        mapping:
-          INTEGRATION_ERR: '#/components/schemas/IntegrationErr'
-          NO_AUTH_AVAILABLE_FOR_FACTOR: '#/components/schemas/NoAuthAvailableForFactor'
-        propertyName: code
+      additionalProperties: true
       properties:
         code:
           type: string
@@ -1210,11 +1159,7 @@ components:
       x-order: kntrl/core/infra/err.kt8
       x-super: '#/components/schemas/ClientErr'
     ServerErr:
-      discriminator:
-        mapping:
-          SERVER_ERR: '#/components/schemas/ServerErr'
-          PLUGIN_ERR: '#/components/schemas/PluginErr'
-        propertyName: code
+      additionalProperties: true
       properties:
         code:
           type: string
@@ -1317,14 +1262,7 @@ components:
       x-order: kntrl/core/domain/err.kt11
       x-super: '#/components/schemas/ClientErr'
     Unauthenticated:
-      discriminator:
-        mapping:
-          SESSION_EXPIRED: '#/components/schemas/SessionExpired'
-          ACCESS_DENIED: '#/components/schemas/AccessDenied'
-          USER_NOT_FOUND: '#/components/schemas/UserNotFound'
-          TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
-          UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
-        propertyName: code
+      additionalProperties: true
       properties:
         code:
           type: string
@@ -1779,12 +1717,6 @@ components:
       type: object
       x-order: kntrl/core/domain/user/AuthUserCfg.kt3
     AuthExecRes:
-      discriminator:
-        mapping:
-          OK: '#/components/schemas/OkAuthExecRes'
-          ERR: '#/components/schemas/ErrAuthExecRes'
-          SKIPPED: '#/components/schemas/SkippedAuthExecRes'
-        propertyName: status
       example:
         sentCode:
           attemptsLeft: 2
@@ -1793,12 +1725,25 @@ components:
           validUntil: 5
           id: id
           sentAt: 7
-        status: status
+        err:
+          msg: msg
+          code: code
+          devMsg: devMsg
+        resData: "{}"
+        status: OK
       properties:
         status:
+          enum:
+          - OK
+          - ERR
+          - SKIPPED
           type: string
         sentCode:
           $ref: '#/components/schemas/Code'
+        err:
+          $ref: '#/components/schemas/Err'
+        resData:
+          type: object
       required:
       - status
       type: object
@@ -1952,7 +1897,12 @@ components:
               validUntil: 5
               id: id
               sentAt: 7
-            status: status
+            err:
+              msg: msg
+              code: code
+              devMsg: devMsg
+            resData: "{}"
+            status: OK
       properties:
         tokens:
           $ref: '#/components/schemas/Tokens'
@@ -2003,6 +1953,10 @@ components:
     ErrAuthExecRes:
       properties:
         status:
+          enum:
+          - OK
+          - ERR
+          - SKIPPED
           type: string
         sentCode:
           $ref: '#/components/schemas/Code'
@@ -2040,6 +1994,10 @@ components:
     OkAuthExecRes:
       properties:
         status:
+          enum:
+          - OK
+          - ERR
+          - SKIPPED
           type: string
         sentCode:
           $ref: '#/components/schemas/Code'
@@ -2053,6 +2011,10 @@ components:
     SkippedAuthExecRes:
       properties:
         status:
+          enum:
+          - OK
+          - ERR
+          - SKIPPED
           type: string
         sentCode:
           $ref: '#/components/schemas/Code'
@@ -2431,7 +2393,12 @@ components:
               validUntil: 5
               id: id
               sentAt: 7
-            status: status
+            err:
+              msg: msg
+              code: code
+              devMsg: devMsg
+            resData: "{}"
+            status: OK
       properties:
         user:
           $ref: '#/components/schemas/User'

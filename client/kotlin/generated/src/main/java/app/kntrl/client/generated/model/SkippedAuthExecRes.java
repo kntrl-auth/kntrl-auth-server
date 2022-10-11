@@ -50,9 +50,58 @@ import app.kntrl.client.generated.infra.JSON;
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class SkippedAuthExecRes {
+  /**
+   * Gets or Sets status
+   */
+  @JsonAdapter(StatusEnum.Adapter.class)
+  public enum StatusEnum {
+    OK("OK"),
+    
+    ERR("ERR"),
+    
+    SKIPPED("SKIPPED");
+
+    private String value;
+
+    StatusEnum(String value) {
+      this.value = value;
+    }
+
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    public static StatusEnum fromValue(String value) {
+      for (StatusEnum b : StatusEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+    }
+
+    public static class Adapter extends TypeAdapter<StatusEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final StatusEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public StatusEnum read(final JsonReader jsonReader) throws IOException {
+        String value =  jsonReader.nextString();
+        return StatusEnum.fromValue(value);
+      }
+    }
+  }
+
   public static final String SERIALIZED_NAME_STATUS = "status";
   @SerializedName(SERIALIZED_NAME_STATUS)
-  private String status;
+  private StatusEnum status;
 
   public static final String SERIALIZED_NAME_SENT_CODE = "sentCode";
   @SerializedName(SERIALIZED_NAME_SENT_CODE)
@@ -61,7 +110,7 @@ public class SkippedAuthExecRes {
   public SkippedAuthExecRes() { 
   }
 
-  public SkippedAuthExecRes status(String status) {
+  public SkippedAuthExecRes status(StatusEnum status) {
     
     this.status = status;
     return this;
@@ -74,12 +123,12 @@ public class SkippedAuthExecRes {
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "")
 
-  public String getStatus() {
+  public StatusEnum getStatus() {
     return status;
   }
 
 
-  public void setStatus(String status) {
+  public void setStatus(StatusEnum status) {
     this.status = status;
   }
 

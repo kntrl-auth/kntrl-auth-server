@@ -1,18 +1,22 @@
 {
   "compilerOptions": {
-    "module": "esnext",
-    "target": "ES2017",
+    "module": "CommonJS",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "target": "es6",
     "noImplicitAny": true,
     "removeComments": true,
     "preserveConstEnums": true,
-    "outFile": "./build/lib.js",
+    "outDir": "./dist",
     "sourceMap": true,
-    "moduleResolution": "node",
-    "lib": ["dom"],
-    "allowSyntheticDefaultImports": true,
-    "strictNullChecks": true
+    "lib": [ "dom" ],
+    "strictNullChecks": true,
+    "declaration": true
   },
   "include": [
-    "src/**/*"
+    "generated/**/*",
+    "src/**/*",
+    "index.ts",
   ]
 }

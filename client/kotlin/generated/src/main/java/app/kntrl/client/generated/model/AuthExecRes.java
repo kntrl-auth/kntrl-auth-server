@@ -16,9 +16,7 @@ package app.kntrl.client.generated.model;
 import java.util.Objects;
 import java.util.Arrays;
 import app.kntrl.client.generated.model.Code;
-import app.kntrl.client.generated.model.ErrAuthExecRes;
-import app.kntrl.client.generated.model.OkAuthExecRes;
-import app.kntrl.client.generated.model.SkippedAuthExecRes;
+import app.kntrl.client.generated.model.Err;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -53,19 +51,75 @@ import app.kntrl.client.generated.infra.JSON;
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class AuthExecRes {
+  /**
+   * Gets or Sets status
+   */
+  @JsonAdapter(StatusEnum.Adapter.class)
+  public enum StatusEnum {
+    OK("OK"),
+    
+    ERR("ERR"),
+    
+    SKIPPED("SKIPPED");
+
+    private String value;
+
+    StatusEnum(String value) {
+      this.value = value;
+    }
+
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    public static StatusEnum fromValue(String value) {
+      for (StatusEnum b : StatusEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+    }
+
+    public static class Adapter extends TypeAdapter<StatusEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final StatusEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public StatusEnum read(final JsonReader jsonReader) throws IOException {
+        String value =  jsonReader.nextString();
+        return StatusEnum.fromValue(value);
+      }
+    }
+  }
+
   public static final String SERIALIZED_NAME_STATUS = "status";
   @SerializedName(SERIALIZED_NAME_STATUS)
-  protected String status;
+  private StatusEnum status;
 
   public static final String SERIALIZED_NAME_SENT_CODE = "sentCode";
   @SerializedName(SERIALIZED_NAME_SENT_CODE)
   private Code sentCode;
 
+  public static final String SERIALIZED_NAME_ERR = "err";
+  @SerializedName(SERIALIZED_NAME_ERR)
+  private Err err;
+
+  public static final String SERIALIZED_NAME_RES_DATA = "resData";
+  @SerializedName(SERIALIZED_NAME_RES_DATA)
+  private Object resData;
+
   public AuthExecRes() { 
-    this.status = this.getClass().getSimpleName();
   }
 
-  public AuthExecRes status(String status) {
+  public AuthExecRes status(StatusEnum status) {
     
     this.status = status;
     return this;
@@ -78,12 +132,12 @@ public class AuthExecRes {
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "")
 
-  public String getStatus() {
+  public StatusEnum getStatus() {
     return status;
   }
 
 
-  public void setStatus(String status) {
+  public void setStatus(StatusEnum status) {
     this.status = status;
   }
 
@@ -111,6 +165,52 @@ public class AuthExecRes {
   }
 
 
+  public AuthExecRes err(Err err) {
+    
+    this.err = err;
+    return this;
+  }
+
+   /**
+   * Get err
+   * @return err
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Err getErr() {
+    return err;
+  }
+
+
+  public void setErr(Err err) {
+    this.err = err;
+  }
+
+
+  public AuthExecRes resData(Object resData) {
+    
+    this.resData = resData;
+    return this;
+  }
+
+   /**
+   * Get resData
+   * @return resData
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Object getResData() {
+    return resData;
+  }
+
+
+  public void setResData(Object resData) {
+    this.resData = resData;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -122,12 +222,14 @@ public class AuthExecRes {
     }
     AuthExecRes authExecRes = (AuthExecRes) o;
     return Objects.equals(this.status, authExecRes.status) &&
-        Objects.equals(this.sentCode, authExecRes.sentCode);
+        Objects.equals(this.sentCode, authExecRes.sentCode) &&
+        Objects.equals(this.err, authExecRes.err) &&
+        Objects.equals(this.resData, authExecRes.resData);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(status, sentCode);
+    return Objects.hash(status, sentCode, err, resData);
   }
 
   @Override
@@ -136,6 +238,8 @@ public class AuthExecRes {
     sb.append("class AuthExecRes {\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    sentCode: ").append(toIndentedString(sentCode)).append("\n");
+    sb.append("    err: ").append(toIndentedString(err)).append("\n");
+    sb.append("    resData: ").append(toIndentedString(resData)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -160,6 +264,8 @@ public class AuthExecRes {
     openapiFields = new HashSet<String>();
     openapiFields.add("status");
     openapiFields.add("sentCode");
+    openapiFields.add("err");
+    openapiFields.add("resData");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -194,6 +300,13 @@ public class AuthExecRes {
         if (jsonObj.get(requiredField) == null) {
           throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonObj.toString()));
         }
+      }
+      if (jsonObj.get("status") != null && !jsonObj.get("status").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `status` to be a primitive type in the JSON string but got `%s`", jsonObj.get("status").toString()));
+      }
+      // validate the optional field `sentCode`
+      if (jsonObj.getAsJsonObject("sentCode") != null) {
+        Code.validateJsonObject(jsonObj.getAsJsonObject("sentCode"));
       }
   }
 

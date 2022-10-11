@@ -138,7 +138,7 @@ OpenAPI specification is located in [client folder](client):
 
 **TL;DR;** if you're not sure which specification to use, just use [openapi-no-discriminators.yaml](client/openapi-no-discriminators.yaml), e.g.:
 ```shell
-openapi-generator-cli generate -i .client/openapi-no-discriminators.yaml -g go -o /generated/.client
+openapi-generator-cli generate -i ./client/openapi-no-discriminators.yaml -g go -o ./generated/.client
 ```
 
 #### Option 3 - call HTTP API manually

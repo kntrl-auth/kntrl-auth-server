@@ -3,7 +3,7 @@ import { Session } from './src/session';
 import { AxiosRequestConfig } from 'axios';
 
 export class Kntrl {
-    constructor(readonly serverUrl: string, readonly lang?: string) {}
+    constructor(readonly serverUrl: string = 'http://localhost:9876', readonly lang?: string) {}
 
     newSession(req: Omit<NewSessionReq, keyof AuthenticateReq>): Session { return new Session(this, req); }
     session(accessTokenOrTokens?: string | Tokens): Session {

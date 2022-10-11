@@ -90,8 +90,7 @@ export class Session implements SessionModel {
         if (!refreshToken) throw errOnMissingToken || 'No refresh token';
 
         const res = await handleErr(
-            new TokenApi(this._serverCfg())
-                .refreshToken({ refreshToken }, await this.kntrl._axiosCfg())
+            new TokenApi(this._serverCfg()).refreshToken({ refreshToken }, await this.kntrl._axiosCfg())
         );
         this.update(res);
         return res;
