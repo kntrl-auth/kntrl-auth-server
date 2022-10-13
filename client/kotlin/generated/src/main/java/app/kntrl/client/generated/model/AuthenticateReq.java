@@ -15,6 +15,7 @@ package app.kntrl.client.generated.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import app.kntrl.client.generated.model.AuthenticateReqAuthReqsValue;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -58,7 +59,7 @@ public class AuthenticateReq {
 
   public static final String SERIALIZED_NAME_AUTH_REQS = "authReqs";
   @SerializedName(SERIALIZED_NAME_AUTH_REQS)
-  private Map<String, Object> authReqs = null;
+  private Map<String, AuthenticateReqAuthReqsValue> authReqs = null;
 
   public static final String SERIALIZED_NAME_DRY_RUN = "dryRun";
   @SerializedName(SERIALIZED_NAME_DRY_RUN)
@@ -82,11 +83,11 @@ public class AuthenticateReq {
   }
 
    /**
-   * Get factors
+   * Forces specific auth to be used for factor. Takes place only when multiple auths is provided within request and auth can be assigned to several factors. If used in sign-up mode, it just enables those factors. 
    * @return factors
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(value = "Forces specific auth to be used for factor. Takes place only when multiple auths is provided within request and auth can be assigned to several factors. If used in sign-up mode, it just enables those factors. ")
 
   public Map<String, String> getFactors() {
     return factors;
@@ -98,13 +99,13 @@ public class AuthenticateReq {
   }
 
 
-  public AuthenticateReq authReqs(Map<String, Object> authReqs) {
+  public AuthenticateReq authReqs(Map<String, AuthenticateReqAuthReqsValue> authReqs) {
     
     this.authReqs = authReqs;
     return this;
   }
 
-  public AuthenticateReq putAuthReqsItem(String key, Object authReqsItem) {
+  public AuthenticateReq putAuthReqsItem(String key, AuthenticateReqAuthReqsValue authReqsItem) {
     if (this.authReqs == null) {
       this.authReqs = new HashMap<>();
     }
@@ -119,12 +120,12 @@ public class AuthenticateReq {
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Request for authenticators ")
 
-  public Map<String, Object> getAuthReqs() {
+  public Map<String, AuthenticateReqAuthReqsValue> getAuthReqs() {
     return authReqs;
   }
 
 
-  public void setAuthReqs(Map<String, Object> authReqs) {
+  public void setAuthReqs(Map<String, AuthenticateReqAuthReqsValue> authReqs) {
     this.authReqs = authReqs;
   }
 
@@ -136,11 +137,11 @@ public class AuthenticateReq {
   }
 
    /**
-   * Get dryRun
+   * Execute only validation ща authenticator requests.
    * @return dryRun
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(value = "Execute only validation ща authenticator requests.")
 
   public Boolean getDryRun() {
     return dryRun;

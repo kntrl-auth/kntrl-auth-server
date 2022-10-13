@@ -10,10 +10,10 @@ export class ServerSvc {
 
     async health(key?: string): Promise<HealthRes> {
         try {
-            return (await this.api.health(key, await this.session._authenticatedAxiosCfg())).data;
+            return handleErr(this.api.health(key, await this.session._authenticatedAxiosCfg()), this.session);
         } catch (err) {
-            if (err.reponse?.data) {
-                throw err.response?.data;
+            if (err.code) {
+                throw err;
             }
 
             const status = {

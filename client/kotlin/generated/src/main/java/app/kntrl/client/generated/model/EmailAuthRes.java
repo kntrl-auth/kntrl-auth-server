@@ -23,9 +23,6 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -48,69 +45,37 @@ import java.util.Set;
 import app.kntrl.client.generated.infra.JSON;
 
 /**
- * AuthData
+ * EmailAuthRes
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
-public class AuthData {
-  public static final String SERIALIZED_NAME_PUBLIC = "public";
-  @SerializedName(SERIALIZED_NAME_PUBLIC)
-  private Map<String, Object> _public = new HashMap<>();
+public class EmailAuthRes {
+  public static final String SERIALIZED_NAME_EMAIL_SENT_TO = "emailSentTo";
+  @SerializedName(SERIALIZED_NAME_EMAIL_SENT_TO)
+  private String emailSentTo;
 
-  public static final String SERIALIZED_NAME_LOGIN = "login";
-  @SerializedName(SERIALIZED_NAME_LOGIN)
-  private String login;
-
-  public AuthData() { 
+  public EmailAuthRes() { 
   }
 
-  public AuthData _public(Map<String, Object> _public) {
+  public EmailAuthRes emailSentTo(String emailSentTo) {
     
-    this._public = _public;
-    return this;
-  }
-
-  public AuthData putPublicItem(String key, Object _publicItem) {
-    this._public.put(key, _publicItem);
+    this.emailSentTo = emailSentTo;
     return this;
   }
 
    /**
-   * Get _public
-   * @return _public
-  **/
-  @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
-
-  public Map<String, Object> getPublic() {
-    return _public;
-  }
-
-
-  public void setPublic(Map<String, Object> _public) {
-    this._public = _public;
-  }
-
-
-  public AuthData login(String login) {
-    
-    this.login = login;
-    return this;
-  }
-
-   /**
-   * Get login
-   * @return login
+   * Shows user email, that was used to send a code. Email will be partially hidden.
+   * @return emailSentTo
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(value = "Shows user email, that was used to send a code. Email will be partially hidden.")
 
-  public String getLogin() {
-    return login;
+  public String getEmailSentTo() {
+    return emailSentTo;
   }
 
 
-  public void setLogin(String login) {
-    this.login = login;
+  public void setEmailSentTo(String emailSentTo) {
+    this.emailSentTo = emailSentTo;
   }
 
 
@@ -123,22 +88,20 @@ public class AuthData {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    AuthData authData = (AuthData) o;
-    return Objects.equals(this._public, authData._public) &&
-        Objects.equals(this.login, authData.login);
+    EmailAuthRes emailAuthRes = (EmailAuthRes) o;
+    return Objects.equals(this.emailSentTo, emailAuthRes.emailSentTo);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(_public, login);
+    return Objects.hash(emailSentTo);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class AuthData {\n");
-    sb.append("    _public: ").append(toIndentedString(_public)).append("\n");
-    sb.append("    login: ").append(toIndentedString(login)).append("\n");
+    sb.append("class EmailAuthRes {\n");
+    sb.append("    emailSentTo: ").append(toIndentedString(emailSentTo)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -161,45 +124,36 @@ public class AuthData {
   static {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
-    openapiFields.add("public");
-    openapiFields.add("login");
+    openapiFields.add("emailSentTo");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
-    openapiRequiredFields.add("public");
   }
 
  /**
   * Validates the JSON Object and throws an exception if issues found
   *
   * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to AuthData
+  * @throws IOException if the JSON Object is invalid with respect to EmailAuthRes
   */
   public static void validateJsonObject(JsonObject jsonObj) throws IOException {
       if (jsonObj == null) {
-        if (AuthData.openapiRequiredFields.isEmpty()) {
+        if (EmailAuthRes.openapiRequiredFields.isEmpty()) {
           return;
         } else { // has required fields
-          throw new IllegalArgumentException(String.format("The required field(s) %s in AuthData is not found in the empty JSON string", AuthData.openapiRequiredFields.toString()));
+          throw new IllegalArgumentException(String.format("The required field(s) %s in EmailAuthRes is not found in the empty JSON string", EmailAuthRes.openapiRequiredFields.toString()));
         }
       }
 
       Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
       // check to see if the JSON string contains additional fields
       for (Entry<String, JsonElement> entry : entries) {
-        if (!AuthData.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `AuthData` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        if (!EmailAuthRes.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `EmailAuthRes` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
         }
       }
-
-      // check to make sure all required properties/fields are present in the JSON string
-      for (String requiredField : AuthData.openapiRequiredFields) {
-        if (jsonObj.get(requiredField) == null) {
-          throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonObj.toString()));
-        }
-      }
-      if (jsonObj.get("login") != null && !jsonObj.get("login").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `login` to be a primitive type in the JSON string but got `%s`", jsonObj.get("login").toString()));
+      if (jsonObj.get("emailSentTo") != null && !jsonObj.get("emailSentTo").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `emailSentTo` to be a primitive type in the JSON string but got `%s`", jsonObj.get("emailSentTo").toString()));
       }
   }
 
@@ -207,22 +161,22 @@ public class AuthData {
     @SuppressWarnings("unchecked")
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!AuthData.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'AuthData' and its subtypes
+       if (!EmailAuthRes.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'EmailAuthRes' and its subtypes
        }
        final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<AuthData> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(AuthData.class));
+       final TypeAdapter<EmailAuthRes> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(EmailAuthRes.class));
 
-       return (TypeAdapter<T>) new TypeAdapter<AuthData>() {
+       return (TypeAdapter<T>) new TypeAdapter<EmailAuthRes>() {
            @Override
-           public void write(JsonWriter out, AuthData value) throws IOException {
+           public void write(JsonWriter out, EmailAuthRes value) throws IOException {
              JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
              elementAdapter.write(out, obj);
            }
 
            @Override
-           public AuthData read(JsonReader in) throws IOException {
+           public EmailAuthRes read(JsonReader in) throws IOException {
              JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
              validateJsonObject(jsonObj);
              return thisAdapter.fromJsonTree(jsonObj);
@@ -233,18 +187,18 @@ public class AuthData {
   }
 
  /**
-  * Create an instance of AuthData given an JSON string
+  * Create an instance of EmailAuthRes given an JSON string
   *
   * @param jsonString JSON string
-  * @return An instance of AuthData
-  * @throws IOException if the JSON string is invalid with respect to AuthData
+  * @return An instance of EmailAuthRes
+  * @throws IOException if the JSON string is invalid with respect to EmailAuthRes
   */
-  public static AuthData fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, AuthData.class);
+  public static EmailAuthRes fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, EmailAuthRes.class);
   }
 
  /**
-  * Convert an instance of AuthData to an JSON string
+  * Convert an instance of EmailAuthRes to an JSON string
   *
   * @return JSON string
   */

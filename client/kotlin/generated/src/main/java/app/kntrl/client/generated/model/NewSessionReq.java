@@ -15,6 +15,7 @@ package app.kntrl.client.generated.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import app.kntrl.client.generated.model.AuthenticateReqAuthReqsValue;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -66,7 +67,7 @@ public class NewSessionReq {
 
   public static final String SERIALIZED_NAME_AUTH_REQS = "authReqs";
   @SerializedName(SERIALIZED_NAME_AUTH_REQS)
-  private Map<String, Object> authReqs = null;
+  private Map<String, AuthenticateReqAuthReqsValue> authReqs = null;
 
   public static final String SERIALIZED_NAME_SIGN_IN = "signIn";
   @SerializedName(SERIALIZED_NAME_SIGN_IN)
@@ -152,11 +153,11 @@ public class NewSessionReq {
   }
 
    /**
-   * Get factors
+   * Forces specific auth to be used for factor. Takes place only when multiple auths is provided within request and auth can be assigned to several factors. If used in sign-up mode, it just enables those factors. 
    * @return factors
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(value = "Forces specific auth to be used for factor. Takes place only when multiple auths is provided within request and auth can be assigned to several factors. If used in sign-up mode, it just enables those factors. ")
 
   public Map<String, String> getFactors() {
     return factors;
@@ -168,13 +169,13 @@ public class NewSessionReq {
   }
 
 
-  public NewSessionReq authReqs(Map<String, Object> authReqs) {
+  public NewSessionReq authReqs(Map<String, AuthenticateReqAuthReqsValue> authReqs) {
     
     this.authReqs = authReqs;
     return this;
   }
 
-  public NewSessionReq putAuthReqsItem(String key, Object authReqsItem) {
+  public NewSessionReq putAuthReqsItem(String key, AuthenticateReqAuthReqsValue authReqsItem) {
     if (this.authReqs == null) {
       this.authReqs = new HashMap<>();
     }
@@ -183,18 +184,18 @@ public class NewSessionReq {
   }
 
    /**
-   * Authenticator requests 
+   * Request for authenticators 
    * @return authReqs
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Authenticator requests ")
+  @ApiModelProperty(value = "Request for authenticators ")
 
-  public Map<String, Object> getAuthReqs() {
+  public Map<String, AuthenticateReqAuthReqsValue> getAuthReqs() {
     return authReqs;
   }
 
 
-  public void setAuthReqs(Map<String, Object> authReqs) {
+  public void setAuthReqs(Map<String, AuthenticateReqAuthReqsValue> authReqs) {
     this.authReqs = authReqs;
   }
 

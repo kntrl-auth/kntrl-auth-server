@@ -680,13 +680,18 @@ components:
       discriminator:
         propertyName: code
         mapping:
+          PLUGIN_ERR: '#/components/schemas/PluginErr'
+          PLUGIN_CLIENT_ERR: '#/components/schemas/PluginClientErr'
+          PASSWORD_IS_INCORRECT: '#/components/schemas/PasswordIsIncorrect'
+          PASSWORD_IS_INVALID: '#/components/schemas/PasswordIsInvalid'
+          EMAIL_IS_INCORRECT: '#/components/schemas/EmailIsIncorrect'
+          IP_NEW: '#/components/schemas/IpNew'
+          QUESTIONS_ANSWERS_INCORRECT: '#/components/schemas/QuestionsAnswersIncorrect'
+          QUESTIONS_ANSWERS_INVALID: '#/components/schemas/QuestionsAnswersInvalid'
           SESSION_EXPIRED: '#/components/schemas/SessionExpired'
           ACCESS_DENIED: '#/components/schemas/AccessDenied'
           USER_NOT_FOUND: '#/components/schemas/UserNotFound'
           SIGNATURE_IS_INCORRECT: '#/components/schemas/SignatureIsIncorrect'
-          SERVER_ERR: '#/components/schemas/ServerErr'
-          INTEGRATION_ERR: '#/components/schemas/IntegrationErr'
-          ANY_ERR: '#/components/schemas/AnyErr'
           USER_LOGIN_ALREADY_TAKEN: '#/components/schemas/UserLoginAlreadyTaken'
           AUTH_IS_NOT_ENABLED: '#/components/schemas/AuthIsNotEnabled'
           TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
@@ -698,15 +703,10 @@ components:
           CODE_TOO_MANY_ATTEMPTS: '#/components/schemas/CodeTooManyAttempts'
           CODE_IS_INCORRECT: '#/components/schemas/CodeIsIncorrect'
           UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
-          PLUGIN_ERR: '#/components/schemas/PluginErr'
-          PLUGIN_CLIENT_ERR: '#/components/schemas/PluginClientErr'
-          PASSWORD_IS_INCORRECT: '#/components/schemas/PasswordIsIncorrect'
-          PASSWORD_IS_INVALID: '#/components/schemas/PasswordIsInvalid'
-          EMAIL_IS_INCORRECT: '#/components/schemas/EmailIsIncorrect'
-          IP_NEW: '#/components/schemas/IpNew'
-          QUESTIONS_ANSWERS_INCORRECT: '#/components/schemas/QuestionsAnswersIncorrect'
-          QUESTIONS_ANSWERS_INVALID: '#/components/schemas/QuestionsAnswersInvalid'
-      x-order: kntrl/core/domain/err-base.kt0
+          SERVER_ERR: '#/components/schemas/ServerErr'
+          INTEGRATION_ERR: '#/components/schemas/IntegrationErr'
+          ANY_ERR: '#/components/schemas/AnyErr'
+      x-order: 2025349183-0
       x-sealed: false
     AccessDenied:
       required:
@@ -723,7 +723,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: kntrl/core/app/err.kt1
+      x-order: -2065236468-1
       x-super: '#/components/schemas/Unauthenticated'
     AnswerErr:
       required:
@@ -735,7 +735,7 @@ components:
           type: boolean
         tooLong:
           type: boolean
-      x-order: kntrl/core/infra/err.kt9
+      x-order: -1279700867-9
     AnyErr:
       required:
       - code
@@ -752,7 +752,7 @@ components:
           description: Localised message suitable for UI.
           x-nullable: true
       additionalProperties: true
-      x-order: kntrl/core/domain/err-base.kt5
+      x-order: 2025349183-5
       x-super: '#/components/schemas/Err'
     AuthIsNotConfirmed:
       required:
@@ -769,7 +769,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: kntrl/core/domain/err.kt2
+      x-order: -270554383-2
       x-super: '#/components/schemas/ClientErr'
     AuthIsNotEnabled:
       required:
@@ -786,7 +786,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: kntrl/core/domain/err.kt1
+      x-order: -270554383-1
       x-super: '#/components/schemas/ClientErr'
     AuthRequiresAnother:
       required:
@@ -803,7 +803,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: kntrl/core/domain/err.kt4
+      x-order: -270554383-4
       x-super: '#/components/schemas/ClientErr'
     ClientErr:
       required:
@@ -823,6 +823,13 @@ components:
       discriminator:
         propertyName: code
         mapping:
+          PLUGIN_CLIENT_ERR: '#/components/schemas/PluginClientErr'
+          PASSWORD_IS_INCORRECT: '#/components/schemas/PasswordIsIncorrect'
+          PASSWORD_IS_INVALID: '#/components/schemas/PasswordIsInvalid'
+          EMAIL_IS_INCORRECT: '#/components/schemas/EmailIsIncorrect'
+          IP_NEW: '#/components/schemas/IpNew'
+          QUESTIONS_ANSWERS_INCORRECT: '#/components/schemas/QuestionsAnswersIncorrect'
+          QUESTIONS_ANSWERS_INVALID: '#/components/schemas/QuestionsAnswersInvalid'
           SESSION_EXPIRED: '#/components/schemas/SessionExpired'
           ACCESS_DENIED: '#/components/schemas/AccessDenied'
           USER_NOT_FOUND: '#/components/schemas/UserNotFound'
@@ -837,14 +844,7 @@ components:
           CODE_TOO_MANY_ATTEMPTS: '#/components/schemas/CodeTooManyAttempts'
           CODE_IS_INCORRECT: '#/components/schemas/CodeIsIncorrect'
           UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
-          PLUGIN_CLIENT_ERR: '#/components/schemas/PluginClientErr'
-          PASSWORD_IS_INCORRECT: '#/components/schemas/PasswordIsIncorrect'
-          PASSWORD_IS_INVALID: '#/components/schemas/PasswordIsInvalid'
-          EMAIL_IS_INCORRECT: '#/components/schemas/EmailIsIncorrect'
-          IP_NEW: '#/components/schemas/IpNew'
-          QUESTIONS_ANSWERS_INCORRECT: '#/components/schemas/QuestionsAnswersIncorrect'
-          QUESTIONS_ANSWERS_INVALID: '#/components/schemas/QuestionsAnswersInvalid'
-      x-order: kntrl/core/domain/err-base.kt4
+      x-order: 2025349183-4
       x-sealed: false
       x-super: '#/components/schemas/Err'
     CodeIsExpired:
@@ -862,7 +862,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: kntrl/core/domain/err.kt5
+      x-order: -270554383-5
       x-super: '#/components/schemas/ClientErr'
     CodeIsIncorrect:
       required:
@@ -879,7 +879,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: kntrl/core/domain/err.kt7
+      x-order: -270554383-7
       x-super: '#/components/schemas/ClientErr'
     CodeTooManyAttempts:
       required:
@@ -896,7 +896,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: kntrl/core/domain/err.kt6
+      x-order: -270554383-6
       x-super: '#/components/schemas/ClientErr'
     EmailIsIncorrect:
       required:
@@ -913,7 +913,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: kntrl/core/infra/err.kt5
+      x-order: -1279700867-5
       x-super: '#/components/schemas/ClientErr'
     Instant:
       type: integer
@@ -936,9 +936,9 @@ components:
       discriminator:
         propertyName: code
         mapping:
-          INTEGRATION_ERR: '#/components/schemas/IntegrationErr'
           NO_AUTH_AVAILABLE_FOR_FACTOR: '#/components/schemas/NoAuthAvailableForFactor'
-      x-order: kntrl/core/domain/err-base.kt3
+          INTEGRATION_ERR: '#/components/schemas/IntegrationErr'
+      x-order: 2025349183-3
       x-sealed: false
       x-super: '#/components/schemas/Err'
     IpNew:
@@ -956,7 +956,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: kntrl/core/infra/err.kt6
+      x-order: -1279700867-6
       x-super: '#/components/schemas/ClientErr'
     LoginId:
       required:
@@ -970,7 +970,7 @@ components:
         login:
           type: string
           description: "User unique identifier, email, username, etc."
-      x-order: kntrl/core/domain/user/Login.kt2
+      x-order: -2010674509-2
     NoAuthAvailableForFactor:
       required:
       - code
@@ -986,7 +986,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: kntrl/core/domain/err.kt3
+      x-order: -270554383-3
       x-super: '#/components/schemas/IntegrationErr'
     PasswordIsIncorrect:
       required:
@@ -1011,7 +1011,7 @@ components:
           type: integer
           format: int64
           x-nullable: true
-      x-order: kntrl/core/infra/err.kt3
+      x-order: -1279700867-3
       x-super: '#/components/schemas/ClientErr'
     PasswordIsInvalid:
       required:
@@ -1064,7 +1064,7 @@ components:
         wasUsedDaysAgo:
           type: integer
           format: int64
-      x-order: kntrl/core/infra/err.kt4
+      x-order: -1279700867-4
       x-super: '#/components/schemas/ClientErr'
     PluginClientErr:
       required:
@@ -1086,7 +1086,7 @@ components:
           additionalProperties:
             type: object
           writeOnly: true
-      x-order: kntrl/core/infra/err.kt2
+      x-order: -1279700867-2
       x-super: '#/components/schemas/ClientErr'
     PluginErr:
       required:
@@ -1103,7 +1103,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: kntrl/core/infra/err.kt1
+      x-order: -1279700867-1
       x-super: '#/components/schemas/ServerErr'
     QuestionsAnswersIncorrect:
       required:
@@ -1133,7 +1133,7 @@ components:
           type: array
           items:
             type: string
-      x-order: kntrl/core/infra/err.kt7
+      x-order: -1279700867-7
       x-super: '#/components/schemas/ClientErr'
     QuestionsAnswersInvalid:
       required:
@@ -1158,7 +1158,7 @@ components:
             $ref: '#/components/schemas/AnswerErr'
         tooManyAnswers:
           type: boolean
-      x-order: kntrl/core/infra/err.kt8
+      x-order: -1279700867-8
       x-super: '#/components/schemas/ClientErr'
     ServerErr:
       required:
@@ -1180,7 +1180,7 @@ components:
         mapping:
           SERVER_ERR: '#/components/schemas/ServerErr'
           PLUGIN_ERR: '#/components/schemas/PluginErr'
-      x-order: kntrl/core/domain/err-base.kt2
+      x-order: 2025349183-2
       x-sealed: false
       x-super: '#/components/schemas/Err'
     SessionExpired:
@@ -1198,7 +1198,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: kntrl/core/app/err.kt0
+      x-order: -2065236468-0
       x-super: '#/components/schemas/Unauthenticated'
     SignatureIsIncorrect:
       required:
@@ -1215,7 +1215,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: kntrl/core/app/err.kt3
+      x-order: -2065236468-3
       x-super: '#/components/schemas/ClientErr'
     TokenExpired:
       required:
@@ -1236,7 +1236,7 @@ components:
           type: integer
           format: int64
           x-nullable: true
-      x-order: kntrl/core/domain/err.kt10
+      x-order: -270554383-10
       x-super: '#/components/schemas/Unauthenticated'
     TooManyReqs:
       required:
@@ -1265,7 +1265,7 @@ components:
           type: integer
           format: int32
           x-nullable: true
-      x-order: kntrl/core/domain/err.kt11
+      x-order: -270554383-11
       x-super: '#/components/schemas/ClientErr'
     Unauthenticated:
       required:
@@ -1290,7 +1290,7 @@ components:
           USER_NOT_FOUND: '#/components/schemas/UserNotFound'
           TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
           UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
-      x-order: kntrl/core/domain/err.kt8
+      x-order: -270554383-8
       x-sealed: false
       x-super: '#/components/schemas/ClientErr'
     UserLoginAlreadyTaken:
@@ -1308,7 +1308,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: kntrl/core/domain/err.kt0
+      x-order: -270554383-0
       x-super: '#/components/schemas/ClientErr'
     UserNotFound:
       required:
@@ -1325,11 +1325,11 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: kntrl/core/app/err.kt2
+      x-order: -2065236468-2
       x-super: '#/components/schemas/Unauthenticated'
     AccessToken:
       type: string
-      x-order: kntrl/core/domain/token/Token.kt3
+      x-order: -2026363309-3
     CodeVerifier:
       required:
       - attemptsLeft
@@ -1354,7 +1354,7 @@ components:
           format: int64
         hasAttemptsLeft:
           type: boolean
-      x-order: kntrl/core/domain/confirm/CodeVerifier.kt0
+      x-order: 1113303910-0
     Device:
       required:
       - userAgent
@@ -1370,7 +1370,7 @@ components:
           type: string
         mobile:
           type: boolean
-      x-order: kntrl/core/domain/session/Device.kt0
+      x-order: 1837614569-0
     NextFactor:
       required:
       - factor
@@ -1384,10 +1384,10 @@ components:
           type: array
           items:
             type: string
-      x-order: kntrl/core/domain/session/NextFactors.kt0
+      x-order: 1296788734-0
     RefreshToken:
       type: string
-      x-order: kntrl/core/domain/token/Token.kt5
+      x-order: -2026363309-5
     RefreshTokenRes:
       required:
       - session
@@ -1398,7 +1398,7 @@ components:
           $ref: '#/components/schemas/Tokens'
         session:
           $ref: '#/components/schemas/Session'
-      x-order: kntrl/core/app/TokenMng.kt2
+      x-order: 68856176-2
     Session:
       required:
       - authenticatedBy
@@ -1466,7 +1466,7 @@ components:
           type: boolean
         authenticated:
           type: boolean
-      x-order: kntrl/core/domain/session/Session.kt0
+      x-order: 2013237977-0
     Tokens:
       required:
       - access
@@ -1480,7 +1480,7 @@ components:
         accessTokenExpiresAt:
           type: integer
           format: int64
-      x-order: kntrl/core/domain/token/Token.kt0
+      x-order: -2026363309-0
     UnconfirmedAuth:
       type: object
       properties:
@@ -1488,7 +1488,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CodeVerifier'
-      x-order: kntrl/core/domain/session/UnconfirmedAuth.kt0
+      x-order: 320227009-0
     RefreshTokenReq:
       required:
       - refreshToken
@@ -1496,7 +1496,7 @@ components:
       properties:
         refreshToken:
           $ref: '#/components/schemas/RefreshToken'
-      x-order: kntrl/core/app/TokenMng.kt1
+      x-order: 68856176-1
     DbHealthRes:
       required:
       - rateLimiter
@@ -1510,7 +1510,7 @@ components:
           $ref: '#/components/schemas/HealthStatusRes'
         rateLimiter:
           $ref: '#/components/schemas/HealthStatusRes'
-      x-order: kntrl/core/app/server/ServerSvc.kt2
+      x-order: -517526772-2
     HealthRes:
       required:
       - auth
@@ -1530,7 +1530,7 @@ components:
         msg:
           type: string
           x-nullable: true
-      x-order: kntrl/core/app/server/ServerSvc.kt1
+      x-order: -517526772-1
     HealthStatus:
       type: string
       enum:
@@ -1547,7 +1547,7 @@ components:
         msg:
           type: string
           x-nullable: true
-      x-order: kntrl/core/app/server/HasHealthStatus.kt1
+      x-order: -814092127-1
     AuthData:
       required:
       - public
@@ -1558,7 +1558,7 @@ components:
         login:
           type: string
           x-nullable: true
-      x-order: kntrl/core/domain/user/AuthUserCfg.kt3
+      x-order: 332570507-3
     AuthExecRes:
       required:
       - status
@@ -1574,8 +1574,20 @@ components:
           OK: '#/components/schemas/OkAuthExecRes'
           ERR: '#/components/schemas/ErrAuthExecRes'
           SKIPPED: '#/components/schemas/SkippedAuthExecRes'
-      x-order: kntrl/core/app/auth/AuthExec.kt2
+      x-order: -73723375-2
       x-sealed: true
+    AuthResData:
+      type: object
+      x-order: -1249106462-7
+    AuthResDataJson:
+      type: object
+      properties:
+        key:
+          type: object
+          x-nullable: true
+      additionalProperties: true
+      x-order: -1249106462-8
+      x-super: '#/components/schemas/AuthResData'
     AuthUserCfg:
       type: object
       properties:
@@ -1589,7 +1601,7 @@ components:
             $ref: '#/components/schemas/UnconfirmedAuthData'
         confirmed:
           type: boolean
-      x-order: kntrl/core/domain/user/AuthUserCfg.kt0
+      x-order: 332570507-0
     AuthenticateRes:
       required:
       - authRes
@@ -1605,7 +1617,7 @@ components:
           type: object
           additionalProperties:
             $ref: '#/components/schemas/AuthExecRes'
-      x-order: kntrl/core/app/session/SessionMng.kt3
+      x-order: 2094520596-3
     Code:
       required:
       - attemptsLeft
@@ -1630,7 +1642,16 @@ components:
           format: int64
         hasAttemptsLeft:
           type: boolean
-      x-order: kntrl/core/app/auth/Auth.kt3
+      x-order: -1249106462-3
+    EmailAuthRes:
+      type: object
+      properties:
+        emailSentTo:
+          type: string
+          description: "Shows user email, that was used to send a code. Email will\
+            \ be partially hidden."
+      x-order: -701605246-5
+      x-super: '#/components/schemas/AuthResData'
     ErrAuthExecRes:
       required:
       - err
@@ -1643,8 +1664,17 @@ components:
           $ref: '#/components/schemas/Code'
         err:
           $ref: '#/components/schemas/Err'
-      x-order: kntrl/core/app/auth/AuthExec.kt4
+      x-order: -73723375-4
       x-super: '#/components/schemas/AuthExecRes'
+    IpAuthRes:
+      required:
+      - ipEncoded
+      type: object
+      properties:
+        ipEncoded:
+          type: string
+      x-order: 2116983897-1
+      x-super: '#/components/schemas/AuthResData'
     Login:
       required:
       - login
@@ -1662,7 +1692,21 @@ components:
           x-nullable: true
         confirmed:
           type: boolean
-      x-order: kntrl/core/domain/user/Login.kt0
+      x-order: -2010674509-0
+    OAuthRes:
+      required:
+      - login
+      - publicData
+      type: object
+      properties:
+        login:
+          type: string
+        publicData:
+          type: object
+          additionalProperties:
+            type: object
+      x-order: -51011121-2
+      x-super: '#/components/schemas/AuthResData'
     OkAuthExecRes:
       required:
       - status
@@ -1673,9 +1717,61 @@ components:
         sentCode:
           $ref: '#/components/schemas/Code'
         resData:
-          type: object
-      x-order: kntrl/core/app/auth/AuthExec.kt3
+          oneOf:
+          - $ref: '#/components/schemas/AuthResDataJson'
+          - $ref: '#/components/schemas/EmailAuthRes'
+          - $ref: '#/components/schemas/IpAuthRes'
+          - $ref: '#/components/schemas/OAuthRes'
+          - $ref: '#/components/schemas/PasswordUpdateRes'
+          - $ref: '#/components/schemas/QuestionsAuthenticateRes'
+          - $ref: '#/components/schemas/QuestionsUpdateRes'
+      x-order: -73723375-3
       x-super: '#/components/schemas/AuthExecRes'
+    PasswordUpdateRes:
+      required:
+      - password
+      type: object
+      properties:
+        password:
+          type: string
+          description: If password was generated by app this field contains generated
+            password.
+        strength:
+          type: string
+          description: Calculated strength of password. Null means that all checks
+            failed.
+          x-nullable: true
+      x-order: -266447761-5
+      x-super: '#/components/schemas/AuthResData'
+    QuestionsAuthenticateRes:
+      required:
+      - correct
+      type: object
+      properties:
+        correct:
+          type: object
+          additionalProperties:
+            type: boolean
+          description: |
+            Shows is answer was correct.
+          example:
+            HOME_CITY: true
+            MOTHER_NAME: false
+      x-order: 131730481-3
+      x-super: '#/components/schemas/AuthResData'
+    QuestionsUpdateRes:
+      required:
+      - answersSavedAt
+      type: object
+      properties:
+        answersSavedAt:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+          description: Date of last update
+      x-order: 131730481-4
+      x-super: '#/components/schemas/AuthResData'
     SkippedAuthExecRes:
       required:
       - status
@@ -1685,7 +1781,7 @@ components:
           type: string
         sentCode:
           $ref: '#/components/schemas/Code'
-      x-order: kntrl/core/app/auth/AuthExec.kt5
+      x-order: -73723375-5
       x-super: '#/components/schemas/AuthExecRes'
     UnconfirmedAuthData:
       required:
@@ -1697,7 +1793,7 @@ components:
           $ref: '#/components/schemas/AuthData'
         code:
           $ref: '#/components/schemas/CodeVerifier'
-      x-order: kntrl/core/domain/user/AuthUserCfg.kt4
+      x-order: 332570507-4
     User:
       required:
       - auths
@@ -1743,9 +1839,31 @@ components:
           description: Allows to access to any user in the app.
         new:
           type: boolean
-      x-order: kntrl/core/domain/user/User.kt0
+      x-order: 276900135-0
     json:
       type: object
+      additionalProperties: true
+    AppSecretReq:
+      required:
+      - secret
+      type: object
+      properties:
+        secret:
+          type: string
+      x-order: 791325901-3
+      x-super: '#/components/schemas/AuthReqData'
+    AuthReqData:
+      type: object
+      x-order: 1333651370-0
+    AuthReqDataJson:
+      type: object
+      properties:
+        key:
+          type: object
+          x-nullable: true
+      additionalProperties: true
+      x-order: 1333651370-1
+      x-super: '#/components/schemas/AuthReqData'
     AuthenticateReq:
       type: object
       properties:
@@ -1754,16 +1872,60 @@ components:
           additionalProperties:
             type: string
             x-additionalPropertiesName: factor
+          description: |
+            Forces specific auth to be used for factor.
+            Takes place only when multiple auths is provided within request and auth can be
+            assigned to several factors.
+            If used in sign-up mode, it just enables those factors.
         authReqs:
           type: object
           additionalProperties:
-            type: object
+            oneOf:
+            - $ref: '#/components/schemas/AppSecretReq'
+            - $ref: '#/components/schemas/AuthReqDataJson'
+            - $ref: '#/components/schemas/EmailAuthenticateReq'
+            - $ref: '#/components/schemas/EmailUpdateReq'
+            - $ref: '#/components/schemas/OAuthReq'
+            - $ref: '#/components/schemas/PasswordAuthenticateReq'
+            - $ref: '#/components/schemas/PasswordUpdateReq'
+            - $ref: '#/components/schemas/QuestionsAuthenticateReq'
+            - $ref: '#/components/schemas/QuestionsUpdateReq'
             x-additionalPropertiesName: auth
           description: |
             Request for authenticators
         dryRun:
           type: boolean
-      x-order: kntrl/core/app/session/SessionMng.kt2
+          description: Execute only validation ща authenticator requests.
+      x-order: 2094520596-2
+    EmailAuthenticateReq:
+      type: object
+      properties:
+        email:
+          type: string
+          description: |-
+            User email. If email is not null - auth allow identification by email (email auth also must be listed in
+            logins config). Otherwise, uses email of already identified user.
+          x-nullable: true
+        template:
+          type: string
+          description: Template to use.
+          x-nullable: true
+      x-order: -701605246-3
+      x-super: '#/components/schemas/AuthReqData'
+    EmailUpdateReq:
+      required:
+      - email
+      type: object
+      properties:
+        email:
+          type: string
+          description: New email to set.
+        template:
+          type: string
+          description: Template to use.
+          x-nullable: true
+      x-order: -701605246-4
+      x-super: '#/components/schemas/AuthReqData'
     NewSessionReq:
       required:
       - entry
@@ -1775,18 +1937,33 @@ components:
           type: object
           additionalProperties:
             type: string
+            x-additionalPropertiesName: loginType
         factors:
           type: object
           additionalProperties:
             type: string
             x-additionalPropertiesName: factor
+          description: |
+            Forces specific auth to be used for factor.
+            Takes place only when multiple auths is provided within request and auth can be
+            assigned to several factors.
+            If used in sign-up mode, it just enables those factors.
         authReqs:
           type: object
           additionalProperties:
-            type: object
+            oneOf:
+            - $ref: '#/components/schemas/AppSecretReq'
+            - $ref: '#/components/schemas/AuthReqDataJson'
+            - $ref: '#/components/schemas/EmailAuthenticateReq'
+            - $ref: '#/components/schemas/EmailUpdateReq'
+            - $ref: '#/components/schemas/OAuthReq'
+            - $ref: '#/components/schemas/PasswordAuthenticateReq'
+            - $ref: '#/components/schemas/PasswordUpdateReq'
+            - $ref: '#/components/schemas/QuestionsAuthenticateReq'
+            - $ref: '#/components/schemas/QuestionsUpdateReq'
             x-additionalPropertiesName: auth
           description: |
-            Authenticator requests
+            Request for authenticators
         signIn:
           type: boolean
         signUp:
@@ -1794,7 +1971,75 @@ components:
         dryRun:
           type: boolean
           description: Execute only validation ща authenticator requests.
-      x-order: kntrl/core/app/session/SessionMng.kt1
+      x-order: 2094520596-1
+    OAuthReq:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          description: If you have access-token - put it here.
+          x-nullable: true
+        authorizationCode:
+          type: string
+          description: If you have authorisation-code - app will exchange it for access-token.
+          x-nullable: true
+      x-order: -51011121-1
+      x-super: '#/components/schemas/AuthReqData'
+    PasswordAuthenticateReq:
+      required:
+      - password
+      type: object
+      properties:
+        password:
+          type: string
+          description: User password.
+      x-order: -266447761-3
+      x-super: '#/components/schemas/AuthReqData'
+    PasswordUpdateReq:
+      type: object
+      properties:
+        password:
+          type: string
+          description: New password to set. If null app generates password automatically.
+          x-nullable: true
+        confirmPassword:
+          type: string
+          description: Password confirmation. If null app doesn't perform this check.
+          x-nullable: true
+      x-order: -266447761-4
+      x-super: '#/components/schemas/AuthReqData'
+    QuestionsAuthenticateReq:
+      required:
+      - answers
+      type: object
+      properties:
+        answers:
+          type: object
+          additionalProperties:
+            type: string
+          description: |
+            Given answers for questions.
+          example:
+            HOME_CITY: New-York
+            MOTHER_NAME: Emma
+      x-order: 131730481-1
+      x-super: '#/components/schemas/AuthReqData'
+    QuestionsUpdateReq:
+      required:
+      - answers
+      type: object
+      properties:
+        answers:
+          type: object
+          additionalProperties:
+            type: string
+          description: |
+            Answers to save. `null` as value removes answer
+          example:
+            HOME_CITY: London
+            MOTHER_NAME: null
+      x-order: 131730481-2
+      x-super: '#/components/schemas/AuthReqData'
     ConfirmSessionAuthsReq:
       required:
       - receivedCodes
@@ -1811,10 +2056,10 @@ components:
               type: string
               x-additionalPropertiesName: codeId
             x-additionalPropertiesName: auth
-      x-order: kntrl/core/app/session/SessionMng.kt4
+      x-order: 2094520596-4
     SignOutRes:
       type: object
-      x-order: kntrl/core/app/session/SessionMng.kt5
+      x-order: 2094520596-5
     FindSessionsRes:
       required:
       - sessions
@@ -1826,7 +2071,7 @@ components:
             $ref: '#/components/schemas/Session'
         tooManySessions:
           type: boolean
-      x-order: kntrl/core/app/session/SessionRepo.kt4
+      x-order: 400707106-4
     SaveUserRes:
       required:
       - authRes
@@ -1838,7 +2083,7 @@ components:
           type: object
           additionalProperties:
             $ref: '#/components/schemas/AuthExecRes'
-      x-order: kntrl/core/app/user/UserMng.kt2
+      x-order: -1847312442-2
     ConfirmUserAuthsReq:
       required:
       - receivedCodes
@@ -1855,7 +2100,7 @@ components:
               type: string
               x-additionalPropertiesName: codeId
             x-additionalPropertiesName: auth
-      x-order: kntrl/core/app/user/UserMng.kt4
+      x-order: -1847312442-4
     EditUserReq:
       type: object
       properties:
@@ -1875,14 +2120,23 @@ components:
         authReqs:
           type: object
           additionalProperties:
-            type: object
+            oneOf:
+            - $ref: '#/components/schemas/AppSecretReq'
+            - $ref: '#/components/schemas/AuthReqDataJson'
+            - $ref: '#/components/schemas/EmailAuthenticateReq'
+            - $ref: '#/components/schemas/EmailUpdateReq'
+            - $ref: '#/components/schemas/OAuthReq'
+            - $ref: '#/components/schemas/PasswordAuthenticateReq'
+            - $ref: '#/components/schemas/PasswordUpdateReq'
+            - $ref: '#/components/schemas/QuestionsAuthenticateReq'
+            - $ref: '#/components/schemas/QuestionsUpdateReq'
             x-additionalPropertiesName: auth
         dryRun:
           type: boolean
         systemAccess:
           type: boolean
           x-nullable: true
-      x-order: kntrl/core/app/user/UserMng.kt3
+      x-order: -1847312442-3
       x-super: '#/components/schemas/SaveUserReq'
     SaveUserReq:
       type: object
@@ -1903,23 +2157,32 @@ components:
         authReqs:
           type: object
           additionalProperties:
-            type: object
+            oneOf:
+            - $ref: '#/components/schemas/AppSecretReq'
+            - $ref: '#/components/schemas/AuthReqDataJson'
+            - $ref: '#/components/schemas/EmailAuthenticateReq'
+            - $ref: '#/components/schemas/EmailUpdateReq'
+            - $ref: '#/components/schemas/OAuthReq'
+            - $ref: '#/components/schemas/PasswordAuthenticateReq'
+            - $ref: '#/components/schemas/PasswordUpdateReq'
+            - $ref: '#/components/schemas/QuestionsAuthenticateReq'
+            - $ref: '#/components/schemas/QuestionsUpdateReq'
             x-additionalPropertiesName: auth
         dryRun:
           type: boolean
-      x-order: kntrl/core/app/user/UserMng.kt1
+      x-order: -1847312442-1
     AuthoriseRes:
       type: object
       properties:
         session:
           $ref: '#/components/schemas/Session'
-      x-order: kntrl/core/app/utils/AuthorisationSvc.kt2
+      x-order: -2047680577-2
     AuthoriseReq:
       type: object
       properties:
         rateLimiter:
           $ref: '#/components/schemas/RateLimiterReq'
-      x-order: kntrl/core/app/utils/AuthorisationSvc.kt1
+      x-order: -2047680577-1
     RateLimiterReq:
       required:
       - id
@@ -1931,7 +2194,7 @@ components:
         quotaToBurn:
           type: number
           format: double
-      x-order: kntrl/core/app/utils/AuthorisationSvc.kt3
+      x-order: -2047680577-3
     AccessTokenCfg:
       type: object
       properties:
@@ -1949,7 +2212,7 @@ components:
             Lifetime for access token. 1d, 30m, etc.
           example: 1d
       description: Short-living token used for authentication.
-      x-order: kntrl/core/domain/cfg/TokenCfg.kt1
+      x-order: -1195634750-1
     AppSecretAuthCfg:
       type: object
       properties:
@@ -1981,7 +2244,7 @@ components:
           description: Every auth execution will burn this amount of quota. Takes
             place only when rate limiter is specified
           format: double
-      x-order: kntrl/core/infra/impl/auth/builtin/AppSecretAuth.kt2
+      x-order: 791325901-2
       x-super: '#/components/schemas/BuiltInAuthCfg'
     AuthCfg:
       type: object
@@ -2015,7 +2278,7 @@ components:
             place only when rate limiter is specified
           format: double
       description: Authentication implementation config
-      x-order: kntrl/core/domain/cfg/AuthCfg.kt0
+      x-order: 2102313733-0
     AuthCodeHandlerCfg:
       required:
       - clientId
@@ -2033,7 +2296,7 @@ components:
           type: string
           description: OAuth client secret.
           x-nullable: true
-      x-order: kntrl/core/infra/impl/auth/builtin/OAuth.kt5
+      x-order: -51011121-5
     BuiltInAuthCfg:
       type: object
       properties:
@@ -2066,7 +2329,7 @@ components:
             place only when rate limiter is specified
           format: double
       description: Authentication implementation config
-      x-order: kntrl/core/infra/impl/auth/builtin/BuiltInAuthCfg.kt0
+      x-order: -824080721-0
       x-super: '#/components/schemas/AuthCfg'
     Cache:
       type: string
@@ -2095,10 +2358,10 @@ components:
           description: Max attempts to enter the code.
           format: int32
       description: If specified - app generates code and requires auth to be confirmed
-      x-order: kntrl/core/domain/cfg/AuthCfg.kt1
+      x-order: 2102313733-1
     DbCfg:
       type: object
-      x-order: kntrl/core/infra/impl/repo/DbCfg.kt0
+      x-order: -1580107990-0
     DbsCfg:
       required:
       - rateLimiter
@@ -2147,7 +2410,7 @@ components:
           - $ref: '#/components/schemas/PostgresCfg'
           - $ref: '#/components/schemas/SqliteCfg'
       description: Database connection configs
-      x-order: kntrl/core/domain/cfg/AppCfg.kt3
+      x-order: -1723799702-3
     Duration:
       type: string
     EmailAuthCfg:
@@ -2233,7 +2496,7 @@ components:
             Additional params for template.
         code:
           $ref: '#/components/schemas/CodeCfg'
-      x-order: kntrl/core/infra/impl/auth/builtin/EmailAuth.kt6
+      x-order: -701605246-6
       x-super: '#/components/schemas/BuiltInAuthCfg'
     EntryAccessTokenCfg:
       type: object
@@ -2246,7 +2509,7 @@ components:
           type: boolean
           description: Enable or disable client-side caching of access token
           x-nullable: true
-      x-order: kntrl/core/domain/cfg/EntryCfg.kt1
+      x-order: -842539141-1
     EntryCfg:
       type: object
       properties:
@@ -2305,7 +2568,7 @@ components:
           description: "Is this session allowed to add/remove new auth, enable/disable\
             \ factors, etc.?"
       description: Configuration for app entry.
-      x-order: kntrl/core/domain/cfg/EntryCfg.kt0
+      x-order: -842539141-0
     I18nCfg:
       type: object
       properties:
@@ -2322,20 +2585,20 @@ components:
             Default language to use.
           example: en
       description: "Configuration for localization of error messages, emails, etc."
-      x-order: kntrl/core/domain/cfg/AppCfg.kt4
+      x-order: -1723799702-4
     InMemoryCfg:
       type: object
       properties:
         inMemory:
           type: boolean
-      x-order: kntrl/core/infra/impl/repo/in-memory.kt3
+      x-order: 1129812999-3
       x-super: '#/components/schemas/DbCfg'
     InTokenCfg:
       type: object
       properties:
         inToken:
           type: boolean
-      x-order: kntrl/core/infra/impl/repo/in-token.kt1
+      x-order: -291817267-1
       x-super: '#/components/schemas/DbCfg'
     IpAuthCfg:
       type: object
@@ -2380,7 +2643,7 @@ components:
             History of IP addresses user used to sign-in. Authenticated when user attempts to sign in with one of stored
             IPs.
           format: int32
-      x-order: kntrl/core/infra/impl/auth/builtin/IpAuth.kt2
+      x-order: 2116983897-2
       x-super: '#/components/schemas/BuiltInAuthCfg'
     JdbcCfg:
       type: object
@@ -2392,7 +2655,7 @@ components:
         maxConnections:
           type: integer
           format: int32
-      x-order: kntrl/core/infra/impl/repo/jdbc/jdbc.kt0
+      x-order: -1497406623-0
       x-super: '#/components/schemas/DbCfg'
     MongoCfg:
       required:
@@ -2404,7 +2667,7 @@ components:
           type: string
         database:
           type: string
-      x-order: kntrl/core/infra/impl/repo/mongo/mongo.kt0
+      x-order: -592385449-0
       x-super: '#/components/schemas/DbCfg'
     MysqlCfg:
       type: object
@@ -2418,7 +2681,7 @@ components:
           format: int32
         password:
           type: string
-      x-order: kntrl/core/infra/impl/repo/jdbc/mysql.kt2
+      x-order: -577347408-2
       x-super: '#/components/schemas/JdbcCfg'
     OAuthCfg:
       required:
@@ -2485,7 +2748,7 @@ components:
           additionalProperties:
             type: string
           description: Can fill public data by a response of user-info or id-token.
-      x-order: kntrl/core/infra/impl/auth/builtin/OAuth.kt4
+      x-order: -51011121-4
       x-super: '#/components/schemas/BuiltInAuthCfg'
     PasswordAuthCfg:
       type: object
@@ -2557,7 +2820,7 @@ components:
             until first failed.
       description: "Password authentication. To enable this auth set auth name to\
         \ \"password\" or use \"builtin\": \"password\" param."
-      x-order: kntrl/core/infra/impl/auth/builtin/password/PasswordAuth.kt6
+      x-order: -266447761-6
       x-super: '#/components/schemas/BuiltInAuthCfg'
     PasswordHistoryCfg:
       type: object
@@ -2572,7 +2835,7 @@ components:
             \ 2y 6m, etc."
       description: Forbids user to change password to the old one. Useful if you force
         user to change password regularly.
-      x-order: kntrl/core/infra/impl/auth/builtin/password/PasswordHistory.kt2
+      x-order: 378192899-2
     PasswordStrengthRequirements:
       type: object
       properties:
@@ -2600,7 +2863,7 @@ components:
           description: "Rejects passwords that match username, email, anything that\
             \ used as a login according to logins config."
       description: Requirements for password
-      x-order: kntrl/core/infra/impl/auth/builtin/password/PasswordAuth.kt7
+      x-order: -266447761-7
     PostgresCfg:
       type: object
       properties:
@@ -2613,7 +2876,7 @@ components:
           format: int32
         password:
           type: string
-      x-order: kntrl/core/infra/impl/repo/jdbc/postgres.kt2
+      x-order: 893841315-2
       x-super: '#/components/schemas/JdbcCfg'
     QuestionsAuthCfg:
       type: object
@@ -2673,7 +2936,7 @@ components:
           type: integer
           description: Max answers that user can save.
           format: int32
-      x-order: kntrl/core/infra/impl/auth/builtin/QuestionsAuth.kt5
+      x-order: 131730481-5
       x-super: '#/components/schemas/BuiltInAuthCfg'
     RateLimiterCfg:
       type: object
@@ -2706,7 +2969,7 @@ components:
             If the rt1 has the rt2 as a parent, that means that rt1 allows 10 reqs per seconds but not more than 20 per minute.
           x-nullable: true
       description: Rate limiter configuration
-      x-order: kntrl/core/domain/cfg/RateLimiterCfg.kt0
+      x-order: -1666811215-0
     RedisCfg:
       type: object
       properties:
@@ -2730,7 +2993,7 @@ components:
         maxConnections:
           type: integer
           format: int32
-      x-order: kntrl/core/infra/impl/repo/redis/redis.kt0
+      x-order: -2007275575-0
       x-super: '#/components/schemas/DbCfg'
     RefreshTokenCfg:
       type: object
@@ -2757,7 +3020,7 @@ components:
       description: |-
         Long-living token used for generation of new access token.
         THis is optional. You can set longer access-token lifetime instead.
-      x-order: kntrl/core/domain/cfg/TokenCfg.kt5
+      x-order: -1195634750-5
     RemoteAuthCfg:
       required:
       - remote
@@ -2811,7 +3074,7 @@ components:
         code:
           $ref: '#/components/schemas/CodeCfg'
       description: Authentication implementation config
-      x-order: kntrl/core/infra/impl/auth/remote.kt0
+      x-order: 658063406-0
       x-super: '#/components/schemas/AuthCfg'
     RemoteDbCfg:
       required:
@@ -2828,7 +3091,7 @@ components:
           type: object
           additionalProperties:
             type: string
-      x-order: kntrl/core/infra/impl/repo/remote.kt0
+      x-order: 842893688-0
       x-super: '#/components/schemas/DbCfg'
     SHAppCfg:
       type: object
@@ -2910,7 +3173,7 @@ components:
           $ref: '#/components/schemas/I18nCfg'
         $schema:
           type: string
-      x-order: kntrl/selfhosted/infra/cfg/SHAppCfg.kt0
+      x-order: 578911261-0
     SHHttpCfg:
       type: object
       properties:
@@ -2930,7 +3193,7 @@ components:
           description: "If true, X-Forwarded-For header is used to get client's IP\
             \ address"
       description: Http server config
-      x-order: kntrl/selfhosted/infra/cfg/SHAppCfg.kt1
+      x-order: 578911261-1
     SqliteCfg:
       type: object
       properties:
@@ -2943,7 +3206,7 @@ components:
           format: int32
         sqlite:
           type: string
-      x-order: kntrl/core/infra/impl/repo/jdbc/sqlite.kt3
+      x-order: -1872929936-3
       x-super: '#/components/schemas/JdbcCfg'
     TokenCfg:
       type: object
@@ -2956,7 +3219,7 @@ components:
           type: boolean
           description: Require all request to be made from the same device.
       description: Token lifetime config.
-      x-order: kntrl/core/domain/cfg/TokenCfg.kt0
+      x-order: -1195634750-0
     TokenHandlerCfg:
       required:
       - userInfoUrl
@@ -2973,7 +3236,7 @@ components:
         sendTokenInHeader:
           type: boolean
           description: Send token in Authorisation header.
-      x-order: kntrl/core/infra/impl/auth/builtin/OAuth.kt6
+      x-order: -51011121-6
   securitySchemes:
     access-token:
       type: apiKey

@@ -2,6 +2,7 @@ package app.kntrl.client
 
 import app.kntrl.client.generated.infra.ApiClient
 import app.kntrl.client.generated.model.NewSessionReq
+import app.kntrl.client.generated.model.Tokens
 
 class Kntrl(serverUrl: String = "http://localhost:9876") {
     private val client = ApiClient().apply {
@@ -20,7 +21,9 @@ class Kntrl(serverUrl: String = "http://localhost:9876") {
         this.signUp = signUp
     })
 
-    fun session(accessToken: String? = null) = Session(client, accessToken, null)
+    fun session(tokens: Tokens) = Session(client, tokens, null)
+    fun session(accessToken: String?) = session(Tokens().access(accessToken))
+    fun session() = session(null)
 
     fun serverHealth(key: String? = null) = session().server.health(key)
 

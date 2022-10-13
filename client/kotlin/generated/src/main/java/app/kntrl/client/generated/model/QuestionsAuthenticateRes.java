@@ -48,69 +48,42 @@ import java.util.Set;
 import app.kntrl.client.generated.infra.JSON;
 
 /**
- * AuthData
+ * QuestionsAuthenticateRes
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
-public class AuthData {
-  public static final String SERIALIZED_NAME_PUBLIC = "public";
-  @SerializedName(SERIALIZED_NAME_PUBLIC)
-  private Map<String, Object> _public = new HashMap<>();
+public class QuestionsAuthenticateRes {
+  public static final String SERIALIZED_NAME_CORRECT = "correct";
+  @SerializedName(SERIALIZED_NAME_CORRECT)
+  private Map<String, Boolean> correct = new HashMap<>();
 
-  public static final String SERIALIZED_NAME_LOGIN = "login";
-  @SerializedName(SERIALIZED_NAME_LOGIN)
-  private String login;
-
-  public AuthData() { 
+  public QuestionsAuthenticateRes() { 
   }
 
-  public AuthData _public(Map<String, Object> _public) {
+  public QuestionsAuthenticateRes correct(Map<String, Boolean> correct) {
     
-    this._public = _public;
+    this.correct = correct;
     return this;
   }
 
-  public AuthData putPublicItem(String key, Object _publicItem) {
-    this._public.put(key, _publicItem);
+  public QuestionsAuthenticateRes putCorrectItem(String key, Boolean correctItem) {
+    this.correct.put(key, correctItem);
     return this;
   }
 
    /**
-   * Get _public
-   * @return _public
+   * Shows is answer was correct. 
+   * @return correct
   **/
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @ApiModelProperty(example = "{\"HOME_CITY\":true,\"MOTHER_NAME\":false}", required = true, value = "Shows is answer was correct. ")
 
-  public Map<String, Object> getPublic() {
-    return _public;
+  public Map<String, Boolean> getCorrect() {
+    return correct;
   }
 
 
-  public void setPublic(Map<String, Object> _public) {
-    this._public = _public;
-  }
-
-
-  public AuthData login(String login) {
-    
-    this.login = login;
-    return this;
-  }
-
-   /**
-   * Get login
-   * @return login
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
-
-  public String getLogin() {
-    return login;
-  }
-
-
-  public void setLogin(String login) {
-    this.login = login;
+  public void setCorrect(Map<String, Boolean> correct) {
+    this.correct = correct;
   }
 
 
@@ -123,22 +96,20 @@ public class AuthData {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    AuthData authData = (AuthData) o;
-    return Objects.equals(this._public, authData._public) &&
-        Objects.equals(this.login, authData.login);
+    QuestionsAuthenticateRes questionsAuthenticateRes = (QuestionsAuthenticateRes) o;
+    return Objects.equals(this.correct, questionsAuthenticateRes.correct);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(_public, login);
+    return Objects.hash(correct);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class AuthData {\n");
-    sb.append("    _public: ").append(toIndentedString(_public)).append("\n");
-    sb.append("    login: ").append(toIndentedString(login)).append("\n");
+    sb.append("class QuestionsAuthenticateRes {\n");
+    sb.append("    correct: ").append(toIndentedString(correct)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -161,45 +132,41 @@ public class AuthData {
   static {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
-    openapiFields.add("public");
-    openapiFields.add("login");
+    openapiFields.add("correct");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
-    openapiRequiredFields.add("public");
+    openapiRequiredFields.add("correct");
   }
 
  /**
   * Validates the JSON Object and throws an exception if issues found
   *
   * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to AuthData
+  * @throws IOException if the JSON Object is invalid with respect to QuestionsAuthenticateRes
   */
   public static void validateJsonObject(JsonObject jsonObj) throws IOException {
       if (jsonObj == null) {
-        if (AuthData.openapiRequiredFields.isEmpty()) {
+        if (QuestionsAuthenticateRes.openapiRequiredFields.isEmpty()) {
           return;
         } else { // has required fields
-          throw new IllegalArgumentException(String.format("The required field(s) %s in AuthData is not found in the empty JSON string", AuthData.openapiRequiredFields.toString()));
+          throw new IllegalArgumentException(String.format("The required field(s) %s in QuestionsAuthenticateRes is not found in the empty JSON string", QuestionsAuthenticateRes.openapiRequiredFields.toString()));
         }
       }
 
       Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
       // check to see if the JSON string contains additional fields
       for (Entry<String, JsonElement> entry : entries) {
-        if (!AuthData.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `AuthData` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        if (!QuestionsAuthenticateRes.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `QuestionsAuthenticateRes` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
         }
       }
 
       // check to make sure all required properties/fields are present in the JSON string
-      for (String requiredField : AuthData.openapiRequiredFields) {
+      for (String requiredField : QuestionsAuthenticateRes.openapiRequiredFields) {
         if (jsonObj.get(requiredField) == null) {
           throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonObj.toString()));
         }
-      }
-      if (jsonObj.get("login") != null && !jsonObj.get("login").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `login` to be a primitive type in the JSON string but got `%s`", jsonObj.get("login").toString()));
       }
   }
 
@@ -207,22 +174,22 @@ public class AuthData {
     @SuppressWarnings("unchecked")
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!AuthData.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'AuthData' and its subtypes
+       if (!QuestionsAuthenticateRes.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'QuestionsAuthenticateRes' and its subtypes
        }
        final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<AuthData> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(AuthData.class));
+       final TypeAdapter<QuestionsAuthenticateRes> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(QuestionsAuthenticateRes.class));
 
-       return (TypeAdapter<T>) new TypeAdapter<AuthData>() {
+       return (TypeAdapter<T>) new TypeAdapter<QuestionsAuthenticateRes>() {
            @Override
-           public void write(JsonWriter out, AuthData value) throws IOException {
+           public void write(JsonWriter out, QuestionsAuthenticateRes value) throws IOException {
              JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
              elementAdapter.write(out, obj);
            }
 
            @Override
-           public AuthData read(JsonReader in) throws IOException {
+           public QuestionsAuthenticateRes read(JsonReader in) throws IOException {
              JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
              validateJsonObject(jsonObj);
              return thisAdapter.fromJsonTree(jsonObj);
@@ -233,18 +200,18 @@ public class AuthData {
   }
 
  /**
-  * Create an instance of AuthData given an JSON string
+  * Create an instance of QuestionsAuthenticateRes given an JSON string
   *
   * @param jsonString JSON string
-  * @return An instance of AuthData
-  * @throws IOException if the JSON string is invalid with respect to AuthData
+  * @return An instance of QuestionsAuthenticateRes
+  * @throws IOException if the JSON string is invalid with respect to QuestionsAuthenticateRes
   */
-  public static AuthData fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, AuthData.class);
+  public static QuestionsAuthenticateRes fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, QuestionsAuthenticateRes.class);
   }
 
  /**
-  * Convert an instance of AuthData to an JSON string
+  * Convert an instance of QuestionsAuthenticateRes to an JSON string
   *
   * @return JSON string
   */

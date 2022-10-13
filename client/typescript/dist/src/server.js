@@ -18,14 +18,13 @@ class ServerSvc {
         this.api = new generated_1.ServerApi(session._serverCfg());
     }
     health(key) {
-        var _a, _b;
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                return (yield this.api.health(key, yield this.session._authenticatedAxiosCfg())).data;
+                return utils_1.handleErr(this.api.health(key, yield this.session._authenticatedAxiosCfg()), this.session);
             }
             catch (err) {
-                if ((_a = err.reponse) === null || _a === void 0 ? void 0 : _a.data) {
-                    throw (_b = err.response) === null || _b === void 0 ? void 0 : _b.data;
+                if (err.code) {
+                    throw err;
                 }
                 const status = {
                     status: generated_1.HealthStatus.Err,

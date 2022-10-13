@@ -48,69 +48,42 @@ import java.util.Set;
 import app.kntrl.client.generated.infra.JSON;
 
 /**
- * AuthData
+ * QuestionsUpdateRes
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
-public class AuthData {
-  public static final String SERIALIZED_NAME_PUBLIC = "public";
-  @SerializedName(SERIALIZED_NAME_PUBLIC)
-  private Map<String, Object> _public = new HashMap<>();
+public class QuestionsUpdateRes {
+  public static final String SERIALIZED_NAME_ANSWERS_SAVED_AT = "answersSavedAt";
+  @SerializedName(SERIALIZED_NAME_ANSWERS_SAVED_AT)
+  private Map<String, Long> answersSavedAt = new HashMap<>();
 
-  public static final String SERIALIZED_NAME_LOGIN = "login";
-  @SerializedName(SERIALIZED_NAME_LOGIN)
-  private String login;
-
-  public AuthData() { 
+  public QuestionsUpdateRes() { 
   }
 
-  public AuthData _public(Map<String, Object> _public) {
+  public QuestionsUpdateRes answersSavedAt(Map<String, Long> answersSavedAt) {
     
-    this._public = _public;
+    this.answersSavedAt = answersSavedAt;
     return this;
   }
 
-  public AuthData putPublicItem(String key, Object _publicItem) {
-    this._public.put(key, _publicItem);
+  public QuestionsUpdateRes putAnswersSavedAtItem(String key, Long answersSavedAtItem) {
+    this.answersSavedAt.put(key, answersSavedAtItem);
     return this;
   }
 
    /**
-   * Get _public
-   * @return _public
+   * Date of last update
+   * @return answersSavedAt
   **/
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @ApiModelProperty(required = true, value = "Date of last update")
 
-  public Map<String, Object> getPublic() {
-    return _public;
+  public Map<String, Long> getAnswersSavedAt() {
+    return answersSavedAt;
   }
 
 
-  public void setPublic(Map<String, Object> _public) {
-    this._public = _public;
-  }
-
-
-  public AuthData login(String login) {
-    
-    this.login = login;
-    return this;
-  }
-
-   /**
-   * Get login
-   * @return login
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
-
-  public String getLogin() {
-    return login;
-  }
-
-
-  public void setLogin(String login) {
-    this.login = login;
+  public void setAnswersSavedAt(Map<String, Long> answersSavedAt) {
+    this.answersSavedAt = answersSavedAt;
   }
 
 
@@ -123,22 +96,20 @@ public class AuthData {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    AuthData authData = (AuthData) o;
-    return Objects.equals(this._public, authData._public) &&
-        Objects.equals(this.login, authData.login);
+    QuestionsUpdateRes questionsUpdateRes = (QuestionsUpdateRes) o;
+    return Objects.equals(this.answersSavedAt, questionsUpdateRes.answersSavedAt);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(_public, login);
+    return Objects.hash(answersSavedAt);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class AuthData {\n");
-    sb.append("    _public: ").append(toIndentedString(_public)).append("\n");
-    sb.append("    login: ").append(toIndentedString(login)).append("\n");
+    sb.append("class QuestionsUpdateRes {\n");
+    sb.append("    answersSavedAt: ").append(toIndentedString(answersSavedAt)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -161,45 +132,41 @@ public class AuthData {
   static {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
-    openapiFields.add("public");
-    openapiFields.add("login");
+    openapiFields.add("answersSavedAt");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
-    openapiRequiredFields.add("public");
+    openapiRequiredFields.add("answersSavedAt");
   }
 
  /**
   * Validates the JSON Object and throws an exception if issues found
   *
   * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to AuthData
+  * @throws IOException if the JSON Object is invalid with respect to QuestionsUpdateRes
   */
   public static void validateJsonObject(JsonObject jsonObj) throws IOException {
       if (jsonObj == null) {
-        if (AuthData.openapiRequiredFields.isEmpty()) {
+        if (QuestionsUpdateRes.openapiRequiredFields.isEmpty()) {
           return;
         } else { // has required fields
-          throw new IllegalArgumentException(String.format("The required field(s) %s in AuthData is not found in the empty JSON string", AuthData.openapiRequiredFields.toString()));
+          throw new IllegalArgumentException(String.format("The required field(s) %s in QuestionsUpdateRes is not found in the empty JSON string", QuestionsUpdateRes.openapiRequiredFields.toString()));
         }
       }
 
       Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
       // check to see if the JSON string contains additional fields
       for (Entry<String, JsonElement> entry : entries) {
-        if (!AuthData.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `AuthData` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        if (!QuestionsUpdateRes.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `QuestionsUpdateRes` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
         }
       }
 
       // check to make sure all required properties/fields are present in the JSON string
-      for (String requiredField : AuthData.openapiRequiredFields) {
+      for (String requiredField : QuestionsUpdateRes.openapiRequiredFields) {
         if (jsonObj.get(requiredField) == null) {
           throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonObj.toString()));
         }
-      }
-      if (jsonObj.get("login") != null && !jsonObj.get("login").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `login` to be a primitive type in the JSON string but got `%s`", jsonObj.get("login").toString()));
       }
   }
 
@@ -207,22 +174,22 @@ public class AuthData {
     @SuppressWarnings("unchecked")
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!AuthData.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'AuthData' and its subtypes
+       if (!QuestionsUpdateRes.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'QuestionsUpdateRes' and its subtypes
        }
        final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<AuthData> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(AuthData.class));
+       final TypeAdapter<QuestionsUpdateRes> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(QuestionsUpdateRes.class));
 
-       return (TypeAdapter<T>) new TypeAdapter<AuthData>() {
+       return (TypeAdapter<T>) new TypeAdapter<QuestionsUpdateRes>() {
            @Override
-           public void write(JsonWriter out, AuthData value) throws IOException {
+           public void write(JsonWriter out, QuestionsUpdateRes value) throws IOException {
              JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
              elementAdapter.write(out, obj);
            }
 
            @Override
-           public AuthData read(JsonReader in) throws IOException {
+           public QuestionsUpdateRes read(JsonReader in) throws IOException {
              JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
              validateJsonObject(jsonObj);
              return thisAdapter.fromJsonTree(jsonObj);
@@ -233,18 +200,18 @@ public class AuthData {
   }
 
  /**
-  * Create an instance of AuthData given an JSON string
+  * Create an instance of QuestionsUpdateRes given an JSON string
   *
   * @param jsonString JSON string
-  * @return An instance of AuthData
-  * @throws IOException if the JSON string is invalid with respect to AuthData
+  * @return An instance of QuestionsUpdateRes
+  * @throws IOException if the JSON string is invalid with respect to QuestionsUpdateRes
   */
-  public static AuthData fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, AuthData.class);
+  public static QuestionsUpdateRes fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, QuestionsUpdateRes.class);
   }
 
  /**
-  * Convert an instance of AuthData to an JSON string
+  * Convert an instance of QuestionsUpdateRes to an JSON string
   *
   * @return JSON string
   */

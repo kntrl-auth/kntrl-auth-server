@@ -1,5 +1,6 @@
 package app.kntrl.client
 
+import app.kntrl.client.generated.api.AuthorisationApi
 import app.kntrl.client.generated.api.SessionApi
 import app.kntrl.client.generated.api.TokenApi
 import app.kntrl.client.generated.infra.ApiClient
@@ -7,16 +8,11 @@ import app.kntrl.client.generated.model.*
 import app.kntrl.client.generated.model.Session as SessionModel
 
 class Session(
-    client: ApiClient,
-    private val accessToken: String?, private var newSessionReq: NewSessionReq?,
+    private val client: ApiClient,
+    private var tokens: Tokens?, private var newSessionReq: NewSessionReq?,
 ) : SessionModel() {
-    private val client = ApiClient(client.httpClient).apply {
-        basePath = client.basePath
-        setApiKey(accessToken)
-    }
-    private val sessionApi = SessionApi(this.client)
-
-    val server = Server(client)
+    val server = ServerSvc(this)
+    val user = UserSvc(this)
 
     init {
         id = ""
@@ -36,23 +32,23 @@ class Session(
         authenticated = false
     }
 
-    fun get(): SessionModel = handleErr {
-        val res = sessionApi.session
+    fun get(): SessionModel = handleErr(this) {
+        val res = SessionApi(_authenticatedOpenapiClient()).session
         update(null, res)
         res
     }
 
     fun authenticate(
-        authReqs: Map<String, Any?>? = null,
+        authReqs: Map<String, AuthenticateReqAuthReqsValue?>? = null,
         factors: Map<String, String>? = null,
-    ): AuthenticateRes = handleErr {
+    ): AuthenticateRes = handleErr(this) {
         val res = if (newSessionReq != null) {
-            sessionApi.newSession(newSessionReq!!.apply {
+            SessionApi(_authenticatedOpenapiClient()).newSession(newSessionReq!!.apply {
                 this.factors = factors
                 this.authReqs = authReqs
             })
         } else {
-            sessionApi.authenticate(AuthenticateReq().apply {
+            SessionApi(_authenticatedOpenapiClient()).authenticate(AuthenticateReq().apply {
                 this.factors = factors
                 this.authReqs = authReqs
             })
@@ -62,28 +58,64 @@ class Session(
         res
     }
 
-    fun confirm(receivedCodes: Map<String, Map<String, String>>): AuthenticateRes = handleErr {
-        val res = sessionApi.confirmSessionAuths(
+    fun confirm(receivedCodes: Map<String, Map<String, String>>): AuthenticateRes = handleErr(this) {
+        val res = SessionApi(_authenticatedOpenapiClient()).confirmSessionAuths(
             ConfirmSessionAuthsReq().receivedCodes(receivedCodes))
         update(res.tokens, res.session)
         res
     }
 
-    fun signOut() = handleErr {
-        sessionApi.signOut()
+    fun signOut() = handleErr(this) {
+        SessionApi(_authenticatedOpenapiClient()).signOut()
     }
 
-    fun refresh(refreshToken: String): RefreshTokenRes = handleErr {
+    fun refreshAccessToken() = refreshAccessToken(null)
+    fun refreshAccessToken(refreshToken: String?) = refreshAccessToken(refreshToken, null)
+    fun refreshAccessToken(
+        overrideRefreshToken: String?,
+        errOnMissingToken: Exception?,
+    ): RefreshTokenRes = handleErr {
+        val refreshToken = overrideRefreshToken
+            ?: tokens?.refresh
+            ?: throw (errOnMissingToken ?: IllegalArgumentException("No refresh token"))
+
         val res = TokenApi(client).refreshToken(RefreshTokenReq().refreshToken(refreshToken))
         update(res.tokens, res.session)
         res
     }
 
-    fun newSession(entry: String) = Session(client, accessToken, NewSessionReq()
-        .entry(entry).signIn(true))
+    fun accessToken() = accessToken(1000)
+    fun accessToken(refreshBeforeExpireMs: Long): String? {
+        if (tokens?.refresh == null) return this.tokens?.access;
 
-    private fun update(tokens: Tokens?, session: SessionModel?) {
-        tokens?.access?.let(client::setApiKey)
+        if (tokens!!.accessTokenExpiresAt!! - System.currentTimeMillis() < refreshBeforeExpireMs) {
+            this.refreshAccessToken()
+        }
+        return tokens!!.access
+    }
+
+    fun newSession(entry: String) = Session(
+        client, tokens,
+        NewSessionReq().entry(entry).signIn(true),
+    )
+
+    fun authorize() = authorize(null)
+    fun authorize(rateLimiter: RateLimiterReq?): AuthoriseRes = handleErr(this) {
+        AuthorisationApi(_authenticatedOpenapiClient())
+            .authorize(AuthoriseReq().rateLimiter(rateLimiter))
+    }
+
+    fun _authenticatedOpenapiClient() = if (this.tokens == null) {
+        this.client
+    } else {
+        ApiClient(client.httpClient).apply {
+            basePath = client.basePath
+            setApiKey(accessToken())
+        }
+    }
+
+    private fun update(tokens: Tokens?, session: SessionModel?) = synchronized(this) {
+        tokens?.also { this.tokens = tokens }
         session?.also {
             id = it.id
             entry = it.entry
@@ -110,10 +142,24 @@ class Session(
         }
     }
 
-    class AuthReqs : LinkedHashMap<String, Any?>() {
-        fun req(auth: String, req: Any?): AuthReqs {
+    class AuthReqs : LinkedHashMap<String, AuthenticateReqAuthReqsValue?>() {
+        fun req(auth: String, req: AuthenticateReqAuthReqsValue?): AuthReqs {
             put(auth, req)
             return this
+        }
+        fun req(auth: String, req: PasswordAuthenticateReq) = req(auth, req.let(::AuthenticateReqAuthReqsValue))
+        fun req(auth: String, req: PasswordUpdateReq?) = req(auth, req.let(::AuthenticateReqAuthReqsValue))
+        fun req(auth: String, req: AppSecretReq?) = req(auth, req?.let(::AuthenticateReqAuthReqsValue))
+        fun req(auth: String, req: EmailAuthenticateReq) = req(auth, req.let(::AuthenticateReqAuthReqsValue))
+        fun req(auth: String, req: EmailUpdateReq?) = req(auth, req?.let(::AuthenticateReqAuthReqsValue))
+        fun req(auth: String) = req(auth, mutableMapOf())
+        fun req(auth: String, req: OAuthReq?) = req(auth, req?.let(::AuthenticateReqAuthReqsValue))
+        fun req(auth: String, req: QuestionsAuthenticateReq) = req(auth, req.let(::AuthenticateReqAuthReqsValue))
+        fun req(auth: String, req: QuestionsUpdateReq?) = req(auth, req?.let(::AuthenticateReqAuthReqsValue))
+        fun req(auth: String, req: MutableMap<String, Any>?): AuthReqs {
+            val reqJson = AuthReqDataJson()
+            req?.forEach { (k, v) -> reqJson.putAdditionalProperty(k, v) }
+            return req(auth, AuthenticateReqAuthReqsValue(reqJson))
         }
     }
 }

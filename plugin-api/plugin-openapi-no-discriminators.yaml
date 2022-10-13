@@ -356,7 +356,7 @@ components:
           description: Localised message suitable for UI.
           x-nullable: true
       additionalProperties: true
-      x-order: kntrl/core/domain/err-base.kt0
+      x-order: 2025349183-0
       x-sealed: false
     AccessDenied:
       required:
@@ -373,7 +373,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: kntrl/core/app/err.kt1
+      x-order: -2065236468-1
       x-super: '#/components/schemas/Unauthenticated'
     AnswerErr:
       required:
@@ -385,7 +385,7 @@ components:
           type: boolean
         tooLong:
           type: boolean
-      x-order: kntrl/core/infra/err.kt9
+      x-order: -1279700867-9
     AnyErr:
       required:
       - code
@@ -402,7 +402,7 @@ components:
           description: Localised message suitable for UI.
           x-nullable: true
       additionalProperties: true
-      x-order: kntrl/core/domain/err-base.kt5
+      x-order: 2025349183-5
       x-super: '#/components/schemas/Err'
     AuthIsNotConfirmed:
       required:
@@ -419,7 +419,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: kntrl/core/domain/err.kt2
+      x-order: -270554383-2
       x-super: '#/components/schemas/ClientErr'
     AuthIsNotEnabled:
       required:
@@ -436,7 +436,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: kntrl/core/domain/err.kt1
+      x-order: -270554383-1
       x-super: '#/components/schemas/ClientErr'
     AuthRequiresAnother:
       required:
@@ -453,7 +453,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: kntrl/core/domain/err.kt4
+      x-order: -270554383-4
       x-super: '#/components/schemas/ClientErr'
     ClientErr:
       required:
@@ -471,7 +471,7 @@ components:
           description: Localised message suitable for UI.
           x-nullable: true
       additionalProperties: true
-      x-order: kntrl/core/domain/err-base.kt4
+      x-order: 2025349183-4
       x-sealed: false
       x-super: '#/components/schemas/Err'
     CodeIsExpired:
@@ -489,7 +489,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: kntrl/core/domain/err.kt5
+      x-order: -270554383-5
       x-super: '#/components/schemas/ClientErr'
     CodeIsIncorrect:
       required:
@@ -506,7 +506,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: kntrl/core/domain/err.kt7
+      x-order: -270554383-7
       x-super: '#/components/schemas/ClientErr'
     CodeTooManyAttempts:
       required:
@@ -523,7 +523,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: kntrl/core/domain/err.kt6
+      x-order: -270554383-6
       x-super: '#/components/schemas/ClientErr'
     EmailIsIncorrect:
       required:
@@ -540,7 +540,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: kntrl/core/infra/err.kt5
+      x-order: -1279700867-5
       x-super: '#/components/schemas/ClientErr'
     Instant:
       type: integer
@@ -561,7 +561,7 @@ components:
           description: Localised message suitable for UI.
           x-nullable: true
       additionalProperties: true
-      x-order: kntrl/core/domain/err-base.kt3
+      x-order: 2025349183-3
       x-sealed: false
       x-super: '#/components/schemas/Err'
     IpNew:
@@ -579,7 +579,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: kntrl/core/infra/err.kt6
+      x-order: -1279700867-6
       x-super: '#/components/schemas/ClientErr'
     LoginId:
       required:
@@ -593,7 +593,7 @@ components:
         login:
           type: string
           description: "User unique identifier, email, username, etc."
-      x-order: kntrl/core/domain/user/Login.kt2
+      x-order: -2010674509-2
     NoAuthAvailableForFactor:
       required:
       - code
@@ -609,7 +609,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: kntrl/core/domain/err.kt3
+      x-order: -270554383-3
       x-super: '#/components/schemas/IntegrationErr'
     PasswordIsIncorrect:
       required:
@@ -634,7 +634,7 @@ components:
           type: integer
           format: int64
           x-nullable: true
-      x-order: kntrl/core/infra/err.kt3
+      x-order: -1279700867-3
       x-super: '#/components/schemas/ClientErr'
     PasswordIsInvalid:
       required:
@@ -687,7 +687,7 @@ components:
         wasUsedDaysAgo:
           type: integer
           format: int64
-      x-order: kntrl/core/infra/err.kt4
+      x-order: -1279700867-4
       x-super: '#/components/schemas/ClientErr'
     PluginClientErr:
       required:
@@ -709,7 +709,7 @@ components:
           additionalProperties:
             type: object
           writeOnly: true
-      x-order: kntrl/core/infra/err.kt2
+      x-order: -1279700867-2
       x-super: '#/components/schemas/ClientErr'
     PluginErr:
       required:
@@ -726,7 +726,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: kntrl/core/infra/err.kt1
+      x-order: -1279700867-1
       x-super: '#/components/schemas/ServerErr'
     QuestionsAnswersIncorrect:
       required:
@@ -756,7 +756,7 @@ components:
           type: array
           items:
             type: string
-      x-order: kntrl/core/infra/err.kt7
+      x-order: -1279700867-7
       x-super: '#/components/schemas/ClientErr'
     QuestionsAnswersInvalid:
       required:
@@ -781,7 +781,7 @@ components:
             $ref: '#/components/schemas/AnswerErr'
         tooManyAnswers:
           type: boolean
-      x-order: kntrl/core/infra/err.kt8
+      x-order: -1279700867-8
       x-super: '#/components/schemas/ClientErr'
     ServerErr:
       required:
@@ -799,7 +799,7 @@ components:
           description: Localised message suitable for UI.
           x-nullable: true
       additionalProperties: true
-      x-order: kntrl/core/domain/err-base.kt2
+      x-order: 2025349183-2
       x-sealed: false
       x-super: '#/components/schemas/Err'
     SessionExpired:
@@ -817,7 +817,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: kntrl/core/app/err.kt0
+      x-order: -2065236468-0
       x-super: '#/components/schemas/Unauthenticated'
     SignatureIsIncorrect:
       required:
@@ -834,7 +834,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: kntrl/core/app/err.kt3
+      x-order: -2065236468-3
       x-super: '#/components/schemas/ClientErr'
     TokenExpired:
       required:
@@ -855,7 +855,7 @@ components:
           type: integer
           format: int64
           x-nullable: true
-      x-order: kntrl/core/domain/err.kt10
+      x-order: -270554383-10
       x-super: '#/components/schemas/Unauthenticated'
     TooManyReqs:
       required:
@@ -884,7 +884,7 @@ components:
           type: integer
           format: int32
           x-nullable: true
-      x-order: kntrl/core/domain/err.kt11
+      x-order: -270554383-11
       x-super: '#/components/schemas/ClientErr'
     Unauthenticated:
       required:
@@ -902,7 +902,7 @@ components:
           description: Localised message suitable for UI.
           x-nullable: true
       additionalProperties: true
-      x-order: kntrl/core/domain/err.kt8
+      x-order: -270554383-8
       x-sealed: false
       x-super: '#/components/schemas/ClientErr'
     UserLoginAlreadyTaken:
@@ -920,7 +920,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: kntrl/core/domain/err.kt0
+      x-order: -270554383-0
       x-super: '#/components/schemas/ClientErr'
     UserNotFound:
       required:
@@ -937,7 +937,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: kntrl/core/app/err.kt2
+      x-order: -2065236468-2
       x-super: '#/components/schemas/Unauthenticated'
     RateLimiterState:
       required:
@@ -950,7 +950,7 @@ components:
         burntQuota:
           type: number
           format: double
-      x-order: kntrl/core/domain/RateLimiterState.kt0
+      x-order: 328297103-0
     RateLimiterStateId:
       required:
       - rateLimiter
@@ -964,7 +964,7 @@ components:
           $ref: '#/components/schemas/RateLimiterUser'
         window:
           $ref: '#/components/schemas/TimeWindow'
-      x-order: kntrl/core/domain/RateLimiterState.kt2
+      x-order: 328297103-2
     RateLimiterUser:
       type: object
       properties:
@@ -974,7 +974,7 @@ components:
         ip:
           type: string
           x-nullable: true
-      x-order: kntrl/core/domain/RateLimiterState.kt4
+      x-order: 328297103-4
     TimeWindow:
       required:
       - end
@@ -987,7 +987,7 @@ components:
         end:
           type: integer
           format: int64
-      x-order: kntrl/core/domain/RateLimiterState.kt6
+      x-order: 328297103-6
     BurnQuotaReq:
       required:
       - quota
@@ -996,7 +996,7 @@ components:
         quota:
           type: number
           format: double
-      x-order: kntrl/core/app/RateLimiter.kt1
+      x-order: 1338599945-1
     AuthData:
       required:
       - private
@@ -1010,7 +1010,7 @@ components:
         login:
           type: string
           x-nullable: true
-      x-order: kntrl/core/domain/user/AuthUserCfg.kt3
+      x-order: 332570507-3
     AuthRes:
       required:
       - authData
@@ -1019,9 +1019,108 @@ components:
         authData:
           $ref: '#/components/schemas/AuthData'
         resData:
+          oneOf:
+          - $ref: '#/components/schemas/AuthResDataJson'
+          - $ref: '#/components/schemas/EmailAuthRes'
+          - $ref: '#/components/schemas/IpAuthRes'
+          - $ref: '#/components/schemas/OAuthRes'
+          - $ref: '#/components/schemas/PasswordUpdateRes'
+          - $ref: '#/components/schemas/QuestionsAuthenticateRes'
+          - $ref: '#/components/schemas/QuestionsUpdateRes'
+          x-nullable: true
+      x-order: -1249106462-6
+    AuthResData:
+      type: object
+      x-order: -1249106462-7
+    AuthResDataJson:
+      type: object
+      properties:
+        key:
           type: object
           x-nullable: true
-      x-order: kntrl/core/app/auth/Auth.kt6
+      additionalProperties: true
+      x-order: -1249106462-8
+      x-super: '#/components/schemas/AuthResData'
+    EmailAuthRes:
+      type: object
+      properties:
+        emailSentTo:
+          type: string
+          description: "Shows user email, that was used to send a code. Email will\
+            \ be partially hidden."
+      x-order: -701605246-5
+      x-super: '#/components/schemas/AuthResData'
+    IpAuthRes:
+      required:
+      - ipEncoded
+      type: object
+      properties:
+        ipEncoded:
+          type: string
+      x-order: 2116983897-1
+      x-super: '#/components/schemas/AuthResData'
+    OAuthRes:
+      required:
+      - login
+      - publicData
+      type: object
+      properties:
+        login:
+          type: string
+        publicData:
+          type: object
+          additionalProperties:
+            type: object
+      x-order: -51011121-2
+      x-super: '#/components/schemas/AuthResData'
+    PasswordUpdateRes:
+      required:
+      - password
+      type: object
+      properties:
+        password:
+          type: string
+          description: If password was generated by app this field contains generated
+            password.
+        strength:
+          type: string
+          description: Calculated strength of password. Null means that all checks
+            failed.
+          x-nullable: true
+      x-order: -266447761-5
+      x-super: '#/components/schemas/AuthResData'
+    QuestionsAuthenticateRes:
+      required:
+      - correct
+      type: object
+      properties:
+        correct:
+          type: object
+          additionalProperties:
+            type: boolean
+          description: |
+            Shows is answer was correct.
+          example:
+            HOME_CITY: true
+            MOTHER_NAME: false
+      x-order: 131730481-3
+      x-super: '#/components/schemas/AuthResData'
+    QuestionsUpdateRes:
+      required:
+      - answersSavedAt
+      type: object
+      properties:
+        answersSavedAt:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+          description: Date of last update
+      x-order: 131730481-4
+      x-super: '#/components/schemas/AuthResData'
+    json:
+      type: object
+      additionalProperties: true
     AuthReq:
       required:
       - ctx
@@ -1043,7 +1142,7 @@ components:
           type: object
         ctx:
           $ref: '#/components/schemas/ReqCtx'
-      x-order: kntrl/core/app/auth/Auth.kt2
+      x-order: -1249106462-2
     AuthUserCfg:
       type: object
       properties:
@@ -1055,7 +1154,7 @@ components:
             List of auths that wait for confirmation.
           items:
             $ref: '#/components/schemas/UnconfirmedAuthData'
-      x-order: kntrl/core/domain/user/AuthUserCfg.kt0
+      x-order: 332570507-0
     Code:
       required:
       - attemptsLeft
@@ -1082,7 +1181,7 @@ components:
           format: int64
         code:
           type: string
-      x-order: kntrl/core/app/auth/Auth.kt3
+      x-order: -1249106462-3
     CodeVerifier:
       required:
       - attemptsLeft
@@ -1106,7 +1205,7 @@ components:
         sentAt:
           type: integer
           format: int64
-      x-order: kntrl/core/domain/confirm/CodeVerifier.kt0
+      x-order: 1113303910-0
     Device:
       required:
       - userAgent
@@ -1122,7 +1221,7 @@ components:
           type: string
         mobile:
           type: boolean
-      x-order: kntrl/core/domain/session/Device.kt0
+      x-order: 1837614569-0
     Login:
       required:
       - login
@@ -1138,7 +1237,7 @@ components:
         unconfirmedLogin:
           type: string
           x-nullable: true
-      x-order: kntrl/core/domain/user/Login.kt0
+      x-order: -2010674509-0
     NextFactor:
       required:
       - factor
@@ -1152,7 +1251,7 @@ components:
           type: array
           items:
             type: string
-      x-order: kntrl/core/domain/session/NextFactors.kt0
+      x-order: 1296788734-0
     ReqCtx:
       required:
       - device
@@ -1171,7 +1270,7 @@ components:
           type: object
           additionalProperties:
             type: string
-      x-order: kntrl/core/app/utils/ReqCtx.kt0
+      x-order: -418366826-0
     Session:
       required:
       - authenticatedBy
@@ -1237,7 +1336,7 @@ components:
           type: boolean
         authenticated:
           type: boolean
-      x-order: kntrl/core/domain/session/Session.kt0
+      x-order: 2013237977-0
     UnconfirmedAuth:
       type: object
       properties:
@@ -1245,7 +1344,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CodeVerifier'
-      x-order: kntrl/core/domain/session/UnconfirmedAuth.kt0
+      x-order: 320227009-0
     UnconfirmedAuthData:
       required:
       - code
@@ -1256,7 +1355,7 @@ components:
           $ref: '#/components/schemas/AuthData'
         code:
           $ref: '#/components/schemas/CodeVerifier'
-      x-order: kntrl/core/domain/user/AuthUserCfg.kt4
+      x-order: 332570507-4
     User:
       required:
       - auths
@@ -1300,16 +1399,14 @@ components:
           description: Allows to access to any user in the app.
         new:
           type: boolean
-      x-order: kntrl/core/domain/user/User.kt0
-    json:
-      type: object
+      x-order: 276900135-0
     BaseAuthData:
       type: object
       properties:
         login:
           type: string
           x-nullable: true
-      x-order: kntrl/core/domain/user/AuthUserCfg.kt2
+      x-order: 332570507-2
     DryRunAuthRes:
       type: object
       properties:
@@ -1319,15 +1416,22 @@ components:
           - $ref: '#/components/schemas/BaseAuthData'
           x-nullable: true
         resData:
-          type: object
+          oneOf:
+          - $ref: '#/components/schemas/AuthResDataJson'
+          - $ref: '#/components/schemas/EmailAuthRes'
+          - $ref: '#/components/schemas/IpAuthRes'
+          - $ref: '#/components/schemas/OAuthRes'
+          - $ref: '#/components/schemas/PasswordUpdateRes'
+          - $ref: '#/components/schemas/QuestionsAuthenticateRes'
+          - $ref: '#/components/schemas/QuestionsUpdateRes'
           x-nullable: true
-      x-order: kntrl/core/app/auth/Auth.kt5
+      x-order: -1249106462-5
     FindSessionRes:
       type: object
       properties:
         session:
           $ref: '#/components/schemas/Session'
-      x-order: kntrl/core/app/session/SessionRepo.kt2
+      x-order: 400707106-2
     FindSessionsRes:
       required:
       - sessions
@@ -1339,7 +1443,7 @@ components:
             $ref: '#/components/schemas/Session'
         tooManySessions:
           type: boolean
-      x-order: kntrl/core/app/session/SessionRepo.kt4
+      x-order: 400707106-4
     SaveSessionReq:
       required:
       - removed
@@ -1356,13 +1460,13 @@ components:
           type: array
           items:
             type: string
-      x-order: kntrl/core/app/session/SessionRepo.kt3
+      x-order: 400707106-3
     FindUserRes:
       type: object
       properties:
         user:
           $ref: '#/components/schemas/User'
-      x-order: kntrl/core/app/user/UserRepo.kt1
+      x-order: -1537032784-1
     SaveUserReq:
       required:
       - newLogins
@@ -1397,7 +1501,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/User'
-      x-order: kntrl/core/app/user/UserRepo.kt2
+      x-order: -1537032784-2
 x-tagGroups:
 - name: Api
   tags:

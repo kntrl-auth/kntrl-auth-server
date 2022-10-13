@@ -155,6 +155,19 @@ export interface AppSecretAuthCfg {
     'burnQuota'?: number;
 }
 /**
+ * 
+ * @export
+ * @interface AppSecretReq
+ */
+export interface AppSecretReq {
+    /**
+     * 
+     * @type {string}
+     * @memberof AppSecretReq
+     */
+    'secret': string;
+}
+/**
  * Authentication implementation config
  * @export
  * @interface AuthCfg
@@ -204,7 +217,7 @@ export interface AuthCodeHandlerCfg {
      */
     'clientId': string;
     /**
-     * OAuth .client secret.
+     * OAuth client secret.
      * @type {string}
      * @memberof AuthCodeHandlerCfg
      */
@@ -218,10 +231,10 @@ export interface AuthCodeHandlerCfg {
 export interface AuthData {
     /**
      * 
-     * @type {object}
+     * @type {{ [key: string]: any; }}
      * @memberof AuthData
      */
-    'public': object;
+    'public': { [key: string]: any; };
     /**
      * 
      * @type {string}
@@ -255,10 +268,10 @@ export interface AuthExecRes {
     'err'?: Err;
     /**
      * 
-     * @type {object}
+     * @type {AuthExecResResData}
      * @memberof AuthExecRes
      */
-    'resData'?: object;
+    'resData'?: AuthExecResResData;
 }
 
 export const AuthExecResStatusEnum = {
@@ -268,6 +281,12 @@ export const AuthExecResStatusEnum = {
 } as const;
 
 export type AuthExecResStatusEnum = typeof AuthExecResStatusEnum[keyof typeof AuthExecResStatusEnum];
+
+/**
+ * @type AuthExecResResData
+ * @export
+ */
+export type AuthExecResResData = AuthResDataJson | EmailAuthRes | IpAuthRes | OAuthRes | PasswordUpdateRes | QuestionsAuthenticateRes | QuestionsUpdateRes;
 
 /**
  * 
@@ -322,6 +341,21 @@ export interface AuthIsNotEnabled {
 /**
  * 
  * @export
+ * @interface AuthReqDataJson
+ */
+export interface AuthReqDataJson {
+    [key: string]: any;
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AuthReqDataJson
+     */
+    'key'?: object;
+}
+/**
+ * 
+ * @export
  * @interface AuthRequiresAnother
  */
 export interface AuthRequiresAnother {
@@ -343,6 +377,21 @@ export interface AuthRequiresAnother {
      * @memberof AuthRequiresAnother
      */
     'msg'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface AuthResDataJson
+ */
+export interface AuthResDataJson {
+    [key: string]: any;
+
+    /**
+     * 
+     * @type {object}
+     * @memberof AuthResDataJson
+     */
+    'key'?: object;
 }
 /**
  * 
@@ -376,24 +425,30 @@ export interface AuthUserCfg {
  */
 export interface AuthenticateReq {
     /**
-     * 
+     * Forces specific auth to be used for factor. Takes place only when multiple auths is provided within request and auth can be assigned to several factors. If used in sign-up mode, it just enables those factors. 
      * @type {{ [key: string]: string; }}
      * @memberof AuthenticateReq
      */
     'factors'?: { [key: string]: string; };
     /**
      * Request for authenticators 
-     * @type {{ [key: string]: object; }}
+     * @type {{ [key: string]: AuthenticateReqAuthReqsValue; }}
      * @memberof AuthenticateReq
      */
-    'authReqs'?: { [key: string]: object; };
+    'authReqs'?: { [key: string]: AuthenticateReqAuthReqsValue; };
     /**
-     * 
+     * Execute only validation ща authenticator requests.
      * @type {boolean}
      * @memberof AuthenticateReq
      */
     'dryRun'?: boolean;
 }
+/**
+ * @type AuthenticateReqAuthReqsValue
+ * @export
+ */
+export type AuthenticateReqAuthReqsValue = AppSecretReq | AuthReqDataJson | EmailAuthenticateReq | EmailUpdateReq | OAuthReq | PasswordAuthenticateReq | PasswordUpdateReq | QuestionsAuthenticateReq | QuestionsUpdateReq;
+
 /**
  * 
  * @export
@@ -881,10 +936,10 @@ export interface EditUserReq {
     'logins'?: { [key: string]: string; };
     /**
      * 
-     * @type {{ [key: string]: object; }}
+     * @type {{ [key: string]: AuthenticateReqAuthReqsValue; }}
      * @memberof EditUserReq
      */
-    'authReqs'?: { [key: string]: object; };
+    'authReqs'?: { [key: string]: AuthenticateReqAuthReqsValue; };
     /**
      * 
      * @type {boolean}
@@ -980,6 +1035,38 @@ export interface EmailAuthCfg {
 /**
  * 
  * @export
+ * @interface EmailAuthRes
+ */
+export interface EmailAuthRes {
+    /**
+     * Shows user email, that was used to send a code. Email will be partially hidden.
+     * @type {string}
+     * @memberof EmailAuthRes
+     */
+    'emailSentTo'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface EmailAuthenticateReq
+ */
+export interface EmailAuthenticateReq {
+    /**
+     * User email. If email is not null - auth allow identification by email (email auth also must be listed in logins config). Otherwise, uses email of already identified user.
+     * @type {string}
+     * @memberof EmailAuthenticateReq
+     */
+    'email'?: string;
+    /**
+     * Template to use.
+     * @type {string}
+     * @memberof EmailAuthenticateReq
+     */
+    'template'?: string;
+}
+/**
+ * 
+ * @export
  * @interface EmailIsIncorrect
  */
 export interface EmailIsIncorrect {
@@ -1005,6 +1092,25 @@ export interface EmailIsIncorrect {
 /**
  * 
  * @export
+ * @interface EmailUpdateReq
+ */
+export interface EmailUpdateReq {
+    /**
+     * New email to set.
+     * @type {string}
+     * @memberof EmailUpdateReq
+     */
+    'email': string;
+    /**
+     * Template to use.
+     * @type {string}
+     * @memberof EmailUpdateReq
+     */
+    'template'?: string;
+}
+/**
+ * 
+ * @export
  * @interface EntryAccessTokenCfg
  */
 export interface EntryAccessTokenCfg {
@@ -1015,7 +1121,7 @@ export interface EntryAccessTokenCfg {
      */
     'ttl'?: string;
     /**
-     * Enable or disable .client-side caching of access token
+     * Enable or disable client-side caching of access token
      * @type {boolean}
      * @memberof EntryAccessTokenCfg
      */
@@ -1327,6 +1433,19 @@ export interface IpAuthCfg {
 /**
  * 
  * @export
+ * @interface IpAuthRes
+ */
+export interface IpAuthRes {
+    /**
+     * 
+     * @type {string}
+     * @memberof IpAuthRes
+     */
+    'ipEncoded': string;
+}
+/**
+ * 
+ * @export
  * @interface IpNew
  */
 export interface IpNew {
@@ -1493,17 +1612,17 @@ export interface NewSessionReq {
      */
     'logins'?: { [key: string]: string; };
     /**
-     * 
+     * Forces specific auth to be used for factor. Takes place only when multiple auths is provided within request and auth can be assigned to several factors. If used in sign-up mode, it just enables those factors. 
      * @type {{ [key: string]: string; }}
      * @memberof NewSessionReq
      */
     'factors'?: { [key: string]: string; };
     /**
-     * Authenticator requests 
-     * @type {{ [key: string]: object; }}
+     * Request for authenticators 
+     * @type {{ [key: string]: AuthenticateReqAuthReqsValue; }}
      * @memberof NewSessionReq
      */
-    'authReqs'?: { [key: string]: object; };
+    'authReqs'?: { [key: string]: AuthenticateReqAuthReqsValue; };
     /**
      * 
      * @type {boolean}
@@ -1610,13 +1729,13 @@ export interface OAuthCfg {
      */
     'tokenUrl'?: string;
     /**
-     * OAuth .client id. Client must be registered on OAuth provider (e.g. facebook, google)
+     * OAuth client id. Client must be registered on OAuth provider (e.g. facebook, google)
      * @type {string}
      * @memberof OAuthCfg
      */
     'clientId'?: string;
     /**
-     * OAuth .client secret.
+     * OAuth client secret.
      * @type {string}
      * @memberof OAuthCfg
      */
@@ -1649,6 +1768,44 @@ export interface OAuthCfg {
 /**
  * 
  * @export
+ * @interface OAuthReq
+ */
+export interface OAuthReq {
+    /**
+     * If you have access-token - put it here.
+     * @type {string}
+     * @memberof OAuthReq
+     */
+    'accessToken'?: string;
+    /**
+     * If you have authorisation-code - app will exchange it for access-token.
+     * @type {string}
+     * @memberof OAuthReq
+     */
+    'authorizationCode'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface OAuthRes
+ */
+export interface OAuthRes {
+    /**
+     * 
+     * @type {string}
+     * @memberof OAuthRes
+     */
+    'login': string;
+    /**
+     * 
+     * @type {{ [key: string]: object; }}
+     * @memberof OAuthRes
+     */
+    'publicData': { [key: string]: object; };
+}
+/**
+ * 
+ * @export
  * @interface OkAuthExecRes
  */
 export interface OkAuthExecRes {
@@ -1666,10 +1823,10 @@ export interface OkAuthExecRes {
     'sentCode'?: Code;
     /**
      * 
-     * @type {object}
+     * @type {AuthExecResResData}
      * @memberof OkAuthExecRes
      */
-    'resData'?: object;
+    'resData'?: AuthExecResResData;
 }
 
 export const OkAuthExecResStatusEnum = {
@@ -1764,6 +1921,19 @@ export interface PasswordAuthCfg {
      * @memberof PasswordAuthCfg
      */
     'strength'?: { [key: string]: PasswordStrengthRequirements; };
+}
+/**
+ * 
+ * @export
+ * @interface PasswordAuthenticateReq
+ */
+export interface PasswordAuthenticateReq {
+    /**
+     * User password.
+     * @type {string}
+     * @memberof PasswordAuthenticateReq
+     */
+    'password': string;
 }
 /**
  * Forbids user to change password to the old one. Useful if you force user to change password regularly.
@@ -1960,6 +2130,44 @@ export interface PasswordStrengthRequirements {
      * @memberof PasswordStrengthRequirements
      */
     'forbidLoginAsPassword'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface PasswordUpdateReq
+ */
+export interface PasswordUpdateReq {
+    /**
+     * New password to set. If null app generates password automatically.
+     * @type {string}
+     * @memberof PasswordUpdateReq
+     */
+    'password'?: string;
+    /**
+     * Password confirmation. If null app doesn\'t perform this check.
+     * @type {string}
+     * @memberof PasswordUpdateReq
+     */
+    'confirmPassword'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface PasswordUpdateRes
+ */
+export interface PasswordUpdateRes {
+    /**
+     * If password was generated by app this field contains generated password.
+     * @type {string}
+     * @memberof PasswordUpdateRes
+     */
+    'password': string;
+    /**
+     * Calculated strength of password. Null means that all checks failed.
+     * @type {string}
+     * @memberof PasswordUpdateRes
+     */
+    'strength'?: string;
 }
 /**
  * 
@@ -2200,6 +2408,58 @@ export interface QuestionsAuthCfg {
      * @memberof QuestionsAuthCfg
      */
     'maxAnswers'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface QuestionsAuthenticateReq
+ */
+export interface QuestionsAuthenticateReq {
+    /**
+     * Given answers for questions. 
+     * @type {{ [key: string]: string; }}
+     * @memberof QuestionsAuthenticateReq
+     */
+    'answers': { [key: string]: string; };
+}
+/**
+ * 
+ * @export
+ * @interface QuestionsAuthenticateRes
+ */
+export interface QuestionsAuthenticateRes {
+    /**
+     * Shows is answer was correct. 
+     * @type {{ [key: string]: boolean; }}
+     * @memberof QuestionsAuthenticateRes
+     */
+    'correct': { [key: string]: boolean; };
+}
+/**
+ * 
+ * @export
+ * @interface QuestionsUpdateReq
+ */
+export interface QuestionsUpdateReq {
+    /**
+     * Answers to save. `null` as value removes answer 
+     * @type {{ [key: string]: string; }}
+     * @memberof QuestionsUpdateReq
+     */
+    'answers': { [key: string]: string; };
+}
+/**
+ * 
+ * @export
+ * @interface QuestionsUpdateRes
+ */
+export interface QuestionsUpdateRes {
+    /**
+     * Date of last update
+     * @type {{ [key: string]: number; }}
+     * @memberof QuestionsUpdateRes
+     */
+    'answersSavedAt': { [key: string]: number; };
 }
 /**
  * Rate limiter configuration
@@ -2553,7 +2813,7 @@ export interface SHHttpCfg {
      */
     'bind'?: string;
     /**
-     * If true, X-Forwarded-For header is used to get .client\'s IP address
+     * If true, X-Forwarded-For header is used to get client\'s IP address
      * @type {boolean}
      * @memberof SHHttpCfg
      */
@@ -2579,10 +2839,10 @@ export interface SaveUserReq {
     'logins'?: { [key: string]: string; };
     /**
      * 
-     * @type {{ [key: string]: object; }}
+     * @type {{ [key: string]: AuthenticateReqAuthReqsValue; }}
      * @memberof SaveUserReq
      */
-    'authReqs'?: { [key: string]: object; };
+    'authReqs'?: { [key: string]: AuthenticateReqAuthReqsValue; };
     /**
      * 
      * @type {boolean}

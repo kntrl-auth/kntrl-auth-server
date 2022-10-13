@@ -33,7 +33,7 @@ export declare class Session implements SessionModel {
         entry: string;
     }): Session;
     allSessions(entry?: string, userId?: string): Promise<FindSessionsRes>;
-    authorise(req?: AuthoriseReq): Promise<AuthoriseRes>;
+    authorize(req?: AuthoriseReq): Promise<AuthoriseRes>;
     accessToken(refreshBeforeExpireMs?: number): Promise<string | undefined>;
     _authenticatedAxiosCfg(): Promise<AxiosRequestConfig>;
     _serverCfg(): Configuration;

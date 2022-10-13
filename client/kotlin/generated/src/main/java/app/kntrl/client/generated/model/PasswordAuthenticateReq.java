@@ -23,9 +23,6 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -48,69 +45,37 @@ import java.util.Set;
 import app.kntrl.client.generated.infra.JSON;
 
 /**
- * AuthData
+ * PasswordAuthenticateReq
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
-public class AuthData {
-  public static final String SERIALIZED_NAME_PUBLIC = "public";
-  @SerializedName(SERIALIZED_NAME_PUBLIC)
-  private Map<String, Object> _public = new HashMap<>();
+public class PasswordAuthenticateReq {
+  public static final String SERIALIZED_NAME_PASSWORD = "password";
+  @SerializedName(SERIALIZED_NAME_PASSWORD)
+  private String password;
 
-  public static final String SERIALIZED_NAME_LOGIN = "login";
-  @SerializedName(SERIALIZED_NAME_LOGIN)
-  private String login;
-
-  public AuthData() { 
+  public PasswordAuthenticateReq() { 
   }
 
-  public AuthData _public(Map<String, Object> _public) {
+  public PasswordAuthenticateReq password(String password) {
     
-    this._public = _public;
-    return this;
-  }
-
-  public AuthData putPublicItem(String key, Object _publicItem) {
-    this._public.put(key, _publicItem);
+    this.password = password;
     return this;
   }
 
    /**
-   * Get _public
-   * @return _public
+   * User password.
+   * @return password
   **/
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @ApiModelProperty(required = true, value = "User password.")
 
-  public Map<String, Object> getPublic() {
-    return _public;
+  public String getPassword() {
+    return password;
   }
 
 
-  public void setPublic(Map<String, Object> _public) {
-    this._public = _public;
-  }
-
-
-  public AuthData login(String login) {
-    
-    this.login = login;
-    return this;
-  }
-
-   /**
-   * Get login
-   * @return login
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
-
-  public String getLogin() {
-    return login;
-  }
-
-
-  public void setLogin(String login) {
-    this.login = login;
+  public void setPassword(String password) {
+    this.password = password;
   }
 
 
@@ -123,22 +88,20 @@ public class AuthData {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    AuthData authData = (AuthData) o;
-    return Objects.equals(this._public, authData._public) &&
-        Objects.equals(this.login, authData.login);
+    PasswordAuthenticateReq passwordAuthenticateReq = (PasswordAuthenticateReq) o;
+    return Objects.equals(this.password, passwordAuthenticateReq.password);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(_public, login);
+    return Objects.hash(password);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class AuthData {\n");
-    sb.append("    _public: ").append(toIndentedString(_public)).append("\n");
-    sb.append("    login: ").append(toIndentedString(login)).append("\n");
+    sb.append("class PasswordAuthenticateReq {\n");
+    sb.append("    password: ").append(toIndentedString(password)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -161,45 +124,44 @@ public class AuthData {
   static {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
-    openapiFields.add("public");
-    openapiFields.add("login");
+    openapiFields.add("password");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
-    openapiRequiredFields.add("public");
+    openapiRequiredFields.add("password");
   }
 
  /**
   * Validates the JSON Object and throws an exception if issues found
   *
   * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to AuthData
+  * @throws IOException if the JSON Object is invalid with respect to PasswordAuthenticateReq
   */
   public static void validateJsonObject(JsonObject jsonObj) throws IOException {
       if (jsonObj == null) {
-        if (AuthData.openapiRequiredFields.isEmpty()) {
+        if (PasswordAuthenticateReq.openapiRequiredFields.isEmpty()) {
           return;
         } else { // has required fields
-          throw new IllegalArgumentException(String.format("The required field(s) %s in AuthData is not found in the empty JSON string", AuthData.openapiRequiredFields.toString()));
+          throw new IllegalArgumentException(String.format("The required field(s) %s in PasswordAuthenticateReq is not found in the empty JSON string", PasswordAuthenticateReq.openapiRequiredFields.toString()));
         }
       }
 
       Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
       // check to see if the JSON string contains additional fields
       for (Entry<String, JsonElement> entry : entries) {
-        if (!AuthData.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `AuthData` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        if (!PasswordAuthenticateReq.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `PasswordAuthenticateReq` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
         }
       }
 
       // check to make sure all required properties/fields are present in the JSON string
-      for (String requiredField : AuthData.openapiRequiredFields) {
+      for (String requiredField : PasswordAuthenticateReq.openapiRequiredFields) {
         if (jsonObj.get(requiredField) == null) {
           throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonObj.toString()));
         }
       }
-      if (jsonObj.get("login") != null && !jsonObj.get("login").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `login` to be a primitive type in the JSON string but got `%s`", jsonObj.get("login").toString()));
+      if (jsonObj.get("password") != null && !jsonObj.get("password").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `password` to be a primitive type in the JSON string but got `%s`", jsonObj.get("password").toString()));
       }
   }
 
@@ -207,22 +169,22 @@ public class AuthData {
     @SuppressWarnings("unchecked")
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!AuthData.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'AuthData' and its subtypes
+       if (!PasswordAuthenticateReq.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'PasswordAuthenticateReq' and its subtypes
        }
        final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<AuthData> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(AuthData.class));
+       final TypeAdapter<PasswordAuthenticateReq> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(PasswordAuthenticateReq.class));
 
-       return (TypeAdapter<T>) new TypeAdapter<AuthData>() {
+       return (TypeAdapter<T>) new TypeAdapter<PasswordAuthenticateReq>() {
            @Override
-           public void write(JsonWriter out, AuthData value) throws IOException {
+           public void write(JsonWriter out, PasswordAuthenticateReq value) throws IOException {
              JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
              elementAdapter.write(out, obj);
            }
 
            @Override
-           public AuthData read(JsonReader in) throws IOException {
+           public PasswordAuthenticateReq read(JsonReader in) throws IOException {
              JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
              validateJsonObject(jsonObj);
              return thisAdapter.fromJsonTree(jsonObj);
@@ -233,18 +195,18 @@ public class AuthData {
   }
 
  /**
-  * Create an instance of AuthData given an JSON string
+  * Create an instance of PasswordAuthenticateReq given an JSON string
   *
   * @param jsonString JSON string
-  * @return An instance of AuthData
-  * @throws IOException if the JSON string is invalid with respect to AuthData
+  * @return An instance of PasswordAuthenticateReq
+  * @throws IOException if the JSON string is invalid with respect to PasswordAuthenticateReq
   */
-  public static AuthData fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, AuthData.class);
+  public static PasswordAuthenticateReq fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, PasswordAuthenticateReq.class);
   }
 
  /**
-  * Convert an instance of AuthData to an JSON string
+  * Convert an instance of PasswordAuthenticateReq to an JSON string
   *
   * @return JSON string
   */

@@ -110,7 +110,7 @@ class Session {
             return (yield utils_1.handleErr(this.api.getAll(entry, userId, yield this._authenticatedAxiosCfg()), this));
         });
     }
-    authorise(req = {}) {
+    authorize(req = {}) {
         return __awaiter(this, void 0, void 0, function* () {
             return utils_1.handleErr(new generated_1.AuthorisationApi(this._serverCfg()).authorize(req, yield this._authenticatedAxiosCfg()), this);
         });

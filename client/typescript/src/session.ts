@@ -104,7 +104,7 @@ export class Session implements SessionModel {
         return (await handleErr(this.api.getAll(entry, userId, await this._authenticatedAxiosCfg()), this));
     }
 
-    async authorise(req: AuthoriseReq = {}): Promise<AuthoriseRes> {
+    async authorize(req: AuthoriseReq = {}): Promise<AuthoriseRes> {
         return handleErr(new AuthorisationApi(this._serverCfg()).authorize(req, await this._authenticatedAxiosCfg()), this);
     }
 

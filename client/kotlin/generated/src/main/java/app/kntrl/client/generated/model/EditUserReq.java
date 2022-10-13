@@ -15,6 +15,7 @@ package app.kntrl.client.generated.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import app.kntrl.client.generated.model.AuthenticateReqAuthReqsValue;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -62,7 +63,7 @@ public class EditUserReq {
 
   public static final String SERIALIZED_NAME_AUTH_REQS = "authReqs";
   @SerializedName(SERIALIZED_NAME_AUTH_REQS)
-  private Map<String, Object> authReqs = null;
+  private Map<String, AuthenticateReqAuthReqsValue> authReqs = null;
 
   public static final String SERIALIZED_NAME_DRY_RUN = "dryRun";
   @SerializedName(SERIALIZED_NAME_DRY_RUN)
@@ -137,13 +138,13 @@ public class EditUserReq {
   }
 
 
-  public EditUserReq authReqs(Map<String, Object> authReqs) {
+  public EditUserReq authReqs(Map<String, AuthenticateReqAuthReqsValue> authReqs) {
     
     this.authReqs = authReqs;
     return this;
   }
 
-  public EditUserReq putAuthReqsItem(String key, Object authReqsItem) {
+  public EditUserReq putAuthReqsItem(String key, AuthenticateReqAuthReqsValue authReqsItem) {
     if (this.authReqs == null) {
       this.authReqs = new HashMap<>();
     }
@@ -158,12 +159,12 @@ public class EditUserReq {
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
 
-  public Map<String, Object> getAuthReqs() {
+  public Map<String, AuthenticateReqAuthReqsValue> getAuthReqs() {
     return authReqs;
   }
 
 
-  public void setAuthReqs(Map<String, Object> authReqs) {
+  public void setAuthReqs(Map<String, AuthenticateReqAuthReqsValue> authReqs) {
     this.authReqs = authReqs;
   }
 

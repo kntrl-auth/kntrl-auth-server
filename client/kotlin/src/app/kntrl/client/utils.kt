@@ -2,16 +2,28 @@ package app.kntrl.client
 
 import app.kntrl.client.generated.infra.ApiException
 import app.kntrl.client.generated.model.AnyErr
+import app.kntrl.client.generated.model.AuthoriseRes
 
-fun <T> handleErr(action: () -> T): T {
-    fun parseAnyErr(ex: ApiException): Nothing = try {
-        throw KntrlException(AnyErr.fromJson(ex.responseBody))
+fun <T> handleErr(
+    retryOnExpiredTokenOn: Session? = null,
+    action: () -> T,
+): T {
+    fun parseAnyErr(ex: ApiException): T = try {
+        val anyErr = AnyErr.fromJson(ex.responseBody);
+        val kntrlEx = KntrlException(AnyErr.fromJson(ex.responseBody))
+
+        if (anyErr.code == "TOKEN_EXPIRED" && retryOnExpiredTokenOn != null) {
+            retryOnExpiredTokenOn.refreshAccessToken(null, kntrlEx)
+            handleErr(null, action)
+        } else {
+            throw kntrlEx
+        }
     } catch (th: Throwable) {
         throw ex
     }
 
-    try {
-        return action()
+    return try {
+        action()
     } catch (ex: ApiException) {
         parseAnyErr(ex)
     }

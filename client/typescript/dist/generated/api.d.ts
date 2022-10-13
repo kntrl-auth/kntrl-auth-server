@@ -28,6 +28,9 @@ export interface AppSecretAuthCfg {
     'rateLimiter'?: string;
     'burnQuota'?: number;
 }
+export interface AppSecretReq {
+    'secret': string;
+}
 export interface AuthCfg {
     'requiresAuth'?: Array<Array<string>>;
     'skipOnFail'?: boolean;
@@ -47,7 +50,7 @@ export interface AuthExecRes {
     'status': AuthExecResStatusEnum;
     'sentCode'?: Code;
     'err'?: Err;
-    'resData'?: object;
+    'resData'?: AuthExecResResData;
 }
 export declare const AuthExecResStatusEnum: {
     readonly Ok: "OK";
@@ -55,6 +58,7 @@ export declare const AuthExecResStatusEnum: {
     readonly Skipped: "SKIPPED";
 };
 export declare type AuthExecResStatusEnum = typeof AuthExecResStatusEnum[keyof typeof AuthExecResStatusEnum];
+export declare type AuthExecResResData = EmailAuthRes | IpAuthRes | OAuthRes | PasswordUpdateRes | QuestionsAuthenticateRes | QuestionsUpdateRes | object;
 export interface AuthIsNotConfirmed {
     'code': string;
     'devMsg': string;
@@ -80,10 +84,11 @@ export interface AuthenticateReq {
         [key: string]: string;
     };
     'authReqs'?: {
-        [key: string]: object;
+        [key: string]: AuthenticateReqAuthReqsValue;
     };
     'dryRun'?: boolean;
 }
+export declare type AuthenticateReqAuthReqsValue = AppSecretReq | EmailAuthenticateReq | OAuthReq | PasswordAuthenticateReq | PasswordUpdateReq | QuestionsAuthenticateReq | QuestionsUpdateReq | UpdateEmailReq | object;
 export interface AuthenticateRes {
     'tokens'?: Tokens;
     'session'?: Session;
@@ -196,7 +201,7 @@ export interface EditUserReq {
         [key: string]: string;
     };
     'authReqs'?: {
-        [key: string]: object;
+        [key: string]: AuthenticateReqAuthReqsValue;
     };
     'dryRun'?: boolean;
     'systemAccess'?: boolean;
@@ -218,6 +223,13 @@ export interface EmailAuthCfg {
         [key: string]: string;
     };
     'code'?: CodeCfg;
+}
+export interface EmailAuthRes {
+    'emailSentTo'?: string;
+}
+export interface EmailAuthenticateReq {
+    'email'?: string;
+    'template'?: string;
 }
 export interface EmailIsIncorrect {
     'code': string;
@@ -303,6 +315,9 @@ export interface IpAuthCfg {
     'ipBytesToIgnore'?: number;
     'historySize'?: number;
 }
+export interface IpAuthRes {
+    'ipEncoded': string;
+}
 export interface IpNew {
     'code': string;
     'devMsg': string;
@@ -342,7 +357,7 @@ export interface NewSessionReq {
         [key: string]: string;
     };
     'authReqs'?: {
-        [key: string]: object;
+        [key: string]: AuthenticateReqAuthReqsValue;
     };
     'signIn'?: boolean;
     'signUp'?: boolean;
@@ -373,10 +388,20 @@ export interface OAuthCfg {
         [key: string]: string;
     };
 }
+export interface OAuthReq {
+    'accessToken'?: string;
+    'authorizationCode'?: string;
+}
+export interface OAuthRes {
+    'login': string;
+    'publicData': {
+        [key: string]: object;
+    };
+}
 export interface OkAuthExecRes {
     'status': OkAuthExecResStatusEnum;
     'sentCode'?: Code;
-    'resData'?: object;
+    'resData'?: AuthExecResResData;
 }
 export declare const OkAuthExecResStatusEnum: {
     readonly Ok: "OK";
@@ -400,6 +425,9 @@ export interface PasswordAuthCfg {
     'strength'?: {
         [key: string]: PasswordStrengthRequirements;
     };
+}
+export interface PasswordAuthenticateReq {
+    'password': string;
 }
 export interface PasswordHistoryCfg {
     'passwordHistorySize'?: number;
@@ -436,6 +464,14 @@ export interface PasswordStrengthRequirements {
     'requireUpperCase'?: boolean;
     'forbidCommonPasswords'?: boolean;
     'forbidLoginAsPassword'?: boolean;
+}
+export interface PasswordUpdateReq {
+    'password'?: string;
+    'confirmPassword'?: string;
+}
+export interface PasswordUpdateRes {
+    'password': string;
+    'strength'?: string;
 }
 export interface PluginClientErr {
     'code': string;
@@ -485,6 +521,26 @@ export interface QuestionsAuthCfg {
     'maxLength'?: number;
     'answersRequired'?: number;
     'maxAnswers'?: number;
+}
+export interface QuestionsAuthenticateReq {
+    'answers': {
+        [key: string]: string;
+    };
+}
+export interface QuestionsAuthenticateRes {
+    'correct': {
+        [key: string]: boolean;
+    };
+}
+export interface QuestionsUpdateReq {
+    'answers': {
+        [key: string]: string;
+    };
+}
+export interface QuestionsUpdateRes {
+    'answersSavedAt': {
+        [key: string]: number;
+    };
 }
 export interface RateLimiterCfg {
     'userId'?: boolean;
@@ -576,7 +632,7 @@ export interface SaveUserReq {
         [key: string]: string;
     };
     'authReqs'?: {
-        [key: string]: object;
+        [key: string]: AuthenticateReqAuthReqsValue;
     };
     'dryRun'?: boolean;
 }
@@ -680,6 +736,10 @@ export interface UnconfirmedAuth {
 export interface UnconfirmedAuthData {
     'data': AuthData;
     'code': CodeVerifier;
+}
+export interface UpdateEmailReq {
+    'email': string;
+    'template'?: string;
 }
 export interface User {
     'id': string;

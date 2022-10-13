@@ -15,6 +15,7 @@ package app.kntrl.client.generated.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import app.kntrl.client.generated.model.AuthExecResResData;
 import app.kntrl.client.generated.model.Code;
 import app.kntrl.client.generated.model.Err;
 import com.google.gson.TypeAdapter;
@@ -114,7 +115,7 @@ public class AuthExecRes {
 
   public static final String SERIALIZED_NAME_RES_DATA = "resData";
   @SerializedName(SERIALIZED_NAME_RES_DATA)
-  private Object resData;
+  private AuthExecResResData resData;
 
   public AuthExecRes() { 
   }
@@ -188,7 +189,7 @@ public class AuthExecRes {
   }
 
 
-  public AuthExecRes resData(Object resData) {
+  public AuthExecRes resData(AuthExecResResData resData) {
     
     this.resData = resData;
     return this;
@@ -201,12 +202,12 @@ public class AuthExecRes {
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
 
-  public Object getResData() {
+  public AuthExecResResData getResData() {
     return resData;
   }
 
 
-  public void setResData(Object resData) {
+  public void setResData(AuthExecResResData resData) {
     this.resData = resData;
   }
 
@@ -307,6 +308,10 @@ public class AuthExecRes {
       // validate the optional field `sentCode`
       if (jsonObj.getAsJsonObject("sentCode") != null) {
         Code.validateJsonObject(jsonObj.getAsJsonObject("sentCode"));
+      }
+      // validate the optional field `resData`
+      if (jsonObj.getAsJsonObject("resData") != null) {
+        AuthExecResResData.validateJsonObject(jsonObj.getAsJsonObject("resData"));
       }
   }
 
