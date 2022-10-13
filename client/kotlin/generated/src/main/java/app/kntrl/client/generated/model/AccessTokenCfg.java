@@ -67,7 +67,7 @@ public class AccessTokenCfg {
   @SerializedName(SERIALIZED_NAME_TTL)
   private String ttl;
 
-  public AccessTokenCfg() { 
+  public AccessTokenCfg() {
   }
 
   public AccessTokenCfg cookie(Boolean cookie) {
@@ -161,6 +161,41 @@ public class AccessTokenCfg {
     this.ttl = ttl;
   }
 
+  /**
+   * A container for additional, undeclared properties.
+   * This is a holder for any undeclared properties as specified with
+   * the 'additionalProperties' keyword in the OAS document.
+   */
+  private Map<String, Object> additionalProperties;
+
+  /**
+   * Set the additional (undeclared) property with the specified name and value.
+   * If the property does not already exist, create it otherwise replace it.
+   */
+  public AccessTokenCfg putAdditionalProperty(String key, Object value) {
+    if (this.additionalProperties == null) {
+        this.additionalProperties = new HashMap<String, Object>();
+    }
+    this.additionalProperties.put(key, value);
+    return this;
+  }
+
+  /**
+   * Return the additional (undeclared) property.
+   */
+  public Map<String, Object> getAdditionalProperties() {
+    return additionalProperties;
+  }
+
+  /**
+   * Return the additional (undeclared) property with the specified name.
+   */
+  public Object getAdditionalProperty(String key) {
+    if (this.additionalProperties == null) {
+        return null;
+    }
+    return this.additionalProperties.get(key);
+  }
 
 
   @Override
@@ -175,12 +210,13 @@ public class AccessTokenCfg {
     return Objects.equals(this.cookie, accessTokenCfg.cookie) &&
         Objects.equals(this.cache, accessTokenCfg.cache) &&
         Objects.equals(this.cacheUnauthenticated, accessTokenCfg.cacheUnauthenticated) &&
-        Objects.equals(this.ttl, accessTokenCfg.ttl);
+        Objects.equals(this.ttl, accessTokenCfg.ttl)&&
+        Objects.equals(this.additionalProperties, accessTokenCfg.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(cookie, cache, cacheUnauthenticated, ttl);
+    return Objects.hash(cookie, cache, cacheUnauthenticated, ttl, additionalProperties);
   }
 
   @Override
@@ -191,6 +227,7 @@ public class AccessTokenCfg {
     sb.append("    cache: ").append(toIndentedString(cache)).append("\n");
     sb.append("    cacheUnauthenticated: ").append(toIndentedString(cacheUnauthenticated)).append("\n");
     sb.append("    ttl: ").append(toIndentedString(ttl)).append("\n");
+    sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -236,15 +273,7 @@ public class AccessTokenCfg {
           throw new IllegalArgumentException(String.format("The required field(s) %s in AccessTokenCfg is not found in the empty JSON string", AccessTokenCfg.openapiRequiredFields.toString()));
         }
       }
-
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
-      // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
-        if (!AccessTokenCfg.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `AccessTokenCfg` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
-        }
-      }
-      if (jsonObj.get("ttl") != null && !jsonObj.get("ttl").isJsonPrimitive()) {
+      if ((jsonObj.get("ttl") != null && !jsonObj.get("ttl").isJsonNull()) && !jsonObj.get("ttl").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `ttl` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ttl").toString()));
       }
   }
@@ -264,6 +293,23 @@ public class AccessTokenCfg {
            @Override
            public void write(JsonWriter out, AccessTokenCfg value) throws IOException {
              JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             obj.remove("additionalProperties");
+             // serialize additonal properties
+             if (value.getAdditionalProperties() != null) {
+               for (Map.Entry<String, Object> entry : value.getAdditionalProperties().entrySet()) {
+                 if (entry.getValue() instanceof String)
+                   obj.addProperty(entry.getKey(), (String) entry.getValue());
+                 else if (entry.getValue() instanceof Number)
+                   obj.addProperty(entry.getKey(), (Number) entry.getValue());
+                 else if (entry.getValue() instanceof Boolean)
+                   obj.addProperty(entry.getKey(), (Boolean) entry.getValue());
+                 else if (entry.getValue() instanceof Character)
+                   obj.addProperty(entry.getKey(), (Character) entry.getValue());
+                 else {
+                   obj.add(entry.getKey(), gson.toJsonTree(entry.getValue()).getAsJsonObject());
+                 }
+               }
+             }
              elementAdapter.write(out, obj);
            }
 
@@ -271,7 +317,25 @@ public class AccessTokenCfg {
            public AccessTokenCfg read(JsonReader in) throws IOException {
              JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
              validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             // store additional fields in the deserialized instance
+             AccessTokenCfg instance = thisAdapter.fromJsonTree(jsonObj);
+             for (Map.Entry<String, JsonElement> entry : jsonObj.entrySet()) {
+               if (!openapiFields.contains(entry.getKey())) {
+                 if (entry.getValue().isJsonPrimitive()) { // primitive type
+                   if (entry.getValue().getAsJsonPrimitive().isString())
+                     instance.putAdditionalProperty(entry.getKey(), entry.getValue().getAsString());
+                   else if (entry.getValue().getAsJsonPrimitive().isNumber())
+                     instance.putAdditionalProperty(entry.getKey(), entry.getValue().getAsNumber());
+                   else if (entry.getValue().getAsJsonPrimitive().isBoolean())
+                     instance.putAdditionalProperty(entry.getKey(), entry.getValue().getAsBoolean());
+                   else
+                     throw new IllegalArgumentException(String.format("The field `%s` has unknown primitive type. Value: %s", entry.getKey(), entry.getValue().toString()));
+                 } else { // non-primitive type
+                   instance.putAdditionalProperty(entry.getKey(), gson.fromJson(entry.getValue(), HashMap.class));
+                 }
+               }
+             }
+             return instance;
            }
 
        }.nullSafe();

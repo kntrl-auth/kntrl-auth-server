@@ -90,7 +90,7 @@ public class ApiClient {
         initHttpClient();
 
         // Setup authentications (key: authentication name, value: authentication).
-        authentications.put("access-token", new ApiKeyAuth("query", "access-token"));
+        authentications.put("access-token", new HttpBearerAuth("Bearer"));
         // Prevent the authentications from being modified.
         authentications = Collections.unmodifiableMap(authentications);
     }
@@ -106,7 +106,7 @@ public class ApiClient {
         httpClient = client;
 
         // Setup authentications (key: authentication name, value: authentication).
-        authentications.put("access-token", new ApiKeyAuth("query", "access-token"));
+        authentications.put("access-token", new HttpBearerAuth("Bearer"));
         // Prevent the authentications from being modified.
         authentications = Collections.unmodifiableMap(authentications);
     }
@@ -347,6 +347,19 @@ public class ApiClient {
         return authentications.get(authName);
     }
 
+        /**
+        * Helper method to set access token for the first Bearer authentication.
+        * @param bearerToken Bearer token
+        */
+    public void setBearerToken(String bearerToken) {
+        for (Authentication auth : authentications.values()) {
+            if (auth instanceof HttpBearerAuth) {
+                ((HttpBearerAuth) auth).setBearerToken(bearerToken);
+                return;
+            }
+        }
+        throw new RuntimeException("No Bearer authentication configured!");
+    }
 
     /**
      * Helper method to set username for the first HTTP basic authentication.
@@ -883,6 +896,8 @@ public class ApiClient {
                 content = null;
             }
             return RequestBody.create(content, MediaType.parse(contentType));
+        } else if (obj instanceof String) {
+            return RequestBody.create(MediaType.parse(contentType), (String) obj);
         } else {
             throw new ApiException("Content type \"" + contentType + "\" is not supported");
         }
@@ -1302,11 +1317,12 @@ public class ApiClient {
                 for (Object item: list) {
                     if (item instanceof File) {
                         addPartToMultiPartBuilder(mpBuilder, param.getKey(), (File) item);
+                    } else {
+                        addPartToMultiPartBuilder(mpBuilder, param.getKey(), param.getValue());
                     }
                 }
             } else {
-                Headers partHeaders = Headers.of("Content-Disposition", "form-data; name=\"" + param.getKey() + "\"");
-                mpBuilder.addPart(partHeaders, RequestBody.create(parameterToString(param.getValue()), null));
+                addPartToMultiPartBuilder(mpBuilder, param.getKey(), param.getValue());
             }
         }
         return mpBuilder.build();
@@ -1338,6 +1354,31 @@ public class ApiClient {
         Headers partHeaders = Headers.of("Content-Disposition", "form-data; name=\"" + key + "\"; filename=\"" + file.getName() + "\"");
         MediaType mediaType = MediaType.parse(guessContentTypeFromFile(file));
         mpBuilder.addPart(partHeaders, RequestBody.create(file, mediaType));
+    }
+
+    /**
+     * Add a Content-Disposition Header for the given key and complex object to the MultipartBody Builder.
+     *
+     * @param mpBuilder MultipartBody.Builder
+     * @param key The key of the Header element
+     * @param obj The complex object to add to the Header
+     */
+    private void addPartToMultiPartBuilder(MultipartBody.Builder mpBuilder, String key, Object obj) {
+        RequestBody requestBody;
+        if (obj instanceof String) {
+            requestBody = RequestBody.create((String) obj, MediaType.parse("text/plain"));
+        } else {
+            String content;
+            if (obj != null) {
+                content = json.serialize(obj);
+            } else {
+                content = null;
+            }
+            requestBody = RequestBody.create(content, MediaType.parse("application/json"));
+        }
+
+        Headers partHeaders = Headers.of("Content-Disposition", "form-data; name=\"" + key + "\"");
+        mpBuilder.addPart(partHeaders, requestBody);
     }
 
     /**
@@ -1440,7 +1481,7 @@ public class ApiClient {
     /**
      * Convert the HTTP request body to a string.
      *
-     * @param request The HTTP request object
+     * @param requestBody The HTTP request object
      * @return The string representation of the HTTP request body
      * @throws app.kntrl.client.generated.infra.ApiException If fail to serialize the request body object into a string
      */

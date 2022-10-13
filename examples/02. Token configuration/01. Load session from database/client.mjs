@@ -5,13 +5,13 @@ async function example() {
 
   const session = new Kntrl().session(tokens);
   // This line will likely be used on backend to validate the session.
-  await session.authorise();
+  await session.authorize();
 
   await session.signOut();
 
   try {
     // Session is expired after sign-out.
-    await session.authorise();
+    await session.authorize();
   } catch (err) {
     console.log(err.code);
   }

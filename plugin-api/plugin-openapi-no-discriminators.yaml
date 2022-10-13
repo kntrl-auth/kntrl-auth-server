@@ -1019,7 +1019,7 @@ components:
         authData:
           $ref: '#/components/schemas/AuthData'
         resData:
-          oneOf:
+          anyOf:
           - $ref: '#/components/schemas/AuthResDataJson'
           - $ref: '#/components/schemas/EmailAuthRes'
           - $ref: '#/components/schemas/IpAuthRes'
@@ -1037,6 +1037,7 @@ components:
       properties:
         key:
           type: object
+          description: Ignore. Just workaround for bug in some open-generators
           x-nullable: true
       additionalProperties: true
       x-order: -1249106462-8
@@ -1208,9 +1209,12 @@ components:
       x-order: 1113303910-0
     Device:
       required:
+      - mobile
       - userAgent
       type: object
       properties:
+        mobile:
+          type: boolean
         type:
           type: string
           x-nullable: true
@@ -1219,8 +1223,6 @@ components:
           x-nullable: true
         userAgent:
           type: string
-        mobile:
-          type: boolean
       x-order: 1837614569-0
     Login:
       required:
@@ -1411,12 +1413,12 @@ components:
       type: object
       properties:
         authData:
-          oneOf:
+          anyOf:
           - $ref: '#/components/schemas/AuthData'
           - $ref: '#/components/schemas/BaseAuthData'
           x-nullable: true
         resData:
-          oneOf:
+          anyOf:
           - $ref: '#/components/schemas/AuthResDataJson'
           - $ref: '#/components/schemas/EmailAuthRes'
           - $ref: '#/components/schemas/IpAuthRes'

@@ -47,9 +47,9 @@ exports.SkippedAuthExecResStatusEnum = {
 };
 const AuthorisationApiAxiosParamCreator = function (configuration) {
     return {
-        authorize: (authoriseReq, options = {}) => __awaiter(this, void 0, void 0, function* () {
-            common_1.assertParamExists('authorize', 'authoriseReq', authoriseReq);
-            const localVarPath = `/api/authorise`;
+        authorize: (authorizeReq, options = {}) => __awaiter(this, void 0, void 0, function* () {
+            common_1.assertParamExists('authorize', 'authorizeReq', authorizeReq);
+            const localVarPath = `/api/authorize`;
             const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
@@ -58,12 +58,12 @@ const AuthorisationApiAxiosParamCreator = function (configuration) {
             const localVarRequestOptions = Object.assign(Object.assign({ method: 'POST' }, baseOptions), options);
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
-            yield common_1.setApiKeyToObject(localVarQueryParameter, "access-token", configuration);
+            yield common_1.setBearerAuthToObject(localVarHeaderParameter, configuration);
             localVarHeaderParameter['Content-Type'] = 'application/json';
             common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-            localVarRequestOptions.data = common_1.serializeDataIfNeeded(authoriseReq, localVarRequestOptions, configuration);
+            localVarRequestOptions.data = common_1.serializeDataIfNeeded(authorizeReq, localVarRequestOptions, configuration);
             return {
                 url: common_1.toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
@@ -80,7 +80,7 @@ const AuthorisationApiAxiosParamCreator = function (configuration) {
             const localVarRequestOptions = Object.assign(Object.assign({ method: 'POST' }, baseOptions), options);
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
-            yield common_1.setApiKeyToObject(localVarQueryParameter, "access-token", configuration);
+            yield common_1.setBearerAuthToObject(localVarHeaderParameter, configuration);
             localVarHeaderParameter['Content-Type'] = 'application/json';
             common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
@@ -97,9 +97,9 @@ exports.AuthorisationApiAxiosParamCreator = AuthorisationApiAxiosParamCreator;
 const AuthorisationApiFp = function (configuration) {
     const localVarAxiosParamCreator = exports.AuthorisationApiAxiosParamCreator(configuration);
     return {
-        authorize(authoriseReq, options) {
+        authorize(authorizeReq, options) {
             return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.authorize(authoriseReq, options);
+                const localVarAxiosArgs = yield localVarAxiosParamCreator.authorize(authorizeReq, options);
                 return common_1.createRequestFunction(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
             });
         },
@@ -115,8 +115,8 @@ exports.AuthorisationApiFp = AuthorisationApiFp;
 const AuthorisationApiFactory = function (configuration, basePath, axios) {
     const localVarFp = exports.AuthorisationApiFp(configuration);
     return {
-        authorize(authoriseReq, options) {
-            return localVarFp.authorize(authoriseReq, options).then((request) => request(axios, basePath));
+        authorize(authorizeReq, options) {
+            return localVarFp.authorize(authorizeReq, options).then((request) => request(axios, basePath));
         },
         limit(rateLimiterReq, options) {
             return localVarFp.limit(rateLimiterReq, options).then((request) => request(axios, basePath));
@@ -125,8 +125,8 @@ const AuthorisationApiFactory = function (configuration, basePath, axios) {
 };
 exports.AuthorisationApiFactory = AuthorisationApiFactory;
 class AuthorisationApi extends base_1.BaseAPI {
-    authorize(authoriseReq, options) {
-        return exports.AuthorisationApiFp(this.configuration).authorize(authoriseReq, options).then((request) => request(this.axios, this.basePath));
+    authorize(authorizeReq, options) {
+        return exports.AuthorisationApiFp(this.configuration).authorize(authorizeReq, options).then((request) => request(this.axios, this.basePath));
     }
     limit(rateLimiterReq, options) {
         return exports.AuthorisationApiFp(this.configuration).limit(rateLimiterReq, options).then((request) => request(this.axios, this.basePath));
@@ -145,7 +145,7 @@ const ServerApiAxiosParamCreator = function (configuration) {
             const localVarRequestOptions = Object.assign(Object.assign({ method: 'GET' }, baseOptions), options);
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
-            yield common_1.setApiKeyToObject(localVarQueryParameter, "access-token", configuration);
+            yield common_1.setBearerAuthToObject(localVarHeaderParameter, configuration);
             common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
@@ -230,7 +230,7 @@ const SessionApiAxiosParamCreator = function (configuration) {
             const localVarRequestOptions = Object.assign(Object.assign({ method: 'PATCH' }, baseOptions), options);
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
-            yield common_1.setApiKeyToObject(localVarQueryParameter, "access-token", configuration);
+            yield common_1.setBearerAuthToObject(localVarHeaderParameter, configuration);
             localVarHeaderParameter['Content-Type'] = 'application/json';
             common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
@@ -252,7 +252,7 @@ const SessionApiAxiosParamCreator = function (configuration) {
             const localVarRequestOptions = Object.assign(Object.assign({ method: 'POST' }, baseOptions), options);
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
-            yield common_1.setApiKeyToObject(localVarQueryParameter, "access-token", configuration);
+            yield common_1.setBearerAuthToObject(localVarHeaderParameter, configuration);
             localVarHeaderParameter['Content-Type'] = 'application/json';
             common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
@@ -275,7 +275,7 @@ const SessionApiAxiosParamCreator = function (configuration) {
             const localVarRequestOptions = Object.assign(Object.assign({ method: 'DELETE' }, baseOptions), options);
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
-            yield common_1.setApiKeyToObject(localVarQueryParameter, "access-token", configuration);
+            yield common_1.setBearerAuthToObject(localVarHeaderParameter, configuration);
             common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
@@ -294,7 +294,7 @@ const SessionApiAxiosParamCreator = function (configuration) {
             const localVarRequestOptions = Object.assign(Object.assign({ method: 'GET' }, baseOptions), options);
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
-            yield common_1.setApiKeyToObject(localVarQueryParameter, "access-token", configuration);
+            yield common_1.setBearerAuthToObject(localVarHeaderParameter, configuration);
             if (entry !== undefined) {
                 localVarQueryParameter['entry'] = entry;
             }
@@ -319,7 +319,7 @@ const SessionApiAxiosParamCreator = function (configuration) {
             const localVarRequestOptions = Object.assign(Object.assign({ method: 'GET' }, baseOptions), options);
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
-            yield common_1.setApiKeyToObject(localVarQueryParameter, "access-token", configuration);
+            yield common_1.setBearerAuthToObject(localVarHeaderParameter, configuration);
             common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
@@ -339,6 +339,7 @@ const SessionApiAxiosParamCreator = function (configuration) {
             const localVarRequestOptions = Object.assign(Object.assign({ method: 'POST' }, baseOptions), options);
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
+            yield common_1.setBearerAuthToObject(localVarHeaderParameter, configuration);
             localVarHeaderParameter['Content-Type'] = 'application/json';
             common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
@@ -359,7 +360,7 @@ const SessionApiAxiosParamCreator = function (configuration) {
             const localVarRequestOptions = Object.assign(Object.assign({ method: 'DELETE' }, baseOptions), options);
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
-            yield common_1.setApiKeyToObject(localVarQueryParameter, "access-token", configuration);
+            yield common_1.setBearerAuthToObject(localVarHeaderParameter, configuration);
             common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
@@ -482,7 +483,6 @@ const SignatureApiAxiosParamCreator = function (configuration) {
             const localVarRequestOptions = Object.assign(Object.assign({ method: 'GET' }, baseOptions), options);
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
-            yield common_1.setApiKeyToObject(localVarQueryParameter, "access-token", configuration);
             common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
@@ -502,7 +502,7 @@ const SignatureApiAxiosParamCreator = function (configuration) {
             const localVarRequestOptions = Object.assign(Object.assign({ method: 'POST' }, baseOptions), options);
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
-            yield common_1.setApiKeyToObject(localVarQueryParameter, "access-token", configuration);
+            yield common_1.setBearerAuthToObject(localVarHeaderParameter, configuration);
             if (secret !== undefined) {
                 localVarQueryParameter['secret'] = secret;
             }
@@ -664,7 +664,7 @@ const UserApiAxiosParamCreator = function (configuration) {
             const localVarRequestOptions = Object.assign(Object.assign({ method: 'POST' }, baseOptions), options);
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
-            yield common_1.setApiKeyToObject(localVarQueryParameter, "access-token", configuration);
+            yield common_1.setBearerAuthToObject(localVarHeaderParameter, configuration);
             localVarHeaderParameter['Content-Type'] = 'application/json';
             common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
@@ -688,7 +688,7 @@ const UserApiAxiosParamCreator = function (configuration) {
             const localVarRequestOptions = Object.assign(Object.assign({ method: 'PATCH' }, baseOptions), options);
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
-            yield common_1.setApiKeyToObject(localVarQueryParameter, "access-token", configuration);
+            yield common_1.setBearerAuthToObject(localVarHeaderParameter, configuration);
             localVarHeaderParameter['Content-Type'] = 'application/json';
             common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
@@ -709,7 +709,7 @@ const UserApiAxiosParamCreator = function (configuration) {
             const localVarRequestOptions = Object.assign(Object.assign({ method: 'GET' }, baseOptions), options);
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
-            yield common_1.setApiKeyToObject(localVarQueryParameter, "access-token", configuration);
+            yield common_1.setBearerAuthToObject(localVarHeaderParameter, configuration);
             common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
@@ -729,7 +729,7 @@ const UserApiAxiosParamCreator = function (configuration) {
             const localVarRequestOptions = Object.assign(Object.assign({ method: 'PATCH' }, baseOptions), options);
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
-            yield common_1.setApiKeyToObject(localVarQueryParameter, "access-token", configuration);
+            yield common_1.setBearerAuthToObject(localVarHeaderParameter, configuration);
             localVarHeaderParameter['Content-Type'] = 'application/json';
             common_1.setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};

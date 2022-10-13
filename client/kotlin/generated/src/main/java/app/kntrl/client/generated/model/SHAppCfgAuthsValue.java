@@ -148,7 +148,7 @@ public class SHAppCfgAuthsValue extends AbstractOpenApiSchema {
                         return;
                     }
 
-                    throw new IOException("Failed to serialize as the type doesn't match oneOf schemas: AppSecretAuthCfg, EmailAuthCfg, IpAuthCfg, OAuthCfg, PasswordAuthCfg, QuestionsAuthCfg, RemoteAuthCfg");
+                    throw new IOException("Failed to serialize as the type doesn't match anyOf schemas: AppSecretAuthCfg, EmailAuthCfg, IpAuthCfg, OAuthCfg, PasswordAuthCfg, QuestionsAuthCfg, RemoteAuthCfg");
                 }
 
                 @Override
@@ -156,20 +156,16 @@ public class SHAppCfgAuthsValue extends AbstractOpenApiSchema {
                     Object deserialized = null;
                     JsonObject jsonObject = elementAdapter.read(in).getAsJsonObject();
 
-                    int match = 0;
-                    ArrayList<String> errorMessages = new ArrayList<>();
-                    TypeAdapter actualAdapter = elementAdapter;
-
                     // deserialize AppSecretAuthCfg
                     try {
                         // validate the JSON object to see if any exception is thrown
                         AppSecretAuthCfg.validateJsonObject(jsonObject);
-                        actualAdapter = adapterAppSecretAuthCfg;
-                        match++;
                         log.log(Level.FINER, "Input data matches schema 'AppSecretAuthCfg'");
+                        SHAppCfgAuthsValue ret = new SHAppCfgAuthsValue();
+                        ret.setActualInstance(adapterAppSecretAuthCfg.fromJsonTree(jsonObject));
+                        return ret;
                     } catch (Exception e) {
                         // deserialization failed, continue
-                        errorMessages.add(String.format("Deserialization for AppSecretAuthCfg failed with `%s`.", e.getMessage()));
                         log.log(Level.FINER, "Input data does not match schema 'AppSecretAuthCfg'", e);
                     }
 
@@ -177,12 +173,12 @@ public class SHAppCfgAuthsValue extends AbstractOpenApiSchema {
                     try {
                         // validate the JSON object to see if any exception is thrown
                         EmailAuthCfg.validateJsonObject(jsonObject);
-                        actualAdapter = adapterEmailAuthCfg;
-                        match++;
                         log.log(Level.FINER, "Input data matches schema 'EmailAuthCfg'");
+                        SHAppCfgAuthsValue ret = new SHAppCfgAuthsValue();
+                        ret.setActualInstance(adapterEmailAuthCfg.fromJsonTree(jsonObject));
+                        return ret;
                     } catch (Exception e) {
                         // deserialization failed, continue
-                        errorMessages.add(String.format("Deserialization for EmailAuthCfg failed with `%s`.", e.getMessage()));
                         log.log(Level.FINER, "Input data does not match schema 'EmailAuthCfg'", e);
                     }
 
@@ -190,12 +186,12 @@ public class SHAppCfgAuthsValue extends AbstractOpenApiSchema {
                     try {
                         // validate the JSON object to see if any exception is thrown
                         IpAuthCfg.validateJsonObject(jsonObject);
-                        actualAdapter = adapterIpAuthCfg;
-                        match++;
                         log.log(Level.FINER, "Input data matches schema 'IpAuthCfg'");
+                        SHAppCfgAuthsValue ret = new SHAppCfgAuthsValue();
+                        ret.setActualInstance(adapterIpAuthCfg.fromJsonTree(jsonObject));
+                        return ret;
                     } catch (Exception e) {
                         // deserialization failed, continue
-                        errorMessages.add(String.format("Deserialization for IpAuthCfg failed with `%s`.", e.getMessage()));
                         log.log(Level.FINER, "Input data does not match schema 'IpAuthCfg'", e);
                     }
 
@@ -203,12 +199,12 @@ public class SHAppCfgAuthsValue extends AbstractOpenApiSchema {
                     try {
                         // validate the JSON object to see if any exception is thrown
                         OAuthCfg.validateJsonObject(jsonObject);
-                        actualAdapter = adapterOAuthCfg;
-                        match++;
                         log.log(Level.FINER, "Input data matches schema 'OAuthCfg'");
+                        SHAppCfgAuthsValue ret = new SHAppCfgAuthsValue();
+                        ret.setActualInstance(adapterOAuthCfg.fromJsonTree(jsonObject));
+                        return ret;
                     } catch (Exception e) {
                         // deserialization failed, continue
-                        errorMessages.add(String.format("Deserialization for OAuthCfg failed with `%s`.", e.getMessage()));
                         log.log(Level.FINER, "Input data does not match schema 'OAuthCfg'", e);
                     }
 
@@ -216,12 +212,12 @@ public class SHAppCfgAuthsValue extends AbstractOpenApiSchema {
                     try {
                         // validate the JSON object to see if any exception is thrown
                         PasswordAuthCfg.validateJsonObject(jsonObject);
-                        actualAdapter = adapterPasswordAuthCfg;
-                        match++;
                         log.log(Level.FINER, "Input data matches schema 'PasswordAuthCfg'");
+                        SHAppCfgAuthsValue ret = new SHAppCfgAuthsValue();
+                        ret.setActualInstance(adapterPasswordAuthCfg.fromJsonTree(jsonObject));
+                        return ret;
                     } catch (Exception e) {
                         // deserialization failed, continue
-                        errorMessages.add(String.format("Deserialization for PasswordAuthCfg failed with `%s`.", e.getMessage()));
                         log.log(Level.FINER, "Input data does not match schema 'PasswordAuthCfg'", e);
                     }
 
@@ -229,12 +225,12 @@ public class SHAppCfgAuthsValue extends AbstractOpenApiSchema {
                     try {
                         // validate the JSON object to see if any exception is thrown
                         QuestionsAuthCfg.validateJsonObject(jsonObject);
-                        actualAdapter = adapterQuestionsAuthCfg;
-                        match++;
                         log.log(Level.FINER, "Input data matches schema 'QuestionsAuthCfg'");
+                        SHAppCfgAuthsValue ret = new SHAppCfgAuthsValue();
+                        ret.setActualInstance(adapterQuestionsAuthCfg.fromJsonTree(jsonObject));
+                        return ret;
                     } catch (Exception e) {
                         // deserialization failed, continue
-                        errorMessages.add(String.format("Deserialization for QuestionsAuthCfg failed with `%s`.", e.getMessage()));
                         log.log(Level.FINER, "Input data does not match schema 'QuestionsAuthCfg'", e);
                     }
 
@@ -242,66 +238,61 @@ public class SHAppCfgAuthsValue extends AbstractOpenApiSchema {
                     try {
                         // validate the JSON object to see if any exception is thrown
                         RemoteAuthCfg.validateJsonObject(jsonObject);
-                        actualAdapter = adapterRemoteAuthCfg;
-                        match++;
                         log.log(Level.FINER, "Input data matches schema 'RemoteAuthCfg'");
+                        SHAppCfgAuthsValue ret = new SHAppCfgAuthsValue();
+                        ret.setActualInstance(adapterRemoteAuthCfg.fromJsonTree(jsonObject));
+                        return ret;
                     } catch (Exception e) {
                         // deserialization failed, continue
-                        errorMessages.add(String.format("Deserialization for RemoteAuthCfg failed with `%s`.", e.getMessage()));
                         log.log(Level.FINER, "Input data does not match schema 'RemoteAuthCfg'", e);
                     }
 
-                    if (match == 1) {
-                        SHAppCfgAuthsValue ret = new SHAppCfgAuthsValue();
-                        ret.setActualInstance(actualAdapter.fromJsonTree(jsonObject));
-                        return ret;
-                    }
 
-                    throw new IOException(String.format("Failed deserialization for SHAppCfgAuthsValue: %d classes match result, expected 1. Detailed failure message for oneOf schemas: %s. JSON: %s", match, errorMessages, jsonObject.toString()));
+                    throw new IOException(String.format("Failed deserialization for SHAppCfgAuthsValue: no class matched. JSON: %s", jsonObject.toString()));
                 }
             }.nullSafe();
         }
     }
 
-    // store a list of schema names defined in oneOf
+    // store a list of schema names defined in anyOf
     public static final Map<String, GenericType> schemas = new HashMap<String, GenericType>();
 
     public SHAppCfgAuthsValue() {
-        super("oneOf", Boolean.FALSE);
+        super("anyOf", Boolean.FALSE);
     }
 
     public SHAppCfgAuthsValue(AppSecretAuthCfg o) {
-        super("oneOf", Boolean.FALSE);
+        super("anyOf", Boolean.FALSE);
         setActualInstance(o);
     }
 
     public SHAppCfgAuthsValue(EmailAuthCfg o) {
-        super("oneOf", Boolean.FALSE);
+        super("anyOf", Boolean.FALSE);
         setActualInstance(o);
     }
 
     public SHAppCfgAuthsValue(IpAuthCfg o) {
-        super("oneOf", Boolean.FALSE);
+        super("anyOf", Boolean.FALSE);
         setActualInstance(o);
     }
 
     public SHAppCfgAuthsValue(OAuthCfg o) {
-        super("oneOf", Boolean.FALSE);
+        super("anyOf", Boolean.FALSE);
         setActualInstance(o);
     }
 
     public SHAppCfgAuthsValue(PasswordAuthCfg o) {
-        super("oneOf", Boolean.FALSE);
+        super("anyOf", Boolean.FALSE);
         setActualInstance(o);
     }
 
     public SHAppCfgAuthsValue(QuestionsAuthCfg o) {
-        super("oneOf", Boolean.FALSE);
+        super("anyOf", Boolean.FALSE);
         setActualInstance(o);
     }
 
     public SHAppCfgAuthsValue(RemoteAuthCfg o) {
-        super("oneOf", Boolean.FALSE);
+        super("anyOf", Boolean.FALSE);
         setActualInstance(o);
     }
 
@@ -328,12 +319,12 @@ public class SHAppCfgAuthsValue extends AbstractOpenApiSchema {
     }
 
     /**
-     * Set the instance that matches the oneOf child schema, check
-     * the instance parameter is valid against the oneOf child schemas:
+     * Set the instance that matches the anyOf child schema, check
+     * the instance parameter is valid against the anyOf child schemas:
      * AppSecretAuthCfg, EmailAuthCfg, IpAuthCfg, OAuthCfg, PasswordAuthCfg, QuestionsAuthCfg, RemoteAuthCfg
      *
-     * It could be an instance of the 'oneOf' schemas.
-     * The oneOf child schemas may themselves be a composed schema (allOf, anyOf, oneOf).
+     * It could be an instance of the 'anyOf' schemas.
+     * The anyOf child schemas may themselves be a composed schema (allOf, anyOf, anyOf).
      */
     @Override
     public void setActualInstance(Object instance) {
@@ -471,67 +462,66 @@ public class SHAppCfgAuthsValue extends AbstractOpenApiSchema {
   * @throws IOException if the JSON Object is invalid with respect to SHAppCfgAuthsValue
   */
   public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-    // validate oneOf schemas one by one
+    // validate anyOf schemas one by one
     int validCount = 0;
-    ArrayList<String> errorMessages = new ArrayList<>();
     // validate the json string with AppSecretAuthCfg
     try {
       AppSecretAuthCfg.validateJsonObject(jsonObj);
-      validCount++;
+      return; // return earlier as at least one schema is valid with respect to the Json object
+      //validCount++;
     } catch (Exception e) {
-      errorMessages.add(String.format("Deserialization for AppSecretAuthCfg failed with `%s`.", e.getMessage()));
       // continue to the next one
     }
     // validate the json string with EmailAuthCfg
     try {
       EmailAuthCfg.validateJsonObject(jsonObj);
-      validCount++;
+      return; // return earlier as at least one schema is valid with respect to the Json object
+      //validCount++;
     } catch (Exception e) {
-      errorMessages.add(String.format("Deserialization for EmailAuthCfg failed with `%s`.", e.getMessage()));
       // continue to the next one
     }
     // validate the json string with IpAuthCfg
     try {
       IpAuthCfg.validateJsonObject(jsonObj);
-      validCount++;
+      return; // return earlier as at least one schema is valid with respect to the Json object
+      //validCount++;
     } catch (Exception e) {
-      errorMessages.add(String.format("Deserialization for IpAuthCfg failed with `%s`.", e.getMessage()));
       // continue to the next one
     }
     // validate the json string with OAuthCfg
     try {
       OAuthCfg.validateJsonObject(jsonObj);
-      validCount++;
+      return; // return earlier as at least one schema is valid with respect to the Json object
+      //validCount++;
     } catch (Exception e) {
-      errorMessages.add(String.format("Deserialization for OAuthCfg failed with `%s`.", e.getMessage()));
       // continue to the next one
     }
     // validate the json string with PasswordAuthCfg
     try {
       PasswordAuthCfg.validateJsonObject(jsonObj);
-      validCount++;
+      return; // return earlier as at least one schema is valid with respect to the Json object
+      //validCount++;
     } catch (Exception e) {
-      errorMessages.add(String.format("Deserialization for PasswordAuthCfg failed with `%s`.", e.getMessage()));
       // continue to the next one
     }
     // validate the json string with QuestionsAuthCfg
     try {
       QuestionsAuthCfg.validateJsonObject(jsonObj);
-      validCount++;
+      return; // return earlier as at least one schema is valid with respect to the Json object
+      //validCount++;
     } catch (Exception e) {
-      errorMessages.add(String.format("Deserialization for QuestionsAuthCfg failed with `%s`.", e.getMessage()));
       // continue to the next one
     }
     // validate the json string with RemoteAuthCfg
     try {
       RemoteAuthCfg.validateJsonObject(jsonObj);
-      validCount++;
+      return; // return earlier as at least one schema is valid with respect to the Json object
+      //validCount++;
     } catch (Exception e) {
-      errorMessages.add(String.format("Deserialization for RemoteAuthCfg failed with `%s`.", e.getMessage()));
       // continue to the next one
     }
-    if (validCount != 1) {
-      throw new IOException(String.format("The JSON string is invalid for SHAppCfgAuthsValue with oneOf schemas: AppSecretAuthCfg, EmailAuthCfg, IpAuthCfg, OAuthCfg, PasswordAuthCfg, QuestionsAuthCfg, RemoteAuthCfg. %d class(es) match the result, expected 1. Detailed failure message for oneOf schemas: %s. JSON: %s", validCount, errorMessages, jsonObj.toString()));
+    if (validCount == 0) {
+      throw new IOException(String.format("The JSON string is invalid for SHAppCfgAuthsValue with anyOf schemas: AppSecretAuthCfg, EmailAuthCfg, IpAuthCfg, OAuthCfg, PasswordAuthCfg, QuestionsAuthCfg, RemoteAuthCfg. JSON: %s", jsonObj.toString()));
     }
   }
 

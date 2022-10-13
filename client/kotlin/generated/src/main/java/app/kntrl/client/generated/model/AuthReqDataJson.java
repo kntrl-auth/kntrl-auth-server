@@ -53,7 +53,7 @@ public class AuthReqDataJson {
   @SerializedName(SERIALIZED_NAME_KEY)
   private Object key;
 
-  public AuthReqDataJson() { 
+  public AuthReqDataJson() {
   }
 
   public AuthReqDataJson key(Object key) {
@@ -63,11 +63,11 @@ public class AuthReqDataJson {
   }
 
    /**
-   * Get key
+   * Ignore. Just workaround for bug in some open-generators
    * @return key
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(value = "Ignore. Just workaround for bug in some open-generators")
 
   public Object getKey() {
     return key;

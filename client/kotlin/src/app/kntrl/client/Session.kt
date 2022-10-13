@@ -13,6 +13,7 @@ class Session(
 ) : SessionModel() {
     val server = ServerSvc(this)
     val user = UserSvc(this)
+    val rateLimiter = RateLimiterSvc(this)
 
     init {
         id = ""
@@ -91,7 +92,7 @@ class Session(
         if (tokens!!.accessTokenExpiresAt!! - System.currentTimeMillis() < refreshBeforeExpireMs) {
             this.refreshAccessToken()
         }
-        return tokens!!.access
+        return tokens?.access
     }
 
     fun newSession(entry: String) = Session(
@@ -100,9 +101,9 @@ class Session(
     )
 
     fun authorize() = authorize(null)
-    fun authorize(rateLimiter: RateLimiterReq?): AuthoriseRes = handleErr(this) {
+    fun authorize(rateLimiter: RateLimiterReq?): AuthorizeRes = handleErr(this) {
         AuthorisationApi(_authenticatedOpenapiClient())
-            .authorize(AuthoriseReq().rateLimiter(rateLimiter))
+            .authorize(AuthorizeReq().rateLimiter(rateLimiter))
     }
 
     fun _authenticatedOpenapiClient() = if (this.tokens == null) {
@@ -110,7 +111,7 @@ class Session(
     } else {
         ApiClient(client.httpClient).apply {
             basePath = client.basePath
-            setApiKey(accessToken())
+            setBearerToken(accessToken())
         }
     }
 

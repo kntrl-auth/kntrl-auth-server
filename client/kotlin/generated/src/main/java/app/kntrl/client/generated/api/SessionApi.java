@@ -804,7 +804,7 @@ public class SessionApi {
             localVarHeaderParams.put("Content-Type", localVarContentType);
         }
 
-        String[] localVarAuthNames = new String[] {  };
+        String[] localVarAuthNames = new String[] { "access-token" };
         return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
     }
 
@@ -824,7 +824,7 @@ public class SessionApi {
 
     /**
      * 
-     * Create new session. if session entry requires another entry, access token must be provided.
+     * Create new session. if session entry requires another entry, access token must be provided. 
      * @param newSessionReq  (required)
      * @return AuthenticateRes
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -843,7 +843,7 @@ public class SessionApi {
 
     /**
      * 
-     * Create new session. if session entry requires another entry, access token must be provided.
+     * Create new session. if session entry requires another entry, access token must be provided. 
      * @param newSessionReq  (required)
      * @return ApiResponse&lt;AuthenticateRes&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -863,7 +863,7 @@ public class SessionApi {
 
     /**
      *  (asynchronously)
-     * Create new session. if session entry requires another entry, access token must be provided.
+     * Create new session. if session entry requires another entry, access token must be provided. 
      * @param newSessionReq  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call

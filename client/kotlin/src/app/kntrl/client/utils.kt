@@ -2,7 +2,6 @@ package app.kntrl.client
 
 import app.kntrl.client.generated.infra.ApiException
 import app.kntrl.client.generated.model.AnyErr
-import app.kntrl.client.generated.model.AuthoriseRes
 
 fun <T> handleErr(
     retryOnExpiredTokenOn: Session? = null,
@@ -19,7 +18,7 @@ fun <T> handleErr(
             throw kntrlEx
         }
     } catch (th: Throwable) {
-        throw ex
+        throw th as? KntrlException ?: ex
     }
 
     return try {

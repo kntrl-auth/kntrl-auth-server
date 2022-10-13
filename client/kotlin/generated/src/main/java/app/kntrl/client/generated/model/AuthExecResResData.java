@@ -31,7 +31,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.core.GenericType;
@@ -144,7 +143,7 @@ public class AuthExecResResData extends AbstractOpenApiSchema {
                         return;
                     }
 
-                    throw new IOException("Failed to serialize as the type doesn't match oneOf schemas: AuthResDataJson, EmailAuthRes, IpAuthRes, OAuthRes, PasswordUpdateRes, QuestionsAuthenticateRes, QuestionsUpdateRes");
+                    throw new IOException("Failed to serialize as the type doesn't match anyOf schemas: AuthResDataJson, EmailAuthRes, IpAuthRes, OAuthRes, PasswordUpdateRes, QuestionsAuthenticateRes, QuestionsUpdateRes");
                 }
 
                 @Override
@@ -152,20 +151,16 @@ public class AuthExecResResData extends AbstractOpenApiSchema {
                     Object deserialized = null;
                     JsonObject jsonObject = elementAdapter.read(in).getAsJsonObject();
 
-                    int match = 0;
-                    ArrayList<String> errorMessages = new ArrayList<>();
-                    TypeAdapter actualAdapter = elementAdapter;
-
                     // deserialize AuthResDataJson
                     try {
                         // validate the JSON object to see if any exception is thrown
                         AuthResDataJson.validateJsonObject(jsonObject);
-                        actualAdapter = adapterAuthResDataJson;
-                        match++;
                         log.log(Level.FINER, "Input data matches schema 'AuthResDataJson'");
+                        AuthExecResResData ret = new AuthExecResResData();
+                        ret.setActualInstance(adapterAuthResDataJson.fromJsonTree(jsonObject));
+                        return ret;
                     } catch (Exception e) {
                         // deserialization failed, continue
-                        errorMessages.add(String.format("Deserialization for AuthResDataJson failed with `%s`.", e.getMessage()));
                         log.log(Level.FINER, "Input data does not match schema 'AuthResDataJson'", e);
                     }
 
@@ -173,12 +168,12 @@ public class AuthExecResResData extends AbstractOpenApiSchema {
                     try {
                         // validate the JSON object to see if any exception is thrown
                         EmailAuthRes.validateJsonObject(jsonObject);
-                        actualAdapter = adapterEmailAuthRes;
-                        match++;
                         log.log(Level.FINER, "Input data matches schema 'EmailAuthRes'");
+                        AuthExecResResData ret = new AuthExecResResData();
+                        ret.setActualInstance(adapterEmailAuthRes.fromJsonTree(jsonObject));
+                        return ret;
                     } catch (Exception e) {
                         // deserialization failed, continue
-                        errorMessages.add(String.format("Deserialization for EmailAuthRes failed with `%s`.", e.getMessage()));
                         log.log(Level.FINER, "Input data does not match schema 'EmailAuthRes'", e);
                     }
 
@@ -186,12 +181,12 @@ public class AuthExecResResData extends AbstractOpenApiSchema {
                     try {
                         // validate the JSON object to see if any exception is thrown
                         IpAuthRes.validateJsonObject(jsonObject);
-                        actualAdapter = adapterIpAuthRes;
-                        match++;
                         log.log(Level.FINER, "Input data matches schema 'IpAuthRes'");
+                        AuthExecResResData ret = new AuthExecResResData();
+                        ret.setActualInstance(adapterIpAuthRes.fromJsonTree(jsonObject));
+                        return ret;
                     } catch (Exception e) {
                         // deserialization failed, continue
-                        errorMessages.add(String.format("Deserialization for IpAuthRes failed with `%s`.", e.getMessage()));
                         log.log(Level.FINER, "Input data does not match schema 'IpAuthRes'", e);
                     }
 
@@ -199,12 +194,12 @@ public class AuthExecResResData extends AbstractOpenApiSchema {
                     try {
                         // validate the JSON object to see if any exception is thrown
                         OAuthRes.validateJsonObject(jsonObject);
-                        actualAdapter = adapterOAuthRes;
-                        match++;
                         log.log(Level.FINER, "Input data matches schema 'OAuthRes'");
+                        AuthExecResResData ret = new AuthExecResResData();
+                        ret.setActualInstance(adapterOAuthRes.fromJsonTree(jsonObject));
+                        return ret;
                     } catch (Exception e) {
                         // deserialization failed, continue
-                        errorMessages.add(String.format("Deserialization for OAuthRes failed with `%s`.", e.getMessage()));
                         log.log(Level.FINER, "Input data does not match schema 'OAuthRes'", e);
                     }
 
@@ -212,12 +207,12 @@ public class AuthExecResResData extends AbstractOpenApiSchema {
                     try {
                         // validate the JSON object to see if any exception is thrown
                         PasswordUpdateRes.validateJsonObject(jsonObject);
-                        actualAdapter = adapterPasswordUpdateRes;
-                        match++;
                         log.log(Level.FINER, "Input data matches schema 'PasswordUpdateRes'");
+                        AuthExecResResData ret = new AuthExecResResData();
+                        ret.setActualInstance(adapterPasswordUpdateRes.fromJsonTree(jsonObject));
+                        return ret;
                     } catch (Exception e) {
                         // deserialization failed, continue
-                        errorMessages.add(String.format("Deserialization for PasswordUpdateRes failed with `%s`.", e.getMessage()));
                         log.log(Level.FINER, "Input data does not match schema 'PasswordUpdateRes'", e);
                     }
 
@@ -225,12 +220,12 @@ public class AuthExecResResData extends AbstractOpenApiSchema {
                     try {
                         // validate the JSON object to see if any exception is thrown
                         QuestionsAuthenticateRes.validateJsonObject(jsonObject);
-                        actualAdapter = adapterQuestionsAuthenticateRes;
-                        match++;
                         log.log(Level.FINER, "Input data matches schema 'QuestionsAuthenticateRes'");
+                        AuthExecResResData ret = new AuthExecResResData();
+                        ret.setActualInstance(adapterQuestionsAuthenticateRes.fromJsonTree(jsonObject));
+                        return ret;
                     } catch (Exception e) {
                         // deserialization failed, continue
-                        errorMessages.add(String.format("Deserialization for QuestionsAuthenticateRes failed with `%s`.", e.getMessage()));
                         log.log(Level.FINER, "Input data does not match schema 'QuestionsAuthenticateRes'", e);
                     }
 
@@ -238,66 +233,61 @@ public class AuthExecResResData extends AbstractOpenApiSchema {
                     try {
                         // validate the JSON object to see if any exception is thrown
                         QuestionsUpdateRes.validateJsonObject(jsonObject);
-                        actualAdapter = adapterQuestionsUpdateRes;
-                        match++;
                         log.log(Level.FINER, "Input data matches schema 'QuestionsUpdateRes'");
+                        AuthExecResResData ret = new AuthExecResResData();
+                        ret.setActualInstance(adapterQuestionsUpdateRes.fromJsonTree(jsonObject));
+                        return ret;
                     } catch (Exception e) {
                         // deserialization failed, continue
-                        errorMessages.add(String.format("Deserialization for QuestionsUpdateRes failed with `%s`.", e.getMessage()));
                         log.log(Level.FINER, "Input data does not match schema 'QuestionsUpdateRes'", e);
                     }
 
-                    if (match == 1) {
-                        AuthExecResResData ret = new AuthExecResResData();
-                        ret.setActualInstance(actualAdapter.fromJsonTree(jsonObject));
-                        return ret;
-                    }
 
-                    throw new IOException(String.format("Failed deserialization for AuthExecResResData: %d classes match result, expected 1. Detailed failure message for oneOf schemas: %s. JSON: %s", match, errorMessages, jsonObject.toString()));
+                    throw new IOException(String.format("Failed deserialization for AuthExecResResData: no class matched. JSON: %s", jsonObject.toString()));
                 }
             }.nullSafe();
         }
     }
 
-    // store a list of schema names defined in oneOf
+    // store a list of schema names defined in anyOf
     public static final Map<String, GenericType> schemas = new HashMap<String, GenericType>();
 
     public AuthExecResResData() {
-        super("oneOf", Boolean.FALSE);
+        super("anyOf", Boolean.FALSE);
     }
 
     public AuthExecResResData(AuthResDataJson o) {
-        super("oneOf", Boolean.FALSE);
+        super("anyOf", Boolean.FALSE);
         setActualInstance(o);
     }
 
     public AuthExecResResData(EmailAuthRes o) {
-        super("oneOf", Boolean.FALSE);
+        super("anyOf", Boolean.FALSE);
         setActualInstance(o);
     }
 
     public AuthExecResResData(IpAuthRes o) {
-        super("oneOf", Boolean.FALSE);
+        super("anyOf", Boolean.FALSE);
         setActualInstance(o);
     }
 
     public AuthExecResResData(OAuthRes o) {
-        super("oneOf", Boolean.FALSE);
+        super("anyOf", Boolean.FALSE);
         setActualInstance(o);
     }
 
     public AuthExecResResData(PasswordUpdateRes o) {
-        super("oneOf", Boolean.FALSE);
+        super("anyOf", Boolean.FALSE);
         setActualInstance(o);
     }
 
     public AuthExecResResData(QuestionsAuthenticateRes o) {
-        super("oneOf", Boolean.FALSE);
+        super("anyOf", Boolean.FALSE);
         setActualInstance(o);
     }
 
     public AuthExecResResData(QuestionsUpdateRes o) {
-        super("oneOf", Boolean.FALSE);
+        super("anyOf", Boolean.FALSE);
         setActualInstance(o);
     }
 
@@ -324,12 +314,12 @@ public class AuthExecResResData extends AbstractOpenApiSchema {
     }
 
     /**
-     * Set the instance that matches the oneOf child schema, check
-     * the instance parameter is valid against the oneOf child schemas:
+     * Set the instance that matches the anyOf child schema, check
+     * the instance parameter is valid against the anyOf child schemas:
      * AuthResDataJson, EmailAuthRes, IpAuthRes, OAuthRes, PasswordUpdateRes, QuestionsAuthenticateRes, QuestionsUpdateRes
      *
-     * It could be an instance of the 'oneOf' schemas.
-     * The oneOf child schemas may themselves be a composed schema (allOf, anyOf, oneOf).
+     * It could be an instance of the 'anyOf' schemas.
+     * The anyOf child schemas may themselves be a composed schema (allOf, anyOf, anyOf).
      */
     @Override
     public void setActualInstance(Object instance) {
@@ -467,67 +457,66 @@ public class AuthExecResResData extends AbstractOpenApiSchema {
   * @throws IOException if the JSON Object is invalid with respect to AuthExecResResData
   */
   public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-    // validate oneOf schemas one by one
+    // validate anyOf schemas one by one
     int validCount = 0;
-    ArrayList<String> errorMessages = new ArrayList<>();
     // validate the json string with AuthResDataJson
     try {
       AuthResDataJson.validateJsonObject(jsonObj);
-      validCount++;
+      return; // return earlier as at least one schema is valid with respect to the Json object
+      //validCount++;
     } catch (Exception e) {
-      errorMessages.add(String.format("Deserialization for AuthResDataJson failed with `%s`.", e.getMessage()));
       // continue to the next one
     }
     // validate the json string with EmailAuthRes
     try {
       EmailAuthRes.validateJsonObject(jsonObj);
-      validCount++;
+      return; // return earlier as at least one schema is valid with respect to the Json object
+      //validCount++;
     } catch (Exception e) {
-      errorMessages.add(String.format("Deserialization for EmailAuthRes failed with `%s`.", e.getMessage()));
       // continue to the next one
     }
     // validate the json string with IpAuthRes
     try {
       IpAuthRes.validateJsonObject(jsonObj);
-      validCount++;
+      return; // return earlier as at least one schema is valid with respect to the Json object
+      //validCount++;
     } catch (Exception e) {
-      errorMessages.add(String.format("Deserialization for IpAuthRes failed with `%s`.", e.getMessage()));
       // continue to the next one
     }
     // validate the json string with OAuthRes
     try {
       OAuthRes.validateJsonObject(jsonObj);
-      validCount++;
+      return; // return earlier as at least one schema is valid with respect to the Json object
+      //validCount++;
     } catch (Exception e) {
-      errorMessages.add(String.format("Deserialization for OAuthRes failed with `%s`.", e.getMessage()));
       // continue to the next one
     }
     // validate the json string with PasswordUpdateRes
     try {
       PasswordUpdateRes.validateJsonObject(jsonObj);
-      validCount++;
+      return; // return earlier as at least one schema is valid with respect to the Json object
+      //validCount++;
     } catch (Exception e) {
-      errorMessages.add(String.format("Deserialization for PasswordUpdateRes failed with `%s`.", e.getMessage()));
       // continue to the next one
     }
     // validate the json string with QuestionsAuthenticateRes
     try {
       QuestionsAuthenticateRes.validateJsonObject(jsonObj);
-      validCount++;
+      return; // return earlier as at least one schema is valid with respect to the Json object
+      //validCount++;
     } catch (Exception e) {
-      errorMessages.add(String.format("Deserialization for QuestionsAuthenticateRes failed with `%s`.", e.getMessage()));
       // continue to the next one
     }
     // validate the json string with QuestionsUpdateRes
     try {
       QuestionsUpdateRes.validateJsonObject(jsonObj);
-      validCount++;
+      return; // return earlier as at least one schema is valid with respect to the Json object
+      //validCount++;
     } catch (Exception e) {
-      errorMessages.add(String.format("Deserialization for QuestionsUpdateRes failed with `%s`.", e.getMessage()));
       // continue to the next one
     }
-    if (validCount != 1) {
-      throw new IOException(String.format("The JSON string is invalid for AuthExecResResData with oneOf schemas: AuthResDataJson, EmailAuthRes, IpAuthRes, OAuthRes, PasswordUpdateRes, QuestionsAuthenticateRes, QuestionsUpdateRes. %d class(es) match the result, expected 1. Detailed failure message for oneOf schemas: %s. JSON: %s", validCount, errorMessages, jsonObj.toString()));
+    if (validCount == 0) {
+      throw new IOException(String.format("The JSON string is invalid for AuthExecResResData with anyOf schemas: AuthResDataJson, EmailAuthRes, IpAuthRes, OAuthRes, PasswordUpdateRes, QuestionsAuthenticateRes, QuestionsUpdateRes. JSON: %s", jsonObj.toString()));
     }
   }
 

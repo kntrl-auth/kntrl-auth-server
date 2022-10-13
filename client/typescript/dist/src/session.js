@@ -30,7 +30,7 @@ class Session {
         if (expiresAt === void 0) { expiresAt = 0; }
         if (newUser === void 0) { newUser = false; }
         if (authenticated === void 0) { authenticated = false; }
-        if (device === void 0) { device = { userAgent: '' }; }
+        if (device === void 0) { device = { userAgent: '', mobile: false }; }
         if (refreshedAt === void 0) { refreshedAt = 0; }
         if (systemAccess === void 0) { systemAccess = false; }
         this.kntrl = kntrl;

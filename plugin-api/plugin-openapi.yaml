@@ -660,7 +660,7 @@ components:
           invalidAnswers:
             type: object
             additionalProperties:
-              oneOf:
+              anyOf:
               - $ref: '#/components/schemas/AnswerErr'
           tooManyAnswers:
             type: boolean
@@ -836,7 +836,7 @@ components:
         authData:
           $ref: '#/components/schemas/AuthData'
         resData:
-          oneOf:
+          anyOf:
           - $ref: '#/components/schemas/AuthResDataJson'
           - $ref: '#/components/schemas/EmailAuthRes'
           - $ref: '#/components/schemas/IpAuthRes'
@@ -858,6 +858,7 @@ components:
         properties:
           key:
             type: object
+            description: Ignore. Just workaround for bug in some open-generators
             x-nullable: true
       x-order: -1249106462-8
     EmailAuthRes:
@@ -1038,9 +1039,12 @@ components:
       x-order: 1113303910-0
     Device:
       required:
+      - mobile
       - userAgent
       type: object
       properties:
+        mobile:
+          type: boolean
         type:
           type: string
           x-nullable: true
@@ -1049,8 +1053,6 @@ components:
           x-nullable: true
         userAgent:
           type: string
-        mobile:
-          type: boolean
       x-order: 1837614569-0
     Login:
       required:
@@ -1141,7 +1143,7 @@ components:
           type: object
           additionalProperties:
             x-additionalPropertiesName: auth
-            oneOf:
+            anyOf:
             - $ref: '#/components/schemas/UnconfirmedAuth'
           description: |
             Auths that waiting for confirmation
@@ -1210,7 +1212,7 @@ components:
           type: object
           additionalProperties:
             x-additionalPropertiesName: auth
-            oneOf:
+            anyOf:
             - $ref: '#/components/schemas/AuthUserCfg'
           description: |
             Public data of confirmed auths and sent codes for unconfirmed auths.
@@ -1243,12 +1245,12 @@ components:
       type: object
       properties:
         authData:
-          oneOf:
+          anyOf:
           - $ref: '#/components/schemas/AuthData'
           - $ref: '#/components/schemas/BaseAuthData'
           x-nullable: true
         resData:
-          oneOf:
+          anyOf:
           - $ref: '#/components/schemas/AuthResDataJson'
           - $ref: '#/components/schemas/EmailAuthRes'
           - $ref: '#/components/schemas/IpAuthRes'

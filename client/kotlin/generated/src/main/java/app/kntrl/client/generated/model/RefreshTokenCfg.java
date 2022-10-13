@@ -66,7 +66,7 @@ public class RefreshTokenCfg {
   @SerializedName(SERIALIZED_NAME_ALLOW_REUSE)
   private Boolean allowReuse;
 
-  public RefreshTokenCfg() { 
+  public RefreshTokenCfg() {
   }
 
   public RefreshTokenCfg ttl(String ttl) {
@@ -160,6 +160,41 @@ public class RefreshTokenCfg {
     this.allowReuse = allowReuse;
   }
 
+  /**
+   * A container for additional, undeclared properties.
+   * This is a holder for any undeclared properties as specified with
+   * the 'additionalProperties' keyword in the OAS document.
+   */
+  private Map<String, Object> additionalProperties;
+
+  /**
+   * Set the additional (undeclared) property with the specified name and value.
+   * If the property does not already exist, create it otherwise replace it.
+   */
+  public RefreshTokenCfg putAdditionalProperty(String key, Object value) {
+    if (this.additionalProperties == null) {
+        this.additionalProperties = new HashMap<String, Object>();
+    }
+    this.additionalProperties.put(key, value);
+    return this;
+  }
+
+  /**
+   * Return the additional (undeclared) property.
+   */
+  public Map<String, Object> getAdditionalProperties() {
+    return additionalProperties;
+  }
+
+  /**
+   * Return the additional (undeclared) property with the specified name.
+   */
+  public Object getAdditionalProperty(String key) {
+    if (this.additionalProperties == null) {
+        return null;
+    }
+    return this.additionalProperties.get(key);
+  }
 
 
   @Override
@@ -174,12 +209,13 @@ public class RefreshTokenCfg {
     return Objects.equals(this.ttl, refreshTokenCfg.ttl) &&
         Objects.equals(this.maxTtl, refreshTokenCfg.maxTtl) &&
         Objects.equals(this.unauthenticatedTtl, refreshTokenCfg.unauthenticatedTtl) &&
-        Objects.equals(this.allowReuse, refreshTokenCfg.allowReuse);
+        Objects.equals(this.allowReuse, refreshTokenCfg.allowReuse)&&
+        Objects.equals(this.additionalProperties, refreshTokenCfg.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(ttl, maxTtl, unauthenticatedTtl, allowReuse);
+    return Objects.hash(ttl, maxTtl, unauthenticatedTtl, allowReuse, additionalProperties);
   }
 
   @Override
@@ -190,6 +226,7 @@ public class RefreshTokenCfg {
     sb.append("    maxTtl: ").append(toIndentedString(maxTtl)).append("\n");
     sb.append("    unauthenticatedTtl: ").append(toIndentedString(unauthenticatedTtl)).append("\n");
     sb.append("    allowReuse: ").append(toIndentedString(allowReuse)).append("\n");
+    sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -235,21 +272,13 @@ public class RefreshTokenCfg {
           throw new IllegalArgumentException(String.format("The required field(s) %s in RefreshTokenCfg is not found in the empty JSON string", RefreshTokenCfg.openapiRequiredFields.toString()));
         }
       }
-
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
-      // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
-        if (!RefreshTokenCfg.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `RefreshTokenCfg` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
-        }
-      }
-      if (jsonObj.get("ttl") != null && !jsonObj.get("ttl").isJsonPrimitive()) {
+      if ((jsonObj.get("ttl") != null && !jsonObj.get("ttl").isJsonNull()) && !jsonObj.get("ttl").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `ttl` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ttl").toString()));
       }
-      if (jsonObj.get("maxTtl") != null && !jsonObj.get("maxTtl").isJsonPrimitive()) {
+      if ((jsonObj.get("maxTtl") != null && !jsonObj.get("maxTtl").isJsonNull()) && !jsonObj.get("maxTtl").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `maxTtl` to be a primitive type in the JSON string but got `%s`", jsonObj.get("maxTtl").toString()));
       }
-      if (jsonObj.get("unauthenticatedTtl") != null && !jsonObj.get("unauthenticatedTtl").isJsonPrimitive()) {
+      if ((jsonObj.get("unauthenticatedTtl") != null && !jsonObj.get("unauthenticatedTtl").isJsonNull()) && !jsonObj.get("unauthenticatedTtl").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `unauthenticatedTtl` to be a primitive type in the JSON string but got `%s`", jsonObj.get("unauthenticatedTtl").toString()));
       }
   }
@@ -269,6 +298,23 @@ public class RefreshTokenCfg {
            @Override
            public void write(JsonWriter out, RefreshTokenCfg value) throws IOException {
              JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             obj.remove("additionalProperties");
+             // serialize additonal properties
+             if (value.getAdditionalProperties() != null) {
+               for (Map.Entry<String, Object> entry : value.getAdditionalProperties().entrySet()) {
+                 if (entry.getValue() instanceof String)
+                   obj.addProperty(entry.getKey(), (String) entry.getValue());
+                 else if (entry.getValue() instanceof Number)
+                   obj.addProperty(entry.getKey(), (Number) entry.getValue());
+                 else if (entry.getValue() instanceof Boolean)
+                   obj.addProperty(entry.getKey(), (Boolean) entry.getValue());
+                 else if (entry.getValue() instanceof Character)
+                   obj.addProperty(entry.getKey(), (Character) entry.getValue());
+                 else {
+                   obj.add(entry.getKey(), gson.toJsonTree(entry.getValue()).getAsJsonObject());
+                 }
+               }
+             }
              elementAdapter.write(out, obj);
            }
 
@@ -276,7 +322,25 @@ public class RefreshTokenCfg {
            public RefreshTokenCfg read(JsonReader in) throws IOException {
              JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
              validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             // store additional fields in the deserialized instance
+             RefreshTokenCfg instance = thisAdapter.fromJsonTree(jsonObj);
+             for (Map.Entry<String, JsonElement> entry : jsonObj.entrySet()) {
+               if (!openapiFields.contains(entry.getKey())) {
+                 if (entry.getValue().isJsonPrimitive()) { // primitive type
+                   if (entry.getValue().getAsJsonPrimitive().isString())
+                     instance.putAdditionalProperty(entry.getKey(), entry.getValue().getAsString());
+                   else if (entry.getValue().getAsJsonPrimitive().isNumber())
+                     instance.putAdditionalProperty(entry.getKey(), entry.getValue().getAsNumber());
+                   else if (entry.getValue().getAsJsonPrimitive().isBoolean())
+                     instance.putAdditionalProperty(entry.getKey(), entry.getValue().getAsBoolean());
+                   else
+                     throw new IllegalArgumentException(String.format("The field `%s` has unknown primitive type. Value: %s", entry.getKey(), entry.getValue().toString()));
+                 } else { // non-primitive type
+                   instance.putAdditionalProperty(entry.getKey(), gson.fromJson(entry.getValue(), HashMap.class));
+                 }
+               }
+             }
+             return instance;
            }
 
        }.nullSafe();

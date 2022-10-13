@@ -43,7 +43,9 @@ export interface AuthCodeHandlerCfg {
     'clientSecret'?: string;
 }
 export interface AuthData {
-    'public': object;
+    'public': {
+        [key: string]: any;
+    };
     'login'?: string;
 }
 export interface AuthExecRes {
@@ -58,7 +60,23 @@ export declare const AuthExecResStatusEnum: {
     readonly Skipped: "SKIPPED";
 };
 export declare type AuthExecResStatusEnum = typeof AuthExecResStatusEnum[keyof typeof AuthExecResStatusEnum];
-export declare type AuthExecResResData = EmailAuthRes | IpAuthRes | OAuthRes | PasswordUpdateRes | QuestionsAuthenticateRes | QuestionsUpdateRes | object;
+export interface AuthExecResResData {
+    'key'?: object;
+    'emailSentTo'?: string;
+    'ipEncoded': string;
+    'login': string;
+    'publicData': {
+        [key: string]: object;
+    };
+    'password': string;
+    'strength'?: string;
+    'correct': {
+        [key: string]: boolean;
+    };
+    'answersSavedAt': {
+        [key: string]: number;
+    };
+}
 export interface AuthIsNotConfirmed {
     'code': string;
     'devMsg': string;
@@ -69,10 +87,18 @@ export interface AuthIsNotEnabled {
     'devMsg': string;
     'msg'?: string;
 }
+export interface AuthReqDataJson {
+    [key: string]: any;
+    'key'?: object;
+}
 export interface AuthRequiresAnother {
     'code': string;
     'devMsg': string;
     'msg'?: string;
+}
+export interface AuthResDataJson {
+    [key: string]: any;
+    'key'?: object;
 }
 export interface AuthUserCfg {
     'data'?: AuthData;
@@ -88,7 +114,19 @@ export interface AuthenticateReq {
     };
     'dryRun'?: boolean;
 }
-export declare type AuthenticateReqAuthReqsValue = AppSecretReq | EmailAuthenticateReq | OAuthReq | PasswordAuthenticateReq | PasswordUpdateReq | QuestionsAuthenticateReq | QuestionsUpdateReq | UpdateEmailReq | object;
+export interface AuthenticateReqAuthReqsValue {
+    'secret': string;
+    'key'?: object;
+    'email': string;
+    'template'?: string;
+    'accessToken'?: string;
+    'authorizationCode'?: string;
+    'password': string;
+    'confirmPassword'?: string;
+    'answers': {
+        [key: string]: string;
+    };
+}
 export interface AuthenticateRes {
     'tokens'?: Tokens;
     'session'?: Session;
@@ -97,10 +135,10 @@ export interface AuthenticateRes {
         [key: string]: AuthExecRes;
     };
 }
-export interface AuthoriseReq {
+export interface AuthorizeReq {
     'rateLimiter'?: RateLimiterReq;
 }
-export interface AuthoriseRes {
+export interface AuthorizeRes {
     'session'?: Session;
 }
 export interface BuiltInAuthCfg {
@@ -184,14 +222,80 @@ export interface DbsCfg {
     'session': DbsCfgSession;
     'rateLimiter': DbsCfgRateLimiter;
 }
-export declare type DbsCfgRateLimiter = InMemoryCfg | InTokenCfg | MongoCfg | MysqlCfg | PostgresCfg | RedisCfg | RemoteDbCfg | SqliteCfg;
-export declare type DbsCfgSession = InMemoryCfg | InTokenCfg | MongoCfg | MysqlCfg | PostgresCfg | RedisCfg | RemoteDbCfg | SqliteCfg;
-export declare type DbsCfgUser = InMemoryCfg | InTokenCfg | MongoCfg | MysqlCfg | PostgresCfg | RedisCfg | RemoteDbCfg | SqliteCfg;
+export interface DbsCfgRateLimiter {
+    'inMemory'?: boolean;
+    'inToken'?: boolean;
+    'mongodb': string;
+    'database': number;
+    'redis'?: Array<string>;
+    'cluster'?: boolean;
+    'user'?: string;
+    'password'?: string;
+    'ssl'?: boolean;
+    'maxConnections'?: number;
+    'remote': string;
+    'query'?: {
+        [key: string]: string;
+    };
+    'headers'?: {
+        [key: string]: string;
+    };
+    'mysql'?: string;
+    'username'?: string;
+    'postgres'?: string;
+    'sqlite'?: string;
+}
+export interface DbsCfgSession {
+    'inMemory'?: boolean;
+    'inToken'?: boolean;
+    'mongodb': string;
+    'database': number;
+    'redis'?: Array<string>;
+    'cluster'?: boolean;
+    'user'?: string;
+    'password'?: string;
+    'ssl'?: boolean;
+    'maxConnections'?: number;
+    'remote': string;
+    'query'?: {
+        [key: string]: string;
+    };
+    'headers'?: {
+        [key: string]: string;
+    };
+    'mysql'?: string;
+    'username'?: string;
+    'postgres'?: string;
+    'sqlite'?: string;
+}
+export interface DbsCfgUser {
+    'inMemory'?: boolean;
+    'inToken'?: boolean;
+    'mongodb': string;
+    'database': number;
+    'redis'?: Array<string>;
+    'cluster'?: boolean;
+    'user'?: string;
+    'password'?: string;
+    'ssl'?: boolean;
+    'maxConnections'?: number;
+    'remote': string;
+    'query'?: {
+        [key: string]: string;
+    };
+    'headers'?: {
+        [key: string]: string;
+    };
+    'mysql'?: string;
+    'username'?: string;
+    'postgres'?: string;
+    'sqlite'?: string;
+}
 export interface Device {
+    'mobile': boolean;
     'type'?: string;
     'browser'?: string;
     'userAgent': string;
-    'mobile'?: boolean;
 }
 export interface EditUserReq {
     'factors'?: {
@@ -235,6 +339,10 @@ export interface EmailIsIncorrect {
     'code': string;
     'devMsg': string;
     'msg'?: string;
+}
+export interface EmailUpdateReq {
+    'email': string;
+    'template'?: string;
 }
 export interface EntryAccessTokenCfg {
     'ttl'?: string;
@@ -618,7 +726,59 @@ export interface SHAppCfg {
     'i18n'?: I18nCfg;
     '$schema'?: string;
 }
-export declare type SHAppCfgAuthsValue = AppSecretAuthCfg | EmailAuthCfg | IpAuthCfg | OAuthCfg | PasswordAuthCfg | QuestionsAuthCfg | RemoteAuthCfg;
+export interface SHAppCfgAuthsValue {
+    'remote': string;
+    'requiresAuth'?: Array<Array<string>>;
+    'skipOnFail'?: boolean;
+    'rateLimiter'?: string;
+    'burnQuota'?: number;
+    'query'?: {
+        [key: string]: string;
+    };
+    'headers'?: {
+        [key: string]: string;
+    };
+    'code'?: CodeCfg;
+    'server': string;
+    'sender': string;
+    'username'?: string;
+    'password'?: string;
+    'confirmationUrl'?: string;
+    'templates'?: {
+        [key: string]: string;
+    };
+    'templateParams'?: {
+        [key: string]: string;
+    };
+    'ipBytesToIgnore'?: number;
+    'historySize'?: number;
+    'extractLogin': string;
+    'tokenUrl'?: string;
+    'clientId'?: string;
+    'clientSecret'?: string;
+    'userInfoUrl'?: string;
+    'sendTokenInQuery'?: string;
+    'sendTokenInHeader'?: boolean;
+    'extractPublicData'?: {
+        [key: string]: string;
+    };
+    'maxLength'?: number;
+    'minLength'?: number;
+    'requireNumber'?: boolean;
+    'requireSymbol'?: boolean;
+    'requireUpperCase'?: boolean;
+    'forbidCommonPasswords'?: boolean;
+    'forbidLoginAsPassword'?: boolean;
+    'forbidReusingPassword'?: PasswordHistoryCfg;
+    'strength'?: {
+        [key: string]: PasswordStrengthRequirements;
+    };
+    'lowercase'?: boolean;
+    'removeSymbols'?: boolean;
+    'removeSpaces'?: boolean;
+    'answersRequired'?: number;
+    'maxAnswers'?: number;
+}
 export interface SHHttpCfg {
     'port'?: number;
     'bind'?: string;
@@ -737,10 +897,6 @@ export interface UnconfirmedAuthData {
     'data': AuthData;
     'code': CodeVerifier;
 }
-export interface UpdateEmailReq {
-    'email': string;
-    'template'?: string;
-}
 export interface User {
     'id': string;
     'logins': Array<Login>;
@@ -765,20 +921,20 @@ export interface UserNotFound {
     'msg'?: string;
 }
 export declare const AuthorisationApiAxiosParamCreator: (configuration?: Configuration | undefined) => {
-    authorize: (authoriseReq: AuthoriseReq, options?: AxiosRequestConfig) => Promise<RequestArgs>;
+    authorize: (authorizeReq: AuthorizeReq, options?: AxiosRequestConfig) => Promise<RequestArgs>;
     limit: (rateLimiterReq: RateLimiterReq, options?: AxiosRequestConfig) => Promise<RequestArgs>;
 };
 export declare const AuthorisationApiFp: (configuration?: Configuration | undefined) => {
-    authorize(authoriseReq: AuthoriseReq, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AuthoriseRes>>;
-    limit(rateLimiterReq: RateLimiterReq, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AuthoriseRes>>;
+    authorize(authorizeReq: AuthorizeReq, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AuthorizeRes>>;
+    limit(rateLimiterReq: RateLimiterReq, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AuthorizeRes>>;
 };
 export declare const AuthorisationApiFactory: (configuration?: Configuration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
-    authorize(authoriseReq: AuthoriseReq, options?: any): AxiosPromise<AuthoriseRes>;
-    limit(rateLimiterReq: RateLimiterReq, options?: any): AxiosPromise<AuthoriseRes>;
+    authorize(authorizeReq: AuthorizeReq, options?: any): AxiosPromise<AuthorizeRes>;
+    limit(rateLimiterReq: RateLimiterReq, options?: any): AxiosPromise<AuthorizeRes>;
 };
 export declare class AuthorisationApi extends BaseAPI {
-    authorize(authoriseReq: AuthoriseReq, options?: AxiosRequestConfig): Promise<import("axios").AxiosResponse<AuthoriseRes>>;
-    limit(rateLimiterReq: RateLimiterReq, options?: AxiosRequestConfig): Promise<import("axios").AxiosResponse<AuthoriseRes>>;
+    authorize(authorizeReq: AuthorizeReq, options?: AxiosRequestConfig): Promise<import("axios").AxiosResponse<AuthorizeRes>>;
+    limit(rateLimiterReq: RateLimiterReq, options?: AxiosRequestConfig): Promise<import("axios").AxiosResponse<AuthorizeRes>>;
 }
 export declare const ServerApiAxiosParamCreator: (configuration?: Configuration | undefined) => {
     cfg: (options?: AxiosRequestConfig) => Promise<RequestArgs>;

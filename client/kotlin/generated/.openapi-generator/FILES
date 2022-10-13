@@ -27,8 +27,8 @@ docs/AuthenticateReq.md
 docs/AuthenticateReqAuthReqsValue.md
 docs/AuthenticateRes.md
 docs/AuthorisationApi.md
-docs/AuthoriseReq.md
-docs/AuthoriseRes.md
+docs/AuthorizeReq.md
+docs/AuthorizeRes.md
 docs/BuiltInAuthCfg.md
 docs/Cache.md
 docs/ClientErr.md
@@ -185,8 +185,8 @@ src/main/java/app/kntrl/client/generated/model/AuthUserCfg.java
 src/main/java/app/kntrl/client/generated/model/AuthenticateReq.java
 src/main/java/app/kntrl/client/generated/model/AuthenticateReqAuthReqsValue.java
 src/main/java/app/kntrl/client/generated/model/AuthenticateRes.java
-src/main/java/app/kntrl/client/generated/model/AuthoriseReq.java
-src/main/java/app/kntrl/client/generated/model/AuthoriseRes.java
+src/main/java/app/kntrl/client/generated/model/AuthorizeReq.java
+src/main/java/app/kntrl/client/generated/model/AuthorizeRes.java
 src/main/java/app/kntrl/client/generated/model/BuiltInAuthCfg.java
 src/main/java/app/kntrl/client/generated/model/Cache.java
 src/main/java/app/kntrl/client/generated/model/ClientErr.java
@@ -311,8 +311,8 @@ src/test/java/app/kntrl/client/generated/model/AuthUserCfgTest.java
 src/test/java/app/kntrl/client/generated/model/AuthenticateReqAuthReqsValueTest.java
 src/test/java/app/kntrl/client/generated/model/AuthenticateReqTest.java
 src/test/java/app/kntrl/client/generated/model/AuthenticateResTest.java
-src/test/java/app/kntrl/client/generated/model/AuthoriseReqTest.java
-src/test/java/app/kntrl/client/generated/model/AuthoriseResTest.java
+src/test/java/app/kntrl/client/generated/model/AuthorizeReqTest.java
+src/test/java/app/kntrl/client/generated/model/AuthorizeResTest.java
 src/test/java/app/kntrl/client/generated/model/BuiltInAuthCfgTest.java
 src/test/java/app/kntrl/client/generated/model/CacheTest.java
 src/test/java/app/kntrl/client/generated/model/ClientErrTest.java

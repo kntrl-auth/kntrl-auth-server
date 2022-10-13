@@ -2,8 +2,8 @@ import {
     AuthenticateReq,
     AuthenticateRes,
     AuthorisationApi,
-    AuthoriseReq,
-    AuthoriseRes,
+    AuthorizeReq,
+    AuthorizeRes,
     Configuration,
     ConfirmSessionAuthsReq,
     Device,
@@ -43,7 +43,7 @@ export class Session implements SessionModel {
         readonly expiresAt: number = 0,
         readonly newUser: boolean = false,
         readonly authenticated: boolean = false,
-        readonly device: Device = { userAgent: '' },
+        readonly device: Device = { userAgent: '', mobile: false },
         readonly refreshedAt: number = 0,
         readonly systemAccess: boolean = false,
     ) {
@@ -104,7 +104,7 @@ export class Session implements SessionModel {
         return (await handleErr(this.api.getAll(entry, userId, await this._authenticatedAxiosCfg()), this));
     }
 
-    async authorize(req: AuthoriseReq = {}): Promise<AuthoriseRes> {
+    async authorize(req: AuthorizeReq = {}): Promise<AuthorizeRes> {
         return handleErr(new AuthorisationApi(this._serverCfg()).authorize(req, await this._authenticatedAxiosCfg()), this);
     }
 

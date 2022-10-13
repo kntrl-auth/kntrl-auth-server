@@ -32,7 +32,6 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -105,7 +104,7 @@ public class SHAppCfg {
   @SerializedName(SERIALIZED_NAME_$_SCHEMA)
   private String $schema;
 
-  public SHAppCfg() { 
+  public SHAppCfg() {
   }
 
   public SHAppCfg http(SHHttpCfg http) {
@@ -392,6 +391,41 @@ public class SHAppCfg {
     this.$schema = $schema;
   }
 
+  /**
+   * A container for additional, undeclared properties.
+   * This is a holder for any undeclared properties as specified with
+   * the 'additionalProperties' keyword in the OAS document.
+   */
+  private Map<String, Object> additionalProperties;
+
+  /**
+   * Set the additional (undeclared) property with the specified name and value.
+   * If the property does not already exist, create it otherwise replace it.
+   */
+  public SHAppCfg putAdditionalProperty(String key, Object value) {
+    if (this.additionalProperties == null) {
+        this.additionalProperties = new HashMap<String, Object>();
+    }
+    this.additionalProperties.put(key, value);
+    return this;
+  }
+
+  /**
+   * Return the additional (undeclared) property.
+   */
+  public Map<String, Object> getAdditionalProperties() {
+    return additionalProperties;
+  }
+
+  /**
+   * Return the additional (undeclared) property with the specified name.
+   */
+  public Object getAdditionalProperty(String key) {
+    if (this.additionalProperties == null) {
+        return null;
+    }
+    return this.additionalProperties.get(key);
+  }
 
 
   @Override
@@ -413,12 +447,13 @@ public class SHAppCfg {
         Objects.equals(this.secret, shAppCfg.secret) &&
         Objects.equals(this.healthCheckKey, shAppCfg.healthCheckKey) &&
         Objects.equals(this.i18n, shAppCfg.i18n) &&
-        Objects.equals(this.$schema, shAppCfg.$schema);
+        Objects.equals(this.$schema, shAppCfg.$schema)&&
+        Objects.equals(this.additionalProperties, shAppCfg.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(http, logins, auths, entries, db, token, rateLimiters, secret, healthCheckKey, i18n, $schema);
+    return Objects.hash(http, logins, auths, entries, db, token, rateLimiters, secret, healthCheckKey, i18n, $schema, additionalProperties);
   }
 
   @Override
@@ -436,6 +471,7 @@ public class SHAppCfg {
     sb.append("    healthCheckKey: ").append(toIndentedString(healthCheckKey)).append("\n");
     sb.append("    i18n: ").append(toIndentedString(i18n)).append("\n");
     sb.append("    $schema: ").append(toIndentedString($schema)).append("\n");
+    sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -488,41 +524,33 @@ public class SHAppCfg {
           throw new IllegalArgumentException(String.format("The required field(s) %s in SHAppCfg is not found in the empty JSON string", SHAppCfg.openapiRequiredFields.toString()));
         }
       }
-
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
-      // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
-        if (!SHAppCfg.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `SHAppCfg` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
-        }
-      }
       // validate the optional field `http`
-      if (jsonObj.getAsJsonObject("http") != null) {
+      if (jsonObj.get("http") != null && !jsonObj.get("http").isJsonNull()) {
         SHHttpCfg.validateJsonObject(jsonObj.getAsJsonObject("http"));
       }
       // ensure the json data is an array
-      if (jsonObj.get("logins") != null && !jsonObj.get("logins").isJsonArray()) {
+      if ((jsonObj.get("logins") != null && !jsonObj.get("logins").isJsonNull()) && !jsonObj.get("logins").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `logins` to be an array in the JSON string but got `%s`", jsonObj.get("logins").toString()));
       }
       // validate the optional field `db`
-      if (jsonObj.getAsJsonObject("db") != null) {
+      if (jsonObj.get("db") != null && !jsonObj.get("db").isJsonNull()) {
         DbsCfg.validateJsonObject(jsonObj.getAsJsonObject("db"));
       }
       // validate the optional field `token`
-      if (jsonObj.getAsJsonObject("token") != null) {
+      if (jsonObj.get("token") != null && !jsonObj.get("token").isJsonNull()) {
         TokenCfg.validateJsonObject(jsonObj.getAsJsonObject("token"));
       }
-      if (jsonObj.get("secret") != null && !jsonObj.get("secret").isJsonPrimitive()) {
+      if ((jsonObj.get("secret") != null && !jsonObj.get("secret").isJsonNull()) && !jsonObj.get("secret").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `secret` to be a primitive type in the JSON string but got `%s`", jsonObj.get("secret").toString()));
       }
-      if (jsonObj.get("healthCheckKey") != null && !jsonObj.get("healthCheckKey").isJsonPrimitive()) {
+      if ((jsonObj.get("healthCheckKey") != null && !jsonObj.get("healthCheckKey").isJsonNull()) && !jsonObj.get("healthCheckKey").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `healthCheckKey` to be a primitive type in the JSON string but got `%s`", jsonObj.get("healthCheckKey").toString()));
       }
       // validate the optional field `i18n`
-      if (jsonObj.getAsJsonObject("i18n") != null) {
+      if (jsonObj.get("i18n") != null && !jsonObj.get("i18n").isJsonNull()) {
         I18nCfg.validateJsonObject(jsonObj.getAsJsonObject("i18n"));
       }
-      if (jsonObj.get("$schema") != null && !jsonObj.get("$schema").isJsonPrimitive()) {
+      if ((jsonObj.get("$schema") != null && !jsonObj.get("$schema").isJsonNull()) && !jsonObj.get("$schema").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `$schema` to be a primitive type in the JSON string but got `%s`", jsonObj.get("$schema").toString()));
       }
   }
@@ -542,6 +570,23 @@ public class SHAppCfg {
            @Override
            public void write(JsonWriter out, SHAppCfg value) throws IOException {
              JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             obj.remove("additionalProperties");
+             // serialize additonal properties
+             if (value.getAdditionalProperties() != null) {
+               for (Map.Entry<String, Object> entry : value.getAdditionalProperties().entrySet()) {
+                 if (entry.getValue() instanceof String)
+                   obj.addProperty(entry.getKey(), (String) entry.getValue());
+                 else if (entry.getValue() instanceof Number)
+                   obj.addProperty(entry.getKey(), (Number) entry.getValue());
+                 else if (entry.getValue() instanceof Boolean)
+                   obj.addProperty(entry.getKey(), (Boolean) entry.getValue());
+                 else if (entry.getValue() instanceof Character)
+                   obj.addProperty(entry.getKey(), (Character) entry.getValue());
+                 else {
+                   obj.add(entry.getKey(), gson.toJsonTree(entry.getValue()).getAsJsonObject());
+                 }
+               }
+             }
              elementAdapter.write(out, obj);
            }
 
@@ -549,7 +594,25 @@ public class SHAppCfg {
            public SHAppCfg read(JsonReader in) throws IOException {
              JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
              validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
+             // store additional fields in the deserialized instance
+             SHAppCfg instance = thisAdapter.fromJsonTree(jsonObj);
+             for (Map.Entry<String, JsonElement> entry : jsonObj.entrySet()) {
+               if (!openapiFields.contains(entry.getKey())) {
+                 if (entry.getValue().isJsonPrimitive()) { // primitive type
+                   if (entry.getValue().getAsJsonPrimitive().isString())
+                     instance.putAdditionalProperty(entry.getKey(), entry.getValue().getAsString());
+                   else if (entry.getValue().getAsJsonPrimitive().isNumber())
+                     instance.putAdditionalProperty(entry.getKey(), entry.getValue().getAsNumber());
+                   else if (entry.getValue().getAsJsonPrimitive().isBoolean())
+                     instance.putAdditionalProperty(entry.getKey(), entry.getValue().getAsBoolean());
+                   else
+                     throw new IllegalArgumentException(String.format("The field `%s` has unknown primitive type. Value: %s", entry.getKey(), entry.getValue().toString()));
+                 } else { // non-primitive type
+                   instance.putAdditionalProperty(entry.getKey(), gson.fromJson(entry.getValue(), HashMap.class));
+                 }
+               }
+             }
+             return instance;
            }
 
        }.nullSafe();

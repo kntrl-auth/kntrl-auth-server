@@ -91,16 +91,14 @@ public class Example {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("http://localhost");
     
-    // Configure API key authorization: access-token
-    ApiKeyAuth access-token = (ApiKeyAuth) defaultClient.getAuthentication("access-token");
-    access-token.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //access-token.setApiKeyPrefix("Token");
+    // Configure HTTP bearer authorization: access-token
+    HttpBearerAuth access-token = (HttpBearerAuth) defaultClient.getAuthentication("access-token");
+    access-token.setBearerToken("BEARER TOKEN");
 
     AuthorisationApi apiInstance = new AuthorisationApi(defaultClient);
-    AuthoriseReq authoriseReq = new AuthoriseReq(); // AuthoriseReq | 
+    AuthorizeReq authorizeReq = new AuthorizeReq(); // AuthorizeReq | 
     try {
-      AuthoriseRes result = apiInstance.authorize(authoriseReq);
+      AuthorizeRes result = apiInstance.authorize(authorizeReq);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AuthorisationApi#authorize");
@@ -120,7 +118,7 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*AuthorisationApi* | [**authorize**](docs/AuthorisationApi.md#authorize) | **POST** /api/authorise | 
+*AuthorisationApi* | [**authorize**](docs/AuthorisationApi.md#authorize) | **POST** /api/authorize | 
 *AuthorisationApi* | [**limit**](docs/AuthorisationApi.md#limit) | **POST** /api/rate-limiter/limit | 
 *ServerApi* | [**cfg**](docs/ServerApi.md#cfg) | **GET** /api/server/cfg | 
 *ServerApi* | [**health**](docs/ServerApi.md#health) | **GET** /api/server/health | 
@@ -163,8 +161,8 @@ Class | Method | HTTP request | Description
  - [AuthenticateReq](docs/AuthenticateReq.md)
  - [AuthenticateReqAuthReqsValue](docs/AuthenticateReqAuthReqsValue.md)
  - [AuthenticateRes](docs/AuthenticateRes.md)
- - [AuthoriseReq](docs/AuthoriseReq.md)
- - [AuthoriseRes](docs/AuthoriseRes.md)
+ - [AuthorizeReq](docs/AuthorizeReq.md)
+ - [AuthorizeRes](docs/AuthorizeRes.md)
  - [BuiltInAuthCfg](docs/BuiltInAuthCfg.md)
  - [Cache](docs/Cache.md)
  - [ClientErr](docs/ClientErr.md)
@@ -270,9 +268,7 @@ Class | Method | HTTP request | Description
 Authentication schemes defined for the API:
 ### access-token
 
-- **Type**: API key
-- **API key parameter name**: access-token
-- **Location**: URL query string
+- **Type**: HTTP basic authentication
 
 
 ## Recommendation

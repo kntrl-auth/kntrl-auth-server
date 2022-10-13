@@ -61,7 +61,7 @@ public class ClientErr {
   @SerializedName(SERIALIZED_NAME_MSG)
   private String msg;
 
-  public ClientErr() { 
+  public ClientErr() {
   }
 
   public ClientErr code(String code) {
@@ -250,13 +250,13 @@ public class ClientErr {
           throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonObj.toString()));
         }
       }
-      if (jsonObj.get("code") != null && !jsonObj.get("code").isJsonPrimitive()) {
+      if ((jsonObj.get("code") != null && !jsonObj.get("code").isJsonNull()) && !jsonObj.get("code").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `code` to be a primitive type in the JSON string but got `%s`", jsonObj.get("code").toString()));
       }
-      if (jsonObj.get("devMsg") != null && !jsonObj.get("devMsg").isJsonPrimitive()) {
+      if ((jsonObj.get("devMsg") != null && !jsonObj.get("devMsg").isJsonNull()) && !jsonObj.get("devMsg").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `devMsg` to be a primitive type in the JSON string but got `%s`", jsonObj.get("devMsg").toString()));
       }
-      if (jsonObj.get("msg") != null && !jsonObj.get("msg").isJsonPrimitive()) {
+      if ((jsonObj.get("msg") != null && !jsonObj.get("msg").isJsonNull()) && !jsonObj.get("msg").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `msg` to be a primitive type in the JSON string but got `%s`", jsonObj.get("msg").toString()));
       }
   }

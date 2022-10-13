@@ -128,7 +128,7 @@ public class SignatureApi {
             localVarHeaderParams.put("Content-Type", localVarContentType);
         }
 
-        String[] localVarAuthNames = new String[] { "access-token" };
+        String[] localVarAuthNames = new String[] {  };
         return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
     }
 
@@ -143,7 +143,7 @@ public class SignatureApi {
 
     /**
      * 
-     * Public key generated from app-secret from config used for signature validation. 
+     * Public key generated from app-secret from config used for signature validation.
      * @return String
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -161,7 +161,7 @@ public class SignatureApi {
 
     /**
      * 
-     * Public key generated from app-secret from config used for signature validation. 
+     * Public key generated from app-secret from config used for signature validation.
      * @return ApiResponse&lt;String&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -180,7 +180,7 @@ public class SignatureApi {
 
     /**
      *  (asynchronously)
-     * Public key generated from app-secret from config used for signature validation. 
+     * Public key generated from app-secret from config used for signature validation.
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -431,7 +431,7 @@ public class SignatureApi {
 
     /**
      * 
-     * Validates data signature.
+     * Validates data signature
      * @param signature  (required)
      * @param body  (required)
      * @param secret  (optional)
@@ -450,7 +450,7 @@ public class SignatureApi {
 
     /**
      * 
-     * Validates data signature.
+     * Validates data signature
      * @param signature  (required)
      * @param body  (required)
      * @param secret  (optional)
@@ -471,7 +471,7 @@ public class SignatureApi {
 
     /**
      *  (asynchronously)
-     * Validates data signature.
+     * Validates data signature
      * @param signature  (required)
      * @param body  (required)
      * @param secret  (optional)

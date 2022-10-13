@@ -1,4 +1,4 @@
-import { AuthenticateReq, AuthenticateRes, AuthoriseReq, AuthoriseRes, Configuration, ConfirmSessionAuthsReq, Device, FindSessionsRes, LoginId, NewSessionReq, NextFactor, RefreshTokenRes, Session as SessionModel, Tokens, UnconfirmedAuth } from '../generated';
+import { AuthenticateReq, AuthenticateRes, AuthorizeReq, AuthorizeRes, Configuration, ConfirmSessionAuthsReq, Device, FindSessionsRes, LoginId, NewSessionReq, NextFactor, RefreshTokenRes, Session as SessionModel, Tokens, UnconfirmedAuth } from '../generated';
 import { UserSvc } from './user';
 import { ServerSvc } from './server';
 import { AxiosRequestConfig } from 'axios';
@@ -33,7 +33,7 @@ export declare class Session implements SessionModel {
         entry: string;
     }): Session;
     allSessions(entry?: string, userId?: string): Promise<FindSessionsRes>;
-    authorize(req?: AuthoriseReq): Promise<AuthoriseRes>;
+    authorize(req?: AuthorizeReq): Promise<AuthorizeRes>;
     accessToken(refreshBeforeExpireMs?: number): Promise<string | undefined>;
     _authenticatedAxiosCfg(): Promise<AxiosRequestConfig>;
     _serverCfg(): Configuration;

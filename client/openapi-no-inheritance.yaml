@@ -92,7 +92,7 @@ paths:
     post:
       tags:
       - session
-      description: |-
+      description: |
         Create new session.
         if session entry requires another entry, access token must be provided.
       operationId: newSession
@@ -121,6 +121,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/IntegrationErr'
+      security:
+      - access-token: []
+      - {}
       x-order: 3
     patch:
       tags:
@@ -239,7 +242,7 @@ paths:
       security:
       - access-token: []
       x-order: 7
-  /api/authorise:
+  /api/authorize:
     post:
       tags:
       - authorisation
@@ -251,7 +254,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AuthoriseReq'
+              $ref: '#/components/schemas/AuthorizeReq'
         required: true
       responses:
         default:
@@ -259,7 +262,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AuthoriseRes'
+                $ref: '#/components/schemas/AuthorizeRes'
         "4XX":
           description: Client error
           content:
@@ -279,8 +282,8 @@ paths:
     get:
       tags:
       - signature
-      description: |
-        Public key generated from app-secret from config used for signature validation.
+      description: Public key generated from app-secret from config used for signature
+        validation.
       operationId: getPublicKey
       responses:
         default:
@@ -301,8 +304,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/IntegrationErr'
-      security:
-      - access-token: []
       x-order: 1
   /api/server/cfg:
     get:
@@ -384,7 +385,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AuthoriseRes'
+                $ref: '#/components/schemas/AuthorizeRes'
         "4XX":
           description: Client error
           content:
@@ -399,12 +400,14 @@ paths:
                 $ref: '#/components/schemas/IntegrationErr'
       security:
       - access-token: []
+      - ? ""
+        : []
       x-order: 2
   /api/signature/verify:
     post:
       tags:
       - signature
-      description: Validates data signature.
+      description: Validates data signature
       operationId: verify
       parameters:
       - name: signature
@@ -1357,9 +1360,12 @@ components:
       x-order: 1113303910-0
     Device:
       required:
+      - mobile
       - userAgent
       type: object
       properties:
+        mobile:
+          type: boolean
         type:
           type: string
           x-nullable: true
@@ -1368,8 +1374,6 @@ components:
           x-nullable: true
         userAgent:
           type: string
-        mobile:
-          type: boolean
       x-order: 1837614569-0
     NextFactor:
       required:
@@ -1584,6 +1588,7 @@ components:
       properties:
         key:
           type: object
+          description: Ignore. Just workaround for bug in some open-generators
           x-nullable: true
       additionalProperties: true
       x-order: -1249106462-8
@@ -1717,7 +1722,7 @@ components:
         sentCode:
           $ref: '#/components/schemas/Code'
         resData:
-          oneOf:
+          anyOf:
           - $ref: '#/components/schemas/AuthResDataJson'
           - $ref: '#/components/schemas/EmailAuthRes'
           - $ref: '#/components/schemas/IpAuthRes'
@@ -1860,6 +1865,7 @@ components:
       properties:
         key:
           type: object
+          description: Ignore. Just workaround for bug in some open-generators
           x-nullable: true
       additionalProperties: true
       x-order: 1333651370-1
@@ -1880,7 +1886,7 @@ components:
         authReqs:
           type: object
           additionalProperties:
-            oneOf:
+            anyOf:
             - $ref: '#/components/schemas/AppSecretReq'
             - $ref: '#/components/schemas/AuthReqDataJson'
             - $ref: '#/components/schemas/EmailAuthenticateReq'
@@ -1951,7 +1957,7 @@ components:
         authReqs:
           type: object
           additionalProperties:
-            oneOf:
+            anyOf:
             - $ref: '#/components/schemas/AppSecretReq'
             - $ref: '#/components/schemas/AuthReqDataJson'
             - $ref: '#/components/schemas/EmailAuthenticateReq'
@@ -2120,7 +2126,7 @@ components:
         authReqs:
           type: object
           additionalProperties:
-            oneOf:
+            anyOf:
             - $ref: '#/components/schemas/AppSecretReq'
             - $ref: '#/components/schemas/AuthReqDataJson'
             - $ref: '#/components/schemas/EmailAuthenticateReq'
@@ -2157,7 +2163,7 @@ components:
         authReqs:
           type: object
           additionalProperties:
-            oneOf:
+            anyOf:
             - $ref: '#/components/schemas/AppSecretReq'
             - $ref: '#/components/schemas/AuthReqDataJson'
             - $ref: '#/components/schemas/EmailAuthenticateReq'
@@ -2171,13 +2177,13 @@ components:
         dryRun:
           type: boolean
       x-order: -1847312442-1
-    AuthoriseRes:
+    AuthorizeRes:
       type: object
       properties:
         session:
           $ref: '#/components/schemas/Session'
       x-order: -2047680577-2
-    AuthoriseReq:
+    AuthorizeReq:
       type: object
       properties:
         rateLimiter:
@@ -2371,7 +2377,7 @@ components:
       properties:
         user:
           description: User database config
-          oneOf:
+          anyOf:
           - $ref: '#/components/schemas/InMemoryCfg'
           - $ref: '#/components/schemas/InTokenCfg'
           - $ref: '#/components/schemas/MongoCfg'
@@ -2388,7 +2394,7 @@ components:
 
             You can use in-token to not use database at all. Use it with `token.access.cacheUnauthenticated = true` and
             `token.access.cache != null` values.
-          oneOf:
+          anyOf:
           - $ref: '#/components/schemas/InMemoryCfg'
           - $ref: '#/components/schemas/InTokenCfg'
           - $ref: '#/components/schemas/MongoCfg'
@@ -2400,7 +2406,7 @@ components:
         rateLimiter:
           description: "Database for rate-limiters. If you don't use rate-limiter\
             \ leave this empty (`{}`)."
-          oneOf:
+          anyOf:
           - $ref: '#/components/schemas/InMemoryCfg'
           - $ref: '#/components/schemas/InTokenCfg'
           - $ref: '#/components/schemas/MongoCfg'
@@ -3119,7 +3125,7 @@ components:
         auths:
           type: object
           additionalProperties:
-            oneOf:
+            anyOf:
             - $ref: '#/components/schemas/RemoteAuthCfg'
             - $ref: '#/components/schemas/AppSecretAuthCfg'
             - $ref: '#/components/schemas/EmailAuthCfg'
@@ -3239,9 +3245,8 @@ components:
       x-order: -51011121-6
   securitySchemes:
     access-token:
-      type: apiKey
-      name: access-token
-      in: query
+      type: http
+      scheme: Bearer
 x-tagGroups:
 - name: Api
   tags:

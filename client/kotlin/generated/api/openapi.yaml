@@ -11,7 +11,8 @@ tags:
 - name: server
   x-displayName:
   - Server API
-- description: "API for signing in/up/out, listing all sessions, etc.\n"
+- description: |
+    API for signing in/up/out, listing all sessions, etc.
   name: session
   x-displayName:
   - Session
@@ -156,8 +157,9 @@ paths:
       x-content-type: application/json
       x-accepts: application/json
     post:
-      description: "Create new session.\nif session entry requires another entry,\
-        \ access token must be provided."
+      description: |
+        Create new session.
+        if session entry requires another entry, access token must be provided.
       operationId: newSession
       requestBody:
         content:
@@ -184,6 +186,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/IntegrationErr'
           description: Server error
+      security:
+      - access-token: []
+      - {}
       tags:
       - session
       x-order: 3
@@ -251,7 +256,7 @@ paths:
       x-order: 7
       x-content-type: application/json
       x-accepts: application/json
-  /api/authorise:
+  /api/authorize:
     post:
       description: |
         Validates token and executes rate limiter.
@@ -261,14 +266,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AuthoriseReq'
+              $ref: '#/components/schemas/AuthorizeReq'
         required: true
       responses:
         default:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AuthoriseRes'
+                $ref: '#/components/schemas/AuthorizeRes'
           description: Success
         "4XX":
           content:
@@ -291,8 +296,8 @@ paths:
       x-accepts: application/json
   /api/signature/public-key:
     get:
-      description: |
-        Public key generated from app-secret from config used for signature validation.
+      description: Public key generated from app-secret from config used for signature
+        validation.
       operationId: getPublicKey
       responses:
         default:
@@ -313,8 +318,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/IntegrationErr'
           description: Server error
-      security:
-      - access-token: []
       tags:
       - signature
       x-order: 1
@@ -385,8 +388,8 @@ paths:
       x-accepts: application/json
   /api/rate-limiter/limit:
     post:
-      description: "Executes rate limiter if no authorisation is required. Otherwise,\
-        \ this works similarly to /authorise.\n"
+      description: |
+        Executes rate limiter if no authorisation is required. Otherwise, this works similarly to /authorise.
       operationId: limit
       requestBody:
         content:
@@ -399,7 +402,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AuthoriseRes'
+                $ref: '#/components/schemas/AuthorizeRes'
           description: Success
         "4XX":
           content:
@@ -415,6 +418,8 @@ paths:
           description: Server error
       security:
       - access-token: []
+      - ? ""
+        : []
       tags:
       - authorisation
       x-order: 2
@@ -422,7 +427,7 @@ paths:
       x-accepts: application/json
   /api/signature/verify:
     post:
-      description: Validates data signature.
+      description: Validates data signature
       operationId: verify
       parameters:
       - explode: true
@@ -514,8 +519,8 @@ paths:
       x-accepts: application/json
   /api/session/auth/confirm:
     post:
-      description: "Confirm auth with received code. To get code id, check response\
-        \ of sign in / sign up / authenticate API.\n"
+      description: |
+        Confirm auth with received code. To get code id, check response of sign in / sign up / authenticate API.
       operationId: confirmSessionAuths
       requestBody:
         content:
@@ -1356,6 +1361,8 @@ components:
         userAgent: userAgent
         type: type
       properties:
+        mobile:
+          type: boolean
         type:
           type: string
           x-nullable: true
@@ -1364,9 +1371,8 @@ components:
           x-nullable: true
         userAgent:
           type: string
-        mobile:
-          type: boolean
       required:
+      - mobile
       - userAgent
       type: object
       x-order: 1837614569-0
@@ -1758,6 +1764,7 @@ components:
       additionalProperties: true
       properties:
         key:
+          description: Ignore. Just workaround for bug in some open-generators
           type: object
           x-nullable: true
       type: object
@@ -2256,6 +2263,7 @@ components:
       additionalProperties: true
       properties:
         key:
+          description: Ignore. Just workaround for bug in some open-generators
           type: object
           x-nullable: true
       type: object
@@ -2273,10 +2281,11 @@ components:
           additionalProperties:
             type: string
             x-additionalPropertiesName: factor
-          description: "Forces specific auth to be used for factor.\nTakes place only\
-            \ when multiple auths is provided within request and auth can be\nassigned\
-            \ to several factors.\nIf used in sign-up mode, it just enables those\
-            \ factors.\n"
+          description: |
+            Forces specific auth to be used for factor.
+            Takes place only when multiple auths is provided within request and auth can be
+            assigned to several factors.
+            If used in sign-up mode, it just enables those factors.
           type: object
         authReqs:
           additionalProperties:
@@ -2292,9 +2301,9 @@ components:
     EmailAuthenticateReq:
       properties:
         email:
-          description: "User email. If email is not null - auth allow identification\
-            \ by email (email auth also must be listed in\nlogins config). Otherwise,\
-            \ uses email of already identified user."
+          description: |-
+            User email. If email is not null - auth allow identification by email (email auth also must be listed in
+            logins config). Otherwise, uses email of already identified user.
           type: string
           x-nullable: true
         template:
@@ -2342,10 +2351,11 @@ components:
           additionalProperties:
             type: string
             x-additionalPropertiesName: factor
-          description: "Forces specific auth to be used for factor.\nTakes place only\
-            \ when multiple auths is provided within request and auth can be\nassigned\
-            \ to several factors.\nIf used in sign-up mode, it just enables those\
-            \ factors.\n"
+          description: |
+            Forces specific auth to be used for factor.
+            Takes place only when multiple auths is provided within request and auth can be
+            assigned to several factors.
+            If used in sign-up mode, it just enables those factors.
           type: object
         authReqs:
           additionalProperties:
@@ -2678,9 +2688,9 @@ components:
           additionalProperties:
             type: boolean
             x-additionalPropertiesName: factor
-          description: "Optional factors to enable/disable. If factor marked as required\
-            \ in config, it will be considered enabled\nby default and this request\
-            \ doesn't change this.\n"
+          description: |
+            Optional factors to enable/disable. If factor marked as required in config, it will be considered enabled
+            by default and this request doesn't change this.
           type: object
         logins:
           additionalProperties:
@@ -2713,9 +2723,9 @@ components:
           additionalProperties:
             type: boolean
             x-additionalPropertiesName: factor
-          description: "Optional factors to enable/disable. If factor marked as required\
-            \ in config, it will be considered enabled\nby default and this request\
-            \ doesn't change this.\n"
+          description: |
+            Optional factors to enable/disable. If factor marked as required in config, it will be considered enabled
+            by default and this request doesn't change this.
           type: object
         logins:
           additionalProperties:
@@ -2730,7 +2740,7 @@ components:
           type: boolean
       type: object
       x-order: -1847312442-1
-    AuthoriseRes:
+    AuthorizeRes:
       example:
         session:
           authenticated: true
@@ -2784,7 +2794,7 @@ components:
           $ref: '#/components/schemas/Session'
       type: object
       x-order: -2047680577-2
-    AuthoriseReq:
+    AuthorizeReq:
       example:
         rateLimiter:
           quotaToBurn: 0.8008281904610115
@@ -2826,7 +2836,8 @@ components:
           description: "By default, unauthenticated sessions can't be cached."
           type: boolean
         ttl:
-          description: "Lifetime for access token. 1d, 30m, etc.\n"
+          description: |
+            Lifetime for access token. 1d, 30m, etc.
           example: 1d
           type: string
       type: object
@@ -2834,11 +2845,11 @@ components:
     AppSecretAuthCfg:
       properties:
         requiresAuth:
-          description: "If this is not null, app forbids to add this auth until listed\
-            \ auth enabled.\n- if this a string -> require specified auth to be enabled\
-            \ before this.\n- array of strings -> require any of listed auths to be\
-            \ enabled\n- array of arrays of strings -> works as `[ [ \"auth1\" and\
-            \ \"auth2\" ] or [ \"auth1\" and \"auth2\" ] ]`"
+          description: |-
+            If this is not null, app forbids to add this auth until listed auth enabled.
+            - if this a string -> require specified auth to be enabled before this.
+            - array of strings -> require any of listed auths to be enabled
+            - array of arrays of strings -> works as `[ [ "auth1" and "auth2" ] or [ "auth1" and "auth2" ] ]`
           items:
             items:
               type: string
@@ -2868,11 +2879,11 @@ components:
       description: Authentication implementation config
       properties:
         requiresAuth:
-          description: "If this is not null, app forbids to add this auth until listed\
-            \ auth enabled.\n- if this a string -> require specified auth to be enabled\
-            \ before this.\n- array of strings -> require any of listed auths to be\
-            \ enabled\n- array of arrays of strings -> works as `[ [ \"auth1\" and\
-            \ \"auth2\" ] or [ \"auth1\" and \"auth2\" ] ]`"
+          description: |-
+            If this is not null, app forbids to add this auth until listed auth enabled.
+            - if this a string -> require specified auth to be enabled before this.
+            - array of strings -> require any of listed auths to be enabled
+            - array of arrays of strings -> works as `[ [ "auth1" and "auth2" ] or [ "auth1" and "auth2" ] ]`
           items:
             items:
               type: string
@@ -2919,11 +2930,11 @@ components:
       description: Authentication implementation config
       properties:
         requiresAuth:
-          description: "If this is not null, app forbids to add this auth until listed\
-            \ auth enabled.\n- if this a string -> require specified auth to be enabled\
-            \ before this.\n- array of strings -> require any of listed auths to be\
-            \ enabled\n- array of arrays of strings -> works as `[ [ \"auth1\" and\
-            \ \"auth2\" ] or [ \"auth1\" and \"auth2\" ] ]`"
+          description: |-
+            If this is not null, app forbids to add this auth until listed auth enabled.
+            - if this a string -> require specified auth to be enabled before this.
+            - array of strings -> require any of listed auths to be enabled
+            - array of arrays of strings -> works as `[ [ "auth1" and "auth2" ] or [ "auth1" and "auth2" ] ]`
           items:
             items:
               type: string
@@ -3004,11 +3015,11 @@ components:
     EmailAuthCfg:
       properties:
         requiresAuth:
-          description: "If this is not null, app forbids to add this auth until listed\
-            \ auth enabled.\n- if this a string -> require specified auth to be enabled\
-            \ before this.\n- array of strings -> require any of listed auths to be\
-            \ enabled\n- array of arrays of strings -> works as `[ [ \"auth1\" and\
-            \ \"auth2\" ] or [ \"auth1\" and \"auth2\" ] ]`"
+          description: |-
+            If this is not null, app forbids to add this auth until listed auth enabled.
+            - if this a string -> require specified auth to be enabled before this.
+            - array of strings -> require any of listed auths to be enabled
+            - array of arrays of strings -> works as `[ [ "auth1" and "auth2" ] or [ "auth1" and "auth2" ] ]`
           items:
             items:
               type: string
@@ -3046,25 +3057,27 @@ components:
           type: string
           x-nullable: true
         confirmationUrl:
-          description: "If not null, server will create template param `confirmationUrl`\
-            \ that will contain query parameters with\nconfirmation code, session\
-            \ id, etc."
+          description: |-
+            If not null, server will create template param `confirmationUrl` that will contain query parameters with
+            confirmation code, session id, etc.
           type: string
           x-nullable: true
         templates:
           additionalProperties:
             type: string
             x-additionalPropertiesName: templateName
-          description: "List of email templates. Key - name of template (can be used\
-            \ lately on frontend), value - path to template.\nApp uses handlebars\
-            \ templates to generate emails. See docs here https://handlebarsjs.com\n\
-            \nEmail templates received `confirmationUrl`, `action`, `user`, `session`,\
-            \ `codeId`, `code`, `lang`, `headers`\nas template params, e.g. you can\
-            \ print user id as `{{ user.id }}`.\n\nTemplate engine also provides `i18n`\
-            \ helper for localisation. E.g. `{{i18n 'confirmationButton' default='Confirm'}}`\n\
-            searches key `confirmationButton` in files specified by `i18n.dir` config.\n\
-            \nIt allows setting subject of email using `title` html tag, e.g. `<title>Email\
-            \ subject</title>`.\n\n"
+          description: |+
+            List of email templates. Key - name of template (can be used lately on frontend), value - path to template.
+            App uses handlebars templates to generate emails. See docs here https://handlebarsjs.com
+
+            Email templates received `confirmationUrl`, `action`, `user`, `session`, `codeId`, `code`, `lang`, `headers`
+            as template params, e.g. you can print user id as `{{ user.id }}`.
+
+            Template engine also provides `i18n` helper for localisation. E.g. `{{i18n 'confirmationButton' default='Confirm'}}`
+            searches key `confirmationButton` in files specified by `i18n.dir` config.
+
+            It allows setting subject of email using `title` html tag, e.g. `<title>Email subject</title>`.
+
           example:
             welcome: ./welcome.html.hbs
             restoreAccess: ./restore.html.hbs
@@ -3155,10 +3168,9 @@ components:
             - sms
           type: object
         requiresEntry:
-          description: "Require user to be already signed in by one of the listed\
-            \ entries. Usually it used for action confirmation, e.g.\n\"payment\"\
-            \ that requires confirmation by sms, requires user to be already signed\
-            \ in (e.g. with entry \"app\"."
+          description: |-
+            Require user to be already signed in by one of the listed entries. Usually it used for action confirmation, e.g.
+            "payment" that requires confirmation by sms, requires user to be already signed in (e.g. with entry "app".
           items:
             type: string
           type: array
@@ -3213,11 +3225,11 @@ components:
     IpAuthCfg:
       properties:
         requiresAuth:
-          description: "If this is not null, app forbids to add this auth until listed\
-            \ auth enabled.\n- if this a string -> require specified auth to be enabled\
-            \ before this.\n- array of strings -> require any of listed auths to be\
-            \ enabled\n- array of arrays of strings -> works as `[ [ \"auth1\" and\
-            \ \"auth2\" ] or [ \"auth1\" and \"auth2\" ] ]`"
+          description: |-
+            If this is not null, app forbids to add this auth until listed auth enabled.
+            - if this a string -> require specified auth to be enabled before this.
+            - array of strings -> require any of listed auths to be enabled
+            - array of arrays of strings -> works as `[ [ "auth1" and "auth2" ] or [ "auth1" and "auth2" ] ]`
           items:
             items:
               type: string
@@ -3241,9 +3253,9 @@ components:
           format: double
           type: number
         ipBytesToIgnore:
-          description: "This allows to drop last bytes of IP. So it allows to authenticate\
-            \ factor when ip has rough match, e.g.\nthe same country, same city, or\
-            \ same internet provider."
+          description: |-
+            This allows to drop last bytes of IP. So it allows to authenticate factor when ip has rough match, e.g.
+            the same country, same city, or same internet provider.
           format: int32
           type: integer
         historySize:
@@ -3296,11 +3308,11 @@ components:
     OAuthCfg:
       properties:
         requiresAuth:
-          description: "If this is not null, app forbids to add this auth until listed\
-            \ auth enabled.\n- if this a string -> require specified auth to be enabled\
-            \ before this.\n- array of strings -> require any of listed auths to be\
-            \ enabled\n- array of arrays of strings -> works as `[ [ \"auth1\" and\
-            \ \"auth2\" ] or [ \"auth1\" and \"auth2\" ] ]`"
+          description: |-
+            If this is not null, app forbids to add this auth until listed auth enabled.
+            - if this a string -> require specified auth to be enabled before this.
+            - array of strings -> require any of listed auths to be enabled
+            - array of arrays of strings -> works as `[ [ "auth1" and "auth2" ] or [ "auth1" and "auth2" ] ]`
           items:
             items:
               type: string
@@ -3324,9 +3336,9 @@ components:
           format: double
           type: number
         extractLogin:
-          description: "Path for login in id-token or user-info endpoint response.\n\
-            e.g. `res.user.id` extracts user login from `{ \"res\": { \"user\": {\
-            \ \"id\": \"...\" } } }`"
+          description: |-
+            Path for login in id-token or user-info endpoint response.
+            e.g. `res.user.id` extracts user login from `{ "res": { "user": { "id": "..." } } }`
           type: string
         tokenUrl:
           description: Url to get access token by authorisation code.
@@ -3365,11 +3377,11 @@ components:
         \ \"password\" or use \"builtin\": \"password\" param."
       properties:
         requiresAuth:
-          description: "If this is not null, app forbids to add this auth until listed\
-            \ auth enabled.\n- if this a string -> require specified auth to be enabled\
-            \ before this.\n- array of strings -> require any of listed auths to be\
-            \ enabled\n- array of arrays of strings -> works as `[ [ \"auth1\" and\
-            \ \"auth2\" ] or [ \"auth1\" and \"auth2\" ] ]`"
+          description: |-
+            If this is not null, app forbids to add this auth until listed auth enabled.
+            - if this a string -> require specified auth to be enabled before this.
+            - array of strings -> require any of listed auths to be enabled
+            - array of arrays of strings -> works as `[ [ "auth1" and "auth2" ] or [ "auth1" and "auth2" ] ]`
           items:
             items:
               type: string
@@ -3490,11 +3502,11 @@ components:
     QuestionsAuthCfg:
       properties:
         requiresAuth:
-          description: "If this is not null, app forbids to add this auth until listed\
-            \ auth enabled.\n- if this a string -> require specified auth to be enabled\
-            \ before this.\n- array of strings -> require any of listed auths to be\
-            \ enabled\n- array of arrays of strings -> works as `[ [ \"auth1\" and\
-            \ \"auth2\" ] or [ \"auth1\" and \"auth2\" ] ]`"
+          description: |-
+            If this is not null, app forbids to add this auth until listed auth enabled.
+            - if this a string -> require specified auth to be enabled before this.
+            - array of strings -> require any of listed auths to be enabled
+            - array of arrays of strings -> works as `[ [ "auth1" and "auth2" ] or [ "auth1" and "auth2" ] ]`
           items:
             items:
               type: string
@@ -3518,9 +3530,9 @@ components:
           format: double
           type: number
         lowercase:
-          description: "Transform user answer to lowercase letters. This allows user\
-            \ still pass a check when he wrote name or city\nwith different cases.\
-            \ `false` means strict match, so \"John\" != \"john\""
+          description: |-
+            Transform user answer to lowercase letters. This allows user still pass a check when he wrote name or city
+            with different cases. `false` means strict match, so "John" != "john"
           type: boolean
         removeSymbols:
           description: Remove all non-letters from user answer.
@@ -3579,10 +3591,9 @@ components:
             requests.
           type: boolean
         parent:
-          description: "Allows to combine rate limiters. Let's say rt1 allows 10 reqs\
-            \ per seconds, and rt2 allows 20 reqs per minute.\nIf the rt1 has the\
-            \ rt2 as a parent, that means that rt1 allows 10 reqs per seconds but\
-            \ not more than 20 per minute."
+          description: |-
+            Allows to combine rate limiters. Let's say rt1 allows 10 reqs per seconds, and rt2 allows 20 reqs per minute.
+            If the rt1 has the rt2 as a parent, that means that rt1 allows 10 reqs per seconds but not more than 20 per minute.
           type: string
           x-nullable: true
       type: object
@@ -3623,7 +3634,8 @@ components:
         ttl: 3M
       properties:
         ttl:
-          description: "Lifetime for refresh token. 10d, 3M, etc.\n"
+          description: |
+            Lifetime for refresh token. 10d, 3M, etc.
           example: 3M
           type: string
         maxTtl:
@@ -3632,8 +3644,8 @@ components:
           example: 1Y
           type: string
         unauthenticatedTtl:
-          description: "Lifetime of token for unauthenticated session. Limits time\
-            \ that user has to sign in/up, restoring password etc.\n"
+          description: |
+            Lifetime of token for unauthenticated session. Limits time that user has to sign in/up, restoring password etc.
           example: 1d
           type: string
         allowReuse:
@@ -3649,11 +3661,11 @@ components:
           description: Path to the API that implements plugin.
           type: string
         requiresAuth:
-          description: "If this is not null, app forbids to add this auth until listed\
-            \ auth enabled.\n- if this a string -> require specified auth to be enabled\
-            \ before this.\n- array of strings -> require any of listed auths to be\
-            \ enabled\n- array of arrays of strings -> works as `[ [ \"auth1\" and\
-            \ \"auth2\" ] or [ \"auth1\" and \"auth2\" ] ]`"
+          description: |-
+            If this is not null, app forbids to add this auth until listed auth enabled.
+            - if this a string -> require specified auth to be enabled before this.
+            - array of strings -> require any of listed auths to be enabled
+            - array of arrays of strings -> works as `[ [ "auth1" and "auth2" ] or [ "auth1" and "auth2" ] ]`
           items:
             items:
               type: string
@@ -3781,12 +3793,15 @@ components:
         http:
           $ref: '#/components/schemas/SHHttpCfg'
         logins:
-          description: "Types of logins that can be used for identification.\n\nIf\
-            \ the login type is not specified in the auth config - it will be considered\
-            \ a simple login:\nthe user can set any name. E.g. username.\n\nIf the\
-            \ login type is specified in the auth config, this login will be generated\
-            \ by\nthe corresponding authenticator. E.g. email, phone or facebook account\
-            \ id.\n\n"
+          description: |+
+            Types of logins that can be used for identification.
+
+            If the login type is not specified in the auth config - it will be considered a simple login:
+            the user can set any name. E.g. username.
+
+            If the login type is specified in the auth config, this login will be generated by
+            the corresponding authenticator. E.g. email, phone or facebook account id.
+
           example:
           - username
           - facebook
@@ -3798,9 +3813,11 @@ components:
         auths:
           additionalProperties:
             $ref: '#/components/schemas/SHAppCfg_auths_value'
-          description: "List of auth names and auth configs\n\nTo use builtin auths\
-            \ (not a plugin or remote) follow the example: `\"password\": { ... }`\
-            \ or\n`\"anyAuthName\": { \"builtin\": \"password\", ... }`\n"
+          description: |
+            List of auth names and auth configs
+
+            To use builtin auths (not a plugin or remote) follow the example: `"password": { ... }` or
+            `"anyAuthName": { "builtin": "password", ... }`
           example:
             email: {}
             password: {}
@@ -3810,12 +3827,12 @@ components:
         entries:
           additionalProperties:
             $ref: '#/components/schemas/EntryCfg'
-          description: "List of app entries. Entry usually represents UI used for\
-            \ signing in/up or additional authentication\nbefore action. E.g.:\n-\
-            \ app: main entry that requests user login/email + password and 2fa (if\
-            \ enabled)\n- api: entry that allows user to generate API keys and connect\
-            \ third-party app\n- action: additional authentication (e.g. code from\
-            \ sms) requested before e.g. payment\n"
+          description: |
+            List of app entries. Entry usually represents UI used for signing in/up or additional authentication
+            before action. E.g.:
+            - app: main entry that requests user login/email + password and 2fa (if enabled)
+            - api: entry that allows user to generate API keys and connect third-party app
+            - action: additional authentication (e.g. code from sms) requested before e.g. payment
           type: object
         db:
           $ref: '#/components/schemas/DbsCfg'
@@ -3922,7 +3939,7 @@ components:
       type: object
       x-order: -51011121-6
     AuthExecRes_resData:
-      oneOf:
+      anyOf:
       - $ref: '#/components/schemas/AuthResDataJson'
       - $ref: '#/components/schemas/EmailAuthRes'
       - $ref: '#/components/schemas/IpAuthRes'
@@ -3931,7 +3948,7 @@ components:
       - $ref: '#/components/schemas/QuestionsAuthenticateRes'
       - $ref: '#/components/schemas/QuestionsUpdateRes'
     AuthenticateReq_authReqs_value:
-      oneOf:
+      anyOf:
       - $ref: '#/components/schemas/AppSecretReq'
       - $ref: '#/components/schemas/AuthReqDataJson'
       - $ref: '#/components/schemas/EmailAuthenticateReq'
@@ -3943,22 +3960,18 @@ components:
       - $ref: '#/components/schemas/QuestionsUpdateReq'
       x-additionalPropertiesName: auth
     DbsCfg_user:
+      anyOf:
+      - $ref: '#/components/schemas/InMemoryCfg'
+      - $ref: '#/components/schemas/InTokenCfg'
+      - $ref: '#/components/schemas/MongoCfg'
+      - $ref: '#/components/schemas/RedisCfg'
+      - $ref: '#/components/schemas/RemoteDbCfg'
+      - $ref: '#/components/schemas/MysqlCfg'
+      - $ref: '#/components/schemas/PostgresCfg'
+      - $ref: '#/components/schemas/SqliteCfg'
       description: User database config
-      oneOf:
-      - $ref: '#/components/schemas/InMemoryCfg'
-      - $ref: '#/components/schemas/InTokenCfg'
-      - $ref: '#/components/schemas/MongoCfg'
-      - $ref: '#/components/schemas/RedisCfg'
-      - $ref: '#/components/schemas/RemoteDbCfg'
-      - $ref: '#/components/schemas/MysqlCfg'
-      - $ref: '#/components/schemas/PostgresCfg'
-      - $ref: '#/components/schemas/SqliteCfg'
     DbsCfg_session:
-      description: "Session database config.\n\nIf you aren't using cluster, prefer\
-        \ in-memory database.\n\nYou can use in-token to not use database at all.\
-        \ Use it with `token.access.cacheUnauthenticated = true` and\n`token.access.cache\
-        \ != null` values."
-      oneOf:
+      anyOf:
       - $ref: '#/components/schemas/InMemoryCfg'
       - $ref: '#/components/schemas/InTokenCfg'
       - $ref: '#/components/schemas/MongoCfg'
@@ -3967,20 +3980,27 @@ components:
       - $ref: '#/components/schemas/MysqlCfg'
       - $ref: '#/components/schemas/PostgresCfg'
       - $ref: '#/components/schemas/SqliteCfg'
+      description: |-
+        Session database config.
+
+        If you aren't using cluster, prefer in-memory database.
+
+        You can use in-token to not use database at all. Use it with `token.access.cacheUnauthenticated = true` and
+        `token.access.cache != null` values.
     DbsCfg_rateLimiter:
+      anyOf:
+      - $ref: '#/components/schemas/InMemoryCfg'
+      - $ref: '#/components/schemas/InTokenCfg'
+      - $ref: '#/components/schemas/MongoCfg'
+      - $ref: '#/components/schemas/RedisCfg'
+      - $ref: '#/components/schemas/RemoteDbCfg'
+      - $ref: '#/components/schemas/MysqlCfg'
+      - $ref: '#/components/schemas/PostgresCfg'
+      - $ref: '#/components/schemas/SqliteCfg'
       description: "Database for rate-limiters. If you don't use rate-limiter leave\
         \ this empty (`{}`)."
-      oneOf:
-      - $ref: '#/components/schemas/InMemoryCfg'
-      - $ref: '#/components/schemas/InTokenCfg'
-      - $ref: '#/components/schemas/MongoCfg'
-      - $ref: '#/components/schemas/RedisCfg'
-      - $ref: '#/components/schemas/RemoteDbCfg'
-      - $ref: '#/components/schemas/MysqlCfg'
-      - $ref: '#/components/schemas/PostgresCfg'
-      - $ref: '#/components/schemas/SqliteCfg'
     SHAppCfg_auths_value:
-      oneOf:
+      anyOf:
       - $ref: '#/components/schemas/RemoteAuthCfg'
       - $ref: '#/components/schemas/AppSecretAuthCfg'
       - $ref: '#/components/schemas/EmailAuthCfg'
@@ -3991,9 +4011,8 @@ components:
       x-additionalPropertiesName: auth
   securitySchemes:
     access-token:
-      in: query
-      name: access-token
-      type: apiKey
+      scheme: Bearer
+      type: http
 x-tagGroups:
 - name: Api
   tags:

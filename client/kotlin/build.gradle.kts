@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-    swaggerCodegen("org.openapitools:openapi-generator-cli:6.0.0")
+    swaggerCodegen("org.openapitools:openapi-generator-cli:6.2.0")
     api("app.kntrl:openapi-client:0.9")
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
 }
@@ -35,6 +35,7 @@ tasks.register<GenerateSwaggerCode>("generateApi") {
         "artifactId" to "openapi-client",
         "artifactVersion" to "0.9",
         "hideGenerationTimestamp" to "true",
+        "disallowAdditionalPropertiesIfNotPresent" to "false",
     )
     doLast {
         file("generated/docs").walk(FileWalkDirection.BOTTOM_UP).forEach(File::delete)

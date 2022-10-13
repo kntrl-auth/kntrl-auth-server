@@ -27,8 +27,8 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
-import app.kntrl.client.generated.model.AuthoriseReq;
-import app.kntrl.client.generated.model.AuthoriseRes;
+import app.kntrl.client.generated.model.AuthorizeReq;
+import app.kntrl.client.generated.model.AuthorizeRes;
 import app.kntrl.client.generated.model.ClientErr;
 import app.kntrl.client.generated.model.IntegrationErr;
 import app.kntrl.client.generated.model.RateLimiterReq;
@@ -79,7 +79,7 @@ public class AuthorisationApi {
 
     /**
      * Build call for authorize
-     * @param authoriseReq  (required)
+     * @param authorizeReq  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -91,7 +91,7 @@ public class AuthorisationApi {
         <tr><td> 0 </td><td> Success </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call authorizeCall(AuthoriseReq authoriseReq, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call authorizeCall(AuthorizeReq authorizeReq, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -105,10 +105,10 @@ public class AuthorisationApi {
             basePath = null;
         }
 
-        Object localVarPostBody = authoriseReq;
+        Object localVarPostBody = authorizeReq;
 
         // create path and map variables
-        String localVarPath = "/api/authorise";
+        String localVarPath = "/api/authorize";
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -137,15 +137,15 @@ public class AuthorisationApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call authorizeValidateBeforeCall(AuthoriseReq authoriseReq, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call authorizeValidateBeforeCall(AuthorizeReq authorizeReq, final ApiCallback _callback) throws ApiException {
         
-        // verify the required parameter 'authoriseReq' is set
-        if (authoriseReq == null) {
-            throw new ApiException("Missing the required parameter 'authoriseReq' when calling authorize(Async)");
+        // verify the required parameter 'authorizeReq' is set
+        if (authorizeReq == null) {
+            throw new ApiException("Missing the required parameter 'authorizeReq' when calling authorize(Async)");
         }
         
 
-        okhttp3.Call localVarCall = authorizeCall(authoriseReq, _callback);
+        okhttp3.Call localVarCall = authorizeCall(authorizeReq, _callback);
         return localVarCall;
 
     }
@@ -153,8 +153,8 @@ public class AuthorisationApi {
     /**
      * 
      * Validates token and executes rate limiter. This API should be called by backend. 
-     * @param authoriseReq  (required)
-     * @return AuthoriseRes
+     * @param authorizeReq  (required)
+     * @return AuthorizeRes
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -164,16 +164,16 @@ public class AuthorisationApi {
         <tr><td> 0 </td><td> Success </td><td>  -  </td></tr>
      </table>
      */
-    public AuthoriseRes authorize(AuthoriseReq authoriseReq) throws ApiException {
-        ApiResponse<AuthoriseRes> localVarResp = authorizeWithHttpInfo(authoriseReq);
+    public AuthorizeRes authorize(AuthorizeReq authorizeReq) throws ApiException {
+        ApiResponse<AuthorizeRes> localVarResp = authorizeWithHttpInfo(authorizeReq);
         return localVarResp.getData();
     }
 
     /**
      * 
      * Validates token and executes rate limiter. This API should be called by backend. 
-     * @param authoriseReq  (required)
-     * @return ApiResponse&lt;AuthoriseRes&gt;
+     * @param authorizeReq  (required)
+     * @return ApiResponse&lt;AuthorizeRes&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -183,16 +183,16 @@ public class AuthorisationApi {
         <tr><td> 0 </td><td> Success </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<AuthoriseRes> authorizeWithHttpInfo(AuthoriseReq authoriseReq) throws ApiException {
-        okhttp3.Call localVarCall = authorizeValidateBeforeCall(authoriseReq, null);
-        Type localVarReturnType = new TypeToken<AuthoriseRes>(){}.getType();
+    public ApiResponse<AuthorizeRes> authorizeWithHttpInfo(AuthorizeReq authorizeReq) throws ApiException {
+        okhttp3.Call localVarCall = authorizeValidateBeforeCall(authorizeReq, null);
+        Type localVarReturnType = new TypeToken<AuthorizeRes>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
      *  (asynchronously)
      * Validates token and executes rate limiter. This API should be called by backend. 
-     * @param authoriseReq  (required)
+     * @param authorizeReq  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -204,10 +204,10 @@ public class AuthorisationApi {
         <tr><td> 0 </td><td> Success </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call authorizeAsync(AuthoriseReq authoriseReq, final ApiCallback<AuthoriseRes> _callback) throws ApiException {
+    public okhttp3.Call authorizeAsync(AuthorizeReq authorizeReq, final ApiCallback<AuthorizeRes> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = authorizeValidateBeforeCall(authoriseReq, _callback);
-        Type localVarReturnType = new TypeToken<AuthoriseRes>(){}.getType();
+        okhttp3.Call localVarCall = authorizeValidateBeforeCall(authorizeReq, _callback);
+        Type localVarReturnType = new TypeToken<AuthorizeRes>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -288,7 +288,7 @@ public class AuthorisationApi {
      * 
      * Executes rate limiter if no authorisation is required. Otherwise, this works similarly to /authorise. 
      * @param rateLimiterReq  (required)
-     * @return AuthoriseRes
+     * @return AuthorizeRes
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -298,8 +298,8 @@ public class AuthorisationApi {
         <tr><td> 0 </td><td> Success </td><td>  -  </td></tr>
      </table>
      */
-    public AuthoriseRes limit(RateLimiterReq rateLimiterReq) throws ApiException {
-        ApiResponse<AuthoriseRes> localVarResp = limitWithHttpInfo(rateLimiterReq);
+    public AuthorizeRes limit(RateLimiterReq rateLimiterReq) throws ApiException {
+        ApiResponse<AuthorizeRes> localVarResp = limitWithHttpInfo(rateLimiterReq);
         return localVarResp.getData();
     }
 
@@ -307,7 +307,7 @@ public class AuthorisationApi {
      * 
      * Executes rate limiter if no authorisation is required. Otherwise, this works similarly to /authorise. 
      * @param rateLimiterReq  (required)
-     * @return ApiResponse&lt;AuthoriseRes&gt;
+     * @return ApiResponse&lt;AuthorizeRes&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -317,9 +317,9 @@ public class AuthorisationApi {
         <tr><td> 0 </td><td> Success </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<AuthoriseRes> limitWithHttpInfo(RateLimiterReq rateLimiterReq) throws ApiException {
+    public ApiResponse<AuthorizeRes> limitWithHttpInfo(RateLimiterReq rateLimiterReq) throws ApiException {
         okhttp3.Call localVarCall = limitValidateBeforeCall(rateLimiterReq, null);
-        Type localVarReturnType = new TypeToken<AuthoriseRes>(){}.getType();
+        Type localVarReturnType = new TypeToken<AuthorizeRes>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -338,10 +338,10 @@ public class AuthorisationApi {
         <tr><td> 0 </td><td> Success </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call limitAsync(RateLimiterReq rateLimiterReq, final ApiCallback<AuthoriseRes> _callback) throws ApiException {
+    public okhttp3.Call limitAsync(RateLimiterReq rateLimiterReq, final ApiCallback<AuthorizeRes> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = limitValidateBeforeCall(rateLimiterReq, _callback);
-        Type localVarReturnType = new TypeToken<AuthoriseRes>(){}.getType();
+        Type localVarReturnType = new TypeToken<AuthorizeRes>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
