@@ -27,6 +27,7 @@ export class Kntrl {
     _serverCfg(): Configuration { return new Configuration({ basePath: this._axiosCfg().baseURL }) }
 }
 
-export * from './generated'
-export { Session as SessionModel } from './generated'
+export * from './generated';
+export { Session as SessionModel } from './generated';
 export { Session } from './src/session';
+export { AuthExecResStatusEnum as AuthStatus } from './generated';
