@@ -10,12 +10,8 @@ async function example() {
 
   await session.signOut();
 
-  try {
-    // Session is expired after sign-out.
-    await session.authorize();
-  } catch (err) {
-    console.log(err.code);
-  }
+  // Token still valid until expiration as it cached in JWT
+  await session.authorize();
 }
 
 async function loadSessionTokens() {

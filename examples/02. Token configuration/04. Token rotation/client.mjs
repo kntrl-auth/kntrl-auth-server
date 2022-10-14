@@ -3,19 +3,15 @@ import {Kntrl} from '../../.client/node_modules/kntrl-client/index.js';
 async function example() {
   const tokens = await loadSessionTokens();
   console.log(tokens.access)
+  console.log(tokens.refresh)
 
   const session = new Kntrl().session(tokens);
-  // This line will likely be used on backend to validate the session.
+
+  // In JS sdk tokens are rotated automatically as long as refresh token provided above, no action needed
   await session.authorize();
 
-  await session.signOut();
-
-  try {
-    // Session is expired after sign-out.
-    await session.authorize();
-  } catch (err) {
-    console.log(err.code);
-  }
+  // But anyway session can be refreshed manually
+  await session.refreshAccessToken()
 }
 
 async function loadSessionTokens() {

@@ -3,7 +3,7 @@ import app.kntrl.client.Session;
 import app.kntrl.client.generated.model.AuthenticateRes;
 import app.kntrl.client.generated.model.Tokens;
 
-class Example0201 {
+class Example0203 {
     public static void main(String[] args) {
         Tokens tokens = loadSessionTokens();
         System.out.println(tokens.getAccess());
@@ -15,12 +15,8 @@ class Example0201 {
 
         session.signOut();
 
-        try {
-            // Session is expired after sign-out.
-            session.authorize();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        // Token still valid until expiration as it cached in JWT
+        session.authorize();
     }
 
     private static Tokens loadSessionTokens() {

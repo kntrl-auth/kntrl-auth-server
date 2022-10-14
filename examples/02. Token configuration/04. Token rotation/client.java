@@ -3,24 +3,19 @@ import app.kntrl.client.Session;
 import app.kntrl.client.generated.model.AuthenticateRes;
 import app.kntrl.client.generated.model.Tokens;
 
-class Example0201 {
+class Example0204 {
     public static void main(String[] args) {
         Tokens tokens = loadSessionTokens();
         System.out.println(tokens.getAccess());
+        System.out.println(tokens.getRefresh());
 
         Session session = new Kntrl().session(tokens);
 
-        // This line will likely be used on backend to validate the session.
+        // In Java sdk tokens are rotated automatically as long as refresh token provided above, no action needed
         session.authorize();
 
-        session.signOut();
-
-        try {
-            // Session is expired after sign-out.
-            session.authorize();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        // But anyway session can be refreshed manually
+        session.refreshAccessToken();
     }
 
     private static Tokens loadSessionTokens() {
