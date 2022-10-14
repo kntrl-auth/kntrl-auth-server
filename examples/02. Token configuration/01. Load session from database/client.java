@@ -43,9 +43,6 @@ class Example0201 {
                         .req("password", new Session.AuthReq().password("Abcdef1@")),
                 null
         );
-        System.out.println(signUpRes);
-        System.out.println(signUpRes.getAuthRes().get("password").getResData());
-        System.out.println(signUpRes.getAuthRes().get("password").getResData().getPassword());
         return signUpRes.getTokens();
     }
 }

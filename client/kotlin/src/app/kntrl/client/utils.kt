@@ -1,18 +1,17 @@
 package app.kntrl.client
 
  import app.kntrl.client.generated.infra.ApiException
- import app.kntrl.client.generated.model.AnyErr
  import app.kntrl.client.generated.model.Err
+ import app.kntrl.client.generated.model.ErrCode
 
 fun <T> handleErr(
     retryOnExpiredTokenOn: Session? = null,
     action: () -> T,
 ): T {
     fun parseAnyErr(ex: ApiException): T = try {
-        val err = Err.fromJson(ex.responseBody);
-        val kntrlEx = KntrlException(AnyErr.fromJson(ex.responseBody), err)
+        val kntrlEx = KntrlException(Err.fromJson(ex.responseBody))
 
-        if (err.code == "TOKEN_EXPIRED" && retryOnExpiredTokenOn != null) {
+        if (kntrlEx.code == ErrCode.TOKEN_EXPIRED.value && retryOnExpiredTokenOn != null) {
             retryOnExpiredTokenOn.refreshAccessToken(null, kntrlEx)
             handleErr(null, action)
         } else {
@@ -29,15 +28,10 @@ fun <T> handleErr(
     }
 }
 
-class KntrlException(
-    private val anyErr: AnyErr,
-    val err: Err,
-) : RuntimeException("Kntrl API error (${err.code}): ${err.devMsg}"),
-    Map<String, Any> by anyErr.additionalProperties {
-
-    val code: String = err.code
-    val devMsg: String = err.devMsg
-    val msg: String? = err.msg
+class KntrlException(val data: Err) : RuntimeException("Kntrl API error (${data.code}): ${data.devMsg}") {
+    val code: String = data.code
+    val devMsg: String = data.devMsg
+    val msg: String? = data.msg
 }
 
 class ReceivedCodes : LinkedHashMap<String, MutableMap<String, String>>() {
