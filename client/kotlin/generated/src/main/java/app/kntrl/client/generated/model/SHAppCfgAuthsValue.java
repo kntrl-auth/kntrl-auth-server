@@ -15,16 +15,9 @@ package app.kntrl.client.generated.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import app.kntrl.client.generated.model.AppSecretAuthCfg;
 import app.kntrl.client.generated.model.CodeCfg;
-import app.kntrl.client.generated.model.EmailAuthCfg;
-import app.kntrl.client.generated.model.IpAuthCfg;
-import app.kntrl.client.generated.model.OAuthCfg;
-import app.kntrl.client.generated.model.PasswordAuthCfg;
 import app.kntrl.client.generated.model.PasswordHistoryCfg;
 import app.kntrl.client.generated.model.PasswordStrengthRequirements;
-import app.kntrl.client.generated.model.QuestionsAuthCfg;
-import app.kntrl.client.generated.model.RemoteAuthCfg;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -38,422 +31,1344 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.core.GenericType;
-
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonParseException;
-import com.google.gson.TypeAdapter;
-import com.google.gson.TypeAdapterFactory;
-import com.google.gson.reflect.TypeToken;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.google.gson.TypeAdapterFactory;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import app.kntrl.client.generated.infra.JSON;
 
+/**
+ * SHAppCfgAuthsValue
+ */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
-public class SHAppCfgAuthsValue extends AbstractOpenApiSchema {
-    private static final Logger log = Logger.getLogger(SHAppCfgAuthsValue.class.getName());
+public class SHAppCfgAuthsValue {
+  public static final String SERIALIZED_NAME_REMOTE = "remote";
+  @SerializedName(SERIALIZED_NAME_REMOTE)
+  private String remote;
 
-    public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
-        @SuppressWarnings("unchecked")
-        @Override
-        public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-            if (!SHAppCfgAuthsValue.class.isAssignableFrom(type.getRawType())) {
-                return null; // this class only serializes 'SHAppCfgAuthsValue' and its subtypes
-            }
-            final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-            final TypeAdapter<AppSecretAuthCfg> adapterAppSecretAuthCfg = gson.getDelegateAdapter(this, TypeToken.get(AppSecretAuthCfg.class));
-            final TypeAdapter<EmailAuthCfg> adapterEmailAuthCfg = gson.getDelegateAdapter(this, TypeToken.get(EmailAuthCfg.class));
-            final TypeAdapter<IpAuthCfg> adapterIpAuthCfg = gson.getDelegateAdapter(this, TypeToken.get(IpAuthCfg.class));
-            final TypeAdapter<OAuthCfg> adapterOAuthCfg = gson.getDelegateAdapter(this, TypeToken.get(OAuthCfg.class));
-            final TypeAdapter<PasswordAuthCfg> adapterPasswordAuthCfg = gson.getDelegateAdapter(this, TypeToken.get(PasswordAuthCfg.class));
-            final TypeAdapter<QuestionsAuthCfg> adapterQuestionsAuthCfg = gson.getDelegateAdapter(this, TypeToken.get(QuestionsAuthCfg.class));
-            final TypeAdapter<RemoteAuthCfg> adapterRemoteAuthCfg = gson.getDelegateAdapter(this, TypeToken.get(RemoteAuthCfg.class));
+  public static final String SERIALIZED_NAME_REQUIRES_AUTH = "requiresAuth";
+  @SerializedName(SERIALIZED_NAME_REQUIRES_AUTH)
+  private List<List<String>> requiresAuth = null;
 
-            return (TypeAdapter<T>) new TypeAdapter<SHAppCfgAuthsValue>() {
-                @Override
-                public void write(JsonWriter out, SHAppCfgAuthsValue value) throws IOException {
-                    if (value == null || value.getActualInstance() == null) {
-                        elementAdapter.write(out, null);
-                        return;
-                    }
+  public static final String SERIALIZED_NAME_SKIP_ON_FAIL = "skipOnFail";
+  @SerializedName(SERIALIZED_NAME_SKIP_ON_FAIL)
+  private Boolean skipOnFail;
 
-                    // check if the actual instance is of the type `AppSecretAuthCfg`
-                    if (value.getActualInstance() instanceof AppSecretAuthCfg) {
-                        JsonObject obj = adapterAppSecretAuthCfg.toJsonTree((AppSecretAuthCfg)value.getActualInstance()).getAsJsonObject();
-                        elementAdapter.write(out, obj);
-                        return;
-                    }
+  public static final String SERIALIZED_NAME_RATE_LIMITER = "rateLimiter";
+  @SerializedName(SERIALIZED_NAME_RATE_LIMITER)
+  private String rateLimiter;
 
-                    // check if the actual instance is of the type `EmailAuthCfg`
-                    if (value.getActualInstance() instanceof EmailAuthCfg) {
-                        JsonObject obj = adapterEmailAuthCfg.toJsonTree((EmailAuthCfg)value.getActualInstance()).getAsJsonObject();
-                        elementAdapter.write(out, obj);
-                        return;
-                    }
+  public static final String SERIALIZED_NAME_BURN_QUOTA = "burnQuota";
+  @SerializedName(SERIALIZED_NAME_BURN_QUOTA)
+  private Double burnQuota;
 
-                    // check if the actual instance is of the type `IpAuthCfg`
-                    if (value.getActualInstance() instanceof IpAuthCfg) {
-                        JsonObject obj = adapterIpAuthCfg.toJsonTree((IpAuthCfg)value.getActualInstance()).getAsJsonObject();
-                        elementAdapter.write(out, obj);
-                        return;
-                    }
+  public static final String SERIALIZED_NAME_QUERY = "query";
+  @SerializedName(SERIALIZED_NAME_QUERY)
+  private Map<String, String> query = null;
 
-                    // check if the actual instance is of the type `OAuthCfg`
-                    if (value.getActualInstance() instanceof OAuthCfg) {
-                        JsonObject obj = adapterOAuthCfg.toJsonTree((OAuthCfg)value.getActualInstance()).getAsJsonObject();
-                        elementAdapter.write(out, obj);
-                        return;
-                    }
+  public static final String SERIALIZED_NAME_HEADERS = "headers";
+  @SerializedName(SERIALIZED_NAME_HEADERS)
+  private Map<String, String> headers = null;
 
-                    // check if the actual instance is of the type `PasswordAuthCfg`
-                    if (value.getActualInstance() instanceof PasswordAuthCfg) {
-                        JsonObject obj = adapterPasswordAuthCfg.toJsonTree((PasswordAuthCfg)value.getActualInstance()).getAsJsonObject();
-                        elementAdapter.write(out, obj);
-                        return;
-                    }
+  public static final String SERIALIZED_NAME_CODE = "code";
+  @SerializedName(SERIALIZED_NAME_CODE)
+  private CodeCfg code;
 
-                    // check if the actual instance is of the type `QuestionsAuthCfg`
-                    if (value.getActualInstance() instanceof QuestionsAuthCfg) {
-                        JsonObject obj = adapterQuestionsAuthCfg.toJsonTree((QuestionsAuthCfg)value.getActualInstance()).getAsJsonObject();
-                        elementAdapter.write(out, obj);
-                        return;
-                    }
+  public static final String SERIALIZED_NAME_SERVER = "server";
+  @SerializedName(SERIALIZED_NAME_SERVER)
+  private String server;
 
-                    // check if the actual instance is of the type `RemoteAuthCfg`
-                    if (value.getActualInstance() instanceof RemoteAuthCfg) {
-                        JsonObject obj = adapterRemoteAuthCfg.toJsonTree((RemoteAuthCfg)value.getActualInstance()).getAsJsonObject();
-                        elementAdapter.write(out, obj);
-                        return;
-                    }
+  public static final String SERIALIZED_NAME_SENDER = "sender";
+  @SerializedName(SERIALIZED_NAME_SENDER)
+  private String sender;
 
-                    throw new IOException("Failed to serialize as the type doesn't match anyOf schemas: AppSecretAuthCfg, EmailAuthCfg, IpAuthCfg, OAuthCfg, PasswordAuthCfg, QuestionsAuthCfg, RemoteAuthCfg");
-                }
+  public static final String SERIALIZED_NAME_USERNAME = "username";
+  @SerializedName(SERIALIZED_NAME_USERNAME)
+  private String username;
 
-                @Override
-                public SHAppCfgAuthsValue read(JsonReader in) throws IOException {
-                    Object deserialized = null;
-                    JsonObject jsonObject = elementAdapter.read(in).getAsJsonObject();
+  public static final String SERIALIZED_NAME_PASSWORD = "password";
+  @SerializedName(SERIALIZED_NAME_PASSWORD)
+  private String password;
 
-                    // deserialize AppSecretAuthCfg
-                    try {
-                        // validate the JSON object to see if any exception is thrown
-                        AppSecretAuthCfg.validateJsonObject(jsonObject);
-                        log.log(Level.FINER, "Input data matches schema 'AppSecretAuthCfg'");
-                        SHAppCfgAuthsValue ret = new SHAppCfgAuthsValue();
-                        ret.setActualInstance(adapterAppSecretAuthCfg.fromJsonTree(jsonObject));
-                        return ret;
-                    } catch (Exception e) {
-                        // deserialization failed, continue
-                        log.log(Level.FINER, "Input data does not match schema 'AppSecretAuthCfg'", e);
-                    }
+  public static final String SERIALIZED_NAME_CONFIRMATION_URL = "confirmationUrl";
+  @SerializedName(SERIALIZED_NAME_CONFIRMATION_URL)
+  private String confirmationUrl;
 
-                    // deserialize EmailAuthCfg
-                    try {
-                        // validate the JSON object to see if any exception is thrown
-                        EmailAuthCfg.validateJsonObject(jsonObject);
-                        log.log(Level.FINER, "Input data matches schema 'EmailAuthCfg'");
-                        SHAppCfgAuthsValue ret = new SHAppCfgAuthsValue();
-                        ret.setActualInstance(adapterEmailAuthCfg.fromJsonTree(jsonObject));
-                        return ret;
-                    } catch (Exception e) {
-                        // deserialization failed, continue
-                        log.log(Level.FINER, "Input data does not match schema 'EmailAuthCfg'", e);
-                    }
+  public static final String SERIALIZED_NAME_TEMPLATES = "templates";
+  @SerializedName(SERIALIZED_NAME_TEMPLATES)
+  private Map<String, String> templates = null;
 
-                    // deserialize IpAuthCfg
-                    try {
-                        // validate the JSON object to see if any exception is thrown
-                        IpAuthCfg.validateJsonObject(jsonObject);
-                        log.log(Level.FINER, "Input data matches schema 'IpAuthCfg'");
-                        SHAppCfgAuthsValue ret = new SHAppCfgAuthsValue();
-                        ret.setActualInstance(adapterIpAuthCfg.fromJsonTree(jsonObject));
-                        return ret;
-                    } catch (Exception e) {
-                        // deserialization failed, continue
-                        log.log(Level.FINER, "Input data does not match schema 'IpAuthCfg'", e);
-                    }
+  public static final String SERIALIZED_NAME_TEMPLATE_PARAMS = "templateParams";
+  @SerializedName(SERIALIZED_NAME_TEMPLATE_PARAMS)
+  private Map<String, String> templateParams = null;
 
-                    // deserialize OAuthCfg
-                    try {
-                        // validate the JSON object to see if any exception is thrown
-                        OAuthCfg.validateJsonObject(jsonObject);
-                        log.log(Level.FINER, "Input data matches schema 'OAuthCfg'");
-                        SHAppCfgAuthsValue ret = new SHAppCfgAuthsValue();
-                        ret.setActualInstance(adapterOAuthCfg.fromJsonTree(jsonObject));
-                        return ret;
-                    } catch (Exception e) {
-                        // deserialization failed, continue
-                        log.log(Level.FINER, "Input data does not match schema 'OAuthCfg'", e);
-                    }
+  public static final String SERIALIZED_NAME_IP_BYTES_TO_IGNORE = "ipBytesToIgnore";
+  @SerializedName(SERIALIZED_NAME_IP_BYTES_TO_IGNORE)
+  private Integer ipBytesToIgnore;
 
-                    // deserialize PasswordAuthCfg
-                    try {
-                        // validate the JSON object to see if any exception is thrown
-                        PasswordAuthCfg.validateJsonObject(jsonObject);
-                        log.log(Level.FINER, "Input data matches schema 'PasswordAuthCfg'");
-                        SHAppCfgAuthsValue ret = new SHAppCfgAuthsValue();
-                        ret.setActualInstance(adapterPasswordAuthCfg.fromJsonTree(jsonObject));
-                        return ret;
-                    } catch (Exception e) {
-                        // deserialization failed, continue
-                        log.log(Level.FINER, "Input data does not match schema 'PasswordAuthCfg'", e);
-                    }
+  public static final String SERIALIZED_NAME_HISTORY_SIZE = "historySize";
+  @SerializedName(SERIALIZED_NAME_HISTORY_SIZE)
+  private Integer historySize;
 
-                    // deserialize QuestionsAuthCfg
-                    try {
-                        // validate the JSON object to see if any exception is thrown
-                        QuestionsAuthCfg.validateJsonObject(jsonObject);
-                        log.log(Level.FINER, "Input data matches schema 'QuestionsAuthCfg'");
-                        SHAppCfgAuthsValue ret = new SHAppCfgAuthsValue();
-                        ret.setActualInstance(adapterQuestionsAuthCfg.fromJsonTree(jsonObject));
-                        return ret;
-                    } catch (Exception e) {
-                        // deserialization failed, continue
-                        log.log(Level.FINER, "Input data does not match schema 'QuestionsAuthCfg'", e);
-                    }
+  public static final String SERIALIZED_NAME_EXTRACT_LOGIN = "extractLogin";
+  @SerializedName(SERIALIZED_NAME_EXTRACT_LOGIN)
+  private String extractLogin;
 
-                    // deserialize RemoteAuthCfg
-                    try {
-                        // validate the JSON object to see if any exception is thrown
-                        RemoteAuthCfg.validateJsonObject(jsonObject);
-                        log.log(Level.FINER, "Input data matches schema 'RemoteAuthCfg'");
-                        SHAppCfgAuthsValue ret = new SHAppCfgAuthsValue();
-                        ret.setActualInstance(adapterRemoteAuthCfg.fromJsonTree(jsonObject));
-                        return ret;
-                    } catch (Exception e) {
-                        // deserialization failed, continue
-                        log.log(Level.FINER, "Input data does not match schema 'RemoteAuthCfg'", e);
-                    }
+  public static final String SERIALIZED_NAME_TOKEN_URL = "tokenUrl";
+  @SerializedName(SERIALIZED_NAME_TOKEN_URL)
+  private String tokenUrl;
+
+  public static final String SERIALIZED_NAME_CLIENT_ID = "clientId";
+  @SerializedName(SERIALIZED_NAME_CLIENT_ID)
+  private String clientId;
+
+  public static final String SERIALIZED_NAME_CLIENT_SECRET = "clientSecret";
+  @SerializedName(SERIALIZED_NAME_CLIENT_SECRET)
+  private String clientSecret;
+
+  public static final String SERIALIZED_NAME_USER_INFO_URL = "userInfoUrl";
+  @SerializedName(SERIALIZED_NAME_USER_INFO_URL)
+  private String userInfoUrl;
+
+  public static final String SERIALIZED_NAME_SEND_TOKEN_IN_QUERY = "sendTokenInQuery";
+  @SerializedName(SERIALIZED_NAME_SEND_TOKEN_IN_QUERY)
+  private String sendTokenInQuery;
+
+  public static final String SERIALIZED_NAME_SEND_TOKEN_IN_HEADER = "sendTokenInHeader";
+  @SerializedName(SERIALIZED_NAME_SEND_TOKEN_IN_HEADER)
+  private Boolean sendTokenInHeader;
+
+  public static final String SERIALIZED_NAME_EXTRACT_PUBLIC_DATA = "extractPublicData";
+  @SerializedName(SERIALIZED_NAME_EXTRACT_PUBLIC_DATA)
+  private Map<String, String> extractPublicData = null;
+
+  public static final String SERIALIZED_NAME_MAX_LENGTH = "maxLength";
+  @SerializedName(SERIALIZED_NAME_MAX_LENGTH)
+  private Integer maxLength;
+
+  public static final String SERIALIZED_NAME_MIN_LENGTH = "minLength";
+  @SerializedName(SERIALIZED_NAME_MIN_LENGTH)
+  private Integer minLength;
+
+  public static final String SERIALIZED_NAME_REQUIRE_NUMBER = "requireNumber";
+  @SerializedName(SERIALIZED_NAME_REQUIRE_NUMBER)
+  private Boolean requireNumber;
+
+  public static final String SERIALIZED_NAME_REQUIRE_SYMBOL = "requireSymbol";
+  @SerializedName(SERIALIZED_NAME_REQUIRE_SYMBOL)
+  private Boolean requireSymbol;
+
+  public static final String SERIALIZED_NAME_REQUIRE_UPPER_CASE = "requireUpperCase";
+  @SerializedName(SERIALIZED_NAME_REQUIRE_UPPER_CASE)
+  private Boolean requireUpperCase;
+
+  public static final String SERIALIZED_NAME_FORBID_COMMON_PASSWORDS = "forbidCommonPasswords";
+  @SerializedName(SERIALIZED_NAME_FORBID_COMMON_PASSWORDS)
+  private Boolean forbidCommonPasswords;
+
+  public static final String SERIALIZED_NAME_FORBID_LOGIN_AS_PASSWORD = "forbidLoginAsPassword";
+  @SerializedName(SERIALIZED_NAME_FORBID_LOGIN_AS_PASSWORD)
+  private Boolean forbidLoginAsPassword;
+
+  public static final String SERIALIZED_NAME_FORBID_REUSING_PASSWORD = "forbidReusingPassword";
+  @SerializedName(SERIALIZED_NAME_FORBID_REUSING_PASSWORD)
+  private PasswordHistoryCfg forbidReusingPassword;
+
+  public static final String SERIALIZED_NAME_STRENGTH = "strength";
+  @SerializedName(SERIALIZED_NAME_STRENGTH)
+  private Map<String, PasswordStrengthRequirements> strength = null;
+
+  public static final String SERIALIZED_NAME_LOWERCASE = "lowercase";
+  @SerializedName(SERIALIZED_NAME_LOWERCASE)
+  private Boolean lowercase;
+
+  public static final String SERIALIZED_NAME_REMOVE_SYMBOLS = "removeSymbols";
+  @SerializedName(SERIALIZED_NAME_REMOVE_SYMBOLS)
+  private Boolean removeSymbols;
+
+  public static final String SERIALIZED_NAME_REMOVE_SPACES = "removeSpaces";
+  @SerializedName(SERIALIZED_NAME_REMOVE_SPACES)
+  private Boolean removeSpaces;
+
+  public static final String SERIALIZED_NAME_ANSWERS_REQUIRED = "answersRequired";
+  @SerializedName(SERIALIZED_NAME_ANSWERS_REQUIRED)
+  private Integer answersRequired;
+
+  public static final String SERIALIZED_NAME_MAX_ANSWERS = "maxAnswers";
+  @SerializedName(SERIALIZED_NAME_MAX_ANSWERS)
+  private Integer maxAnswers;
+
+  public SHAppCfgAuthsValue() {
+  }
+
+  public SHAppCfgAuthsValue remote(String remote) {
+    
+    this.remote = remote;
+    return this;
+  }
+
+   /**
+   * Path to the API that implements plugin.
+   * @return remote
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Path to the API that implements plugin.")
+
+  public String getRemote() {
+    return remote;
+  }
 
 
-                    throw new IOException(String.format("Failed deserialization for SHAppCfgAuthsValue: no class matched. JSON: %s", jsonObject.toString()));
-                }
-            }.nullSafe();
-        }
+  public void setRemote(String remote) {
+    this.remote = remote;
+  }
+
+
+  public SHAppCfgAuthsValue requiresAuth(List<List<String>> requiresAuth) {
+    
+    this.requiresAuth = requiresAuth;
+    return this;
+  }
+
+  public SHAppCfgAuthsValue addRequiresAuthItem(List<String> requiresAuthItem) {
+    if (this.requiresAuth == null) {
+      this.requiresAuth = new ArrayList<>();
     }
+    this.requiresAuth.add(requiresAuthItem);
+    return this;
+  }
 
-    // store a list of schema names defined in anyOf
-    public static final Map<String, GenericType> schemas = new HashMap<String, GenericType>();
+   /**
+   * If this is not null, app forbids to add this auth until listed auth enabled. - if this a string -&gt; require specified auth to be enabled before this. - array of strings -&gt; require any of listed auths to be enabled - array of arrays of strings -&gt; works as &#x60;[ [ \&quot;auth1\&quot; and \&quot;auth2\&quot; ] or [ \&quot;auth1\&quot; and \&quot;auth2\&quot; ] ]&#x60;
+   * @return requiresAuth
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "If this is not null, app forbids to add this auth until listed auth enabled. - if this a string -> require specified auth to be enabled before this. - array of strings -> require any of listed auths to be enabled - array of arrays of strings -> works as `[ [ \"auth1\" and \"auth2\" ] or [ \"auth1\" and \"auth2\" ] ]`")
 
-    public SHAppCfgAuthsValue() {
-        super("anyOf", Boolean.FALSE);
+  public List<List<String>> getRequiresAuth() {
+    return requiresAuth;
+  }
+
+
+  public void setRequiresAuth(List<List<String>> requiresAuth) {
+    this.requiresAuth = requiresAuth;
+  }
+
+
+  public SHAppCfgAuthsValue skipOnFail(Boolean skipOnFail) {
+    
+    this.skipOnFail = skipOnFail;
+    return this;
+  }
+
+   /**
+   * When this is set to true app will attempt next auth in case of error on current. It&#39;s works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be executed only when IP auth is failed. If set to false any error on this auth will stop the whole request execution.
+   * @return skipOnFail
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "When this is set to true app will attempt next auth in case of error on current. It's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be executed only when IP auth is failed. If set to false any error on this auth will stop the whole request execution.")
+
+  public Boolean getSkipOnFail() {
+    return skipOnFail;
+  }
+
+
+  public void setSkipOnFail(Boolean skipOnFail) {
+    this.skipOnFail = skipOnFail;
+  }
+
+
+  public SHAppCfgAuthsValue rateLimiter(String rateLimiter) {
+    
+    this.rateLimiter = rateLimiter;
+    return this;
+  }
+
+   /**
+   * Apply rate limiter for this auth.
+   * @return rateLimiter
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Apply rate limiter for this auth.")
+
+  public String getRateLimiter() {
+    return rateLimiter;
+  }
+
+
+  public void setRateLimiter(String rateLimiter) {
+    this.rateLimiter = rateLimiter;
+  }
+
+
+  public SHAppCfgAuthsValue burnQuota(Double burnQuota) {
+    
+    this.burnQuota = burnQuota;
+    return this;
+  }
+
+   /**
+   * Every auth execution will burn this amount of quota. Takes place only when rate limiter is specified
+   * @return burnQuota
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Every auth execution will burn this amount of quota. Takes place only when rate limiter is specified")
+
+  public Double getBurnQuota() {
+    return burnQuota;
+  }
+
+
+  public void setBurnQuota(Double burnQuota) {
+    this.burnQuota = burnQuota;
+  }
+
+
+  public SHAppCfgAuthsValue query(Map<String, String> query) {
+    
+    this.query = query;
+    return this;
+  }
+
+  public SHAppCfgAuthsValue putQueryItem(String key, String queryItem) {
+    if (this.query == null) {
+      this.query = new HashMap<>();
     }
+    this.query.put(key, queryItem);
+    return this;
+  }
 
-    public SHAppCfgAuthsValue(AppSecretAuthCfg o) {
-        super("anyOf", Boolean.FALSE);
-        setActualInstance(o);
+   /**
+   * Add query params after &#x60;?&#x60; symbol in url. 
+   * @return query
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Add query params after `?` symbol in url. ")
+
+  public Map<String, String> getQuery() {
+    return query;
+  }
+
+
+  public void setQuery(Map<String, String> query) {
+    this.query = query;
+  }
+
+
+  public SHAppCfgAuthsValue headers(Map<String, String> headers) {
+    
+    this.headers = headers;
+    return this;
+  }
+
+  public SHAppCfgAuthsValue putHeadersItem(String key, String headersItem) {
+    if (this.headers == null) {
+      this.headers = new HashMap<>();
     }
+    this.headers.put(key, headersItem);
+    return this;
+  }
 
-    public SHAppCfgAuthsValue(EmailAuthCfg o) {
-        super("anyOf", Boolean.FALSE);
-        setActualInstance(o);
+   /**
+   * Add headers to request. 
+   * @return headers
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Add headers to request. ")
+
+  public Map<String, String> getHeaders() {
+    return headers;
+  }
+
+
+  public void setHeaders(Map<String, String> headers) {
+    this.headers = headers;
+  }
+
+
+  public SHAppCfgAuthsValue code(CodeCfg code) {
+    
+    this.code = code;
+    return this;
+  }
+
+   /**
+   * Get code
+   * @return code
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public CodeCfg getCode() {
+    return code;
+  }
+
+
+  public void setCode(CodeCfg code) {
+    this.code = code;
+  }
+
+
+  public SHAppCfgAuthsValue server(String server) {
+    
+    this.server = server;
+    return this;
+  }
+
+   /**
+   * Email server address/IP.
+   * @return server
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Email server address/IP.")
+
+  public String getServer() {
+    return server;
+  }
+
+
+  public void setServer(String server) {
+    this.server = server;
+  }
+
+
+  public SHAppCfgAuthsValue sender(String sender) {
+    
+    this.sender = sender;
+    return this;
+  }
+
+   /**
+   * Email address of sender.
+   * @return sender
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Email address of sender.")
+
+  public String getSender() {
+    return sender;
+  }
+
+
+  public void setSender(String sender) {
+    this.sender = sender;
+  }
+
+
+  public SHAppCfgAuthsValue username(String username) {
+    
+    this.username = username;
+    return this;
+  }
+
+   /**
+   * SMTP username.
+   * @return username
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "SMTP username.")
+
+  public String getUsername() {
+    return username;
+  }
+
+
+  public void setUsername(String username) {
+    this.username = username;
+  }
+
+
+  public SHAppCfgAuthsValue password(String password) {
+    
+    this.password = password;
+    return this;
+  }
+
+   /**
+   * SMTP password.
+   * @return password
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "SMTP password.")
+
+  public String getPassword() {
+    return password;
+  }
+
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+
+  public SHAppCfgAuthsValue confirmationUrl(String confirmationUrl) {
+    
+    this.confirmationUrl = confirmationUrl;
+    return this;
+  }
+
+   /**
+   * If not null, server will create template param &#x60;confirmationUrl&#x60; that will contain query parameters with confirmation code, session id, etc.
+   * @return confirmationUrl
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "If not null, server will create template param `confirmationUrl` that will contain query parameters with confirmation code, session id, etc.")
+
+  public String getConfirmationUrl() {
+    return confirmationUrl;
+  }
+
+
+  public void setConfirmationUrl(String confirmationUrl) {
+    this.confirmationUrl = confirmationUrl;
+  }
+
+
+  public SHAppCfgAuthsValue templates(Map<String, String> templates) {
+    
+    this.templates = templates;
+    return this;
+  }
+
+  public SHAppCfgAuthsValue putTemplatesItem(String key, String templatesItem) {
+    if (this.templates == null) {
+      this.templates = new HashMap<>();
     }
+    this.templates.put(key, templatesItem);
+    return this;
+  }
 
-    public SHAppCfgAuthsValue(IpAuthCfg o) {
-        super("anyOf", Boolean.FALSE);
-        setActualInstance(o);
+   /**
+   * List of email templates. Key - name of template (can be used lately on frontend), value - path to template. App uses handlebars templates to generate emails. See docs here https://handlebarsjs.com  Email templates received &#x60;confirmationUrl&#x60;, &#x60;action&#x60;, &#x60;user&#x60;, &#x60;session&#x60;, &#x60;codeId&#x60;, &#x60;code&#x60;, &#x60;lang&#x60;, &#x60;headers&#x60; as template params, e.g. you can print user id as &#x60;{{ user.id }}&#x60;.  Template engine also provides &#x60;i18n&#x60; helper for localisation. E.g. &#x60;{{i18n &#39;confirmationButton&#39; default&#x3D;&#39;Confirm&#39;}}&#x60; searches key &#x60;confirmationButton&#x60; in files specified by &#x60;i18n.dir&#x60; config.  It allows setting subject of email using &#x60;title&#x60; html tag, e.g. &#x60;&lt;title&gt;Email subject&lt;/title&gt;&#x60;.  
+   * @return templates
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(example = "{\"welcome\":\"./welcome.html.hbs\",\"restoreAccess\":\"./restore.html.hbs\"}", value = "List of email templates. Key - name of template (can be used lately on frontend), value - path to template. App uses handlebars templates to generate emails. See docs here https://handlebarsjs.com  Email templates received `confirmationUrl`, `action`, `user`, `session`, `codeId`, `code`, `lang`, `headers` as template params, e.g. you can print user id as `{{ user.id }}`.  Template engine also provides `i18n` helper for localisation. E.g. `{{i18n 'confirmationButton' default='Confirm'}}` searches key `confirmationButton` in files specified by `i18n.dir` config.  It allows setting subject of email using `title` html tag, e.g. `<title>Email subject</title>`.  ")
+
+  public Map<String, String> getTemplates() {
+    return templates;
+  }
+
+
+  public void setTemplates(Map<String, String> templates) {
+    this.templates = templates;
+  }
+
+
+  public SHAppCfgAuthsValue templateParams(Map<String, String> templateParams) {
+    
+    this.templateParams = templateParams;
+    return this;
+  }
+
+  public SHAppCfgAuthsValue putTemplateParamsItem(String key, String templateParamsItem) {
+    if (this.templateParams == null) {
+      this.templateParams = new HashMap<>();
     }
+    this.templateParams.put(key, templateParamsItem);
+    return this;
+  }
 
-    public SHAppCfgAuthsValue(OAuthCfg o) {
-        super("anyOf", Boolean.FALSE);
-        setActualInstance(o);
+   /**
+   * Additional params for template. 
+   * @return templateParams
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Additional params for template. ")
+
+  public Map<String, String> getTemplateParams() {
+    return templateParams;
+  }
+
+
+  public void setTemplateParams(Map<String, String> templateParams) {
+    this.templateParams = templateParams;
+  }
+
+
+  public SHAppCfgAuthsValue ipBytesToIgnore(Integer ipBytesToIgnore) {
+    
+    this.ipBytesToIgnore = ipBytesToIgnore;
+    return this;
+  }
+
+   /**
+   * This allows to drop last bytes of IP. So it allows to authenticate factor when ip has rough match, e.g. the same country, same city, or same internet provider.
+   * @return ipBytesToIgnore
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "This allows to drop last bytes of IP. So it allows to authenticate factor when ip has rough match, e.g. the same country, same city, or same internet provider.")
+
+  public Integer getIpBytesToIgnore() {
+    return ipBytesToIgnore;
+  }
+
+
+  public void setIpBytesToIgnore(Integer ipBytesToIgnore) {
+    this.ipBytesToIgnore = ipBytesToIgnore;
+  }
+
+
+  public SHAppCfgAuthsValue historySize(Integer historySize) {
+    
+    this.historySize = historySize;
+    return this;
+  }
+
+   /**
+   * History of IP addresses user used to sign-in. Authenticated when user attempts to sign in with one of stored IPs.
+   * @return historySize
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "History of IP addresses user used to sign-in. Authenticated when user attempts to sign in with one of stored IPs.")
+
+  public Integer getHistorySize() {
+    return historySize;
+  }
+
+
+  public void setHistorySize(Integer historySize) {
+    this.historySize = historySize;
+  }
+
+
+  public SHAppCfgAuthsValue extractLogin(String extractLogin) {
+    
+    this.extractLogin = extractLogin;
+    return this;
+  }
+
+   /**
+   * Path for login in id-token or user-info endpoint response. e.g. &#x60;res.user.id&#x60; extracts user login from &#x60;{ \&quot;res\&quot;: { \&quot;user\&quot;: { \&quot;id\&quot;: \&quot;...\&quot; } } }&#x60;
+   * @return extractLogin
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Path for login in id-token or user-info endpoint response. e.g. `res.user.id` extracts user login from `{ \"res\": { \"user\": { \"id\": \"...\" } } }`")
+
+  public String getExtractLogin() {
+    return extractLogin;
+  }
+
+
+  public void setExtractLogin(String extractLogin) {
+    this.extractLogin = extractLogin;
+  }
+
+
+  public SHAppCfgAuthsValue tokenUrl(String tokenUrl) {
+    
+    this.tokenUrl = tokenUrl;
+    return this;
+  }
+
+   /**
+   * Url to get access token by authorisation code.
+   * @return tokenUrl
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Url to get access token by authorisation code.")
+
+  public String getTokenUrl() {
+    return tokenUrl;
+  }
+
+
+  public void setTokenUrl(String tokenUrl) {
+    this.tokenUrl = tokenUrl;
+  }
+
+
+  public SHAppCfgAuthsValue clientId(String clientId) {
+    
+    this.clientId = clientId;
+    return this;
+  }
+
+   /**
+   * OAuth client id. Client must be registered on OAuth provider (e.g. facebook, google)
+   * @return clientId
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "OAuth client id. Client must be registered on OAuth provider (e.g. facebook, google)")
+
+  public String getClientId() {
+    return clientId;
+  }
+
+
+  public void setClientId(String clientId) {
+    this.clientId = clientId;
+  }
+
+
+  public SHAppCfgAuthsValue clientSecret(String clientSecret) {
+    
+    this.clientSecret = clientSecret;
+    return this;
+  }
+
+   /**
+   * OAuth client secret.
+   * @return clientSecret
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "OAuth client secret.")
+
+  public String getClientSecret() {
+    return clientSecret;
+  }
+
+
+  public void setClientSecret(String clientSecret) {
+    this.clientSecret = clientSecret;
+  }
+
+
+  public SHAppCfgAuthsValue userInfoUrl(String userInfoUrl) {
+    
+    this.userInfoUrl = userInfoUrl;
+    return this;
+  }
+
+   /**
+   * If access token provided in request, app tries to extract user id from user-info endpoint.
+   * @return userInfoUrl
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "If access token provided in request, app tries to extract user id from user-info endpoint.")
+
+  public String getUserInfoUrl() {
+    return userInfoUrl;
+  }
+
+
+  public void setUserInfoUrl(String userInfoUrl) {
+    this.userInfoUrl = userInfoUrl;
+  }
+
+
+  public SHAppCfgAuthsValue sendTokenInQuery(String sendTokenInQuery) {
+    
+    this.sendTokenInQuery = sendTokenInQuery;
+    return this;
+  }
+
+   /**
+   * Send token in query param.
+   * @return sendTokenInQuery
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Send token in query param.")
+
+  public String getSendTokenInQuery() {
+    return sendTokenInQuery;
+  }
+
+
+  public void setSendTokenInQuery(String sendTokenInQuery) {
+    this.sendTokenInQuery = sendTokenInQuery;
+  }
+
+
+  public SHAppCfgAuthsValue sendTokenInHeader(Boolean sendTokenInHeader) {
+    
+    this.sendTokenInHeader = sendTokenInHeader;
+    return this;
+  }
+
+   /**
+   * Send token in Authorisation header.
+   * @return sendTokenInHeader
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Send token in Authorisation header.")
+
+  public Boolean getSendTokenInHeader() {
+    return sendTokenInHeader;
+  }
+
+
+  public void setSendTokenInHeader(Boolean sendTokenInHeader) {
+    this.sendTokenInHeader = sendTokenInHeader;
+  }
+
+
+  public SHAppCfgAuthsValue extractPublicData(Map<String, String> extractPublicData) {
+    
+    this.extractPublicData = extractPublicData;
+    return this;
+  }
+
+  public SHAppCfgAuthsValue putExtractPublicDataItem(String key, String extractPublicDataItem) {
+    if (this.extractPublicData == null) {
+      this.extractPublicData = new HashMap<>();
     }
+    this.extractPublicData.put(key, extractPublicDataItem);
+    return this;
+  }
 
-    public SHAppCfgAuthsValue(PasswordAuthCfg o) {
-        super("anyOf", Boolean.FALSE);
-        setActualInstance(o);
+   /**
+   * Can fill public data by a response of user-info or id-token.
+   * @return extractPublicData
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Can fill public data by a response of user-info or id-token.")
+
+  public Map<String, String> getExtractPublicData() {
+    return extractPublicData;
+  }
+
+
+  public void setExtractPublicData(Map<String, String> extractPublicData) {
+    this.extractPublicData = extractPublicData;
+  }
+
+
+  public SHAppCfgAuthsValue maxLength(Integer maxLength) {
+    
+    this.maxLength = maxLength;
+    return this;
+  }
+
+   /**
+   * Max length of answer.
+   * @return maxLength
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Max length of answer.")
+
+  public Integer getMaxLength() {
+    return maxLength;
+  }
+
+
+  public void setMaxLength(Integer maxLength) {
+    this.maxLength = maxLength;
+  }
+
+
+  public SHAppCfgAuthsValue minLength(Integer minLength) {
+    
+    this.minLength = minLength;
+    return this;
+  }
+
+   /**
+   * Min length of answer. Length are checked after all answer transformation.
+   * @return minLength
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Min length of answer. Length are checked after all answer transformation.")
+
+  public Integer getMinLength() {
+    return minLength;
+  }
+
+
+  public void setMinLength(Integer minLength) {
+    this.minLength = minLength;
+  }
+
+
+  public SHAppCfgAuthsValue requireNumber(Boolean requireNumber) {
+    
+    this.requireNumber = requireNumber;
+    return this;
+  }
+
+   /**
+   * Require password to contain at least one digit.
+   * @return requireNumber
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Require password to contain at least one digit.")
+
+  public Boolean getRequireNumber() {
+    return requireNumber;
+  }
+
+
+  public void setRequireNumber(Boolean requireNumber) {
+    this.requireNumber = requireNumber;
+  }
+
+
+  public SHAppCfgAuthsValue requireSymbol(Boolean requireSymbol) {
+    
+    this.requireSymbol = requireSymbol;
+    return this;
+  }
+
+   /**
+   * Require password to contain at least one symbol e.g. @, !, &amp;...
+   * @return requireSymbol
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Require password to contain at least one symbol e.g. @, !, &...")
+
+  public Boolean getRequireSymbol() {
+    return requireSymbol;
+  }
+
+
+  public void setRequireSymbol(Boolean requireSymbol) {
+    this.requireSymbol = requireSymbol;
+  }
+
+
+  public SHAppCfgAuthsValue requireUpperCase(Boolean requireUpperCase) {
+    
+    this.requireUpperCase = requireUpperCase;
+    return this;
+  }
+
+   /**
+   * This requires password to contain both lowercase and uppercase letters.
+   * @return requireUpperCase
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "This requires password to contain both lowercase and uppercase letters.")
+
+  public Boolean getRequireUpperCase() {
+    return requireUpperCase;
+  }
+
+
+  public void setRequireUpperCase(Boolean requireUpperCase) {
+    this.requireUpperCase = requireUpperCase;
+  }
+
+
+  public SHAppCfgAuthsValue forbidCommonPasswords(Boolean forbidCommonPasswords) {
+    
+    this.forbidCommonPasswords = forbidCommonPasswords;
+    return this;
+  }
+
+   /**
+   * Password will be checked against table 1,000,000 of most overused passwords.
+   * @return forbidCommonPasswords
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Password will be checked against table 1,000,000 of most overused passwords.")
+
+  public Boolean getForbidCommonPasswords() {
+    return forbidCommonPasswords;
+  }
+
+
+  public void setForbidCommonPasswords(Boolean forbidCommonPasswords) {
+    this.forbidCommonPasswords = forbidCommonPasswords;
+  }
+
+
+  public SHAppCfgAuthsValue forbidLoginAsPassword(Boolean forbidLoginAsPassword) {
+    
+    this.forbidLoginAsPassword = forbidLoginAsPassword;
+    return this;
+  }
+
+   /**
+   * Rejects passwords that match username, email, anything that used as a login according to logins config.
+   * @return forbidLoginAsPassword
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Rejects passwords that match username, email, anything that used as a login according to logins config.")
+
+  public Boolean getForbidLoginAsPassword() {
+    return forbidLoginAsPassword;
+  }
+
+
+  public void setForbidLoginAsPassword(Boolean forbidLoginAsPassword) {
+    this.forbidLoginAsPassword = forbidLoginAsPassword;
+  }
+
+
+  public SHAppCfgAuthsValue forbidReusingPassword(PasswordHistoryCfg forbidReusingPassword) {
+    
+    this.forbidReusingPassword = forbidReusingPassword;
+    return this;
+  }
+
+   /**
+   * Get forbidReusingPassword
+   * @return forbidReusingPassword
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public PasswordHistoryCfg getForbidReusingPassword() {
+    return forbidReusingPassword;
+  }
+
+
+  public void setForbidReusingPassword(PasswordHistoryCfg forbidReusingPassword) {
+    this.forbidReusingPassword = forbidReusingPassword;
+  }
+
+
+  public SHAppCfgAuthsValue strength(Map<String, PasswordStrengthRequirements> strength) {
+    
+    this.strength = strength;
+    return this;
+  }
+
+  public SHAppCfgAuthsValue putStrengthItem(String key, PasswordStrengthRequirements strengthItem) {
+    if (this.strength == null) {
+      this.strength = new HashMap<>();
     }
+    this.strength.put(key, strengthItem);
+    return this;
+  }
 
-    public SHAppCfgAuthsValue(QuestionsAuthCfg o) {
-        super("anyOf", Boolean.FALSE);
-        setActualInstance(o);
+   /**
+   * Allows to calculate password strength based on mentioned criteria. Requirements will be checked one by one until first failed. 
+   * @return strength
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Allows to calculate password strength based on mentioned criteria. Requirements will be checked one by one until first failed. ")
+
+  public Map<String, PasswordStrengthRequirements> getStrength() {
+    return strength;
+  }
+
+
+  public void setStrength(Map<String, PasswordStrengthRequirements> strength) {
+    this.strength = strength;
+  }
+
+
+  public SHAppCfgAuthsValue lowercase(Boolean lowercase) {
+    
+    this.lowercase = lowercase;
+    return this;
+  }
+
+   /**
+   * Transform user answer to lowercase letters. This allows user still pass a check when he wrote name or city with different cases. &#x60;false&#x60; means strict match, so \&quot;John\&quot; !&#x3D; \&quot;john\&quot;
+   * @return lowercase
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Transform user answer to lowercase letters. This allows user still pass a check when he wrote name or city with different cases. `false` means strict match, so \"John\" != \"john\"")
+
+  public Boolean getLowercase() {
+    return lowercase;
+  }
+
+
+  public void setLowercase(Boolean lowercase) {
+    this.lowercase = lowercase;
+  }
+
+
+  public SHAppCfgAuthsValue removeSymbols(Boolean removeSymbols) {
+    
+    this.removeSymbols = removeSymbols;
+    return this;
+  }
+
+   /**
+   * Remove all non-letters from user answer.
+   * @return removeSymbols
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Remove all non-letters from user answer.")
+
+  public Boolean getRemoveSymbols() {
+    return removeSymbols;
+  }
+
+
+  public void setRemoveSymbols(Boolean removeSymbols) {
+    this.removeSymbols = removeSymbols;
+  }
+
+
+  public SHAppCfgAuthsValue removeSpaces(Boolean removeSpaces) {
+    
+    this.removeSpaces = removeSpaces;
+    return this;
+  }
+
+   /**
+   * Remove all spaces from user answer.
+   * @return removeSpaces
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Remove all spaces from user answer.")
+
+  public Boolean getRemoveSpaces() {
+    return removeSpaces;
+  }
+
+
+  public void setRemoveSpaces(Boolean removeSpaces) {
+    this.removeSpaces = removeSpaces;
+  }
+
+
+  public SHAppCfgAuthsValue answersRequired(Integer answersRequired) {
+    
+    this.answersRequired = answersRequired;
+    return this;
+  }
+
+   /**
+   * Min number of answers required to pass this check.
+   * @return answersRequired
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Min number of answers required to pass this check.")
+
+  public Integer getAnswersRequired() {
+    return answersRequired;
+  }
+
+
+  public void setAnswersRequired(Integer answersRequired) {
+    this.answersRequired = answersRequired;
+  }
+
+
+  public SHAppCfgAuthsValue maxAnswers(Integer maxAnswers) {
+    
+    this.maxAnswers = maxAnswers;
+    return this;
+  }
+
+   /**
+   * Max answers that user can save.
+   * @return maxAnswers
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Max answers that user can save.")
+
+  public Integer getMaxAnswers() {
+    return maxAnswers;
+  }
+
+
+  public void setMaxAnswers(Integer maxAnswers) {
+    this.maxAnswers = maxAnswers;
+  }
+
+  /**
+   * A container for additional, undeclared properties.
+   * This is a holder for any undeclared properties as specified with
+   * the 'additionalProperties' keyword in the OAS document.
+   */
+  private Map<String, Object> additionalProperties;
+
+  /**
+   * Set the additional (undeclared) property with the specified name and value.
+   * If the property does not already exist, create it otherwise replace it.
+   */
+  public SHAppCfgAuthsValue putAdditionalProperty(String key, Object value) {
+    if (this.additionalProperties == null) {
+        this.additionalProperties = new HashMap<String, Object>();
     }
+    this.additionalProperties.put(key, value);
+    return this;
+  }
 
-    public SHAppCfgAuthsValue(RemoteAuthCfg o) {
-        super("anyOf", Boolean.FALSE);
-        setActualInstance(o);
+  /**
+   * Return the additional (undeclared) property.
+   */
+  public Map<String, Object> getAdditionalProperties() {
+    return additionalProperties;
+  }
+
+  /**
+   * Return the additional (undeclared) property with the specified name.
+   */
+  public Object getAdditionalProperty(String key) {
+    if (this.additionalProperties == null) {
+        return null;
     }
+    return this.additionalProperties.get(key);
+  }
 
-    static {
-        schemas.put("AppSecretAuthCfg", new GenericType<AppSecretAuthCfg>() {
-        });
-        schemas.put("EmailAuthCfg", new GenericType<EmailAuthCfg>() {
-        });
-        schemas.put("IpAuthCfg", new GenericType<IpAuthCfg>() {
-        });
-        schemas.put("OAuthCfg", new GenericType<OAuthCfg>() {
-        });
-        schemas.put("PasswordAuthCfg", new GenericType<PasswordAuthCfg>() {
-        });
-        schemas.put("QuestionsAuthCfg", new GenericType<QuestionsAuthCfg>() {
-        });
-        schemas.put("RemoteAuthCfg", new GenericType<RemoteAuthCfg>() {
-        });
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
     }
-
-    @Override
-    public Map<String, GenericType> getSchemas() {
-        return SHAppCfgAuthsValue.schemas;
+    if (o == null || getClass() != o.getClass()) {
+      return false;
     }
+    SHAppCfgAuthsValue shAppCfgAuthsValue = (SHAppCfgAuthsValue) o;
+    return Objects.equals(this.remote, shAppCfgAuthsValue.remote) &&
+        Objects.equals(this.requiresAuth, shAppCfgAuthsValue.requiresAuth) &&
+        Objects.equals(this.skipOnFail, shAppCfgAuthsValue.skipOnFail) &&
+        Objects.equals(this.rateLimiter, shAppCfgAuthsValue.rateLimiter) &&
+        Objects.equals(this.burnQuota, shAppCfgAuthsValue.burnQuota) &&
+        Objects.equals(this.query, shAppCfgAuthsValue.query) &&
+        Objects.equals(this.headers, shAppCfgAuthsValue.headers) &&
+        Objects.equals(this.code, shAppCfgAuthsValue.code) &&
+        Objects.equals(this.server, shAppCfgAuthsValue.server) &&
+        Objects.equals(this.sender, shAppCfgAuthsValue.sender) &&
+        Objects.equals(this.username, shAppCfgAuthsValue.username) &&
+        Objects.equals(this.password, shAppCfgAuthsValue.password) &&
+        Objects.equals(this.confirmationUrl, shAppCfgAuthsValue.confirmationUrl) &&
+        Objects.equals(this.templates, shAppCfgAuthsValue.templates) &&
+        Objects.equals(this.templateParams, shAppCfgAuthsValue.templateParams) &&
+        Objects.equals(this.ipBytesToIgnore, shAppCfgAuthsValue.ipBytesToIgnore) &&
+        Objects.equals(this.historySize, shAppCfgAuthsValue.historySize) &&
+        Objects.equals(this.extractLogin, shAppCfgAuthsValue.extractLogin) &&
+        Objects.equals(this.tokenUrl, shAppCfgAuthsValue.tokenUrl) &&
+        Objects.equals(this.clientId, shAppCfgAuthsValue.clientId) &&
+        Objects.equals(this.clientSecret, shAppCfgAuthsValue.clientSecret) &&
+        Objects.equals(this.userInfoUrl, shAppCfgAuthsValue.userInfoUrl) &&
+        Objects.equals(this.sendTokenInQuery, shAppCfgAuthsValue.sendTokenInQuery) &&
+        Objects.equals(this.sendTokenInHeader, shAppCfgAuthsValue.sendTokenInHeader) &&
+        Objects.equals(this.extractPublicData, shAppCfgAuthsValue.extractPublicData) &&
+        Objects.equals(this.maxLength, shAppCfgAuthsValue.maxLength) &&
+        Objects.equals(this.minLength, shAppCfgAuthsValue.minLength) &&
+        Objects.equals(this.requireNumber, shAppCfgAuthsValue.requireNumber) &&
+        Objects.equals(this.requireSymbol, shAppCfgAuthsValue.requireSymbol) &&
+        Objects.equals(this.requireUpperCase, shAppCfgAuthsValue.requireUpperCase) &&
+        Objects.equals(this.forbidCommonPasswords, shAppCfgAuthsValue.forbidCommonPasswords) &&
+        Objects.equals(this.forbidLoginAsPassword, shAppCfgAuthsValue.forbidLoginAsPassword) &&
+        Objects.equals(this.forbidReusingPassword, shAppCfgAuthsValue.forbidReusingPassword) &&
+        Objects.equals(this.strength, shAppCfgAuthsValue.strength) &&
+        Objects.equals(this.lowercase, shAppCfgAuthsValue.lowercase) &&
+        Objects.equals(this.removeSymbols, shAppCfgAuthsValue.removeSymbols) &&
+        Objects.equals(this.removeSpaces, shAppCfgAuthsValue.removeSpaces) &&
+        Objects.equals(this.answersRequired, shAppCfgAuthsValue.answersRequired) &&
+        Objects.equals(this.maxAnswers, shAppCfgAuthsValue.maxAnswers)&&
+        Objects.equals(this.additionalProperties, shAppCfgAuthsValue.additionalProperties);
+  }
 
-    /**
-     * Set the instance that matches the anyOf child schema, check
-     * the instance parameter is valid against the anyOf child schemas:
-     * AppSecretAuthCfg, EmailAuthCfg, IpAuthCfg, OAuthCfg, PasswordAuthCfg, QuestionsAuthCfg, RemoteAuthCfg
-     *
-     * It could be an instance of the 'anyOf' schemas.
-     * The anyOf child schemas may themselves be a composed schema (allOf, anyOf, anyOf).
-     */
-    @Override
-    public void setActualInstance(Object instance) {
-        if (instance instanceof AppSecretAuthCfg) {
-            super.setActualInstance(instance);
-            return;
-        }
+  @Override
+  public int hashCode() {
+    return Objects.hash(remote, requiresAuth, skipOnFail, rateLimiter, burnQuota, query, headers, code, server, sender, username, password, confirmationUrl, templates, templateParams, ipBytesToIgnore, historySize, extractLogin, tokenUrl, clientId, clientSecret, userInfoUrl, sendTokenInQuery, sendTokenInHeader, extractPublicData, maxLength, minLength, requireNumber, requireSymbol, requireUpperCase, forbidCommonPasswords, forbidLoginAsPassword, forbidReusingPassword, strength, lowercase, removeSymbols, removeSpaces, answersRequired, maxAnswers, additionalProperties);
+  }
 
-        if (instance instanceof EmailAuthCfg) {
-            super.setActualInstance(instance);
-            return;
-        }
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("class SHAppCfgAuthsValue {\n");
+    sb.append("    remote: ").append(toIndentedString(remote)).append("\n");
+    sb.append("    requiresAuth: ").append(toIndentedString(requiresAuth)).append("\n");
+    sb.append("    skipOnFail: ").append(toIndentedString(skipOnFail)).append("\n");
+    sb.append("    rateLimiter: ").append(toIndentedString(rateLimiter)).append("\n");
+    sb.append("    burnQuota: ").append(toIndentedString(burnQuota)).append("\n");
+    sb.append("    query: ").append(toIndentedString(query)).append("\n");
+    sb.append("    headers: ").append(toIndentedString(headers)).append("\n");
+    sb.append("    code: ").append(toIndentedString(code)).append("\n");
+    sb.append("    server: ").append(toIndentedString(server)).append("\n");
+    sb.append("    sender: ").append(toIndentedString(sender)).append("\n");
+    sb.append("    username: ").append(toIndentedString(username)).append("\n");
+    sb.append("    password: ").append(toIndentedString(password)).append("\n");
+    sb.append("    confirmationUrl: ").append(toIndentedString(confirmationUrl)).append("\n");
+    sb.append("    templates: ").append(toIndentedString(templates)).append("\n");
+    sb.append("    templateParams: ").append(toIndentedString(templateParams)).append("\n");
+    sb.append("    ipBytesToIgnore: ").append(toIndentedString(ipBytesToIgnore)).append("\n");
+    sb.append("    historySize: ").append(toIndentedString(historySize)).append("\n");
+    sb.append("    extractLogin: ").append(toIndentedString(extractLogin)).append("\n");
+    sb.append("    tokenUrl: ").append(toIndentedString(tokenUrl)).append("\n");
+    sb.append("    clientId: ").append(toIndentedString(clientId)).append("\n");
+    sb.append("    clientSecret: ").append(toIndentedString(clientSecret)).append("\n");
+    sb.append("    userInfoUrl: ").append(toIndentedString(userInfoUrl)).append("\n");
+    sb.append("    sendTokenInQuery: ").append(toIndentedString(sendTokenInQuery)).append("\n");
+    sb.append("    sendTokenInHeader: ").append(toIndentedString(sendTokenInHeader)).append("\n");
+    sb.append("    extractPublicData: ").append(toIndentedString(extractPublicData)).append("\n");
+    sb.append("    maxLength: ").append(toIndentedString(maxLength)).append("\n");
+    sb.append("    minLength: ").append(toIndentedString(minLength)).append("\n");
+    sb.append("    requireNumber: ").append(toIndentedString(requireNumber)).append("\n");
+    sb.append("    requireSymbol: ").append(toIndentedString(requireSymbol)).append("\n");
+    sb.append("    requireUpperCase: ").append(toIndentedString(requireUpperCase)).append("\n");
+    sb.append("    forbidCommonPasswords: ").append(toIndentedString(forbidCommonPasswords)).append("\n");
+    sb.append("    forbidLoginAsPassword: ").append(toIndentedString(forbidLoginAsPassword)).append("\n");
+    sb.append("    forbidReusingPassword: ").append(toIndentedString(forbidReusingPassword)).append("\n");
+    sb.append("    strength: ").append(toIndentedString(strength)).append("\n");
+    sb.append("    lowercase: ").append(toIndentedString(lowercase)).append("\n");
+    sb.append("    removeSymbols: ").append(toIndentedString(removeSymbols)).append("\n");
+    sb.append("    removeSpaces: ").append(toIndentedString(removeSpaces)).append("\n");
+    sb.append("    answersRequired: ").append(toIndentedString(answersRequired)).append("\n");
+    sb.append("    maxAnswers: ").append(toIndentedString(maxAnswers)).append("\n");
+    sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
+    sb.append("}");
+    return sb.toString();
+  }
 
-        if (instance instanceof IpAuthCfg) {
-            super.setActualInstance(instance);
-            return;
-        }
-
-        if (instance instanceof OAuthCfg) {
-            super.setActualInstance(instance);
-            return;
-        }
-
-        if (instance instanceof PasswordAuthCfg) {
-            super.setActualInstance(instance);
-            return;
-        }
-
-        if (instance instanceof QuestionsAuthCfg) {
-            super.setActualInstance(instance);
-            return;
-        }
-
-        if (instance instanceof RemoteAuthCfg) {
-            super.setActualInstance(instance);
-            return;
-        }
-
-        throw new RuntimeException("Invalid instance type. Must be AppSecretAuthCfg, EmailAuthCfg, IpAuthCfg, OAuthCfg, PasswordAuthCfg, QuestionsAuthCfg, RemoteAuthCfg");
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(Object o) {
+    if (o == null) {
+      return "null";
     }
+    return o.toString().replace("\n", "\n    ");
+  }
 
-    /**
-     * Get the actual instance, which can be the following:
-     * AppSecretAuthCfg, EmailAuthCfg, IpAuthCfg, OAuthCfg, PasswordAuthCfg, QuestionsAuthCfg, RemoteAuthCfg
-     *
-     * @return The actual instance (AppSecretAuthCfg, EmailAuthCfg, IpAuthCfg, OAuthCfg, PasswordAuthCfg, QuestionsAuthCfg, RemoteAuthCfg)
-     */
-    @Override
-    public Object getActualInstance() {
-        return super.getActualInstance();
-    }
 
-    /**
-     * Get the actual instance of `AppSecretAuthCfg`. If the actual instance is not `AppSecretAuthCfg`,
-     * the ClassCastException will be thrown.
-     *
-     * @return The actual instance of `AppSecretAuthCfg`
-     * @throws ClassCastException if the instance is not `AppSecretAuthCfg`
-     */
-    public AppSecretAuthCfg getAppSecretAuthCfg() throws ClassCastException {
-        return (AppSecretAuthCfg)super.getActualInstance();
-    }
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
 
-    /**
-     * Get the actual instance of `EmailAuthCfg`. If the actual instance is not `EmailAuthCfg`,
-     * the ClassCastException will be thrown.
-     *
-     * @return The actual instance of `EmailAuthCfg`
-     * @throws ClassCastException if the instance is not `EmailAuthCfg`
-     */
-    public EmailAuthCfg getEmailAuthCfg() throws ClassCastException {
-        return (EmailAuthCfg)super.getActualInstance();
-    }
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("remote");
+    openapiFields.add("requiresAuth");
+    openapiFields.add("skipOnFail");
+    openapiFields.add("rateLimiter");
+    openapiFields.add("burnQuota");
+    openapiFields.add("query");
+    openapiFields.add("headers");
+    openapiFields.add("code");
+    openapiFields.add("server");
+    openapiFields.add("sender");
+    openapiFields.add("username");
+    openapiFields.add("password");
+    openapiFields.add("confirmationUrl");
+    openapiFields.add("templates");
+    openapiFields.add("templateParams");
+    openapiFields.add("ipBytesToIgnore");
+    openapiFields.add("historySize");
+    openapiFields.add("extractLogin");
+    openapiFields.add("tokenUrl");
+    openapiFields.add("clientId");
+    openapiFields.add("clientSecret");
+    openapiFields.add("userInfoUrl");
+    openapiFields.add("sendTokenInQuery");
+    openapiFields.add("sendTokenInHeader");
+    openapiFields.add("extractPublicData");
+    openapiFields.add("maxLength");
+    openapiFields.add("minLength");
+    openapiFields.add("requireNumber");
+    openapiFields.add("requireSymbol");
+    openapiFields.add("requireUpperCase");
+    openapiFields.add("forbidCommonPasswords");
+    openapiFields.add("forbidLoginAsPassword");
+    openapiFields.add("forbidReusingPassword");
+    openapiFields.add("strength");
+    openapiFields.add("lowercase");
+    openapiFields.add("removeSymbols");
+    openapiFields.add("removeSpaces");
+    openapiFields.add("answersRequired");
+    openapiFields.add("maxAnswers");
 
-    /**
-     * Get the actual instance of `IpAuthCfg`. If the actual instance is not `IpAuthCfg`,
-     * the ClassCastException will be thrown.
-     *
-     * @return The actual instance of `IpAuthCfg`
-     * @throws ClassCastException if the instance is not `IpAuthCfg`
-     */
-    public IpAuthCfg getIpAuthCfg() throws ClassCastException {
-        return (IpAuthCfg)super.getActualInstance();
-    }
-
-    /**
-     * Get the actual instance of `OAuthCfg`. If the actual instance is not `OAuthCfg`,
-     * the ClassCastException will be thrown.
-     *
-     * @return The actual instance of `OAuthCfg`
-     * @throws ClassCastException if the instance is not `OAuthCfg`
-     */
-    public OAuthCfg getOAuthCfg() throws ClassCastException {
-        return (OAuthCfg)super.getActualInstance();
-    }
-
-    /**
-     * Get the actual instance of `PasswordAuthCfg`. If the actual instance is not `PasswordAuthCfg`,
-     * the ClassCastException will be thrown.
-     *
-     * @return The actual instance of `PasswordAuthCfg`
-     * @throws ClassCastException if the instance is not `PasswordAuthCfg`
-     */
-    public PasswordAuthCfg getPasswordAuthCfg() throws ClassCastException {
-        return (PasswordAuthCfg)super.getActualInstance();
-    }
-
-    /**
-     * Get the actual instance of `QuestionsAuthCfg`. If the actual instance is not `QuestionsAuthCfg`,
-     * the ClassCastException will be thrown.
-     *
-     * @return The actual instance of `QuestionsAuthCfg`
-     * @throws ClassCastException if the instance is not `QuestionsAuthCfg`
-     */
-    public QuestionsAuthCfg getQuestionsAuthCfg() throws ClassCastException {
-        return (QuestionsAuthCfg)super.getActualInstance();
-    }
-
-    /**
-     * Get the actual instance of `RemoteAuthCfg`. If the actual instance is not `RemoteAuthCfg`,
-     * the ClassCastException will be thrown.
-     *
-     * @return The actual instance of `RemoteAuthCfg`
-     * @throws ClassCastException if the instance is not `RemoteAuthCfg`
-     */
-    public RemoteAuthCfg getRemoteAuthCfg() throws ClassCastException {
-        return (RemoteAuthCfg)super.getActualInstance();
-    }
-
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
 
  /**
   * Validates the JSON Object and throws an exception if issues found
@@ -462,66 +1377,127 @@ public class SHAppCfgAuthsValue extends AbstractOpenApiSchema {
   * @throws IOException if the JSON Object is invalid with respect to SHAppCfgAuthsValue
   */
   public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-    // validate anyOf schemas one by one
-    int validCount = 0;
-    // validate the json string with AppSecretAuthCfg
-    try {
-      AppSecretAuthCfg.validateJsonObject(jsonObj);
-      return; // return earlier as at least one schema is valid with respect to the Json object
-      //validCount++;
-    } catch (Exception e) {
-      // continue to the next one
-    }
-    // validate the json string with EmailAuthCfg
-    try {
-      EmailAuthCfg.validateJsonObject(jsonObj);
-      return; // return earlier as at least one schema is valid with respect to the Json object
-      //validCount++;
-    } catch (Exception e) {
-      // continue to the next one
-    }
-    // validate the json string with IpAuthCfg
-    try {
-      IpAuthCfg.validateJsonObject(jsonObj);
-      return; // return earlier as at least one schema is valid with respect to the Json object
-      //validCount++;
-    } catch (Exception e) {
-      // continue to the next one
-    }
-    // validate the json string with OAuthCfg
-    try {
-      OAuthCfg.validateJsonObject(jsonObj);
-      return; // return earlier as at least one schema is valid with respect to the Json object
-      //validCount++;
-    } catch (Exception e) {
-      // continue to the next one
-    }
-    // validate the json string with PasswordAuthCfg
-    try {
-      PasswordAuthCfg.validateJsonObject(jsonObj);
-      return; // return earlier as at least one schema is valid with respect to the Json object
-      //validCount++;
-    } catch (Exception e) {
-      // continue to the next one
-    }
-    // validate the json string with QuestionsAuthCfg
-    try {
-      QuestionsAuthCfg.validateJsonObject(jsonObj);
-      return; // return earlier as at least one schema is valid with respect to the Json object
-      //validCount++;
-    } catch (Exception e) {
-      // continue to the next one
-    }
-    // validate the json string with RemoteAuthCfg
-    try {
-      RemoteAuthCfg.validateJsonObject(jsonObj);
-      return; // return earlier as at least one schema is valid with respect to the Json object
-      //validCount++;
-    } catch (Exception e) {
-      // continue to the next one
-    }
-    if (validCount == 0) {
-      throw new IOException(String.format("The JSON string is invalid for SHAppCfgAuthsValue with anyOf schemas: AppSecretAuthCfg, EmailAuthCfg, IpAuthCfg, OAuthCfg, PasswordAuthCfg, QuestionsAuthCfg, RemoteAuthCfg. JSON: %s", jsonObj.toString()));
+      if (jsonObj == null) {
+        if (SHAppCfgAuthsValue.openapiRequiredFields.isEmpty()) {
+          return;
+        } else { // has required fields
+          throw new IllegalArgumentException(String.format("The required field(s) %s in SHAppCfgAuthsValue is not found in the empty JSON string", SHAppCfgAuthsValue.openapiRequiredFields.toString()));
+        }
+      }
+      if ((jsonObj.get("remote") != null && !jsonObj.get("remote").isJsonNull()) && !jsonObj.get("remote").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `remote` to be a primitive type in the JSON string but got `%s`", jsonObj.get("remote").toString()));
+      }
+      // ensure the json data is an array
+      if ((jsonObj.get("requiresAuth") != null && !jsonObj.get("requiresAuth").isJsonNull()) && !jsonObj.get("requiresAuth").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `requiresAuth` to be an array in the JSON string but got `%s`", jsonObj.get("requiresAuth").toString()));
+      }
+      if ((jsonObj.get("rateLimiter") != null && !jsonObj.get("rateLimiter").isJsonNull()) && !jsonObj.get("rateLimiter").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `rateLimiter` to be a primitive type in the JSON string but got `%s`", jsonObj.get("rateLimiter").toString()));
+      }
+      // validate the optional field `code`
+      if (jsonObj.get("code") != null && !jsonObj.get("code").isJsonNull()) {
+        CodeCfg.validateJsonObject(jsonObj.getAsJsonObject("code"));
+      }
+      if ((jsonObj.get("server") != null && !jsonObj.get("server").isJsonNull()) && !jsonObj.get("server").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `server` to be a primitive type in the JSON string but got `%s`", jsonObj.get("server").toString()));
+      }
+      if ((jsonObj.get("sender") != null && !jsonObj.get("sender").isJsonNull()) && !jsonObj.get("sender").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `sender` to be a primitive type in the JSON string but got `%s`", jsonObj.get("sender").toString()));
+      }
+      if ((jsonObj.get("username") != null && !jsonObj.get("username").isJsonNull()) && !jsonObj.get("username").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `username` to be a primitive type in the JSON string but got `%s`", jsonObj.get("username").toString()));
+      }
+      if ((jsonObj.get("password") != null && !jsonObj.get("password").isJsonNull()) && !jsonObj.get("password").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `password` to be a primitive type in the JSON string but got `%s`", jsonObj.get("password").toString()));
+      }
+      if ((jsonObj.get("confirmationUrl") != null && !jsonObj.get("confirmationUrl").isJsonNull()) && !jsonObj.get("confirmationUrl").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `confirmationUrl` to be a primitive type in the JSON string but got `%s`", jsonObj.get("confirmationUrl").toString()));
+      }
+      if ((jsonObj.get("extractLogin") != null && !jsonObj.get("extractLogin").isJsonNull()) && !jsonObj.get("extractLogin").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `extractLogin` to be a primitive type in the JSON string but got `%s`", jsonObj.get("extractLogin").toString()));
+      }
+      if ((jsonObj.get("tokenUrl") != null && !jsonObj.get("tokenUrl").isJsonNull()) && !jsonObj.get("tokenUrl").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `tokenUrl` to be a primitive type in the JSON string but got `%s`", jsonObj.get("tokenUrl").toString()));
+      }
+      if ((jsonObj.get("clientId") != null && !jsonObj.get("clientId").isJsonNull()) && !jsonObj.get("clientId").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `clientId` to be a primitive type in the JSON string but got `%s`", jsonObj.get("clientId").toString()));
+      }
+      if ((jsonObj.get("clientSecret") != null && !jsonObj.get("clientSecret").isJsonNull()) && !jsonObj.get("clientSecret").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `clientSecret` to be a primitive type in the JSON string but got `%s`", jsonObj.get("clientSecret").toString()));
+      }
+      if ((jsonObj.get("userInfoUrl") != null && !jsonObj.get("userInfoUrl").isJsonNull()) && !jsonObj.get("userInfoUrl").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `userInfoUrl` to be a primitive type in the JSON string but got `%s`", jsonObj.get("userInfoUrl").toString()));
+      }
+      if ((jsonObj.get("sendTokenInQuery") != null && !jsonObj.get("sendTokenInQuery").isJsonNull()) && !jsonObj.get("sendTokenInQuery").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `sendTokenInQuery` to be a primitive type in the JSON string but got `%s`", jsonObj.get("sendTokenInQuery").toString()));
+      }
+      // validate the optional field `forbidReusingPassword`
+      if (jsonObj.get("forbidReusingPassword") != null && !jsonObj.get("forbidReusingPassword").isJsonNull()) {
+        PasswordHistoryCfg.validateJsonObject(jsonObj.getAsJsonObject("forbidReusingPassword"));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!SHAppCfgAuthsValue.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'SHAppCfgAuthsValue' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<SHAppCfgAuthsValue> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(SHAppCfgAuthsValue.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<SHAppCfgAuthsValue>() {
+           @Override
+           public void write(JsonWriter out, SHAppCfgAuthsValue value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             obj.remove("additionalProperties");
+             // serialize additonal properties
+             if (value.getAdditionalProperties() != null) {
+               for (Map.Entry<String, Object> entry : value.getAdditionalProperties().entrySet()) {
+                 if (entry.getValue() instanceof String)
+                   obj.addProperty(entry.getKey(), (String) entry.getValue());
+                 else if (entry.getValue() instanceof Number)
+                   obj.addProperty(entry.getKey(), (Number) entry.getValue());
+                 else if (entry.getValue() instanceof Boolean)
+                   obj.addProperty(entry.getKey(), (Boolean) entry.getValue());
+                 else if (entry.getValue() instanceof Character)
+                   obj.addProperty(entry.getKey(), (Character) entry.getValue());
+                 else {
+                   obj.add(entry.getKey(), gson.toJsonTree(entry.getValue()).getAsJsonObject());
+                 }
+               }
+             }
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public SHAppCfgAuthsValue read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             // store additional fields in the deserialized instance
+             SHAppCfgAuthsValue instance = thisAdapter.fromJsonTree(jsonObj);
+             for (Map.Entry<String, JsonElement> entry : jsonObj.entrySet()) {
+               if (!openapiFields.contains(entry.getKey())) {
+                 if (entry.getValue().isJsonPrimitive()) { // primitive type
+                   if (entry.getValue().getAsJsonPrimitive().isString())
+                     instance.putAdditionalProperty(entry.getKey(), entry.getValue().getAsString());
+                   else if (entry.getValue().getAsJsonPrimitive().isNumber())
+                     instance.putAdditionalProperty(entry.getKey(), entry.getValue().getAsNumber());
+                   else if (entry.getValue().getAsJsonPrimitive().isBoolean())
+                     instance.putAdditionalProperty(entry.getKey(), entry.getValue().getAsBoolean());
+                   else
+                     throw new IllegalArgumentException(String.format("The field `%s` has unknown primitive type. Value: %s", entry.getKey(), entry.getValue().toString()));
+                 } else { // non-primitive type
+                   instance.putAdditionalProperty(entry.getKey(), gson.fromJson(entry.getValue(), HashMap.class));
+                 }
+               }
+             }
+             return instance;
+           }
+
+       }.nullSafe();
     }
   }
 

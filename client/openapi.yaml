@@ -400,8 +400,7 @@ paths:
                 $ref: '#/components/schemas/IntegrationErr'
       security:
       - access-token: []
-      - ? ""
-        : []
+      - {}
       x-order: 2
   /api/signature/verify:
     post:
@@ -1347,12 +1346,6 @@ components:
       additionalProperties: true
       allOf:
       - $ref: '#/components/schemas/AuthResData'
-      - type: object
-        properties:
-          key:
-            type: object
-            description: Ignore. Just workaround for bug in some open-generators
-            x-nullable: true
       x-order: -1249106462-8
     AuthUserCfg:
       type: object
@@ -1636,12 +1629,6 @@ components:
       additionalProperties: true
       allOf:
       - $ref: '#/components/schemas/AuthReqData'
-      - type: object
-        properties:
-          key:
-            type: object
-            description: Ignore. Just workaround for bug in some open-generators
-            x-nullable: true
       x-order: 1333651370-1
     AuthenticateReq:
       type: object

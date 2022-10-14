@@ -61,6 +61,10 @@ public class Unauthenticated {
   @SerializedName(SERIALIZED_NAME_MSG)
   private String msg;
 
+  public static final String SERIALIZED_NAME_EXPIRED_AT = "expiredAt";
+  @SerializedName(SERIALIZED_NAME_EXPIRED_AT)
+  private Long expiredAt;
+
   public Unauthenticated() {
   }
 
@@ -132,6 +136,29 @@ public class Unauthenticated {
     this.msg = msg;
   }
 
+
+  public Unauthenticated expiredAt(Long expiredAt) {
+    
+    this.expiredAt = expiredAt;
+    return this;
+  }
+
+   /**
+   * Get expiredAt
+   * @return expiredAt
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Long getExpiredAt() {
+    return expiredAt;
+  }
+
+
+  public void setExpiredAt(Long expiredAt) {
+    this.expiredAt = expiredAt;
+  }
+
   /**
    * A container for additional, undeclared properties.
    * This is a holder for any undeclared properties as specified with
@@ -180,13 +207,14 @@ public class Unauthenticated {
     Unauthenticated unauthenticated = (Unauthenticated) o;
     return Objects.equals(this.code, unauthenticated.code) &&
         Objects.equals(this.devMsg, unauthenticated.devMsg) &&
-        Objects.equals(this.msg, unauthenticated.msg)&&
+        Objects.equals(this.msg, unauthenticated.msg) &&
+        Objects.equals(this.expiredAt, unauthenticated.expiredAt)&&
         Objects.equals(this.additionalProperties, unauthenticated.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(code, devMsg, msg, additionalProperties);
+    return Objects.hash(code, devMsg, msg, expiredAt, additionalProperties);
   }
 
   @Override
@@ -196,6 +224,7 @@ public class Unauthenticated {
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    devMsg: ").append(toIndentedString(devMsg)).append("\n");
     sb.append("    msg: ").append(toIndentedString(msg)).append("\n");
+    sb.append("    expiredAt: ").append(toIndentedString(expiredAt)).append("\n");
     sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -222,6 +251,7 @@ public class Unauthenticated {
     openapiFields.add("code");
     openapiFields.add("devMsg");
     openapiFields.add("msg");
+    openapiFields.add("expiredAt");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();

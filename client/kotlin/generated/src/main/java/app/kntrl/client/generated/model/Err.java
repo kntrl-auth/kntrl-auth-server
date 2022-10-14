@@ -15,6 +15,8 @@ package app.kntrl.client.generated.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import app.kntrl.client.generated.model.AnswerErr;
+import app.kntrl.client.generated.model.LoginId;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -23,6 +25,10 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -60,6 +66,102 @@ public class Err {
   public static final String SERIALIZED_NAME_MSG = "msg";
   @SerializedName(SERIALIZED_NAME_MSG)
   private String msg;
+
+  public static final String SERIALIZED_NAME_CHANGED_AT = "changedAt";
+  @SerializedName(SERIALIZED_NAME_CHANGED_AT)
+  private Long changedAt;
+
+  public static final String SERIALIZED_NAME_CHANGED_DAYS_AGO = "changedDaysAgo";
+  @SerializedName(SERIALIZED_NAME_CHANGED_DAYS_AGO)
+  private Long changedDaysAgo;
+
+  public static final String SERIALIZED_NAME_TOO_LONG = "tooLong";
+  @SerializedName(SERIALIZED_NAME_TOO_LONG)
+  private Boolean tooLong;
+
+  public static final String SERIALIZED_NAME_TOO_SHORT = "tooShort";
+  @SerializedName(SERIALIZED_NAME_TOO_SHORT)
+  private Boolean tooShort;
+
+  public static final String SERIALIZED_NAME_MISSING_NUMBER = "missingNumber";
+  @SerializedName(SERIALIZED_NAME_MISSING_NUMBER)
+  private Boolean missingNumber;
+
+  public static final String SERIALIZED_NAME_MISSING_SYMBOL = "missingSymbol";
+  @SerializedName(SERIALIZED_NAME_MISSING_SYMBOL)
+  private Boolean missingSymbol;
+
+  public static final String SERIALIZED_NAME_MISSING_UPPER_CASE = "missingUpperCase";
+  @SerializedName(SERIALIZED_NAME_MISSING_UPPER_CASE)
+  private Boolean missingUpperCase;
+
+  public static final String SERIALIZED_NAME_MISSING_LOWER_CASE = "missingLowerCase";
+  @SerializedName(SERIALIZED_NAME_MISSING_LOWER_CASE)
+  private Boolean missingLowerCase;
+
+  public static final String SERIALIZED_NAME_COMMON_PASSWORD = "commonPassword";
+  @SerializedName(SERIALIZED_NAME_COMMON_PASSWORD)
+  private Boolean commonPassword;
+
+  public static final String SERIALIZED_NAME_WAS_USED_BEFORE_AT = "wasUsedBeforeAt";
+  @SerializedName(SERIALIZED_NAME_WAS_USED_BEFORE_AT)
+  private Long wasUsedBeforeAt;
+
+  public static final String SERIALIZED_NAME_MATCHES_LOGIN = "matchesLogin";
+  @SerializedName(SERIALIZED_NAME_MATCHES_LOGIN)
+  private LoginId matchesLogin;
+
+  public static final String SERIALIZED_NAME_PASSWORDS_MISMATCH = "passwordsMismatch";
+  @SerializedName(SERIALIZED_NAME_PASSWORDS_MISMATCH)
+  private Boolean passwordsMismatch;
+
+  public static final String SERIALIZED_NAME_STRENGTH = "strength";
+  @SerializedName(SERIALIZED_NAME_STRENGTH)
+  private String strength;
+
+  public static final String SERIALIZED_NAME_WAS_USED_DAYS_AGO = "wasUsedDaysAgo";
+  @SerializedName(SERIALIZED_NAME_WAS_USED_DAYS_AGO)
+  private Long wasUsedDaysAgo;
+
+  public static final String SERIALIZED_NAME_DATA = "data";
+  @SerializedName(SERIALIZED_NAME_DATA)
+  private Map<String, Object> data = null;
+
+  public static final String SERIALIZED_NAME_INCORRECT_ANSWERS = "incorrectAnswers";
+  @SerializedName(SERIALIZED_NAME_INCORRECT_ANSWERS)
+  private List<String> incorrectAnswers = null;
+
+  public static final String SERIALIZED_NAME_REQUIRES_MORE_ANSWERS = "requiresMoreAnswers";
+  @SerializedName(SERIALIZED_NAME_REQUIRES_MORE_ANSWERS)
+  private Boolean requiresMoreAnswers;
+
+  public static final String SERIALIZED_NAME_QUESTIONS_NOT_FOUND = "questionsNotFound";
+  @SerializedName(SERIALIZED_NAME_QUESTIONS_NOT_FOUND)
+  private List<String> questionsNotFound = null;
+
+  public static final String SERIALIZED_NAME_INVALID_ANSWERS = "invalidAnswers";
+  @SerializedName(SERIALIZED_NAME_INVALID_ANSWERS)
+  private Map<String, AnswerErr> invalidAnswers = null;
+
+  public static final String SERIALIZED_NAME_TOO_MANY_ANSWERS = "tooManyAnswers";
+  @SerializedName(SERIALIZED_NAME_TOO_MANY_ANSWERS)
+  private Boolean tooManyAnswers;
+
+  public static final String SERIALIZED_NAME_WAIT_TIME_MS = "waitTimeMs";
+  @SerializedName(SERIALIZED_NAME_WAIT_TIME_MS)
+  private Integer waitTimeMs;
+
+  public static final String SERIALIZED_NAME_WAIT_TIME_SECONDS = "waitTimeSeconds";
+  @SerializedName(SERIALIZED_NAME_WAIT_TIME_SECONDS)
+  private Integer waitTimeSeconds;
+
+  public static final String SERIALIZED_NAME_WAIT_TIME_MINUTES = "waitTimeMinutes";
+  @SerializedName(SERIALIZED_NAME_WAIT_TIME_MINUTES)
+  private Integer waitTimeMinutes;
+
+  public static final String SERIALIZED_NAME_EXPIRED_AT = "expiredAt";
+  @SerializedName(SERIALIZED_NAME_EXPIRED_AT)
+  private Long expiredAt;
 
   public Err() {
   }
@@ -132,6 +234,590 @@ public class Err {
     this.msg = msg;
   }
 
+
+  public Err changedAt(Long changedAt) {
+    
+    this.changedAt = changedAt;
+    return this;
+  }
+
+   /**
+   * Get changedAt
+   * @return changedAt
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Long getChangedAt() {
+    return changedAt;
+  }
+
+
+  public void setChangedAt(Long changedAt) {
+    this.changedAt = changedAt;
+  }
+
+
+  public Err changedDaysAgo(Long changedDaysAgo) {
+    
+    this.changedDaysAgo = changedDaysAgo;
+    return this;
+  }
+
+   /**
+   * Get changedDaysAgo
+   * @return changedDaysAgo
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Long getChangedDaysAgo() {
+    return changedDaysAgo;
+  }
+
+
+  public void setChangedDaysAgo(Long changedDaysAgo) {
+    this.changedDaysAgo = changedDaysAgo;
+  }
+
+
+  public Err tooLong(Boolean tooLong) {
+    
+    this.tooLong = tooLong;
+    return this;
+  }
+
+   /**
+   * Get tooLong
+   * @return tooLong
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Boolean getTooLong() {
+    return tooLong;
+  }
+
+
+  public void setTooLong(Boolean tooLong) {
+    this.tooLong = tooLong;
+  }
+
+
+  public Err tooShort(Boolean tooShort) {
+    
+    this.tooShort = tooShort;
+    return this;
+  }
+
+   /**
+   * Get tooShort
+   * @return tooShort
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Boolean getTooShort() {
+    return tooShort;
+  }
+
+
+  public void setTooShort(Boolean tooShort) {
+    this.tooShort = tooShort;
+  }
+
+
+  public Err missingNumber(Boolean missingNumber) {
+    
+    this.missingNumber = missingNumber;
+    return this;
+  }
+
+   /**
+   * Get missingNumber
+   * @return missingNumber
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Boolean getMissingNumber() {
+    return missingNumber;
+  }
+
+
+  public void setMissingNumber(Boolean missingNumber) {
+    this.missingNumber = missingNumber;
+  }
+
+
+  public Err missingSymbol(Boolean missingSymbol) {
+    
+    this.missingSymbol = missingSymbol;
+    return this;
+  }
+
+   /**
+   * Get missingSymbol
+   * @return missingSymbol
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Boolean getMissingSymbol() {
+    return missingSymbol;
+  }
+
+
+  public void setMissingSymbol(Boolean missingSymbol) {
+    this.missingSymbol = missingSymbol;
+  }
+
+
+  public Err missingUpperCase(Boolean missingUpperCase) {
+    
+    this.missingUpperCase = missingUpperCase;
+    return this;
+  }
+
+   /**
+   * Get missingUpperCase
+   * @return missingUpperCase
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Boolean getMissingUpperCase() {
+    return missingUpperCase;
+  }
+
+
+  public void setMissingUpperCase(Boolean missingUpperCase) {
+    this.missingUpperCase = missingUpperCase;
+  }
+
+
+  public Err missingLowerCase(Boolean missingLowerCase) {
+    
+    this.missingLowerCase = missingLowerCase;
+    return this;
+  }
+
+   /**
+   * Get missingLowerCase
+   * @return missingLowerCase
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Boolean getMissingLowerCase() {
+    return missingLowerCase;
+  }
+
+
+  public void setMissingLowerCase(Boolean missingLowerCase) {
+    this.missingLowerCase = missingLowerCase;
+  }
+
+
+  public Err commonPassword(Boolean commonPassword) {
+    
+    this.commonPassword = commonPassword;
+    return this;
+  }
+
+   /**
+   * Get commonPassword
+   * @return commonPassword
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Boolean getCommonPassword() {
+    return commonPassword;
+  }
+
+
+  public void setCommonPassword(Boolean commonPassword) {
+    this.commonPassword = commonPassword;
+  }
+
+
+  public Err wasUsedBeforeAt(Long wasUsedBeforeAt) {
+    
+    this.wasUsedBeforeAt = wasUsedBeforeAt;
+    return this;
+  }
+
+   /**
+   * Get wasUsedBeforeAt
+   * @return wasUsedBeforeAt
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Long getWasUsedBeforeAt() {
+    return wasUsedBeforeAt;
+  }
+
+
+  public void setWasUsedBeforeAt(Long wasUsedBeforeAt) {
+    this.wasUsedBeforeAt = wasUsedBeforeAt;
+  }
+
+
+  public Err matchesLogin(LoginId matchesLogin) {
+    
+    this.matchesLogin = matchesLogin;
+    return this;
+  }
+
+   /**
+   * Get matchesLogin
+   * @return matchesLogin
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public LoginId getMatchesLogin() {
+    return matchesLogin;
+  }
+
+
+  public void setMatchesLogin(LoginId matchesLogin) {
+    this.matchesLogin = matchesLogin;
+  }
+
+
+  public Err passwordsMismatch(Boolean passwordsMismatch) {
+    
+    this.passwordsMismatch = passwordsMismatch;
+    return this;
+  }
+
+   /**
+   * Get passwordsMismatch
+   * @return passwordsMismatch
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Boolean getPasswordsMismatch() {
+    return passwordsMismatch;
+  }
+
+
+  public void setPasswordsMismatch(Boolean passwordsMismatch) {
+    this.passwordsMismatch = passwordsMismatch;
+  }
+
+
+  public Err strength(String strength) {
+    
+    this.strength = strength;
+    return this;
+  }
+
+   /**
+   * Get strength
+   * @return strength
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public String getStrength() {
+    return strength;
+  }
+
+
+  public void setStrength(String strength) {
+    this.strength = strength;
+  }
+
+
+  public Err wasUsedDaysAgo(Long wasUsedDaysAgo) {
+    
+    this.wasUsedDaysAgo = wasUsedDaysAgo;
+    return this;
+  }
+
+   /**
+   * Get wasUsedDaysAgo
+   * @return wasUsedDaysAgo
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Long getWasUsedDaysAgo() {
+    return wasUsedDaysAgo;
+  }
+
+
+  public void setWasUsedDaysAgo(Long wasUsedDaysAgo) {
+    this.wasUsedDaysAgo = wasUsedDaysAgo;
+  }
+
+
+  public Err data(Map<String, Object> data) {
+    
+    this.data = data;
+    return this;
+  }
+
+  public Err putDataItem(String key, Object dataItem) {
+    if (this.data == null) {
+      this.data = new HashMap<>();
+    }
+    this.data.put(key, dataItem);
+    return this;
+  }
+
+   /**
+   * Get data
+   * @return data
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Map<String, Object> getData() {
+    return data;
+  }
+
+
+  public void setData(Map<String, Object> data) {
+    this.data = data;
+  }
+
+
+  public Err incorrectAnswers(List<String> incorrectAnswers) {
+    
+    this.incorrectAnswers = incorrectAnswers;
+    return this;
+  }
+
+  public Err addIncorrectAnswersItem(String incorrectAnswersItem) {
+    if (this.incorrectAnswers == null) {
+      this.incorrectAnswers = new ArrayList<>();
+    }
+    this.incorrectAnswers.add(incorrectAnswersItem);
+    return this;
+  }
+
+   /**
+   * Get incorrectAnswers
+   * @return incorrectAnswers
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public List<String> getIncorrectAnswers() {
+    return incorrectAnswers;
+  }
+
+
+  public void setIncorrectAnswers(List<String> incorrectAnswers) {
+    this.incorrectAnswers = incorrectAnswers;
+  }
+
+
+  public Err requiresMoreAnswers(Boolean requiresMoreAnswers) {
+    
+    this.requiresMoreAnswers = requiresMoreAnswers;
+    return this;
+  }
+
+   /**
+   * Get requiresMoreAnswers
+   * @return requiresMoreAnswers
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Boolean getRequiresMoreAnswers() {
+    return requiresMoreAnswers;
+  }
+
+
+  public void setRequiresMoreAnswers(Boolean requiresMoreAnswers) {
+    this.requiresMoreAnswers = requiresMoreAnswers;
+  }
+
+
+  public Err questionsNotFound(List<String> questionsNotFound) {
+    
+    this.questionsNotFound = questionsNotFound;
+    return this;
+  }
+
+  public Err addQuestionsNotFoundItem(String questionsNotFoundItem) {
+    if (this.questionsNotFound == null) {
+      this.questionsNotFound = new ArrayList<>();
+    }
+    this.questionsNotFound.add(questionsNotFoundItem);
+    return this;
+  }
+
+   /**
+   * Get questionsNotFound
+   * @return questionsNotFound
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public List<String> getQuestionsNotFound() {
+    return questionsNotFound;
+  }
+
+
+  public void setQuestionsNotFound(List<String> questionsNotFound) {
+    this.questionsNotFound = questionsNotFound;
+  }
+
+
+  public Err invalidAnswers(Map<String, AnswerErr> invalidAnswers) {
+    
+    this.invalidAnswers = invalidAnswers;
+    return this;
+  }
+
+  public Err putInvalidAnswersItem(String key, AnswerErr invalidAnswersItem) {
+    if (this.invalidAnswers == null) {
+      this.invalidAnswers = new HashMap<>();
+    }
+    this.invalidAnswers.put(key, invalidAnswersItem);
+    return this;
+  }
+
+   /**
+   * Get invalidAnswers
+   * @return invalidAnswers
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Map<String, AnswerErr> getInvalidAnswers() {
+    return invalidAnswers;
+  }
+
+
+  public void setInvalidAnswers(Map<String, AnswerErr> invalidAnswers) {
+    this.invalidAnswers = invalidAnswers;
+  }
+
+
+  public Err tooManyAnswers(Boolean tooManyAnswers) {
+    
+    this.tooManyAnswers = tooManyAnswers;
+    return this;
+  }
+
+   /**
+   * Get tooManyAnswers
+   * @return tooManyAnswers
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Boolean getTooManyAnswers() {
+    return tooManyAnswers;
+  }
+
+
+  public void setTooManyAnswers(Boolean tooManyAnswers) {
+    this.tooManyAnswers = tooManyAnswers;
+  }
+
+
+  public Err waitTimeMs(Integer waitTimeMs) {
+    
+    this.waitTimeMs = waitTimeMs;
+    return this;
+  }
+
+   /**
+   * Get waitTimeMs
+   * @return waitTimeMs
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Integer getWaitTimeMs() {
+    return waitTimeMs;
+  }
+
+
+  public void setWaitTimeMs(Integer waitTimeMs) {
+    this.waitTimeMs = waitTimeMs;
+  }
+
+
+  public Err waitTimeSeconds(Integer waitTimeSeconds) {
+    
+    this.waitTimeSeconds = waitTimeSeconds;
+    return this;
+  }
+
+   /**
+   * Get waitTimeSeconds
+   * @return waitTimeSeconds
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Integer getWaitTimeSeconds() {
+    return waitTimeSeconds;
+  }
+
+
+  public void setWaitTimeSeconds(Integer waitTimeSeconds) {
+    this.waitTimeSeconds = waitTimeSeconds;
+  }
+
+
+  public Err waitTimeMinutes(Integer waitTimeMinutes) {
+    
+    this.waitTimeMinutes = waitTimeMinutes;
+    return this;
+  }
+
+   /**
+   * Get waitTimeMinutes
+   * @return waitTimeMinutes
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Integer getWaitTimeMinutes() {
+    return waitTimeMinutes;
+  }
+
+
+  public void setWaitTimeMinutes(Integer waitTimeMinutes) {
+    this.waitTimeMinutes = waitTimeMinutes;
+  }
+
+
+  public Err expiredAt(Long expiredAt) {
+    
+    this.expiredAt = expiredAt;
+    return this;
+  }
+
+   /**
+   * Get expiredAt
+   * @return expiredAt
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Long getExpiredAt() {
+    return expiredAt;
+  }
+
+
+  public void setExpiredAt(Long expiredAt) {
+    this.expiredAt = expiredAt;
+  }
+
   /**
    * A container for additional, undeclared properties.
    * This is a holder for any undeclared properties as specified with
@@ -180,13 +866,37 @@ public class Err {
     Err err = (Err) o;
     return Objects.equals(this.code, err.code) &&
         Objects.equals(this.devMsg, err.devMsg) &&
-        Objects.equals(this.msg, err.msg)&&
+        Objects.equals(this.msg, err.msg) &&
+        Objects.equals(this.changedAt, err.changedAt) &&
+        Objects.equals(this.changedDaysAgo, err.changedDaysAgo) &&
+        Objects.equals(this.tooLong, err.tooLong) &&
+        Objects.equals(this.tooShort, err.tooShort) &&
+        Objects.equals(this.missingNumber, err.missingNumber) &&
+        Objects.equals(this.missingSymbol, err.missingSymbol) &&
+        Objects.equals(this.missingUpperCase, err.missingUpperCase) &&
+        Objects.equals(this.missingLowerCase, err.missingLowerCase) &&
+        Objects.equals(this.commonPassword, err.commonPassword) &&
+        Objects.equals(this.wasUsedBeforeAt, err.wasUsedBeforeAt) &&
+        Objects.equals(this.matchesLogin, err.matchesLogin) &&
+        Objects.equals(this.passwordsMismatch, err.passwordsMismatch) &&
+        Objects.equals(this.strength, err.strength) &&
+        Objects.equals(this.wasUsedDaysAgo, err.wasUsedDaysAgo) &&
+        Objects.equals(this.data, err.data) &&
+        Objects.equals(this.incorrectAnswers, err.incorrectAnswers) &&
+        Objects.equals(this.requiresMoreAnswers, err.requiresMoreAnswers) &&
+        Objects.equals(this.questionsNotFound, err.questionsNotFound) &&
+        Objects.equals(this.invalidAnswers, err.invalidAnswers) &&
+        Objects.equals(this.tooManyAnswers, err.tooManyAnswers) &&
+        Objects.equals(this.waitTimeMs, err.waitTimeMs) &&
+        Objects.equals(this.waitTimeSeconds, err.waitTimeSeconds) &&
+        Objects.equals(this.waitTimeMinutes, err.waitTimeMinutes) &&
+        Objects.equals(this.expiredAt, err.expiredAt)&&
         Objects.equals(this.additionalProperties, err.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(code, devMsg, msg, additionalProperties);
+    return Objects.hash(code, devMsg, msg, changedAt, changedDaysAgo, tooLong, tooShort, missingNumber, missingSymbol, missingUpperCase, missingLowerCase, commonPassword, wasUsedBeforeAt, matchesLogin, passwordsMismatch, strength, wasUsedDaysAgo, data, incorrectAnswers, requiresMoreAnswers, questionsNotFound, invalidAnswers, tooManyAnswers, waitTimeMs, waitTimeSeconds, waitTimeMinutes, expiredAt, additionalProperties);
   }
 
   @Override
@@ -196,6 +906,30 @@ public class Err {
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    devMsg: ").append(toIndentedString(devMsg)).append("\n");
     sb.append("    msg: ").append(toIndentedString(msg)).append("\n");
+    sb.append("    changedAt: ").append(toIndentedString(changedAt)).append("\n");
+    sb.append("    changedDaysAgo: ").append(toIndentedString(changedDaysAgo)).append("\n");
+    sb.append("    tooLong: ").append(toIndentedString(tooLong)).append("\n");
+    sb.append("    tooShort: ").append(toIndentedString(tooShort)).append("\n");
+    sb.append("    missingNumber: ").append(toIndentedString(missingNumber)).append("\n");
+    sb.append("    missingSymbol: ").append(toIndentedString(missingSymbol)).append("\n");
+    sb.append("    missingUpperCase: ").append(toIndentedString(missingUpperCase)).append("\n");
+    sb.append("    missingLowerCase: ").append(toIndentedString(missingLowerCase)).append("\n");
+    sb.append("    commonPassword: ").append(toIndentedString(commonPassword)).append("\n");
+    sb.append("    wasUsedBeforeAt: ").append(toIndentedString(wasUsedBeforeAt)).append("\n");
+    sb.append("    matchesLogin: ").append(toIndentedString(matchesLogin)).append("\n");
+    sb.append("    passwordsMismatch: ").append(toIndentedString(passwordsMismatch)).append("\n");
+    sb.append("    strength: ").append(toIndentedString(strength)).append("\n");
+    sb.append("    wasUsedDaysAgo: ").append(toIndentedString(wasUsedDaysAgo)).append("\n");
+    sb.append("    data: ").append(toIndentedString(data)).append("\n");
+    sb.append("    incorrectAnswers: ").append(toIndentedString(incorrectAnswers)).append("\n");
+    sb.append("    requiresMoreAnswers: ").append(toIndentedString(requiresMoreAnswers)).append("\n");
+    sb.append("    questionsNotFound: ").append(toIndentedString(questionsNotFound)).append("\n");
+    sb.append("    invalidAnswers: ").append(toIndentedString(invalidAnswers)).append("\n");
+    sb.append("    tooManyAnswers: ").append(toIndentedString(tooManyAnswers)).append("\n");
+    sb.append("    waitTimeMs: ").append(toIndentedString(waitTimeMs)).append("\n");
+    sb.append("    waitTimeSeconds: ").append(toIndentedString(waitTimeSeconds)).append("\n");
+    sb.append("    waitTimeMinutes: ").append(toIndentedString(waitTimeMinutes)).append("\n");
+    sb.append("    expiredAt: ").append(toIndentedString(expiredAt)).append("\n");
     sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -222,6 +956,30 @@ public class Err {
     openapiFields.add("code");
     openapiFields.add("devMsg");
     openapiFields.add("msg");
+    openapiFields.add("changedAt");
+    openapiFields.add("changedDaysAgo");
+    openapiFields.add("tooLong");
+    openapiFields.add("tooShort");
+    openapiFields.add("missingNumber");
+    openapiFields.add("missingSymbol");
+    openapiFields.add("missingUpperCase");
+    openapiFields.add("missingLowerCase");
+    openapiFields.add("commonPassword");
+    openapiFields.add("wasUsedBeforeAt");
+    openapiFields.add("matchesLogin");
+    openapiFields.add("passwordsMismatch");
+    openapiFields.add("strength");
+    openapiFields.add("wasUsedDaysAgo");
+    openapiFields.add("data");
+    openapiFields.add("incorrectAnswers");
+    openapiFields.add("requiresMoreAnswers");
+    openapiFields.add("questionsNotFound");
+    openapiFields.add("invalidAnswers");
+    openapiFields.add("tooManyAnswers");
+    openapiFields.add("waitTimeMs");
+    openapiFields.add("waitTimeSeconds");
+    openapiFields.add("waitTimeMinutes");
+    openapiFields.add("expiredAt");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -258,6 +1016,21 @@ public class Err {
       }
       if ((jsonObj.get("msg") != null && !jsonObj.get("msg").isJsonNull()) && !jsonObj.get("msg").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `msg` to be a primitive type in the JSON string but got `%s`", jsonObj.get("msg").toString()));
+      }
+      // validate the optional field `matchesLogin`
+      if (jsonObj.get("matchesLogin") != null && !jsonObj.get("matchesLogin").isJsonNull()) {
+        LoginId.validateJsonObject(jsonObj.getAsJsonObject("matchesLogin"));
+      }
+      if ((jsonObj.get("strength") != null && !jsonObj.get("strength").isJsonNull()) && !jsonObj.get("strength").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `strength` to be a primitive type in the JSON string but got `%s`", jsonObj.get("strength").toString()));
+      }
+      // ensure the json data is an array
+      if ((jsonObj.get("incorrectAnswers") != null && !jsonObj.get("incorrectAnswers").isJsonNull()) && !jsonObj.get("incorrectAnswers").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `incorrectAnswers` to be an array in the JSON string but got `%s`", jsonObj.get("incorrectAnswers").toString()));
+      }
+      // ensure the json data is an array
+      if ((jsonObj.get("questionsNotFound") != null && !jsonObj.get("questionsNotFound").isJsonNull()) && !jsonObj.get("questionsNotFound").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `questionsNotFound` to be an array in the JSON string but got `%s`", jsonObj.get("questionsNotFound").toString()));
       }
   }
 

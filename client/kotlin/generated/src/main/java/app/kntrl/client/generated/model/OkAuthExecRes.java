@@ -307,10 +307,6 @@ public class OkAuthExecRes {
       if (jsonObj.get("sentCode") != null && !jsonObj.get("sentCode").isJsonNull()) {
         Code.validateJsonObject(jsonObj.getAsJsonObject("sentCode"));
       }
-      // validate the optional field `resData`
-      if (jsonObj.get("resData") != null && !jsonObj.get("resData").isJsonNull()) {
-        AuthExecResResData.validateJsonObject(jsonObj.getAsJsonObject("resData"));
-      }
   }
 
   public static class CustomTypeAdapterFactory implements TypeAdapterFactory {

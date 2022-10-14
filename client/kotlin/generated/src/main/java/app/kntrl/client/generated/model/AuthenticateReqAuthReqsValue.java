@@ -15,15 +15,6 @@ package app.kntrl.client.generated.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import app.kntrl.client.generated.model.AppSecretReq;
-import app.kntrl.client.generated.model.AuthReqDataJson;
-import app.kntrl.client.generated.model.EmailAuthenticateReq;
-import app.kntrl.client.generated.model.EmailUpdateReq;
-import app.kntrl.client.generated.model.OAuthReq;
-import app.kntrl.client.generated.model.PasswordAuthenticateReq;
-import app.kntrl.client.generated.model.PasswordUpdateReq;
-import app.kntrl.client.generated.model.QuestionsAuthenticateReq;
-import app.kntrl.client.generated.model.QuestionsUpdateReq;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -35,510 +26,366 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.ws.rs.core.GenericType;
-
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonParseException;
-import com.google.gson.TypeAdapter;
-import com.google.gson.TypeAdapterFactory;
-import com.google.gson.reflect.TypeToken;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.google.gson.TypeAdapterFactory;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import app.kntrl.client.generated.infra.JSON;
 
+/**
+ * AuthenticateReqAuthReqsValue
+ */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
-public class AuthenticateReqAuthReqsValue extends AbstractOpenApiSchema {
-    private static final Logger log = Logger.getLogger(AuthenticateReqAuthReqsValue.class.getName());
+public class AuthenticateReqAuthReqsValue {
+  public static final String SERIALIZED_NAME_SECRET = "secret";
+  @SerializedName(SERIALIZED_NAME_SECRET)
+  private String secret;
 
-    public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
-        @SuppressWarnings("unchecked")
-        @Override
-        public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-            if (!AuthenticateReqAuthReqsValue.class.isAssignableFrom(type.getRawType())) {
-                return null; // this class only serializes 'AuthenticateReqAuthReqsValue' and its subtypes
-            }
-            final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-            final TypeAdapter<AppSecretReq> adapterAppSecretReq = gson.getDelegateAdapter(this, TypeToken.get(AppSecretReq.class));
-            final TypeAdapter<AuthReqDataJson> adapterAuthReqDataJson = gson.getDelegateAdapter(this, TypeToken.get(AuthReqDataJson.class));
-            final TypeAdapter<EmailAuthenticateReq> adapterEmailAuthenticateReq = gson.getDelegateAdapter(this, TypeToken.get(EmailAuthenticateReq.class));
-            final TypeAdapter<EmailUpdateReq> adapterEmailUpdateReq = gson.getDelegateAdapter(this, TypeToken.get(EmailUpdateReq.class));
-            final TypeAdapter<OAuthReq> adapterOAuthReq = gson.getDelegateAdapter(this, TypeToken.get(OAuthReq.class));
-            final TypeAdapter<PasswordAuthenticateReq> adapterPasswordAuthenticateReq = gson.getDelegateAdapter(this, TypeToken.get(PasswordAuthenticateReq.class));
-            final TypeAdapter<PasswordUpdateReq> adapterPasswordUpdateReq = gson.getDelegateAdapter(this, TypeToken.get(PasswordUpdateReq.class));
-            final TypeAdapter<QuestionsAuthenticateReq> adapterQuestionsAuthenticateReq = gson.getDelegateAdapter(this, TypeToken.get(QuestionsAuthenticateReq.class));
-            final TypeAdapter<QuestionsUpdateReq> adapterQuestionsUpdateReq = gson.getDelegateAdapter(this, TypeToken.get(QuestionsUpdateReq.class));
+  public static final String SERIALIZED_NAME_EMAIL = "email";
+  @SerializedName(SERIALIZED_NAME_EMAIL)
+  private String email;
 
-            return (TypeAdapter<T>) new TypeAdapter<AuthenticateReqAuthReqsValue>() {
-                @Override
-                public void write(JsonWriter out, AuthenticateReqAuthReqsValue value) throws IOException {
-                    if (value == null || value.getActualInstance() == null) {
-                        elementAdapter.write(out, null);
-                        return;
-                    }
+  public static final String SERIALIZED_NAME_TEMPLATE = "template";
+  @SerializedName(SERIALIZED_NAME_TEMPLATE)
+  private String template;
 
-                    // check if the actual instance is of the type `AppSecretReq`
-                    if (value.getActualInstance() instanceof AppSecretReq) {
-                        JsonObject obj = adapterAppSecretReq.toJsonTree((AppSecretReq)value.getActualInstance()).getAsJsonObject();
-                        elementAdapter.write(out, obj);
-                        return;
-                    }
+  public static final String SERIALIZED_NAME_ACCESS_TOKEN = "accessToken";
+  @SerializedName(SERIALIZED_NAME_ACCESS_TOKEN)
+  private String accessToken;
 
-                    // check if the actual instance is of the type `AuthReqDataJson`
-                    if (value.getActualInstance() instanceof AuthReqDataJson) {
-                        JsonObject obj = adapterAuthReqDataJson.toJsonTree((AuthReqDataJson)value.getActualInstance()).getAsJsonObject();
-                        elementAdapter.write(out, obj);
-                        return;
-                    }
+  public static final String SERIALIZED_NAME_AUTHORIZATION_CODE = "authorizationCode";
+  @SerializedName(SERIALIZED_NAME_AUTHORIZATION_CODE)
+  private String authorizationCode;
 
-                    // check if the actual instance is of the type `EmailAuthenticateReq`
-                    if (value.getActualInstance() instanceof EmailAuthenticateReq) {
-                        JsonObject obj = adapterEmailAuthenticateReq.toJsonTree((EmailAuthenticateReq)value.getActualInstance()).getAsJsonObject();
-                        elementAdapter.write(out, obj);
-                        return;
-                    }
+  public static final String SERIALIZED_NAME_PASSWORD = "password";
+  @SerializedName(SERIALIZED_NAME_PASSWORD)
+  private String password;
 
-                    // check if the actual instance is of the type `EmailUpdateReq`
-                    if (value.getActualInstance() instanceof EmailUpdateReq) {
-                        JsonObject obj = adapterEmailUpdateReq.toJsonTree((EmailUpdateReq)value.getActualInstance()).getAsJsonObject();
-                        elementAdapter.write(out, obj);
-                        return;
-                    }
+  public static final String SERIALIZED_NAME_CONFIRM_PASSWORD = "confirmPassword";
+  @SerializedName(SERIALIZED_NAME_CONFIRM_PASSWORD)
+  private String confirmPassword;
 
-                    // check if the actual instance is of the type `OAuthReq`
-                    if (value.getActualInstance() instanceof OAuthReq) {
-                        JsonObject obj = adapterOAuthReq.toJsonTree((OAuthReq)value.getActualInstance()).getAsJsonObject();
-                        elementAdapter.write(out, obj);
-                        return;
-                    }
+  public static final String SERIALIZED_NAME_ANSWERS = "answers";
+  @SerializedName(SERIALIZED_NAME_ANSWERS)
+  private Map<String, String> answers = null;
 
-                    // check if the actual instance is of the type `PasswordAuthenticateReq`
-                    if (value.getActualInstance() instanceof PasswordAuthenticateReq) {
-                        JsonObject obj = adapterPasswordAuthenticateReq.toJsonTree((PasswordAuthenticateReq)value.getActualInstance()).getAsJsonObject();
-                        elementAdapter.write(out, obj);
-                        return;
-                    }
+  public AuthenticateReqAuthReqsValue() {
+  }
 
-                    // check if the actual instance is of the type `PasswordUpdateReq`
-                    if (value.getActualInstance() instanceof PasswordUpdateReq) {
-                        JsonObject obj = adapterPasswordUpdateReq.toJsonTree((PasswordUpdateReq)value.getActualInstance()).getAsJsonObject();
-                        elementAdapter.write(out, obj);
-                        return;
-                    }
+  public AuthenticateReqAuthReqsValue secret(String secret) {
+    
+    this.secret = secret;
+    return this;
+  }
 
-                    // check if the actual instance is of the type `QuestionsAuthenticateReq`
-                    if (value.getActualInstance() instanceof QuestionsAuthenticateReq) {
-                        JsonObject obj = adapterQuestionsAuthenticateReq.toJsonTree((QuestionsAuthenticateReq)value.getActualInstance()).getAsJsonObject();
-                        elementAdapter.write(out, obj);
-                        return;
-                    }
+   /**
+   * Get secret
+   * @return secret
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
 
-                    // check if the actual instance is of the type `QuestionsUpdateReq`
-                    if (value.getActualInstance() instanceof QuestionsUpdateReq) {
-                        JsonObject obj = adapterQuestionsUpdateReq.toJsonTree((QuestionsUpdateReq)value.getActualInstance()).getAsJsonObject();
-                        elementAdapter.write(out, obj);
-                        return;
-                    }
-
-                    throw new IOException("Failed to serialize as the type doesn't match anyOf schemas: AppSecretReq, AuthReqDataJson, EmailAuthenticateReq, EmailUpdateReq, OAuthReq, PasswordAuthenticateReq, PasswordUpdateReq, QuestionsAuthenticateReq, QuestionsUpdateReq");
-                }
-
-                @Override
-                public AuthenticateReqAuthReqsValue read(JsonReader in) throws IOException {
-                    Object deserialized = null;
-                    JsonObject jsonObject = elementAdapter.read(in).getAsJsonObject();
-
-                    // deserialize AppSecretReq
-                    try {
-                        // validate the JSON object to see if any exception is thrown
-                        AppSecretReq.validateJsonObject(jsonObject);
-                        log.log(Level.FINER, "Input data matches schema 'AppSecretReq'");
-                        AuthenticateReqAuthReqsValue ret = new AuthenticateReqAuthReqsValue();
-                        ret.setActualInstance(adapterAppSecretReq.fromJsonTree(jsonObject));
-                        return ret;
-                    } catch (Exception e) {
-                        // deserialization failed, continue
-                        log.log(Level.FINER, "Input data does not match schema 'AppSecretReq'", e);
-                    }
-
-                    // deserialize AuthReqDataJson
-                    try {
-                        // validate the JSON object to see if any exception is thrown
-                        AuthReqDataJson.validateJsonObject(jsonObject);
-                        log.log(Level.FINER, "Input data matches schema 'AuthReqDataJson'");
-                        AuthenticateReqAuthReqsValue ret = new AuthenticateReqAuthReqsValue();
-                        ret.setActualInstance(adapterAuthReqDataJson.fromJsonTree(jsonObject));
-                        return ret;
-                    } catch (Exception e) {
-                        // deserialization failed, continue
-                        log.log(Level.FINER, "Input data does not match schema 'AuthReqDataJson'", e);
-                    }
-
-                    // deserialize EmailAuthenticateReq
-                    try {
-                        // validate the JSON object to see if any exception is thrown
-                        EmailAuthenticateReq.validateJsonObject(jsonObject);
-                        log.log(Level.FINER, "Input data matches schema 'EmailAuthenticateReq'");
-                        AuthenticateReqAuthReqsValue ret = new AuthenticateReqAuthReqsValue();
-                        ret.setActualInstance(adapterEmailAuthenticateReq.fromJsonTree(jsonObject));
-                        return ret;
-                    } catch (Exception e) {
-                        // deserialization failed, continue
-                        log.log(Level.FINER, "Input data does not match schema 'EmailAuthenticateReq'", e);
-                    }
-
-                    // deserialize EmailUpdateReq
-                    try {
-                        // validate the JSON object to see if any exception is thrown
-                        EmailUpdateReq.validateJsonObject(jsonObject);
-                        log.log(Level.FINER, "Input data matches schema 'EmailUpdateReq'");
-                        AuthenticateReqAuthReqsValue ret = new AuthenticateReqAuthReqsValue();
-                        ret.setActualInstance(adapterEmailUpdateReq.fromJsonTree(jsonObject));
-                        return ret;
-                    } catch (Exception e) {
-                        // deserialization failed, continue
-                        log.log(Level.FINER, "Input data does not match schema 'EmailUpdateReq'", e);
-                    }
-
-                    // deserialize OAuthReq
-                    try {
-                        // validate the JSON object to see if any exception is thrown
-                        OAuthReq.validateJsonObject(jsonObject);
-                        log.log(Level.FINER, "Input data matches schema 'OAuthReq'");
-                        AuthenticateReqAuthReqsValue ret = new AuthenticateReqAuthReqsValue();
-                        ret.setActualInstance(adapterOAuthReq.fromJsonTree(jsonObject));
-                        return ret;
-                    } catch (Exception e) {
-                        // deserialization failed, continue
-                        log.log(Level.FINER, "Input data does not match schema 'OAuthReq'", e);
-                    }
-
-                    // deserialize PasswordAuthenticateReq
-                    try {
-                        // validate the JSON object to see if any exception is thrown
-                        PasswordAuthenticateReq.validateJsonObject(jsonObject);
-                        log.log(Level.FINER, "Input data matches schema 'PasswordAuthenticateReq'");
-                        AuthenticateReqAuthReqsValue ret = new AuthenticateReqAuthReqsValue();
-                        ret.setActualInstance(adapterPasswordAuthenticateReq.fromJsonTree(jsonObject));
-                        return ret;
-                    } catch (Exception e) {
-                        // deserialization failed, continue
-                        log.log(Level.FINER, "Input data does not match schema 'PasswordAuthenticateReq'", e);
-                    }
-
-                    // deserialize PasswordUpdateReq
-                    try {
-                        // validate the JSON object to see if any exception is thrown
-                        PasswordUpdateReq.validateJsonObject(jsonObject);
-                        log.log(Level.FINER, "Input data matches schema 'PasswordUpdateReq'");
-                        AuthenticateReqAuthReqsValue ret = new AuthenticateReqAuthReqsValue();
-                        ret.setActualInstance(adapterPasswordUpdateReq.fromJsonTree(jsonObject));
-                        return ret;
-                    } catch (Exception e) {
-                        // deserialization failed, continue
-                        log.log(Level.FINER, "Input data does not match schema 'PasswordUpdateReq'", e);
-                    }
-
-                    // deserialize QuestionsAuthenticateReq
-                    try {
-                        // validate the JSON object to see if any exception is thrown
-                        QuestionsAuthenticateReq.validateJsonObject(jsonObject);
-                        log.log(Level.FINER, "Input data matches schema 'QuestionsAuthenticateReq'");
-                        AuthenticateReqAuthReqsValue ret = new AuthenticateReqAuthReqsValue();
-                        ret.setActualInstance(adapterQuestionsAuthenticateReq.fromJsonTree(jsonObject));
-                        return ret;
-                    } catch (Exception e) {
-                        // deserialization failed, continue
-                        log.log(Level.FINER, "Input data does not match schema 'QuestionsAuthenticateReq'", e);
-                    }
-
-                    // deserialize QuestionsUpdateReq
-                    try {
-                        // validate the JSON object to see if any exception is thrown
-                        QuestionsUpdateReq.validateJsonObject(jsonObject);
-                        log.log(Level.FINER, "Input data matches schema 'QuestionsUpdateReq'");
-                        AuthenticateReqAuthReqsValue ret = new AuthenticateReqAuthReqsValue();
-                        ret.setActualInstance(adapterQuestionsUpdateReq.fromJsonTree(jsonObject));
-                        return ret;
-                    } catch (Exception e) {
-                        // deserialization failed, continue
-                        log.log(Level.FINER, "Input data does not match schema 'QuestionsUpdateReq'", e);
-                    }
+  public String getSecret() {
+    return secret;
+  }
 
 
-                    throw new IOException(String.format("Failed deserialization for AuthenticateReqAuthReqsValue: no class matched. JSON: %s", jsonObject.toString()));
-                }
-            }.nullSafe();
-        }
+  public void setSecret(String secret) {
+    this.secret = secret;
+  }
+
+
+  public AuthenticateReqAuthReqsValue email(String email) {
+    
+    this.email = email;
+    return this;
+  }
+
+   /**
+   * New email to set.
+   * @return email
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "New email to set.")
+
+  public String getEmail() {
+    return email;
+  }
+
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+
+  public AuthenticateReqAuthReqsValue template(String template) {
+    
+    this.template = template;
+    return this;
+  }
+
+   /**
+   * Template to use.
+   * @return template
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Template to use.")
+
+  public String getTemplate() {
+    return template;
+  }
+
+
+  public void setTemplate(String template) {
+    this.template = template;
+  }
+
+
+  public AuthenticateReqAuthReqsValue accessToken(String accessToken) {
+    
+    this.accessToken = accessToken;
+    return this;
+  }
+
+   /**
+   * If you have access-token - put it here.
+   * @return accessToken
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "If you have access-token - put it here.")
+
+  public String getAccessToken() {
+    return accessToken;
+  }
+
+
+  public void setAccessToken(String accessToken) {
+    this.accessToken = accessToken;
+  }
+
+
+  public AuthenticateReqAuthReqsValue authorizationCode(String authorizationCode) {
+    
+    this.authorizationCode = authorizationCode;
+    return this;
+  }
+
+   /**
+   * If you have authorisation-code - app will exchange it for access-token.
+   * @return authorizationCode
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "If you have authorisation-code - app will exchange it for access-token.")
+
+  public String getAuthorizationCode() {
+    return authorizationCode;
+  }
+
+
+  public void setAuthorizationCode(String authorizationCode) {
+    this.authorizationCode = authorizationCode;
+  }
+
+
+  public AuthenticateReqAuthReqsValue password(String password) {
+    
+    this.password = password;
+    return this;
+  }
+
+   /**
+   * New password to set. If null app generates password automatically.
+   * @return password
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "New password to set. If null app generates password automatically.")
+
+  public String getPassword() {
+    return password;
+  }
+
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+
+  public AuthenticateReqAuthReqsValue confirmPassword(String confirmPassword) {
+    
+    this.confirmPassword = confirmPassword;
+    return this;
+  }
+
+   /**
+   * Password confirmation. If null app doesn&#39;t perform this check.
+   * @return confirmPassword
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Password confirmation. If null app doesn't perform this check.")
+
+  public String getConfirmPassword() {
+    return confirmPassword;
+  }
+
+
+  public void setConfirmPassword(String confirmPassword) {
+    this.confirmPassword = confirmPassword;
+  }
+
+
+  public AuthenticateReqAuthReqsValue answers(Map<String, String> answers) {
+    
+    this.answers = answers;
+    return this;
+  }
+
+  public AuthenticateReqAuthReqsValue putAnswersItem(String key, String answersItem) {
+    if (this.answers == null) {
+      this.answers = new HashMap<>();
     }
+    this.answers.put(key, answersItem);
+    return this;
+  }
 
-    // store a list of schema names defined in anyOf
-    public static final Map<String, GenericType> schemas = new HashMap<String, GenericType>();
+   /**
+   * Answers to save. &#x60;null&#x60; as value removes answer 
+   * @return answers
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(example = "{\"HOME_CITY\":\"London\",\"MOTHER_NAME\":null}", value = "Answers to save. `null` as value removes answer ")
 
-    public AuthenticateReqAuthReqsValue() {
-        super("anyOf", Boolean.FALSE);
+  public Map<String, String> getAnswers() {
+    return answers;
+  }
+
+
+  public void setAnswers(Map<String, String> answers) {
+    this.answers = answers;
+  }
+
+  /**
+   * A container for additional, undeclared properties.
+   * This is a holder for any undeclared properties as specified with
+   * the 'additionalProperties' keyword in the OAS document.
+   */
+  private Map<String, Object> additionalProperties;
+
+  /**
+   * Set the additional (undeclared) property with the specified name and value.
+   * If the property does not already exist, create it otherwise replace it.
+   */
+  public AuthenticateReqAuthReqsValue putAdditionalProperty(String key, Object value) {
+    if (this.additionalProperties == null) {
+        this.additionalProperties = new HashMap<String, Object>();
     }
+    this.additionalProperties.put(key, value);
+    return this;
+  }
 
-    public AuthenticateReqAuthReqsValue(AppSecretReq o) {
-        super("anyOf", Boolean.FALSE);
-        setActualInstance(o);
+  /**
+   * Return the additional (undeclared) property.
+   */
+  public Map<String, Object> getAdditionalProperties() {
+    return additionalProperties;
+  }
+
+  /**
+   * Return the additional (undeclared) property with the specified name.
+   */
+  public Object getAdditionalProperty(String key) {
+    if (this.additionalProperties == null) {
+        return null;
     }
+    return this.additionalProperties.get(key);
+  }
 
-    public AuthenticateReqAuthReqsValue(AuthReqDataJson o) {
-        super("anyOf", Boolean.FALSE);
-        setActualInstance(o);
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
     }
-
-    public AuthenticateReqAuthReqsValue(EmailAuthenticateReq o) {
-        super("anyOf", Boolean.FALSE);
-        setActualInstance(o);
+    if (o == null || getClass() != o.getClass()) {
+      return false;
     }
+    AuthenticateReqAuthReqsValue authenticateReqAuthReqsValue = (AuthenticateReqAuthReqsValue) o;
+    return Objects.equals(this.secret, authenticateReqAuthReqsValue.secret) &&
+        Objects.equals(this.email, authenticateReqAuthReqsValue.email) &&
+        Objects.equals(this.template, authenticateReqAuthReqsValue.template) &&
+        Objects.equals(this.accessToken, authenticateReqAuthReqsValue.accessToken) &&
+        Objects.equals(this.authorizationCode, authenticateReqAuthReqsValue.authorizationCode) &&
+        Objects.equals(this.password, authenticateReqAuthReqsValue.password) &&
+        Objects.equals(this.confirmPassword, authenticateReqAuthReqsValue.confirmPassword) &&
+        Objects.equals(this.answers, authenticateReqAuthReqsValue.answers)&&
+        Objects.equals(this.additionalProperties, authenticateReqAuthReqsValue.additionalProperties);
+  }
 
-    public AuthenticateReqAuthReqsValue(EmailUpdateReq o) {
-        super("anyOf", Boolean.FALSE);
-        setActualInstance(o);
+  @Override
+  public int hashCode() {
+    return Objects.hash(secret, email, template, accessToken, authorizationCode, password, confirmPassword, answers, additionalProperties);
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("class AuthenticateReqAuthReqsValue {\n");
+    sb.append("    secret: ").append(toIndentedString(secret)).append("\n");
+    sb.append("    email: ").append(toIndentedString(email)).append("\n");
+    sb.append("    template: ").append(toIndentedString(template)).append("\n");
+    sb.append("    accessToken: ").append(toIndentedString(accessToken)).append("\n");
+    sb.append("    authorizationCode: ").append(toIndentedString(authorizationCode)).append("\n");
+    sb.append("    password: ").append(toIndentedString(password)).append("\n");
+    sb.append("    confirmPassword: ").append(toIndentedString(confirmPassword)).append("\n");
+    sb.append("    answers: ").append(toIndentedString(answers)).append("\n");
+    sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
+    sb.append("}");
+    return sb.toString();
+  }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(Object o) {
+    if (o == null) {
+      return "null";
     }
+    return o.toString().replace("\n", "\n    ");
+  }
 
-    public AuthenticateReqAuthReqsValue(OAuthReq o) {
-        super("anyOf", Boolean.FALSE);
-        setActualInstance(o);
-    }
 
-    public AuthenticateReqAuthReqsValue(PasswordAuthenticateReq o) {
-        super("anyOf", Boolean.FALSE);
-        setActualInstance(o);
-    }
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
 
-    public AuthenticateReqAuthReqsValue(PasswordUpdateReq o) {
-        super("anyOf", Boolean.FALSE);
-        setActualInstance(o);
-    }
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("secret");
+    openapiFields.add("email");
+    openapiFields.add("template");
+    openapiFields.add("accessToken");
+    openapiFields.add("authorizationCode");
+    openapiFields.add("password");
+    openapiFields.add("confirmPassword");
+    openapiFields.add("answers");
 
-    public AuthenticateReqAuthReqsValue(QuestionsAuthenticateReq o) {
-        super("anyOf", Boolean.FALSE);
-        setActualInstance(o);
-    }
-
-    public AuthenticateReqAuthReqsValue(QuestionsUpdateReq o) {
-        super("anyOf", Boolean.FALSE);
-        setActualInstance(o);
-    }
-
-    static {
-        schemas.put("AppSecretReq", new GenericType<AppSecretReq>() {
-        });
-        schemas.put("AuthReqDataJson", new GenericType<AuthReqDataJson>() {
-        });
-        schemas.put("EmailAuthenticateReq", new GenericType<EmailAuthenticateReq>() {
-        });
-        schemas.put("EmailUpdateReq", new GenericType<EmailUpdateReq>() {
-        });
-        schemas.put("OAuthReq", new GenericType<OAuthReq>() {
-        });
-        schemas.put("PasswordAuthenticateReq", new GenericType<PasswordAuthenticateReq>() {
-        });
-        schemas.put("PasswordUpdateReq", new GenericType<PasswordUpdateReq>() {
-        });
-        schemas.put("QuestionsAuthenticateReq", new GenericType<QuestionsAuthenticateReq>() {
-        });
-        schemas.put("QuestionsUpdateReq", new GenericType<QuestionsUpdateReq>() {
-        });
-    }
-
-    @Override
-    public Map<String, GenericType> getSchemas() {
-        return AuthenticateReqAuthReqsValue.schemas;
-    }
-
-    /**
-     * Set the instance that matches the anyOf child schema, check
-     * the instance parameter is valid against the anyOf child schemas:
-     * AppSecretReq, AuthReqDataJson, EmailAuthenticateReq, EmailUpdateReq, OAuthReq, PasswordAuthenticateReq, PasswordUpdateReq, QuestionsAuthenticateReq, QuestionsUpdateReq
-     *
-     * It could be an instance of the 'anyOf' schemas.
-     * The anyOf child schemas may themselves be a composed schema (allOf, anyOf, anyOf).
-     */
-    @Override
-    public void setActualInstance(Object instance) {
-        if (instance instanceof AppSecretReq) {
-            super.setActualInstance(instance);
-            return;
-        }
-
-        if (instance instanceof AuthReqDataJson) {
-            super.setActualInstance(instance);
-            return;
-        }
-
-        if (instance instanceof EmailAuthenticateReq) {
-            super.setActualInstance(instance);
-            return;
-        }
-
-        if (instance instanceof EmailUpdateReq) {
-            super.setActualInstance(instance);
-            return;
-        }
-
-        if (instance instanceof OAuthReq) {
-            super.setActualInstance(instance);
-            return;
-        }
-
-        if (instance instanceof PasswordAuthenticateReq) {
-            super.setActualInstance(instance);
-            return;
-        }
-
-        if (instance instanceof PasswordUpdateReq) {
-            super.setActualInstance(instance);
-            return;
-        }
-
-        if (instance instanceof QuestionsAuthenticateReq) {
-            super.setActualInstance(instance);
-            return;
-        }
-
-        if (instance instanceof QuestionsUpdateReq) {
-            super.setActualInstance(instance);
-            return;
-        }
-
-        throw new RuntimeException("Invalid instance type. Must be AppSecretReq, AuthReqDataJson, EmailAuthenticateReq, EmailUpdateReq, OAuthReq, PasswordAuthenticateReq, PasswordUpdateReq, QuestionsAuthenticateReq, QuestionsUpdateReq");
-    }
-
-    /**
-     * Get the actual instance, which can be the following:
-     * AppSecretReq, AuthReqDataJson, EmailAuthenticateReq, EmailUpdateReq, OAuthReq, PasswordAuthenticateReq, PasswordUpdateReq, QuestionsAuthenticateReq, QuestionsUpdateReq
-     *
-     * @return The actual instance (AppSecretReq, AuthReqDataJson, EmailAuthenticateReq, EmailUpdateReq, OAuthReq, PasswordAuthenticateReq, PasswordUpdateReq, QuestionsAuthenticateReq, QuestionsUpdateReq)
-     */
-    @Override
-    public Object getActualInstance() {
-        return super.getActualInstance();
-    }
-
-    /**
-     * Get the actual instance of `AppSecretReq`. If the actual instance is not `AppSecretReq`,
-     * the ClassCastException will be thrown.
-     *
-     * @return The actual instance of `AppSecretReq`
-     * @throws ClassCastException if the instance is not `AppSecretReq`
-     */
-    public AppSecretReq getAppSecretReq() throws ClassCastException {
-        return (AppSecretReq)super.getActualInstance();
-    }
-
-    /**
-     * Get the actual instance of `AuthReqDataJson`. If the actual instance is not `AuthReqDataJson`,
-     * the ClassCastException will be thrown.
-     *
-     * @return The actual instance of `AuthReqDataJson`
-     * @throws ClassCastException if the instance is not `AuthReqDataJson`
-     */
-    public AuthReqDataJson getAuthReqDataJson() throws ClassCastException {
-        return (AuthReqDataJson)super.getActualInstance();
-    }
-
-    /**
-     * Get the actual instance of `EmailAuthenticateReq`. If the actual instance is not `EmailAuthenticateReq`,
-     * the ClassCastException will be thrown.
-     *
-     * @return The actual instance of `EmailAuthenticateReq`
-     * @throws ClassCastException if the instance is not `EmailAuthenticateReq`
-     */
-    public EmailAuthenticateReq getEmailAuthenticateReq() throws ClassCastException {
-        return (EmailAuthenticateReq)super.getActualInstance();
-    }
-
-    /**
-     * Get the actual instance of `EmailUpdateReq`. If the actual instance is not `EmailUpdateReq`,
-     * the ClassCastException will be thrown.
-     *
-     * @return The actual instance of `EmailUpdateReq`
-     * @throws ClassCastException if the instance is not `EmailUpdateReq`
-     */
-    public EmailUpdateReq getEmailUpdateReq() throws ClassCastException {
-        return (EmailUpdateReq)super.getActualInstance();
-    }
-
-    /**
-     * Get the actual instance of `OAuthReq`. If the actual instance is not `OAuthReq`,
-     * the ClassCastException will be thrown.
-     *
-     * @return The actual instance of `OAuthReq`
-     * @throws ClassCastException if the instance is not `OAuthReq`
-     */
-    public OAuthReq getOAuthReq() throws ClassCastException {
-        return (OAuthReq)super.getActualInstance();
-    }
-
-    /**
-     * Get the actual instance of `PasswordAuthenticateReq`. If the actual instance is not `PasswordAuthenticateReq`,
-     * the ClassCastException will be thrown.
-     *
-     * @return The actual instance of `PasswordAuthenticateReq`
-     * @throws ClassCastException if the instance is not `PasswordAuthenticateReq`
-     */
-    public PasswordAuthenticateReq getPasswordAuthenticateReq() throws ClassCastException {
-        return (PasswordAuthenticateReq)super.getActualInstance();
-    }
-
-    /**
-     * Get the actual instance of `PasswordUpdateReq`. If the actual instance is not `PasswordUpdateReq`,
-     * the ClassCastException will be thrown.
-     *
-     * @return The actual instance of `PasswordUpdateReq`
-     * @throws ClassCastException if the instance is not `PasswordUpdateReq`
-     */
-    public PasswordUpdateReq getPasswordUpdateReq() throws ClassCastException {
-        return (PasswordUpdateReq)super.getActualInstance();
-    }
-
-    /**
-     * Get the actual instance of `QuestionsAuthenticateReq`. If the actual instance is not `QuestionsAuthenticateReq`,
-     * the ClassCastException will be thrown.
-     *
-     * @return The actual instance of `QuestionsAuthenticateReq`
-     * @throws ClassCastException if the instance is not `QuestionsAuthenticateReq`
-     */
-    public QuestionsAuthenticateReq getQuestionsAuthenticateReq() throws ClassCastException {
-        return (QuestionsAuthenticateReq)super.getActualInstance();
-    }
-
-    /**
-     * Get the actual instance of `QuestionsUpdateReq`. If the actual instance is not `QuestionsUpdateReq`,
-     * the ClassCastException will be thrown.
-     *
-     * @return The actual instance of `QuestionsUpdateReq`
-     * @throws ClassCastException if the instance is not `QuestionsUpdateReq`
-     */
-    public QuestionsUpdateReq getQuestionsUpdateReq() throws ClassCastException {
-        return (QuestionsUpdateReq)super.getActualInstance();
-    }
-
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
 
  /**
   * Validates the JSON Object and throws an exception if issues found
@@ -547,82 +394,97 @@ public class AuthenticateReqAuthReqsValue extends AbstractOpenApiSchema {
   * @throws IOException if the JSON Object is invalid with respect to AuthenticateReqAuthReqsValue
   */
   public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-    // validate anyOf schemas one by one
-    int validCount = 0;
-    // validate the json string with AppSecretReq
-    try {
-      AppSecretReq.validateJsonObject(jsonObj);
-      return; // return earlier as at least one schema is valid with respect to the Json object
-      //validCount++;
-    } catch (Exception e) {
-      // continue to the next one
-    }
-    // validate the json string with AuthReqDataJson
-    try {
-      AuthReqDataJson.validateJsonObject(jsonObj);
-      return; // return earlier as at least one schema is valid with respect to the Json object
-      //validCount++;
-    } catch (Exception e) {
-      // continue to the next one
-    }
-    // validate the json string with EmailAuthenticateReq
-    try {
-      EmailAuthenticateReq.validateJsonObject(jsonObj);
-      return; // return earlier as at least one schema is valid with respect to the Json object
-      //validCount++;
-    } catch (Exception e) {
-      // continue to the next one
-    }
-    // validate the json string with EmailUpdateReq
-    try {
-      EmailUpdateReq.validateJsonObject(jsonObj);
-      return; // return earlier as at least one schema is valid with respect to the Json object
-      //validCount++;
-    } catch (Exception e) {
-      // continue to the next one
-    }
-    // validate the json string with OAuthReq
-    try {
-      OAuthReq.validateJsonObject(jsonObj);
-      return; // return earlier as at least one schema is valid with respect to the Json object
-      //validCount++;
-    } catch (Exception e) {
-      // continue to the next one
-    }
-    // validate the json string with PasswordAuthenticateReq
-    try {
-      PasswordAuthenticateReq.validateJsonObject(jsonObj);
-      return; // return earlier as at least one schema is valid with respect to the Json object
-      //validCount++;
-    } catch (Exception e) {
-      // continue to the next one
-    }
-    // validate the json string with PasswordUpdateReq
-    try {
-      PasswordUpdateReq.validateJsonObject(jsonObj);
-      return; // return earlier as at least one schema is valid with respect to the Json object
-      //validCount++;
-    } catch (Exception e) {
-      // continue to the next one
-    }
-    // validate the json string with QuestionsAuthenticateReq
-    try {
-      QuestionsAuthenticateReq.validateJsonObject(jsonObj);
-      return; // return earlier as at least one schema is valid with respect to the Json object
-      //validCount++;
-    } catch (Exception e) {
-      // continue to the next one
-    }
-    // validate the json string with QuestionsUpdateReq
-    try {
-      QuestionsUpdateReq.validateJsonObject(jsonObj);
-      return; // return earlier as at least one schema is valid with respect to the Json object
-      //validCount++;
-    } catch (Exception e) {
-      // continue to the next one
-    }
-    if (validCount == 0) {
-      throw new IOException(String.format("The JSON string is invalid for AuthenticateReqAuthReqsValue with anyOf schemas: AppSecretReq, AuthReqDataJson, EmailAuthenticateReq, EmailUpdateReq, OAuthReq, PasswordAuthenticateReq, PasswordUpdateReq, QuestionsAuthenticateReq, QuestionsUpdateReq. JSON: %s", jsonObj.toString()));
+      if (jsonObj == null) {
+        if (AuthenticateReqAuthReqsValue.openapiRequiredFields.isEmpty()) {
+          return;
+        } else { // has required fields
+          throw new IllegalArgumentException(String.format("The required field(s) %s in AuthenticateReqAuthReqsValue is not found in the empty JSON string", AuthenticateReqAuthReqsValue.openapiRequiredFields.toString()));
+        }
+      }
+      if ((jsonObj.get("secret") != null && !jsonObj.get("secret").isJsonNull()) && !jsonObj.get("secret").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `secret` to be a primitive type in the JSON string but got `%s`", jsonObj.get("secret").toString()));
+      }
+      if ((jsonObj.get("email") != null && !jsonObj.get("email").isJsonNull()) && !jsonObj.get("email").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `email` to be a primitive type in the JSON string but got `%s`", jsonObj.get("email").toString()));
+      }
+      if ((jsonObj.get("template") != null && !jsonObj.get("template").isJsonNull()) && !jsonObj.get("template").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `template` to be a primitive type in the JSON string but got `%s`", jsonObj.get("template").toString()));
+      }
+      if ((jsonObj.get("accessToken") != null && !jsonObj.get("accessToken").isJsonNull()) && !jsonObj.get("accessToken").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `accessToken` to be a primitive type in the JSON string but got `%s`", jsonObj.get("accessToken").toString()));
+      }
+      if ((jsonObj.get("authorizationCode") != null && !jsonObj.get("authorizationCode").isJsonNull()) && !jsonObj.get("authorizationCode").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `authorizationCode` to be a primitive type in the JSON string but got `%s`", jsonObj.get("authorizationCode").toString()));
+      }
+      if ((jsonObj.get("password") != null && !jsonObj.get("password").isJsonNull()) && !jsonObj.get("password").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `password` to be a primitive type in the JSON string but got `%s`", jsonObj.get("password").toString()));
+      }
+      if ((jsonObj.get("confirmPassword") != null && !jsonObj.get("confirmPassword").isJsonNull()) && !jsonObj.get("confirmPassword").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `confirmPassword` to be a primitive type in the JSON string but got `%s`", jsonObj.get("confirmPassword").toString()));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!AuthenticateReqAuthReqsValue.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'AuthenticateReqAuthReqsValue' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<AuthenticateReqAuthReqsValue> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(AuthenticateReqAuthReqsValue.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<AuthenticateReqAuthReqsValue>() {
+           @Override
+           public void write(JsonWriter out, AuthenticateReqAuthReqsValue value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             obj.remove("additionalProperties");
+             // serialize additonal properties
+             if (value.getAdditionalProperties() != null) {
+               for (Map.Entry<String, Object> entry : value.getAdditionalProperties().entrySet()) {
+                 if (entry.getValue() instanceof String)
+                   obj.addProperty(entry.getKey(), (String) entry.getValue());
+                 else if (entry.getValue() instanceof Number)
+                   obj.addProperty(entry.getKey(), (Number) entry.getValue());
+                 else if (entry.getValue() instanceof Boolean)
+                   obj.addProperty(entry.getKey(), (Boolean) entry.getValue());
+                 else if (entry.getValue() instanceof Character)
+                   obj.addProperty(entry.getKey(), (Character) entry.getValue());
+                 else {
+                   obj.add(entry.getKey(), gson.toJsonTree(entry.getValue()).getAsJsonObject());
+                 }
+               }
+             }
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public AuthenticateReqAuthReqsValue read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             // store additional fields in the deserialized instance
+             AuthenticateReqAuthReqsValue instance = thisAdapter.fromJsonTree(jsonObj);
+             for (Map.Entry<String, JsonElement> entry : jsonObj.entrySet()) {
+               if (!openapiFields.contains(entry.getKey())) {
+                 if (entry.getValue().isJsonPrimitive()) { // primitive type
+                   if (entry.getValue().getAsJsonPrimitive().isString())
+                     instance.putAdditionalProperty(entry.getKey(), entry.getValue().getAsString());
+                   else if (entry.getValue().getAsJsonPrimitive().isNumber())
+                     instance.putAdditionalProperty(entry.getKey(), entry.getValue().getAsNumber());
+                   else if (entry.getValue().getAsJsonPrimitive().isBoolean())
+                     instance.putAdditionalProperty(entry.getKey(), entry.getValue().getAsBoolean());
+                   else
+                     throw new IllegalArgumentException(String.format("The field `%s` has unknown primitive type. Value: %s", entry.getKey(), entry.getValue().toString()));
+                 } else { // non-primitive type
+                   instance.putAdditionalProperty(entry.getKey(), gson.fromJson(entry.getValue(), HashMap.class));
+                 }
+               }
+             }
+             return instance;
+           }
+
+       }.nullSafe();
     }
   }
 

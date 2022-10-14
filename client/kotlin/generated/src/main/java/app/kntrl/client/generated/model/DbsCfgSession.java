@@ -15,14 +15,6 @@ package app.kntrl.client.generated.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import app.kntrl.client.generated.model.InMemoryCfg;
-import app.kntrl.client.generated.model.InTokenCfg;
-import app.kntrl.client.generated.model.MongoCfg;
-import app.kntrl.client.generated.model.MysqlCfg;
-import app.kntrl.client.generated.model.PostgresCfg;
-import app.kntrl.client.generated.model.RedisCfg;
-import app.kntrl.client.generated.model.RemoteDbCfg;
-import app.kntrl.client.generated.model.SqliteCfg;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -36,466 +28,653 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.core.GenericType;
-
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonParseException;
-import com.google.gson.TypeAdapter;
-import com.google.gson.TypeAdapterFactory;
-import com.google.gson.reflect.TypeToken;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.google.gson.TypeAdapterFactory;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import app.kntrl.client.generated.infra.JSON;
 
+/**
+ * Session database config.  If you aren&#39;t using cluster, prefer in-memory database.  You can use in-token to not use database at all. Use it with &#x60;token.access.cacheUnauthenticated &#x3D; true&#x60; and &#x60;token.access.cache !&#x3D; null&#x60; values.
+ */
+@ApiModel(description = "Session database config.  If you aren't using cluster, prefer in-memory database.  You can use in-token to not use database at all. Use it with `token.access.cacheUnauthenticated = true` and `token.access.cache != null` values.")
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
-public class DbsCfgSession extends AbstractOpenApiSchema {
-    private static final Logger log = Logger.getLogger(DbsCfgSession.class.getName());
+public class DbsCfgSession {
+  public static final String SERIALIZED_NAME_IN_MEMORY = "inMemory";
+  @SerializedName(SERIALIZED_NAME_IN_MEMORY)
+  private Boolean inMemory;
 
-    public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
-        @SuppressWarnings("unchecked")
-        @Override
-        public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-            if (!DbsCfgSession.class.isAssignableFrom(type.getRawType())) {
-                return null; // this class only serializes 'DbsCfgSession' and its subtypes
-            }
-            final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-            final TypeAdapter<InMemoryCfg> adapterInMemoryCfg = gson.getDelegateAdapter(this, TypeToken.get(InMemoryCfg.class));
-            final TypeAdapter<InTokenCfg> adapterInTokenCfg = gson.getDelegateAdapter(this, TypeToken.get(InTokenCfg.class));
-            final TypeAdapter<MongoCfg> adapterMongoCfg = gson.getDelegateAdapter(this, TypeToken.get(MongoCfg.class));
-            final TypeAdapter<MysqlCfg> adapterMysqlCfg = gson.getDelegateAdapter(this, TypeToken.get(MysqlCfg.class));
-            final TypeAdapter<PostgresCfg> adapterPostgresCfg = gson.getDelegateAdapter(this, TypeToken.get(PostgresCfg.class));
-            final TypeAdapter<RedisCfg> adapterRedisCfg = gson.getDelegateAdapter(this, TypeToken.get(RedisCfg.class));
-            final TypeAdapter<RemoteDbCfg> adapterRemoteDbCfg = gson.getDelegateAdapter(this, TypeToken.get(RemoteDbCfg.class));
-            final TypeAdapter<SqliteCfg> adapterSqliteCfg = gson.getDelegateAdapter(this, TypeToken.get(SqliteCfg.class));
+  public static final String SERIALIZED_NAME_IN_TOKEN = "inToken";
+  @SerializedName(SERIALIZED_NAME_IN_TOKEN)
+  private Boolean inToken;
 
-            return (TypeAdapter<T>) new TypeAdapter<DbsCfgSession>() {
-                @Override
-                public void write(JsonWriter out, DbsCfgSession value) throws IOException {
-                    if (value == null || value.getActualInstance() == null) {
-                        elementAdapter.write(out, null);
-                        return;
-                    }
+  public static final String SERIALIZED_NAME_MONGODB = "mongodb";
+  @SerializedName(SERIALIZED_NAME_MONGODB)
+  private String mongodb;
 
-                    // check if the actual instance is of the type `InMemoryCfg`
-                    if (value.getActualInstance() instanceof InMemoryCfg) {
-                        JsonObject obj = adapterInMemoryCfg.toJsonTree((InMemoryCfg)value.getActualInstance()).getAsJsonObject();
-                        elementAdapter.write(out, obj);
-                        return;
-                    }
+  public static final String SERIALIZED_NAME_DATABASE = "database";
+  @SerializedName(SERIALIZED_NAME_DATABASE)
+  private Integer database;
 
-                    // check if the actual instance is of the type `InTokenCfg`
-                    if (value.getActualInstance() instanceof InTokenCfg) {
-                        JsonObject obj = adapterInTokenCfg.toJsonTree((InTokenCfg)value.getActualInstance()).getAsJsonObject();
-                        elementAdapter.write(out, obj);
-                        return;
-                    }
+  public static final String SERIALIZED_NAME_REDIS = "redis";
+  @SerializedName(SERIALIZED_NAME_REDIS)
+  private List<String> redis = null;
 
-                    // check if the actual instance is of the type `MongoCfg`
-                    if (value.getActualInstance() instanceof MongoCfg) {
-                        JsonObject obj = adapterMongoCfg.toJsonTree((MongoCfg)value.getActualInstance()).getAsJsonObject();
-                        elementAdapter.write(out, obj);
-                        return;
-                    }
+  public static final String SERIALIZED_NAME_CLUSTER = "cluster";
+  @SerializedName(SERIALIZED_NAME_CLUSTER)
+  private Boolean cluster;
 
-                    // check if the actual instance is of the type `MysqlCfg`
-                    if (value.getActualInstance() instanceof MysqlCfg) {
-                        JsonObject obj = adapterMysqlCfg.toJsonTree((MysqlCfg)value.getActualInstance()).getAsJsonObject();
-                        elementAdapter.write(out, obj);
-                        return;
-                    }
+  public static final String SERIALIZED_NAME_USER = "user";
+  @SerializedName(SERIALIZED_NAME_USER)
+  private String user;
 
-                    // check if the actual instance is of the type `PostgresCfg`
-                    if (value.getActualInstance() instanceof PostgresCfg) {
-                        JsonObject obj = adapterPostgresCfg.toJsonTree((PostgresCfg)value.getActualInstance()).getAsJsonObject();
-                        elementAdapter.write(out, obj);
-                        return;
-                    }
+  public static final String SERIALIZED_NAME_PASSWORD = "password";
+  @SerializedName(SERIALIZED_NAME_PASSWORD)
+  private String password;
 
-                    // check if the actual instance is of the type `RedisCfg`
-                    if (value.getActualInstance() instanceof RedisCfg) {
-                        JsonObject obj = adapterRedisCfg.toJsonTree((RedisCfg)value.getActualInstance()).getAsJsonObject();
-                        elementAdapter.write(out, obj);
-                        return;
-                    }
+  public static final String SERIALIZED_NAME_SSL = "ssl";
+  @SerializedName(SERIALIZED_NAME_SSL)
+  private Boolean ssl;
 
-                    // check if the actual instance is of the type `RemoteDbCfg`
-                    if (value.getActualInstance() instanceof RemoteDbCfg) {
-                        JsonObject obj = adapterRemoteDbCfg.toJsonTree((RemoteDbCfg)value.getActualInstance()).getAsJsonObject();
-                        elementAdapter.write(out, obj);
-                        return;
-                    }
+  public static final String SERIALIZED_NAME_MAX_CONNECTIONS = "maxConnections";
+  @SerializedName(SERIALIZED_NAME_MAX_CONNECTIONS)
+  private Integer maxConnections;
 
-                    // check if the actual instance is of the type `SqliteCfg`
-                    if (value.getActualInstance() instanceof SqliteCfg) {
-                        JsonObject obj = adapterSqliteCfg.toJsonTree((SqliteCfg)value.getActualInstance()).getAsJsonObject();
-                        elementAdapter.write(out, obj);
-                        return;
-                    }
+  public static final String SERIALIZED_NAME_REMOTE = "remote";
+  @SerializedName(SERIALIZED_NAME_REMOTE)
+  private String remote;
 
-                    throw new IOException("Failed to serialize as the type doesn't match anyOf schemas: InMemoryCfg, InTokenCfg, MongoCfg, MysqlCfg, PostgresCfg, RedisCfg, RemoteDbCfg, SqliteCfg");
-                }
+  public static final String SERIALIZED_NAME_QUERY = "query";
+  @SerializedName(SERIALIZED_NAME_QUERY)
+  private Map<String, String> query = null;
 
-                @Override
-                public DbsCfgSession read(JsonReader in) throws IOException {
-                    Object deserialized = null;
-                    JsonObject jsonObject = elementAdapter.read(in).getAsJsonObject();
+  public static final String SERIALIZED_NAME_HEADERS = "headers";
+  @SerializedName(SERIALIZED_NAME_HEADERS)
+  private Map<String, String> headers = null;
 
-                    // deserialize InMemoryCfg
-                    try {
-                        // validate the JSON object to see if any exception is thrown
-                        InMemoryCfg.validateJsonObject(jsonObject);
-                        log.log(Level.FINER, "Input data matches schema 'InMemoryCfg'");
-                        DbsCfgSession ret = new DbsCfgSession();
-                        ret.setActualInstance(adapterInMemoryCfg.fromJsonTree(jsonObject));
-                        return ret;
-                    } catch (Exception e) {
-                        // deserialization failed, continue
-                        log.log(Level.FINER, "Input data does not match schema 'InMemoryCfg'", e);
-                    }
+  public static final String SERIALIZED_NAME_MYSQL = "mysql";
+  @SerializedName(SERIALIZED_NAME_MYSQL)
+  private String mysql;
 
-                    // deserialize InTokenCfg
-                    try {
-                        // validate the JSON object to see if any exception is thrown
-                        InTokenCfg.validateJsonObject(jsonObject);
-                        log.log(Level.FINER, "Input data matches schema 'InTokenCfg'");
-                        DbsCfgSession ret = new DbsCfgSession();
-                        ret.setActualInstance(adapterInTokenCfg.fromJsonTree(jsonObject));
-                        return ret;
-                    } catch (Exception e) {
-                        // deserialization failed, continue
-                        log.log(Level.FINER, "Input data does not match schema 'InTokenCfg'", e);
-                    }
+  public static final String SERIALIZED_NAME_USERNAME = "username";
+  @SerializedName(SERIALIZED_NAME_USERNAME)
+  private String username;
 
-                    // deserialize MongoCfg
-                    try {
-                        // validate the JSON object to see if any exception is thrown
-                        MongoCfg.validateJsonObject(jsonObject);
-                        log.log(Level.FINER, "Input data matches schema 'MongoCfg'");
-                        DbsCfgSession ret = new DbsCfgSession();
-                        ret.setActualInstance(adapterMongoCfg.fromJsonTree(jsonObject));
-                        return ret;
-                    } catch (Exception e) {
-                        // deserialization failed, continue
-                        log.log(Level.FINER, "Input data does not match schema 'MongoCfg'", e);
-                    }
+  public static final String SERIALIZED_NAME_POSTGRES = "postgres";
+  @SerializedName(SERIALIZED_NAME_POSTGRES)
+  private String postgres;
 
-                    // deserialize MysqlCfg
-                    try {
-                        // validate the JSON object to see if any exception is thrown
-                        MysqlCfg.validateJsonObject(jsonObject);
-                        log.log(Level.FINER, "Input data matches schema 'MysqlCfg'");
-                        DbsCfgSession ret = new DbsCfgSession();
-                        ret.setActualInstance(adapterMysqlCfg.fromJsonTree(jsonObject));
-                        return ret;
-                    } catch (Exception e) {
-                        // deserialization failed, continue
-                        log.log(Level.FINER, "Input data does not match schema 'MysqlCfg'", e);
-                    }
+  public static final String SERIALIZED_NAME_SQLITE = "sqlite";
+  @SerializedName(SERIALIZED_NAME_SQLITE)
+  private String sqlite;
 
-                    // deserialize PostgresCfg
-                    try {
-                        // validate the JSON object to see if any exception is thrown
-                        PostgresCfg.validateJsonObject(jsonObject);
-                        log.log(Level.FINER, "Input data matches schema 'PostgresCfg'");
-                        DbsCfgSession ret = new DbsCfgSession();
-                        ret.setActualInstance(adapterPostgresCfg.fromJsonTree(jsonObject));
-                        return ret;
-                    } catch (Exception e) {
-                        // deserialization failed, continue
-                        log.log(Level.FINER, "Input data does not match schema 'PostgresCfg'", e);
-                    }
+  public DbsCfgSession() {
+  }
 
-                    // deserialize RedisCfg
-                    try {
-                        // validate the JSON object to see if any exception is thrown
-                        RedisCfg.validateJsonObject(jsonObject);
-                        log.log(Level.FINER, "Input data matches schema 'RedisCfg'");
-                        DbsCfgSession ret = new DbsCfgSession();
-                        ret.setActualInstance(adapterRedisCfg.fromJsonTree(jsonObject));
-                        return ret;
-                    } catch (Exception e) {
-                        // deserialization failed, continue
-                        log.log(Level.FINER, "Input data does not match schema 'RedisCfg'", e);
-                    }
+  public DbsCfgSession inMemory(Boolean inMemory) {
+    
+    this.inMemory = inMemory;
+    return this;
+  }
 
-                    // deserialize RemoteDbCfg
-                    try {
-                        // validate the JSON object to see if any exception is thrown
-                        RemoteDbCfg.validateJsonObject(jsonObject);
-                        log.log(Level.FINER, "Input data matches schema 'RemoteDbCfg'");
-                        DbsCfgSession ret = new DbsCfgSession();
-                        ret.setActualInstance(adapterRemoteDbCfg.fromJsonTree(jsonObject));
-                        return ret;
-                    } catch (Exception e) {
-                        // deserialization failed, continue
-                        log.log(Level.FINER, "Input data does not match schema 'RemoteDbCfg'", e);
-                    }
+   /**
+   * Get inMemory
+   * @return inMemory
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
 
-                    // deserialize SqliteCfg
-                    try {
-                        // validate the JSON object to see if any exception is thrown
-                        SqliteCfg.validateJsonObject(jsonObject);
-                        log.log(Level.FINER, "Input data matches schema 'SqliteCfg'");
-                        DbsCfgSession ret = new DbsCfgSession();
-                        ret.setActualInstance(adapterSqliteCfg.fromJsonTree(jsonObject));
-                        return ret;
-                    } catch (Exception e) {
-                        // deserialization failed, continue
-                        log.log(Level.FINER, "Input data does not match schema 'SqliteCfg'", e);
-                    }
+  public Boolean getInMemory() {
+    return inMemory;
+  }
 
 
-                    throw new IOException(String.format("Failed deserialization for DbsCfgSession: no class matched. JSON: %s", jsonObject.toString()));
-                }
-            }.nullSafe();
-        }
+  public void setInMemory(Boolean inMemory) {
+    this.inMemory = inMemory;
+  }
+
+
+  public DbsCfgSession inToken(Boolean inToken) {
+    
+    this.inToken = inToken;
+    return this;
+  }
+
+   /**
+   * Get inToken
+   * @return inToken
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Boolean getInToken() {
+    return inToken;
+  }
+
+
+  public void setInToken(Boolean inToken) {
+    this.inToken = inToken;
+  }
+
+
+  public DbsCfgSession mongodb(String mongodb) {
+    
+    this.mongodb = mongodb;
+    return this;
+  }
+
+   /**
+   * Get mongodb
+   * @return mongodb
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public String getMongodb() {
+    return mongodb;
+  }
+
+
+  public void setMongodb(String mongodb) {
+    this.mongodb = mongodb;
+  }
+
+
+  public DbsCfgSession database(Integer database) {
+    
+    this.database = database;
+    return this;
+  }
+
+   /**
+   * Get database
+   * @return database
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Integer getDatabase() {
+    return database;
+  }
+
+
+  public void setDatabase(Integer database) {
+    this.database = database;
+  }
+
+
+  public DbsCfgSession redis(List<String> redis) {
+    
+    this.redis = redis;
+    return this;
+  }
+
+  public DbsCfgSession addRedisItem(String redisItem) {
+    if (this.redis == null) {
+      this.redis = new ArrayList<>();
     }
+    this.redis.add(redisItem);
+    return this;
+  }
 
-    // store a list of schema names defined in anyOf
-    public static final Map<String, GenericType> schemas = new HashMap<String, GenericType>();
+   /**
+   * Get redis
+   * @return redis
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
 
-    public DbsCfgSession() {
-        super("anyOf", Boolean.FALSE);
+  public List<String> getRedis() {
+    return redis;
+  }
+
+
+  public void setRedis(List<String> redis) {
+    this.redis = redis;
+  }
+
+
+  public DbsCfgSession cluster(Boolean cluster) {
+    
+    this.cluster = cluster;
+    return this;
+  }
+
+   /**
+   * Get cluster
+   * @return cluster
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Boolean getCluster() {
+    return cluster;
+  }
+
+
+  public void setCluster(Boolean cluster) {
+    this.cluster = cluster;
+  }
+
+
+  public DbsCfgSession user(String user) {
+    
+    this.user = user;
+    return this;
+  }
+
+   /**
+   * Get user
+   * @return user
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public String getUser() {
+    return user;
+  }
+
+
+  public void setUser(String user) {
+    this.user = user;
+  }
+
+
+  public DbsCfgSession password(String password) {
+    
+    this.password = password;
+    return this;
+  }
+
+   /**
+   * Get password
+   * @return password
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public String getPassword() {
+    return password;
+  }
+
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+
+  public DbsCfgSession ssl(Boolean ssl) {
+    
+    this.ssl = ssl;
+    return this;
+  }
+
+   /**
+   * Get ssl
+   * @return ssl
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Boolean getSsl() {
+    return ssl;
+  }
+
+
+  public void setSsl(Boolean ssl) {
+    this.ssl = ssl;
+  }
+
+
+  public DbsCfgSession maxConnections(Integer maxConnections) {
+    
+    this.maxConnections = maxConnections;
+    return this;
+  }
+
+   /**
+   * Get maxConnections
+   * @return maxConnections
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Integer getMaxConnections() {
+    return maxConnections;
+  }
+
+
+  public void setMaxConnections(Integer maxConnections) {
+    this.maxConnections = maxConnections;
+  }
+
+
+  public DbsCfgSession remote(String remote) {
+    
+    this.remote = remote;
+    return this;
+  }
+
+   /**
+   * Get remote
+   * @return remote
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public String getRemote() {
+    return remote;
+  }
+
+
+  public void setRemote(String remote) {
+    this.remote = remote;
+  }
+
+
+  public DbsCfgSession query(Map<String, String> query) {
+    
+    this.query = query;
+    return this;
+  }
+
+  public DbsCfgSession putQueryItem(String key, String queryItem) {
+    if (this.query == null) {
+      this.query = new HashMap<>();
     }
+    this.query.put(key, queryItem);
+    return this;
+  }
 
-    public DbsCfgSession(InMemoryCfg o) {
-        super("anyOf", Boolean.FALSE);
-        setActualInstance(o);
+   /**
+   * Get query
+   * @return query
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Map<String, String> getQuery() {
+    return query;
+  }
+
+
+  public void setQuery(Map<String, String> query) {
+    this.query = query;
+  }
+
+
+  public DbsCfgSession headers(Map<String, String> headers) {
+    
+    this.headers = headers;
+    return this;
+  }
+
+  public DbsCfgSession putHeadersItem(String key, String headersItem) {
+    if (this.headers == null) {
+      this.headers = new HashMap<>();
     }
+    this.headers.put(key, headersItem);
+    return this;
+  }
 
-    public DbsCfgSession(InTokenCfg o) {
-        super("anyOf", Boolean.FALSE);
-        setActualInstance(o);
+   /**
+   * Get headers
+   * @return headers
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public Map<String, String> getHeaders() {
+    return headers;
+  }
+
+
+  public void setHeaders(Map<String, String> headers) {
+    this.headers = headers;
+  }
+
+
+  public DbsCfgSession mysql(String mysql) {
+    
+    this.mysql = mysql;
+    return this;
+  }
+
+   /**
+   * Get mysql
+   * @return mysql
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public String getMysql() {
+    return mysql;
+  }
+
+
+  public void setMysql(String mysql) {
+    this.mysql = mysql;
+  }
+
+
+  public DbsCfgSession username(String username) {
+    
+    this.username = username;
+    return this;
+  }
+
+   /**
+   * Get username
+   * @return username
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public String getUsername() {
+    return username;
+  }
+
+
+  public void setUsername(String username) {
+    this.username = username;
+  }
+
+
+  public DbsCfgSession postgres(String postgres) {
+    
+    this.postgres = postgres;
+    return this;
+  }
+
+   /**
+   * Get postgres
+   * @return postgres
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public String getPostgres() {
+    return postgres;
+  }
+
+
+  public void setPostgres(String postgres) {
+    this.postgres = postgres;
+  }
+
+
+  public DbsCfgSession sqlite(String sqlite) {
+    
+    this.sqlite = sqlite;
+    return this;
+  }
+
+   /**
+   * Get sqlite
+   * @return sqlite
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public String getSqlite() {
+    return sqlite;
+  }
+
+
+  public void setSqlite(String sqlite) {
+    this.sqlite = sqlite;
+  }
+
+  /**
+   * A container for additional, undeclared properties.
+   * This is a holder for any undeclared properties as specified with
+   * the 'additionalProperties' keyword in the OAS document.
+   */
+  private Map<String, Object> additionalProperties;
+
+  /**
+   * Set the additional (undeclared) property with the specified name and value.
+   * If the property does not already exist, create it otherwise replace it.
+   */
+  public DbsCfgSession putAdditionalProperty(String key, Object value) {
+    if (this.additionalProperties == null) {
+        this.additionalProperties = new HashMap<String, Object>();
     }
+    this.additionalProperties.put(key, value);
+    return this;
+  }
 
-    public DbsCfgSession(MongoCfg o) {
-        super("anyOf", Boolean.FALSE);
-        setActualInstance(o);
+  /**
+   * Return the additional (undeclared) property.
+   */
+  public Map<String, Object> getAdditionalProperties() {
+    return additionalProperties;
+  }
+
+  /**
+   * Return the additional (undeclared) property with the specified name.
+   */
+  public Object getAdditionalProperty(String key) {
+    if (this.additionalProperties == null) {
+        return null;
     }
+    return this.additionalProperties.get(key);
+  }
 
-    public DbsCfgSession(MysqlCfg o) {
-        super("anyOf", Boolean.FALSE);
-        setActualInstance(o);
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
     }
-
-    public DbsCfgSession(PostgresCfg o) {
-        super("anyOf", Boolean.FALSE);
-        setActualInstance(o);
+    if (o == null || getClass() != o.getClass()) {
+      return false;
     }
+    DbsCfgSession dbsCfgSession = (DbsCfgSession) o;
+    return Objects.equals(this.inMemory, dbsCfgSession.inMemory) &&
+        Objects.equals(this.inToken, dbsCfgSession.inToken) &&
+        Objects.equals(this.mongodb, dbsCfgSession.mongodb) &&
+        Objects.equals(this.database, dbsCfgSession.database) &&
+        Objects.equals(this.redis, dbsCfgSession.redis) &&
+        Objects.equals(this.cluster, dbsCfgSession.cluster) &&
+        Objects.equals(this.user, dbsCfgSession.user) &&
+        Objects.equals(this.password, dbsCfgSession.password) &&
+        Objects.equals(this.ssl, dbsCfgSession.ssl) &&
+        Objects.equals(this.maxConnections, dbsCfgSession.maxConnections) &&
+        Objects.equals(this.remote, dbsCfgSession.remote) &&
+        Objects.equals(this.query, dbsCfgSession.query) &&
+        Objects.equals(this.headers, dbsCfgSession.headers) &&
+        Objects.equals(this.mysql, dbsCfgSession.mysql) &&
+        Objects.equals(this.username, dbsCfgSession.username) &&
+        Objects.equals(this.postgres, dbsCfgSession.postgres) &&
+        Objects.equals(this.sqlite, dbsCfgSession.sqlite)&&
+        Objects.equals(this.additionalProperties, dbsCfgSession.additionalProperties);
+  }
 
-    public DbsCfgSession(RedisCfg o) {
-        super("anyOf", Boolean.FALSE);
-        setActualInstance(o);
+  @Override
+  public int hashCode() {
+    return Objects.hash(inMemory, inToken, mongodb, database, redis, cluster, user, password, ssl, maxConnections, remote, query, headers, mysql, username, postgres, sqlite, additionalProperties);
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("class DbsCfgSession {\n");
+    sb.append("    inMemory: ").append(toIndentedString(inMemory)).append("\n");
+    sb.append("    inToken: ").append(toIndentedString(inToken)).append("\n");
+    sb.append("    mongodb: ").append(toIndentedString(mongodb)).append("\n");
+    sb.append("    database: ").append(toIndentedString(database)).append("\n");
+    sb.append("    redis: ").append(toIndentedString(redis)).append("\n");
+    sb.append("    cluster: ").append(toIndentedString(cluster)).append("\n");
+    sb.append("    user: ").append(toIndentedString(user)).append("\n");
+    sb.append("    password: ").append(toIndentedString(password)).append("\n");
+    sb.append("    ssl: ").append(toIndentedString(ssl)).append("\n");
+    sb.append("    maxConnections: ").append(toIndentedString(maxConnections)).append("\n");
+    sb.append("    remote: ").append(toIndentedString(remote)).append("\n");
+    sb.append("    query: ").append(toIndentedString(query)).append("\n");
+    sb.append("    headers: ").append(toIndentedString(headers)).append("\n");
+    sb.append("    mysql: ").append(toIndentedString(mysql)).append("\n");
+    sb.append("    username: ").append(toIndentedString(username)).append("\n");
+    sb.append("    postgres: ").append(toIndentedString(postgres)).append("\n");
+    sb.append("    sqlite: ").append(toIndentedString(sqlite)).append("\n");
+    sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
+    sb.append("}");
+    return sb.toString();
+  }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(Object o) {
+    if (o == null) {
+      return "null";
     }
+    return o.toString().replace("\n", "\n    ");
+  }
 
-    public DbsCfgSession(RemoteDbCfg o) {
-        super("anyOf", Boolean.FALSE);
-        setActualInstance(o);
-    }
 
-    public DbsCfgSession(SqliteCfg o) {
-        super("anyOf", Boolean.FALSE);
-        setActualInstance(o);
-    }
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
 
-    static {
-        schemas.put("InMemoryCfg", new GenericType<InMemoryCfg>() {
-        });
-        schemas.put("InTokenCfg", new GenericType<InTokenCfg>() {
-        });
-        schemas.put("MongoCfg", new GenericType<MongoCfg>() {
-        });
-        schemas.put("MysqlCfg", new GenericType<MysqlCfg>() {
-        });
-        schemas.put("PostgresCfg", new GenericType<PostgresCfg>() {
-        });
-        schemas.put("RedisCfg", new GenericType<RedisCfg>() {
-        });
-        schemas.put("RemoteDbCfg", new GenericType<RemoteDbCfg>() {
-        });
-        schemas.put("SqliteCfg", new GenericType<SqliteCfg>() {
-        });
-    }
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("inMemory");
+    openapiFields.add("inToken");
+    openapiFields.add("mongodb");
+    openapiFields.add("database");
+    openapiFields.add("redis");
+    openapiFields.add("cluster");
+    openapiFields.add("user");
+    openapiFields.add("password");
+    openapiFields.add("ssl");
+    openapiFields.add("maxConnections");
+    openapiFields.add("remote");
+    openapiFields.add("query");
+    openapiFields.add("headers");
+    openapiFields.add("mysql");
+    openapiFields.add("username");
+    openapiFields.add("postgres");
+    openapiFields.add("sqlite");
 
-    @Override
-    public Map<String, GenericType> getSchemas() {
-        return DbsCfgSession.schemas;
-    }
-
-    /**
-     * Set the instance that matches the anyOf child schema, check
-     * the instance parameter is valid against the anyOf child schemas:
-     * InMemoryCfg, InTokenCfg, MongoCfg, MysqlCfg, PostgresCfg, RedisCfg, RemoteDbCfg, SqliteCfg
-     *
-     * It could be an instance of the 'anyOf' schemas.
-     * The anyOf child schemas may themselves be a composed schema (allOf, anyOf, anyOf).
-     */
-    @Override
-    public void setActualInstance(Object instance) {
-        if (instance instanceof InMemoryCfg) {
-            super.setActualInstance(instance);
-            return;
-        }
-
-        if (instance instanceof InTokenCfg) {
-            super.setActualInstance(instance);
-            return;
-        }
-
-        if (instance instanceof MongoCfg) {
-            super.setActualInstance(instance);
-            return;
-        }
-
-        if (instance instanceof MysqlCfg) {
-            super.setActualInstance(instance);
-            return;
-        }
-
-        if (instance instanceof PostgresCfg) {
-            super.setActualInstance(instance);
-            return;
-        }
-
-        if (instance instanceof RedisCfg) {
-            super.setActualInstance(instance);
-            return;
-        }
-
-        if (instance instanceof RemoteDbCfg) {
-            super.setActualInstance(instance);
-            return;
-        }
-
-        if (instance instanceof SqliteCfg) {
-            super.setActualInstance(instance);
-            return;
-        }
-
-        throw new RuntimeException("Invalid instance type. Must be InMemoryCfg, InTokenCfg, MongoCfg, MysqlCfg, PostgresCfg, RedisCfg, RemoteDbCfg, SqliteCfg");
-    }
-
-    /**
-     * Get the actual instance, which can be the following:
-     * InMemoryCfg, InTokenCfg, MongoCfg, MysqlCfg, PostgresCfg, RedisCfg, RemoteDbCfg, SqliteCfg
-     *
-     * @return The actual instance (InMemoryCfg, InTokenCfg, MongoCfg, MysqlCfg, PostgresCfg, RedisCfg, RemoteDbCfg, SqliteCfg)
-     */
-    @Override
-    public Object getActualInstance() {
-        return super.getActualInstance();
-    }
-
-    /**
-     * Get the actual instance of `InMemoryCfg`. If the actual instance is not `InMemoryCfg`,
-     * the ClassCastException will be thrown.
-     *
-     * @return The actual instance of `InMemoryCfg`
-     * @throws ClassCastException if the instance is not `InMemoryCfg`
-     */
-    public InMemoryCfg getInMemoryCfg() throws ClassCastException {
-        return (InMemoryCfg)super.getActualInstance();
-    }
-
-    /**
-     * Get the actual instance of `InTokenCfg`. If the actual instance is not `InTokenCfg`,
-     * the ClassCastException will be thrown.
-     *
-     * @return The actual instance of `InTokenCfg`
-     * @throws ClassCastException if the instance is not `InTokenCfg`
-     */
-    public InTokenCfg getInTokenCfg() throws ClassCastException {
-        return (InTokenCfg)super.getActualInstance();
-    }
-
-    /**
-     * Get the actual instance of `MongoCfg`. If the actual instance is not `MongoCfg`,
-     * the ClassCastException will be thrown.
-     *
-     * @return The actual instance of `MongoCfg`
-     * @throws ClassCastException if the instance is not `MongoCfg`
-     */
-    public MongoCfg getMongoCfg() throws ClassCastException {
-        return (MongoCfg)super.getActualInstance();
-    }
-
-    /**
-     * Get the actual instance of `MysqlCfg`. If the actual instance is not `MysqlCfg`,
-     * the ClassCastException will be thrown.
-     *
-     * @return The actual instance of `MysqlCfg`
-     * @throws ClassCastException if the instance is not `MysqlCfg`
-     */
-    public MysqlCfg getMysqlCfg() throws ClassCastException {
-        return (MysqlCfg)super.getActualInstance();
-    }
-
-    /**
-     * Get the actual instance of `PostgresCfg`. If the actual instance is not `PostgresCfg`,
-     * the ClassCastException will be thrown.
-     *
-     * @return The actual instance of `PostgresCfg`
-     * @throws ClassCastException if the instance is not `PostgresCfg`
-     */
-    public PostgresCfg getPostgresCfg() throws ClassCastException {
-        return (PostgresCfg)super.getActualInstance();
-    }
-
-    /**
-     * Get the actual instance of `RedisCfg`. If the actual instance is not `RedisCfg`,
-     * the ClassCastException will be thrown.
-     *
-     * @return The actual instance of `RedisCfg`
-     * @throws ClassCastException if the instance is not `RedisCfg`
-     */
-    public RedisCfg getRedisCfg() throws ClassCastException {
-        return (RedisCfg)super.getActualInstance();
-    }
-
-    /**
-     * Get the actual instance of `RemoteDbCfg`. If the actual instance is not `RemoteDbCfg`,
-     * the ClassCastException will be thrown.
-     *
-     * @return The actual instance of `RemoteDbCfg`
-     * @throws ClassCastException if the instance is not `RemoteDbCfg`
-     */
-    public RemoteDbCfg getRemoteDbCfg() throws ClassCastException {
-        return (RemoteDbCfg)super.getActualInstance();
-    }
-
-    /**
-     * Get the actual instance of `SqliteCfg`. If the actual instance is not `SqliteCfg`,
-     * the ClassCastException will be thrown.
-     *
-     * @return The actual instance of `SqliteCfg`
-     * @throws ClassCastException if the instance is not `SqliteCfg`
-     */
-    public SqliteCfg getSqliteCfg() throws ClassCastException {
-        return (SqliteCfg)super.getActualInstance();
-    }
-
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
 
  /**
   * Validates the JSON Object and throws an exception if issues found
@@ -504,74 +683,104 @@ public class DbsCfgSession extends AbstractOpenApiSchema {
   * @throws IOException if the JSON Object is invalid with respect to DbsCfgSession
   */
   public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-    // validate anyOf schemas one by one
-    int validCount = 0;
-    // validate the json string with InMemoryCfg
-    try {
-      InMemoryCfg.validateJsonObject(jsonObj);
-      return; // return earlier as at least one schema is valid with respect to the Json object
-      //validCount++;
-    } catch (Exception e) {
-      // continue to the next one
-    }
-    // validate the json string with InTokenCfg
-    try {
-      InTokenCfg.validateJsonObject(jsonObj);
-      return; // return earlier as at least one schema is valid with respect to the Json object
-      //validCount++;
-    } catch (Exception e) {
-      // continue to the next one
-    }
-    // validate the json string with MongoCfg
-    try {
-      MongoCfg.validateJsonObject(jsonObj);
-      return; // return earlier as at least one schema is valid with respect to the Json object
-      //validCount++;
-    } catch (Exception e) {
-      // continue to the next one
-    }
-    // validate the json string with MysqlCfg
-    try {
-      MysqlCfg.validateJsonObject(jsonObj);
-      return; // return earlier as at least one schema is valid with respect to the Json object
-      //validCount++;
-    } catch (Exception e) {
-      // continue to the next one
-    }
-    // validate the json string with PostgresCfg
-    try {
-      PostgresCfg.validateJsonObject(jsonObj);
-      return; // return earlier as at least one schema is valid with respect to the Json object
-      //validCount++;
-    } catch (Exception e) {
-      // continue to the next one
-    }
-    // validate the json string with RedisCfg
-    try {
-      RedisCfg.validateJsonObject(jsonObj);
-      return; // return earlier as at least one schema is valid with respect to the Json object
-      //validCount++;
-    } catch (Exception e) {
-      // continue to the next one
-    }
-    // validate the json string with RemoteDbCfg
-    try {
-      RemoteDbCfg.validateJsonObject(jsonObj);
-      return; // return earlier as at least one schema is valid with respect to the Json object
-      //validCount++;
-    } catch (Exception e) {
-      // continue to the next one
-    }
-    // validate the json string with SqliteCfg
-    try {
-      SqliteCfg.validateJsonObject(jsonObj);
-      return; // return earlier as at least one schema is valid with respect to the Json object
-      //validCount++;
-    } catch (Exception e) {
-      // continue to the next one
-    }
-    if (validCount == 0) {
-      throw new IOException(String.format("The JSON string is invalid for DbsCfgSession with anyOf schemas: InMemoryCfg, InTokenCfg, MongoCfg, MysqlCfg, PostgresCfg, RedisCfg, RemoteDbCfg, SqliteCfg. JSON: %s", jsonObj.toString()));
+      if (jsonObj == null) {
+        if (DbsCfgSession.openapiRequiredFields.isEmpty()) {
+          return;
+        } else { // has required fields
+          throw new IllegalArgumentException(String.format("The required field(s) %s in DbsCfgSession is not found in the empty JSON string", DbsCfgSession.openapiRequiredFields.toString()));
+        }
+      }
+      if ((jsonObj.get("mongodb") != null && !jsonObj.get("mongodb").isJsonNull()) && !jsonObj.get("mongodb").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `mongodb` to be a primitive type in the JSON string but got `%s`", jsonObj.get("mongodb").toString()));
+      }
+      // ensure the json data is an array
+      if ((jsonObj.get("redis") != null && !jsonObj.get("redis").isJsonNull()) && !jsonObj.get("redis").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `redis` to be an array in the JSON string but got `%s`", jsonObj.get("redis").toString()));
+      }
+      if ((jsonObj.get("user") != null && !jsonObj.get("user").isJsonNull()) && !jsonObj.get("user").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `user` to be a primitive type in the JSON string but got `%s`", jsonObj.get("user").toString()));
+      }
+      if ((jsonObj.get("password") != null && !jsonObj.get("password").isJsonNull()) && !jsonObj.get("password").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `password` to be a primitive type in the JSON string but got `%s`", jsonObj.get("password").toString()));
+      }
+      if ((jsonObj.get("remote") != null && !jsonObj.get("remote").isJsonNull()) && !jsonObj.get("remote").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `remote` to be a primitive type in the JSON string but got `%s`", jsonObj.get("remote").toString()));
+      }
+      if ((jsonObj.get("mysql") != null && !jsonObj.get("mysql").isJsonNull()) && !jsonObj.get("mysql").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `mysql` to be a primitive type in the JSON string but got `%s`", jsonObj.get("mysql").toString()));
+      }
+      if ((jsonObj.get("username") != null && !jsonObj.get("username").isJsonNull()) && !jsonObj.get("username").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `username` to be a primitive type in the JSON string but got `%s`", jsonObj.get("username").toString()));
+      }
+      if ((jsonObj.get("postgres") != null && !jsonObj.get("postgres").isJsonNull()) && !jsonObj.get("postgres").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `postgres` to be a primitive type in the JSON string but got `%s`", jsonObj.get("postgres").toString()));
+      }
+      if ((jsonObj.get("sqlite") != null && !jsonObj.get("sqlite").isJsonNull()) && !jsonObj.get("sqlite").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `sqlite` to be a primitive type in the JSON string but got `%s`", jsonObj.get("sqlite").toString()));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!DbsCfgSession.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'DbsCfgSession' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<DbsCfgSession> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(DbsCfgSession.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<DbsCfgSession>() {
+           @Override
+           public void write(JsonWriter out, DbsCfgSession value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             obj.remove("additionalProperties");
+             // serialize additonal properties
+             if (value.getAdditionalProperties() != null) {
+               for (Map.Entry<String, Object> entry : value.getAdditionalProperties().entrySet()) {
+                 if (entry.getValue() instanceof String)
+                   obj.addProperty(entry.getKey(), (String) entry.getValue());
+                 else if (entry.getValue() instanceof Number)
+                   obj.addProperty(entry.getKey(), (Number) entry.getValue());
+                 else if (entry.getValue() instanceof Boolean)
+                   obj.addProperty(entry.getKey(), (Boolean) entry.getValue());
+                 else if (entry.getValue() instanceof Character)
+                   obj.addProperty(entry.getKey(), (Character) entry.getValue());
+                 else {
+                   obj.add(entry.getKey(), gson.toJsonTree(entry.getValue()).getAsJsonObject());
+                 }
+               }
+             }
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public DbsCfgSession read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             // store additional fields in the deserialized instance
+             DbsCfgSession instance = thisAdapter.fromJsonTree(jsonObj);
+             for (Map.Entry<String, JsonElement> entry : jsonObj.entrySet()) {
+               if (!openapiFields.contains(entry.getKey())) {
+                 if (entry.getValue().isJsonPrimitive()) { // primitive type
+                   if (entry.getValue().getAsJsonPrimitive().isString())
+                     instance.putAdditionalProperty(entry.getKey(), entry.getValue().getAsString());
+                   else if (entry.getValue().getAsJsonPrimitive().isNumber())
+                     instance.putAdditionalProperty(entry.getKey(), entry.getValue().getAsNumber());
+                   else if (entry.getValue().getAsJsonPrimitive().isBoolean())
+                     instance.putAdditionalProperty(entry.getKey(), entry.getValue().getAsBoolean());
+                   else
+                     throw new IllegalArgumentException(String.format("The field `%s` has unknown primitive type. Value: %s", entry.getKey(), entry.getValue().toString()));
+                 } else { // non-primitive type
+                   instance.putAdditionalProperty(entry.getKey(), gson.fromJson(entry.getValue(), HashMap.class));
+                 }
+               }
+             }
+             return instance;
+           }
+
+       }.nullSafe();
     }
   }
 

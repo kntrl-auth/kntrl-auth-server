@@ -1,17 +1,18 @@
 package app.kntrl.client
 
-import app.kntrl.client.generated.infra.ApiException
-import app.kntrl.client.generated.model.AnyErr
+ import app.kntrl.client.generated.infra.ApiException
+ import app.kntrl.client.generated.model.AnyErr
+ import app.kntrl.client.generated.model.Err
 
 fun <T> handleErr(
     retryOnExpiredTokenOn: Session? = null,
     action: () -> T,
 ): T {
     fun parseAnyErr(ex: ApiException): T = try {
-        val anyErr = AnyErr.fromJson(ex.responseBody);
-        val kntrlEx = KntrlException(AnyErr.fromJson(ex.responseBody))
+        val err = Err.fromJson(ex.responseBody);
+        val kntrlEx = KntrlException(AnyErr.fromJson(ex.responseBody), err)
 
-        if (anyErr.code == "TOKEN_EXPIRED" && retryOnExpiredTokenOn != null) {
+        if (err.code == "TOKEN_EXPIRED" && retryOnExpiredTokenOn != null) {
             retryOnExpiredTokenOn.refreshAccessToken(null, kntrlEx)
             handleErr(null, action)
         } else {
@@ -29,9 +30,10 @@ fun <T> handleErr(
 }
 
 class KntrlException(
-    private val err: AnyErr,
+    private val anyErr: AnyErr,
+    val err: Err,
 ) : RuntimeException("Kntrl API error (${err.code}): ${err.devMsg}"),
-    Map<String, Any> by err.additionalProperties {
+    Map<String, Any> by anyErr.additionalProperties {
 
     val code: String = err.code
     val devMsg: String = err.devMsg

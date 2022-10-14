@@ -19,9 +19,7 @@ docs/AuthExecRes.md
 docs/AuthExecResResData.md
 docs/AuthIsNotConfirmed.md
 docs/AuthIsNotEnabled.md
-docs/AuthReqDataJson.md
 docs/AuthRequiresAnother.md
-docs/AuthResDataJson.md
 docs/AuthUserCfg.md
 docs/AuthenticateReq.md
 docs/AuthenticateReqAuthReqsValue.md
@@ -32,6 +30,7 @@ docs/AuthorizeRes.md
 docs/BuiltInAuthCfg.md
 docs/Cache.md
 docs/ClientErr.md
+docs/ClientErrCode.md
 docs/Code.md
 docs/CodeCfg.md
 docs/CodeIsExpired.md
@@ -56,6 +55,7 @@ docs/EntryAccessTokenCfg.md
 docs/EntryCfg.md
 docs/Err.md
 docs/ErrAuthExecRes.md
+docs/ErrCode.md
 docs/FindSessionsRes.md
 docs/HealthRes.md
 docs/HealthStatus.md
@@ -64,6 +64,7 @@ docs/I18nCfg.md
 docs/InMemoryCfg.md
 docs/InTokenCfg.md
 docs/IntegrationErr.md
+docs/IntegrationErrCode.md
 docs/IpAuthCfg.md
 docs/IpAuthRes.md
 docs/IpNew.md
@@ -112,6 +113,7 @@ docs/SaveUserReq.md
 docs/SaveUserRes.md
 docs/ServerApi.md
 docs/ServerErr.md
+docs/ServerErrCode.md
 docs/Session.md
 docs/SessionApi.md
 docs/SessionExpired.md
@@ -126,6 +128,7 @@ docs/TokenHandlerCfg.md
 docs/Tokens.md
 docs/TooManyReqs.md
 docs/Unauthenticated.md
+docs/UnauthenticatedCode.md
 docs/UnconfirmedAuth.md
 docs/UnconfirmedAuthData.md
 docs/User.md
@@ -178,9 +181,7 @@ src/main/java/app/kntrl/client/generated/model/AuthExecRes.java
 src/main/java/app/kntrl/client/generated/model/AuthExecResResData.java
 src/main/java/app/kntrl/client/generated/model/AuthIsNotConfirmed.java
 src/main/java/app/kntrl/client/generated/model/AuthIsNotEnabled.java
-src/main/java/app/kntrl/client/generated/model/AuthReqDataJson.java
 src/main/java/app/kntrl/client/generated/model/AuthRequiresAnother.java
-src/main/java/app/kntrl/client/generated/model/AuthResDataJson.java
 src/main/java/app/kntrl/client/generated/model/AuthUserCfg.java
 src/main/java/app/kntrl/client/generated/model/AuthenticateReq.java
 src/main/java/app/kntrl/client/generated/model/AuthenticateReqAuthReqsValue.java
@@ -190,6 +191,7 @@ src/main/java/app/kntrl/client/generated/model/AuthorizeRes.java
 src/main/java/app/kntrl/client/generated/model/BuiltInAuthCfg.java
 src/main/java/app/kntrl/client/generated/model/Cache.java
 src/main/java/app/kntrl/client/generated/model/ClientErr.java
+src/main/java/app/kntrl/client/generated/model/ClientErrCode.java
 src/main/java/app/kntrl/client/generated/model/Code.java
 src/main/java/app/kntrl/client/generated/model/CodeCfg.java
 src/main/java/app/kntrl/client/generated/model/CodeIsExpired.java
@@ -214,6 +216,7 @@ src/main/java/app/kntrl/client/generated/model/EntryAccessTokenCfg.java
 src/main/java/app/kntrl/client/generated/model/EntryCfg.java
 src/main/java/app/kntrl/client/generated/model/Err.java
 src/main/java/app/kntrl/client/generated/model/ErrAuthExecRes.java
+src/main/java/app/kntrl/client/generated/model/ErrCode.java
 src/main/java/app/kntrl/client/generated/model/FindSessionsRes.java
 src/main/java/app/kntrl/client/generated/model/HealthRes.java
 src/main/java/app/kntrl/client/generated/model/HealthStatus.java
@@ -222,6 +225,7 @@ src/main/java/app/kntrl/client/generated/model/I18nCfg.java
 src/main/java/app/kntrl/client/generated/model/InMemoryCfg.java
 src/main/java/app/kntrl/client/generated/model/InTokenCfg.java
 src/main/java/app/kntrl/client/generated/model/IntegrationErr.java
+src/main/java/app/kntrl/client/generated/model/IntegrationErrCode.java
 src/main/java/app/kntrl/client/generated/model/IpAuthCfg.java
 src/main/java/app/kntrl/client/generated/model/IpAuthRes.java
 src/main/java/app/kntrl/client/generated/model/IpNew.java
@@ -269,6 +273,7 @@ src/main/java/app/kntrl/client/generated/model/SHHttpCfg.java
 src/main/java/app/kntrl/client/generated/model/SaveUserReq.java
 src/main/java/app/kntrl/client/generated/model/SaveUserRes.java
 src/main/java/app/kntrl/client/generated/model/ServerErr.java
+src/main/java/app/kntrl/client/generated/model/ServerErrCode.java
 src/main/java/app/kntrl/client/generated/model/Session.java
 src/main/java/app/kntrl/client/generated/model/SessionExpired.java
 src/main/java/app/kntrl/client/generated/model/SignatureIsIncorrect.java
@@ -280,6 +285,7 @@ src/main/java/app/kntrl/client/generated/model/TokenHandlerCfg.java
 src/main/java/app/kntrl/client/generated/model/Tokens.java
 src/main/java/app/kntrl/client/generated/model/TooManyReqs.java
 src/main/java/app/kntrl/client/generated/model/Unauthenticated.java
+src/main/java/app/kntrl/client/generated/model/UnauthenticatedCode.java
 src/main/java/app/kntrl/client/generated/model/UnconfirmedAuth.java
 src/main/java/app/kntrl/client/generated/model/UnconfirmedAuthData.java
 src/main/java/app/kntrl/client/generated/model/User.java
@@ -304,9 +310,7 @@ src/test/java/app/kntrl/client/generated/model/AuthExecResResDataTest.java
 src/test/java/app/kntrl/client/generated/model/AuthExecResTest.java
 src/test/java/app/kntrl/client/generated/model/AuthIsNotConfirmedTest.java
 src/test/java/app/kntrl/client/generated/model/AuthIsNotEnabledTest.java
-src/test/java/app/kntrl/client/generated/model/AuthReqDataJsonTest.java
 src/test/java/app/kntrl/client/generated/model/AuthRequiresAnotherTest.java
-src/test/java/app/kntrl/client/generated/model/AuthResDataJsonTest.java
 src/test/java/app/kntrl/client/generated/model/AuthUserCfgTest.java
 src/test/java/app/kntrl/client/generated/model/AuthenticateReqAuthReqsValueTest.java
 src/test/java/app/kntrl/client/generated/model/AuthenticateReqTest.java
@@ -315,6 +319,7 @@ src/test/java/app/kntrl/client/generated/model/AuthorizeReqTest.java
 src/test/java/app/kntrl/client/generated/model/AuthorizeResTest.java
 src/test/java/app/kntrl/client/generated/model/BuiltInAuthCfgTest.java
 src/test/java/app/kntrl/client/generated/model/CacheTest.java
+src/test/java/app/kntrl/client/generated/model/ClientErrCodeTest.java
 src/test/java/app/kntrl/client/generated/model/ClientErrTest.java
 src/test/java/app/kntrl/client/generated/model/CodeCfgTest.java
 src/test/java/app/kntrl/client/generated/model/CodeIsExpiredTest.java
@@ -339,6 +344,7 @@ src/test/java/app/kntrl/client/generated/model/EmailUpdateReqTest.java
 src/test/java/app/kntrl/client/generated/model/EntryAccessTokenCfgTest.java
 src/test/java/app/kntrl/client/generated/model/EntryCfgTest.java
 src/test/java/app/kntrl/client/generated/model/ErrAuthExecResTest.java
+src/test/java/app/kntrl/client/generated/model/ErrCodeTest.java
 src/test/java/app/kntrl/client/generated/model/ErrTest.java
 src/test/java/app/kntrl/client/generated/model/FindSessionsResTest.java
 src/test/java/app/kntrl/client/generated/model/HealthResTest.java
@@ -347,6 +353,7 @@ src/test/java/app/kntrl/client/generated/model/HealthStatusTest.java
 src/test/java/app/kntrl/client/generated/model/I18nCfgTest.java
 src/test/java/app/kntrl/client/generated/model/InMemoryCfgTest.java
 src/test/java/app/kntrl/client/generated/model/InTokenCfgTest.java
+src/test/java/app/kntrl/client/generated/model/IntegrationErrCodeTest.java
 src/test/java/app/kntrl/client/generated/model/IntegrationErrTest.java
 src/test/java/app/kntrl/client/generated/model/IpAuthCfgTest.java
 src/test/java/app/kntrl/client/generated/model/IpAuthResTest.java
@@ -394,6 +401,7 @@ src/test/java/app/kntrl/client/generated/model/SHAppCfgTest.java
 src/test/java/app/kntrl/client/generated/model/SHHttpCfgTest.java
 src/test/java/app/kntrl/client/generated/model/SaveUserReqTest.java
 src/test/java/app/kntrl/client/generated/model/SaveUserResTest.java
+src/test/java/app/kntrl/client/generated/model/ServerErrCodeTest.java
 src/test/java/app/kntrl/client/generated/model/ServerErrTest.java
 src/test/java/app/kntrl/client/generated/model/SessionExpiredTest.java
 src/test/java/app/kntrl/client/generated/model/SessionTest.java
@@ -405,6 +413,7 @@ src/test/java/app/kntrl/client/generated/model/TokenExpiredTest.java
 src/test/java/app/kntrl/client/generated/model/TokenHandlerCfgTest.java
 src/test/java/app/kntrl/client/generated/model/TokensTest.java
 src/test/java/app/kntrl/client/generated/model/TooManyReqsTest.java
+src/test/java/app/kntrl/client/generated/model/UnauthenticatedCodeTest.java
 src/test/java/app/kntrl/client/generated/model/UnauthenticatedTest.java
 src/test/java/app/kntrl/client/generated/model/UnconfirmedAuthDataTest.java
 src/test/java/app/kntrl/client/generated/model/UnconfirmedAuthTest.java

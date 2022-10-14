@@ -418,8 +418,7 @@ paths:
           description: Server error
       security:
       - access-token: []
-      - ? ""
-        : []
+      - {}
       tags:
       - authorisation
       x-order: 2
@@ -717,8 +716,42 @@ components:
       additionalProperties: true
       example:
         msg: msg
+        tooShort: true
+        incorrectAnswers:
+        - incorrectAnswers
+        - incorrectAnswers
         code: code
+        strength: strength
+        data:
+          key: "{}"
         devMsg: devMsg
+        waitTimeMinutes: 1
+        tooLong: true
+        missingSymbol: true
+        matchesLogin:
+          type: type
+          login: login
+        expiredAt: 1
+        missingUpperCase: true
+        commonPassword: true
+        missingNumber: true
+        tooManyAnswers: true
+        questionsNotFound:
+        - questionsNotFound
+        - questionsNotFound
+        wasUsedBeforeAt: 2
+        requiresMoreAnswers: true
+        waitTimeSeconds: 1
+        missingLowerCase: true
+        passwordsMismatch: true
+        wasUsedDaysAgo: 4
+        invalidAnswers:
+          key:
+            tooShort: true
+            tooLong: true
+        waitTimeMs: 7
+        changedAt: 9
+        changedDaysAgo: 3
       properties:
         code:
           type: string
@@ -728,6 +761,79 @@ components:
         msg:
           description: Localised message suitable for UI.
           type: string
+          x-nullable: true
+        changedAt:
+          format: int64
+          type: integer
+          x-nullable: true
+        changedDaysAgo:
+          format: int64
+          type: integer
+          x-nullable: true
+        tooLong:
+          type: boolean
+        tooShort:
+          type: boolean
+        missingNumber:
+          type: boolean
+        missingSymbol:
+          type: boolean
+        missingUpperCase:
+          type: boolean
+        missingLowerCase:
+          type: boolean
+        commonPassword:
+          type: boolean
+        wasUsedBeforeAt:
+          format: int64
+          type: integer
+          x-nullable: true
+        matchesLogin:
+          $ref: '#/components/schemas/LoginId'
+        passwordsMismatch:
+          type: boolean
+        strength:
+          type: string
+          x-nullable: true
+        wasUsedDaysAgo:
+          format: int64
+          type: integer
+        data:
+          additionalProperties:
+            type: object
+          type: object
+          writeOnly: true
+        incorrectAnswers:
+          items:
+            type: string
+          type: array
+        requiresMoreAnswers:
+          type: boolean
+        questionsNotFound:
+          items:
+            type: string
+          type: array
+        invalidAnswers:
+          additionalProperties:
+            $ref: '#/components/schemas/AnswerErr'
+          type: object
+        tooManyAnswers:
+          type: boolean
+        waitTimeMs:
+          format: int32
+          type: integer
+          x-nullable: true
+        waitTimeSeconds:
+          format: int32
+          type: integer
+          x-nullable: true
+        waitTimeMinutes:
+          format: int32
+          type: integer
+          x-nullable: true
+        expiredAt:
+          format: int64
+          type: integer
           x-nullable: true
       required:
       - code
@@ -753,6 +859,9 @@ components:
       x-order: -2065236468-1
       x-super: '#/components/schemas/Unauthenticated'
     AnswerErr:
+      example:
+        tooShort: true
+        tooLong: true
       properties:
         tooShort:
           type: boolean
@@ -843,6 +952,79 @@ components:
         msg:
           description: Localised message suitable for UI.
           type: string
+          x-nullable: true
+        changedAt:
+          format: int64
+          type: integer
+          x-nullable: true
+        changedDaysAgo:
+          format: int64
+          type: integer
+          x-nullable: true
+        tooLong:
+          type: boolean
+        tooShort:
+          type: boolean
+        missingNumber:
+          type: boolean
+        missingSymbol:
+          type: boolean
+        missingUpperCase:
+          type: boolean
+        missingLowerCase:
+          type: boolean
+        commonPassword:
+          type: boolean
+        wasUsedBeforeAt:
+          format: int64
+          type: integer
+          x-nullable: true
+        matchesLogin:
+          $ref: '#/components/schemas/LoginId'
+        passwordsMismatch:
+          type: boolean
+        strength:
+          type: string
+          x-nullable: true
+        wasUsedDaysAgo:
+          format: int64
+          type: integer
+        data:
+          additionalProperties:
+            type: object
+          type: object
+          writeOnly: true
+        incorrectAnswers:
+          items:
+            type: string
+          type: array
+        requiresMoreAnswers:
+          type: boolean
+        questionsNotFound:
+          items:
+            type: string
+          type: array
+        invalidAnswers:
+          additionalProperties:
+            $ref: '#/components/schemas/AnswerErr'
+          type: object
+        tooManyAnswers:
+          type: boolean
+        waitTimeMs:
+          format: int32
+          type: integer
+          x-nullable: true
+        waitTimeSeconds:
+          format: int32
+          type: integer
+          x-nullable: true
+        waitTimeMinutes:
+          format: int32
+          type: integer
+          x-nullable: true
+        expiredAt:
+          format: int64
+          type: integer
           x-nullable: true
       required:
       - code
@@ -1277,6 +1459,10 @@ components:
         msg:
           description: Localised message suitable for UI.
           type: string
+          x-nullable: true
+        expiredAt:
+          format: int64
+          type: integer
           x-nullable: true
       required:
       - code
@@ -1735,9 +1921,55 @@ components:
           sentAt: 7
         err:
           msg: msg
+          tooShort: true
+          incorrectAnswers:
+          - incorrectAnswers
+          - incorrectAnswers
           code: code
+          strength: strength
+          data:
+            key: "{}"
           devMsg: devMsg
-        resData: null
+          waitTimeMinutes: 1
+          tooLong: true
+          missingSymbol: true
+          matchesLogin:
+            type: type
+            login: login
+          expiredAt: 1
+          missingUpperCase: true
+          commonPassword: true
+          missingNumber: true
+          tooManyAnswers: true
+          questionsNotFound:
+          - questionsNotFound
+          - questionsNotFound
+          wasUsedBeforeAt: 2
+          requiresMoreAnswers: true
+          waitTimeSeconds: 1
+          missingLowerCase: true
+          passwordsMismatch: true
+          wasUsedDaysAgo: 4
+          invalidAnswers:
+            key:
+              tooShort: true
+              tooLong: true
+          waitTimeMs: 7
+          changedAt: 9
+          changedDaysAgo: 3
+        resData:
+          emailSentTo: emailSentTo
+          password: password
+          answersSavedAt:
+            key: 6
+          strength: strength
+          correct:
+            HOME_CITY: true
+            MOTHER_NAME: false
+          ipEncoded: ipEncoded
+          login: login
+          publicData:
+            key: "{}"
         status: OK
       properties:
         status:
@@ -1762,11 +1994,6 @@ components:
       x-order: -1249106462-7
     AuthResDataJson:
       additionalProperties: true
-      properties:
-        key:
-          description: Ignore. Just workaround for bug in some open-generators
-          type: object
-          x-nullable: true
       type: object
       x-order: -1249106462-8
       x-super: '#/components/schemas/AuthResData'
@@ -1926,9 +2153,55 @@ components:
               sentAt: 7
             err:
               msg: msg
+              tooShort: true
+              incorrectAnswers:
+              - incorrectAnswers
+              - incorrectAnswers
               code: code
+              strength: strength
+              data:
+                key: "{}"
               devMsg: devMsg
-            resData: null
+              waitTimeMinutes: 1
+              tooLong: true
+              missingSymbol: true
+              matchesLogin:
+                type: type
+                login: login
+              expiredAt: 1
+              missingUpperCase: true
+              commonPassword: true
+              missingNumber: true
+              tooManyAnswers: true
+              questionsNotFound:
+              - questionsNotFound
+              - questionsNotFound
+              wasUsedBeforeAt: 2
+              requiresMoreAnswers: true
+              waitTimeSeconds: 1
+              missingLowerCase: true
+              passwordsMismatch: true
+              wasUsedDaysAgo: 4
+              invalidAnswers:
+                key:
+                  tooShort: true
+                  tooLong: true
+              waitTimeMs: 7
+              changedAt: 9
+              changedDaysAgo: 3
+            resData:
+              emailSentTo: emailSentTo
+              password: password
+              answersSavedAt:
+                key: 6
+              strength: strength
+              correct:
+                HOME_CITY: true
+                MOTHER_NAME: false
+              ipEncoded: ipEncoded
+              login: login
+              publicData:
+                key: "{}"
             status: OK
       properties:
         tokens:
@@ -2261,18 +2534,23 @@ components:
       x-order: 1333651370-0
     AuthReqDataJson:
       additionalProperties: true
-      properties:
-        key:
-          description: Ignore. Just workaround for bug in some open-generators
-          type: object
-          x-nullable: true
       type: object
       x-order: 1333651370-1
       x-super: '#/components/schemas/AuthReqData'
     AuthenticateReq:
       example:
         authReqs:
-          key: null
+          key:
+            template: template
+            password: password
+            authorizationCode: authorizationCode
+            answers:
+              HOME_CITY: London
+              MOTHER_NAME: null
+            confirmPassword: confirmPassword
+            secret: secret
+            accessToken: accessToken
+            email: email
         dryRun: true
         factors:
           key: factors
@@ -2330,7 +2608,17 @@ components:
     NewSessionReq:
       example:
         authReqs:
-          key: null
+          key:
+            template: template
+            password: password
+            authorizationCode: authorizationCode
+            answers:
+              HOME_CITY: London
+              MOTHER_NAME: null
+            confirmPassword: confirmPassword
+            secret: secret
+            accessToken: accessToken
+            email: email
         entry: entry
         dryRun: true
         signIn: true
@@ -2636,9 +2924,55 @@ components:
               sentAt: 7
             err:
               msg: msg
+              tooShort: true
+              incorrectAnswers:
+              - incorrectAnswers
+              - incorrectAnswers
               code: code
+              strength: strength
+              data:
+                key: "{}"
               devMsg: devMsg
-            resData: null
+              waitTimeMinutes: 1
+              tooLong: true
+              missingSymbol: true
+              matchesLogin:
+                type: type
+                login: login
+              expiredAt: 1
+              missingUpperCase: true
+              commonPassword: true
+              missingNumber: true
+              tooManyAnswers: true
+              questionsNotFound:
+              - questionsNotFound
+              - questionsNotFound
+              wasUsedBeforeAt: 2
+              requiresMoreAnswers: true
+              waitTimeSeconds: 1
+              missingLowerCase: true
+              passwordsMismatch: true
+              wasUsedDaysAgo: 4
+              invalidAnswers:
+                key:
+                  tooShort: true
+                  tooLong: true
+              waitTimeMs: 7
+              changedAt: 9
+              changedDaysAgo: 3
+            resData:
+              emailSentTo: emailSentTo
+              password: password
+              answersSavedAt:
+                key: 6
+              strength: strength
+              correct:
+                HOME_CITY: true
+                MOTHER_NAME: false
+              ipEncoded: ipEncoded
+              login: login
+              publicData:
+                key: "{}"
             status: OK
       properties:
         user:
@@ -2676,7 +3010,17 @@ components:
     EditUserReq:
       example:
         authReqs:
-          key: null
+          key:
+            template: template
+            password: password
+            authorizationCode: authorizationCode
+            answers:
+              HOME_CITY: London
+              MOTHER_NAME: null
+            confirmPassword: confirmPassword
+            secret: secret
+            accessToken: accessToken
+            email: email
         dryRun: true
         systemAccess: true
         logins:
@@ -2712,7 +3056,17 @@ components:
     SaveUserReq:
       example:
         authReqs:
-          key: null
+          key:
+            template: template
+            password: password
+            authorizationCode: authorizationCode
+            answers:
+              HOME_CITY: London
+              MOTHER_NAME: null
+            confirmPassword: confirmPassword
+            secret: secret
+            accessToken: accessToken
+            email: email
         dryRun: true
         logins:
           key: logins
@@ -2994,9 +3348,72 @@ components:
     DbsCfg:
       description: Database connection configs
       example:
-        rateLimiter: null
-        session: null
-        user: null
+        rateLimiter:
+          cluster: true
+          headers:
+            key: headers
+          inToken: true
+          sqlite: sqlite
+          query:
+            key: query
+          remote: remote
+          ssl: true
+          redis:
+          - redis
+          - redis
+          database: 5
+          password: password
+          inMemory: true
+          mysql: mysql
+          mongodb: mongodb
+          user: user
+          postgres: postgres
+          maxConnections: 2
+          username: username
+        session:
+          cluster: true
+          headers:
+            key: headers
+          inToken: true
+          sqlite: sqlite
+          query:
+            key: query
+          remote: remote
+          ssl: true
+          redis:
+          - redis
+          - redis
+          database: 1
+          password: password
+          inMemory: true
+          mysql: mysql
+          mongodb: mongodb
+          user: user
+          postgres: postgres
+          maxConnections: 5
+          username: username
+        user:
+          cluster: true
+          headers:
+            key: headers
+          inToken: true
+          sqlite: sqlite
+          query:
+            key: query
+          remote: remote
+          ssl: true
+          redis:
+          - redis
+          - redis
+          database: 0
+          password: password
+          inMemory: true
+          mysql: mysql
+          mongodb: mongodb
+          user: user
+          postgres: postgres
+          maxConnections: 6
+          username: username
       properties:
         user:
           $ref: '#/components/schemas/DbsCfg_user'
@@ -3565,7 +3982,7 @@ components:
         parent: parent
         period: 30s
         ip: true
-        quota: 0.8008281904610115
+        quota: 7.061401241503109
         alignLoad: true
         userId: true
       properties:
@@ -3762,7 +4179,7 @@ components:
             parent: parent
             period: 30s
             ip: true
-            quota: 0.8008281904610115
+            quota: 7.061401241503109
             alignLoad: true
             userId: true
         secret: secret
@@ -3771,9 +4188,72 @@ components:
         - facebook
         - email
         db:
-          rateLimiter: null
-          session: null
-          user: null
+          rateLimiter:
+            cluster: true
+            headers:
+              key: headers
+            inToken: true
+            sqlite: sqlite
+            query:
+              key: query
+            remote: remote
+            ssl: true
+            redis:
+            - redis
+            - redis
+            database: 5
+            password: password
+            inMemory: true
+            mysql: mysql
+            mongodb: mongodb
+            user: user
+            postgres: postgres
+            maxConnections: 2
+            username: username
+          session:
+            cluster: true
+            headers:
+              key: headers
+            inToken: true
+            sqlite: sqlite
+            query:
+              key: query
+            remote: remote
+            ssl: true
+            redis:
+            - redis
+            - redis
+            database: 1
+            password: password
+            inMemory: true
+            mysql: mysql
+            mongodb: mongodb
+            user: user
+            postgres: postgres
+            maxConnections: 5
+            username: username
+          user:
+            cluster: true
+            headers:
+              key: headers
+            inToken: true
+            sqlite: sqlite
+            query:
+              key: query
+            remote: remote
+            ssl: true
+            redis:
+            - redis
+            - redis
+            database: 0
+            password: password
+            inMemory: true
+            mysql: mysql
+            mongodb: mongodb
+            user: user
+            postgres: postgres
+            maxConnections: 6
+            username: username
         i18n:
           default: en
           dir: ./i18n
@@ -3938,48 +4418,249 @@ components:
       - userInfoUrl
       type: object
       x-order: -51011121-6
+    UnauthenticatedCode:
+      enum:
+      - SESSION_EXPIRED
+      - ACCESS_DENIED
+      - USER_NOT_FOUND
+      - TOKEN_EXPIRED
+      - UNAUTHENTICATED
+      type: string
+    ClientErrCode:
+      enum:
+      - PLUGIN_CLIENT_ERR
+      - PASSWORD_IS_INCORRECT
+      - PASSWORD_IS_INVALID
+      - EMAIL_IS_INCORRECT
+      - IP_NEW
+      - QUESTIONS_ANSWERS_INCORRECT
+      - QUESTIONS_ANSWERS_INVALID
+      - SESSION_EXPIRED
+      - ACCESS_DENIED
+      - USER_NOT_FOUND
+      - SIGNATURE_IS_INCORRECT
+      - USER_LOGIN_ALREADY_TAKEN
+      - AUTH_IS_NOT_ENABLED
+      - TOKEN_EXPIRED
+      - TOO_MANY_REQS
+      - AUTH_IS_NOT_CONFIRMED
+      - AUTH_REQUIRES_ANOTHER
+      - CODE_IS_EXPIRED
+      - CODE_TOO_MANY_ATTEMPTS
+      - CODE_IS_INCORRECT
+      - UNAUTHENTICATED
+      type: string
+    IntegrationErrCode:
+      enum:
+      - NO_AUTH_AVAILABLE_FOR_FACTOR
+      - INTEGRATION_ERR
+      type: string
+    ServerErrCode:
+      enum:
+      - SERVER_ERR
+      - PLUGIN_ERR
+      type: string
+    ErrCode:
+      enum:
+      - PLUGIN_ERR
+      - PLUGIN_CLIENT_ERR
+      - PASSWORD_IS_INCORRECT
+      - PASSWORD_IS_INVALID
+      - EMAIL_IS_INCORRECT
+      - IP_NEW
+      - QUESTIONS_ANSWERS_INCORRECT
+      - QUESTIONS_ANSWERS_INVALID
+      - SESSION_EXPIRED
+      - ACCESS_DENIED
+      - USER_NOT_FOUND
+      - SIGNATURE_IS_INCORRECT
+      - USER_LOGIN_ALREADY_TAKEN
+      - AUTH_IS_NOT_ENABLED
+      - TOKEN_EXPIRED
+      - TOO_MANY_REQS
+      - AUTH_IS_NOT_CONFIRMED
+      - NO_AUTH_AVAILABLE_FOR_FACTOR
+      - AUTH_REQUIRES_ANOTHER
+      - CODE_IS_EXPIRED
+      - CODE_TOO_MANY_ATTEMPTS
+      - CODE_IS_INCORRECT
+      - UNAUTHENTICATED
+      - SERVER_ERR
+      - INTEGRATION_ERR
+      - ANY_ERR
+      type: string
     AuthExecRes_resData:
-      anyOf:
-      - $ref: '#/components/schemas/AuthResDataJson'
-      - $ref: '#/components/schemas/EmailAuthRes'
-      - $ref: '#/components/schemas/IpAuthRes'
-      - $ref: '#/components/schemas/OAuthRes'
-      - $ref: '#/components/schemas/PasswordUpdateRes'
-      - $ref: '#/components/schemas/QuestionsAuthenticateRes'
-      - $ref: '#/components/schemas/QuestionsUpdateRes'
+      additionalProperties: true
+      example:
+        emailSentTo: emailSentTo
+        password: password
+        answersSavedAt:
+          key: 6
+        strength: strength
+        correct:
+          HOME_CITY: true
+          MOTHER_NAME: false
+        ipEncoded: ipEncoded
+        login: login
+        publicData:
+          key: "{}"
+      properties:
+        emailSentTo:
+          description: "Shows user email, that was used to send a code. Email will\
+            \ be partially hidden."
+          type: string
+        ipEncoded:
+          type: string
+        login:
+          type: string
+        publicData:
+          additionalProperties:
+            type: object
+          type: object
+        password:
+          description: If password was generated by app this field contains generated
+            password.
+          type: string
+        strength:
+          description: Calculated strength of password. Null means that all checks
+            failed.
+          type: string
+          x-nullable: true
+        correct:
+          additionalProperties:
+            type: boolean
+          description: |
+            Shows is answer was correct.
+          example:
+            HOME_CITY: true
+            MOTHER_NAME: false
+          type: object
+        answersSavedAt:
+          additionalProperties:
+            format: int64
+            type: integer
+          description: Date of last update
+          type: object
+      type: object
     AuthenticateReq_authReqs_value:
-      anyOf:
-      - $ref: '#/components/schemas/AppSecretReq'
-      - $ref: '#/components/schemas/AuthReqDataJson'
-      - $ref: '#/components/schemas/EmailAuthenticateReq'
-      - $ref: '#/components/schemas/EmailUpdateReq'
-      - $ref: '#/components/schemas/OAuthReq'
-      - $ref: '#/components/schemas/PasswordAuthenticateReq'
-      - $ref: '#/components/schemas/PasswordUpdateReq'
-      - $ref: '#/components/schemas/QuestionsAuthenticateReq'
-      - $ref: '#/components/schemas/QuestionsUpdateReq'
+      additionalProperties: true
+      example:
+        template: template
+        password: password
+        authorizationCode: authorizationCode
+        answers:
+          HOME_CITY: London
+          MOTHER_NAME: null
+        confirmPassword: confirmPassword
+        secret: secret
+        accessToken: accessToken
+        email: email
+      properties:
+        secret:
+          type: string
+        email:
+          description: New email to set.
+          type: string
+        template:
+          description: Template to use.
+          type: string
+          x-nullable: true
+        accessToken:
+          description: If you have access-token - put it here.
+          type: string
+          x-nullable: true
+        authorizationCode:
+          description: If you have authorisation-code - app will exchange it for access-token.
+          type: string
+          x-nullable: true
+        password:
+          description: New password to set. If null app generates password automatically.
+          type: string
+          x-nullable: true
+        confirmPassword:
+          description: Password confirmation. If null app doesn't perform this check.
+          type: string
+          x-nullable: true
+        answers:
+          additionalProperties:
+            type: string
+          description: |
+            Answers to save. `null` as value removes answer
+          example:
+            HOME_CITY: London
+            MOTHER_NAME: null
+          type: object
+      type: object
       x-additionalPropertiesName: auth
     DbsCfg_user:
-      anyOf:
-      - $ref: '#/components/schemas/InMemoryCfg'
-      - $ref: '#/components/schemas/InTokenCfg'
-      - $ref: '#/components/schemas/MongoCfg'
-      - $ref: '#/components/schemas/RedisCfg'
-      - $ref: '#/components/schemas/RemoteDbCfg'
-      - $ref: '#/components/schemas/MysqlCfg'
-      - $ref: '#/components/schemas/PostgresCfg'
-      - $ref: '#/components/schemas/SqliteCfg'
       description: User database config
+      example:
+        cluster: true
+        headers:
+          key: headers
+        inToken: true
+        sqlite: sqlite
+        query:
+          key: query
+        remote: remote
+        ssl: true
+        redis:
+        - redis
+        - redis
+        database: 0
+        password: password
+        inMemory: true
+        mysql: mysql
+        mongodb: mongodb
+        user: user
+        postgres: postgres
+        maxConnections: 6
+        username: username
+      properties:
+        inMemory:
+          type: boolean
+        inToken:
+          type: boolean
+        mongodb:
+          type: string
+        database:
+          format: int32
+          type: integer
+        redis:
+          items:
+            type: string
+          type: array
+        cluster:
+          type: boolean
+        user:
+          type: string
+          x-nullable: true
+        password:
+          type: string
+        ssl:
+          type: boolean
+        maxConnections:
+          format: int32
+          type: integer
+        remote:
+          type: string
+        query:
+          additionalProperties:
+            type: string
+          type: object
+        headers:
+          additionalProperties:
+            type: string
+          type: object
+        mysql:
+          type: string
+        username:
+          type: string
+        postgres:
+          type: string
+        sqlite:
+          type: string
     DbsCfg_session:
-      anyOf:
-      - $ref: '#/components/schemas/InMemoryCfg'
-      - $ref: '#/components/schemas/InTokenCfg'
-      - $ref: '#/components/schemas/MongoCfg'
-      - $ref: '#/components/schemas/RedisCfg'
-      - $ref: '#/components/schemas/RemoteDbCfg'
-      - $ref: '#/components/schemas/MysqlCfg'
-      - $ref: '#/components/schemas/PostgresCfg'
-      - $ref: '#/components/schemas/SqliteCfg'
       description: |-
         Session database config.
 
@@ -3987,27 +4668,336 @@ components:
 
         You can use in-token to not use database at all. Use it with `token.access.cacheUnauthenticated = true` and
         `token.access.cache != null` values.
+      example:
+        cluster: true
+        headers:
+          key: headers
+        inToken: true
+        sqlite: sqlite
+        query:
+          key: query
+        remote: remote
+        ssl: true
+        redis:
+        - redis
+        - redis
+        database: 1
+        password: password
+        inMemory: true
+        mysql: mysql
+        mongodb: mongodb
+        user: user
+        postgres: postgres
+        maxConnections: 5
+        username: username
+      properties:
+        inMemory:
+          type: boolean
+        inToken:
+          type: boolean
+        mongodb:
+          type: string
+        database:
+          format: int32
+          type: integer
+        redis:
+          items:
+            type: string
+          type: array
+        cluster:
+          type: boolean
+        user:
+          type: string
+          x-nullable: true
+        password:
+          type: string
+        ssl:
+          type: boolean
+        maxConnections:
+          format: int32
+          type: integer
+        remote:
+          type: string
+        query:
+          additionalProperties:
+            type: string
+          type: object
+        headers:
+          additionalProperties:
+            type: string
+          type: object
+        mysql:
+          type: string
+        username:
+          type: string
+        postgres:
+          type: string
+        sqlite:
+          type: string
     DbsCfg_rateLimiter:
-      anyOf:
-      - $ref: '#/components/schemas/InMemoryCfg'
-      - $ref: '#/components/schemas/InTokenCfg'
-      - $ref: '#/components/schemas/MongoCfg'
-      - $ref: '#/components/schemas/RedisCfg'
-      - $ref: '#/components/schemas/RemoteDbCfg'
-      - $ref: '#/components/schemas/MysqlCfg'
-      - $ref: '#/components/schemas/PostgresCfg'
-      - $ref: '#/components/schemas/SqliteCfg'
       description: "Database for rate-limiters. If you don't use rate-limiter leave\
         \ this empty (`{}`)."
+      example:
+        cluster: true
+        headers:
+          key: headers
+        inToken: true
+        sqlite: sqlite
+        query:
+          key: query
+        remote: remote
+        ssl: true
+        redis:
+        - redis
+        - redis
+        database: 5
+        password: password
+        inMemory: true
+        mysql: mysql
+        mongodb: mongodb
+        user: user
+        postgres: postgres
+        maxConnections: 2
+        username: username
+      properties:
+        inMemory:
+          type: boolean
+        inToken:
+          type: boolean
+        mongodb:
+          type: string
+        database:
+          format: int32
+          type: integer
+        redis:
+          items:
+            type: string
+          type: array
+        cluster:
+          type: boolean
+        user:
+          type: string
+          x-nullable: true
+        password:
+          type: string
+        ssl:
+          type: boolean
+        maxConnections:
+          format: int32
+          type: integer
+        remote:
+          type: string
+        query:
+          additionalProperties:
+            type: string
+          type: object
+        headers:
+          additionalProperties:
+            type: string
+          type: object
+        mysql:
+          type: string
+        username:
+          type: string
+        postgres:
+          type: string
+        sqlite:
+          type: string
     SHAppCfg_auths_value:
-      anyOf:
-      - $ref: '#/components/schemas/RemoteAuthCfg'
-      - $ref: '#/components/schemas/AppSecretAuthCfg'
-      - $ref: '#/components/schemas/EmailAuthCfg'
-      - $ref: '#/components/schemas/IpAuthCfg'
-      - $ref: '#/components/schemas/OAuthCfg'
-      - $ref: '#/components/schemas/PasswordAuthCfg'
-      - $ref: '#/components/schemas/QuestionsAuthCfg'
+      properties:
+        remote:
+          description: Path to the API that implements plugin.
+          type: string
+        requiresAuth:
+          description: |-
+            If this is not null, app forbids to add this auth until listed auth enabled.
+            - if this a string -> require specified auth to be enabled before this.
+            - array of strings -> require any of listed auths to be enabled
+            - array of arrays of strings -> works as `[ [ "auth1" and "auth2" ] or [ "auth1" and "auth2" ] ]`
+          items:
+            items:
+              type: string
+            type: array
+          type: array
+          x-nullable: true
+        skipOnFail:
+          description: |-
+            When this is set to true app will attempt next auth in case of error on current.
+            It's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be
+            executed only when IP auth is failed.
+            If set to false any error on this auth will stop the whole request execution.
+          type: boolean
+        rateLimiter:
+          description: Apply rate limiter for this auth.
+          type: string
+          x-nullable: true
+        burnQuota:
+          description: Every auth execution will burn this amount of quota. Takes
+            place only when rate limiter is specified
+          format: double
+          type: number
+        query:
+          additionalProperties:
+            type: string
+            x-additionalPropertiesName: queryParam
+          description: |
+            Add query params after `?` symbol in url.
+          type: object
+        headers:
+          additionalProperties:
+            type: string
+            x-additionalPropertiesName: header
+          description: |
+            Add headers to request.
+          type: object
+        code:
+          $ref: '#/components/schemas/CodeCfg'
+        server:
+          description: Email server address/IP.
+          type: string
+        sender:
+          description: Email address of sender.
+          type: string
+        username:
+          description: SMTP username.
+          type: string
+          x-nullable: true
+        password:
+          description: SMTP password.
+          type: string
+          x-nullable: true
+        confirmationUrl:
+          description: |-
+            If not null, server will create template param `confirmationUrl` that will contain query parameters with
+            confirmation code, session id, etc.
+          type: string
+          x-nullable: true
+        templates:
+          additionalProperties:
+            type: string
+            x-additionalPropertiesName: templateName
+          description: |+
+            List of email templates. Key - name of template (can be used lately on frontend), value - path to template.
+            App uses handlebars templates to generate emails. See docs here https://handlebarsjs.com
+
+            Email templates received `confirmationUrl`, `action`, `user`, `session`, `codeId`, `code`, `lang`, `headers`
+            as template params, e.g. you can print user id as `{{ user.id }}`.
+
+            Template engine also provides `i18n` helper for localisation. E.g. `{{i18n 'confirmationButton' default='Confirm'}}`
+            searches key `confirmationButton` in files specified by `i18n.dir` config.
+
+            It allows setting subject of email using `title` html tag, e.g. `<title>Email subject</title>`.
+
+          example:
+            welcome: ./welcome.html.hbs
+            restoreAccess: ./restore.html.hbs
+          type: object
+        templateParams:
+          additionalProperties:
+            type: string
+            x-additionalPropertiesName: paramName
+          description: |
+            Additional params for template.
+          type: object
+        ipBytesToIgnore:
+          description: |-
+            This allows to drop last bytes of IP. So it allows to authenticate factor when ip has rough match, e.g.
+            the same country, same city, or same internet provider.
+          format: int32
+          type: integer
+        historySize:
+          description: |-
+            History of IP addresses user used to sign-in. Authenticated when user attempts to sign in with one of stored
+            IPs.
+          format: int32
+          type: integer
+        extractLogin:
+          description: |-
+            Path for login in id-token or user-info endpoint response.
+            e.g. `res.user.id` extracts user login from `{ "res": { "user": { "id": "..." } } }`
+          type: string
+        tokenUrl:
+          description: Url to get access token by authorisation code.
+          type: string
+        clientId:
+          description: "OAuth client id. Client must be registered on OAuth provider\
+            \ (e.g. facebook, google)"
+          type: string
+        clientSecret:
+          description: OAuth client secret.
+          type: string
+          x-nullable: true
+        userInfoUrl:
+          description: "If access token provided in request, app tries to extract\
+            \ user id from user-info endpoint."
+          type: string
+        sendTokenInQuery:
+          description: Send token in query param.
+          type: string
+          x-nullable: true
+        sendTokenInHeader:
+          description: Send token in Authorisation header.
+          type: boolean
+        extractPublicData:
+          additionalProperties:
+            type: string
+          description: Can fill public data by a response of user-info or id-token.
+          type: object
+        maxLength:
+          description: Max length of answer.
+          format: int32
+          type: integer
+        minLength:
+          description: Min length of answer. Length are checked after all answer transformation.
+          format: int32
+          type: integer
+        requireNumber:
+          description: Require password to contain at least one digit.
+          type: boolean
+        requireSymbol:
+          description: "Require password to contain at least one symbol e.g. @, !,\
+            \ &..."
+          type: boolean
+        requireUpperCase:
+          description: This requires password to contain both lowercase and uppercase
+            letters.
+          type: boolean
+        forbidCommonPasswords:
+          description: "Password will be checked against table 1,000,000 of most overused\
+            \ passwords."
+          type: boolean
+        forbidLoginAsPassword:
+          description: "Rejects passwords that match username, email, anything that\
+            \ used as a login according to logins config."
+          type: boolean
+        forbidReusingPassword:
+          $ref: '#/components/schemas/PasswordHistoryCfg'
+        strength:
+          additionalProperties:
+            $ref: '#/components/schemas/PasswordStrengthRequirements'
+          description: |
+            Allows to calculate password strength based on mentioned criteria. Requirements will be checked one by one
+            until first failed.
+          type: object
+        lowercase:
+          description: |-
+            Transform user answer to lowercase letters. This allows user still pass a check when he wrote name or city
+            with different cases. `false` means strict match, so "John" != "john"
+          type: boolean
+        removeSymbols:
+          description: Remove all non-letters from user answer.
+          type: boolean
+        removeSpaces:
+          description: Remove all spaces from user answer.
+          type: boolean
+        answersRequired:
+          description: Min number of answers required to pass this check.
+          format: int32
+          type: integer
+        maxAnswers:
+          description: Max answers that user can save.
+          format: int32
+          type: integer
       x-additionalPropertiesName: auth
   securitySchemes:
     access-token:

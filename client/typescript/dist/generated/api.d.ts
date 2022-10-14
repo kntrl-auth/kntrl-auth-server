@@ -61,19 +61,19 @@ export declare const AuthExecResStatusEnum: {
 };
 export declare type AuthExecResStatusEnum = typeof AuthExecResStatusEnum[keyof typeof AuthExecResStatusEnum];
 export interface AuthExecResResData {
-    'key'?: object;
+    [key: string]: any;
     'emailSentTo'?: string;
-    'ipEncoded': string;
-    'login': string;
-    'publicData': {
+    'ipEncoded'?: string;
+    'login'?: string;
+    'publicData'?: {
         [key: string]: object;
     };
-    'password': string;
+    'password'?: string;
     'strength'?: string;
-    'correct': {
+    'correct'?: {
         [key: string]: boolean;
     };
-    'answersSavedAt': {
+    'answersSavedAt'?: {
         [key: string]: number;
     };
 }
@@ -87,18 +87,10 @@ export interface AuthIsNotEnabled {
     'devMsg': string;
     'msg'?: string;
 }
-export interface AuthReqDataJson {
-    [key: string]: any;
-    'key'?: object;
-}
 export interface AuthRequiresAnother {
     'code': string;
     'devMsg': string;
     'msg'?: string;
-}
-export interface AuthResDataJson {
-    [key: string]: any;
-    'key'?: object;
 }
 export interface AuthUserCfg {
     'data'?: AuthData;
@@ -115,15 +107,15 @@ export interface AuthenticateReq {
     'dryRun'?: boolean;
 }
 export interface AuthenticateReqAuthReqsValue {
-    'secret': string;
-    'key'?: object;
-    'email': string;
+    [key: string]: any;
+    'secret'?: string;
+    'email'?: string;
     'template'?: string;
     'accessToken'?: string;
     'authorizationCode'?: string;
-    'password': string;
+    'password'?: string;
     'confirmPassword'?: string;
-    'answers': {
+    'answers'?: {
         [key: string]: string;
     };
 }
@@ -157,7 +149,59 @@ export interface ClientErr {
     'code': string;
     'devMsg': string;
     'msg'?: string;
+    'changedAt'?: number;
+    'changedDaysAgo'?: number;
+    'tooLong'?: boolean;
+    'tooShort'?: boolean;
+    'missingNumber'?: boolean;
+    'missingSymbol'?: boolean;
+    'missingUpperCase'?: boolean;
+    'missingLowerCase'?: boolean;
+    'commonPassword'?: boolean;
+    'wasUsedBeforeAt'?: number;
+    'matchesLogin'?: LoginId;
+    'passwordsMismatch'?: boolean;
+    'strength'?: string;
+    'wasUsedDaysAgo'?: number;
+    'data'?: {
+        [key: string]: object;
+    };
+    'incorrectAnswers'?: Array<string>;
+    'requiresMoreAnswers'?: boolean;
+    'questionsNotFound'?: Array<string>;
+    'invalidAnswers'?: {
+        [key: string]: AnswerErr;
+    };
+    'tooManyAnswers'?: boolean;
+    'waitTimeMs'?: number;
+    'waitTimeSeconds'?: number;
+    'waitTimeMinutes'?: number;
+    'expiredAt'?: number;
 }
+export declare const ClientErrCode: {
+    readonly PluginClientErr: "PLUGIN_CLIENT_ERR";
+    readonly PasswordIsIncorrect: "PASSWORD_IS_INCORRECT";
+    readonly PasswordIsInvalid: "PASSWORD_IS_INVALID";
+    readonly EmailIsIncorrect: "EMAIL_IS_INCORRECT";
+    readonly IpNew: "IP_NEW";
+    readonly QuestionsAnswersIncorrect: "QUESTIONS_ANSWERS_INCORRECT";
+    readonly QuestionsAnswersInvalid: "QUESTIONS_ANSWERS_INVALID";
+    readonly SessionExpired: "SESSION_EXPIRED";
+    readonly AccessDenied: "ACCESS_DENIED";
+    readonly UserNotFound: "USER_NOT_FOUND";
+    readonly SignatureIsIncorrect: "SIGNATURE_IS_INCORRECT";
+    readonly UserLoginAlreadyTaken: "USER_LOGIN_ALREADY_TAKEN";
+    readonly AuthIsNotEnabled: "AUTH_IS_NOT_ENABLED";
+    readonly TokenExpired: "TOKEN_EXPIRED";
+    readonly TooManyReqs: "TOO_MANY_REQS";
+    readonly AuthIsNotConfirmed: "AUTH_IS_NOT_CONFIRMED";
+    readonly AuthRequiresAnother: "AUTH_REQUIRES_ANOTHER";
+    readonly CodeIsExpired: "CODE_IS_EXPIRED";
+    readonly CodeTooManyAttempts: "CODE_TOO_MANY_ATTEMPTS";
+    readonly CodeIsIncorrect: "CODE_IS_INCORRECT";
+    readonly Unauthenticated: "UNAUTHENTICATED";
+};
+export declare type ClientErrCode = typeof ClientErrCode[keyof typeof ClientErrCode];
 export interface Code {
     'id'?: string;
     'validUntil': number;
@@ -225,15 +269,15 @@ export interface DbsCfg {
 export interface DbsCfgRateLimiter {
     'inMemory'?: boolean;
     'inToken'?: boolean;
-    'mongodb': string;
-    'database': number;
+    'mongodb'?: string;
+    'database'?: number;
     'redis'?: Array<string>;
     'cluster'?: boolean;
     'user'?: string;
     'password'?: string;
     'ssl'?: boolean;
     'maxConnections'?: number;
-    'remote': string;
+    'remote'?: string;
     'query'?: {
         [key: string]: string;
     };
@@ -248,15 +292,15 @@ export interface DbsCfgRateLimiter {
 export interface DbsCfgSession {
     'inMemory'?: boolean;
     'inToken'?: boolean;
-    'mongodb': string;
-    'database': number;
+    'mongodb'?: string;
+    'database'?: number;
     'redis'?: Array<string>;
     'cluster'?: boolean;
     'user'?: string;
     'password'?: string;
     'ssl'?: boolean;
     'maxConnections'?: number;
-    'remote': string;
+    'remote'?: string;
     'query'?: {
         [key: string]: string;
     };
@@ -271,15 +315,15 @@ export interface DbsCfgSession {
 export interface DbsCfgUser {
     'inMemory'?: boolean;
     'inToken'?: boolean;
-    'mongodb': string;
-    'database': number;
+    'mongodb'?: string;
+    'database'?: number;
     'redis'?: Array<string>;
     'cluster'?: boolean;
     'user'?: string;
     'password'?: string;
     'ssl'?: boolean;
     'maxConnections'?: number;
-    'remote': string;
+    'remote'?: string;
     'query'?: {
         [key: string]: string;
     };
@@ -365,6 +409,34 @@ export interface Err {
     'code': string;
     'devMsg': string;
     'msg'?: string;
+    'changedAt'?: number;
+    'changedDaysAgo'?: number;
+    'tooLong'?: boolean;
+    'tooShort'?: boolean;
+    'missingNumber'?: boolean;
+    'missingSymbol'?: boolean;
+    'missingUpperCase'?: boolean;
+    'missingLowerCase'?: boolean;
+    'commonPassword'?: boolean;
+    'wasUsedBeforeAt'?: number;
+    'matchesLogin'?: LoginId;
+    'passwordsMismatch'?: boolean;
+    'strength'?: string;
+    'wasUsedDaysAgo'?: number;
+    'data'?: {
+        [key: string]: object;
+    };
+    'incorrectAnswers'?: Array<string>;
+    'requiresMoreAnswers'?: boolean;
+    'questionsNotFound'?: Array<string>;
+    'invalidAnswers'?: {
+        [key: string]: AnswerErr;
+    };
+    'tooManyAnswers'?: boolean;
+    'waitTimeMs'?: number;
+    'waitTimeSeconds'?: number;
+    'waitTimeMinutes'?: number;
+    'expiredAt'?: number;
 }
 export interface ErrAuthExecRes {
     'status': ErrAuthExecResStatusEnum;
@@ -377,6 +449,35 @@ export declare const ErrAuthExecResStatusEnum: {
     readonly Skipped: "SKIPPED";
 };
 export declare type ErrAuthExecResStatusEnum = typeof ErrAuthExecResStatusEnum[keyof typeof ErrAuthExecResStatusEnum];
+export declare const ErrCode: {
+    readonly PluginErr: "PLUGIN_ERR";
+    readonly PluginClientErr: "PLUGIN_CLIENT_ERR";
+    readonly PasswordIsIncorrect: "PASSWORD_IS_INCORRECT";
+    readonly PasswordIsInvalid: "PASSWORD_IS_INVALID";
+    readonly EmailIsIncorrect: "EMAIL_IS_INCORRECT";
+    readonly IpNew: "IP_NEW";
+    readonly QuestionsAnswersIncorrect: "QUESTIONS_ANSWERS_INCORRECT";
+    readonly QuestionsAnswersInvalid: "QUESTIONS_ANSWERS_INVALID";
+    readonly SessionExpired: "SESSION_EXPIRED";
+    readonly AccessDenied: "ACCESS_DENIED";
+    readonly UserNotFound: "USER_NOT_FOUND";
+    readonly SignatureIsIncorrect: "SIGNATURE_IS_INCORRECT";
+    readonly UserLoginAlreadyTaken: "USER_LOGIN_ALREADY_TAKEN";
+    readonly AuthIsNotEnabled: "AUTH_IS_NOT_ENABLED";
+    readonly TokenExpired: "TOKEN_EXPIRED";
+    readonly TooManyReqs: "TOO_MANY_REQS";
+    readonly AuthIsNotConfirmed: "AUTH_IS_NOT_CONFIRMED";
+    readonly NoAuthAvailableForFactor: "NO_AUTH_AVAILABLE_FOR_FACTOR";
+    readonly AuthRequiresAnother: "AUTH_REQUIRES_ANOTHER";
+    readonly CodeIsExpired: "CODE_IS_EXPIRED";
+    readonly CodeTooManyAttempts: "CODE_TOO_MANY_ATTEMPTS";
+    readonly CodeIsIncorrect: "CODE_IS_INCORRECT";
+    readonly Unauthenticated: "UNAUTHENTICATED";
+    readonly ServerErr: "SERVER_ERR";
+    readonly IntegrationErr: "INTEGRATION_ERR";
+    readonly AnyErr: "ANY_ERR";
+};
+export declare type ErrCode = typeof ErrCode[keyof typeof ErrCode];
 export interface FindSessionsRes {
     'sessions': Array<Session>;
     'tooManySessions'?: boolean;
@@ -415,6 +516,11 @@ export interface IntegrationErr {
     'devMsg': string;
     'msg'?: string;
 }
+export declare const IntegrationErrCode: {
+    readonly NoAuthAvailableForFactor: "NO_AUTH_AVAILABLE_FOR_FACTOR";
+    readonly IntegrationErr: "INTEGRATION_ERR";
+};
+export declare type IntegrationErrCode = typeof IntegrationErrCode[keyof typeof IntegrationErrCode];
 export interface IpAuthCfg {
     'requiresAuth'?: Array<Array<string>>;
     'skipOnFail'?: boolean;
@@ -727,7 +833,7 @@ export interface SHAppCfg {
     '$schema'?: string;
 }
 export interface SHAppCfgAuthsValue {
-    'remote': string;
+    'remote'?: string;
     'requiresAuth'?: Array<Array<string>>;
     'skipOnFail'?: boolean;
     'rateLimiter'?: string;
@@ -739,8 +845,8 @@ export interface SHAppCfgAuthsValue {
         [key: string]: string;
     };
     'code'?: CodeCfg;
-    'server': string;
-    'sender': string;
+    'server'?: string;
+    'sender'?: string;
     'username'?: string;
     'password'?: string;
     'confirmationUrl'?: string;
@@ -752,7 +858,7 @@ export interface SHAppCfgAuthsValue {
     };
     'ipBytesToIgnore'?: number;
     'historySize'?: number;
-    'extractLogin': string;
+    'extractLogin'?: string;
     'tokenUrl'?: string;
     'clientId'?: string;
     'clientSecret'?: string;
@@ -808,6 +914,11 @@ export interface ServerErr {
     'devMsg': string;
     'msg'?: string;
 }
+export declare const ServerErrCode: {
+    readonly ServerErr: "SERVER_ERR";
+    readonly PluginErr: "PLUGIN_ERR";
+};
+export declare type ServerErrCode = typeof ServerErrCode[keyof typeof ServerErrCode];
 export interface Session {
     'id': string;
     'entry': string;
@@ -889,7 +1000,16 @@ export interface Unauthenticated {
     'code': string;
     'devMsg': string;
     'msg'?: string;
+    'expiredAt'?: number;
 }
+export declare const UnauthenticatedCode: {
+    readonly SessionExpired: "SESSION_EXPIRED";
+    readonly AccessDenied: "ACCESS_DENIED";
+    readonly UserNotFound: "USER_NOT_FOUND";
+    readonly TokenExpired: "TOKEN_EXPIRED";
+    readonly Unauthenticated: "UNAUTHENTICATED";
+};
+export declare type UnauthenticatedCode = typeof UnauthenticatedCode[keyof typeof UnauthenticatedCode];
 export interface UnconfirmedAuth {
     'sentCodes'?: Array<CodeVerifier>;
 }

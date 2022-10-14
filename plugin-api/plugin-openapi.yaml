@@ -854,12 +854,6 @@ components:
       additionalProperties: true
       allOf:
       - $ref: '#/components/schemas/AuthResData'
-      - type: object
-        properties:
-          key:
-            type: object
-            description: Ignore. Just workaround for bug in some open-generators
-            x-nullable: true
       x-order: -1249106462-8
     EmailAuthRes:
       type: object

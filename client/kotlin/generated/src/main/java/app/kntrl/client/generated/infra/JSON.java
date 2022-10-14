@@ -106,9 +106,7 @@ public class JSON {
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.AuthExecResResData.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.AuthIsNotConfirmed.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.AuthIsNotEnabled.CustomTypeAdapterFactory());
-        gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.AuthReqDataJson.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.AuthRequiresAnother.CustomTypeAdapterFactory());
-        gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.AuthResDataJson.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.AuthUserCfg.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.AuthenticateReq.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.AuthenticateReqAuthReqsValue.CustomTypeAdapterFactory());

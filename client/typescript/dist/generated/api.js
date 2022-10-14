@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserApi = exports.UserApiFactory = exports.UserApiFp = exports.UserApiAxiosParamCreator = exports.TokenApi = exports.TokenApiFactory = exports.TokenApiFp = exports.TokenApiAxiosParamCreator = exports.SignatureApi = exports.SignatureApiFactory = exports.SignatureApiFp = exports.SignatureApiAxiosParamCreator = exports.SessionApi = exports.SessionApiFactory = exports.SessionApiFp = exports.SessionApiAxiosParamCreator = exports.ServerApi = exports.ServerApiFactory = exports.ServerApiFp = exports.ServerApiAxiosParamCreator = exports.AuthorisationApi = exports.AuthorisationApiFactory = exports.AuthorisationApiFp = exports.AuthorisationApiAxiosParamCreator = exports.SkippedAuthExecResStatusEnum = exports.OkAuthExecResStatusEnum = exports.HealthStatus = exports.ErrAuthExecResStatusEnum = exports.Cache = exports.AuthExecResStatusEnum = void 0;
+exports.UserApi = exports.UserApiFactory = exports.UserApiFp = exports.UserApiAxiosParamCreator = exports.TokenApi = exports.TokenApiFactory = exports.TokenApiFp = exports.TokenApiAxiosParamCreator = exports.SignatureApi = exports.SignatureApiFactory = exports.SignatureApiFp = exports.SignatureApiAxiosParamCreator = exports.SessionApi = exports.SessionApiFactory = exports.SessionApiFp = exports.SessionApiAxiosParamCreator = exports.ServerApi = exports.ServerApiFactory = exports.ServerApiFp = exports.ServerApiAxiosParamCreator = exports.AuthorisationApi = exports.AuthorisationApiFactory = exports.AuthorisationApiFp = exports.AuthorisationApiAxiosParamCreator = exports.UnauthenticatedCode = exports.SkippedAuthExecResStatusEnum = exports.ServerErrCode = exports.OkAuthExecResStatusEnum = exports.IntegrationErrCode = exports.HealthStatus = exports.ErrCode = exports.ErrAuthExecResStatusEnum = exports.ClientErrCode = exports.Cache = exports.AuthExecResStatusEnum = void 0;
 const axios_1 = __importDefault(require("axios"));
 const common_1 = require("./common");
 const base_1 = require("./base");
@@ -25,25 +25,91 @@ exports.Cache = {
     Jwt: 'JWT',
     Binary: 'BINARY'
 };
+exports.ClientErrCode = {
+    PluginClientErr: 'PLUGIN_CLIENT_ERR',
+    PasswordIsIncorrect: 'PASSWORD_IS_INCORRECT',
+    PasswordIsInvalid: 'PASSWORD_IS_INVALID',
+    EmailIsIncorrect: 'EMAIL_IS_INCORRECT',
+    IpNew: 'IP_NEW',
+    QuestionsAnswersIncorrect: 'QUESTIONS_ANSWERS_INCORRECT',
+    QuestionsAnswersInvalid: 'QUESTIONS_ANSWERS_INVALID',
+    SessionExpired: 'SESSION_EXPIRED',
+    AccessDenied: 'ACCESS_DENIED',
+    UserNotFound: 'USER_NOT_FOUND',
+    SignatureIsIncorrect: 'SIGNATURE_IS_INCORRECT',
+    UserLoginAlreadyTaken: 'USER_LOGIN_ALREADY_TAKEN',
+    AuthIsNotEnabled: 'AUTH_IS_NOT_ENABLED',
+    TokenExpired: 'TOKEN_EXPIRED',
+    TooManyReqs: 'TOO_MANY_REQS',
+    AuthIsNotConfirmed: 'AUTH_IS_NOT_CONFIRMED',
+    AuthRequiresAnother: 'AUTH_REQUIRES_ANOTHER',
+    CodeIsExpired: 'CODE_IS_EXPIRED',
+    CodeTooManyAttempts: 'CODE_TOO_MANY_ATTEMPTS',
+    CodeIsIncorrect: 'CODE_IS_INCORRECT',
+    Unauthenticated: 'UNAUTHENTICATED'
+};
 exports.ErrAuthExecResStatusEnum = {
     Ok: 'OK',
     Err: 'ERR',
     Skipped: 'SKIPPED'
+};
+exports.ErrCode = {
+    PluginErr: 'PLUGIN_ERR',
+    PluginClientErr: 'PLUGIN_CLIENT_ERR',
+    PasswordIsIncorrect: 'PASSWORD_IS_INCORRECT',
+    PasswordIsInvalid: 'PASSWORD_IS_INVALID',
+    EmailIsIncorrect: 'EMAIL_IS_INCORRECT',
+    IpNew: 'IP_NEW',
+    QuestionsAnswersIncorrect: 'QUESTIONS_ANSWERS_INCORRECT',
+    QuestionsAnswersInvalid: 'QUESTIONS_ANSWERS_INVALID',
+    SessionExpired: 'SESSION_EXPIRED',
+    AccessDenied: 'ACCESS_DENIED',
+    UserNotFound: 'USER_NOT_FOUND',
+    SignatureIsIncorrect: 'SIGNATURE_IS_INCORRECT',
+    UserLoginAlreadyTaken: 'USER_LOGIN_ALREADY_TAKEN',
+    AuthIsNotEnabled: 'AUTH_IS_NOT_ENABLED',
+    TokenExpired: 'TOKEN_EXPIRED',
+    TooManyReqs: 'TOO_MANY_REQS',
+    AuthIsNotConfirmed: 'AUTH_IS_NOT_CONFIRMED',
+    NoAuthAvailableForFactor: 'NO_AUTH_AVAILABLE_FOR_FACTOR',
+    AuthRequiresAnother: 'AUTH_REQUIRES_ANOTHER',
+    CodeIsExpired: 'CODE_IS_EXPIRED',
+    CodeTooManyAttempts: 'CODE_TOO_MANY_ATTEMPTS',
+    CodeIsIncorrect: 'CODE_IS_INCORRECT',
+    Unauthenticated: 'UNAUTHENTICATED',
+    ServerErr: 'SERVER_ERR',
+    IntegrationErr: 'INTEGRATION_ERR',
+    AnyErr: 'ANY_ERR'
 };
 exports.HealthStatus = {
     Healthy: 'HEALTHY',
     Unavailable: 'UNAVAILABLE',
     Err: 'ERR'
 };
+exports.IntegrationErrCode = {
+    NoAuthAvailableForFactor: 'NO_AUTH_AVAILABLE_FOR_FACTOR',
+    IntegrationErr: 'INTEGRATION_ERR'
+};
 exports.OkAuthExecResStatusEnum = {
     Ok: 'OK',
     Err: 'ERR',
     Skipped: 'SKIPPED'
 };
+exports.ServerErrCode = {
+    ServerErr: 'SERVER_ERR',
+    PluginErr: 'PLUGIN_ERR'
+};
 exports.SkippedAuthExecResStatusEnum = {
     Ok: 'OK',
     Err: 'ERR',
     Skipped: 'SKIPPED'
+};
+exports.UnauthenticatedCode = {
+    SessionExpired: 'SESSION_EXPIRED',
+    AccessDenied: 'ACCESS_DENIED',
+    UserNotFound: 'USER_NOT_FOUND',
+    TokenExpired: 'TOKEN_EXPIRED',
+    Unauthenticated: 'UNAUTHENTICATED'
 };
 const AuthorisationApiAxiosParamCreator = function (configuration) {
     return {

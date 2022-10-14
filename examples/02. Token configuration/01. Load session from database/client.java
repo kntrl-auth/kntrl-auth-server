@@ -1,7 +1,6 @@
 import app.kntrl.client.Kntrl;
 import app.kntrl.client.Session;
 import app.kntrl.client.generated.model.AuthenticateRes;
-import app.kntrl.client.generated.model.PasswordUpdateReq;
 import app.kntrl.client.generated.model.Tokens;
 
 class Example0201 {
@@ -41,9 +40,12 @@ class Example0201 {
         );
         AuthenticateRes signUpRes = signUpSession.authenticate(
                 new Session.AuthReqs()
-                        .req("password", new PasswordUpdateReq().password("Abcdef1@")),
+                        .req("password", new Session.AuthReq().password("Abcdef1@")),
                 null
         );
+        System.out.println(signUpRes);
+        System.out.println(signUpRes.getAuthRes().get("password").getResData());
+        System.out.println(signUpRes.getAuthRes().get("password").getResData().getPassword());
         return signUpRes.getTokens();
     }
 }

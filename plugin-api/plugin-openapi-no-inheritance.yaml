@@ -1100,11 +1100,6 @@ components:
       x-order: -1249106462-7
     AuthResDataJson:
       type: object
-      properties:
-        key:
-          type: object
-          description: Ignore. Just workaround for bug in some open-generators
-          x-nullable: true
       additionalProperties: true
       x-order: -1249106462-8
       x-super: '#/components/schemas/AuthResData'

@@ -148,19 +148,6 @@ class Session(
             put(auth, req)
             return this
         }
-        fun req(auth: String, req: PasswordAuthenticateReq) = req(auth, req.let(::AuthenticateReqAuthReqsValue))
-        fun req(auth: String, req: PasswordUpdateReq?) = req(auth, req.let(::AuthenticateReqAuthReqsValue))
-        fun req(auth: String, req: AppSecretReq?) = req(auth, req?.let(::AuthenticateReqAuthReqsValue))
-        fun req(auth: String, req: EmailAuthenticateReq) = req(auth, req.let(::AuthenticateReqAuthReqsValue))
-        fun req(auth: String, req: EmailUpdateReq?) = req(auth, req?.let(::AuthenticateReqAuthReqsValue))
-        fun req(auth: String) = req(auth, mutableMapOf())
-        fun req(auth: String, req: OAuthReq?) = req(auth, req?.let(::AuthenticateReqAuthReqsValue))
-        fun req(auth: String, req: QuestionsAuthenticateReq) = req(auth, req.let(::AuthenticateReqAuthReqsValue))
-        fun req(auth: String, req: QuestionsUpdateReq?) = req(auth, req?.let(::AuthenticateReqAuthReqsValue))
-        fun req(auth: String, req: MutableMap<String, Any>?): AuthReqs {
-            val reqJson = AuthReqDataJson()
-            req?.forEach { (k, v) -> reqJson.putAdditionalProperty(k, v) }
-            return req(auth, AuthenticateReqAuthReqsValue(reqJson))
-        }
     }
+    class AuthReq : AuthenticateReqAuthReqsValue()
 }

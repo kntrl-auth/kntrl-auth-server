@@ -15,13 +15,6 @@ package app.kntrl.client.generated.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import app.kntrl.client.generated.model.AuthResDataJson;
-import app.kntrl.client.generated.model.EmailAuthRes;
-import app.kntrl.client.generated.model.IpAuthRes;
-import app.kntrl.client.generated.model.OAuthRes;
-import app.kntrl.client.generated.model.PasswordUpdateRes;
-import app.kntrl.client.generated.model.QuestionsAuthenticateRes;
-import app.kntrl.client.generated.model.QuestionsUpdateRes;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -33,422 +26,382 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.ws.rs.core.GenericType;
-
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonParseException;
-import com.google.gson.TypeAdapter;
-import com.google.gson.TypeAdapterFactory;
-import com.google.gson.reflect.TypeToken;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.google.gson.TypeAdapterFactory;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import app.kntrl.client.generated.infra.JSON;
 
+/**
+ * AuthExecResResData
+ */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
-public class AuthExecResResData extends AbstractOpenApiSchema {
-    private static final Logger log = Logger.getLogger(AuthExecResResData.class.getName());
+public class AuthExecResResData {
+  public static final String SERIALIZED_NAME_EMAIL_SENT_TO = "emailSentTo";
+  @SerializedName(SERIALIZED_NAME_EMAIL_SENT_TO)
+  private String emailSentTo;
 
-    public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
-        @SuppressWarnings("unchecked")
-        @Override
-        public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-            if (!AuthExecResResData.class.isAssignableFrom(type.getRawType())) {
-                return null; // this class only serializes 'AuthExecResResData' and its subtypes
-            }
-            final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-            final TypeAdapter<AuthResDataJson> adapterAuthResDataJson = gson.getDelegateAdapter(this, TypeToken.get(AuthResDataJson.class));
-            final TypeAdapter<EmailAuthRes> adapterEmailAuthRes = gson.getDelegateAdapter(this, TypeToken.get(EmailAuthRes.class));
-            final TypeAdapter<IpAuthRes> adapterIpAuthRes = gson.getDelegateAdapter(this, TypeToken.get(IpAuthRes.class));
-            final TypeAdapter<OAuthRes> adapterOAuthRes = gson.getDelegateAdapter(this, TypeToken.get(OAuthRes.class));
-            final TypeAdapter<PasswordUpdateRes> adapterPasswordUpdateRes = gson.getDelegateAdapter(this, TypeToken.get(PasswordUpdateRes.class));
-            final TypeAdapter<QuestionsAuthenticateRes> adapterQuestionsAuthenticateRes = gson.getDelegateAdapter(this, TypeToken.get(QuestionsAuthenticateRes.class));
-            final TypeAdapter<QuestionsUpdateRes> adapterQuestionsUpdateRes = gson.getDelegateAdapter(this, TypeToken.get(QuestionsUpdateRes.class));
+  public static final String SERIALIZED_NAME_IP_ENCODED = "ipEncoded";
+  @SerializedName(SERIALIZED_NAME_IP_ENCODED)
+  private String ipEncoded;
 
-            return (TypeAdapter<T>) new TypeAdapter<AuthExecResResData>() {
-                @Override
-                public void write(JsonWriter out, AuthExecResResData value) throws IOException {
-                    if (value == null || value.getActualInstance() == null) {
-                        elementAdapter.write(out, null);
-                        return;
-                    }
+  public static final String SERIALIZED_NAME_LOGIN = "login";
+  @SerializedName(SERIALIZED_NAME_LOGIN)
+  private String login;
 
-                    // check if the actual instance is of the type `AuthResDataJson`
-                    if (value.getActualInstance() instanceof AuthResDataJson) {
-                        JsonObject obj = adapterAuthResDataJson.toJsonTree((AuthResDataJson)value.getActualInstance()).getAsJsonObject();
-                        elementAdapter.write(out, obj);
-                        return;
-                    }
+  public static final String SERIALIZED_NAME_PUBLIC_DATA = "publicData";
+  @SerializedName(SERIALIZED_NAME_PUBLIC_DATA)
+  private Map<String, Object> publicData = null;
 
-                    // check if the actual instance is of the type `EmailAuthRes`
-                    if (value.getActualInstance() instanceof EmailAuthRes) {
-                        JsonObject obj = adapterEmailAuthRes.toJsonTree((EmailAuthRes)value.getActualInstance()).getAsJsonObject();
-                        elementAdapter.write(out, obj);
-                        return;
-                    }
+  public static final String SERIALIZED_NAME_PASSWORD = "password";
+  @SerializedName(SERIALIZED_NAME_PASSWORD)
+  private String password;
 
-                    // check if the actual instance is of the type `IpAuthRes`
-                    if (value.getActualInstance() instanceof IpAuthRes) {
-                        JsonObject obj = adapterIpAuthRes.toJsonTree((IpAuthRes)value.getActualInstance()).getAsJsonObject();
-                        elementAdapter.write(out, obj);
-                        return;
-                    }
+  public static final String SERIALIZED_NAME_STRENGTH = "strength";
+  @SerializedName(SERIALIZED_NAME_STRENGTH)
+  private String strength;
 
-                    // check if the actual instance is of the type `OAuthRes`
-                    if (value.getActualInstance() instanceof OAuthRes) {
-                        JsonObject obj = adapterOAuthRes.toJsonTree((OAuthRes)value.getActualInstance()).getAsJsonObject();
-                        elementAdapter.write(out, obj);
-                        return;
-                    }
+  public static final String SERIALIZED_NAME_CORRECT = "correct";
+  @SerializedName(SERIALIZED_NAME_CORRECT)
+  private Map<String, Boolean> correct = null;
 
-                    // check if the actual instance is of the type `PasswordUpdateRes`
-                    if (value.getActualInstance() instanceof PasswordUpdateRes) {
-                        JsonObject obj = adapterPasswordUpdateRes.toJsonTree((PasswordUpdateRes)value.getActualInstance()).getAsJsonObject();
-                        elementAdapter.write(out, obj);
-                        return;
-                    }
+  public static final String SERIALIZED_NAME_ANSWERS_SAVED_AT = "answersSavedAt";
+  @SerializedName(SERIALIZED_NAME_ANSWERS_SAVED_AT)
+  private Map<String, Long> answersSavedAt = null;
 
-                    // check if the actual instance is of the type `QuestionsAuthenticateRes`
-                    if (value.getActualInstance() instanceof QuestionsAuthenticateRes) {
-                        JsonObject obj = adapterQuestionsAuthenticateRes.toJsonTree((QuestionsAuthenticateRes)value.getActualInstance()).getAsJsonObject();
-                        elementAdapter.write(out, obj);
-                        return;
-                    }
+  public AuthExecResResData() {
+  }
 
-                    // check if the actual instance is of the type `QuestionsUpdateRes`
-                    if (value.getActualInstance() instanceof QuestionsUpdateRes) {
-                        JsonObject obj = adapterQuestionsUpdateRes.toJsonTree((QuestionsUpdateRes)value.getActualInstance()).getAsJsonObject();
-                        elementAdapter.write(out, obj);
-                        return;
-                    }
+  public AuthExecResResData emailSentTo(String emailSentTo) {
+    
+    this.emailSentTo = emailSentTo;
+    return this;
+  }
 
-                    throw new IOException("Failed to serialize as the type doesn't match anyOf schemas: AuthResDataJson, EmailAuthRes, IpAuthRes, OAuthRes, PasswordUpdateRes, QuestionsAuthenticateRes, QuestionsUpdateRes");
-                }
+   /**
+   * Shows user email, that was used to send a code. Email will be partially hidden.
+   * @return emailSentTo
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Shows user email, that was used to send a code. Email will be partially hidden.")
 
-                @Override
-                public AuthExecResResData read(JsonReader in) throws IOException {
-                    Object deserialized = null;
-                    JsonObject jsonObject = elementAdapter.read(in).getAsJsonObject();
-
-                    // deserialize AuthResDataJson
-                    try {
-                        // validate the JSON object to see if any exception is thrown
-                        AuthResDataJson.validateJsonObject(jsonObject);
-                        log.log(Level.FINER, "Input data matches schema 'AuthResDataJson'");
-                        AuthExecResResData ret = new AuthExecResResData();
-                        ret.setActualInstance(adapterAuthResDataJson.fromJsonTree(jsonObject));
-                        return ret;
-                    } catch (Exception e) {
-                        // deserialization failed, continue
-                        log.log(Level.FINER, "Input data does not match schema 'AuthResDataJson'", e);
-                    }
-
-                    // deserialize EmailAuthRes
-                    try {
-                        // validate the JSON object to see if any exception is thrown
-                        EmailAuthRes.validateJsonObject(jsonObject);
-                        log.log(Level.FINER, "Input data matches schema 'EmailAuthRes'");
-                        AuthExecResResData ret = new AuthExecResResData();
-                        ret.setActualInstance(adapterEmailAuthRes.fromJsonTree(jsonObject));
-                        return ret;
-                    } catch (Exception e) {
-                        // deserialization failed, continue
-                        log.log(Level.FINER, "Input data does not match schema 'EmailAuthRes'", e);
-                    }
-
-                    // deserialize IpAuthRes
-                    try {
-                        // validate the JSON object to see if any exception is thrown
-                        IpAuthRes.validateJsonObject(jsonObject);
-                        log.log(Level.FINER, "Input data matches schema 'IpAuthRes'");
-                        AuthExecResResData ret = new AuthExecResResData();
-                        ret.setActualInstance(adapterIpAuthRes.fromJsonTree(jsonObject));
-                        return ret;
-                    } catch (Exception e) {
-                        // deserialization failed, continue
-                        log.log(Level.FINER, "Input data does not match schema 'IpAuthRes'", e);
-                    }
-
-                    // deserialize OAuthRes
-                    try {
-                        // validate the JSON object to see if any exception is thrown
-                        OAuthRes.validateJsonObject(jsonObject);
-                        log.log(Level.FINER, "Input data matches schema 'OAuthRes'");
-                        AuthExecResResData ret = new AuthExecResResData();
-                        ret.setActualInstance(adapterOAuthRes.fromJsonTree(jsonObject));
-                        return ret;
-                    } catch (Exception e) {
-                        // deserialization failed, continue
-                        log.log(Level.FINER, "Input data does not match schema 'OAuthRes'", e);
-                    }
-
-                    // deserialize PasswordUpdateRes
-                    try {
-                        // validate the JSON object to see if any exception is thrown
-                        PasswordUpdateRes.validateJsonObject(jsonObject);
-                        log.log(Level.FINER, "Input data matches schema 'PasswordUpdateRes'");
-                        AuthExecResResData ret = new AuthExecResResData();
-                        ret.setActualInstance(adapterPasswordUpdateRes.fromJsonTree(jsonObject));
-                        return ret;
-                    } catch (Exception e) {
-                        // deserialization failed, continue
-                        log.log(Level.FINER, "Input data does not match schema 'PasswordUpdateRes'", e);
-                    }
-
-                    // deserialize QuestionsAuthenticateRes
-                    try {
-                        // validate the JSON object to see if any exception is thrown
-                        QuestionsAuthenticateRes.validateJsonObject(jsonObject);
-                        log.log(Level.FINER, "Input data matches schema 'QuestionsAuthenticateRes'");
-                        AuthExecResResData ret = new AuthExecResResData();
-                        ret.setActualInstance(adapterQuestionsAuthenticateRes.fromJsonTree(jsonObject));
-                        return ret;
-                    } catch (Exception e) {
-                        // deserialization failed, continue
-                        log.log(Level.FINER, "Input data does not match schema 'QuestionsAuthenticateRes'", e);
-                    }
-
-                    // deserialize QuestionsUpdateRes
-                    try {
-                        // validate the JSON object to see if any exception is thrown
-                        QuestionsUpdateRes.validateJsonObject(jsonObject);
-                        log.log(Level.FINER, "Input data matches schema 'QuestionsUpdateRes'");
-                        AuthExecResResData ret = new AuthExecResResData();
-                        ret.setActualInstance(adapterQuestionsUpdateRes.fromJsonTree(jsonObject));
-                        return ret;
-                    } catch (Exception e) {
-                        // deserialization failed, continue
-                        log.log(Level.FINER, "Input data does not match schema 'QuestionsUpdateRes'", e);
-                    }
+  public String getEmailSentTo() {
+    return emailSentTo;
+  }
 
 
-                    throw new IOException(String.format("Failed deserialization for AuthExecResResData: no class matched. JSON: %s", jsonObject.toString()));
-                }
-            }.nullSafe();
-        }
+  public void setEmailSentTo(String emailSentTo) {
+    this.emailSentTo = emailSentTo;
+  }
+
+
+  public AuthExecResResData ipEncoded(String ipEncoded) {
+    
+    this.ipEncoded = ipEncoded;
+    return this;
+  }
+
+   /**
+   * Get ipEncoded
+   * @return ipEncoded
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public String getIpEncoded() {
+    return ipEncoded;
+  }
+
+
+  public void setIpEncoded(String ipEncoded) {
+    this.ipEncoded = ipEncoded;
+  }
+
+
+  public AuthExecResResData login(String login) {
+    
+    this.login = login;
+    return this;
+  }
+
+   /**
+   * Get login
+   * @return login
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public String getLogin() {
+    return login;
+  }
+
+
+  public void setLogin(String login) {
+    this.login = login;
+  }
+
+
+  public AuthExecResResData publicData(Map<String, Object> publicData) {
+    
+    this.publicData = publicData;
+    return this;
+  }
+
+  public AuthExecResResData putPublicDataItem(String key, Object publicDataItem) {
+    if (this.publicData == null) {
+      this.publicData = new HashMap<>();
     }
+    this.publicData.put(key, publicDataItem);
+    return this;
+  }
 
-    // store a list of schema names defined in anyOf
-    public static final Map<String, GenericType> schemas = new HashMap<String, GenericType>();
+   /**
+   * Get publicData
+   * @return publicData
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
 
-    public AuthExecResResData() {
-        super("anyOf", Boolean.FALSE);
+  public Map<String, Object> getPublicData() {
+    return publicData;
+  }
+
+
+  public void setPublicData(Map<String, Object> publicData) {
+    this.publicData = publicData;
+  }
+
+
+  public AuthExecResResData password(String password) {
+    
+    this.password = password;
+    return this;
+  }
+
+   /**
+   * If password was generated by app this field contains generated password.
+   * @return password
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "If password was generated by app this field contains generated password.")
+
+  public String getPassword() {
+    return password;
+  }
+
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+
+  public AuthExecResResData strength(String strength) {
+    
+    this.strength = strength;
+    return this;
+  }
+
+   /**
+   * Calculated strength of password. Null means that all checks failed.
+   * @return strength
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Calculated strength of password. Null means that all checks failed.")
+
+  public String getStrength() {
+    return strength;
+  }
+
+
+  public void setStrength(String strength) {
+    this.strength = strength;
+  }
+
+
+  public AuthExecResResData correct(Map<String, Boolean> correct) {
+    
+    this.correct = correct;
+    return this;
+  }
+
+  public AuthExecResResData putCorrectItem(String key, Boolean correctItem) {
+    if (this.correct == null) {
+      this.correct = new HashMap<>();
     }
+    this.correct.put(key, correctItem);
+    return this;
+  }
 
-    public AuthExecResResData(AuthResDataJson o) {
-        super("anyOf", Boolean.FALSE);
-        setActualInstance(o);
+   /**
+   * Shows is answer was correct. 
+   * @return correct
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(example = "{\"HOME_CITY\":true,\"MOTHER_NAME\":false}", value = "Shows is answer was correct. ")
+
+  public Map<String, Boolean> getCorrect() {
+    return correct;
+  }
+
+
+  public void setCorrect(Map<String, Boolean> correct) {
+    this.correct = correct;
+  }
+
+
+  public AuthExecResResData answersSavedAt(Map<String, Long> answersSavedAt) {
+    
+    this.answersSavedAt = answersSavedAt;
+    return this;
+  }
+
+  public AuthExecResResData putAnswersSavedAtItem(String key, Long answersSavedAtItem) {
+    if (this.answersSavedAt == null) {
+      this.answersSavedAt = new HashMap<>();
     }
+    this.answersSavedAt.put(key, answersSavedAtItem);
+    return this;
+  }
 
-    public AuthExecResResData(EmailAuthRes o) {
-        super("anyOf", Boolean.FALSE);
-        setActualInstance(o);
+   /**
+   * Date of last update
+   * @return answersSavedAt
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Date of last update")
+
+  public Map<String, Long> getAnswersSavedAt() {
+    return answersSavedAt;
+  }
+
+
+  public void setAnswersSavedAt(Map<String, Long> answersSavedAt) {
+    this.answersSavedAt = answersSavedAt;
+  }
+
+  /**
+   * A container for additional, undeclared properties.
+   * This is a holder for any undeclared properties as specified with
+   * the 'additionalProperties' keyword in the OAS document.
+   */
+  private Map<String, Object> additionalProperties;
+
+  /**
+   * Set the additional (undeclared) property with the specified name and value.
+   * If the property does not already exist, create it otherwise replace it.
+   */
+  public AuthExecResResData putAdditionalProperty(String key, Object value) {
+    if (this.additionalProperties == null) {
+        this.additionalProperties = new HashMap<String, Object>();
     }
+    this.additionalProperties.put(key, value);
+    return this;
+  }
 
-    public AuthExecResResData(IpAuthRes o) {
-        super("anyOf", Boolean.FALSE);
-        setActualInstance(o);
+  /**
+   * Return the additional (undeclared) property.
+   */
+  public Map<String, Object> getAdditionalProperties() {
+    return additionalProperties;
+  }
+
+  /**
+   * Return the additional (undeclared) property with the specified name.
+   */
+  public Object getAdditionalProperty(String key) {
+    if (this.additionalProperties == null) {
+        return null;
     }
+    return this.additionalProperties.get(key);
+  }
 
-    public AuthExecResResData(OAuthRes o) {
-        super("anyOf", Boolean.FALSE);
-        setActualInstance(o);
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
     }
-
-    public AuthExecResResData(PasswordUpdateRes o) {
-        super("anyOf", Boolean.FALSE);
-        setActualInstance(o);
+    if (o == null || getClass() != o.getClass()) {
+      return false;
     }
+    AuthExecResResData authExecResResData = (AuthExecResResData) o;
+    return Objects.equals(this.emailSentTo, authExecResResData.emailSentTo) &&
+        Objects.equals(this.ipEncoded, authExecResResData.ipEncoded) &&
+        Objects.equals(this.login, authExecResResData.login) &&
+        Objects.equals(this.publicData, authExecResResData.publicData) &&
+        Objects.equals(this.password, authExecResResData.password) &&
+        Objects.equals(this.strength, authExecResResData.strength) &&
+        Objects.equals(this.correct, authExecResResData.correct) &&
+        Objects.equals(this.answersSavedAt, authExecResResData.answersSavedAt)&&
+        Objects.equals(this.additionalProperties, authExecResResData.additionalProperties);
+  }
 
-    public AuthExecResResData(QuestionsAuthenticateRes o) {
-        super("anyOf", Boolean.FALSE);
-        setActualInstance(o);
+  @Override
+  public int hashCode() {
+    return Objects.hash(emailSentTo, ipEncoded, login, publicData, password, strength, correct, answersSavedAt, additionalProperties);
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("class AuthExecResResData {\n");
+    sb.append("    emailSentTo: ").append(toIndentedString(emailSentTo)).append("\n");
+    sb.append("    ipEncoded: ").append(toIndentedString(ipEncoded)).append("\n");
+    sb.append("    login: ").append(toIndentedString(login)).append("\n");
+    sb.append("    publicData: ").append(toIndentedString(publicData)).append("\n");
+    sb.append("    password: ").append(toIndentedString(password)).append("\n");
+    sb.append("    strength: ").append(toIndentedString(strength)).append("\n");
+    sb.append("    correct: ").append(toIndentedString(correct)).append("\n");
+    sb.append("    answersSavedAt: ").append(toIndentedString(answersSavedAt)).append("\n");
+    sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
+    sb.append("}");
+    return sb.toString();
+  }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(Object o) {
+    if (o == null) {
+      return "null";
     }
+    return o.toString().replace("\n", "\n    ");
+  }
 
-    public AuthExecResResData(QuestionsUpdateRes o) {
-        super("anyOf", Boolean.FALSE);
-        setActualInstance(o);
-    }
 
-    static {
-        schemas.put("AuthResDataJson", new GenericType<AuthResDataJson>() {
-        });
-        schemas.put("EmailAuthRes", new GenericType<EmailAuthRes>() {
-        });
-        schemas.put("IpAuthRes", new GenericType<IpAuthRes>() {
-        });
-        schemas.put("OAuthRes", new GenericType<OAuthRes>() {
-        });
-        schemas.put("PasswordUpdateRes", new GenericType<PasswordUpdateRes>() {
-        });
-        schemas.put("QuestionsAuthenticateRes", new GenericType<QuestionsAuthenticateRes>() {
-        });
-        schemas.put("QuestionsUpdateRes", new GenericType<QuestionsUpdateRes>() {
-        });
-    }
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
 
-    @Override
-    public Map<String, GenericType> getSchemas() {
-        return AuthExecResResData.schemas;
-    }
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("emailSentTo");
+    openapiFields.add("ipEncoded");
+    openapiFields.add("login");
+    openapiFields.add("publicData");
+    openapiFields.add("password");
+    openapiFields.add("strength");
+    openapiFields.add("correct");
+    openapiFields.add("answersSavedAt");
 
-    /**
-     * Set the instance that matches the anyOf child schema, check
-     * the instance parameter is valid against the anyOf child schemas:
-     * AuthResDataJson, EmailAuthRes, IpAuthRes, OAuthRes, PasswordUpdateRes, QuestionsAuthenticateRes, QuestionsUpdateRes
-     *
-     * It could be an instance of the 'anyOf' schemas.
-     * The anyOf child schemas may themselves be a composed schema (allOf, anyOf, anyOf).
-     */
-    @Override
-    public void setActualInstance(Object instance) {
-        if (instance instanceof AuthResDataJson) {
-            super.setActualInstance(instance);
-            return;
-        }
-
-        if (instance instanceof EmailAuthRes) {
-            super.setActualInstance(instance);
-            return;
-        }
-
-        if (instance instanceof IpAuthRes) {
-            super.setActualInstance(instance);
-            return;
-        }
-
-        if (instance instanceof OAuthRes) {
-            super.setActualInstance(instance);
-            return;
-        }
-
-        if (instance instanceof PasswordUpdateRes) {
-            super.setActualInstance(instance);
-            return;
-        }
-
-        if (instance instanceof QuestionsAuthenticateRes) {
-            super.setActualInstance(instance);
-            return;
-        }
-
-        if (instance instanceof QuestionsUpdateRes) {
-            super.setActualInstance(instance);
-            return;
-        }
-
-        throw new RuntimeException("Invalid instance type. Must be AuthResDataJson, EmailAuthRes, IpAuthRes, OAuthRes, PasswordUpdateRes, QuestionsAuthenticateRes, QuestionsUpdateRes");
-    }
-
-    /**
-     * Get the actual instance, which can be the following:
-     * AuthResDataJson, EmailAuthRes, IpAuthRes, OAuthRes, PasswordUpdateRes, QuestionsAuthenticateRes, QuestionsUpdateRes
-     *
-     * @return The actual instance (AuthResDataJson, EmailAuthRes, IpAuthRes, OAuthRes, PasswordUpdateRes, QuestionsAuthenticateRes, QuestionsUpdateRes)
-     */
-    @Override
-    public Object getActualInstance() {
-        return super.getActualInstance();
-    }
-
-    /**
-     * Get the actual instance of `AuthResDataJson`. If the actual instance is not `AuthResDataJson`,
-     * the ClassCastException will be thrown.
-     *
-     * @return The actual instance of `AuthResDataJson`
-     * @throws ClassCastException if the instance is not `AuthResDataJson`
-     */
-    public AuthResDataJson getAuthResDataJson() throws ClassCastException {
-        return (AuthResDataJson)super.getActualInstance();
-    }
-
-    /**
-     * Get the actual instance of `EmailAuthRes`. If the actual instance is not `EmailAuthRes`,
-     * the ClassCastException will be thrown.
-     *
-     * @return The actual instance of `EmailAuthRes`
-     * @throws ClassCastException if the instance is not `EmailAuthRes`
-     */
-    public EmailAuthRes getEmailAuthRes() throws ClassCastException {
-        return (EmailAuthRes)super.getActualInstance();
-    }
-
-    /**
-     * Get the actual instance of `IpAuthRes`. If the actual instance is not `IpAuthRes`,
-     * the ClassCastException will be thrown.
-     *
-     * @return The actual instance of `IpAuthRes`
-     * @throws ClassCastException if the instance is not `IpAuthRes`
-     */
-    public IpAuthRes getIpAuthRes() throws ClassCastException {
-        return (IpAuthRes)super.getActualInstance();
-    }
-
-    /**
-     * Get the actual instance of `OAuthRes`. If the actual instance is not `OAuthRes`,
-     * the ClassCastException will be thrown.
-     *
-     * @return The actual instance of `OAuthRes`
-     * @throws ClassCastException if the instance is not `OAuthRes`
-     */
-    public OAuthRes getOAuthRes() throws ClassCastException {
-        return (OAuthRes)super.getActualInstance();
-    }
-
-    /**
-     * Get the actual instance of `PasswordUpdateRes`. If the actual instance is not `PasswordUpdateRes`,
-     * the ClassCastException will be thrown.
-     *
-     * @return The actual instance of `PasswordUpdateRes`
-     * @throws ClassCastException if the instance is not `PasswordUpdateRes`
-     */
-    public PasswordUpdateRes getPasswordUpdateRes() throws ClassCastException {
-        return (PasswordUpdateRes)super.getActualInstance();
-    }
-
-    /**
-     * Get the actual instance of `QuestionsAuthenticateRes`. If the actual instance is not `QuestionsAuthenticateRes`,
-     * the ClassCastException will be thrown.
-     *
-     * @return The actual instance of `QuestionsAuthenticateRes`
-     * @throws ClassCastException if the instance is not `QuestionsAuthenticateRes`
-     */
-    public QuestionsAuthenticateRes getQuestionsAuthenticateRes() throws ClassCastException {
-        return (QuestionsAuthenticateRes)super.getActualInstance();
-    }
-
-    /**
-     * Get the actual instance of `QuestionsUpdateRes`. If the actual instance is not `QuestionsUpdateRes`,
-     * the ClassCastException will be thrown.
-     *
-     * @return The actual instance of `QuestionsUpdateRes`
-     * @throws ClassCastException if the instance is not `QuestionsUpdateRes`
-     */
-    public QuestionsUpdateRes getQuestionsUpdateRes() throws ClassCastException {
-        return (QuestionsUpdateRes)super.getActualInstance();
-    }
-
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
 
  /**
   * Validates the JSON Object and throws an exception if issues found
@@ -457,66 +410,91 @@ public class AuthExecResResData extends AbstractOpenApiSchema {
   * @throws IOException if the JSON Object is invalid with respect to AuthExecResResData
   */
   public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-    // validate anyOf schemas one by one
-    int validCount = 0;
-    // validate the json string with AuthResDataJson
-    try {
-      AuthResDataJson.validateJsonObject(jsonObj);
-      return; // return earlier as at least one schema is valid with respect to the Json object
-      //validCount++;
-    } catch (Exception e) {
-      // continue to the next one
-    }
-    // validate the json string with EmailAuthRes
-    try {
-      EmailAuthRes.validateJsonObject(jsonObj);
-      return; // return earlier as at least one schema is valid with respect to the Json object
-      //validCount++;
-    } catch (Exception e) {
-      // continue to the next one
-    }
-    // validate the json string with IpAuthRes
-    try {
-      IpAuthRes.validateJsonObject(jsonObj);
-      return; // return earlier as at least one schema is valid with respect to the Json object
-      //validCount++;
-    } catch (Exception e) {
-      // continue to the next one
-    }
-    // validate the json string with OAuthRes
-    try {
-      OAuthRes.validateJsonObject(jsonObj);
-      return; // return earlier as at least one schema is valid with respect to the Json object
-      //validCount++;
-    } catch (Exception e) {
-      // continue to the next one
-    }
-    // validate the json string with PasswordUpdateRes
-    try {
-      PasswordUpdateRes.validateJsonObject(jsonObj);
-      return; // return earlier as at least one schema is valid with respect to the Json object
-      //validCount++;
-    } catch (Exception e) {
-      // continue to the next one
-    }
-    // validate the json string with QuestionsAuthenticateRes
-    try {
-      QuestionsAuthenticateRes.validateJsonObject(jsonObj);
-      return; // return earlier as at least one schema is valid with respect to the Json object
-      //validCount++;
-    } catch (Exception e) {
-      // continue to the next one
-    }
-    // validate the json string with QuestionsUpdateRes
-    try {
-      QuestionsUpdateRes.validateJsonObject(jsonObj);
-      return; // return earlier as at least one schema is valid with respect to the Json object
-      //validCount++;
-    } catch (Exception e) {
-      // continue to the next one
-    }
-    if (validCount == 0) {
-      throw new IOException(String.format("The JSON string is invalid for AuthExecResResData with anyOf schemas: AuthResDataJson, EmailAuthRes, IpAuthRes, OAuthRes, PasswordUpdateRes, QuestionsAuthenticateRes, QuestionsUpdateRes. JSON: %s", jsonObj.toString()));
+      if (jsonObj == null) {
+        if (AuthExecResResData.openapiRequiredFields.isEmpty()) {
+          return;
+        } else { // has required fields
+          throw new IllegalArgumentException(String.format("The required field(s) %s in AuthExecResResData is not found in the empty JSON string", AuthExecResResData.openapiRequiredFields.toString()));
+        }
+      }
+      if ((jsonObj.get("emailSentTo") != null && !jsonObj.get("emailSentTo").isJsonNull()) && !jsonObj.get("emailSentTo").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `emailSentTo` to be a primitive type in the JSON string but got `%s`", jsonObj.get("emailSentTo").toString()));
+      }
+      if ((jsonObj.get("ipEncoded") != null && !jsonObj.get("ipEncoded").isJsonNull()) && !jsonObj.get("ipEncoded").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `ipEncoded` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ipEncoded").toString()));
+      }
+      if ((jsonObj.get("login") != null && !jsonObj.get("login").isJsonNull()) && !jsonObj.get("login").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `login` to be a primitive type in the JSON string but got `%s`", jsonObj.get("login").toString()));
+      }
+      if ((jsonObj.get("password") != null && !jsonObj.get("password").isJsonNull()) && !jsonObj.get("password").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `password` to be a primitive type in the JSON string but got `%s`", jsonObj.get("password").toString()));
+      }
+      if ((jsonObj.get("strength") != null && !jsonObj.get("strength").isJsonNull()) && !jsonObj.get("strength").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `strength` to be a primitive type in the JSON string but got `%s`", jsonObj.get("strength").toString()));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!AuthExecResResData.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'AuthExecResResData' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<AuthExecResResData> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(AuthExecResResData.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<AuthExecResResData>() {
+           @Override
+           public void write(JsonWriter out, AuthExecResResData value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             obj.remove("additionalProperties");
+             // serialize additonal properties
+             if (value.getAdditionalProperties() != null) {
+               for (Map.Entry<String, Object> entry : value.getAdditionalProperties().entrySet()) {
+                 if (entry.getValue() instanceof String)
+                   obj.addProperty(entry.getKey(), (String) entry.getValue());
+                 else if (entry.getValue() instanceof Number)
+                   obj.addProperty(entry.getKey(), (Number) entry.getValue());
+                 else if (entry.getValue() instanceof Boolean)
+                   obj.addProperty(entry.getKey(), (Boolean) entry.getValue());
+                 else if (entry.getValue() instanceof Character)
+                   obj.addProperty(entry.getKey(), (Character) entry.getValue());
+                 else {
+                   obj.add(entry.getKey(), gson.toJsonTree(entry.getValue()).getAsJsonObject());
+                 }
+               }
+             }
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public AuthExecResResData read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             // store additional fields in the deserialized instance
+             AuthExecResResData instance = thisAdapter.fromJsonTree(jsonObj);
+             for (Map.Entry<String, JsonElement> entry : jsonObj.entrySet()) {
+               if (!openapiFields.contains(entry.getKey())) {
+                 if (entry.getValue().isJsonPrimitive()) { // primitive type
+                   if (entry.getValue().getAsJsonPrimitive().isString())
+                     instance.putAdditionalProperty(entry.getKey(), entry.getValue().getAsString());
+                   else if (entry.getValue().getAsJsonPrimitive().isNumber())
+                     instance.putAdditionalProperty(entry.getKey(), entry.getValue().getAsNumber());
+                   else if (entry.getValue().getAsJsonPrimitive().isBoolean())
+                     instance.putAdditionalProperty(entry.getKey(), entry.getValue().getAsBoolean());
+                   else
+                     throw new IllegalArgumentException(String.format("The field `%s` has unknown primitive type. Value: %s", entry.getKey(), entry.getValue().toString()));
+                 } else { // non-primitive type
+                   instance.putAdditionalProperty(entry.getKey(), gson.fromJson(entry.getValue(), HashMap.class));
+                 }
+               }
+             }
+             return instance;
+           }
+
+       }.nullSafe();
     }
   }
 

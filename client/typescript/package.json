@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "generate-api": "openapi-generator-cli generate -i ../openapi-no-discriminators.yaml -o ./generated -g typescript-axios",
+    "generate-api": "openapi-generator-cli generate -i ../openapi-no-polymorphism.yaml -o ./generated -g typescript-axios",
     "build": "tsc"
   },
   "main": "dist/index.js",
