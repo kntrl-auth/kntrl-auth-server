@@ -1,11 +1,10 @@
 openapi: 3.0.1
 info:
   title: Kntrl plugin API
-  description: |+
-    This is the API that Kntrl server uses for integration with plugins.
-    To implement plugin you must add next http endpoints to your server
-
+  description: siski
   version: "1.0"
+  x-logo:
+    url: ./logo.png
 tags:
 - name: plugin/rate-limiter
   x-displayName: []
@@ -183,6 +182,7 @@ paths:
     post:
       tags:
       - plugin/auth
+      summary: Authenticate session
       operationId: authenticate
       requestBody:
         content:

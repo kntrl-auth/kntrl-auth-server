@@ -458,7 +458,7 @@ export interface AuthenticateReq {
      */
     'authReqs'?: { [key: string]: AuthenticateReqAuthReqsValue; };
     /**
-     * Execute only validation ща authenticator requests.
+     * Execute only validation of authenticator requests.
      * @type {boolean}
      * @memberof AuthenticateReq
      */
@@ -2387,7 +2387,7 @@ export interface NewSessionReq {
      */
     'signUp'?: boolean;
     /**
-     * Execute only validation ща authenticator requests.
+     * Execute only validation of authenticator requests.
      * @type {boolean}
      * @memberof NewSessionReq
      */

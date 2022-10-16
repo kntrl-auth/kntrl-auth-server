@@ -1,7 +1,10 @@
 openapi: 3.0.1
 info:
   title: Kntrl API
+  description: siski
   version: "1.0"
+  x-logo:
+    url: ./logo.png
 tags:
 - name: token
   x-displayName:
@@ -32,7 +35,9 @@ paths:
     get:
       tags:
       - server
-      description: Get server plugins state
+      summary: Server health status
+      description: |
+        Get server plugins state
       operationId: health
       parameters:
       - name: key
@@ -64,6 +69,7 @@ paths:
     get:
       tags:
       - session
+      summary: Get session
       description: |
         Get current session data.
       operationId: getSession
@@ -92,6 +98,7 @@ paths:
     post:
       tags:
       - session
+      summary: New session
       description: |
         Create new session.
         if session entry requires another entry, access token must be provided.
@@ -128,6 +135,7 @@ paths:
     patch:
       tags:
       - session
+      summary: Authenticate session
       operationId: authenticate
       requestBody:
         content:
@@ -160,6 +168,7 @@ paths:
     delete:
       tags:
       - session
+      summary: Sign out current session
       operationId: signOut
       responses:
         default:
@@ -187,6 +196,7 @@ paths:
     get:
       tags:
       - user
+      summary: Get user
       operationId: getUser
       responses:
         default:
@@ -213,6 +223,7 @@ paths:
     patch:
       tags:
       - user
+      summary: Save user
       operationId: saveUser
       requestBody:
         content:
@@ -246,6 +257,7 @@ paths:
     post:
       tags:
       - authorisation
+      summary: (Backend API) authorize session
       description: |
         Validates token and executes rate limiter.
         This API should be called by backend.
@@ -282,8 +294,9 @@ paths:
     get:
       tags:
       - signature
-      description: Public key generated from app-secret from config used for signature
-        validation.
+      summary: Get RSA public key
+      description: |
+        Public key generated from app-secret from config used for signature validation.
       operationId: getPublicKey
       responses:
         default:
@@ -309,6 +322,7 @@ paths:
     get:
       tags:
       - server
+      summary: Server configuration
       description: |
         Current server configuration. Available only for users with system-access.
       operationId: cfg
@@ -338,7 +352,9 @@ paths:
     post:
       tags:
       - token
-      description: Get new access token using refresh token.
+      summary: Refresh access token
+      description: |
+        Get new access token using refresh token.
       operationId: refreshToken
       requestBody:
         content:
@@ -370,6 +386,7 @@ paths:
     post:
       tags:
       - authorisation
+      summary: (Backend API) validate by rate-limiter
       description: |
         Executes rate limiter if no authorisation is required. Otherwise, this works similarly to /authorise.
       operationId: limit
@@ -406,7 +423,9 @@ paths:
     post:
       tags:
       - signature
-      description: Validates data signature
+      summary: Validate signature
+      description: |
+        Validates data signature
       operationId: verify
       parameters:
       - name: signature
@@ -447,6 +466,7 @@ paths:
     post:
       tags:
       - signature
+      summary: (Backend API) sign data
       description: |
         Sign data using specified secret.
       operationId: sign
@@ -488,6 +508,7 @@ paths:
     post:
       tags:
       - session
+      summary: Confirm with code
       description: |
         Confirm auth with received code. To get code id, check response of sign in / sign up / authenticate API.
       operationId: confirmSessionAuths
@@ -518,11 +539,13 @@ paths:
                 $ref: '#/components/schemas/IntegrationErr'
       security:
       - access-token: []
+      - {}
       x-order: 6
   /api/session/{session-id}:
     delete:
       tags:
       - session
+      summary: Sign out another session
       operationId: delSession
       parameters:
       - name: session-id
@@ -556,6 +579,7 @@ paths:
     get:
       tags:
       - session
+      summary: List sessions
       operationId: getAll
       parameters:
       - name: entry
@@ -594,6 +618,7 @@ paths:
     patch:
       tags:
       - user
+      summary: (Admin API) Edit user
       operationId: editUser
       parameters:
       - name: id
@@ -633,6 +658,7 @@ paths:
     post:
       tags:
       - user
+      summary: Confirm enabled auth
       operationId: confirmUserAuths
       requestBody:
         content:
@@ -1828,6 +1854,9 @@ components:
       properties:
         sessionId:
           type: string
+          description: |-
+            If null, session id will be extracted from access-token.
+            Useful to confirm auth from another device where no access-token available.
           x-nullable: true
         receivedCodes:
           type: object
@@ -1837,6 +1866,8 @@ components:
               type: string
               x-additionalPropertiesName: codeId
             x-additionalPropertiesName: auth
+          description: |
+            Code from authenticate/new-session response.
       x-order: 2094520596-4
     SignOutRes:
       type: object
@@ -1872,6 +1903,9 @@ components:
       properties:
         userId:
           type: string
+          description: |-
+            If null, user id will be extracted from access-token.
+            Useful to confirm auth from another device where no access-token available.
           x-nullable: true
         receivedCodes:
           type: object
@@ -1881,6 +1915,8 @@ components:
               type: string
               x-additionalPropertiesName: codeId
             x-additionalPropertiesName: auth
+          description: |
+            Code from save-user response.
       x-order: -1847312442-4
     EditUserReq:
       type: object

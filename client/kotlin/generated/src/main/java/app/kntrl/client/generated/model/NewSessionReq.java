@@ -252,11 +252,11 @@ public class NewSessionReq {
   }
 
    /**
-   * Execute only validation ща authenticator requests.
+   * Execute only validation of authenticator requests.
    * @return dryRun
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Execute only validation ща authenticator requests.")
+  @ApiModelProperty(value = "Execute only validation of authenticator requests.")
 
   public Boolean getDryRun() {
     return dryRun;

@@ -132,14 +132,16 @@ Then read guide in [examples folder](examples). It contains configuration and in
 Generate HTTP client for any other language by any OpenApi generator (e.g. [this](https://openapi-generator.tech)).
 OpenAPI specification is located in [client folder](client):
 
-- [openapi-no-discriminators.yaml](client/openapi-no-polymorphism.yaml) - simplified specification (without inheritance and polymorphism). All generators should support this specification.
+- [openapi-no-polymorphism.yaml](client/openapi-no-polymorphism.yaml) - simplified specification (without inheritance and polymorphism). All generators should support this specification.
 - [openapi-no-inheritance.yaml](client/openapi-no-inheritance.yaml) - simplified specification (without inheritance). Some generators support this.
 - [openapi.yaml](client/openapi.yaml) - specification with discriminators and inheritance. Most of the generators produce incorrect code for this.
 
 **TL;DR;** if you're not sure which specification to use, just use [openapi-no-polymorphism.yaml](client/openapi-no-polymorphism.yaml), e.g.:
 ```shell
-openapi-generator-cli generate -i ./client/openapi-no-polymorphism.yaml -g go -o ./generated/.client
+openapi-generator-cli generate -i ./client/openapi-no-polymorphism.yaml -g go -o ./generated/client
 ```
+**WARN**: it's strongly recommended to disable client rejection of not-known fields. E.g. for java generator set 
+`disallowAdditionalPropertiesIfNotPresent` to `false`.
 
 #### Option 3 - call HTTP API manually
 Check [API docs](#api-docs) for HTTP API documentation.

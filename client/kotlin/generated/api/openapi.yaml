@@ -2572,7 +2572,7 @@ components:
             Request for authenticators
           type: object
         dryRun:
-          description: Execute only validation ща authenticator requests.
+          description: Execute only validation of authenticator requests.
           type: boolean
       type: object
       x-order: 2094520596-2
@@ -2656,7 +2656,7 @@ components:
         signUp:
           type: boolean
         dryRun:
-          description: Execute only validation ща authenticator requests.
+          description: Execute only validation of authenticator requests.
           type: boolean
       required:
       - entry

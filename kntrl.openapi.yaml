@@ -1,7 +1,10 @@
 openapi: 3.0.1
 info:
   title: Kntrl configuration API
+  description: siski
   version: "1.0"
+  x-logo:
+    url: ./logo.png
 tags:
 - name: config
   x-displayName:
