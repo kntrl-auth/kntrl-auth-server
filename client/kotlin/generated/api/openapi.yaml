@@ -4077,7 +4077,7 @@ components:
     RefreshTokenCfg:
       description: |-
         Long-living token used for generation of new access token.
-        THis is optional. You can set longer access-token lifetime instead.
+        This is optional. You can set longer access-token lifetime instead.
       example:
         allowReuse: true
         unauthenticatedTtl: 1d

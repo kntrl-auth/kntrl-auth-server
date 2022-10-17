@@ -45,9 +45,9 @@ import java.util.Set;
 import app.kntrl.client.generated.infra.JSON;
 
 /**
- * Long-living token used for generation of new access token. THis is optional. You can set longer access-token lifetime instead.
+ * Long-living token used for generation of new access token. This is optional. You can set longer access-token lifetime instead.
  */
-@ApiModel(description = "Long-living token used for generation of new access token. THis is optional. You can set longer access-token lifetime instead.")
+@ApiModel(description = "Long-living token used for generation of new access token. This is optional. You can set longer access-token lifetime instead.")
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class RefreshTokenCfg {
   public static final String SERIALIZED_NAME_TTL = "ttl";

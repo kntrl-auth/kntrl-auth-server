@@ -3343,7 +3343,7 @@ export interface RedisCfg {
     'maxConnections'?: number;
 }
 /**
- * Long-living token used for generation of new access token. THis is optional. You can set longer access-token lifetime instead.
+ * Long-living token used for generation of new access token. This is optional. You can set longer access-token lifetime instead.
  * @export
  * @interface RefreshTokenCfg
  */

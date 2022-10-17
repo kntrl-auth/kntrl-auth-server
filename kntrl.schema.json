@@ -1388,7 +1388,7 @@
               "description": "If false - one refresh token can't be used twice. New refresh token will be provided by refresh API."
             }
           },
-          "description": "Long-living token used for generation of new access token.\nTHis is optional. You can set longer access-token lifetime instead.",
+          "description": "Long-living token used for generation of new access token.\nThis is optional. You can set longer access-token lifetime instead.",
           "x-order": "-1195634750-5"
         },
         "sameUserAgent": {
