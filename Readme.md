@@ -56,14 +56,14 @@ Execute HTTP request:
 ```shell
 curl -X 'GET' 'http://localhost:9876/api/server/health' -H 'accept: application/json'
 ```
-P.S. It's recommended to set `healthCheckKey` property in config to make health API require `key` query-param and
+P.S. It's recommended to set the `healthCheckKey` property in the config to make health API require `key` query-param and
 restrict access to this endpoint.
 
 
 ### Configure
 
 #### Option 1 - Modify `kntrl.json5` file
-When started, app creates file `kntrl.json5` that contains app config and `kntrl.schema.json` with json-schema 
+When started, the app creates the file `kntrl.json5` that contains app config and the `kntrl.schema.json` with json-schema 
 for that file in a working directory.
 If you're using docker, make sure you have specified volume:
 
@@ -117,7 +117,7 @@ java -jar kntrl.jar --auths "{ password: { minLength: 8, requireNumber: true } }
 Read [app architecture overview](arch.md) to grasp main concepts.
 
 ### Learn by example
-Then read guide in [examples folder](examples). It contains configuration and integration examples for common cases.
+Then read the guide in [examples folder](examples). It contains configuration and integration examples for common cases.
 
 
 ## 🛠️ Integrate with frontend/backend
@@ -129,8 +129,8 @@ Then read guide in [examples folder](examples). It contains configuration and in
 - [JavaScript/TypeScript client](client/typescript/Readme.md)
 
 #### Option 2 - use OpenAPI generator
-Generate HTTP client for any other language by any OpenApi generator (e.g. [this](https://openapi-generator.tech)).
-OpenAPI specification is located in [client folder](client):
+Generate an HTTP client for any other language by any OpenApi generator (e.g. [this](https://openapi-generator.tech)).
+The OpenAPI specification is located in [client folder](client):
 
 - [openapi-no-polymorphism.yaml](client/openapi-no-polymorphism.yaml) - simplified specification (without inheritance and polymorphism). All generators should support this specification.
 - [openapi-no-inheritance.yaml](client/openapi-no-inheritance.yaml) - simplified specification (without inheritance). Some generators support this.
@@ -162,11 +162,11 @@ For full specification of app features, check these docs:
 
 ## 🔒 License
 
-This repo includes clients for Kntrl authentication server, examples of usage distributed under MIT license. You can do 
+This repo includes clients for the Kntrl authentication server, examples of usage distributed under MIT license. You can do 
 whatever you want with this.
 
-Self-hosted Kntrl server (that you download from releases page) is proprietary, you're not allowed to modify or sell it;
-you can use it for any kind of software, but you are not allowed to use it for Software as a Service.
+The self-hosted Kntrl server (which you download from releases page) is proprietary, you're not allowed to modify or sell it;
+you can use it for any kind of software, but you are not allowed to provide it as Software as a Service.
 
 #### Is the app sources available anywhere?
 

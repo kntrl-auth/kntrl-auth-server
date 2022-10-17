@@ -3,7 +3,7 @@
 
   auths: {
     email: {
-      server: "localhost:1025",
+      server: "maildev:1025",
       sender: "test@test.com",
 
       // Just for example, this url doesn't exist. App expects that this url will bring user to email confirmation UI.
