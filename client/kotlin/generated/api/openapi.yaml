@@ -4326,7 +4326,7 @@ components:
           type: object
         secret:
           description: |-
-            THe key that app uses for RSA certificate generation used for token signature.
+            The key that app uses for RSA certificate generation used for token signature.
             If `null` - app will generate secret automatically during startup.
           type: string
         healthCheckKey:

@@ -40,8 +40,7 @@ class Example0201 {
                 true
         );
         AuthenticateRes signUpRes = signUpSession.authenticate(
-                new Session.AuthReqs().req("password", new Session.AuthReq().password("Abcdef1@")),
-                null
+                new Session.AuthReqs().req("password", new Session.AuthReq().password("Abcdef1@"))
         );
         return signUpRes.getTokens();
     }

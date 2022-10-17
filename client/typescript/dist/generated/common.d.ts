@@ -1,0 +1,13 @@
+import { Configuration } from "./configuration";
+import { RequestArgs } from "./base";
+import { AxiosInstance, AxiosResponse } from 'axios';
+export declare const DUMMY_BASE_URL = "https://example.com";
+export declare const assertParamExists: (functionName: string, paramName: string, paramValue: unknown) => void;
+export declare const setApiKeyToObject: (object: any, keyParamName: string, configuration?: Configuration | undefined) => Promise<void>;
+export declare const setBasicAuthToObject: (object: any, configuration?: Configuration | undefined) => void;
+export declare const setBearerAuthToObject: (object: any, configuration?: Configuration | undefined) => Promise<void>;
+export declare const setOAuthToObject: (object: any, name: string, scopes: string[], configuration?: Configuration | undefined) => Promise<void>;
+export declare const setSearchParams: (url: URL, ...objects: any[]) => void;
+export declare const serializeDataIfNeeded: (value: any, requestOptions: any, configuration?: Configuration | undefined) => any;
+export declare const toPathString: (url: URL) => string;
+export declare const createRequestFunction: (axiosArgs: RequestArgs, globalAxios: AxiosInstance, BASE_PATH: string, configuration?: Configuration | undefined) => <T = unknown, R = AxiosResponse<T>>(axios?: AxiosInstance, basePath?: string) => Promise<R>;

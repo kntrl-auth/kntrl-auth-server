@@ -39,9 +39,12 @@ class Session(
         res
     }
 
+
+    fun authenticate() = authenticate(null)
+    fun authenticate(authReqs: Map<String, AuthenticateReqAuthReqsValue?>?) = authenticate(authReqs, null)
     fun authenticate(
-        authReqs: Map<String, AuthenticateReqAuthReqsValue?>? = null,
-        factors: Map<String, String>? = null,
+        authReqs: Map<String, AuthenticateReqAuthReqsValue?>?,
+        factors: Map<String, String>?,
     ): AuthenticateRes = handleErr(this) {
         val res = if (newSessionReq != null) {
             SessionApi(_authenticatedOpenapiClient()).newSession(newSessionReq!!.apply {

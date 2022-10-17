@@ -41,664 +41,53 @@
     "auths": {
       "type": "object",
       "additionalProperties": {
-        "anyOf": [
-          {
-            "required": [
-              "remote"
-            ],
-            "type": "object",
-            "properties": {
-              "remote": {
-                "type": "string",
-                "description": "Path to the API that implements plugin."
+        "x-additionalPropertiesName": "auth",
+        "type": "object",
+        "properties": {
+          "requiresAuth": {
+            "description": "If this is not null, app forbids to add this auth until listed auth enabled.\n- if this a string -> require specified auth to be enabled before this.\n- array of strings -> require any of listed auths to be enabled\n- array of arrays of strings -> works as `[ [ \"auth1\" and \"auth2\" ] or [ \"auth1\" and \"auth2\" ] ]`",
+            "x-nullable": true,
+            "oneOf": [
+              {
+                "type": "string"
               },
-              "requiresAuth": {
-                "description": "If this is not null, app forbids to add this auth until listed auth enabled.\n- if this a string -> require specified auth to be enabled before this.\n- array of strings -> require any of listed auths to be enabled\n- array of arrays of strings -> works as `[ [ \"auth1\" and \"auth2\" ] or [ \"auth1\" and \"auth2\" ] ]`",
-                "x-nullable": true,
-                "oneOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "array",
-                    "items": {
-                      "oneOf": [
-                        {
-                          "type": "string"
-                        },
-                        {
-                          "type": "array",
-                          "items": {
-                            "type": "string"
-                          }
-                        }
-                      ]
-                    }
-                  }
-                ]
-              },
-              "skipOnFail": {
-                "type": "boolean",
-                "description": "When this is set to true app will attempt next auth in case of error on current.\nIt's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be\nexecuted only when IP auth is failed.\nIf set to false any error on this auth will stop the whole request execution."
-              },
-              "rateLimiter": {
-                "type": "string",
-                "description": "Apply rate limiter for this auth.",
-                "x-nullable": true
-              },
-              "burnQuota": {
-                "type": "number",
-                "description": "Every auth execution will burn this amount of quota. Takes place only when rate limiter is specified",
-                "format": "double",
-                "minimum": -1.7976931348623157e+308,
-                "maximum": 1.7976931348623157e+308
-              },
-              "query": {
-                "type": "object",
-                "additionalProperties": {
-                  "type": "string",
-                  "x-additionalPropertiesName": "queryParam"
-                },
-                "description": "Add query params after `?` symbol in url.\n"
-              },
-              "headers": {
-                "type": "object",
-                "additionalProperties": {
-                  "type": "string",
-                  "x-additionalPropertiesName": "header"
-                },
-                "description": "Add headers to request.\n"
-              },
-              "code": {
-                "type": "object",
-                "properties": {
-                  "length": {
-                    "type": "integer",
-                    "description": "Length of code to be generated",
-                    "format": "int32",
-                    "minimum": -2147483648,
-                    "maximum": 2147483647
-                  },
-                  "ttl": {
-                    "type": "string",
-                    "description": "Generated code lifetime. e.g. 1m, 60s, 1d, etc."
-                  },
-                  "alphabet": {
-                    "type": "string",
-                    "description": "Symbols used to generate a code. By default `a-z + A-Z + 0-9`."
-                  },
-                  "easyToRemember": {
-                    "type": "boolean",
-                    "description": "If true, every second letter will be the same, that allows the codes to rhyme."
-                  },
-                  "maxAttempts": {
-                    "type": "integer",
-                    "description": "Max attempts to enter the code.",
-                    "format": "int32",
-                    "minimum": -2147483648,
-                    "maximum": 2147483647
-                  }
-                },
-                "description": "If specified - app generates code and requires auth to be confirmed",
-                "x-order": "2102313733-1"
-              }
-            },
-            "description": "Authentication implementation config",
-            "x-order": "658063406-0",
-            "x-super": "#/components/schemas/AuthCfg"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "requiresAuth": {
-                "description": "If this is not null, app forbids to add this auth until listed auth enabled.\n- if this a string -> require specified auth to be enabled before this.\n- array of strings -> require any of listed auths to be enabled\n- array of arrays of strings -> works as `[ [ \"auth1\" and \"auth2\" ] or [ \"auth1\" and \"auth2\" ] ]`",
-                "x-nullable": true,
-                "oneOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "array",
-                    "items": {
-                      "oneOf": [
-                        {
-                          "type": "string"
-                        },
-                        {
-                          "type": "array",
-                          "items": {
-                            "type": "string"
-                          }
-                        }
-                      ]
-                    }
-                  }
-                ]
-              },
-              "skipOnFail": {
-                "type": "boolean",
-                "description": "When this is set to true app will attempt next auth in case of error on current.\nIt's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be\nexecuted only when IP auth is failed.\nIf set to false any error on this auth will stop the whole request execution."
-              },
-              "rateLimiter": {
-                "type": "string",
-                "description": "Apply rate limiter for this auth.",
-                "x-nullable": true
-              },
-              "burnQuota": {
-                "type": "number",
-                "description": "Every auth execution will burn this amount of quota. Takes place only when rate limiter is specified",
-                "format": "double",
-                "minimum": -1.7976931348623157e+308,
-                "maximum": 1.7976931348623157e+308
-              }
-            },
-            "x-order": "791325901-2",
-            "x-super": "#/components/schemas/BuiltInAuthCfg"
-          },
-          {
-            "required": [
-              "sender",
-              "server"
-            ],
-            "type": "object",
-            "properties": {
-              "requiresAuth": {
-                "description": "If this is not null, app forbids to add this auth until listed auth enabled.\n- if this a string -> require specified auth to be enabled before this.\n- array of strings -> require any of listed auths to be enabled\n- array of arrays of strings -> works as `[ [ \"auth1\" and \"auth2\" ] or [ \"auth1\" and \"auth2\" ] ]`",
-                "x-nullable": true,
-                "oneOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "array",
-                    "items": {
-                      "oneOf": [
-                        {
-                          "type": "string"
-                        },
-                        {
-                          "type": "array",
-                          "items": {
-                            "type": "string"
-                          }
-                        }
-                      ]
-                    }
-                  }
-                ]
-              },
-              "skipOnFail": {
-                "type": "boolean",
-                "description": "When this is set to true app will attempt next auth in case of error on current.\nIt's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be\nexecuted only when IP auth is failed.\nIf set to false any error on this auth will stop the whole request execution."
-              },
-              "rateLimiter": {
-                "type": "string",
-                "description": "Apply rate limiter for this auth.",
-                "x-nullable": true
-              },
-              "burnQuota": {
-                "type": "number",
-                "description": "Every auth execution will burn this amount of quota. Takes place only when rate limiter is specified",
-                "format": "double",
-                "minimum": -1.7976931348623157e+308,
-                "maximum": 1.7976931348623157e+308
-              },
-              "server": {
-                "type": "string",
-                "description": "Email server address/IP."
-              },
-              "sender": {
-                "type": "string",
-                "description": "Email address of sender."
-              },
-              "username": {
-                "type": "string",
-                "description": "SMTP username.",
-                "x-nullable": true
-              },
-              "password": {
-                "type": "string",
-                "description": "SMTP password.",
-                "x-nullable": true
-              },
-              "confirmationUrl": {
-                "type": "string",
-                "description": "If not null, server will create template param `confirmationUrl` that will contain query parameters with\nconfirmation code, session id, etc.",
-                "x-nullable": true
-              },
-              "templates": {
-                "type": "object",
-                "additionalProperties": {
-                  "type": "string",
-                  "x-additionalPropertiesName": "templateName"
-                },
-                "description": "List of email templates. Key - name of template (can be used lately on frontend), value - path to template.\nApp uses handlebars templates to generate emails. See docs here https://handlebarsjs.com\n\nEmail templates received `confirmationUrl`, `action`, `user`, `session`, `codeId`, `code`, `lang`, `headers`\nas template params, e.g. you can print user id as `{{ user.id }}`.\n\nTemplate engine also provides `i18n` helper for localisation. E.g. `{{i18n 'confirmationButton' default='Confirm'}}`\nsearches key `confirmationButton` in files specified by `i18n.dir` config.\n\nIt allows setting subject of email using `title` html tag, e.g. `<title>Email subject</title>`.\n\n"
-              },
-              "templateParams": {
-                "type": "object",
-                "additionalProperties": {
-                  "type": "string",
-                  "x-additionalPropertiesName": "paramName"
-                },
-                "description": "Additional params for template.\n"
-              },
-              "code": {
-                "type": "object",
-                "properties": {
-                  "length": {
-                    "type": "integer",
-                    "description": "Length of code to be generated",
-                    "format": "int32",
-                    "minimum": -2147483648,
-                    "maximum": 2147483647
-                  },
-                  "ttl": {
-                    "type": "string",
-                    "description": "Generated code lifetime. e.g. 1m, 60s, 1d, etc."
-                  },
-                  "alphabet": {
-                    "type": "string",
-                    "description": "Symbols used to generate a code. By default `a-z + A-Z + 0-9`."
-                  },
-                  "easyToRemember": {
-                    "type": "boolean",
-                    "description": "If true, every second letter will be the same, that allows the codes to rhyme."
-                  },
-                  "maxAttempts": {
-                    "type": "integer",
-                    "description": "Max attempts to enter the code.",
-                    "format": "int32",
-                    "minimum": -2147483648,
-                    "maximum": 2147483647
-                  }
-                },
-                "description": "If specified - app generates code and requires auth to be confirmed",
-                "x-order": "2102313733-1"
-              }
-            },
-            "x-order": "-701605246-6",
-            "x-super": "#/components/schemas/BuiltInAuthCfg"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "requiresAuth": {
-                "description": "If this is not null, app forbids to add this auth until listed auth enabled.\n- if this a string -> require specified auth to be enabled before this.\n- array of strings -> require any of listed auths to be enabled\n- array of arrays of strings -> works as `[ [ \"auth1\" and \"auth2\" ] or [ \"auth1\" and \"auth2\" ] ]`",
-                "x-nullable": true,
-                "oneOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "array",
-                    "items": {
-                      "oneOf": [
-                        {
-                          "type": "string"
-                        },
-                        {
-                          "type": "array",
-                          "items": {
-                            "type": "string"
-                          }
-                        }
-                      ]
-                    }
-                  }
-                ]
-              },
-              "skipOnFail": {
-                "type": "boolean",
-                "description": "When this is set to true app will attempt next auth in case of error on current.\nIt's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be\nexecuted only when IP auth is failed.\nIf set to false any error on this auth will stop the whole request execution."
-              },
-              "rateLimiter": {
-                "type": "string",
-                "description": "Apply rate limiter for this auth.",
-                "x-nullable": true
-              },
-              "burnQuota": {
-                "type": "number",
-                "description": "Every auth execution will burn this amount of quota. Takes place only when rate limiter is specified",
-                "format": "double",
-                "minimum": -1.7976931348623157e+308,
-                "maximum": 1.7976931348623157e+308
-              },
-              "ipBytesToIgnore": {
-                "type": "integer",
-                "description": "This allows to drop last bytes of IP. So it allows to authenticate factor when ip has rough match, e.g.\nthe same country, same city, or same internet provider.",
-                "format": "int32",
-                "minimum": -2147483648,
-                "maximum": 2147483647
-              },
-              "historySize": {
-                "type": "integer",
-                "description": "History of IP addresses user used to sign-in. Authenticated when user attempts to sign in with one of stored\nIPs.",
-                "format": "int32",
-                "minimum": -2147483648,
-                "maximum": 2147483647
-              }
-            },
-            "x-order": "2116983897-2",
-            "x-super": "#/components/schemas/BuiltInAuthCfg"
-          },
-          {
-            "required": [
-              "extractLogin"
-            ],
-            "type": "object",
-            "properties": {
-              "requiresAuth": {
-                "description": "If this is not null, app forbids to add this auth until listed auth enabled.\n- if this a string -> require specified auth to be enabled before this.\n- array of strings -> require any of listed auths to be enabled\n- array of arrays of strings -> works as `[ [ \"auth1\" and \"auth2\" ] or [ \"auth1\" and \"auth2\" ] ]`",
-                "x-nullable": true,
-                "oneOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "array",
-                    "items": {
-                      "oneOf": [
-                        {
-                          "type": "string"
-                        },
-                        {
-                          "type": "array",
-                          "items": {
-                            "type": "string"
-                          }
-                        }
-                      ]
-                    }
-                  }
-                ]
-              },
-              "skipOnFail": {
-                "type": "boolean",
-                "description": "When this is set to true app will attempt next auth in case of error on current.\nIt's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be\nexecuted only when IP auth is failed.\nIf set to false any error on this auth will stop the whole request execution."
-              },
-              "rateLimiter": {
-                "type": "string",
-                "description": "Apply rate limiter for this auth.",
-                "x-nullable": true
-              },
-              "burnQuota": {
-                "type": "number",
-                "description": "Every auth execution will burn this amount of quota. Takes place only when rate limiter is specified",
-                "format": "double",
-                "minimum": -1.7976931348623157e+308,
-                "maximum": 1.7976931348623157e+308
-              },
-              "extractLogin": {
-                "type": "string",
-                "description": "Path for login in id-token or user-info endpoint response.\ne.g. `res.user.id` extracts user login from `{ \"res\": { \"user\": { \"id\": \"...\" } } }`"
-              },
-              "tokenUrl": {
-                "type": "string",
-                "description": "Url to get access token by authorisation code."
-              },
-              "clientId": {
-                "type": "string",
-                "description": "OAuth client id. Client must be registered on OAuth provider (e.g. facebook, google)"
-              },
-              "clientSecret": {
-                "type": "string",
-                "description": "OAuth client secret.",
-                "x-nullable": true
-              },
-              "userInfoUrl": {
-                "type": "string",
-                "description": "If access token provided in request, app tries to extract user id from user-info endpoint."
-              },
-              "sendTokenInQuery": {
-                "type": "string",
-                "description": "Send token in query param.",
-                "x-nullable": true
-              },
-              "sendTokenInHeader": {
-                "type": "boolean",
-                "description": "Send token in Authorisation header."
-              },
-              "extractPublicData": {
-                "type": "object",
-                "additionalProperties": {
-                  "type": "string"
-                },
-                "description": "Can fill public data by a response of user-info or id-token."
-              }
-            },
-            "x-order": "-51011121-4",
-            "x-super": "#/components/schemas/BuiltInAuthCfg"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "requiresAuth": {
-                "description": "If this is not null, app forbids to add this auth until listed auth enabled.\n- if this a string -> require specified auth to be enabled before this.\n- array of strings -> require any of listed auths to be enabled\n- array of arrays of strings -> works as `[ [ \"auth1\" and \"auth2\" ] or [ \"auth1\" and \"auth2\" ] ]`",
-                "x-nullable": true,
-                "oneOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "array",
-                    "items": {
-                      "oneOf": [
-                        {
-                          "type": "string"
-                        },
-                        {
-                          "type": "array",
-                          "items": {
-                            "type": "string"
-                          }
-                        }
-                      ]
-                    }
-                  }
-                ]
-              },
-              "skipOnFail": {
-                "type": "boolean",
-                "description": "When this is set to true app will attempt next auth in case of error on current.\nIt's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be\nexecuted only when IP auth is failed.\nIf set to false any error on this auth will stop the whole request execution."
-              },
-              "rateLimiter": {
-                "type": "string",
-                "description": "Apply rate limiter for this auth.",
-                "x-nullable": true
-              },
-              "burnQuota": {
-                "type": "number",
-                "description": "Every auth execution will burn this amount of quota. Takes place only when rate limiter is specified",
-                "format": "double",
-                "minimum": -1.7976931348623157e+308,
-                "maximum": 1.7976931348623157e+308
-              },
-              "maxLength": {
-                "type": "integer",
-                "description": "Max allowed Length of the password.",
-                "format": "int32",
-                "minimum": -2147483648,
-                "maximum": 2147483647
-              },
-              "minLength": {
-                "type": "integer",
-                "description": "Minimal length of password",
-                "format": "int32",
-                "minimum": -2147483648,
-                "maximum": 2147483647
-              },
-              "requireNumber": {
-                "type": "boolean",
-                "description": "Require password to contain at least one digit."
-              },
-              "requireSymbol": {
-                "type": "boolean",
-                "description": "Require password to contain at least one symbol e.g. @, !, &..."
-              },
-              "requireUpperCase": {
-                "type": "boolean",
-                "description": "This requires password to contain both lowercase and uppercase letters."
-              },
-              "forbidCommonPasswords": {
-                "type": "boolean",
-                "description": "Password will be checked against table 1,000,000 of most overused passwords."
-              },
-              "forbidLoginAsPassword": {
-                "type": "boolean",
-                "description": "Rejects passwords that match username, email, anything that used as a login according to logins config."
-              },
-              "forbidReusingPassword": {
-                "type": "object",
-                "properties": {
-                  "passwordHistorySize": {
-                    "type": "integer",
-                    "description": "Number of current user passwords to store in database.",
-                    "format": "int32",
-                    "minimum": -2147483648,
-                    "maximum": 2147483647
-                  },
-                  "passwordHistoryTtl": {
-                    "type": "string",
-                    "description": "Lifetime for the password. Accepts time string e.g. 1y, 3m, 2y 6m, etc."
-                  }
-                },
-                "description": "Forbids user to change password to the old one. Useful if you force user to change password regularly.",
-                "x-order": "378192899-2"
-              },
-              "strength": {
-                "type": "object",
-                "additionalProperties": {
-                  "x-additionalPropertiesName": "PASSWORD_STRENGTH",
-                  "type": "object",
-                  "properties": {
-                    "minLength": {
-                      "type": "integer",
-                      "description": "Minimal length of password",
-                      "format": "int32",
-                      "minimum": -2147483648,
-                      "maximum": 2147483647
+              {
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "string"
                     },
-                    "requireNumber": {
-                      "type": "boolean",
-                      "description": "Require password to contain at least one digit."
-                    },
-                    "requireSymbol": {
-                      "type": "boolean",
-                      "description": "Require password to contain at least one symbol e.g. @, !, &..."
-                    },
-                    "requireUpperCase": {
-                      "type": "boolean",
-                      "description": "This requires password to contain both lowercase and uppercase letters."
-                    },
-                    "forbidCommonPasswords": {
-                      "type": "boolean",
-                      "description": "Password will be checked against table 1,000,000 of most overused passwords."
-                    },
-                    "forbidLoginAsPassword": {
-                      "type": "boolean",
-                      "description": "Rejects passwords that match username, email, anything that used as a login according to logins config."
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
                     }
-                  },
-                  "description": "Requirements for password",
-                  "x-order": "-266447761-7"
-                },
-                "description": "Allows to calculate password strength based on mentioned criteria. Requirements will be checked one by one\nuntil first failed.\n"
+                  ]
+                }
               }
-            },
-            "description": "Password authentication. To enable this auth set auth name to \"password\" or use \"builtin\": \"password\" param.",
-            "x-order": "-266447761-6",
-            "x-super": "#/components/schemas/BuiltInAuthCfg"
+            ]
           },
-          {
-            "type": "object",
-            "properties": {
-              "requiresAuth": {
-                "description": "If this is not null, app forbids to add this auth until listed auth enabled.\n- if this a string -> require specified auth to be enabled before this.\n- array of strings -> require any of listed auths to be enabled\n- array of arrays of strings -> works as `[ [ \"auth1\" and \"auth2\" ] or [ \"auth1\" and \"auth2\" ] ]`",
-                "x-nullable": true,
-                "oneOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "array",
-                    "items": {
-                      "oneOf": [
-                        {
-                          "type": "string"
-                        },
-                        {
-                          "type": "array",
-                          "items": {
-                            "type": "string"
-                          }
-                        }
-                      ]
-                    }
-                  }
-                ]
-              },
-              "skipOnFail": {
-                "type": "boolean",
-                "description": "When this is set to true app will attempt next auth in case of error on current.\nIt's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be\nexecuted only when IP auth is failed.\nIf set to false any error on this auth will stop the whole request execution."
-              },
-              "rateLimiter": {
-                "type": "string",
-                "description": "Apply rate limiter for this auth.",
-                "x-nullable": true
-              },
-              "burnQuota": {
-                "type": "number",
-                "description": "Every auth execution will burn this amount of quota. Takes place only when rate limiter is specified",
-                "format": "double",
-                "minimum": -1.7976931348623157e+308,
-                "maximum": 1.7976931348623157e+308
-              },
-              "lowercase": {
-                "type": "boolean",
-                "description": "Transform user answer to lowercase letters. This allows user still pass a check when he wrote name or city\nwith different cases. `false` means strict match, so \"John\" != \"john\""
-              },
-              "removeSymbols": {
-                "type": "boolean",
-                "description": "Remove all non-letters from user answer."
-              },
-              "removeSpaces": {
-                "type": "boolean",
-                "description": "Remove all spaces from user answer."
-              },
-              "minLength": {
-                "type": "integer",
-                "description": "Min length of answer. Length are checked after all answer transformation.",
-                "format": "int32",
-                "minimum": -2147483648,
-                "maximum": 2147483647
-              },
-              "maxLength": {
-                "type": "integer",
-                "description": "Max length of answer.",
-                "format": "int32",
-                "minimum": -2147483648,
-                "maximum": 2147483647
-              },
-              "answersRequired": {
-                "type": "integer",
-                "description": "Min number of answers required to pass this check.",
-                "format": "int32",
-                "minimum": -2147483648,
-                "maximum": 2147483647
-              },
-              "maxAnswers": {
-                "type": "integer",
-                "description": "Max answers that user can save.",
-                "format": "int32",
-                "minimum": -2147483648,
-                "maximum": 2147483647
-              }
-            },
-            "x-order": "131730481-5",
-            "x-super": "#/components/schemas/BuiltInAuthCfg"
+          "skipOnFail": {
+            "type": "boolean",
+            "description": "When this is set to true app will attempt next auth in case of error on current.\nIt's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be\nexecuted only when IP auth is failed.\nIf set to false any error on this auth will stop the whole request execution."
+          },
+          "rateLimiter": {
+            "type": "string",
+            "description": "Apply rate limiter for this auth.",
+            "x-nullable": true
+          },
+          "burnQuota": {
+            "type": "number",
+            "description": "Every auth execution will burn this amount of quota. Takes place only when rate limiter is specified",
+            "format": "double",
+            "minimum": -1.7976931348623157e+308,
+            "maximum": 1.7976931348623157e+308
           }
-        ],
-        "x-additionalPropertiesName": "auth"
+        },
+        "description": "Authentication implementation config",
+        "x-order": "2102313733-0"
       },
       "description": "List of auth names and auth configs\n\nTo use builtin auths (not a plugin or remote) follow the example: `\"password\": { ... }` or\n`\"anyAuthName\": { \"builtin\": \"password\", ... }`\n"
     },
@@ -760,20 +149,25 @@
             ]
           },
           "accessToken": {
-            "type": "object",
-            "properties": {
-              "ttl": {
-                "type": "string",
-                "description": "Override access token ttl",
-                "x-nullable": true
-              },
-              "cache": {
-                "type": "boolean",
-                "description": "Enable or disable client-side caching of access token",
-                "x-nullable": true
+            "description": "Override access token lifetime for sessions of this entry.",
+            "allOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "ttl": {
+                    "type": "string",
+                    "description": "Override access token ttl",
+                    "x-nullable": true
+                  },
+                  "cache": {
+                    "type": "boolean",
+                    "description": "Enable or disable client-side caching of access token",
+                    "x-nullable": true
+                  }
+                },
+                "x-order": "-842539141-1"
               }
-            },
-            "x-order": "-842539141-1"
+            ]
           },
           "ttl": {
             "type": "string",
@@ -800,538 +194,28 @@
       "properties": {
         "user": {
           "description": "User database config",
-          "anyOf": [
+          "allOf": [
             {
               "type": "object",
-              "properties": {
-                "inMemory": {
-                  "type": "boolean"
-                }
-              },
-              "x-order": "1129812999-3",
-              "x-super": "#/components/schemas/DbCfg"
-            },
-            {
-              "type": "object",
-              "properties": {
-                "inToken": {
-                  "type": "boolean"
-                }
-              },
-              "x-order": "-291817267-1",
-              "x-super": "#/components/schemas/DbCfg"
-            },
-            {
-              "required": [
-                "database",
-                "mongodb"
-              ],
-              "type": "object",
-              "properties": {
-                "mongodb": {
-                  "type": "string"
-                },
-                "database": {
-                  "type": "string"
-                }
-              },
-              "x-order": "-592385449-0",
-              "x-super": "#/components/schemas/DbCfg"
-            },
-            {
-              "type": "object",
-              "properties": {
-                "redis": {
-                  "oneOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    }
-                  ]
-                },
-                "cluster": {
-                  "type": "boolean"
-                },
-                "database": {
-                  "type": "integer",
-                  "format": "int32",
-                  "minimum": -2147483648,
-                  "maximum": 2147483647
-                },
-                "user": {
-                  "type": "string",
-                  "x-nullable": true
-                },
-                "password": {
-                  "type": "string",
-                  "x-nullable": true
-                },
-                "ssl": {
-                  "type": "boolean"
-                },
-                "maxConnections": {
-                  "type": "integer",
-                  "format": "int32",
-                  "minimum": -2147483648,
-                  "maximum": 2147483647
-                }
-              },
-              "x-order": "-2007275575-0",
-              "x-super": "#/components/schemas/DbCfg"
-            },
-            {
-              "required": [
-                "remote"
-              ],
-              "type": "object",
-              "properties": {
-                "remote": {
-                  "type": "string"
-                },
-                "query": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "string"
-                  }
-                },
-                "headers": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "string"
-                  }
-                }
-              },
-              "x-order": "842893688-0",
-              "x-super": "#/components/schemas/DbCfg"
-            },
-            {
-              "type": "object",
-              "properties": {
-                "mysql": {
-                  "type": "string"
-                },
-                "username": {
-                  "type": "string"
-                },
-                "maxConnections": {
-                  "type": "integer",
-                  "format": "int32",
-                  "minimum": -2147483648,
-                  "maximum": 2147483647
-                },
-                "password": {
-                  "type": "string"
-                }
-              },
-              "x-order": "-577347408-2",
-              "x-super": "#/components/schemas/JdbcCfg"
-            },
-            {
-              "type": "object",
-              "properties": {
-                "postgres": {
-                  "type": "string"
-                },
-                "username": {
-                  "type": "string"
-                },
-                "maxConnections": {
-                  "type": "integer",
-                  "format": "int32",
-                  "minimum": -2147483648,
-                  "maximum": 2147483647
-                },
-                "password": {
-                  "type": "string"
-                }
-              },
-              "x-order": "893841315-2",
-              "x-super": "#/components/schemas/JdbcCfg"
-            },
-            {
-              "type": "object",
-              "properties": {
-                "username": {
-                  "type": "string"
-                },
-                "password": {
-                  "type": "string"
-                },
-                "maxConnections": {
-                  "type": "integer",
-                  "format": "int32",
-                  "minimum": -2147483648,
-                  "maximum": 2147483647
-                },
-                "sqlite": {
-                  "type": "string"
-                }
-              },
-              "x-order": "-1872929936-3",
-              "x-super": "#/components/schemas/JdbcCfg"
+              "x-order": "-1580107990-0"
             }
           ]
         },
         "session": {
           "description": "Session database config.\n\nIf you aren't using cluster, prefer in-memory database.\n\nYou can use in-token to not use database at all. Use it with `token.access.cacheUnauthenticated = true` and\n`token.access.cache != null` values.",
-          "anyOf": [
+          "allOf": [
             {
               "type": "object",
-              "properties": {
-                "inMemory": {
-                  "type": "boolean"
-                }
-              },
-              "x-order": "1129812999-3",
-              "x-super": "#/components/schemas/DbCfg"
-            },
-            {
-              "type": "object",
-              "properties": {
-                "inToken": {
-                  "type": "boolean"
-                }
-              },
-              "x-order": "-291817267-1",
-              "x-super": "#/components/schemas/DbCfg"
-            },
-            {
-              "required": [
-                "database",
-                "mongodb"
-              ],
-              "type": "object",
-              "properties": {
-                "mongodb": {
-                  "type": "string"
-                },
-                "database": {
-                  "type": "string"
-                }
-              },
-              "x-order": "-592385449-0",
-              "x-super": "#/components/schemas/DbCfg"
-            },
-            {
-              "type": "object",
-              "properties": {
-                "redis": {
-                  "oneOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    }
-                  ]
-                },
-                "cluster": {
-                  "type": "boolean"
-                },
-                "database": {
-                  "type": "integer",
-                  "format": "int32",
-                  "minimum": -2147483648,
-                  "maximum": 2147483647
-                },
-                "user": {
-                  "type": "string",
-                  "x-nullable": true
-                },
-                "password": {
-                  "type": "string",
-                  "x-nullable": true
-                },
-                "ssl": {
-                  "type": "boolean"
-                },
-                "maxConnections": {
-                  "type": "integer",
-                  "format": "int32",
-                  "minimum": -2147483648,
-                  "maximum": 2147483647
-                }
-              },
-              "x-order": "-2007275575-0",
-              "x-super": "#/components/schemas/DbCfg"
-            },
-            {
-              "required": [
-                "remote"
-              ],
-              "type": "object",
-              "properties": {
-                "remote": {
-                  "type": "string"
-                },
-                "query": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "string"
-                  }
-                },
-                "headers": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "string"
-                  }
-                }
-              },
-              "x-order": "842893688-0",
-              "x-super": "#/components/schemas/DbCfg"
-            },
-            {
-              "type": "object",
-              "properties": {
-                "mysql": {
-                  "type": "string"
-                },
-                "username": {
-                  "type": "string"
-                },
-                "maxConnections": {
-                  "type": "integer",
-                  "format": "int32",
-                  "minimum": -2147483648,
-                  "maximum": 2147483647
-                },
-                "password": {
-                  "type": "string"
-                }
-              },
-              "x-order": "-577347408-2",
-              "x-super": "#/components/schemas/JdbcCfg"
-            },
-            {
-              "type": "object",
-              "properties": {
-                "postgres": {
-                  "type": "string"
-                },
-                "username": {
-                  "type": "string"
-                },
-                "maxConnections": {
-                  "type": "integer",
-                  "format": "int32",
-                  "minimum": -2147483648,
-                  "maximum": 2147483647
-                },
-                "password": {
-                  "type": "string"
-                }
-              },
-              "x-order": "893841315-2",
-              "x-super": "#/components/schemas/JdbcCfg"
-            },
-            {
-              "type": "object",
-              "properties": {
-                "username": {
-                  "type": "string"
-                },
-                "password": {
-                  "type": "string"
-                },
-                "maxConnections": {
-                  "type": "integer",
-                  "format": "int32",
-                  "minimum": -2147483648,
-                  "maximum": 2147483647
-                },
-                "sqlite": {
-                  "type": "string"
-                }
-              },
-              "x-order": "-1872929936-3",
-              "x-super": "#/components/schemas/JdbcCfg"
+              "x-order": "-1580107990-0"
             }
           ]
         },
         "rateLimiter": {
           "description": "Database for rate-limiters. If you don't use rate-limiter leave this empty (`{}`).",
-          "anyOf": [
+          "allOf": [
             {
               "type": "object",
-              "properties": {
-                "inMemory": {
-                  "type": "boolean"
-                }
-              },
-              "x-order": "1129812999-3",
-              "x-super": "#/components/schemas/DbCfg"
-            },
-            {
-              "type": "object",
-              "properties": {
-                "inToken": {
-                  "type": "boolean"
-                }
-              },
-              "x-order": "-291817267-1",
-              "x-super": "#/components/schemas/DbCfg"
-            },
-            {
-              "required": [
-                "database",
-                "mongodb"
-              ],
-              "type": "object",
-              "properties": {
-                "mongodb": {
-                  "type": "string"
-                },
-                "database": {
-                  "type": "string"
-                }
-              },
-              "x-order": "-592385449-0",
-              "x-super": "#/components/schemas/DbCfg"
-            },
-            {
-              "type": "object",
-              "properties": {
-                "redis": {
-                  "oneOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    }
-                  ]
-                },
-                "cluster": {
-                  "type": "boolean"
-                },
-                "database": {
-                  "type": "integer",
-                  "format": "int32",
-                  "minimum": -2147483648,
-                  "maximum": 2147483647
-                },
-                "user": {
-                  "type": "string",
-                  "x-nullable": true
-                },
-                "password": {
-                  "type": "string",
-                  "x-nullable": true
-                },
-                "ssl": {
-                  "type": "boolean"
-                },
-                "maxConnections": {
-                  "type": "integer",
-                  "format": "int32",
-                  "minimum": -2147483648,
-                  "maximum": 2147483647
-                }
-              },
-              "x-order": "-2007275575-0",
-              "x-super": "#/components/schemas/DbCfg"
-            },
-            {
-              "required": [
-                "remote"
-              ],
-              "type": "object",
-              "properties": {
-                "remote": {
-                  "type": "string"
-                },
-                "query": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "string"
-                  }
-                },
-                "headers": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "string"
-                  }
-                }
-              },
-              "x-order": "842893688-0",
-              "x-super": "#/components/schemas/DbCfg"
-            },
-            {
-              "type": "object",
-              "properties": {
-                "mysql": {
-                  "type": "string"
-                },
-                "username": {
-                  "type": "string"
-                },
-                "maxConnections": {
-                  "type": "integer",
-                  "format": "int32",
-                  "minimum": -2147483648,
-                  "maximum": 2147483647
-                },
-                "password": {
-                  "type": "string"
-                }
-              },
-              "x-order": "-577347408-2",
-              "x-super": "#/components/schemas/JdbcCfg"
-            },
-            {
-              "type": "object",
-              "properties": {
-                "postgres": {
-                  "type": "string"
-                },
-                "username": {
-                  "type": "string"
-                },
-                "maxConnections": {
-                  "type": "integer",
-                  "format": "int32",
-                  "minimum": -2147483648,
-                  "maximum": 2147483647
-                },
-                "password": {
-                  "type": "string"
-                }
-              },
-              "x-order": "893841315-2",
-              "x-super": "#/components/schemas/JdbcCfg"
-            },
-            {
-              "type": "object",
-              "properties": {
-                "username": {
-                  "type": "string"
-                },
-                "password": {
-                  "type": "string"
-                },
-                "maxConnections": {
-                  "type": "integer",
-                  "format": "int32",
-                  "minimum": -2147483648,
-                  "maximum": 2147483647
-                },
-                "sqlite": {
-                  "type": "string"
-                }
-              },
-              "x-order": "-1872929936-3",
-              "x-super": "#/components/schemas/JdbcCfg"
+              "x-order": "-1580107990-0"
             }
           ]
         }
@@ -1350,11 +234,17 @@
               "description": "Send token in `access_token` cookie"
             },
             "cache": {
-              "type": "string",
-              "enum": [
-                "JWT",
-                "BINARY"
-              ]
+              "description": "If not null - access token contains signed session data, so it's not required to request session database for\naccess check.",
+              "allOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "JWT",
+                    "BINARY"
+                  ]
+                }
+              ],
+              "x-nullable": true
             },
             "cacheUnauthenticated": {
               "type": "boolean",
@@ -1441,7 +331,7 @@
     },
     "secret": {
       "type": "string",
-      "description": "THe key that app uses for RSA certificate generation used for token signature.\nIf `null` - app will generate secret automatically during startup."
+      "description": "The key that app uses for RSA certificate generation used for token signature.\nIf `null` - app will generate secret automatically during startup."
     },
     "healthCheckKey": {
       "type": "string",

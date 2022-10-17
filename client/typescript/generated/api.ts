@@ -3515,7 +3515,7 @@ export interface SHAppCfg {
      */
     'rateLimiters'?: { [key: string]: RateLimiterCfg; };
     /**
-     * THe key that app uses for RSA certificate generation used for token signature. If `null` - app will generate secret automatically during startup.
+     * The key that app uses for RSA certificate generation used for token signature. If `null` - app will generate secret automatically during startup.
      * @type {string}
      * @memberof SHAppCfg
      */

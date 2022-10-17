@@ -1,0 +1,44 @@
+import { AuthenticateReq, AuthenticateRes, AuthorizeReq, AuthorizeRes, Configuration, ConfirmSessionAuthsReq, Device, FindSessionsRes, LoginId, NewSessionReq, NextFactor, RefreshTokenRes, Session as SessionModel, Tokens, UnconfirmedAuth } from '../generated';
+import { UserSvc } from './user';
+import { ServerSvc } from './server';
+import { AxiosRequestConfig } from 'axios';
+import { RateLimiterSvc } from './rate-limiter';
+import { Kntrl } from '../index';
+export declare class Session implements SessionModel {
+    private kntrl;
+    private newSessionReq;
+    readonly tokens: Tokens | undefined;
+    readonly id: string;
+    readonly entry: string;
+    readonly identifiedBy: Array<LoginId>;
+    readonly authenticatedBy: Record<string, string>;
+    readonly userId: string | undefined;
+    readonly unconfirmedAuths: Record<string, UnconfirmedAuth>;
+    readonly nextFactors: Array<NextFactor>;
+    readonly signedInAt: number;
+    readonly expiresAt: number;
+    readonly newUser: boolean;
+    readonly authenticated: boolean;
+    readonly device: Device;
+    readonly refreshedAt: number;
+    readonly systemAccess: boolean;
+    private readonly api;
+    constructor(kntrl: Kntrl, newSessionReq: Omit<NewSessionReq, keyof AuthenticateReq> | undefined, tokens?: Tokens | undefined, id?: string, entry?: string, identifiedBy?: Array<LoginId>, authenticatedBy?: Record<string, string>, userId?: string | undefined, unconfirmedAuths?: Record<string, UnconfirmedAuth>, nextFactors?: Array<NextFactor>, signedInAt?: number, expiresAt?: number, newUser?: boolean, authenticated?: boolean, device?: Device, refreshedAt?: number, systemAccess?: boolean);
+    get(): Promise<SessionModel>;
+    authenticate(req?: AuthenticateReq): Promise<AuthenticateRes>;
+    confirmAuth(req: ConfirmSessionAuthsReq): Promise<AuthenticateRes>;
+    signOut(): Promise<void>;
+    refreshAccessToken(refreshToken?: string, errOnMissingToken?: any): Promise<RefreshTokenRes>;
+    newSession(req: {
+        entry: string;
+    }): Session;
+    allSessions(entry?: string, userId?: string): Promise<FindSessionsRes>;
+    authorize(req?: AuthorizeReq): Promise<AuthorizeRes>;
+    accessToken(refreshBeforeExpireMs?: number): Promise<string | undefined>;
+    _authenticatedAxiosCfg(): Promise<AxiosRequestConfig>;
+    _serverCfg(): Configuration;
+    user: UserSvc;
+    server: ServerSvc;
+    rateLimiter: RateLimiterSvc;
+    private update;
+}

@@ -17,14 +17,13 @@ class Example03 {
         AuthenticateRes signUpRes = signUpSession.authenticate(
                 new Session.AuthReqs().req("password", new Session.AuthReq()
                         .password("Abcdef1@")
-                        .confirmPassword("Abcdef1@")),
+                        .confirmPassword("Abcdef1@"))
 
 //                Confirm password field is not required
 //                new Session.AuthReqs().req("password", new Session.AuthReq().password("Abcdef1@")),
 
 //                Password can be generated automatically
 //                new Session.AuthReqs().req("password", new Session.AuthReq()),
-                null
         );
         System.out.println(
                 signUpRes.getAuthRes().get("password").getResData().getPassword() + " - " +
@@ -39,8 +38,7 @@ class Example03 {
                 false
         );
         AuthenticateRes signInRes = signInSession.authenticate(
-                new Session.AuthReqs().req("password", new Session.AuthReq().password("1234")),
-                null
+                new Session.AuthReqs().req("password", new Session.AuthReq().password("1234"))
         );
         AuthExecRes passwordAuthRes = signInRes.getAuthRes().get("password");
         if (passwordAuthRes.getStatus() != AuthExecRes.StatusEnum.OK) {

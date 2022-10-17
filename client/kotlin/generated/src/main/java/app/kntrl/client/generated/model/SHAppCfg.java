@@ -307,11 +307,11 @@ public class SHAppCfg {
   }
 
    /**
-   * THe key that app uses for RSA certificate generation used for token signature. If &#x60;null&#x60; - app will generate secret automatically during startup.
+   * The key that app uses for RSA certificate generation used for token signature. If &#x60;null&#x60; - app will generate secret automatically during startup.
    * @return secret
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "THe key that app uses for RSA certificate generation used for token signature. If `null` - app will generate secret automatically during startup.")
+  @ApiModelProperty(value = "The key that app uses for RSA certificate generation used for token signature. If `null` - app will generate secret automatically during startup.")
 
   public String getSecret() {
     return secret;

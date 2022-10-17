@@ -1,8 +1,7 @@
 openapi: 3.0.1
 info:
   title: Kntrl API
-  description: siski
-  version: "1.0"
+  version: "0.9"
   x-logo:
     url: ./logo.png
 tags:
@@ -224,6 +223,10 @@ paths:
       tags:
       - user
       summary: Save user
+      description: |
+        Saves users.
+        Be careful with order. To avoid potential "duplicated entry" problem, remove operation goes firs,
+        then update, then insert.
       operationId: saveUser
       requestBody:
         content:
@@ -1223,9 +1226,9 @@ components:
         unconfirmedAuths:
           type: object
           additionalProperties:
-            x-additionalPropertiesName: auth
             anyOf:
             - $ref: '#/components/schemas/UnconfirmedAuth'
+            x-additionalPropertiesName: auth
           description: |
             Auths that waiting for confirmation
         nextFactors:
@@ -1260,9 +1263,13 @@ components:
       type: object
       properties:
         access:
-          $ref: '#/components/schemas/AccessToken'
+          description: Access token for authentication
+          allOf:
+          - $ref: '#/components/schemas/AccessToken'
         refresh:
-          $ref: '#/components/schemas/RefreshToken'
+          description: Refresh token for obtaining new access token
+          allOf:
+          - $ref: '#/components/schemas/RefreshToken'
         accessTokenExpiresAt:
           type: integer
           format: int64
@@ -1309,9 +1316,9 @@ components:
         auth:
           type: object
           additionalProperties:
-            x-additionalPropertiesName: auth
             anyOf:
             - $ref: '#/components/schemas/HealthStatusRes'
+            x-additionalPropertiesName: auth
         status:
           $ref: '#/components/schemas/HealthStatus'
         msg:
@@ -1341,11 +1348,16 @@ components:
       type: object
       properties:
         public:
-          $ref: '#/components/schemas/json'
+          description: Data that are available for API.
+          allOf:
+          - $ref: '#/components/schemas/json'
         login:
           type: string
+          description: |-
+            If authenticator supports identification, it provides login here. This can be email, phone number,
+            facebook account id, etc.
           x-nullable: true
-      x-order: 332570507-3
+      x-order: 332570507-4
     AuthExecRes:
       required:
       - status
@@ -1401,7 +1413,8 @@ components:
         authRes:
           type: object
           additionalProperties:
-            $ref: '#/components/schemas/AuthExecRes'
+            anyOf:
+            - $ref: '#/components/schemas/AuthExecRes'
             x-additionalPropertiesName: auth
       x-order: 2094520596-3
     Code:
@@ -1585,7 +1598,7 @@ components:
           $ref: '#/components/schemas/AuthData'
         code:
           $ref: '#/components/schemas/CodeVerifier'
-      x-order: 332570507-4
+      x-order: 332570507-5
     User:
       required:
       - auths
@@ -1608,9 +1621,9 @@ components:
         auths:
           type: object
           additionalProperties:
-            x-additionalPropertiesName: auth
             anyOf:
             - $ref: '#/components/schemas/AuthUserCfg'
+            x-additionalPropertiesName: auth
           description: |
             Public data of confirmed auths and sent codes for unconfirmed auths.
         factors:
@@ -1672,17 +1685,9 @@ components:
         authReqs:
           type: object
           additionalProperties:
-            x-additionalPropertiesName: auth
             anyOf:
-            - $ref: '#/components/schemas/AppSecretReq'
-            - $ref: '#/components/schemas/AuthReqDataJson'
-            - $ref: '#/components/schemas/EmailAuthenticateReq'
-            - $ref: '#/components/schemas/EmailUpdateReq'
-            - $ref: '#/components/schemas/OAuthReq'
-            - $ref: '#/components/schemas/PasswordAuthenticateReq'
-            - $ref: '#/components/schemas/PasswordUpdateReq'
-            - $ref: '#/components/schemas/QuestionsAuthenticateReq'
-            - $ref: '#/components/schemas/QuestionsUpdateReq'
+            - $ref: '#/components/schemas/AuthReqData'
+            x-additionalPropertiesName: auth
           description: |
             Request for authenticators
         dryRun:
@@ -1747,17 +1752,9 @@ components:
         authReqs:
           type: object
           additionalProperties:
-            x-additionalPropertiesName: auth
             anyOf:
-            - $ref: '#/components/schemas/AppSecretReq'
-            - $ref: '#/components/schemas/AuthReqDataJson'
-            - $ref: '#/components/schemas/EmailAuthenticateReq'
-            - $ref: '#/components/schemas/EmailUpdateReq'
-            - $ref: '#/components/schemas/OAuthReq'
-            - $ref: '#/components/schemas/PasswordAuthenticateReq'
-            - $ref: '#/components/schemas/PasswordUpdateReq'
-            - $ref: '#/components/schemas/QuestionsAuthenticateReq'
-            - $ref: '#/components/schemas/QuestionsUpdateReq'
+            - $ref: '#/components/schemas/AuthReqData'
+            x-additionalPropertiesName: auth
           description: |
             Request for authenticators
         signIn:
@@ -1883,6 +1880,7 @@ components:
             $ref: '#/components/schemas/Session'
         tooManySessions:
           type: boolean
+          description: True if number of sessions in database exceeds some limit
       x-order: 400707106-4
     SaveUserRes:
       required:
@@ -1940,17 +1938,9 @@ components:
           authReqs:
             type: object
             additionalProperties:
-              x-additionalPropertiesName: auth
               anyOf:
-              - $ref: '#/components/schemas/AppSecretReq'
-              - $ref: '#/components/schemas/AuthReqDataJson'
-              - $ref: '#/components/schemas/EmailAuthenticateReq'
-              - $ref: '#/components/schemas/EmailUpdateReq'
-              - $ref: '#/components/schemas/OAuthReq'
-              - $ref: '#/components/schemas/PasswordAuthenticateReq'
-              - $ref: '#/components/schemas/PasswordUpdateReq'
-              - $ref: '#/components/schemas/QuestionsAuthenticateReq'
-              - $ref: '#/components/schemas/QuestionsUpdateReq'
+              - $ref: '#/components/schemas/AuthReqData'
+              x-additionalPropertiesName: auth
           dryRun:
             type: boolean
           systemAccess:
@@ -1976,17 +1966,9 @@ components:
         authReqs:
           type: object
           additionalProperties:
-            x-additionalPropertiesName: auth
             anyOf:
-            - $ref: '#/components/schemas/AppSecretReq'
-            - $ref: '#/components/schemas/AuthReqDataJson'
-            - $ref: '#/components/schemas/EmailAuthenticateReq'
-            - $ref: '#/components/schemas/EmailUpdateReq'
-            - $ref: '#/components/schemas/OAuthReq'
-            - $ref: '#/components/schemas/PasswordAuthenticateReq'
-            - $ref: '#/components/schemas/PasswordUpdateReq'
-            - $ref: '#/components/schemas/QuestionsAuthenticateReq'
-            - $ref: '#/components/schemas/QuestionsUpdateReq'
+            - $ref: '#/components/schemas/AuthReqData'
+            x-additionalPropertiesName: auth
         dryRun:
           type: boolean
       x-order: -1847312442-1
@@ -2021,7 +2003,12 @@ components:
           type: boolean
           description: Send token in `access_token` cookie
         cache:
-          $ref: '#/components/schemas/Cache'
+          description: |-
+            If not null - access token contains signed session data, so it's not required to request session database for
+            access check.
+          allOf:
+          - $ref: '#/components/schemas/Cache'
+          x-nullable: true
         cacheUnauthenticated:
           type: boolean
           description: "By default, unauthenticated sessions can't be cached."
@@ -2164,15 +2151,8 @@ components:
       properties:
         user:
           description: User database config
-          anyOf:
-          - $ref: '#/components/schemas/InMemoryCfg'
-          - $ref: '#/components/schemas/InTokenCfg'
-          - $ref: '#/components/schemas/MongoCfg'
-          - $ref: '#/components/schemas/RedisCfg'
-          - $ref: '#/components/schemas/RemoteDbCfg'
-          - $ref: '#/components/schemas/MysqlCfg'
-          - $ref: '#/components/schemas/PostgresCfg'
-          - $ref: '#/components/schemas/SqliteCfg'
+          allOf:
+          - $ref: '#/components/schemas/DbCfg'
         session:
           description: |-
             Session database config.
@@ -2181,27 +2161,13 @@ components:
 
             You can use in-token to not use database at all. Use it with `token.access.cacheUnauthenticated = true` and
             `token.access.cache != null` values.
-          anyOf:
-          - $ref: '#/components/schemas/InMemoryCfg'
-          - $ref: '#/components/schemas/InTokenCfg'
-          - $ref: '#/components/schemas/MongoCfg'
-          - $ref: '#/components/schemas/RedisCfg'
-          - $ref: '#/components/schemas/RemoteDbCfg'
-          - $ref: '#/components/schemas/MysqlCfg'
-          - $ref: '#/components/schemas/PostgresCfg'
-          - $ref: '#/components/schemas/SqliteCfg'
+          allOf:
+          - $ref: '#/components/schemas/DbCfg'
         rateLimiter:
           description: "Database for rate-limiters. If you don't use rate-limiter\
             \ leave this empty (`{}`)."
-          anyOf:
-          - $ref: '#/components/schemas/InMemoryCfg'
-          - $ref: '#/components/schemas/InTokenCfg'
-          - $ref: '#/components/schemas/MongoCfg'
-          - $ref: '#/components/schemas/RedisCfg'
-          - $ref: '#/components/schemas/RemoteDbCfg'
-          - $ref: '#/components/schemas/MysqlCfg'
-          - $ref: '#/components/schemas/PostgresCfg'
-          - $ref: '#/components/schemas/SqliteCfg'
+          allOf:
+          - $ref: '#/components/schemas/DbCfg'
       description: Database connection configs
       x-order: -1723799702-3
     Duration:
@@ -2323,7 +2289,9 @@ components:
           items:
             type: string
         accessToken:
-          $ref: '#/components/schemas/EntryAccessTokenCfg'
+          description: Override access token lifetime for sessions of this entry.
+          allOf:
+          - $ref: '#/components/schemas/EntryAccessTokenCfg'
         ttl:
           type: string
           description: |
@@ -2515,9 +2483,9 @@ components:
           strength:
             type: object
             additionalProperties:
-              x-additionalPropertiesName: PASSWORD_STRENGTH
               anyOf:
               - $ref: '#/components/schemas/PasswordStrengthRequirements'
+              x-additionalPropertiesName: PASSWORD_STRENGTH
             description: |
               Allows to calculate password strength based on mentioned criteria. Requirements will be checked one by one
               until first failed.
@@ -2802,15 +2770,9 @@ components:
         auths:
           type: object
           additionalProperties:
-            x-additionalPropertiesName: auth
             anyOf:
-            - $ref: '#/components/schemas/RemoteAuthCfg'
-            - $ref: '#/components/schemas/AppSecretAuthCfg'
-            - $ref: '#/components/schemas/EmailAuthCfg'
-            - $ref: '#/components/schemas/IpAuthCfg'
-            - $ref: '#/components/schemas/OAuthCfg'
-            - $ref: '#/components/schemas/PasswordAuthCfg'
-            - $ref: '#/components/schemas/QuestionsAuthCfg'
+            - $ref: '#/components/schemas/AuthCfg'
+            x-additionalPropertiesName: auth
           description: |
             List of auth names and auth configs
 
@@ -2824,9 +2786,9 @@ components:
         entries:
           type: object
           additionalProperties:
-            x-additionalPropertiesName: entry
             anyOf:
             - $ref: '#/components/schemas/EntryCfg'
+            x-additionalPropertiesName: entry
           description: |
             List of app entries. Entry usually represents UI used for signing in/up or additional authentication
             before action. E.g.:
@@ -2840,15 +2802,15 @@ components:
         rateLimiters:
           type: object
           additionalProperties:
-            x-additionalPropertiesName: rate-limiter id
             anyOf:
             - $ref: '#/components/schemas/RateLimiterCfg'
+            x-additionalPropertiesName: rate-limiter id
           description: |
             List of rate limiters
         secret:
           type: string
           description: |-
-            THe key that app uses for RSA certificate generation used for token signature.
+            The key that app uses for RSA certificate generation used for token signature.
             If `null` - app will generate secret automatically during startup.
         healthCheckKey:
           type: string
