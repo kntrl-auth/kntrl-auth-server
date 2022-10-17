@@ -1590,13 +1590,13 @@ components:
       type: object
       properties:
         access:
+          type: string
           description: Access token for authentication
-          allOf:
-          - $ref: '#/components/schemas/AccessToken'
+          x-super: '#/components/schemas/AccessToken'
         refresh:
+          type: string
           description: Refresh token for obtaining new access token
-          allOf:
-          - $ref: '#/components/schemas/RefreshToken'
+          x-super: '#/components/schemas/RefreshToken'
         accessTokenExpiresAt:
           type: integer
           format: int64
@@ -1674,9 +1674,9 @@ components:
       type: object
       properties:
         public:
+          type: object
           description: Data that are available for API.
-          allOf:
-          - $ref: '#/components/schemas/json'
+          x-super: '#/components/schemas/json'
         login:
           type: string
           description: |-
@@ -2079,8 +2079,45 @@ components:
         authReqs:
           type: object
           additionalProperties:
+            properties:
+              secret:
+                type: string
+              email:
+                type: string
+                description: New email to set.
+              template:
+                type: string
+                description: Template to use.
+                x-nullable: true
+              accessToken:
+                type: string
+                description: If you have access-token - put it here.
+                x-nullable: true
+              authorizationCode:
+                type: string
+                description: If you have authorisation-code - app will exchange it
+                  for access-token.
+                x-nullable: true
+              password:
+                type: string
+                description: New password to set. If null app generates password automatically.
+                x-nullable: true
+              confirmPassword:
+                type: string
+                description: Password confirmation. If null app doesn't perform this
+                  check.
+                x-nullable: true
+              answers:
+                type: object
+                additionalProperties:
+                  type: string
+                description: |
+                  Answers to save. `null` as value removes answer
+                example:
+                  HOME_CITY: London
+                  MOTHER_NAME: null
+            additionalProperties: true
             x-additionalPropertiesName: auth
-            $ref: '#/components/schemas/AuthReqData'
           description: |
             Request for authenticators
         dryRun:
@@ -2141,8 +2178,45 @@ components:
         authReqs:
           type: object
           additionalProperties:
+            properties:
+              secret:
+                type: string
+              email:
+                type: string
+                description: New email to set.
+              template:
+                type: string
+                description: Template to use.
+                x-nullable: true
+              accessToken:
+                type: string
+                description: If you have access-token - put it here.
+                x-nullable: true
+              authorizationCode:
+                type: string
+                description: If you have authorisation-code - app will exchange it
+                  for access-token.
+                x-nullable: true
+              password:
+                type: string
+                description: New password to set. If null app generates password automatically.
+                x-nullable: true
+              confirmPassword:
+                type: string
+                description: Password confirmation. If null app doesn't perform this
+                  check.
+                x-nullable: true
+              answers:
+                type: object
+                additionalProperties:
+                  type: string
+                description: |
+                  Answers to save. `null` as value removes answer
+                example:
+                  HOME_CITY: London
+                  MOTHER_NAME: null
+            additionalProperties: true
             x-additionalPropertiesName: auth
-            $ref: '#/components/schemas/AuthReqData'
           description: |
             Request for authenticators
         signIn:
@@ -2312,8 +2386,45 @@ components:
         authReqs:
           type: object
           additionalProperties:
+            properties:
+              secret:
+                type: string
+              email:
+                type: string
+                description: New email to set.
+              template:
+                type: string
+                description: Template to use.
+                x-nullable: true
+              accessToken:
+                type: string
+                description: If you have access-token - put it here.
+                x-nullable: true
+              authorizationCode:
+                type: string
+                description: If you have authorisation-code - app will exchange it
+                  for access-token.
+                x-nullable: true
+              password:
+                type: string
+                description: New password to set. If null app generates password automatically.
+                x-nullable: true
+              confirmPassword:
+                type: string
+                description: Password confirmation. If null app doesn't perform this
+                  check.
+                x-nullable: true
+              answers:
+                type: object
+                additionalProperties:
+                  type: string
+                description: |
+                  Answers to save. `null` as value removes answer
+                example:
+                  HOME_CITY: London
+                  MOTHER_NAME: null
+            additionalProperties: true
             x-additionalPropertiesName: auth
-            $ref: '#/components/schemas/AuthReqData'
         dryRun:
           type: boolean
         systemAccess:
@@ -2340,8 +2451,45 @@ components:
         authReqs:
           type: object
           additionalProperties:
+            properties:
+              secret:
+                type: string
+              email:
+                type: string
+                description: New email to set.
+              template:
+                type: string
+                description: Template to use.
+                x-nullable: true
+              accessToken:
+                type: string
+                description: If you have access-token - put it here.
+                x-nullable: true
+              authorizationCode:
+                type: string
+                description: If you have authorisation-code - app will exchange it
+                  for access-token.
+                x-nullable: true
+              password:
+                type: string
+                description: New password to set. If null app generates password automatically.
+                x-nullable: true
+              confirmPassword:
+                type: string
+                description: Password confirmation. If null app doesn't perform this
+                  check.
+                x-nullable: true
+              answers:
+                type: object
+                additionalProperties:
+                  type: string
+                description: |
+                  Answers to save. `null` as value removes answer
+                example:
+                  HOME_CITY: London
+                  MOTHER_NAME: null
+            additionalProperties: true
             x-additionalPropertiesName: auth
-            $ref: '#/components/schemas/AuthReqData'
         dryRun:
           type: boolean
       x-order: -1847312442-1
@@ -2376,12 +2524,12 @@ components:
           type: boolean
           description: Send token in `access_token` cookie
         cache:
+          type: string
           description: |-
             If not null - access token contains signed session data, so it's not required to request session database for
             access check.
-          allOf:
-          - $ref: '#/components/schemas/Cache'
           x-nullable: true
+          x-super: '#/components/schemas/Cache'
         cacheUnauthenticated:
           type: boolean
           description: "By default, unauthenticated sessions can't be cached."
@@ -2549,10 +2697,11 @@ components:
       type: object
       properties:
         user:
+          type: object
           description: User database config
-          allOf:
-          - $ref: '#/components/schemas/DbCfg'
+          x-super: '#/components/schemas/DbCfg'
         session:
+          type: object
           description: |-
             Session database config.
 
@@ -2560,13 +2709,12 @@ components:
 
             You can use in-token to not use database at all. Use it with `token.access.cacheUnauthenticated = true` and
             `token.access.cache != null` values.
-          allOf:
-          - $ref: '#/components/schemas/DbCfg'
+          x-super: '#/components/schemas/DbCfg'
         rateLimiter:
+          type: object
           description: "Database for rate-limiters. If you don't use rate-limiter\
             \ leave this empty (`{}`)."
-          allOf:
-          - $ref: '#/components/schemas/DbCfg'
+          x-super: '#/components/schemas/DbCfg'
       description: Database connection configs
       x-order: -1723799702-3
     Duration:
@@ -2714,9 +2862,18 @@ components:
           items:
             type: string
         accessToken:
+          type: object
+          properties:
+            ttl:
+              type: string
+              description: Override access token ttl
+              x-nullable: true
+            cache:
+              type: boolean
+              description: Enable or disable client-side caching of access token
+              x-nullable: true
           description: Override access token lifetime for sessions of this entry.
-          allOf:
-          - $ref: '#/components/schemas/EntryAccessTokenCfg'
+          x-super: '#/components/schemas/EntryAccessTokenCfg'
         ttl:
           type: string
           description: |
@@ -3279,8 +3436,203 @@ components:
         auths:
           type: object
           additionalProperties:
+            properties:
+              remote:
+                type: string
+                description: Path to the API that implements plugin.
+              requiresAuth:
+                type: array
+                description: |-
+                  If this is not null, app forbids to add this auth until listed auth enabled.
+                  - if this a string -> require specified auth to be enabled before this.
+                  - array of strings -> require any of listed auths to be enabled
+                  - array of arrays of strings -> works as `[ [ "auth1" and "auth2" ] or [ "auth1" and "auth2" ] ]`
+                items:
+                  type: array
+                  items:
+                    type: string
+                x-nullable: true
+              skipOnFail:
+                type: boolean
+                description: |-
+                  When this is set to true app will attempt next auth in case of error on current.
+                  It's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be
+                  executed only when IP auth is failed.
+                  If set to false any error on this auth will stop the whole request execution.
+              rateLimiter:
+                type: string
+                description: Apply rate limiter for this auth.
+                x-nullable: true
+              burnQuota:
+                type: number
+                description: Every auth execution will burn this amount of quota.
+                  Takes place only when rate limiter is specified
+                format: double
+              query:
+                type: object
+                additionalProperties:
+                  type: string
+                  x-additionalPropertiesName: queryParam
+                description: |
+                  Add query params after `?` symbol in url.
+              headers:
+                type: object
+                additionalProperties:
+                  type: string
+                  x-additionalPropertiesName: header
+                description: |
+                  Add headers to request.
+              code:
+                $ref: '#/components/schemas/CodeCfg'
+              server:
+                type: string
+                description: Email server address/IP.
+              sender:
+                type: string
+                description: Email address of sender.
+              username:
+                type: string
+                description: SMTP username.
+                x-nullable: true
+              password:
+                type: string
+                description: SMTP password.
+                x-nullable: true
+              confirmationUrl:
+                type: string
+                description: |-
+                  If not null, server will create template param `confirmationUrl` that will contain query parameters with
+                  confirmation code, session id, etc.
+                x-nullable: true
+              templates:
+                type: object
+                additionalProperties:
+                  type: string
+                  x-additionalPropertiesName: templateName
+                description: |+
+                  List of email templates. Key - name of template (can be used lately on frontend), value - path to template.
+                  App uses handlebars templates to generate emails. See docs here https://handlebarsjs.com
+
+                  Email templates received `confirmationUrl`, `action`, `user`, `session`, `codeId`, `code`, `lang`, `headers`
+                  as template params, e.g. you can print user id as `{{ user.id }}`.
+
+                  Template engine also provides `i18n` helper for localisation. E.g. `{{i18n 'confirmationButton' default='Confirm'}}`
+                  searches key `confirmationButton` in files specified by `i18n.dir` config.
+
+                  It allows setting subject of email using `title` html tag, e.g. `<title>Email subject</title>`.
+
+                example:
+                  welcome: ./welcome.html.hbs
+                  restoreAccess: ./restore.html.hbs
+              templateParams:
+                type: object
+                additionalProperties:
+                  type: string
+                  x-additionalPropertiesName: paramName
+                description: |
+                  Additional params for template.
+              ipBytesToIgnore:
+                type: integer
+                description: |-
+                  This allows to drop last bytes of IP. So it allows to authenticate factor when ip has rough match, e.g.
+                  the same country, same city, or same internet provider.
+                format: int32
+              historySize:
+                type: integer
+                description: |-
+                  History of IP addresses user used to sign-in. Authenticated when user attempts to sign in with one of stored
+                  IPs.
+                format: int32
+              extractLogin:
+                type: string
+                description: |-
+                  Path for login in id-token or user-info endpoint response.
+                  e.g. `res.user.id` extracts user login from `{ "res": { "user": { "id": "..." } } }`
+              tokenUrl:
+                type: string
+                description: Url to get access token by authorisation code.
+              clientId:
+                type: string
+                description: "OAuth client id. Client must be registered on OAuth\
+                  \ provider (e.g. facebook, google)"
+              clientSecret:
+                type: string
+                description: OAuth client secret.
+                x-nullable: true
+              userInfoUrl:
+                type: string
+                description: "If access token provided in request, app tries to extract\
+                  \ user id from user-info endpoint."
+              sendTokenInQuery:
+                type: string
+                description: Send token in query param.
+                x-nullable: true
+              sendTokenInHeader:
+                type: boolean
+                description: Send token in Authorisation header.
+              extractPublicData:
+                type: object
+                additionalProperties:
+                  type: string
+                description: Can fill public data by a response of user-info or id-token.
+              maxLength:
+                type: integer
+                description: Max length of answer.
+                format: int32
+              minLength:
+                type: integer
+                description: Min length of answer. Length are checked after all answer
+                  transformation.
+                format: int32
+              requireNumber:
+                type: boolean
+                description: Require password to contain at least one digit.
+              requireSymbol:
+                type: boolean
+                description: "Require password to contain at least one symbol e.g.\
+                  \ @, !, &..."
+              requireUpperCase:
+                type: boolean
+                description: This requires password to contain both lowercase and
+                  uppercase letters.
+              forbidCommonPasswords:
+                type: boolean
+                description: "Password will be checked against table 1,000,000 of\
+                  \ most overused passwords."
+              forbidLoginAsPassword:
+                type: boolean
+                description: "Rejects passwords that match username, email, anything\
+                  \ that used as a login according to logins config."
+              forbidReusingPassword:
+                $ref: '#/components/schemas/PasswordHistoryCfg'
+              strength:
+                type: object
+                additionalProperties:
+                  x-additionalPropertiesName: PASSWORD_STRENGTH
+                  $ref: '#/components/schemas/PasswordStrengthRequirements'
+                description: |
+                  Allows to calculate password strength based on mentioned criteria. Requirements will be checked one by one
+                  until first failed.
+              lowercase:
+                type: boolean
+                description: |-
+                  Transform user answer to lowercase letters. This allows user still pass a check when he wrote name or city
+                  with different cases. `false` means strict match, so "John" != "john"
+              removeSymbols:
+                type: boolean
+                description: Remove all non-letters from user answer.
+              removeSpaces:
+                type: boolean
+                description: Remove all spaces from user answer.
+              answersRequired:
+                type: integer
+                description: Min number of answers required to pass this check.
+                format: int32
+              maxAnswers:
+                type: integer
+                description: Max answers that user can save.
+                format: int32
             x-additionalPropertiesName: auth
-            $ref: '#/components/schemas/AuthCfg'
           description: |
             List of auth names and auth configs
 

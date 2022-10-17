@@ -1192,13 +1192,13 @@ components:
       type: object
       properties:
         public:
+          type: object
           description: Data that are available for API.
-          allOf:
-          - $ref: '#/components/schemas/json'
+          x-super: '#/components/schemas/json'
         private:
+          type: object
           description: Data available only for authenticator.
-          allOf:
-          - $ref: '#/components/schemas/json'
+          x-super: '#/components/schemas/json'
         login:
           type: string
           description: |-
@@ -1212,14 +1212,32 @@ components:
       type: object
       properties:
         authData:
+          required:
+          - private
+          - public
+          type: object
+          properties:
+            public:
+              type: object
+              description: Data that are available for API.
+              x-super: '#/components/schemas/json'
+            private:
+              type: object
+              description: Data available only for authenticator.
+              x-super: '#/components/schemas/json'
+            login:
+              type: string
+              description: |-
+                If authenticator supports identification, it provides login here. This can be email, phone number,
+                facebook account id, etc.
+              x-nullable: true
           description: New auth data to save
-          allOf:
-          - $ref: '#/components/schemas/AuthData'
+          x-super: '#/components/schemas/AuthData'
         resData:
+          type: object
           description: This data will be sent back to the client.
-          allOf:
-          - $ref: '#/components/schemas/AuthResData'
           x-nullable: true
+          x-super: '#/components/schemas/AuthResData'
       x-order: -1249106462-6
     AuthResData:
       type: object
@@ -1320,28 +1338,174 @@ components:
           description: Response provided by dry-run execution
           x-nullable: true
         user:
+          required:
+          - auths
+          - factors
+          - id
+          - logins
+          - signedUpAt
+          - updatedAt
+          type: object
+          properties:
+            id:
+              type: string
+              description: |
+                Generated user uuid
+              example: 2c24704f-198a-4bc4-9718-306ccc97bbdc
+            logins:
+              type: array
+              items:
+                $ref: '#/components/schemas/Login'
+            auths:
+              type: object
+              additionalProperties:
+                x-additionalPropertiesName: auth
+                $ref: '#/components/schemas/AuthUserCfg'
+              description: |
+                Public data of confirmed auths and sent codes for unconfirmed auths.
+            factors:
+              uniqueItems: true
+              type: array
+              description: Enabled factors
+              items:
+                type: string
+            signedUpAt:
+              type: integer
+              format: int64
+            updatedAt:
+              type: integer
+              format: int64
+            systemAccess:
+              type: boolean
+              description: Allows to access to any user in the app.
+            new:
+              type: boolean
           description: User loaded from database. Can be null if user isn't identified
             yet.
-          allOf:
-          - $ref: '#/components/schemas/User'
           x-nullable: true
+          x-super: '#/components/schemas/User'
         session:
+          required:
+          - authenticatedBy
+          - device
+          - entry
+          - expiresAt
+          - id
+          - identifiedBy
+          - newUser
+          - nextFactors
+          - refreshedAt
+          - signedInAt
+          - systemAccess
+          - unconfirmedAuths
+          type: object
+          properties:
+            id:
+              type: string
+            entry:
+              type: string
+              description: Entry that authenticates this session
+            identifiedBy:
+              type: array
+              description: Login used to identify this user
+              items:
+                $ref: '#/components/schemas/LoginId'
+            userId:
+              type: string
+              x-nullable: true
+            authenticatedBy:
+              type: object
+              additionalProperties:
+                type: string
+                x-additionalPropertiesName: factor
+              description: |
+                Authenticator used for factors
+            unconfirmedAuths:
+              type: object
+              additionalProperties:
+                x-additionalPropertiesName: auth
+                $ref: '#/components/schemas/UnconfirmedAuth'
+              description: |
+                Auths that waiting for confirmation
+            nextFactors:
+              type: array
+              description: List of factors needed to authenticate this session
+              items:
+                $ref: '#/components/schemas/NextFactor'
+            signedInAt:
+              type: integer
+              format: int64
+            expiresAt:
+              type: integer
+              format: int64
+            refreshedAt:
+              type: integer
+              format: int64
+            newUser:
+              type: boolean
+            device:
+              $ref: '#/components/schemas/Device'
+            systemAccess:
+              type: boolean
+            authenticated:
+              type: boolean
           description: "Current session, can be null if user edited by admin."
-          allOf:
-          - $ref: '#/components/schemas/Session'
           x-nullable: true
+          x-super: '#/components/schemas/Session'
         authData:
+          required:
+          - private
+          - public
+          type: object
+          properties:
+            public:
+              type: object
+              description: Data that are available for API.
+              x-super: '#/components/schemas/json'
+            private:
+              type: object
+              description: Data available only for authenticator.
+              x-super: '#/components/schemas/json'
+            login:
+              type: string
+              description: |-
+                If authenticator supports identification, it provides login here. This can be email, phone number,
+                facebook account id, etc.
+              x-nullable: true
           description: |-
             Current session data. Null if auth wasn't enabled before. Otherwise, will contain current auth data during
             authenticate and previous data during update-auth request.
-          allOf:
-          - $ref: '#/components/schemas/AuthData'
           x-nullable: true
+          x-super: '#/components/schemas/AuthData'
         codeToSend:
+          required:
+          - attemptsLeft
+          - code
+          - codeHash
+          - sentAt
+          - usedAttempts
+          - validUntil
+          type: object
+          properties:
+            validUntil:
+              type: integer
+              format: int64
+            usedAttempts:
+              type: integer
+              format: int32
+            attemptsLeft:
+              type: integer
+              format: int32
+            codeHash:
+              type: string
+            sentAt:
+              type: integer
+              format: int64
+            code:
+              type: string
           description: Generated code. Will be null if no code-config specified.
-          allOf:
-          - $ref: '#/components/schemas/Code'
           x-nullable: true
+          x-super: '#/components/schemas/Code'
         reqData:
           type: object
           description: Request data provided by client.
@@ -1620,15 +1784,22 @@ components:
       type: object
       properties:
         authData:
+          type: object
+          properties:
+            login:
+              type: string
+              description: |-
+                If authenticator supports identification, it provides login here. This can be email, phone number,
+                facebook account id, etc.
+              x-nullable: true
           description: New auth data to save
-          allOf:
-          - $ref: '#/components/schemas/DryRunAuthData'
           x-nullable: true
+          x-super: '#/components/schemas/DryRunAuthData'
         resData:
+          type: object
           description: This data will be sent back to the client.
-          allOf:
-          - $ref: '#/components/schemas/AuthResData'
           x-nullable: true
+          x-super: '#/components/schemas/AuthResData'
       x-order: -1249106462-5
     FindSessionRes:
       type: object
@@ -1658,15 +1829,141 @@ components:
           type: string
           x-nullable: true
         updated:
+          required:
+          - authenticatedBy
+          - device
+          - entry
+          - expiresAt
+          - id
+          - identifiedBy
+          - newUser
+          - nextFactors
+          - refreshedAt
+          - signedInAt
+          - systemAccess
+          - unconfirmedAuths
+          type: object
+          properties:
+            id:
+              type: string
+            entry:
+              type: string
+              description: Entry that authenticates this session
+            identifiedBy:
+              type: array
+              description: Login used to identify this user
+              items:
+                $ref: '#/components/schemas/LoginId'
+            userId:
+              type: string
+              x-nullable: true
+            authenticatedBy:
+              type: object
+              additionalProperties:
+                type: string
+                x-additionalPropertiesName: factor
+              description: |
+                Authenticator used for factors
+            unconfirmedAuths:
+              type: object
+              additionalProperties:
+                x-additionalPropertiesName: auth
+                $ref: '#/components/schemas/UnconfirmedAuth'
+              description: |
+                Auths that waiting for confirmation
+            nextFactors:
+              type: array
+              description: List of factors needed to authenticate this session
+              items:
+                $ref: '#/components/schemas/NextFactor'
+            signedInAt:
+              type: integer
+              format: int64
+            expiresAt:
+              type: integer
+              format: int64
+            refreshedAt:
+              type: integer
+              format: int64
+            newUser:
+              type: boolean
+            device:
+              $ref: '#/components/schemas/Device'
+            systemAccess:
+              type: boolean
+            authenticated:
+              type: boolean
           description: Session to update.
-          allOf:
-          - $ref: '#/components/schemas/Session'
           x-nullable: true
+          x-super: '#/components/schemas/Session'
         new:
+          required:
+          - authenticatedBy
+          - device
+          - entry
+          - expiresAt
+          - id
+          - identifiedBy
+          - newUser
+          - nextFactors
+          - refreshedAt
+          - signedInAt
+          - systemAccess
+          - unconfirmedAuths
+          type: object
+          properties:
+            id:
+              type: string
+            entry:
+              type: string
+              description: Entry that authenticates this session
+            identifiedBy:
+              type: array
+              description: Login used to identify this user
+              items:
+                $ref: '#/components/schemas/LoginId'
+            userId:
+              type: string
+              x-nullable: true
+            authenticatedBy:
+              type: object
+              additionalProperties:
+                type: string
+                x-additionalPropertiesName: factor
+              description: |
+                Authenticator used for factors
+            unconfirmedAuths:
+              type: object
+              additionalProperties:
+                x-additionalPropertiesName: auth
+                $ref: '#/components/schemas/UnconfirmedAuth'
+              description: |
+                Auths that waiting for confirmation
+            nextFactors:
+              type: array
+              description: List of factors needed to authenticate this session
+              items:
+                $ref: '#/components/schemas/NextFactor'
+            signedInAt:
+              type: integer
+              format: int64
+            expiresAt:
+              type: integer
+              format: int64
+            refreshedAt:
+              type: integer
+              format: int64
+            newUser:
+              type: boolean
+            device:
+              $ref: '#/components/schemas/Device'
+            systemAccess:
+              type: boolean
+            authenticated:
+              type: boolean
           description: Session to insert
-          allOf:
-          - $ref: '#/components/schemas/Session'
           x-nullable: true
+          x-super: '#/components/schemas/Session'
         removed:
           type: array
           description: Session ids to remove

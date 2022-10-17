@@ -45,91 +45,65 @@ import java.util.Set;
 import app.kntrl.client.generated.infra.JSON;
 
 /**
- * CodeIsIncorrect
+ * Override access token lifetime for sessions of this entry.
  */
+@ApiModel(description = "Override access token lifetime for sessions of this entry.")
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
-public class CodeIsIncorrect {
-  public static final String SERIALIZED_NAME_CODE = "code";
-  @SerializedName(SERIALIZED_NAME_CODE)
-  private String code;
+public class EntryCfgAccessToken {
+  public static final String SERIALIZED_NAME_TTL = "ttl";
+  @SerializedName(SERIALIZED_NAME_TTL)
+  private String ttl;
 
-  public static final String SERIALIZED_NAME_DEV_MSG = "devMsg";
-  @SerializedName(SERIALIZED_NAME_DEV_MSG)
-  private String devMsg;
+  public static final String SERIALIZED_NAME_CACHE = "cache";
+  @SerializedName(SERIALIZED_NAME_CACHE)
+  private Boolean cache;
 
-  public static final String SERIALIZED_NAME_MSG = "msg";
-  @SerializedName(SERIALIZED_NAME_MSG)
-  private String msg;
-
-  public CodeIsIncorrect() {
+  public EntryCfgAccessToken() {
   }
 
-  public CodeIsIncorrect code(String code) {
+  public EntryCfgAccessToken ttl(String ttl) {
     
-    this.code = code;
+    this.ttl = ttl;
     return this;
   }
 
    /**
-   * Get code
-   * @return code
-  **/
-  @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
-
-  public String getCode() {
-    return code;
-  }
-
-
-  public void setCode(String code) {
-    this.code = code;
-  }
-
-
-  public CodeIsIncorrect devMsg(String devMsg) {
-    
-    this.devMsg = devMsg;
-    return this;
-  }
-
-   /**
-   * Message for developers.
-   * @return devMsg
-  **/
-  @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Message for developers.")
-
-  public String getDevMsg() {
-    return devMsg;
-  }
-
-
-  public void setDevMsg(String devMsg) {
-    this.devMsg = devMsg;
-  }
-
-
-  public CodeIsIncorrect msg(String msg) {
-    
-    this.msg = msg;
-    return this;
-  }
-
-   /**
-   * Localised message suitable for UI.
-   * @return msg
+   * Override access token ttl
+   * @return ttl
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Localised message suitable for UI.")
+  @ApiModelProperty(value = "Override access token ttl")
 
-  public String getMsg() {
-    return msg;
+  public String getTtl() {
+    return ttl;
   }
 
 
-  public void setMsg(String msg) {
-    this.msg = msg;
+  public void setTtl(String ttl) {
+    this.ttl = ttl;
+  }
+
+
+  public EntryCfgAccessToken cache(Boolean cache) {
+    
+    this.cache = cache;
+    return this;
+  }
+
+   /**
+   * Enable or disable client-side caching of access token
+   * @return cache
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Enable or disable client-side caching of access token")
+
+  public Boolean getCache() {
+    return cache;
+  }
+
+
+  public void setCache(Boolean cache) {
+    this.cache = cache;
   }
 
   /**
@@ -143,7 +117,7 @@ public class CodeIsIncorrect {
    * Set the additional (undeclared) property with the specified name and value.
    * If the property does not already exist, create it otherwise replace it.
    */
-  public CodeIsIncorrect putAdditionalProperty(String key, Object value) {
+  public EntryCfgAccessToken putAdditionalProperty(String key, Object value) {
     if (this.additionalProperties == null) {
         this.additionalProperties = new HashMap<String, Object>();
     }
@@ -177,25 +151,23 @@ public class CodeIsIncorrect {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    CodeIsIncorrect codeIsIncorrect = (CodeIsIncorrect) o;
-    return Objects.equals(this.code, codeIsIncorrect.code) &&
-        Objects.equals(this.devMsg, codeIsIncorrect.devMsg) &&
-        Objects.equals(this.msg, codeIsIncorrect.msg)&&
-        Objects.equals(this.additionalProperties, codeIsIncorrect.additionalProperties);
+    EntryCfgAccessToken entryCfgAccessToken = (EntryCfgAccessToken) o;
+    return Objects.equals(this.ttl, entryCfgAccessToken.ttl) &&
+        Objects.equals(this.cache, entryCfgAccessToken.cache)&&
+        Objects.equals(this.additionalProperties, entryCfgAccessToken.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(code, devMsg, msg, additionalProperties);
+    return Objects.hash(ttl, cache, additionalProperties);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class CodeIsIncorrect {\n");
-    sb.append("    code: ").append(toIndentedString(code)).append("\n");
-    sb.append("    devMsg: ").append(toIndentedString(devMsg)).append("\n");
-    sb.append("    msg: ").append(toIndentedString(msg)).append("\n");
+    sb.append("class EntryCfgAccessToken {\n");
+    sb.append("    ttl: ").append(toIndentedString(ttl)).append("\n");
+    sb.append("    cache: ").append(toIndentedString(cache)).append("\n");
     sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -219,45 +191,29 @@ public class CodeIsIncorrect {
   static {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
-    openapiFields.add("code");
-    openapiFields.add("devMsg");
-    openapiFields.add("msg");
+    openapiFields.add("ttl");
+    openapiFields.add("cache");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
-    openapiRequiredFields.add("code");
-    openapiRequiredFields.add("devMsg");
   }
 
  /**
   * Validates the JSON Object and throws an exception if issues found
   *
   * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to CodeIsIncorrect
+  * @throws IOException if the JSON Object is invalid with respect to EntryCfgAccessToken
   */
   public static void validateJsonObject(JsonObject jsonObj) throws IOException {
       if (jsonObj == null) {
-        if (CodeIsIncorrect.openapiRequiredFields.isEmpty()) {
+        if (EntryCfgAccessToken.openapiRequiredFields.isEmpty()) {
           return;
         } else { // has required fields
-          throw new IllegalArgumentException(String.format("The required field(s) %s in CodeIsIncorrect is not found in the empty JSON string", CodeIsIncorrect.openapiRequiredFields.toString()));
+          throw new IllegalArgumentException(String.format("The required field(s) %s in EntryCfgAccessToken is not found in the empty JSON string", EntryCfgAccessToken.openapiRequiredFields.toString()));
         }
       }
-
-      // check to make sure all required properties/fields are present in the JSON string
-      for (String requiredField : CodeIsIncorrect.openapiRequiredFields) {
-        if (jsonObj.get(requiredField) == null) {
-          throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonObj.toString()));
-        }
-      }
-      if ((jsonObj.get("code") != null && !jsonObj.get("code").isJsonNull()) && !jsonObj.get("code").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `code` to be a primitive type in the JSON string but got `%s`", jsonObj.get("code").toString()));
-      }
-      if ((jsonObj.get("devMsg") != null && !jsonObj.get("devMsg").isJsonNull()) && !jsonObj.get("devMsg").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `devMsg` to be a primitive type in the JSON string but got `%s`", jsonObj.get("devMsg").toString()));
-      }
-      if ((jsonObj.get("msg") != null && !jsonObj.get("msg").isJsonNull()) && !jsonObj.get("msg").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `msg` to be a primitive type in the JSON string but got `%s`", jsonObj.get("msg").toString()));
+      if ((jsonObj.get("ttl") != null && !jsonObj.get("ttl").isJsonNull()) && !jsonObj.get("ttl").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `ttl` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ttl").toString()));
       }
   }
 
@@ -265,16 +221,16 @@ public class CodeIsIncorrect {
     @SuppressWarnings("unchecked")
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!CodeIsIncorrect.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'CodeIsIncorrect' and its subtypes
+       if (!EntryCfgAccessToken.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'EntryCfgAccessToken' and its subtypes
        }
        final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<CodeIsIncorrect> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(CodeIsIncorrect.class));
+       final TypeAdapter<EntryCfgAccessToken> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(EntryCfgAccessToken.class));
 
-       return (TypeAdapter<T>) new TypeAdapter<CodeIsIncorrect>() {
+       return (TypeAdapter<T>) new TypeAdapter<EntryCfgAccessToken>() {
            @Override
-           public void write(JsonWriter out, CodeIsIncorrect value) throws IOException {
+           public void write(JsonWriter out, EntryCfgAccessToken value) throws IOException {
              JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
              obj.remove("additionalProperties");
              // serialize additonal properties
@@ -297,11 +253,11 @@ public class CodeIsIncorrect {
            }
 
            @Override
-           public CodeIsIncorrect read(JsonReader in) throws IOException {
+           public EntryCfgAccessToken read(JsonReader in) throws IOException {
              JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
              validateJsonObject(jsonObj);
              // store additional fields in the deserialized instance
-             CodeIsIncorrect instance = thisAdapter.fromJsonTree(jsonObj);
+             EntryCfgAccessToken instance = thisAdapter.fromJsonTree(jsonObj);
              for (Map.Entry<String, JsonElement> entry : jsonObj.entrySet()) {
                if (!openapiFields.contains(entry.getKey())) {
                  if (entry.getValue().isJsonPrimitive()) { // primitive type
@@ -326,18 +282,18 @@ public class CodeIsIncorrect {
   }
 
  /**
-  * Create an instance of CodeIsIncorrect given an JSON string
+  * Create an instance of EntryCfgAccessToken given an JSON string
   *
   * @param jsonString JSON string
-  * @return An instance of CodeIsIncorrect
-  * @throws IOException if the JSON string is invalid with respect to CodeIsIncorrect
+  * @return An instance of EntryCfgAccessToken
+  * @throws IOException if the JSON string is invalid with respect to EntryCfgAccessToken
   */
-  public static CodeIsIncorrect fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, CodeIsIncorrect.class);
+  public static EntryCfgAccessToken fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, EntryCfgAccessToken.class);
   }
 
  /**
-  * Convert an instance of CodeIsIncorrect to an JSON string
+  * Convert an instance of EntryCfgAccessToken to an JSON string
   *
   * @return JSON string
   */

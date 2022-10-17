@@ -715,12 +715,12 @@ components:
           type: boolean
           description: Send token in `access_token` cookie
         cache:
+          type: string
           description: |-
             If not null - access token contains signed session data, so it's not required to request session database for
             access check.
-          allOf:
-          - $ref: '#/components/schemas/Cache'
           x-nullable: true
+          x-super: '#/components/schemas/Cache'
         cacheUnauthenticated:
           type: boolean
           description: "By default, unauthenticated sessions can't be cached."
@@ -888,10 +888,11 @@ components:
       type: object
       properties:
         user:
+          type: object
           description: User database config
-          allOf:
-          - $ref: '#/components/schemas/DbCfg'
+          x-super: '#/components/schemas/DbCfg'
         session:
+          type: object
           description: |-
             Session database config.
 
@@ -899,13 +900,12 @@ components:
 
             You can use in-token to not use database at all. Use it with `token.access.cacheUnauthenticated = true` and
             `token.access.cache != null` values.
-          allOf:
-          - $ref: '#/components/schemas/DbCfg'
+          x-super: '#/components/schemas/DbCfg'
         rateLimiter:
+          type: object
           description: "Database for rate-limiters. If you don't use rate-limiter\
             \ leave this empty (`{}`)."
-          allOf:
-          - $ref: '#/components/schemas/DbCfg'
+          x-super: '#/components/schemas/DbCfg'
       description: Database connection configs
       x-order: -1723799702-3
     Duration:
@@ -1053,9 +1053,18 @@ components:
           items:
             type: string
         accessToken:
+          type: object
+          properties:
+            ttl:
+              type: string
+              description: Override access token ttl
+              x-nullable: true
+            cache:
+              type: boolean
+              description: Enable or disable client-side caching of access token
+              x-nullable: true
           description: Override access token lifetime for sessions of this entry.
-          allOf:
-          - $ref: '#/components/schemas/EntryAccessTokenCfg'
+          x-super: '#/components/schemas/EntryAccessTokenCfg'
         ttl:
           type: string
           description: |
@@ -1618,8 +1627,15 @@ components:
         auths:
           type: object
           additionalProperties:
+            anyOf:
+            - $ref: '#/components/schemas/RemoteAuthCfg'
+            - $ref: '#/components/schemas/AppSecretAuthCfg'
+            - $ref: '#/components/schemas/EmailAuthCfg'
+            - $ref: '#/components/schemas/IpAuthCfg'
+            - $ref: '#/components/schemas/OAuthCfg'
+            - $ref: '#/components/schemas/PasswordAuthCfg'
+            - $ref: '#/components/schemas/QuestionsAuthCfg'
             x-additionalPropertiesName: auth
-            $ref: '#/components/schemas/AuthCfg'
           description: |
             List of auth names and auth configs
 

@@ -1226,9 +1226,9 @@ components:
         unconfirmedAuths:
           type: object
           additionalProperties:
+            x-additionalPropertiesName: auth
             anyOf:
             - $ref: '#/components/schemas/UnconfirmedAuth'
-            x-additionalPropertiesName: auth
           description: |
             Auths that waiting for confirmation
         nextFactors:
@@ -1316,9 +1316,9 @@ components:
         auth:
           type: object
           additionalProperties:
+            x-additionalPropertiesName: auth
             anyOf:
             - $ref: '#/components/schemas/HealthStatusRes'
-            x-additionalPropertiesName: auth
         status:
           $ref: '#/components/schemas/HealthStatus'
         msg:
@@ -1621,9 +1621,9 @@ components:
         auths:
           type: object
           additionalProperties:
+            x-additionalPropertiesName: auth
             anyOf:
             - $ref: '#/components/schemas/AuthUserCfg'
-            x-additionalPropertiesName: auth
           description: |
             Public data of confirmed auths and sent codes for unconfirmed auths.
         factors:
@@ -1685,9 +1685,17 @@ components:
         authReqs:
           type: object
           additionalProperties:
-            anyOf:
-            - $ref: '#/components/schemas/AuthReqData'
             x-additionalPropertiesName: auth
+            anyOf:
+            - $ref: '#/components/schemas/AppSecretReq'
+            - $ref: '#/components/schemas/AuthReqDataJson'
+            - $ref: '#/components/schemas/EmailAuthenticateReq'
+            - $ref: '#/components/schemas/EmailUpdateReq'
+            - $ref: '#/components/schemas/OAuthReq'
+            - $ref: '#/components/schemas/PasswordAuthenticateReq'
+            - $ref: '#/components/schemas/PasswordUpdateReq'
+            - $ref: '#/components/schemas/QuestionsAuthenticateReq'
+            - $ref: '#/components/schemas/QuestionsUpdateReq'
           description: |
             Request for authenticators
         dryRun:
@@ -1752,9 +1760,17 @@ components:
         authReqs:
           type: object
           additionalProperties:
-            anyOf:
-            - $ref: '#/components/schemas/AuthReqData'
             x-additionalPropertiesName: auth
+            anyOf:
+            - $ref: '#/components/schemas/AppSecretReq'
+            - $ref: '#/components/schemas/AuthReqDataJson'
+            - $ref: '#/components/schemas/EmailAuthenticateReq'
+            - $ref: '#/components/schemas/EmailUpdateReq'
+            - $ref: '#/components/schemas/OAuthReq'
+            - $ref: '#/components/schemas/PasswordAuthenticateReq'
+            - $ref: '#/components/schemas/PasswordUpdateReq'
+            - $ref: '#/components/schemas/QuestionsAuthenticateReq'
+            - $ref: '#/components/schemas/QuestionsUpdateReq'
           description: |
             Request for authenticators
         signIn:
@@ -1892,7 +1908,8 @@ components:
         authRes:
           type: object
           additionalProperties:
-            $ref: '#/components/schemas/AuthExecRes'
+            anyOf:
+            - $ref: '#/components/schemas/AuthExecRes'
       x-order: -1847312442-2
     ConfirmUserAuthsReq:
       required:
@@ -1938,9 +1955,17 @@ components:
           authReqs:
             type: object
             additionalProperties:
-              anyOf:
-              - $ref: '#/components/schemas/AuthReqData'
               x-additionalPropertiesName: auth
+              anyOf:
+              - $ref: '#/components/schemas/AppSecretReq'
+              - $ref: '#/components/schemas/AuthReqDataJson'
+              - $ref: '#/components/schemas/EmailAuthenticateReq'
+              - $ref: '#/components/schemas/EmailUpdateReq'
+              - $ref: '#/components/schemas/OAuthReq'
+              - $ref: '#/components/schemas/PasswordAuthenticateReq'
+              - $ref: '#/components/schemas/PasswordUpdateReq'
+              - $ref: '#/components/schemas/QuestionsAuthenticateReq'
+              - $ref: '#/components/schemas/QuestionsUpdateReq'
           dryRun:
             type: boolean
           systemAccess:
@@ -1966,9 +1991,17 @@ components:
         authReqs:
           type: object
           additionalProperties:
-            anyOf:
-            - $ref: '#/components/schemas/AuthReqData'
             x-additionalPropertiesName: auth
+            anyOf:
+            - $ref: '#/components/schemas/AppSecretReq'
+            - $ref: '#/components/schemas/AuthReqDataJson'
+            - $ref: '#/components/schemas/EmailAuthenticateReq'
+            - $ref: '#/components/schemas/EmailUpdateReq'
+            - $ref: '#/components/schemas/OAuthReq'
+            - $ref: '#/components/schemas/PasswordAuthenticateReq'
+            - $ref: '#/components/schemas/PasswordUpdateReq'
+            - $ref: '#/components/schemas/QuestionsAuthenticateReq'
+            - $ref: '#/components/schemas/QuestionsUpdateReq'
         dryRun:
           type: boolean
       x-order: -1847312442-1
@@ -2483,9 +2516,9 @@ components:
           strength:
             type: object
             additionalProperties:
+              x-additionalPropertiesName: PASSWORD_STRENGTH
               anyOf:
               - $ref: '#/components/schemas/PasswordStrengthRequirements'
-              x-additionalPropertiesName: PASSWORD_STRENGTH
             description: |
               Allows to calculate password strength based on mentioned criteria. Requirements will be checked one by one
               until first failed.
@@ -2770,9 +2803,15 @@ components:
         auths:
           type: object
           additionalProperties:
-            anyOf:
-            - $ref: '#/components/schemas/AuthCfg'
             x-additionalPropertiesName: auth
+            anyOf:
+            - $ref: '#/components/schemas/RemoteAuthCfg'
+            - $ref: '#/components/schemas/AppSecretAuthCfg'
+            - $ref: '#/components/schemas/EmailAuthCfg'
+            - $ref: '#/components/schemas/IpAuthCfg'
+            - $ref: '#/components/schemas/OAuthCfg'
+            - $ref: '#/components/schemas/PasswordAuthCfg'
+            - $ref: '#/components/schemas/QuestionsAuthCfg'
           description: |
             List of auth names and auth configs
 
@@ -2786,9 +2825,9 @@ components:
         entries:
           type: object
           additionalProperties:
+            x-additionalPropertiesName: entry
             anyOf:
             - $ref: '#/components/schemas/EntryCfg'
-            x-additionalPropertiesName: entry
           description: |
             List of app entries. Entry usually represents UI used for signing in/up or additional authentication
             before action. E.g.:
@@ -2802,9 +2841,9 @@ components:
         rateLimiters:
           type: object
           additionalProperties:
+            x-additionalPropertiesName: rate-limiter id
             anyOf:
             - $ref: '#/components/schemas/RateLimiterCfg'
-            x-additionalPropertiesName: rate-limiter id
           description: |
             List of rate limiters
         secret:

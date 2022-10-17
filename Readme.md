@@ -140,11 +140,11 @@ OpenAPI specification is located in [client folder](client):
 ```shell
 openapi-generator-cli generate -i ./client/openapi-no-polymorphism.yaml -g go -o ./generated/client
 ```
-**WARN**: it's strongly recommended to disable client rejection of not-known fields. E.g. for java generator set 
+**WARN**: it's strongly recommended to disable rejection of not-known fields. E.g. for java generator set 
 `disallowAdditionalPropertiesIfNotPresent` to `false`.
 
 #### Option 3 - call HTTP API manually
-Check [API docs](#api-docs) for HTTP API documentation.
+Check [API docs](https://kntrl-auth.github.io/kntrl-auth-server/apidocs) for HTTP API documentation.
 
 
 ### Use client
@@ -155,9 +155,9 @@ Check corresponding files in [examples folder](examples) for usage examples.
 
 For full specification of app features, check these docs:
 
-- [Configuration API](#api-docs)
-- [Frontend/Backend integration API](#api-docs)
-- [Plugin API](#api-docs)
+- [Configuration API](https://kntrl-auth.github.io/kntrl-auth-server/apidocs/cfg)
+- [Frontend/Backend integration API](https://kntrl-auth.github.io/kntrl-auth-server/apidocs)
+- [Plugin API](https://kntrl-auth.github.io/kntrl-auth-server/apidocs/plugin)
 
 
 ## 🔒 License

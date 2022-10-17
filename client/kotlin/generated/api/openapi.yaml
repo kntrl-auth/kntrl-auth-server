@@ -1,7 +1,9 @@
 openapi: 3.0.1
 info:
   title: Kntrl API
-  version: "1.0"
+  version: "0.9"
+  x-logo:
+    url: ./logo.png
 servers:
 - url: /
 tags:
@@ -32,7 +34,8 @@ tags:
 paths:
   /api/server/health:
     get:
-      description: Get server plugins state
+      description: |
+        Get server plugins state
       operationId: health
       parameters:
       - explode: true
@@ -61,6 +64,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/IntegrationErr'
           description: Server error
+      summary: Server health status
       tags:
       - server
       x-order: 1
@@ -89,6 +93,7 @@ paths:
           description: Server error
       security:
       - access-token: []
+      summary: Sign out current session
       tags:
       - session
       x-order: 7
@@ -118,6 +123,7 @@ paths:
           description: Server error
       security:
       - access-token: []
+      summary: Get session
       tags:
       - session
       x-order: 1
@@ -151,6 +157,7 @@ paths:
           description: Server error
       security:
       - access-token: []
+      summary: Authenticate session
       tags:
       - session
       x-order: 4
@@ -189,6 +196,7 @@ paths:
       security:
       - access-token: []
       - {}
+      summary: New session
       tags:
       - session
       x-order: 3
@@ -218,11 +226,16 @@ paths:
           description: Server error
       security:
       - access-token: []
+      summary: Get user
       tags:
       - user
       x-order: 1
       x-accepts: application/json
     patch:
+      description: |
+        Saves users.
+        Be careful with order. To avoid potential "duplicated entry" problem, remove operation goes firs,
+        then update, then insert.
       operationId: saveUser
       requestBody:
         content:
@@ -251,6 +264,7 @@ paths:
           description: Server error
       security:
       - access-token: []
+      summary: Save user
       tags:
       - user
       x-order: 7
@@ -289,6 +303,7 @@ paths:
           description: Server error
       security:
       - access-token: []
+      summary: (Backend API) authorize session
       tags:
       - authorisation
       x-order: 1
@@ -296,8 +311,8 @@ paths:
       x-accepts: application/json
   /api/signature/public-key:
     get:
-      description: Public key generated from app-secret from config used for signature
-        validation.
+      description: |
+        Public key generated from app-secret from config used for signature validation.
       operationId: getPublicKey
       responses:
         default:
@@ -318,6 +333,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/IntegrationErr'
           description: Server error
+      summary: Get RSA public key
       tags:
       - signature
       x-order: 1
@@ -348,13 +364,15 @@ paths:
           description: Server error
       security:
       - access-token: []
+      summary: Server configuration
       tags:
       - server
       x-order: 1
       x-accepts: application/json
   /api/token/refresh:
     post:
-      description: Get new access token using refresh token.
+      description: |
+        Get new access token using refresh token.
       operationId: refreshToken
       requestBody:
         content:
@@ -381,6 +399,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/IntegrationErr'
           description: Server error
+      summary: Refresh access token
       tags:
       - token
       x-order: 2
@@ -419,6 +438,7 @@ paths:
       security:
       - access-token: []
       - {}
+      summary: (Backend API) validate by rate-limiter
       tags:
       - authorisation
       x-order: 2
@@ -426,7 +446,8 @@ paths:
       x-accepts: application/json
   /api/signature/verify:
     post:
-      description: Validates data signature
+      description: |
+        Validates data signature
       operationId: verify
       parameters:
       - explode: true
@@ -466,6 +487,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/IntegrationErr'
           description: Server error
+      summary: Validate signature
       tags:
       - signature
       x-order: 2
@@ -511,6 +533,7 @@ paths:
           description: Server error
       security:
       - access-token: []
+      summary: (Backend API) sign data
       tags:
       - signature
       x-order: 3
@@ -548,6 +571,8 @@ paths:
           description: Server error
       security:
       - access-token: []
+      - {}
+      summary: Confirm with code
       tags:
       - session
       x-order: 6
@@ -585,6 +610,7 @@ paths:
           description: Server error
       security:
       - access-token: []
+      summary: Sign out another session
       tags:
       - session
       x-order: 8
@@ -628,6 +654,7 @@ paths:
           description: Server error
       security:
       - access-token: []
+      summary: List sessions
       tags:
       - session
       x-order: 9
@@ -670,6 +697,7 @@ paths:
           description: Server error
       security:
       - access-token: []
+      summary: (Admin API) Edit user
       tags:
       - user
       x-order: 9
@@ -705,6 +733,7 @@ paths:
           description: Server error
       security:
       - access-token: []
+      summary: Confirm enabled auth
       tags:
       - user
       x-order: 10
@@ -1768,11 +1797,13 @@ components:
         refresh: refresh
       properties:
         access:
+          description: Access token for authentication
           type: string
-          x-order: -2026363309-3
+          x-super: '#/components/schemas/AccessToken'
         refresh:
+          description: Refresh token for obtaining new access token
           type: string
-          x-order: -2026363309-5
+          x-super: '#/components/schemas/RefreshToken'
         accessTokenExpiresAt:
           format: int64
           type: integer
@@ -1896,20 +1927,23 @@ components:
       x-order: -814092127-1
     AuthData:
       example:
-        public:
-          key: ""
+        public: "{}"
         login: login
       properties:
         public:
-          additionalProperties: true
+          description: Data that are available for API.
           type: object
+          x-super: '#/components/schemas/json'
         login:
+          description: |-
+            If authenticator supports identification, it provides login here. This can be email, phone number,
+            facebook account id, etc.
           type: string
           x-nullable: true
       required:
       - public
       type: object
-      x-order: 332570507-3
+      x-order: 332570507-4
     AuthExecRes:
       example:
         sentCode:
@@ -2000,8 +2034,7 @@ components:
     AuthUserCfg:
       example:
         data:
-          public:
-            key: ""
+          public: "{}"
           login: login
         sentCodes:
         - code:
@@ -2012,8 +2045,7 @@ components:
             id: id
             sentAt: 5
           data:
-            public:
-              key: ""
+            public: "{}"
             login: login
         - code:
             attemptsLeft: 1
@@ -2023,8 +2055,7 @@ components:
             id: id
             sentAt: 5
           data:
-            public:
-              key: ""
+            public: "{}"
             login: login
         confirmed: true
       properties:
@@ -2100,8 +2131,7 @@ components:
           auths:
             key:
               data:
-                public:
-                  key: ""
+                public: "{}"
                 login: login
               sentCodes:
               - code:
@@ -2112,8 +2142,7 @@ components:
                   id: id
                   sentAt: 5
                 data:
-                  public:
-                    key: ""
+                  public: "{}"
                   login: login
               - code:
                   attemptsLeft: 1
@@ -2123,8 +2152,7 @@ components:
                   id: id
                   sentAt: 5
                 data:
-                  public:
-                    key: ""
+                  public: "{}"
                   login: login
               confirmed: true
           id: 2c24704f-198a-4bc4-9718-306ccc97bbdc
@@ -2410,8 +2438,7 @@ components:
           id: id
           sentAt: 5
         data:
-          public:
-            key: ""
+          public: "{}"
           login: login
       properties:
         data:
@@ -2422,7 +2449,7 @@ components:
       - code
       - data
       type: object
-      x-order: 332570507-4
+      x-order: 332570507-5
     User:
       example:
         new: true
@@ -2431,8 +2458,7 @@ components:
         auths:
           key:
             data:
-              public:
-                key: ""
+              public: "{}"
               login: login
             sentCodes:
             - code:
@@ -2443,8 +2469,7 @@ components:
                 id: id
                 sentAt: 5
               data:
-                public:
-                  key: ""
+                public: "{}"
                 login: login
             - code:
                 attemptsLeft: 1
@@ -2454,8 +2479,7 @@ components:
                 id: id
                 sentAt: 5
               data:
-                public:
-                  key: ""
+                public: "{}"
                 login: login
             confirmed: true
         id: 2c24704f-198a-4bc4-9718-306ccc97bbdc
@@ -2572,7 +2596,7 @@ components:
             Request for authenticators
           type: object
         dryRun:
-          description: Execute only validation of authenticator requests.
+          description: Execute only validation ща authenticator requests.
           type: boolean
       type: object
       x-order: 2094520596-2
@@ -2656,7 +2680,7 @@ components:
         signUp:
           type: boolean
         dryRun:
-          description: Execute only validation of authenticator requests.
+          description: Execute only validation ща authenticator requests.
           type: boolean
       required:
       - entry
@@ -2738,6 +2762,9 @@ components:
         sessionId: sessionId
       properties:
         sessionId:
+          description: |-
+            If null, session id will be extracted from access-token.
+            Useful to confirm auth from another device where no access-token available.
           type: string
           x-nullable: true
         receivedCodes:
@@ -2747,6 +2774,8 @@ components:
               x-additionalPropertiesName: codeId
             type: object
             x-additionalPropertiesName: auth
+          description: |
+            Code from authenticate/new-session response.
           type: object
       required:
       - receivedCodes
@@ -2857,6 +2886,7 @@ components:
             $ref: '#/components/schemas/Session'
           type: array
         tooManySessions:
+          description: True if number of sessions in database exceeds some limit
           type: boolean
       required:
       - sessions
@@ -2871,8 +2901,7 @@ components:
           auths:
             key:
               data:
-                public:
-                  key: ""
+                public: "{}"
                 login: login
               sentCodes:
               - code:
@@ -2883,8 +2912,7 @@ components:
                   id: id
                   sentAt: 5
                 data:
-                  public:
-                    key: ""
+                  public: "{}"
                   login: login
               - code:
                   attemptsLeft: 1
@@ -2894,8 +2922,7 @@ components:
                   id: id
                   sentAt: 5
                 data:
-                  public:
-                    key: ""
+                  public: "{}"
                   login: login
               confirmed: true
           id: 2c24704f-198a-4bc4-9718-306ccc97bbdc
@@ -2993,6 +3020,9 @@ components:
         userId: userId
       properties:
         userId:
+          description: |-
+            If null, user id will be extracted from access-token.
+            Useful to confirm auth from another device where no access-token available.
           type: string
           x-nullable: true
         receivedCodes:
@@ -3002,6 +3032,8 @@ components:
               x-additionalPropertiesName: codeId
             type: object
             x-additionalPropertiesName: auth
+          description: |
+            Code from save-user response.
           type: object
       required:
       - receivedCodes
@@ -3176,7 +3208,7 @@ components:
     AccessTokenCfg:
       description: Short-living token used for authentication.
       example:
-        cache: null
+        cache: cache
         cookie: true
         cacheUnauthenticated: true
         ttl: 1d
@@ -3185,7 +3217,12 @@ components:
           description: Send token in `access_token` cookie
           type: boolean
         cache:
-          $ref: '#/components/schemas/Cache'
+          description: |-
+            If not null - access token contains signed session data, so it's not required to request session database for
+            access check.
+          type: string
+          x-nullable: true
+          x-super: '#/components/schemas/Cache'
         cacheUnauthenticated:
           description: "By default, unauthenticated sessions can't be cached."
           type: boolean
@@ -3348,79 +3385,29 @@ components:
     DbsCfg:
       description: Database connection configs
       example:
-        rateLimiter:
-          cluster: true
-          headers:
-            key: headers
-          inToken: true
-          sqlite: sqlite
-          query:
-            key: query
-          remote: remote
-          ssl: true
-          redis:
-          - redis
-          - redis
-          database: 5
-          password: password
-          inMemory: true
-          mysql: mysql
-          mongodb: mongodb
-          user: user
-          postgres: postgres
-          maxConnections: 2
-          username: username
-        session:
-          cluster: true
-          headers:
-            key: headers
-          inToken: true
-          sqlite: sqlite
-          query:
-            key: query
-          remote: remote
-          ssl: true
-          redis:
-          - redis
-          - redis
-          database: 1
-          password: password
-          inMemory: true
-          mysql: mysql
-          mongodb: mongodb
-          user: user
-          postgres: postgres
-          maxConnections: 5
-          username: username
-        user:
-          cluster: true
-          headers:
-            key: headers
-          inToken: true
-          sqlite: sqlite
-          query:
-            key: query
-          remote: remote
-          ssl: true
-          redis:
-          - redis
-          - redis
-          database: 0
-          password: password
-          inMemory: true
-          mysql: mysql
-          mongodb: mongodb
-          user: user
-          postgres: postgres
-          maxConnections: 6
-          username: username
+        rateLimiter: "{}"
+        session: "{}"
+        user: "{}"
       properties:
         user:
-          $ref: '#/components/schemas/DbsCfg_user'
+          description: User database config
+          type: object
+          x-super: '#/components/schemas/DbCfg'
         session:
-          $ref: '#/components/schemas/DbsCfg_session'
+          description: |-
+            Session database config.
+
+            If you aren't using cluster, prefer in-memory database.
+
+            You can use in-token to not use database at all. Use it with `token.access.cacheUnauthenticated = true` and
+            `token.access.cache != null` values.
+          type: object
+          x-super: '#/components/schemas/DbCfg'
         rateLimiter:
-          $ref: '#/components/schemas/DbsCfg_rateLimiter'
+          description: "Database for rate-limiters. If you don't use rate-limiter\
+            \ leave this empty (`{}`)."
+          type: object
+          x-super: '#/components/schemas/DbCfg'
       required:
       - rateLimiter
       - session
@@ -3515,9 +3502,6 @@ components:
       x-order: -701605246-6
       x-super: '#/components/schemas/BuiltInAuthCfg'
     EntryAccessTokenCfg:
-      example:
-        cache: true
-        ttl: ttl
       properties:
         ttl:
           description: Override access token ttl
@@ -3592,7 +3576,7 @@ components:
             type: string
           type: array
         accessToken:
-          $ref: '#/components/schemas/EntryAccessTokenCfg'
+          $ref: '#/components/schemas/EntryCfg_accessToken'
         ttl:
           description: |
             Max lifetime of session.
@@ -3982,7 +3966,7 @@ components:
         parent: parent
         period: 30s
         ip: true
-        quota: 7.061401241503109
+        quota: 0.8008281904610115
         alignLoad: true
         userId: true
       properties:
@@ -4179,7 +4163,7 @@ components:
             parent: parent
             period: 30s
             ip: true
-            quota: 7.061401241503109
+            quota: 0.8008281904610115
             alignLoad: true
             userId: true
         secret: secret
@@ -4188,78 +4172,15 @@ components:
         - facebook
         - email
         db:
-          rateLimiter:
-            cluster: true
-            headers:
-              key: headers
-            inToken: true
-            sqlite: sqlite
-            query:
-              key: query
-            remote: remote
-            ssl: true
-            redis:
-            - redis
-            - redis
-            database: 5
-            password: password
-            inMemory: true
-            mysql: mysql
-            mongodb: mongodb
-            user: user
-            postgres: postgres
-            maxConnections: 2
-            username: username
-          session:
-            cluster: true
-            headers:
-              key: headers
-            inToken: true
-            sqlite: sqlite
-            query:
-              key: query
-            remote: remote
-            ssl: true
-            redis:
-            - redis
-            - redis
-            database: 1
-            password: password
-            inMemory: true
-            mysql: mysql
-            mongodb: mongodb
-            user: user
-            postgres: postgres
-            maxConnections: 5
-            username: username
-          user:
-            cluster: true
-            headers:
-              key: headers
-            inToken: true
-            sqlite: sqlite
-            query:
-              key: query
-            remote: remote
-            ssl: true
-            redis:
-            - redis
-            - redis
-            database: 0
-            password: password
-            inMemory: true
-            mysql: mysql
-            mongodb: mongodb
-            user: user
-            postgres: postgres
-            maxConnections: 6
-            username: username
+          rateLimiter: "{}"
+          session: "{}"
+          user: "{}"
         i18n:
           default: en
           dir: ./i18n
         token:
           access:
-            cache: null
+            cache: cache
             cookie: true
             cacheUnauthenticated: true
             ttl: 1d
@@ -4381,7 +4302,7 @@ components:
       description: Token lifetime config.
       example:
         access:
-          cache: null
+          cache: cache
           cookie: true
           cacheUnauthenticated: true
           ttl: 1d
@@ -4592,217 +4513,22 @@ components:
           type: object
       type: object
       x-additionalPropertiesName: auth
-    DbsCfg_user:
-      description: User database config
+    EntryCfg_accessToken:
+      description: Override access token lifetime for sessions of this entry.
       example:
-        cluster: true
-        headers:
-          key: headers
-        inToken: true
-        sqlite: sqlite
-        query:
-          key: query
-        remote: remote
-        ssl: true
-        redis:
-        - redis
-        - redis
-        database: 0
-        password: password
-        inMemory: true
-        mysql: mysql
-        mongodb: mongodb
-        user: user
-        postgres: postgres
-        maxConnections: 6
-        username: username
+        cache: true
+        ttl: ttl
       properties:
-        inMemory:
-          type: boolean
-        inToken:
-          type: boolean
-        mongodb:
-          type: string
-        database:
-          format: int32
-          type: integer
-        redis:
-          items:
-            type: string
-          type: array
-        cluster:
-          type: boolean
-        user:
+        ttl:
+          description: Override access token ttl
           type: string
           x-nullable: true
-        password:
-          type: string
-        ssl:
+        cache:
+          description: Enable or disable client-side caching of access token
           type: boolean
-        maxConnections:
-          format: int32
-          type: integer
-        remote:
-          type: string
-        query:
-          additionalProperties:
-            type: string
-          type: object
-        headers:
-          additionalProperties:
-            type: string
-          type: object
-        mysql:
-          type: string
-        username:
-          type: string
-        postgres:
-          type: string
-        sqlite:
-          type: string
-    DbsCfg_session:
-      description: |-
-        Session database config.
-
-        If you aren't using cluster, prefer in-memory database.
-
-        You can use in-token to not use database at all. Use it with `token.access.cacheUnauthenticated = true` and
-        `token.access.cache != null` values.
-      example:
-        cluster: true
-        headers:
-          key: headers
-        inToken: true
-        sqlite: sqlite
-        query:
-          key: query
-        remote: remote
-        ssl: true
-        redis:
-        - redis
-        - redis
-        database: 1
-        password: password
-        inMemory: true
-        mysql: mysql
-        mongodb: mongodb
-        user: user
-        postgres: postgres
-        maxConnections: 5
-        username: username
-      properties:
-        inMemory:
-          type: boolean
-        inToken:
-          type: boolean
-        mongodb:
-          type: string
-        database:
-          format: int32
-          type: integer
-        redis:
-          items:
-            type: string
-          type: array
-        cluster:
-          type: boolean
-        user:
-          type: string
           x-nullable: true
-        password:
-          type: string
-        ssl:
-          type: boolean
-        maxConnections:
-          format: int32
-          type: integer
-        remote:
-          type: string
-        query:
-          additionalProperties:
-            type: string
-          type: object
-        headers:
-          additionalProperties:
-            type: string
-          type: object
-        mysql:
-          type: string
-        username:
-          type: string
-        postgres:
-          type: string
-        sqlite:
-          type: string
-    DbsCfg_rateLimiter:
-      description: "Database for rate-limiters. If you don't use rate-limiter leave\
-        \ this empty (`{}`)."
-      example:
-        cluster: true
-        headers:
-          key: headers
-        inToken: true
-        sqlite: sqlite
-        query:
-          key: query
-        remote: remote
-        ssl: true
-        redis:
-        - redis
-        - redis
-        database: 5
-        password: password
-        inMemory: true
-        mysql: mysql
-        mongodb: mongodb
-        user: user
-        postgres: postgres
-        maxConnections: 2
-        username: username
-      properties:
-        inMemory:
-          type: boolean
-        inToken:
-          type: boolean
-        mongodb:
-          type: string
-        database:
-          format: int32
-          type: integer
-        redis:
-          items:
-            type: string
-          type: array
-        cluster:
-          type: boolean
-        user:
-          type: string
-          x-nullable: true
-        password:
-          type: string
-        ssl:
-          type: boolean
-        maxConnections:
-          format: int32
-          type: integer
-        remote:
-          type: string
-        query:
-          additionalProperties:
-            type: string
-          type: object
-        headers:
-          additionalProperties:
-            type: string
-          type: object
-        mysql:
-          type: string
-        username:
-          type: string
-        postgres:
-          type: string
-        sqlite:
-          type: string
+      type: object
+      x-super: '#/components/schemas/EntryAccessTokenCfg'
     SHAppCfg_auths_value:
       properties:
         remote:

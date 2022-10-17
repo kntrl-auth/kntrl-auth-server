@@ -1195,9 +1195,9 @@ components:
         unconfirmedAuths:
           type: object
           additionalProperties:
+            x-additionalPropertiesName: auth
             anyOf:
             - $ref: '#/components/schemas/UnconfirmedAuth'
-            x-additionalPropertiesName: auth
           description: |
             Auths that waiting for confirmation
         nextFactors:
@@ -1264,9 +1264,9 @@ components:
         auths:
           type: object
           additionalProperties:
+            x-additionalPropertiesName: auth
             anyOf:
             - $ref: '#/components/schemas/AuthUserCfg'
-            x-additionalPropertiesName: auth
           description: |
             Public data of confirmed auths and sent codes for unconfirmed auths.
         factors:
