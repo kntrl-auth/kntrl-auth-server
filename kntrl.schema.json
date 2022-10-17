@@ -800,19 +800,541 @@
       "type": "object",
       "properties": {
         "user": {
-          "type": "object",
           "description": "User database config",
-          "x-super": "#/components/schemas/DbCfg"
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "inMemory": {
+                  "type": "boolean"
+                }
+              },
+              "x-order": "1129812999-3",
+              "x-super": "#/components/schemas/DbCfg"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "inToken": {
+                  "type": "boolean"
+                }
+              },
+              "x-order": "-291817267-1",
+              "x-super": "#/components/schemas/DbCfg"
+            },
+            {
+              "required": [
+                "database",
+                "mongodb"
+              ],
+              "type": "object",
+              "properties": {
+                "mongodb": {
+                  "type": "string"
+                },
+                "database": {
+                  "type": "string"
+                }
+              },
+              "x-order": "-592385449-0",
+              "x-super": "#/components/schemas/DbCfg"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "redis": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  ]
+                },
+                "cluster": {
+                  "type": "boolean"
+                },
+                "database": {
+                  "type": "integer",
+                  "format": "int32",
+                  "minimum": -2147483648,
+                  "maximum": 2147483647
+                },
+                "user": {
+                  "type": "string",
+                  "x-nullable": true
+                },
+                "password": {
+                  "type": "string",
+                  "x-nullable": true
+                },
+                "ssl": {
+                  "type": "boolean"
+                },
+                "maxConnections": {
+                  "type": "integer",
+                  "format": "int32",
+                  "minimum": -2147483648,
+                  "maximum": 2147483647
+                }
+              },
+              "x-order": "-2007275575-0",
+              "x-super": "#/components/schemas/DbCfg"
+            },
+            {
+              "required": [
+                "remote"
+              ],
+              "type": "object",
+              "properties": {
+                "remote": {
+                  "type": "string"
+                },
+                "query": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                },
+                "headers": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                }
+              },
+              "x-order": "842893688-0",
+              "x-super": "#/components/schemas/DbCfg"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "mysql": {
+                  "type": "string"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "maxConnections": {
+                  "type": "integer",
+                  "format": "int32",
+                  "minimum": -2147483648,
+                  "maximum": 2147483647
+                },
+                "password": {
+                  "type": "string"
+                }
+              },
+              "x-order": "-577347408-2",
+              "x-super": "#/components/schemas/JdbcCfg"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "postgres": {
+                  "type": "string"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "maxConnections": {
+                  "type": "integer",
+                  "format": "int32",
+                  "minimum": -2147483648,
+                  "maximum": 2147483647
+                },
+                "password": {
+                  "type": "string"
+                }
+              },
+              "x-order": "893841315-2",
+              "x-super": "#/components/schemas/JdbcCfg"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "maxConnections": {
+                  "type": "integer",
+                  "format": "int32",
+                  "minimum": -2147483648,
+                  "maximum": 2147483647
+                },
+                "sqlite": {
+                  "type": "string"
+                }
+              },
+              "x-order": "-1872929936-3",
+              "x-super": "#/components/schemas/JdbcCfg"
+            }
+          ]
         },
         "session": {
-          "type": "object",
           "description": "Session database config.\n\nIf you aren't using cluster, prefer in-memory database.\n\nYou can use in-token to not use database at all. Use it with `token.access.cacheUnauthenticated = true` and\n`token.access.cache != null` values.",
-          "x-super": "#/components/schemas/DbCfg"
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "inMemory": {
+                  "type": "boolean"
+                }
+              },
+              "x-order": "1129812999-3",
+              "x-super": "#/components/schemas/DbCfg"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "inToken": {
+                  "type": "boolean"
+                }
+              },
+              "x-order": "-291817267-1",
+              "x-super": "#/components/schemas/DbCfg"
+            },
+            {
+              "required": [
+                "database",
+                "mongodb"
+              ],
+              "type": "object",
+              "properties": {
+                "mongodb": {
+                  "type": "string"
+                },
+                "database": {
+                  "type": "string"
+                }
+              },
+              "x-order": "-592385449-0",
+              "x-super": "#/components/schemas/DbCfg"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "redis": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  ]
+                },
+                "cluster": {
+                  "type": "boolean"
+                },
+                "database": {
+                  "type": "integer",
+                  "format": "int32",
+                  "minimum": -2147483648,
+                  "maximum": 2147483647
+                },
+                "user": {
+                  "type": "string",
+                  "x-nullable": true
+                },
+                "password": {
+                  "type": "string",
+                  "x-nullable": true
+                },
+                "ssl": {
+                  "type": "boolean"
+                },
+                "maxConnections": {
+                  "type": "integer",
+                  "format": "int32",
+                  "minimum": -2147483648,
+                  "maximum": 2147483647
+                }
+              },
+              "x-order": "-2007275575-0",
+              "x-super": "#/components/schemas/DbCfg"
+            },
+            {
+              "required": [
+                "remote"
+              ],
+              "type": "object",
+              "properties": {
+                "remote": {
+                  "type": "string"
+                },
+                "query": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                },
+                "headers": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                }
+              },
+              "x-order": "842893688-0",
+              "x-super": "#/components/schemas/DbCfg"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "mysql": {
+                  "type": "string"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "maxConnections": {
+                  "type": "integer",
+                  "format": "int32",
+                  "minimum": -2147483648,
+                  "maximum": 2147483647
+                },
+                "password": {
+                  "type": "string"
+                }
+              },
+              "x-order": "-577347408-2",
+              "x-super": "#/components/schemas/JdbcCfg"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "postgres": {
+                  "type": "string"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "maxConnections": {
+                  "type": "integer",
+                  "format": "int32",
+                  "minimum": -2147483648,
+                  "maximum": 2147483647
+                },
+                "password": {
+                  "type": "string"
+                }
+              },
+              "x-order": "893841315-2",
+              "x-super": "#/components/schemas/JdbcCfg"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "maxConnections": {
+                  "type": "integer",
+                  "format": "int32",
+                  "minimum": -2147483648,
+                  "maximum": 2147483647
+                },
+                "sqlite": {
+                  "type": "string"
+                }
+              },
+              "x-order": "-1872929936-3",
+              "x-super": "#/components/schemas/JdbcCfg"
+            }
+          ]
         },
         "rateLimiter": {
-          "type": "object",
           "description": "Database for rate-limiters. If you don't use rate-limiter leave this empty (`{}`).",
-          "x-super": "#/components/schemas/DbCfg"
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "inMemory": {
+                  "type": "boolean"
+                }
+              },
+              "x-order": "1129812999-3",
+              "x-super": "#/components/schemas/DbCfg"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "inToken": {
+                  "type": "boolean"
+                }
+              },
+              "x-order": "-291817267-1",
+              "x-super": "#/components/schemas/DbCfg"
+            },
+            {
+              "required": [
+                "database",
+                "mongodb"
+              ],
+              "type": "object",
+              "properties": {
+                "mongodb": {
+                  "type": "string"
+                },
+                "database": {
+                  "type": "string"
+                }
+              },
+              "x-order": "-592385449-0",
+              "x-super": "#/components/schemas/DbCfg"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "redis": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  ]
+                },
+                "cluster": {
+                  "type": "boolean"
+                },
+                "database": {
+                  "type": "integer",
+                  "format": "int32",
+                  "minimum": -2147483648,
+                  "maximum": 2147483647
+                },
+                "user": {
+                  "type": "string",
+                  "x-nullable": true
+                },
+                "password": {
+                  "type": "string",
+                  "x-nullable": true
+                },
+                "ssl": {
+                  "type": "boolean"
+                },
+                "maxConnections": {
+                  "type": "integer",
+                  "format": "int32",
+                  "minimum": -2147483648,
+                  "maximum": 2147483647
+                }
+              },
+              "x-order": "-2007275575-0",
+              "x-super": "#/components/schemas/DbCfg"
+            },
+            {
+              "required": [
+                "remote"
+              ],
+              "type": "object",
+              "properties": {
+                "remote": {
+                  "type": "string"
+                },
+                "query": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                },
+                "headers": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                }
+              },
+              "x-order": "842893688-0",
+              "x-super": "#/components/schemas/DbCfg"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "mysql": {
+                  "type": "string"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "maxConnections": {
+                  "type": "integer",
+                  "format": "int32",
+                  "minimum": -2147483648,
+                  "maximum": 2147483647
+                },
+                "password": {
+                  "type": "string"
+                }
+              },
+              "x-order": "-577347408-2",
+              "x-super": "#/components/schemas/JdbcCfg"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "postgres": {
+                  "type": "string"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "maxConnections": {
+                  "type": "integer",
+                  "format": "int32",
+                  "minimum": -2147483648,
+                  "maximum": 2147483647
+                },
+                "password": {
+                  "type": "string"
+                }
+              },
+              "x-order": "893841315-2",
+              "x-super": "#/components/schemas/JdbcCfg"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "maxConnections": {
+                  "type": "integer",
+                  "format": "int32",
+                  "minimum": -2147483648,
+                  "maximum": 2147483647
+                },
+                "sqlite": {
+                  "type": "string"
+                }
+              },
+              "x-order": "-1872929936-3",
+              "x-super": "#/components/schemas/JdbcCfg"
+            }
+          ]
         }
       },
       "description": "Database connection configs",

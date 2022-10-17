@@ -2184,8 +2184,15 @@ components:
       properties:
         user:
           description: User database config
-          allOf:
-          - $ref: '#/components/schemas/DbCfg'
+          anyOf:
+          - $ref: '#/components/schemas/InMemoryCfg'
+          - $ref: '#/components/schemas/InTokenCfg'
+          - $ref: '#/components/schemas/MongoCfg'
+          - $ref: '#/components/schemas/RedisCfg'
+          - $ref: '#/components/schemas/RemoteDbCfg'
+          - $ref: '#/components/schemas/MysqlCfg'
+          - $ref: '#/components/schemas/PostgresCfg'
+          - $ref: '#/components/schemas/SqliteCfg'
         session:
           description: |-
             Session database config.
@@ -2194,13 +2201,27 @@ components:
 
             You can use in-token to not use database at all. Use it with `token.access.cacheUnauthenticated = true` and
             `token.access.cache != null` values.
-          allOf:
-          - $ref: '#/components/schemas/DbCfg'
+          anyOf:
+          - $ref: '#/components/schemas/InMemoryCfg'
+          - $ref: '#/components/schemas/InTokenCfg'
+          - $ref: '#/components/schemas/MongoCfg'
+          - $ref: '#/components/schemas/RedisCfg'
+          - $ref: '#/components/schemas/RemoteDbCfg'
+          - $ref: '#/components/schemas/MysqlCfg'
+          - $ref: '#/components/schemas/PostgresCfg'
+          - $ref: '#/components/schemas/SqliteCfg'
         rateLimiter:
           description: "Database for rate-limiters. If you don't use rate-limiter\
             \ leave this empty (`{}`)."
-          allOf:
-          - $ref: '#/components/schemas/DbCfg'
+          anyOf:
+          - $ref: '#/components/schemas/InMemoryCfg'
+          - $ref: '#/components/schemas/InTokenCfg'
+          - $ref: '#/components/schemas/MongoCfg'
+          - $ref: '#/components/schemas/RedisCfg'
+          - $ref: '#/components/schemas/RemoteDbCfg'
+          - $ref: '#/components/schemas/MysqlCfg'
+          - $ref: '#/components/schemas/PostgresCfg'
+          - $ref: '#/components/schemas/SqliteCfg'
       description: Database connection configs
       x-order: -1723799702-3
     Duration:

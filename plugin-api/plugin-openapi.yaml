@@ -884,8 +884,14 @@ components:
           - $ref: '#/components/schemas/AuthData'
         resData:
           description: This data will be sent back to the client.
-          allOf:
-          - $ref: '#/components/schemas/AuthResData'
+          anyOf:
+          - $ref: '#/components/schemas/AuthResDataJson'
+          - $ref: '#/components/schemas/EmailAuthRes'
+          - $ref: '#/components/schemas/IpAuthRes'
+          - $ref: '#/components/schemas/OAuthRes'
+          - $ref: '#/components/schemas/PasswordUpdateRes'
+          - $ref: '#/components/schemas/QuestionsAuthenticateRes'
+          - $ref: '#/components/schemas/QuestionsUpdateRes'
           x-nullable: true
       x-order: -1249106462-6
     AuthResData:
@@ -1307,8 +1313,14 @@ components:
           x-nullable: true
         resData:
           description: This data will be sent back to the client.
-          allOf:
-          - $ref: '#/components/schemas/AuthResData'
+          anyOf:
+          - $ref: '#/components/schemas/AuthResDataJson'
+          - $ref: '#/components/schemas/EmailAuthRes'
+          - $ref: '#/components/schemas/IpAuthRes'
+          - $ref: '#/components/schemas/OAuthRes'
+          - $ref: '#/components/schemas/PasswordUpdateRes'
+          - $ref: '#/components/schemas/QuestionsAuthenticateRes'
+          - $ref: '#/components/schemas/QuestionsUpdateRes'
           x-nullable: true
       x-order: -1249106462-5
     FindSessionRes:

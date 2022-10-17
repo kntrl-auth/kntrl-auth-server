@@ -1095,23 +1095,350 @@ export interface DbHealthRes {
  */
 export interface DbsCfg {
     /**
-     * User database config
-     * @type {object}
+     * 
+     * @type {DbsCfgUser}
      * @memberof DbsCfg
      */
-    'user': object;
+    'user': DbsCfgUser;
     /**
-     * Session database config.  If you aren\'t using cluster, prefer in-memory database.  You can use in-token to not use database at all. Use it with `token.access.cacheUnauthenticated = true` and `token.access.cache != null` values.
-     * @type {object}
+     * 
+     * @type {DbsCfgSession}
      * @memberof DbsCfg
      */
-    'session': object;
+    'session': DbsCfgSession;
     /**
-     * Database for rate-limiters. If you don\'t use rate-limiter leave this empty (`{}`).
-     * @type {object}
+     * 
+     * @type {DbsCfgRateLimiter}
      * @memberof DbsCfg
      */
-    'rateLimiter': object;
+    'rateLimiter': DbsCfgRateLimiter;
+}
+/**
+ * Database for rate-limiters. If you don\'t use rate-limiter leave this empty (`{}`).
+ * @export
+ * @interface DbsCfgRateLimiter
+ */
+export interface DbsCfgRateLimiter {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof DbsCfgRateLimiter
+     */
+    'inMemory'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof DbsCfgRateLimiter
+     */
+    'inToken'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof DbsCfgRateLimiter
+     */
+    'mongodb'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof DbsCfgRateLimiter
+     */
+    'database'?: number;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof DbsCfgRateLimiter
+     */
+    'redis'?: Array<string>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof DbsCfgRateLimiter
+     */
+    'cluster'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof DbsCfgRateLimiter
+     */
+    'user'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DbsCfgRateLimiter
+     */
+    'password'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof DbsCfgRateLimiter
+     */
+    'ssl'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof DbsCfgRateLimiter
+     */
+    'maxConnections'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof DbsCfgRateLimiter
+     */
+    'remote'?: string;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof DbsCfgRateLimiter
+     */
+    'query'?: { [key: string]: string; };
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof DbsCfgRateLimiter
+     */
+    'headers'?: { [key: string]: string; };
+    /**
+     * 
+     * @type {string}
+     * @memberof DbsCfgRateLimiter
+     */
+    'mysql'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DbsCfgRateLimiter
+     */
+    'username'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DbsCfgRateLimiter
+     */
+    'postgres'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DbsCfgRateLimiter
+     */
+    'sqlite'?: string;
+}
+/**
+ * Session database config.  If you aren\'t using cluster, prefer in-memory database.  You can use in-token to not use database at all. Use it with `token.access.cacheUnauthenticated = true` and `token.access.cache != null` values.
+ * @export
+ * @interface DbsCfgSession
+ */
+export interface DbsCfgSession {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof DbsCfgSession
+     */
+    'inMemory'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof DbsCfgSession
+     */
+    'inToken'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof DbsCfgSession
+     */
+    'mongodb'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof DbsCfgSession
+     */
+    'database'?: number;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof DbsCfgSession
+     */
+    'redis'?: Array<string>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof DbsCfgSession
+     */
+    'cluster'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof DbsCfgSession
+     */
+    'user'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DbsCfgSession
+     */
+    'password'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof DbsCfgSession
+     */
+    'ssl'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof DbsCfgSession
+     */
+    'maxConnections'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof DbsCfgSession
+     */
+    'remote'?: string;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof DbsCfgSession
+     */
+    'query'?: { [key: string]: string; };
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof DbsCfgSession
+     */
+    'headers'?: { [key: string]: string; };
+    /**
+     * 
+     * @type {string}
+     * @memberof DbsCfgSession
+     */
+    'mysql'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DbsCfgSession
+     */
+    'username'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DbsCfgSession
+     */
+    'postgres'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DbsCfgSession
+     */
+    'sqlite'?: string;
+}
+/**
+ * User database config
+ * @export
+ * @interface DbsCfgUser
+ */
+export interface DbsCfgUser {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof DbsCfgUser
+     */
+    'inMemory'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof DbsCfgUser
+     */
+    'inToken'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof DbsCfgUser
+     */
+    'mongodb'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof DbsCfgUser
+     */
+    'database'?: number;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof DbsCfgUser
+     */
+    'redis'?: Array<string>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof DbsCfgUser
+     */
+    'cluster'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof DbsCfgUser
+     */
+    'user'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DbsCfgUser
+     */
+    'password'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof DbsCfgUser
+     */
+    'ssl'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof DbsCfgUser
+     */
+    'maxConnections'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof DbsCfgUser
+     */
+    'remote'?: string;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof DbsCfgUser
+     */
+    'query'?: { [key: string]: string; };
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof DbsCfgUser
+     */
+    'headers'?: { [key: string]: string; };
+    /**
+     * 
+     * @type {string}
+     * @memberof DbsCfgUser
+     */
+    'mysql'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DbsCfgUser
+     */
+    'username'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DbsCfgUser
+     */
+    'postgres'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DbsCfgUser
+     */
+    'sqlite'?: string;
 }
 /**
  * 

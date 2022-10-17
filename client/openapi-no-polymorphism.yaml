@@ -2697,11 +2697,96 @@ components:
       type: object
       properties:
         user:
-          type: object
+          properties:
+            inMemory:
+              type: boolean
+            inToken:
+              type: boolean
+            mongodb:
+              type: string
+            database:
+              type: integer
+              format: int32
+            redis:
+              type: array
+              items:
+                type: string
+            cluster:
+              type: boolean
+            user:
+              type: string
+              x-nullable: true
+            password:
+              type: string
+            ssl:
+              type: boolean
+            maxConnections:
+              type: integer
+              format: int32
+            remote:
+              type: string
+            query:
+              type: object
+              additionalProperties:
+                type: string
+            headers:
+              type: object
+              additionalProperties:
+                type: string
+            mysql:
+              type: string
+            username:
+              type: string
+            postgres:
+              type: string
+            sqlite:
+              type: string
           description: User database config
-          x-super: '#/components/schemas/DbCfg'
         session:
-          type: object
+          properties:
+            inMemory:
+              type: boolean
+            inToken:
+              type: boolean
+            mongodb:
+              type: string
+            database:
+              type: integer
+              format: int32
+            redis:
+              type: array
+              items:
+                type: string
+            cluster:
+              type: boolean
+            user:
+              type: string
+              x-nullable: true
+            password:
+              type: string
+            ssl:
+              type: boolean
+            maxConnections:
+              type: integer
+              format: int32
+            remote:
+              type: string
+            query:
+              type: object
+              additionalProperties:
+                type: string
+            headers:
+              type: object
+              additionalProperties:
+                type: string
+            mysql:
+              type: string
+            username:
+              type: string
+            postgres:
+              type: string
+            sqlite:
+              type: string
           description: |-
             Session database config.
 
@@ -2709,12 +2794,53 @@ components:
 
             You can use in-token to not use database at all. Use it with `token.access.cacheUnauthenticated = true` and
             `token.access.cache != null` values.
-          x-super: '#/components/schemas/DbCfg'
         rateLimiter:
-          type: object
+          properties:
+            inMemory:
+              type: boolean
+            inToken:
+              type: boolean
+            mongodb:
+              type: string
+            database:
+              type: integer
+              format: int32
+            redis:
+              type: array
+              items:
+                type: string
+            cluster:
+              type: boolean
+            user:
+              type: string
+              x-nullable: true
+            password:
+              type: string
+            ssl:
+              type: boolean
+            maxConnections:
+              type: integer
+              format: int32
+            remote:
+              type: string
+            query:
+              type: object
+              additionalProperties:
+                type: string
+            headers:
+              type: object
+              additionalProperties:
+                type: string
+            mysql:
+              type: string
+            username:
+              type: string
+            postgres:
+              type: string
+            sqlite:
+              type: string
           description: "Database for rate-limiters. If you don't use rate-limiter\
             \ leave this empty (`{}`)."
-          x-super: '#/components/schemas/DbCfg'
       description: Database connection configs
       x-order: -1723799702-3
     Duration:

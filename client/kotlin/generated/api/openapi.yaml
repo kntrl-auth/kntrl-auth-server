@@ -3385,29 +3385,79 @@ components:
     DbsCfg:
       description: Database connection configs
       example:
-        rateLimiter: "{}"
-        session: "{}"
-        user: "{}"
+        rateLimiter:
+          cluster: true
+          headers:
+            key: headers
+          inToken: true
+          sqlite: sqlite
+          query:
+            key: query
+          remote: remote
+          ssl: true
+          redis:
+          - redis
+          - redis
+          database: 5
+          password: password
+          inMemory: true
+          mysql: mysql
+          mongodb: mongodb
+          user: user
+          postgres: postgres
+          maxConnections: 2
+          username: username
+        session:
+          cluster: true
+          headers:
+            key: headers
+          inToken: true
+          sqlite: sqlite
+          query:
+            key: query
+          remote: remote
+          ssl: true
+          redis:
+          - redis
+          - redis
+          database: 1
+          password: password
+          inMemory: true
+          mysql: mysql
+          mongodb: mongodb
+          user: user
+          postgres: postgres
+          maxConnections: 5
+          username: username
+        user:
+          cluster: true
+          headers:
+            key: headers
+          inToken: true
+          sqlite: sqlite
+          query:
+            key: query
+          remote: remote
+          ssl: true
+          redis:
+          - redis
+          - redis
+          database: 0
+          password: password
+          inMemory: true
+          mysql: mysql
+          mongodb: mongodb
+          user: user
+          postgres: postgres
+          maxConnections: 6
+          username: username
       properties:
         user:
-          description: User database config
-          type: object
-          x-super: '#/components/schemas/DbCfg'
+          $ref: '#/components/schemas/DbsCfg_user'
         session:
-          description: |-
-            Session database config.
-
-            If you aren't using cluster, prefer in-memory database.
-
-            You can use in-token to not use database at all. Use it with `token.access.cacheUnauthenticated = true` and
-            `token.access.cache != null` values.
-          type: object
-          x-super: '#/components/schemas/DbCfg'
+          $ref: '#/components/schemas/DbsCfg_session'
         rateLimiter:
-          description: "Database for rate-limiters. If you don't use rate-limiter\
-            \ leave this empty (`{}`)."
-          type: object
-          x-super: '#/components/schemas/DbCfg'
+          $ref: '#/components/schemas/DbsCfg_rateLimiter'
       required:
       - rateLimiter
       - session
@@ -3966,7 +4016,7 @@ components:
         parent: parent
         period: 30s
         ip: true
-        quota: 0.8008281904610115
+        quota: 7.061401241503109
         alignLoad: true
         userId: true
       properties:
@@ -4163,7 +4213,7 @@ components:
             parent: parent
             period: 30s
             ip: true
-            quota: 0.8008281904610115
+            quota: 7.061401241503109
             alignLoad: true
             userId: true
         secret: secret
@@ -4172,9 +4222,72 @@ components:
         - facebook
         - email
         db:
-          rateLimiter: "{}"
-          session: "{}"
-          user: "{}"
+          rateLimiter:
+            cluster: true
+            headers:
+              key: headers
+            inToken: true
+            sqlite: sqlite
+            query:
+              key: query
+            remote: remote
+            ssl: true
+            redis:
+            - redis
+            - redis
+            database: 5
+            password: password
+            inMemory: true
+            mysql: mysql
+            mongodb: mongodb
+            user: user
+            postgres: postgres
+            maxConnections: 2
+            username: username
+          session:
+            cluster: true
+            headers:
+              key: headers
+            inToken: true
+            sqlite: sqlite
+            query:
+              key: query
+            remote: remote
+            ssl: true
+            redis:
+            - redis
+            - redis
+            database: 1
+            password: password
+            inMemory: true
+            mysql: mysql
+            mongodb: mongodb
+            user: user
+            postgres: postgres
+            maxConnections: 5
+            username: username
+          user:
+            cluster: true
+            headers:
+              key: headers
+            inToken: true
+            sqlite: sqlite
+            query:
+              key: query
+            remote: remote
+            ssl: true
+            redis:
+            - redis
+            - redis
+            database: 0
+            password: password
+            inMemory: true
+            mysql: mysql
+            mongodb: mongodb
+            user: user
+            postgres: postgres
+            maxConnections: 6
+            username: username
         i18n:
           default: en
           dir: ./i18n
@@ -4513,6 +4626,217 @@ components:
           type: object
       type: object
       x-additionalPropertiesName: auth
+    DbsCfg_user:
+      description: User database config
+      example:
+        cluster: true
+        headers:
+          key: headers
+        inToken: true
+        sqlite: sqlite
+        query:
+          key: query
+        remote: remote
+        ssl: true
+        redis:
+        - redis
+        - redis
+        database: 0
+        password: password
+        inMemory: true
+        mysql: mysql
+        mongodb: mongodb
+        user: user
+        postgres: postgres
+        maxConnections: 6
+        username: username
+      properties:
+        inMemory:
+          type: boolean
+        inToken:
+          type: boolean
+        mongodb:
+          type: string
+        database:
+          format: int32
+          type: integer
+        redis:
+          items:
+            type: string
+          type: array
+        cluster:
+          type: boolean
+        user:
+          type: string
+          x-nullable: true
+        password:
+          type: string
+        ssl:
+          type: boolean
+        maxConnections:
+          format: int32
+          type: integer
+        remote:
+          type: string
+        query:
+          additionalProperties:
+            type: string
+          type: object
+        headers:
+          additionalProperties:
+            type: string
+          type: object
+        mysql:
+          type: string
+        username:
+          type: string
+        postgres:
+          type: string
+        sqlite:
+          type: string
+    DbsCfg_session:
+      description: |-
+        Session database config.
+
+        If you aren't using cluster, prefer in-memory database.
+
+        You can use in-token to not use database at all. Use it with `token.access.cacheUnauthenticated = true` and
+        `token.access.cache != null` values.
+      example:
+        cluster: true
+        headers:
+          key: headers
+        inToken: true
+        sqlite: sqlite
+        query:
+          key: query
+        remote: remote
+        ssl: true
+        redis:
+        - redis
+        - redis
+        database: 1
+        password: password
+        inMemory: true
+        mysql: mysql
+        mongodb: mongodb
+        user: user
+        postgres: postgres
+        maxConnections: 5
+        username: username
+      properties:
+        inMemory:
+          type: boolean
+        inToken:
+          type: boolean
+        mongodb:
+          type: string
+        database:
+          format: int32
+          type: integer
+        redis:
+          items:
+            type: string
+          type: array
+        cluster:
+          type: boolean
+        user:
+          type: string
+          x-nullable: true
+        password:
+          type: string
+        ssl:
+          type: boolean
+        maxConnections:
+          format: int32
+          type: integer
+        remote:
+          type: string
+        query:
+          additionalProperties:
+            type: string
+          type: object
+        headers:
+          additionalProperties:
+            type: string
+          type: object
+        mysql:
+          type: string
+        username:
+          type: string
+        postgres:
+          type: string
+        sqlite:
+          type: string
+    DbsCfg_rateLimiter:
+      description: "Database for rate-limiters. If you don't use rate-limiter leave\
+        \ this empty (`{}`)."
+      example:
+        cluster: true
+        headers:
+          key: headers
+        inToken: true
+        sqlite: sqlite
+        query:
+          key: query
+        remote: remote
+        ssl: true
+        redis:
+        - redis
+        - redis
+        database: 5
+        password: password
+        inMemory: true
+        mysql: mysql
+        mongodb: mongodb
+        user: user
+        postgres: postgres
+        maxConnections: 2
+        username: username
+      properties:
+        inMemory:
+          type: boolean
+        inToken:
+          type: boolean
+        mongodb:
+          type: string
+        database:
+          format: int32
+          type: integer
+        redis:
+          items:
+            type: string
+          type: array
+        cluster:
+          type: boolean
+        user:
+          type: string
+          x-nullable: true
+        password:
+          type: string
+        ssl:
+          type: boolean
+        maxConnections:
+          format: int32
+          type: integer
+        remote:
+          type: string
+        query:
+          additionalProperties:
+            type: string
+          type: object
+        headers:
+          additionalProperties:
+            type: string
+          type: object
+        mysql:
+          type: string
+        username:
+          type: string
+        postgres:
+          type: string
+        sqlite:
+          type: string
     EntryCfg_accessToken:
       description: Override access token lifetime for sessions of this entry.
       example:

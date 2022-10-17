@@ -41,6 +41,9 @@ docs/ConfirmSessionAuthsReq.md
 docs/ConfirmUserAuthsReq.md
 docs/DbHealthRes.md
 docs/DbsCfg.md
+docs/DbsCfgRateLimiter.md
+docs/DbsCfgSession.md
+docs/DbsCfgUser.md
 docs/Device.md
 docs/EditUserReq.md
 docs/EmailAuthCfg.md
@@ -200,6 +203,9 @@ src/main/java/app/kntrl/client/generated/model/ConfirmSessionAuthsReq.java
 src/main/java/app/kntrl/client/generated/model/ConfirmUserAuthsReq.java
 src/main/java/app/kntrl/client/generated/model/DbHealthRes.java
 src/main/java/app/kntrl/client/generated/model/DbsCfg.java
+src/main/java/app/kntrl/client/generated/model/DbsCfgRateLimiter.java
+src/main/java/app/kntrl/client/generated/model/DbsCfgSession.java
+src/main/java/app/kntrl/client/generated/model/DbsCfgUser.java
 src/main/java/app/kntrl/client/generated/model/Device.java
 src/main/java/app/kntrl/client/generated/model/EditUserReq.java
 src/main/java/app/kntrl/client/generated/model/EmailAuthCfg.java
@@ -326,7 +332,10 @@ src/test/java/app/kntrl/client/generated/model/CodeVerifierTest.java
 src/test/java/app/kntrl/client/generated/model/ConfirmSessionAuthsReqTest.java
 src/test/java/app/kntrl/client/generated/model/ConfirmUserAuthsReqTest.java
 src/test/java/app/kntrl/client/generated/model/DbHealthResTest.java
+src/test/java/app/kntrl/client/generated/model/DbsCfgRateLimiterTest.java
+src/test/java/app/kntrl/client/generated/model/DbsCfgSessionTest.java
 src/test/java/app/kntrl/client/generated/model/DbsCfgTest.java
+src/test/java/app/kntrl/client/generated/model/DbsCfgUserTest.java
 src/test/java/app/kntrl/client/generated/model/DeviceTest.java
 src/test/java/app/kntrl/client/generated/model/EditUserReqTest.java
 src/test/java/app/kntrl/client/generated/model/EmailAuthCfgTest.java

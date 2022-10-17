@@ -1150,10 +1150,16 @@ components:
           description: New auth data to save
           x-super: '#/components/schemas/AuthData'
         resData:
-          type: object
           description: This data will be sent back to the client.
+          anyOf:
+          - $ref: '#/components/schemas/AuthResDataJson'
+          - $ref: '#/components/schemas/EmailAuthRes'
+          - $ref: '#/components/schemas/IpAuthRes'
+          - $ref: '#/components/schemas/OAuthRes'
+          - $ref: '#/components/schemas/PasswordUpdateRes'
+          - $ref: '#/components/schemas/QuestionsAuthenticateRes'
+          - $ref: '#/components/schemas/QuestionsUpdateRes'
           x-nullable: true
-          x-super: '#/components/schemas/AuthResData'
       x-order: -1249106462-6
     AuthResData:
       type: object
@@ -1712,10 +1718,16 @@ components:
           x-nullable: true
           x-super: '#/components/schemas/DryRunAuthData'
         resData:
-          type: object
           description: This data will be sent back to the client.
+          anyOf:
+          - $ref: '#/components/schemas/AuthResDataJson'
+          - $ref: '#/components/schemas/EmailAuthRes'
+          - $ref: '#/components/schemas/IpAuthRes'
+          - $ref: '#/components/schemas/OAuthRes'
+          - $ref: '#/components/schemas/PasswordUpdateRes'
+          - $ref: '#/components/schemas/QuestionsAuthenticateRes'
+          - $ref: '#/components/schemas/QuestionsUpdateRes'
           x-nullable: true
-          x-super: '#/components/schemas/AuthResData'
       x-order: -1249106462-5
     FindSessionRes:
       type: object

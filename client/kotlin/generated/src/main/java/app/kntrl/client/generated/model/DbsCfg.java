@@ -15,6 +15,9 @@ package app.kntrl.client.generated.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import app.kntrl.client.generated.model.DbsCfgRateLimiter;
+import app.kntrl.client.generated.model.DbsCfgSession;
+import app.kntrl.client.generated.model.DbsCfgUser;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -52,84 +55,84 @@ import app.kntrl.client.generated.infra.JSON;
 public class DbsCfg {
   public static final String SERIALIZED_NAME_USER = "user";
   @SerializedName(SERIALIZED_NAME_USER)
-  private Object user;
+  private DbsCfgUser user;
 
   public static final String SERIALIZED_NAME_SESSION = "session";
   @SerializedName(SERIALIZED_NAME_SESSION)
-  private Object session;
+  private DbsCfgSession session;
 
   public static final String SERIALIZED_NAME_RATE_LIMITER = "rateLimiter";
   @SerializedName(SERIALIZED_NAME_RATE_LIMITER)
-  private Object rateLimiter;
+  private DbsCfgRateLimiter rateLimiter;
 
   public DbsCfg() {
   }
 
-  public DbsCfg user(Object user) {
+  public DbsCfg user(DbsCfgUser user) {
     
     this.user = user;
     return this;
   }
 
    /**
-   * User database config
+   * Get user
    * @return user
   **/
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "User database config")
+  @ApiModelProperty(required = true, value = "")
 
-  public Object getUser() {
+  public DbsCfgUser getUser() {
     return user;
   }
 
 
-  public void setUser(Object user) {
+  public void setUser(DbsCfgUser user) {
     this.user = user;
   }
 
 
-  public DbsCfg session(Object session) {
+  public DbsCfg session(DbsCfgSession session) {
     
     this.session = session;
     return this;
   }
 
    /**
-   * Session database config.  If you aren&#39;t using cluster, prefer in-memory database.  You can use in-token to not use database at all. Use it with &#x60;token.access.cacheUnauthenticated &#x3D; true&#x60; and &#x60;token.access.cache !&#x3D; null&#x60; values.
+   * Get session
    * @return session
   **/
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Session database config.  If you aren't using cluster, prefer in-memory database.  You can use in-token to not use database at all. Use it with `token.access.cacheUnauthenticated = true` and `token.access.cache != null` values.")
+  @ApiModelProperty(required = true, value = "")
 
-  public Object getSession() {
+  public DbsCfgSession getSession() {
     return session;
   }
 
 
-  public void setSession(Object session) {
+  public void setSession(DbsCfgSession session) {
     this.session = session;
   }
 
 
-  public DbsCfg rateLimiter(Object rateLimiter) {
+  public DbsCfg rateLimiter(DbsCfgRateLimiter rateLimiter) {
     
     this.rateLimiter = rateLimiter;
     return this;
   }
 
    /**
-   * Database for rate-limiters. If you don&#39;t use rate-limiter leave this empty (&#x60;{}&#x60;).
+   * Get rateLimiter
    * @return rateLimiter
   **/
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Database for rate-limiters. If you don't use rate-limiter leave this empty (`{}`).")
+  @ApiModelProperty(required = true, value = "")
 
-  public Object getRateLimiter() {
+  public DbsCfgRateLimiter getRateLimiter() {
     return rateLimiter;
   }
 
 
-  public void setRateLimiter(Object rateLimiter) {
+  public void setRateLimiter(DbsCfgRateLimiter rateLimiter) {
     this.rateLimiter = rateLimiter;
   }
 
@@ -251,6 +254,18 @@ public class DbsCfg {
         if (jsonObj.get(requiredField) == null) {
           throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonObj.toString()));
         }
+      }
+      // validate the optional field `user`
+      if (jsonObj.get("user") != null && !jsonObj.get("user").isJsonNull()) {
+        DbsCfgUser.validateJsonObject(jsonObj.getAsJsonObject("user"));
+      }
+      // validate the optional field `session`
+      if (jsonObj.get("session") != null && !jsonObj.get("session").isJsonNull()) {
+        DbsCfgSession.validateJsonObject(jsonObj.getAsJsonObject("session"));
+      }
+      // validate the optional field `rateLimiter`
+      if (jsonObj.get("rateLimiter") != null && !jsonObj.get("rateLimiter").isJsonNull()) {
+        DbsCfgRateLimiter.validateJsonObject(jsonObj.getAsJsonObject("rateLimiter"));
       }
   }
 

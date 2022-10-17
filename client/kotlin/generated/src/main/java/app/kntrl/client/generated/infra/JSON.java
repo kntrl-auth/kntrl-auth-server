@@ -125,6 +125,9 @@ public class JSON {
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.ConfirmUserAuthsReq.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.DbHealthRes.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.DbsCfg.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.DbsCfgRateLimiter.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.DbsCfgSession.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.DbsCfgUser.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.Device.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.EditUserReq.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.EmailAuthCfg.CustomTypeAdapterFactory());
