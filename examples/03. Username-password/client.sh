@@ -17,6 +17,25 @@ curl -X POST "http://localhost:9876/api/session" \
         }
       }"
 
+
+printf '\n\nPrecheck password\n'
+curl -X POST "http://localhost:9876/api/session" \
+  -H 'Content-Type: application/json' \
+  -d "{
+        \"entry\": \"app\",
+        \"logins\": {
+          \"username\": \"$LOGIN\"
+        },
+        \"signUp\": true,
+        \"authReqs\": {
+          \"password\": {
+            \"password\": \"Abcdef1@\",
+            \"confirmPassword\": \"Abcdef1@\"
+          }
+        },
+        \"dryRun\": true
+      }"
+
 printf '\n\nConfirm password field is not required\n'
 curl -X POST "http://localhost:9876/api/session" \
   -H 'Content-Type: application/json' \

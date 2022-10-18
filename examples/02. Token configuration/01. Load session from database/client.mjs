@@ -37,9 +37,7 @@ async function loadSessionTokens() {
   });
   const signUpRes = await signUpSession.authenticate({
     authReqs: {
-      password: {
-        password: 'Abcdef1@'
-      }
+      password: {}
     }
   });
   return signUpRes.tokens;

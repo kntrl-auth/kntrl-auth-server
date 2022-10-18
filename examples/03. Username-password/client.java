@@ -1,3 +1,4 @@
+import app.kntrl.client.AuthReq;
 import app.kntrl.client.Kntrl;
 import app.kntrl.client.Session;
 import app.kntrl.client.generated.model.AuthExecRes;
@@ -14,8 +15,18 @@ class Example03 {
                 false,
                 true
         );
+
+        // Precheck password
+        AuthenticateRes precheckPasswordResult = signUpSession.authenticate(new Session.AuthReqs()
+                .req("password", new AuthReq()
+                        .password("Abcdef1@")
+                        .confirmPassword("Abcdef1@"))
+                .dryRun()
+        );
+        System.out.println("Password strength: " + precheckPasswordResult.getAuthRes().get("password").getResData().getStrength());
+
         AuthenticateRes signUpRes = signUpSession.authenticate(
-                new Session.AuthReqs().req("password", new Session.AuthReq()
+                new Session.AuthReqs().req("password", new AuthReq()
                         .password("Abcdef1@")
                         .confirmPassword("Abcdef1@"))
 
@@ -38,7 +49,7 @@ class Example03 {
                 false
         );
         AuthenticateRes signInRes = signInSession.authenticate(
-                new Session.AuthReqs().req("password", new Session.AuthReq().password("1234"))
+                new Session.AuthReqs().req("password", new AuthReq().password("1234"))
         );
         AuthExecRes passwordAuthRes = signInRes.getAuthRes().get("password");
         if (passwordAuthRes.getStatus() != AuthExecRes.StatusEnum.OK) {

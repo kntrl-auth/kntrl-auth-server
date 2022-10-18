@@ -1,6 +1,9 @@
 {
-  "files": [ "../**" ],
+  "files": [
+    "../**"
+  ],
   "dependencies": {
-    "kntrl-client": "file:../../client/typescript/dist"
+    "kntrl-client": "file:../../client/typescript/dist",
+    "prompt-sync": "^4.2.0"
   }
 }

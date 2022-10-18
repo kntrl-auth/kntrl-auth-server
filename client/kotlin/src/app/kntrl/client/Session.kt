@@ -40,22 +40,15 @@ class Session(
     }
 
 
-    fun authenticate() = authenticate(null)
-    fun authenticate(authReqs: Map<String, AuthenticateReqAuthReqsValue?>?) = authenticate(authReqs, null)
-    fun authenticate(
-        authReqs: Map<String, AuthenticateReqAuthReqsValue?>?,
-        factors: Map<String, String>?,
-    ): AuthenticateRes = handleErr(this) {
+    fun authenticate(req: AuthenticateReq): AuthenticateRes = handleErr(this) {
         val res = if (newSessionReq != null) {
             SessionApi(_authenticatedOpenapiClient()).newSession(newSessionReq!!.apply {
-                this.factors = factors
-                this.authReqs = authReqs
+                factors = req.factors
+                authReqs = req.authReqs
+                dryRun = req.dryRun
             })
         } else {
-            SessionApi(_authenticatedOpenapiClient()).authenticate(AuthenticateReq().apply {
-                this.factors = factors
-                this.authReqs = authReqs
-            })
+            SessionApi(_authenticatedOpenapiClient()).authenticate(req)
         }
         if (res.tokens?.access != null) newSessionReq = null
         update(res.tokens, res.session)
@@ -147,11 +140,25 @@ class Session(
         }
     }
 
-    class AuthReqs : LinkedHashMap<String, AuthenticateReqAuthReqsValue?>() {
+    class AuthReqs : AuthenticateReq() {
         fun req(auth: String, req: AuthenticateReqAuthReqsValue?): AuthReqs {
-            put(auth, req)
+            putAuthReqsItem(auth, req)
+            return this
+        }
+        fun req(auth: String, factor: String, req: AuthenticateReqAuthReqsValue?): AuthReqs {
+            putAuthReqsItem(auth, req)
+            putFactorsItem(auth, factor)
+            return this
+        }
+        fun enableFactor(factor: String): AuthReqs {
+            putFactorsItem(factor, null)
+            return this
+        }
+        fun dryRun(): AuthReqs {
+            dryRun(true)
             return this
         }
     }
-    class AuthReq : AuthenticateReqAuthReqsValue()
 }
+
+class AuthReq : AuthenticateReqAuthReqsValue()

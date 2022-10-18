@@ -1,3 +1,4 @@
+import app.kntrl.client.AuthReq;
 import app.kntrl.client.Kntrl;
 import app.kntrl.client.Session;
 import app.kntrl.client.generated.model.AuthenticateRes;
@@ -36,7 +37,7 @@ class Example0202 {
                 true
         );
         AuthenticateRes signUpRes = signUpSession.authenticate(
-                new Session.AuthReqs().req("password", new Session.AuthReq().password("Abcdef1@"))
+                new Session.AuthReqs().req("password", new AuthReq())
         );
         return signUpRes.getTokens();
     }

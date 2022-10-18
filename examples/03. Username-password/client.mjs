@@ -1,7 +1,7 @@
 import {AuthStatus, ErrCode, Kntrl} from '../.client/node_modules/kntrl-client/index.js';
 
 async function example() {
-  const login = "John-" + Math.random();
+  const login = 'John-' + Math.random();
 
   const signUpSession = new Kntrl().newSession({
     entry: 'app',
@@ -10,6 +10,19 @@ async function example() {
     },
     signUp: true
   });
+
+  // Precheck password
+  const precheckPasswordResult = await signUpSession.authenticate({
+    authReqs: {
+      password: {
+        password: 'Abcdef1@',
+        confirmPassword: 'Abcdef1@'
+      }
+    }
+  });
+  console.log(`Password strength: ${precheckPasswordResult.authRes.password.resData.strength}`);
+
+
   const signUpRes = await signUpSession.authenticate({
     authReqs: {
       // Use auth named "password"

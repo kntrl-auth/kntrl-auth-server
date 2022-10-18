@@ -6,7 +6,7 @@
       // use default config
     },
     email: {
-      server: "localhost:1025",
+      server: "maildev:1025",
       sender: "test@test.com"
     },
   },
