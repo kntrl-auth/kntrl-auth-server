@@ -35,16 +35,24 @@ async function example() {
   const paymentSession = signUpSession.newSession({
     entry: 'payment'
   });
-  let paymentRes = await paymentSession.authenticate();
-  if (!paymentRes.session.authenticated) {
-    console.log(`Factors required: ${paymentRes.session.nextFactors}`);
-    paymentRes = await paymentSession.authenticate({
+  await paymentSession.authenticate();
+  if (!paymentSession.authenticated) {
+    console.log('Factors required:', paymentSession.nextFactors);
+    const paymentRes = await paymentSession.authenticate({
       authReqs: {
         // Email field is not required, email will be extracted from user data.
         email: {}
       }
     });
-    console.log(`Next factors: ${paymentRes.session.nextFactors}`);
+    console.log('Next factors:', paymentSession.nextFactors);
+    await paymentSession.confirmAuth({
+      receivedCodes: {
+        email: {
+          [paymentRes.authRes.email.sentCode.id]: prompt('Enter received code from email (http://localhost:1080): ')
+        }
+      }
+    });
+    console.log('Authentication status:', paymentSession.authenticated)
   }
 }
 

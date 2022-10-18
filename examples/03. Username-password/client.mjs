@@ -20,7 +20,7 @@ async function example() {
       }
     }
   });
-  console.log(`Password strength: ${precheckPasswordResult.authRes.password.resData.strength}`);
+  console.log('Password strength:', precheckPasswordResult.authRes.password.resData.strength);
 
 
   const signUpRes = await signUpSession.authenticate({
@@ -41,7 +41,7 @@ async function example() {
     }
   });
 
-  console.log(signUpRes.authRes.password.resData.password + ' - ' + signUpRes.authRes.password.resData.strength)
+  console.log(signUpRes.authRes.password.resData.password + ': ' + signUpRes.authRes.password.resData.strength)
 
   const signInSession = new Kntrl().newSession({
     entry: 'app',
