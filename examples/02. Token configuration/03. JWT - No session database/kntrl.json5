@@ -11,6 +11,7 @@
 
   token: {
     access: {
+      cookie: true,
       cache: "BINARY", // or "JWT"
 
       // Optionally, required only if you can't authenticate user within single request

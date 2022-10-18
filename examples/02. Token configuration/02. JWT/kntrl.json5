@@ -1,6 +1,7 @@
 {
   token: {
     access: {
+      cookie: true,
       // Access token will be extracted from JWT
       cache: "JWT",
     },
