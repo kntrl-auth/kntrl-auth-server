@@ -1,4 +1,4 @@
-import {Kntrl, AuthStatus} from '../.client/node_modules/kntrl-client/index.js';
+import {AuthStatus, Kntrl} from '../.client/node_modules/kntrl-client/index.js';
 
 // Sign up with email
 async function example1() {
@@ -23,23 +23,25 @@ async function example1() {
 
 // Confirm email
 async function example2() {
-  // const sessionId = '<paste session id here>'
-  // const codeId = '<paste code id here>'
-  // const code = '<paste code here>'
+  const userId = '<paste user id here>';
+  const codeId = '<paste code id here>';
+  const code = '<paste code here>';
 
-  const sessionId = '1ed4ed2b-366f-62da-bd45-c3da6756c93d'
-  const codeId = '1n8u8M3LyrbHBUJVUfSxfObr2rFkrAuSnz7F5e7N3USy8YKwrmBRKYT1bA1aHhE1TZx1YFYUScFxIvhON'
-  const code = '244649'
-
-  await new Kntrl().session().confirmAuth({
-    sessionId,
+  const res = await new Kntrl().session().user.confirmAuth({
+    userId,
     receivedCodes: {
       email: {
         [codeId]: code
       }
     }
   });
+
+  if (res.authRes.email.status === AuthStatus.Ok) {
+    console.log(`Email confirmed`)
+  } else {
+    console.log(`Failed to confirm email "${res.authRes.email.err.devMsg}"`)
+  }
 }
 
-// example1().then(() => {}).catch(err => console.log(err));
-example2().then(() => {}).catch(err => console.log(err));
+example1().then(() => {}).catch(err => console.log(err));
+// example2().then(() => {}).catch(err => console.log(err));
