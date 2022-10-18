@@ -27,9 +27,9 @@ async function example2() {
   // const codeId = '<paste code id here>'
   // const code = '<paste code here>'
 
-  const sessionId = '1ed4e63b-a3e2-6b40-970a-ddcf42cf4d09'
-  const codeId = '1n8u8M3LyrH9KJAOlKbVNL1BMrKON3IqAL4KQJUFruK9qdExWFiABLeZe494C9hStv54eLNuiqc7p81yd'
-  const code = '677779'
+  const sessionId = '1ed4ed2b-366f-62da-bd45-c3da6756c93d'
+  const codeId = '1n8u8M3LyrbHBUJVUfSxfObr2rFkrAuSnz7F5e7N3USy8YKwrmBRKYT1bA1aHhE1TZx1YFYUScFxIvhON'
+  const code = '244649'
 
   await new Kntrl().session().confirmAuth({
     sessionId,
