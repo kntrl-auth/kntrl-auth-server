@@ -12,7 +12,7 @@ class Session(
     private var tokens: Tokens?, private var newSessionReq: NewSessionReq?,
 ) : SessionModel() {
     val server = ServerSvc(this)
-    val user = UserSvc(this)
+    @get:JvmName("user") val user = UserSvc(this)
     val rateLimiter = RateLimiterSvc(this)
 
     init {
@@ -62,9 +62,10 @@ class Session(
         res
     }
 
-    fun confirm(receivedCodes: Map<String, Map<String, String>>): AuthenticateRes = handleErr(this) {
+    fun confirm(receivedCodes: Map<String, Map<String, String>>): AuthenticateRes = confirm(null, receivedCodes)
+    fun confirm(sessionId: String?, receivedCodes: Map<String, Map<String, String>>): AuthenticateRes = handleErr(this) {
         val res = SessionApi(_authenticatedOpenapiClient()).confirmSessionAuths(
-            ConfirmSessionAuthsReq().receivedCodes(receivedCodes))
+            ConfirmSessionAuthsReq().sessionId(sessionId).receivedCodes(receivedCodes))
         update(res.tokens, res.session)
         res
     }

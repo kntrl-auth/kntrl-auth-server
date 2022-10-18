@@ -1,7 +1,7 @@
 import {AuthStatus, Kntrl} from '../.client/node_modules/kntrl-client/index.js';
 
 // Sign up with email
-async function example1() {
+async function exampleSignUp() {
   const session = new Kntrl().newSession({
     entry: 'app',
     signUp: true,
@@ -22,7 +22,7 @@ async function example1() {
 }
 
 // Confirm email
-async function example2() {
+async function exampleConfirmAuth() {
   const userId = '<paste user id here>';
   const codeId = '<paste code id here>';
   const code = '<paste code here>';
@@ -43,5 +43,5 @@ async function example2() {
   }
 }
 
-example1().then(() => {}).catch(err => console.log(err));
-// example2().then(() => {}).catch(err => console.log(err));
+exampleSignUp().then(() => {}).catch(err => console.log(err));
+// exampleConfirmAuth().then(() => {}).catch(err => console.log(err));

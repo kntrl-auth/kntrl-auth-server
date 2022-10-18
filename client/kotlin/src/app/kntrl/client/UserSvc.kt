@@ -11,9 +11,10 @@ class UserSvc(private val session: Session) {
     fun save(req: SaveUserReq): SaveUserRes = handleErr(session) {
         UserApi(session._authenticatedOpenapiClient()).saveUser(req)
     }
-    fun confirmAuth(receivedCodes: Map<String, Map<String, String>>): SaveUserRes = handleErr(session) {
+    fun confirmAuth(receivedCodes: Map<String, Map<String, String>>): SaveUserRes = confirmAuth(null, receivedCodes)
+    fun confirmAuth(userId: String?, receivedCodes: Map<String, Map<String, String>>): SaveUserRes = handleErr(session) {
         UserApi(session._authenticatedOpenapiClient())
-            .confirmUserAuths(ConfirmUserAuthsReq().receivedCodes(receivedCodes))
+            .confirmUserAuths(ConfirmUserAuthsReq().userId(userId).receivedCodes(receivedCodes))
     }
 }
 

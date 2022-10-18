@@ -20,6 +20,8 @@ class Kntrl(serverUrl: String = "http://localhost:9876") {
         this.signIn = signIn
         this.signUp = signUp
     })
+    fun newSession(entry: String, signIn: Boolean = false, signUp: Boolean = false) =
+        newSession(entry, null, signIn, signUp)
 
     fun session(tokens: Tokens) = Session(client, tokens, null)
     fun session(accessToken: String?) = session(Tokens().access(accessToken))

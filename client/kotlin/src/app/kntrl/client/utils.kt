@@ -35,7 +35,8 @@ class KntrlException(val data: Err) : RuntimeException("Kntrl API error (${data.
 }
 
 class ReceivedCodes : LinkedHashMap<String, MutableMap<String, String>>() {
-    fun received(auth: String, codeId: String, code: String) {
+    fun received(auth: String, codeId: String, code: String): ReceivedCodes {
         computeIfAbsent(auth) { LinkedHashMap() }[codeId] = code
+        return this
     }
 }
