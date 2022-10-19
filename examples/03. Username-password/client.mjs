@@ -18,7 +18,8 @@ async function example() {
         password: 'Abcdef1@',
         confirmPassword: 'Abcdef1@'
       }
-    }
+    },
+    dryRun: true,
   });
   console.log('Password strength:', precheckPasswordResult.authRes.password.resData.strength);
 

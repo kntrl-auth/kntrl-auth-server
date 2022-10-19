@@ -18,7 +18,6 @@ import java.util.Arrays;
 import app.kntrl.client.generated.model.EntryCfg;
 import app.kntrl.client.generated.model.I18nCfg;
 import app.kntrl.client.generated.model.RateLimiterCfg;
-import app.kntrl.client.generated.model.Regex;
 import app.kntrl.client.generated.model.ShAppCfgAuthsValue;
 import app.kntrl.client.generated.model.ShDbsCfg;
 import app.kntrl.client.generated.model.ShHttpCfg;
@@ -71,7 +70,7 @@ public class ShAppCfg {
 
   public static final String SERIALIZED_NAME_LOGIN_REQUIREMENTS = "loginRequirements";
   @SerializedName(SERIALIZED_NAME_LOGIN_REQUIREMENTS)
-  private Map<String, Regex> loginRequirements = null;
+  private Map<String, String> loginRequirements = null;
 
   public static final String SERIALIZED_NAME_AUTHS = "auths";
   @SerializedName(SERIALIZED_NAME_AUTHS)
@@ -166,13 +165,13 @@ public class ShAppCfg {
   }
 
 
-  public ShAppCfg loginRequirements(Map<String, Regex> loginRequirements) {
+  public ShAppCfg loginRequirements(Map<String, String> loginRequirements) {
     
     this.loginRequirements = loginRequirements;
     return this;
   }
 
-  public ShAppCfg putLoginRequirementsItem(String key, Regex loginRequirementsItem) {
+  public ShAppCfg putLoginRequirementsItem(String key, String loginRequirementsItem) {
     if (this.loginRequirements == null) {
       this.loginRequirements = new HashMap<>();
     }
@@ -185,14 +184,14 @@ public class ShAppCfg {
    * @return loginRequirements
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "{\"username\":\"\"}", value = "Regexes to validate logins. ")
+  @ApiModelProperty(example = "{\"username\":\"[\\\\w\\\\-.]{3,45}\"}", value = "Regexes to validate logins. ")
 
-  public Map<String, Regex> getLoginRequirements() {
+  public Map<String, String> getLoginRequirements() {
     return loginRequirements;
   }
 
 
-  public void setLoginRequirements(Map<String, Regex> loginRequirements) {
+  public void setLoginRequirements(Map<String, String> loginRequirements) {
     this.loginRequirements = loginRequirements;
   }
 

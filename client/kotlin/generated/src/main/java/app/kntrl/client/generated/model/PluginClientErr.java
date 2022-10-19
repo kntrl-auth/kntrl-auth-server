@@ -23,8 +23,6 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -62,10 +60,6 @@ public class PluginClientErr {
   public static final String SERIALIZED_NAME_MSG = "msg";
   @SerializedName(SERIALIZED_NAME_MSG)
   private String msg;
-
-  public static final String SERIALIZED_NAME_DATA = "data";
-  @SerializedName(SERIALIZED_NAME_DATA)
-  private Map<String, Object> data = null;
 
   public PluginClientErr() {
   }
@@ -138,37 +132,6 @@ public class PluginClientErr {
     this.msg = msg;
   }
 
-
-  public PluginClientErr data(Map<String, Object> data) {
-    
-    this.data = data;
-    return this;
-  }
-
-  public PluginClientErr putDataItem(String key, Object dataItem) {
-    if (this.data == null) {
-      this.data = new HashMap<>();
-    }
-    this.data.put(key, dataItem);
-    return this;
-  }
-
-   /**
-   * Get data
-   * @return data
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
-
-  public Map<String, Object> getData() {
-    return data;
-  }
-
-
-  public void setData(Map<String, Object> data) {
-    this.data = data;
-  }
-
   /**
    * A container for additional, undeclared properties.
    * This is a holder for any undeclared properties as specified with
@@ -217,14 +180,13 @@ public class PluginClientErr {
     PluginClientErr pluginClientErr = (PluginClientErr) o;
     return Objects.equals(this.code, pluginClientErr.code) &&
         Objects.equals(this.devMsg, pluginClientErr.devMsg) &&
-        Objects.equals(this.msg, pluginClientErr.msg) &&
-        Objects.equals(this.data, pluginClientErr.data)&&
+        Objects.equals(this.msg, pluginClientErr.msg)&&
         Objects.equals(this.additionalProperties, pluginClientErr.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(code, devMsg, msg, data, additionalProperties);
+    return Objects.hash(code, devMsg, msg, additionalProperties);
   }
 
   @Override
@@ -234,7 +196,6 @@ public class PluginClientErr {
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    devMsg: ").append(toIndentedString(devMsg)).append("\n");
     sb.append("    msg: ").append(toIndentedString(msg)).append("\n");
-    sb.append("    data: ").append(toIndentedString(data)).append("\n");
     sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -261,7 +222,6 @@ public class PluginClientErr {
     openapiFields.add("code");
     openapiFields.add("devMsg");
     openapiFields.add("msg");
-    openapiFields.add("data");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();

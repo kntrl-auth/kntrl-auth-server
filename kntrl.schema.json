@@ -41,20 +41,8 @@
     "loginRequirements": {
       "type": "object",
       "additionalProperties": {
-        "x-additionalPropertiesName": "login type",
-        "type": "object",
-        "properties": {
-          "pattern": {
-            "type": "string"
-          },
-          "options": {
-            "uniqueItems": true,
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/RegexOption"
-            }
-          }
-        }
+        "type": "string",
+        "x-additionalPropertiesName": "login type"
       },
       "description": "Regexes to validate logins.\n"
     },

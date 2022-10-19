@@ -783,8 +783,6 @@ components:
           type: type
           login: login
         strength: strength
-        data:
-          key: "{}"
         devMsg: devMsg
         waitTimeMinutes: 1
         tooLong: true
@@ -859,11 +857,6 @@ components:
         wasUsedDaysAgo:
           format: int64
           type: integer
-        data:
-          additionalProperties:
-            type: object
-          type: object
-          writeOnly: true
         incorrectAnswers:
           items:
             type: string
@@ -1052,11 +1045,6 @@ components:
         wasUsedDaysAgo:
           format: int64
           type: integer
-        data:
-          additionalProperties:
-            type: object
-          type: object
-          writeOnly: true
         incorrectAnswers:
           items:
             type: string
@@ -1317,6 +1305,7 @@ components:
       x-order: -1279700867-4
       x-super: '#/components/schemas/ClientErr'
     PluginClientErr:
+      additionalProperties: true
       properties:
         code:
           type: string
@@ -1327,11 +1316,6 @@ components:
           description: Localised message suitable for UI.
           type: string
           x-nullable: true
-        data:
-          additionalProperties:
-            type: object
-          type: object
-          writeOnly: true
       required:
       - code
       - devMsg
@@ -1922,6 +1906,8 @@ components:
           authType: authType
         - auth: auth
           authType: authType
+        loginRequirements:
+          key: loginRequirements
         logins:
         - logins
         - logins
@@ -1930,12 +1916,17 @@ components:
           items:
             type: string
           type: array
+        loginRequirements:
+          additionalProperties:
+            type: string
+          type: object
         auths:
           items:
             $ref: '#/components/schemas/PublicCfgAuth'
           type: array
       required:
       - auths
+      - loginRequirements
       - logins
       type: object
       x-order: -517526772-3
@@ -2058,8 +2049,6 @@ components:
             type: type
             login: login
           strength: strength
-          data:
-            key: "{}"
           devMsg: devMsg
           waitTimeMinutes: 1
           tooLong: true
@@ -2287,8 +2276,6 @@ components:
                 type: type
                 login: login
               strength: strength
-              data:
-                key: "{}"
               devMsg: devMsg
               waitTimeMinutes: 1
               tooLong: true
@@ -3060,8 +3047,6 @@ components:
                 type: type
                 login: login
               strength: strength
-              data:
-                key: "{}"
               devMsg: devMsg
               waitTimeMinutes: 1
               tooLong: true
@@ -4126,26 +4111,6 @@ components:
           type: boolean
       type: object
       x-order: -1195634750-5
-    Regex:
-      properties:
-        pattern:
-          type: string
-        options:
-          items:
-            $ref: '#/components/schemas/RegexOption'
-          type: array
-          uniqueItems: true
-      type: object
-    RegexOption:
-      enum:
-      - IGNORE_CASE
-      - MULTILINE
-      - LITERAL
-      - UNIX_LINES
-      - COMMENTS
-      - DOT_MATCHES_ALL
-      - CANON_EQ
-      type: string
     RemoteAuthCfg:
       description: Authentication implementation config
       properties:
@@ -4250,7 +4215,7 @@ components:
           bind: 127.0.0.1
           port: 9876
         loginRequirements:
-          username: ""
+          username: "[\\w\\-.]{3,45}"
         rateLimiters:
           key:
             parent: parent
@@ -4369,11 +4334,12 @@ components:
           uniqueItems: true
         loginRequirements:
           additionalProperties:
-            $ref: '#/components/schemas/Regex'
+            type: string
+            x-additionalPropertiesName: login type
           description: |
             Regexes to validate logins.
           example:
-            username: ""
+            username: "[\\w\\-.]{3,45}"
           type: object
         auths:
           additionalProperties:
@@ -4581,6 +4547,8 @@ components:
       - userInfoUrl
       type: object
       x-order: -51011121-6
+    regex:
+      type: string
     UnauthenticatedCode:
       enum:
       - SESSION_EXPIRED

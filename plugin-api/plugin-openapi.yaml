@@ -652,15 +652,9 @@ components:
       x-order: -1279700867-4
     PluginClientErr:
       type: object
+      additionalProperties: true
       allOf:
       - $ref: '#/components/schemas/ClientErr'
-      - type: object
-        properties:
-          data:
-            type: object
-            additionalProperties:
-              type: object
-            writeOnly: true
       x-order: -1279700867-2
     PluginErr:
       type: object

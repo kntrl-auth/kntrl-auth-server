@@ -123,10 +123,6 @@ public class ClientErr {
   @SerializedName(SERIALIZED_NAME_WAS_USED_DAYS_AGO)
   private Long wasUsedDaysAgo;
 
-  public static final String SERIALIZED_NAME_DATA = "data";
-  @SerializedName(SERIALIZED_NAME_DATA)
-  private Map<String, Object> data = null;
-
   public static final String SERIALIZED_NAME_INCORRECT_ANSWERS = "incorrectAnswers";
   @SerializedName(SERIALIZED_NAME_INCORRECT_ANSWERS)
   private List<String> incorrectAnswers = null;
@@ -561,37 +557,6 @@ public class ClientErr {
   }
 
 
-  public ClientErr data(Map<String, Object> data) {
-    
-    this.data = data;
-    return this;
-  }
-
-  public ClientErr putDataItem(String key, Object dataItem) {
-    if (this.data == null) {
-      this.data = new HashMap<>();
-    }
-    this.data.put(key, dataItem);
-    return this;
-  }
-
-   /**
-   * Get data
-   * @return data
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
-
-  public Map<String, Object> getData() {
-    return data;
-  }
-
-
-  public void setData(Map<String, Object> data) {
-    this.data = data;
-  }
-
-
   public ClientErr incorrectAnswers(List<String> incorrectAnswers) {
     
     this.incorrectAnswers = incorrectAnswers;
@@ -908,7 +873,6 @@ public class ClientErr {
         Objects.equals(this.passwordsMismatch, clientErr.passwordsMismatch) &&
         Objects.equals(this.strength, clientErr.strength) &&
         Objects.equals(this.wasUsedDaysAgo, clientErr.wasUsedDaysAgo) &&
-        Objects.equals(this.data, clientErr.data) &&
         Objects.equals(this.incorrectAnswers, clientErr.incorrectAnswers) &&
         Objects.equals(this.requiresMoreAnswers, clientErr.requiresMoreAnswers) &&
         Objects.equals(this.questionsNotFound, clientErr.questionsNotFound) &&
@@ -924,7 +888,7 @@ public class ClientErr {
 
   @Override
   public int hashCode() {
-    return Objects.hash(code, devMsg, msg, changedAt, changedDaysAgo, tooLong, tooShort, missingNumber, missingSymbol, missingUpperCase, missingLowerCase, commonPassword, wasUsedBeforeAt, matchesLogin, passwordsMismatch, strength, wasUsedDaysAgo, data, incorrectAnswers, requiresMoreAnswers, questionsNotFound, invalidAnswers, tooManyAnswers, waitTimeMs, waitTimeSeconds, waitTimeMinutes, expiredAt, loginId, additionalProperties);
+    return Objects.hash(code, devMsg, msg, changedAt, changedDaysAgo, tooLong, tooShort, missingNumber, missingSymbol, missingUpperCase, missingLowerCase, commonPassword, wasUsedBeforeAt, matchesLogin, passwordsMismatch, strength, wasUsedDaysAgo, incorrectAnswers, requiresMoreAnswers, questionsNotFound, invalidAnswers, tooManyAnswers, waitTimeMs, waitTimeSeconds, waitTimeMinutes, expiredAt, loginId, additionalProperties);
   }
 
   @Override
@@ -948,7 +912,6 @@ public class ClientErr {
     sb.append("    passwordsMismatch: ").append(toIndentedString(passwordsMismatch)).append("\n");
     sb.append("    strength: ").append(toIndentedString(strength)).append("\n");
     sb.append("    wasUsedDaysAgo: ").append(toIndentedString(wasUsedDaysAgo)).append("\n");
-    sb.append("    data: ").append(toIndentedString(data)).append("\n");
     sb.append("    incorrectAnswers: ").append(toIndentedString(incorrectAnswers)).append("\n");
     sb.append("    requiresMoreAnswers: ").append(toIndentedString(requiresMoreAnswers)).append("\n");
     sb.append("    questionsNotFound: ").append(toIndentedString(questionsNotFound)).append("\n");
@@ -999,7 +962,6 @@ public class ClientErr {
     openapiFields.add("passwordsMismatch");
     openapiFields.add("strength");
     openapiFields.add("wasUsedDaysAgo");
-    openapiFields.add("data");
     openapiFields.add("incorrectAnswers");
     openapiFields.add("requiresMoreAnswers");
     openapiFields.add("questionsNotFound");

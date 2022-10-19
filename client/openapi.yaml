@@ -998,15 +998,9 @@ components:
       x-order: -1279700867-4
     PluginClientErr:
       type: object
+      additionalProperties: true
       allOf:
       - $ref: '#/components/schemas/ClientErr'
-      - type: object
-        properties:
-          data:
-            type: object
-            additionalProperties:
-              type: object
-            writeOnly: true
       x-order: -1279700867-2
     PluginErr:
       type: object
@@ -1345,12 +1339,17 @@ components:
     PublicCfgRes:
       required:
       - auths
+      - loginRequirements
       - logins
       type: object
       properties:
         logins:
           type: array
           items:
+            type: string
+        loginRequirements:
+          type: object
+          additionalProperties:
             type: string
         auths:
           type: array
@@ -2740,26 +2739,6 @@ components:
         Long-living token used for generation of new access token.
         This is optional. You can set longer access-token lifetime instead.
       x-order: -1195634750-5
-    Regex:
-      type: object
-      properties:
-        pattern:
-          type: string
-        options:
-          uniqueItems: true
-          type: array
-          items:
-            $ref: '#/components/schemas/RegexOption'
-    RegexOption:
-      type: string
-      enum:
-      - IGNORE_CASE
-      - MULTILINE
-      - LITERAL
-      - UNIX_LINES
-      - COMMENTS
-      - DOT_MATCHES_ALL
-      - CANON_EQ
     RemoteAuthCfg:
       required:
       - remote
@@ -2862,13 +2841,12 @@ components:
         loginRequirements:
           type: object
           additionalProperties:
+            type: string
             x-additionalPropertiesName: login type
-            anyOf:
-            - $ref: '#/components/schemas/Regex'
           description: |
             Regexes to validate logins.
           example:
-            username: ""
+            username: "[\\w\\-.]{3,45}"
         auths:
           type: object
           additionalProperties:
@@ -3039,6 +3017,8 @@ components:
           type: boolean
           description: Send token in Authorisation header.
       x-order: -51011121-6
+    regex:
+      type: string
   securitySchemes:
     access-token:
       type: http

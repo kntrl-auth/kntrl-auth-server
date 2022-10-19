@@ -2,3 +2,4 @@ rootProject.name = "client-example"
 
 // Remove this line if you want to make gradle download library from maven central.
 includeBuild("../../client/kotlin")
+includeBuild("../08. Custom auth (plugin)/.plugin-server")

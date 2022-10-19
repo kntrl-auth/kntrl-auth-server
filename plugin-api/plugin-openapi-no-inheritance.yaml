@@ -799,11 +799,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-        data:
-          type: object
-          additionalProperties:
-            type: object
-          writeOnly: true
+      additionalProperties: true
       x-order: -1279700867-2
       x-super: '#/components/schemas/ClientErr'
     PluginErr:

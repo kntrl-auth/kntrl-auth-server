@@ -735,12 +735,6 @@ export interface ClientErr {
     'wasUsedDaysAgo'?: number;
     /**
      * 
-     * @type {{ [key: string]: object; }}
-     * @memberof ClientErr
-     */
-    'data'?: { [key: string]: object; };
-    /**
-     * 
      * @type {Array<string>}
      * @memberof ClientErr
      */
@@ -1509,12 +1503,6 @@ export interface Err {
      * @memberof Err
      */
     'wasUsedDaysAgo'?: number;
-    /**
-     * 
-     * @type {{ [key: string]: object; }}
-     * @memberof Err
-     */
-    'data'?: { [key: string]: object; };
     /**
      * 
      * @type {Array<string>}
@@ -2607,6 +2595,8 @@ export interface PasswordUpdateRes {
  * @interface PluginClientErr
  */
 export interface PluginClientErr {
+    [key: string]: any;
+
     /**
      * 
      * @type {string}
@@ -2625,12 +2615,6 @@ export interface PluginClientErr {
      * @memberof PluginClientErr
      */
     'msg'?: string;
-    /**
-     * 
-     * @type {{ [key: string]: object; }}
-     * @memberof PluginClientErr
-     */
-    'data'?: { [key: string]: object; };
 }
 /**
  * 
@@ -2719,6 +2703,12 @@ export interface PublicCfgRes {
      * @memberof PublicCfgRes
      */
     'logins': Array<string>;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof PublicCfgRes
+     */
+    'loginRequirements': { [key: string]: string; };
     /**
      * 
      * @type {Array<PublicCfgAuth>}
@@ -3106,44 +3096,6 @@ export interface RefreshTokenRes {
     'session': Session;
 }
 /**
- * 
- * @export
- * @interface Regex
- */
-export interface Regex {
-    /**
-     * 
-     * @type {string}
-     * @memberof Regex
-     */
-    'pattern'?: string;
-    /**
-     * 
-     * @type {Set<RegexOption>}
-     * @memberof Regex
-     */
-    'options'?: Set<RegexOption>;
-}
-/**
- * 
- * @export
- * @enum {string}
- */
-
-export const RegexOption = {
-    IgnoreCase: 'IGNORE_CASE',
-    Multiline: 'MULTILINE',
-    Literal: 'LITERAL',
-    UnixLines: 'UNIX_LINES',
-    Comments: 'COMMENTS',
-    DotMatchesAll: 'DOT_MATCHES_ALL',
-    CanonEq: 'CANON_EQ'
-} as const;
-
-export type RegexOption = typeof RegexOption[keyof typeof RegexOption];
-
-
-/**
  * Authentication implementation config
  * @export
  * @interface RemoteAuthCfg
@@ -3456,10 +3408,10 @@ export interface ShAppCfg {
     'logins'?: Set<string>;
     /**
      * Regexes to validate logins. 
-     * @type {{ [key: string]: Regex; }}
+     * @type {{ [key: string]: string; }}
      * @memberof ShAppCfg
      */
-    'loginRequirements'?: { [key: string]: Regex; };
+    'loginRequirements'?: { [key: string]: string; };
     /**
      * List of auth names and auth configs  To use builtin auths (not a plugin or remote) follow the example: `\"password\": { ... }` or `\"anyAuthName\": { \"builtin\": \"password\", ... }` 
      * @type {{ [key: string]: ShAppCfgAuthsValue; }}
