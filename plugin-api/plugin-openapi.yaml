@@ -408,10 +408,11 @@ components:
           ACCESS_DENIED: '#/components/schemas/AccessDenied'
           USER_NOT_FOUND: '#/components/schemas/UserNotFound'
           SIGNATURE_IS_INCORRECT: '#/components/schemas/SignatureIsIncorrect'
+          USER_SIMPLE_LOGIN_IS_INCORRECT: '#/components/schemas/UserSimpleLoginIsIncorrect'
           USER_LOGIN_ALREADY_TAKEN: '#/components/schemas/UserLoginAlreadyTaken'
-          AUTH_IS_NOT_ENABLED: '#/components/schemas/AuthIsNotEnabled'
           TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
           TOO_MANY_REQS: '#/components/schemas/TooManyReqs'
+          AUTH_IS_NOT_ENABLED: '#/components/schemas/AuthIsNotEnabled'
           AUTH_IS_NOT_CONFIRMED: '#/components/schemas/AuthIsNotConfirmed'
           NO_AUTH_AVAILABLE_FOR_FACTOR: '#/components/schemas/NoAuthAvailableForFactor'
           AUTH_REQUIRES_ANOTHER: '#/components/schemas/AuthRequiresAnother'
@@ -463,17 +464,17 @@ components:
       type: object
       allOf:
       - $ref: '#/components/schemas/ClientErr'
-      x-order: -270554383-2
+      x-order: -270554383-3
     AuthIsNotEnabled:
       type: object
       allOf:
       - $ref: '#/components/schemas/ClientErr'
-      x-order: -270554383-1
+      x-order: -270554383-2
     AuthRequiresAnother:
       type: object
       allOf:
       - $ref: '#/components/schemas/ClientErr'
-      x-order: -270554383-4
+      x-order: -270554383-5
     ClientErr:
       required:
       - code
@@ -493,10 +494,11 @@ components:
           ACCESS_DENIED: '#/components/schemas/AccessDenied'
           USER_NOT_FOUND: '#/components/schemas/UserNotFound'
           SIGNATURE_IS_INCORRECT: '#/components/schemas/SignatureIsIncorrect'
+          USER_SIMPLE_LOGIN_IS_INCORRECT: '#/components/schemas/UserSimpleLoginIsIncorrect'
           USER_LOGIN_ALREADY_TAKEN: '#/components/schemas/UserLoginAlreadyTaken'
-          AUTH_IS_NOT_ENABLED: '#/components/schemas/AuthIsNotEnabled'
           TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
           TOO_MANY_REQS: '#/components/schemas/TooManyReqs'
+          AUTH_IS_NOT_ENABLED: '#/components/schemas/AuthIsNotEnabled'
           AUTH_IS_NOT_CONFIRMED: '#/components/schemas/AuthIsNotConfirmed'
           AUTH_REQUIRES_ANOTHER: '#/components/schemas/AuthRequiresAnother'
           CODE_IS_EXPIRED: '#/components/schemas/CodeIsExpired'
@@ -522,17 +524,17 @@ components:
       type: object
       allOf:
       - $ref: '#/components/schemas/ClientErr'
-      x-order: -270554383-5
+      x-order: -270554383-6
     CodeIsIncorrect:
       type: object
       allOf:
       - $ref: '#/components/schemas/ClientErr'
-      x-order: -270554383-7
+      x-order: -270554383-8
     CodeTooManyAttempts:
       type: object
       allOf:
       - $ref: '#/components/schemas/ClientErr'
-      x-order: -270554383-6
+      x-order: -270554383-7
     EmailIsIncorrect:
       type: object
       allOf:
@@ -588,7 +590,7 @@ components:
       type: object
       allOf:
       - $ref: '#/components/schemas/IntegrationErr'
-      x-order: -270554383-3
+      x-order: -270554383-4
     PasswordIsIncorrect:
       type: object
       allOf:
@@ -748,7 +750,7 @@ components:
             type: integer
             format: int64
             x-nullable: true
-      x-order: -270554383-10
+      x-order: -270554383-11
     TooManyReqs:
       type: object
       allOf:
@@ -767,7 +769,7 @@ components:
             type: integer
             format: int32
             x-nullable: true
-      x-order: -270554383-11
+      x-order: -270554383-12
     Unauthenticated:
       required:
       - code
@@ -782,18 +784,41 @@ components:
           UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
       allOf:
       - $ref: '#/components/schemas/ClientErr'
-      x-order: -270554383-8
+      x-order: -270554383-9
       x-sealed: false
     UserLoginAlreadyTaken:
       type: object
       allOf:
       - $ref: '#/components/schemas/ClientErr'
-      x-order: -270554383-0
+      x-order: -270554383-1
     UserNotFound:
       type: object
       allOf:
       - $ref: '#/components/schemas/Unauthenticated'
       x-order: -2065236468-2
+    UserSimpleLoginIsIncorrect:
+      required:
+      - loginId
+      - notAlphanumericOrDashUnderscorePoint
+      - tooLong
+      - tooShort
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ClientErr'
+      - type: object
+        properties:
+          loginId:
+            $ref: '#/components/schemas/LoginId'
+          tooShort:
+            type: boolean
+          tooLong:
+            type: boolean
+          phoneNumber:
+            type: boolean
+          notAlphanumericOrDashUnderscorePoint:
+            type: boolean
+            description: "Login contains symbols other than a-z, A-Z, 0-9, -, _, ."
+      x-order: -270554383-0
     RateLimiterState:
       required:
       - burntQuota

@@ -30,7 +30,8 @@ import java.io.IOException;
 import app.kntrl.client.generated.model.ClientErr;
 import app.kntrl.client.generated.model.HealthRes;
 import app.kntrl.client.generated.model.IntegrationErr;
-import app.kntrl.client.generated.model.SHAppCfg;
+import app.kntrl.client.generated.model.PublicCfgRes;
+import app.kntrl.client.generated.model.ShAppCfg;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -146,7 +147,7 @@ public class ServerApi {
     /**
      * Server configuration
      * Current server configuration. Available only for users with system-access. 
-     * @return SHAppCfg
+     * @return ShAppCfg
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -156,15 +157,15 @@ public class ServerApi {
         <tr><td> 0 </td><td> Success </td><td>  -  </td></tr>
      </table>
      */
-    public SHAppCfg cfg() throws ApiException {
-        ApiResponse<SHAppCfg> localVarResp = cfgWithHttpInfo();
+    public ShAppCfg cfg() throws ApiException {
+        ApiResponse<ShAppCfg> localVarResp = cfgWithHttpInfo();
         return localVarResp.getData();
     }
 
     /**
      * Server configuration
      * Current server configuration. Available only for users with system-access. 
-     * @return ApiResponse&lt;SHAppCfg&gt;
+     * @return ApiResponse&lt;ShAppCfg&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -174,9 +175,9 @@ public class ServerApi {
         <tr><td> 0 </td><td> Success </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<SHAppCfg> cfgWithHttpInfo() throws ApiException {
+    public ApiResponse<ShAppCfg> cfgWithHttpInfo() throws ApiException {
         okhttp3.Call localVarCall = cfgValidateBeforeCall(null);
-        Type localVarReturnType = new TypeToken<SHAppCfg>(){}.getType();
+        Type localVarReturnType = new TypeToken<ShAppCfg>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -194,10 +195,135 @@ public class ServerApi {
         <tr><td> 0 </td><td> Success </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call cfgAsync(final ApiCallback<SHAppCfg> _callback) throws ApiException {
+    public okhttp3.Call cfgAsync(final ApiCallback<ShAppCfg> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = cfgValidateBeforeCall(_callback);
-        Type localVarReturnType = new TypeToken<SHAppCfg>(){}.getType();
+        Type localVarReturnType = new TypeToken<ShAppCfg>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for cfgPublic
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 4XX </td><td> Client error </td><td>  -  </td></tr>
+        <tr><td> 5XX </td><td> Server error </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Success </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call cfgPublicCall(final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/api/server/cfg/public";
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] {  };
+        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call cfgPublicValidateBeforeCall(final ApiCallback _callback) throws ApiException {
+        
+
+        okhttp3.Call localVarCall = cfgPublicCall(_callback);
+        return localVarCall;
+
+    }
+
+    /**
+     * Public server configuration
+     * Get server configuration. 
+     * @return PublicCfgRes
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 4XX </td><td> Client error </td><td>  -  </td></tr>
+        <tr><td> 5XX </td><td> Server error </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Success </td><td>  -  </td></tr>
+     </table>
+     */
+    public PublicCfgRes cfgPublic() throws ApiException {
+        ApiResponse<PublicCfgRes> localVarResp = cfgPublicWithHttpInfo();
+        return localVarResp.getData();
+    }
+
+    /**
+     * Public server configuration
+     * Get server configuration. 
+     * @return ApiResponse&lt;PublicCfgRes&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 4XX </td><td> Client error </td><td>  -  </td></tr>
+        <tr><td> 5XX </td><td> Server error </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Success </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<PublicCfgRes> cfgPublicWithHttpInfo() throws ApiException {
+        okhttp3.Call localVarCall = cfgPublicValidateBeforeCall(null);
+        Type localVarReturnType = new TypeToken<PublicCfgRes>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Public server configuration (asynchronously)
+     * Get server configuration. 
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 4XX </td><td> Client error </td><td>  -  </td></tr>
+        <tr><td> 5XX </td><td> Server error </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Success </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call cfgPublicAsync(final ApiCallback<PublicCfgRes> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = cfgPublicValidateBeforeCall(_callback);
+        Type localVarReturnType = new TypeToken<PublicCfgRes>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }

@@ -49,7 +49,7 @@ import app.kntrl.client.generated.infra.JSON;
  */
 @ApiModel(description = "Http server config")
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
-public class SHHttpCfg {
+public class ShHttpCfg {
   public static final String SERIALIZED_NAME_PORT = "port";
   @SerializedName(SERIALIZED_NAME_PORT)
   private Integer port;
@@ -62,10 +62,10 @@ public class SHHttpCfg {
   @SerializedName(SERIALIZED_NAME_PROXY)
   private Boolean proxy;
 
-  public SHHttpCfg() {
+  public ShHttpCfg() {
   }
 
-  public SHHttpCfg port(Integer port) {
+  public ShHttpCfg port(Integer port) {
     
     this.port = port;
     return this;
@@ -88,7 +88,7 @@ public class SHHttpCfg {
   }
 
 
-  public SHHttpCfg bind(String bind) {
+  public ShHttpCfg bind(String bind) {
     
     this.bind = bind;
     return this;
@@ -111,7 +111,7 @@ public class SHHttpCfg {
   }
 
 
-  public SHHttpCfg proxy(Boolean proxy) {
+  public ShHttpCfg proxy(Boolean proxy) {
     
     this.proxy = proxy;
     return this;
@@ -144,7 +144,7 @@ public class SHHttpCfg {
    * Set the additional (undeclared) property with the specified name and value.
    * If the property does not already exist, create it otherwise replace it.
    */
-  public SHHttpCfg putAdditionalProperty(String key, Object value) {
+  public ShHttpCfg putAdditionalProperty(String key, Object value) {
     if (this.additionalProperties == null) {
         this.additionalProperties = new HashMap<String, Object>();
     }
@@ -178,7 +178,7 @@ public class SHHttpCfg {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SHHttpCfg shHttpCfg = (SHHttpCfg) o;
+    ShHttpCfg shHttpCfg = (ShHttpCfg) o;
     return Objects.equals(this.port, shHttpCfg.port) &&
         Objects.equals(this.bind, shHttpCfg.bind) &&
         Objects.equals(this.proxy, shHttpCfg.proxy)&&
@@ -193,7 +193,7 @@ public class SHHttpCfg {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SHHttpCfg {\n");
+    sb.append("class ShHttpCfg {\n");
     sb.append("    port: ").append(toIndentedString(port)).append("\n");
     sb.append("    bind: ").append(toIndentedString(bind)).append("\n");
     sb.append("    proxy: ").append(toIndentedString(proxy)).append("\n");
@@ -232,14 +232,14 @@ public class SHHttpCfg {
   * Validates the JSON Object and throws an exception if issues found
   *
   * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to SHHttpCfg
+  * @throws IOException if the JSON Object is invalid with respect to ShHttpCfg
   */
   public static void validateJsonObject(JsonObject jsonObj) throws IOException {
       if (jsonObj == null) {
-        if (SHHttpCfg.openapiRequiredFields.isEmpty()) {
+        if (ShHttpCfg.openapiRequiredFields.isEmpty()) {
           return;
         } else { // has required fields
-          throw new IllegalArgumentException(String.format("The required field(s) %s in SHHttpCfg is not found in the empty JSON string", SHHttpCfg.openapiRequiredFields.toString()));
+          throw new IllegalArgumentException(String.format("The required field(s) %s in ShHttpCfg is not found in the empty JSON string", ShHttpCfg.openapiRequiredFields.toString()));
         }
       }
       if ((jsonObj.get("bind") != null && !jsonObj.get("bind").isJsonNull()) && !jsonObj.get("bind").isJsonPrimitive()) {
@@ -251,16 +251,16 @@ public class SHHttpCfg {
     @SuppressWarnings("unchecked")
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!SHHttpCfg.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'SHHttpCfg' and its subtypes
+       if (!ShHttpCfg.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'ShHttpCfg' and its subtypes
        }
        final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<SHHttpCfg> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(SHHttpCfg.class));
+       final TypeAdapter<ShHttpCfg> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(ShHttpCfg.class));
 
-       return (TypeAdapter<T>) new TypeAdapter<SHHttpCfg>() {
+       return (TypeAdapter<T>) new TypeAdapter<ShHttpCfg>() {
            @Override
-           public void write(JsonWriter out, SHHttpCfg value) throws IOException {
+           public void write(JsonWriter out, ShHttpCfg value) throws IOException {
              JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
              obj.remove("additionalProperties");
              // serialize additonal properties
@@ -283,11 +283,11 @@ public class SHHttpCfg {
            }
 
            @Override
-           public SHHttpCfg read(JsonReader in) throws IOException {
+           public ShHttpCfg read(JsonReader in) throws IOException {
              JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
              validateJsonObject(jsonObj);
              // store additional fields in the deserialized instance
-             SHHttpCfg instance = thisAdapter.fromJsonTree(jsonObj);
+             ShHttpCfg instance = thisAdapter.fromJsonTree(jsonObj);
              for (Map.Entry<String, JsonElement> entry : jsonObj.entrySet()) {
                if (!openapiFields.contains(entry.getKey())) {
                  if (entry.getValue().isJsonPrimitive()) { // primitive type
@@ -312,18 +312,18 @@ public class SHHttpCfg {
   }
 
  /**
-  * Create an instance of SHHttpCfg given an JSON string
+  * Create an instance of ShHttpCfg given an JSON string
   *
   * @param jsonString JSON string
-  * @return An instance of SHHttpCfg
-  * @throws IOException if the JSON string is invalid with respect to SHHttpCfg
+  * @return An instance of ShHttpCfg
+  * @throws IOException if the JSON string is invalid with respect to ShHttpCfg
   */
-  public static SHHttpCfg fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, SHHttpCfg.class);
+  public static ShHttpCfg fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, ShHttpCfg.class);
   }
 
  /**
-  * Convert an instance of SHHttpCfg to an JSON string
+  * Convert an instance of ShHttpCfg to an JSON string
   *
   * @return JSON string
   */

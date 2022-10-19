@@ -21,7 +21,7 @@
         }
       },
       "description": "Http server config",
-      "x-order": "578911261-1"
+      "x-order": "-1414553603-1"
     },
     "logins": {
       "uniqueItems": true,
@@ -792,11 +792,6 @@
       "description": "List of app entries. Entry usually represents UI used for signing in/up or additional authentication\nbefore action. E.g.:\n- app: main entry that requests user login/email + password and 2fa (if enabled)\n- api: entry that allows user to generate API keys and connect third-party app\n- action: additional authentication (e.g. code from sms) requested before e.g. payment\n"
     },
     "db": {
-      "required": [
-        "rateLimiter",
-        "session",
-        "user"
-      ],
       "type": "object",
       "properties": {
         "user": {
@@ -1338,7 +1333,7 @@
         }
       },
       "description": "Database connection configs",
-      "x-order": "-1723799702-3"
+      "x-order": "-1414553603-2"
     },
     "token": {
       "type": "object",
@@ -1468,6 +1463,6 @@
       "type": "string"
     }
   },
-  "x-order": "578911261-0",
+  "x-order": "-1414553603-0",
   "$schema": "http://json-schema.org/draft-04/schema#"
 }

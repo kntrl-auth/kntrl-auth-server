@@ -121,6 +121,7 @@ Class | Method | HTTP request | Description
 *AuthorisationApi* | [**authorize**](docs/AuthorisationApi.md#authorize) | **POST** /api/authorize | (Backend API) authorize session
 *AuthorisationApi* | [**limit**](docs/AuthorisationApi.md#limit) | **POST** /api/rate-limiter/limit | (Backend API) validate by rate-limiter
 *ServerApi* | [**cfg**](docs/ServerApi.md#cfg) | **GET** /api/server/cfg | Server configuration
+*ServerApi* | [**cfgPublic**](docs/ServerApi.md#cfgPublic) | **GET** /api/server/cfg/public | Public server configuration
 *ServerApi* | [**health**](docs/ServerApi.md#health) | **GET** /api/server/health | Server health status
 *SessionApi* | [**authenticate**](docs/SessionApi.md#authenticate) | **PATCH** /api/session | Authenticate session
 *SessionApi* | [**confirmSessionAuths**](docs/SessionApi.md#confirmSessionAuths) | **POST** /api/session/auth/confirm | Confirm with code
@@ -174,10 +175,6 @@ Class | Method | HTTP request | Description
  - [ConfirmSessionAuthsReq](docs/ConfirmSessionAuthsReq.md)
  - [ConfirmUserAuthsReq](docs/ConfirmUserAuthsReq.md)
  - [DbHealthRes](docs/DbHealthRes.md)
- - [DbsCfg](docs/DbsCfg.md)
- - [DbsCfgRateLimiter](docs/DbsCfgRateLimiter.md)
- - [DbsCfgSession](docs/DbsCfgSession.md)
- - [DbsCfgUser](docs/DbsCfgUser.md)
  - [Device](docs/Device.md)
  - [EditUserReq](docs/EditUserReq.md)
  - [EmailAuthCfg](docs/EmailAuthCfg.md)
@@ -226,6 +223,8 @@ Class | Method | HTTP request | Description
  - [PluginClientErr](docs/PluginClientErr.md)
  - [PluginErr](docs/PluginErr.md)
  - [PostgresCfg](docs/PostgresCfg.md)
+ - [PublicCfgAuth](docs/PublicCfgAuth.md)
+ - [PublicCfgRes](docs/PublicCfgRes.md)
  - [QuestionsAnswersIncorrect](docs/QuestionsAnswersIncorrect.md)
  - [QuestionsAnswersInvalid](docs/QuestionsAnswersInvalid.md)
  - [QuestionsAuthCfg](docs/QuestionsAuthCfg.md)
@@ -241,15 +240,19 @@ Class | Method | HTTP request | Description
  - [RefreshTokenRes](docs/RefreshTokenRes.md)
  - [RemoteAuthCfg](docs/RemoteAuthCfg.md)
  - [RemoteDbCfg](docs/RemoteDbCfg.md)
- - [SHAppCfg](docs/SHAppCfg.md)
- - [SHAppCfgAuthsValue](docs/SHAppCfgAuthsValue.md)
- - [SHHttpCfg](docs/SHHttpCfg.md)
  - [SaveUserReq](docs/SaveUserReq.md)
  - [SaveUserRes](docs/SaveUserRes.md)
  - [ServerErr](docs/ServerErr.md)
  - [ServerErrCode](docs/ServerErrCode.md)
  - [Session](docs/Session.md)
  - [SessionExpired](docs/SessionExpired.md)
+ - [ShAppCfg](docs/ShAppCfg.md)
+ - [ShAppCfgAuthsValue](docs/ShAppCfgAuthsValue.md)
+ - [ShDbsCfg](docs/ShDbsCfg.md)
+ - [ShDbsCfgRateLimiter](docs/ShDbsCfgRateLimiter.md)
+ - [ShDbsCfgSession](docs/ShDbsCfgSession.md)
+ - [ShDbsCfgUser](docs/ShDbsCfgUser.md)
+ - [ShHttpCfg](docs/ShHttpCfg.md)
  - [SignatureIsIncorrect](docs/SignatureIsIncorrect.md)
  - [SkippedAuthExecRes](docs/SkippedAuthExecRes.md)
  - [SqliteCfg](docs/SqliteCfg.md)
@@ -265,6 +268,7 @@ Class | Method | HTTP request | Description
  - [User](docs/User.md)
  - [UserLoginAlreadyTaken](docs/UserLoginAlreadyTaken.md)
  - [UserNotFound](docs/UserNotFound.md)
+ - [UserSimpleLoginIsIncorrect](docs/UserSimpleLoginIsIncorrect.md)
 
 
 ## Documentation for Authorization

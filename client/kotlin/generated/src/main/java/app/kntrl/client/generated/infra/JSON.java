@@ -124,10 +124,6 @@ public class JSON {
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.ConfirmSessionAuthsReq.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.ConfirmUserAuthsReq.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.DbHealthRes.CustomTypeAdapterFactory());
-        gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.DbsCfg.CustomTypeAdapterFactory());
-        gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.DbsCfgRateLimiter.CustomTypeAdapterFactory());
-        gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.DbsCfgSession.CustomTypeAdapterFactory());
-        gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.DbsCfgUser.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.Device.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.EditUserReq.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.EmailAuthCfg.CustomTypeAdapterFactory());
@@ -173,6 +169,8 @@ public class JSON {
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.PluginClientErr.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.PluginErr.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.PostgresCfg.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.PublicCfgAuth.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.PublicCfgRes.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.QuestionsAnswersIncorrect.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.QuestionsAnswersInvalid.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.QuestionsAuthCfg.CustomTypeAdapterFactory());
@@ -188,14 +186,18 @@ public class JSON {
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.RefreshTokenRes.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.RemoteAuthCfg.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.RemoteDbCfg.CustomTypeAdapterFactory());
-        gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.SHAppCfg.CustomTypeAdapterFactory());
-        gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.SHAppCfgAuthsValue.CustomTypeAdapterFactory());
-        gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.SHHttpCfg.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.SaveUserReq.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.SaveUserRes.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.ServerErr.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.Session.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.SessionExpired.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.ShAppCfg.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.ShAppCfgAuthsValue.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.ShDbsCfg.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.ShDbsCfgRateLimiter.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.ShDbsCfgSession.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.ShDbsCfgUser.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.ShHttpCfg.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.SignatureIsIncorrect.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.SkippedAuthExecRes.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.SqliteCfg.CustomTypeAdapterFactory());
@@ -210,6 +212,7 @@ public class JSON {
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.User.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.UserLoginAlreadyTaken.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.UserNotFound.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.UserSimpleLoginIsIncorrect.CustomTypeAdapterFactory());
         gson = gsonBuilder.create();
     }
 

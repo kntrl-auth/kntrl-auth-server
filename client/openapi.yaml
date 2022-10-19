@@ -335,7 +335,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SHAppCfg'
+                $ref: '#/components/schemas/ShAppCfg'
         "4XX":
           description: Client error
           content:
@@ -372,6 +372,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RefreshTokenRes'
+        "4XX":
+          description: Client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+        "5XX":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+      x-order: 2
+  /api/server/cfg/public:
+    get:
+      tags:
+      - server
+      summary: Public server configuration
+      description: |
+        Get server configuration.
+      operationId: cfgPublic
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicCfgRes'
         "4XX":
           description: Client error
           content:
@@ -723,10 +751,11 @@ components:
           ACCESS_DENIED: '#/components/schemas/AccessDenied'
           USER_NOT_FOUND: '#/components/schemas/UserNotFound'
           SIGNATURE_IS_INCORRECT: '#/components/schemas/SignatureIsIncorrect'
+          USER_SIMPLE_LOGIN_IS_INCORRECT: '#/components/schemas/UserSimpleLoginIsIncorrect'
           USER_LOGIN_ALREADY_TAKEN: '#/components/schemas/UserLoginAlreadyTaken'
-          AUTH_IS_NOT_ENABLED: '#/components/schemas/AuthIsNotEnabled'
           TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
           TOO_MANY_REQS: '#/components/schemas/TooManyReqs'
+          AUTH_IS_NOT_ENABLED: '#/components/schemas/AuthIsNotEnabled'
           AUTH_IS_NOT_CONFIRMED: '#/components/schemas/AuthIsNotConfirmed'
           NO_AUTH_AVAILABLE_FOR_FACTOR: '#/components/schemas/NoAuthAvailableForFactor'
           AUTH_REQUIRES_ANOTHER: '#/components/schemas/AuthRequiresAnother'
@@ -779,17 +808,17 @@ components:
       type: object
       allOf:
       - $ref: '#/components/schemas/ClientErr'
-      x-order: -270554383-2
+      x-order: -270554383-3
     AuthIsNotEnabled:
       type: object
       allOf:
       - $ref: '#/components/schemas/ClientErr'
-      x-order: -270554383-1
+      x-order: -270554383-2
     AuthRequiresAnother:
       type: object
       allOf:
       - $ref: '#/components/schemas/ClientErr'
-      x-order: -270554383-4
+      x-order: -270554383-5
     ClientErr:
       required:
       - code
@@ -809,10 +838,11 @@ components:
           ACCESS_DENIED: '#/components/schemas/AccessDenied'
           USER_NOT_FOUND: '#/components/schemas/UserNotFound'
           SIGNATURE_IS_INCORRECT: '#/components/schemas/SignatureIsIncorrect'
+          USER_SIMPLE_LOGIN_IS_INCORRECT: '#/components/schemas/UserSimpleLoginIsIncorrect'
           USER_LOGIN_ALREADY_TAKEN: '#/components/schemas/UserLoginAlreadyTaken'
-          AUTH_IS_NOT_ENABLED: '#/components/schemas/AuthIsNotEnabled'
           TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
           TOO_MANY_REQS: '#/components/schemas/TooManyReqs'
+          AUTH_IS_NOT_ENABLED: '#/components/schemas/AuthIsNotEnabled'
           AUTH_IS_NOT_CONFIRMED: '#/components/schemas/AuthIsNotConfirmed'
           AUTH_REQUIRES_ANOTHER: '#/components/schemas/AuthRequiresAnother'
           CODE_IS_EXPIRED: '#/components/schemas/CodeIsExpired'
@@ -839,17 +869,17 @@ components:
       type: object
       allOf:
       - $ref: '#/components/schemas/ClientErr'
-      x-order: -270554383-5
+      x-order: -270554383-6
     CodeIsIncorrect:
       type: object
       allOf:
       - $ref: '#/components/schemas/ClientErr'
-      x-order: -270554383-7
+      x-order: -270554383-8
     CodeTooManyAttempts:
       type: object
       allOf:
       - $ref: '#/components/schemas/ClientErr'
-      x-order: -270554383-6
+      x-order: -270554383-7
     EmailIsIncorrect:
       type: object
       allOf:
@@ -906,7 +936,7 @@ components:
       type: object
       allOf:
       - $ref: '#/components/schemas/IntegrationErr'
-      x-order: -270554383-3
+      x-order: -270554383-4
     PasswordIsIncorrect:
       type: object
       allOf:
@@ -1067,7 +1097,7 @@ components:
             type: integer
             format: int64
             x-nullable: true
-      x-order: -270554383-10
+      x-order: -270554383-11
     TooManyReqs:
       type: object
       allOf:
@@ -1086,7 +1116,7 @@ components:
             type: integer
             format: int32
             x-nullable: true
-      x-order: -270554383-11
+      x-order: -270554383-12
     Unauthenticated:
       required:
       - code
@@ -1102,18 +1132,41 @@ components:
         x-explicitMappingOnly: true
       allOf:
       - $ref: '#/components/schemas/ClientErr'
-      x-order: -270554383-8
+      x-order: -270554383-9
       x-sealed: false
     UserLoginAlreadyTaken:
       type: object
       allOf:
       - $ref: '#/components/schemas/ClientErr'
-      x-order: -270554383-0
+      x-order: -270554383-1
     UserNotFound:
       type: object
       allOf:
       - $ref: '#/components/schemas/Unauthenticated'
       x-order: -2065236468-2
+    UserSimpleLoginIsIncorrect:
+      required:
+      - loginId
+      - notAlphanumericOrDashUnderscorePoint
+      - tooLong
+      - tooShort
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ClientErr'
+      - type: object
+        properties:
+          loginId:
+            $ref: '#/components/schemas/LoginId'
+          tooShort:
+            type: boolean
+          tooLong:
+            type: boolean
+          phoneNumber:
+            type: boolean
+          notAlphanumericOrDashUnderscorePoint:
+            type: boolean
+            description: "Login contains symbols other than a-z, A-Z, 0-9, -, _, ."
+      x-order: -270554383-0
     AccessToken:
       type: string
       x-order: -2026363309-3
@@ -1290,6 +1343,32 @@ components:
         refreshToken:
           $ref: '#/components/schemas/RefreshToken'
       x-order: 68856176-1
+    PublicCfgAuth:
+      required:
+      - auth
+      - authType
+      type: object
+      properties:
+        auth:
+          type: string
+        authType:
+          type: string
+      x-order: -517526772-4
+    PublicCfgRes:
+      required:
+      - auths
+      - logins
+      type: object
+      properties:
+        logins:
+          type: array
+          items:
+            type: string
+        auths:
+          type: array
+          items:
+            $ref: '#/components/schemas/PublicCfgAuth'
+      x-order: -517526772-3
     DbHealthRes:
       required:
       - rateLimiter
@@ -2175,55 +2254,6 @@ components:
     DbCfg:
       type: object
       x-order: -1580107990-0
-    DbsCfg:
-      required:
-      - rateLimiter
-      - session
-      - user
-      type: object
-      properties:
-        user:
-          description: User database config
-          anyOf:
-          - $ref: '#/components/schemas/InMemoryCfg'
-          - $ref: '#/components/schemas/InTokenCfg'
-          - $ref: '#/components/schemas/MongoCfg'
-          - $ref: '#/components/schemas/RedisCfg'
-          - $ref: '#/components/schemas/RemoteDbCfg'
-          - $ref: '#/components/schemas/MysqlCfg'
-          - $ref: '#/components/schemas/PostgresCfg'
-          - $ref: '#/components/schemas/SqliteCfg'
-        session:
-          description: |-
-            Session database config.
-
-            If you aren't using cluster, prefer in-memory database.
-
-            You can use in-token to not use database at all. Use it with `token.access.cacheUnauthenticated = true` and
-            `token.access.cache != null` values.
-          anyOf:
-          - $ref: '#/components/schemas/InMemoryCfg'
-          - $ref: '#/components/schemas/InTokenCfg'
-          - $ref: '#/components/schemas/MongoCfg'
-          - $ref: '#/components/schemas/RedisCfg'
-          - $ref: '#/components/schemas/RemoteDbCfg'
-          - $ref: '#/components/schemas/MysqlCfg'
-          - $ref: '#/components/schemas/PostgresCfg'
-          - $ref: '#/components/schemas/SqliteCfg'
-        rateLimiter:
-          description: "Database for rate-limiters. If you don't use rate-limiter\
-            \ leave this empty (`{}`)."
-          anyOf:
-          - $ref: '#/components/schemas/InMemoryCfg'
-          - $ref: '#/components/schemas/InTokenCfg'
-          - $ref: '#/components/schemas/MongoCfg'
-          - $ref: '#/components/schemas/RedisCfg'
-          - $ref: '#/components/schemas/RemoteDbCfg'
-          - $ref: '#/components/schemas/MysqlCfg'
-          - $ref: '#/components/schemas/PostgresCfg'
-          - $ref: '#/components/schemas/SqliteCfg'
-      description: Database connection configs
-      x-order: -1723799702-3
     Duration:
       type: string
     EmailAuthCfg:
@@ -2798,11 +2828,11 @@ components:
             additionalProperties:
               type: string
       x-order: 842893688-0
-    SHAppCfg:
+    ShAppCfg:
       type: object
       properties:
         http:
-          $ref: '#/components/schemas/SHHttpCfg'
+          $ref: '#/components/schemas/ShHttpCfg'
         logins:
           uniqueItems: true
           type: array
@@ -2856,7 +2886,7 @@ components:
             - api: entry that allows user to generate API keys and connect third-party app
             - action: additional authentication (e.g. code from sms) requested before e.g. payment
         db:
-          $ref: '#/components/schemas/DbsCfg'
+          $ref: '#/components/schemas/ShDbsCfg'
         token:
           $ref: '#/components/schemas/TokenCfg'
         rateLimiters:
@@ -2880,8 +2910,53 @@ components:
           $ref: '#/components/schemas/I18nCfg'
         $schema:
           type: string
-      x-order: 578911261-0
-    SHHttpCfg:
+      x-order: -1414553603-0
+    ShDbsCfg:
+      type: object
+      properties:
+        user:
+          description: User database config
+          anyOf:
+          - $ref: '#/components/schemas/InMemoryCfg'
+          - $ref: '#/components/schemas/InTokenCfg'
+          - $ref: '#/components/schemas/MongoCfg'
+          - $ref: '#/components/schemas/RedisCfg'
+          - $ref: '#/components/schemas/RemoteDbCfg'
+          - $ref: '#/components/schemas/MysqlCfg'
+          - $ref: '#/components/schemas/PostgresCfg'
+          - $ref: '#/components/schemas/SqliteCfg'
+        session:
+          description: |-
+            Session database config.
+
+            If you aren't using cluster, prefer in-memory database.
+
+            You can use in-token to not use database at all. Use it with `token.access.cacheUnauthenticated = true` and
+            `token.access.cache != null` values.
+          anyOf:
+          - $ref: '#/components/schemas/InMemoryCfg'
+          - $ref: '#/components/schemas/InTokenCfg'
+          - $ref: '#/components/schemas/MongoCfg'
+          - $ref: '#/components/schemas/RedisCfg'
+          - $ref: '#/components/schemas/RemoteDbCfg'
+          - $ref: '#/components/schemas/MysqlCfg'
+          - $ref: '#/components/schemas/PostgresCfg'
+          - $ref: '#/components/schemas/SqliteCfg'
+        rateLimiter:
+          description: "Database for rate-limiters. If you don't use rate-limiter\
+            \ leave this empty (`{}`)."
+          anyOf:
+          - $ref: '#/components/schemas/InMemoryCfg'
+          - $ref: '#/components/schemas/InTokenCfg'
+          - $ref: '#/components/schemas/MongoCfg'
+          - $ref: '#/components/schemas/RedisCfg'
+          - $ref: '#/components/schemas/RemoteDbCfg'
+          - $ref: '#/components/schemas/MysqlCfg'
+          - $ref: '#/components/schemas/PostgresCfg'
+          - $ref: '#/components/schemas/SqliteCfg'
+      description: Database connection configs
+      x-order: -1414553603-2
+    ShHttpCfg:
       type: object
       properties:
         port:
@@ -2900,7 +2975,7 @@ components:
           description: "If true, X-Forwarded-For header is used to get client's IP\
             \ address"
       description: Http server config
-      x-order: 578911261-1
+      x-order: -1414553603-1
     SqliteCfg:
       type: object
       allOf:

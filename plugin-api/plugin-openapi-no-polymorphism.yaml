@@ -466,6 +466,13 @@ components:
           type: integer
           format: int64
           x-nullable: true
+        loginId:
+          $ref: '#/components/schemas/LoginId'
+        phoneNumber:
+          type: boolean
+        notAlphanumericOrDashUnderscorePoint:
+          type: boolean
+          description: "Login contains symbols other than a-z, A-Z, 0-9, -, _, ."
       additionalProperties: true
       x-order: 2025349183-0
       x-sealed: false
@@ -530,7 +537,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-2
+      x-order: -270554383-3
       x-super: '#/components/schemas/ClientErr'
     AuthIsNotEnabled:
       required:
@@ -547,7 +554,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-1
+      x-order: -270554383-2
       x-super: '#/components/schemas/ClientErr'
     AuthRequiresAnother:
       required:
@@ -564,7 +571,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-4
+      x-order: -270554383-5
       x-super: '#/components/schemas/ClientErr'
     ClientErr:
       required:
@@ -654,6 +661,13 @@ components:
           type: integer
           format: int64
           x-nullable: true
+        loginId:
+          $ref: '#/components/schemas/LoginId'
+        phoneNumber:
+          type: boolean
+        notAlphanumericOrDashUnderscorePoint:
+          type: boolean
+          description: "Login contains symbols other than a-z, A-Z, 0-9, -, _, ."
       additionalProperties: true
       x-order: 2025349183-4
       x-sealed: false
@@ -673,7 +687,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-5
+      x-order: -270554383-6
       x-super: '#/components/schemas/ClientErr'
     CodeIsIncorrect:
       required:
@@ -690,7 +704,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-7
+      x-order: -270554383-8
       x-super: '#/components/schemas/ClientErr'
     CodeTooManyAttempts:
       required:
@@ -707,7 +721,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-6
+      x-order: -270554383-7
       x-super: '#/components/schemas/ClientErr'
     EmailIsIncorrect:
       required:
@@ -793,7 +807,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-3
+      x-order: -270554383-4
       x-super: '#/components/schemas/IntegrationErr'
     PasswordIsIncorrect:
       required:
@@ -1039,7 +1053,7 @@ components:
           type: integer
           format: int64
           x-nullable: true
-      x-order: -270554383-10
+      x-order: -270554383-11
       x-super: '#/components/schemas/Unauthenticated'
     TooManyReqs:
       required:
@@ -1068,7 +1082,7 @@ components:
           type: integer
           format: int32
           x-nullable: true
-      x-order: -270554383-11
+      x-order: -270554383-12
       x-super: '#/components/schemas/ClientErr'
     Unauthenticated:
       required:
@@ -1090,7 +1104,7 @@ components:
           format: int64
           x-nullable: true
       additionalProperties: true
-      x-order: -270554383-8
+      x-order: -270554383-9
       x-sealed: false
       x-super: '#/components/schemas/ClientErr'
     UserLoginAlreadyTaken:
@@ -1108,7 +1122,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-0
+      x-order: -270554383-1
       x-super: '#/components/schemas/ClientErr'
     UserNotFound:
       required:
@@ -1127,6 +1141,38 @@ components:
           x-nullable: true
       x-order: -2065236468-2
       x-super: '#/components/schemas/Unauthenticated'
+    UserSimpleLoginIsIncorrect:
+      required:
+      - code
+      - devMsg
+      - loginId
+      - notAlphanumericOrDashUnderscorePoint
+      - tooLong
+      - tooShort
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+        loginId:
+          $ref: '#/components/schemas/LoginId'
+        tooShort:
+          type: boolean
+        tooLong:
+          type: boolean
+        phoneNumber:
+          type: boolean
+        notAlphanumericOrDashUnderscorePoint:
+          type: boolean
+          description: "Login contains symbols other than a-z, A-Z, 0-9, -, _, ."
+      x-order: -270554383-0
+      x-super: '#/components/schemas/ClientErr'
     RateLimiterState:
       required:
       - burntQuota
@@ -2113,10 +2159,11 @@ components:
       - ACCESS_DENIED
       - USER_NOT_FOUND
       - SIGNATURE_IS_INCORRECT
+      - USER_SIMPLE_LOGIN_IS_INCORRECT
       - USER_LOGIN_ALREADY_TAKEN
-      - AUTH_IS_NOT_ENABLED
       - TOKEN_EXPIRED
       - TOO_MANY_REQS
+      - AUTH_IS_NOT_ENABLED
       - AUTH_IS_NOT_CONFIRMED
       - AUTH_REQUIRES_ANOTHER
       - CODE_IS_EXPIRED
@@ -2148,10 +2195,11 @@ components:
       - ACCESS_DENIED
       - USER_NOT_FOUND
       - SIGNATURE_IS_INCORRECT
+      - USER_SIMPLE_LOGIN_IS_INCORRECT
       - USER_LOGIN_ALREADY_TAKEN
-      - AUTH_IS_NOT_ENABLED
       - TOKEN_EXPIRED
       - TOO_MANY_REQS
+      - AUTH_IS_NOT_ENABLED
       - AUTH_IS_NOT_CONFIRMED
       - NO_AUTH_AVAILABLE_FOR_FACTOR
       - AUTH_REQUIRES_ANOTHER

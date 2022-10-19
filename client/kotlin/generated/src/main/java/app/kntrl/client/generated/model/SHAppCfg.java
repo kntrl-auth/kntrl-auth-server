@@ -15,12 +15,12 @@ package app.kntrl.client.generated.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import app.kntrl.client.generated.model.DbsCfg;
 import app.kntrl.client.generated.model.EntryCfg;
 import app.kntrl.client.generated.model.I18nCfg;
 import app.kntrl.client.generated.model.RateLimiterCfg;
-import app.kntrl.client.generated.model.SHAppCfgAuthsValue;
-import app.kntrl.client.generated.model.SHHttpCfg;
+import app.kntrl.client.generated.model.ShAppCfgAuthsValue;
+import app.kntrl.client.generated.model.ShDbsCfg;
+import app.kntrl.client.generated.model.ShHttpCfg;
 import app.kntrl.client.generated.model.TokenCfg;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
@@ -56,13 +56,13 @@ import java.util.Set;
 import app.kntrl.client.generated.infra.JSON;
 
 /**
- * SHAppCfg
+ * ShAppCfg
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
-public class SHAppCfg {
+public class ShAppCfg {
   public static final String SERIALIZED_NAME_HTTP = "http";
   @SerializedName(SERIALIZED_NAME_HTTP)
-  private SHHttpCfg http;
+  private ShHttpCfg http;
 
   public static final String SERIALIZED_NAME_LOGINS = "logins";
   @SerializedName(SERIALIZED_NAME_LOGINS)
@@ -70,7 +70,7 @@ public class SHAppCfg {
 
   public static final String SERIALIZED_NAME_AUTHS = "auths";
   @SerializedName(SERIALIZED_NAME_AUTHS)
-  private Map<String, SHAppCfgAuthsValue> auths = null;
+  private Map<String, ShAppCfgAuthsValue> auths = null;
 
   public static final String SERIALIZED_NAME_ENTRIES = "entries";
   @SerializedName(SERIALIZED_NAME_ENTRIES)
@@ -78,7 +78,7 @@ public class SHAppCfg {
 
   public static final String SERIALIZED_NAME_DB = "db";
   @SerializedName(SERIALIZED_NAME_DB)
-  private DbsCfg db;
+  private ShDbsCfg db;
 
   public static final String SERIALIZED_NAME_TOKEN = "token";
   @SerializedName(SERIALIZED_NAME_TOKEN)
@@ -104,10 +104,10 @@ public class SHAppCfg {
   @SerializedName(SERIALIZED_NAME_$_SCHEMA)
   private String $schema;
 
-  public SHAppCfg() {
+  public ShAppCfg() {
   }
 
-  public SHAppCfg http(SHHttpCfg http) {
+  public ShAppCfg http(ShHttpCfg http) {
     
     this.http = http;
     return this;
@@ -120,23 +120,23 @@ public class SHAppCfg {
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
 
-  public SHHttpCfg getHttp() {
+  public ShHttpCfg getHttp() {
     return http;
   }
 
 
-  public void setHttp(SHHttpCfg http) {
+  public void setHttp(ShHttpCfg http) {
     this.http = http;
   }
 
 
-  public SHAppCfg logins(Set<String> logins) {
+  public ShAppCfg logins(Set<String> logins) {
     
     this.logins = logins;
     return this;
   }
 
-  public SHAppCfg addLoginsItem(String loginsItem) {
+  public ShAppCfg addLoginsItem(String loginsItem) {
     if (this.logins == null) {
       this.logins = new LinkedHashSet<>();
     }
@@ -161,13 +161,13 @@ public class SHAppCfg {
   }
 
 
-  public SHAppCfg auths(Map<String, SHAppCfgAuthsValue> auths) {
+  public ShAppCfg auths(Map<String, ShAppCfgAuthsValue> auths) {
     
     this.auths = auths;
     return this;
   }
 
-  public SHAppCfg putAuthsItem(String key, SHAppCfgAuthsValue authsItem) {
+  public ShAppCfg putAuthsItem(String key, ShAppCfgAuthsValue authsItem) {
     if (this.auths == null) {
       this.auths = new HashMap<>();
     }
@@ -182,23 +182,23 @@ public class SHAppCfg {
   @javax.annotation.Nullable
   @ApiModelProperty(example = "{\"email\":{},\"password\":{},\"facebook\":{\"builtin\":\"oauth\"}}", value = "List of auth names and auth configs  To use builtin auths (not a plugin or remote) follow the example: `\"password\": { ... }` or `\"anyAuthName\": { \"builtin\": \"password\", ... }` ")
 
-  public Map<String, SHAppCfgAuthsValue> getAuths() {
+  public Map<String, ShAppCfgAuthsValue> getAuths() {
     return auths;
   }
 
 
-  public void setAuths(Map<String, SHAppCfgAuthsValue> auths) {
+  public void setAuths(Map<String, ShAppCfgAuthsValue> auths) {
     this.auths = auths;
   }
 
 
-  public SHAppCfg entries(Map<String, EntryCfg> entries) {
+  public ShAppCfg entries(Map<String, EntryCfg> entries) {
     
     this.entries = entries;
     return this;
   }
 
-  public SHAppCfg putEntriesItem(String key, EntryCfg entriesItem) {
+  public ShAppCfg putEntriesItem(String key, EntryCfg entriesItem) {
     if (this.entries == null) {
       this.entries = new HashMap<>();
     }
@@ -223,7 +223,7 @@ public class SHAppCfg {
   }
 
 
-  public SHAppCfg db(DbsCfg db) {
+  public ShAppCfg db(ShDbsCfg db) {
     
     this.db = db;
     return this;
@@ -236,17 +236,17 @@ public class SHAppCfg {
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
 
-  public DbsCfg getDb() {
+  public ShDbsCfg getDb() {
     return db;
   }
 
 
-  public void setDb(DbsCfg db) {
+  public void setDb(ShDbsCfg db) {
     this.db = db;
   }
 
 
-  public SHAppCfg token(TokenCfg token) {
+  public ShAppCfg token(TokenCfg token) {
     
     this.token = token;
     return this;
@@ -269,13 +269,13 @@ public class SHAppCfg {
   }
 
 
-  public SHAppCfg rateLimiters(Map<String, RateLimiterCfg> rateLimiters) {
+  public ShAppCfg rateLimiters(Map<String, RateLimiterCfg> rateLimiters) {
     
     this.rateLimiters = rateLimiters;
     return this;
   }
 
-  public SHAppCfg putRateLimitersItem(String key, RateLimiterCfg rateLimitersItem) {
+  public ShAppCfg putRateLimitersItem(String key, RateLimiterCfg rateLimitersItem) {
     if (this.rateLimiters == null) {
       this.rateLimiters = new HashMap<>();
     }
@@ -300,7 +300,7 @@ public class SHAppCfg {
   }
 
 
-  public SHAppCfg secret(String secret) {
+  public ShAppCfg secret(String secret) {
     
     this.secret = secret;
     return this;
@@ -323,7 +323,7 @@ public class SHAppCfg {
   }
 
 
-  public SHAppCfg healthCheckKey(String healthCheckKey) {
+  public ShAppCfg healthCheckKey(String healthCheckKey) {
     
     this.healthCheckKey = healthCheckKey;
     return this;
@@ -346,7 +346,7 @@ public class SHAppCfg {
   }
 
 
-  public SHAppCfg i18n(I18nCfg i18n) {
+  public ShAppCfg i18n(I18nCfg i18n) {
     
     this.i18n = i18n;
     return this;
@@ -369,7 +369,7 @@ public class SHAppCfg {
   }
 
 
-  public SHAppCfg $schema(String $schema) {
+  public ShAppCfg $schema(String $schema) {
     
     this.$schema = $schema;
     return this;
@@ -402,7 +402,7 @@ public class SHAppCfg {
    * Set the additional (undeclared) property with the specified name and value.
    * If the property does not already exist, create it otherwise replace it.
    */
-  public SHAppCfg putAdditionalProperty(String key, Object value) {
+  public ShAppCfg putAdditionalProperty(String key, Object value) {
     if (this.additionalProperties == null) {
         this.additionalProperties = new HashMap<String, Object>();
     }
@@ -436,7 +436,7 @@ public class SHAppCfg {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SHAppCfg shAppCfg = (SHAppCfg) o;
+    ShAppCfg shAppCfg = (ShAppCfg) o;
     return Objects.equals(this.http, shAppCfg.http) &&
         Objects.equals(this.logins, shAppCfg.logins) &&
         Objects.equals(this.auths, shAppCfg.auths) &&
@@ -459,7 +459,7 @@ public class SHAppCfg {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SHAppCfg {\n");
+    sb.append("class ShAppCfg {\n");
     sb.append("    http: ").append(toIndentedString(http)).append("\n");
     sb.append("    logins: ").append(toIndentedString(logins)).append("\n");
     sb.append("    auths: ").append(toIndentedString(auths)).append("\n");
@@ -514,19 +514,19 @@ public class SHAppCfg {
   * Validates the JSON Object and throws an exception if issues found
   *
   * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to SHAppCfg
+  * @throws IOException if the JSON Object is invalid with respect to ShAppCfg
   */
   public static void validateJsonObject(JsonObject jsonObj) throws IOException {
       if (jsonObj == null) {
-        if (SHAppCfg.openapiRequiredFields.isEmpty()) {
+        if (ShAppCfg.openapiRequiredFields.isEmpty()) {
           return;
         } else { // has required fields
-          throw new IllegalArgumentException(String.format("The required field(s) %s in SHAppCfg is not found in the empty JSON string", SHAppCfg.openapiRequiredFields.toString()));
+          throw new IllegalArgumentException(String.format("The required field(s) %s in ShAppCfg is not found in the empty JSON string", ShAppCfg.openapiRequiredFields.toString()));
         }
       }
       // validate the optional field `http`
       if (jsonObj.get("http") != null && !jsonObj.get("http").isJsonNull()) {
-        SHHttpCfg.validateJsonObject(jsonObj.getAsJsonObject("http"));
+        ShHttpCfg.validateJsonObject(jsonObj.getAsJsonObject("http"));
       }
       // ensure the json data is an array
       if ((jsonObj.get("logins") != null && !jsonObj.get("logins").isJsonNull()) && !jsonObj.get("logins").isJsonArray()) {
@@ -534,7 +534,7 @@ public class SHAppCfg {
       }
       // validate the optional field `db`
       if (jsonObj.get("db") != null && !jsonObj.get("db").isJsonNull()) {
-        DbsCfg.validateJsonObject(jsonObj.getAsJsonObject("db"));
+        ShDbsCfg.validateJsonObject(jsonObj.getAsJsonObject("db"));
       }
       // validate the optional field `token`
       if (jsonObj.get("token") != null && !jsonObj.get("token").isJsonNull()) {
@@ -559,16 +559,16 @@ public class SHAppCfg {
     @SuppressWarnings("unchecked")
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!SHAppCfg.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'SHAppCfg' and its subtypes
+       if (!ShAppCfg.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'ShAppCfg' and its subtypes
        }
        final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<SHAppCfg> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(SHAppCfg.class));
+       final TypeAdapter<ShAppCfg> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(ShAppCfg.class));
 
-       return (TypeAdapter<T>) new TypeAdapter<SHAppCfg>() {
+       return (TypeAdapter<T>) new TypeAdapter<ShAppCfg>() {
            @Override
-           public void write(JsonWriter out, SHAppCfg value) throws IOException {
+           public void write(JsonWriter out, ShAppCfg value) throws IOException {
              JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
              obj.remove("additionalProperties");
              // serialize additonal properties
@@ -591,11 +591,11 @@ public class SHAppCfg {
            }
 
            @Override
-           public SHAppCfg read(JsonReader in) throws IOException {
+           public ShAppCfg read(JsonReader in) throws IOException {
              JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
              validateJsonObject(jsonObj);
              // store additional fields in the deserialized instance
-             SHAppCfg instance = thisAdapter.fromJsonTree(jsonObj);
+             ShAppCfg instance = thisAdapter.fromJsonTree(jsonObj);
              for (Map.Entry<String, JsonElement> entry : jsonObj.entrySet()) {
                if (!openapiFields.contains(entry.getKey())) {
                  if (entry.getValue().isJsonPrimitive()) { // primitive type
@@ -620,18 +620,18 @@ public class SHAppCfg {
   }
 
  /**
-  * Create an instance of SHAppCfg given an JSON string
+  * Create an instance of ShAppCfg given an JSON string
   *
   * @param jsonString JSON string
-  * @return An instance of SHAppCfg
-  * @throws IOException if the JSON string is invalid with respect to SHAppCfg
+  * @return An instance of ShAppCfg
+  * @throws IOException if the JSON string is invalid with respect to ShAppCfg
   */
-  public static SHAppCfg fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, SHAppCfg.class);
+  public static ShAppCfg fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, ShAppCfg.class);
   }
 
  /**
-  * Convert an instance of SHAppCfg to an JSON string
+  * Convert an instance of ShAppCfg to an JSON string
   *
   * @return JSON string
   */

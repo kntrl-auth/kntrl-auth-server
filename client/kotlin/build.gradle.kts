@@ -22,7 +22,7 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
 }
 
-tasks.register<GenerateSwaggerCode>("generateApi") {
+tasks.register<GenerateSwaggerCode>("generateOpenapiClient") {
     group = "openapi"
     language = "java"
     inputFile = file("../openapi-no-polymorphism.yaml")

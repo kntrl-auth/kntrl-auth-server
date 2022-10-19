@@ -25,7 +25,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SHAppCfg'
+                $ref: '#/components/schemas/ShAppCfg'
         "4XX":
           description: Client error
           content:
@@ -73,10 +73,11 @@ components:
           ACCESS_DENIED: '#/components/schemas/AccessDenied'
           USER_NOT_FOUND: '#/components/schemas/UserNotFound'
           SIGNATURE_IS_INCORRECT: '#/components/schemas/SignatureIsIncorrect'
+          USER_SIMPLE_LOGIN_IS_INCORRECT: '#/components/schemas/UserSimpleLoginIsIncorrect'
           USER_LOGIN_ALREADY_TAKEN: '#/components/schemas/UserLoginAlreadyTaken'
-          AUTH_IS_NOT_ENABLED: '#/components/schemas/AuthIsNotEnabled'
           TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
           TOO_MANY_REQS: '#/components/schemas/TooManyReqs'
+          AUTH_IS_NOT_ENABLED: '#/components/schemas/AuthIsNotEnabled'
           AUTH_IS_NOT_CONFIRMED: '#/components/schemas/AuthIsNotConfirmed'
           NO_AUTH_AVAILABLE_FOR_FACTOR: '#/components/schemas/NoAuthAvailableForFactor'
           AUTH_REQUIRES_ANOTHER: '#/components/schemas/AuthRequiresAnother'
@@ -150,7 +151,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-2
+      x-order: -270554383-3
       x-super: '#/components/schemas/ClientErr'
     AuthIsNotEnabled:
       required:
@@ -167,7 +168,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-1
+      x-order: -270554383-2
       x-super: '#/components/schemas/ClientErr'
     AuthRequiresAnother:
       required:
@@ -184,7 +185,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-4
+      x-order: -270554383-5
       x-super: '#/components/schemas/ClientErr'
     ClientErr:
       required:
@@ -215,10 +216,11 @@ components:
           ACCESS_DENIED: '#/components/schemas/AccessDenied'
           USER_NOT_FOUND: '#/components/schemas/UserNotFound'
           SIGNATURE_IS_INCORRECT: '#/components/schemas/SignatureIsIncorrect'
+          USER_SIMPLE_LOGIN_IS_INCORRECT: '#/components/schemas/UserSimpleLoginIsIncorrect'
           USER_LOGIN_ALREADY_TAKEN: '#/components/schemas/UserLoginAlreadyTaken'
-          AUTH_IS_NOT_ENABLED: '#/components/schemas/AuthIsNotEnabled'
           TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
           TOO_MANY_REQS: '#/components/schemas/TooManyReqs'
+          AUTH_IS_NOT_ENABLED: '#/components/schemas/AuthIsNotEnabled'
           AUTH_IS_NOT_CONFIRMED: '#/components/schemas/AuthIsNotConfirmed'
           AUTH_REQUIRES_ANOTHER: '#/components/schemas/AuthRequiresAnother'
           CODE_IS_EXPIRED: '#/components/schemas/CodeIsExpired'
@@ -243,7 +245,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-5
+      x-order: -270554383-6
       x-super: '#/components/schemas/ClientErr'
     CodeIsIncorrect:
       required:
@@ -260,7 +262,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-7
+      x-order: -270554383-8
       x-super: '#/components/schemas/ClientErr'
     CodeTooManyAttempts:
       required:
@@ -277,7 +279,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-6
+      x-order: -270554383-7
       x-super: '#/components/schemas/ClientErr'
     EmailIsIncorrect:
       required:
@@ -367,7 +369,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-3
+      x-order: -270554383-4
       x-super: '#/components/schemas/IntegrationErr'
     PasswordIsIncorrect:
       required:
@@ -617,7 +619,7 @@ components:
           type: integer
           format: int64
           x-nullable: true
-      x-order: -270554383-10
+      x-order: -270554383-11
       x-super: '#/components/schemas/Unauthenticated'
     TooManyReqs:
       required:
@@ -646,7 +648,7 @@ components:
           type: integer
           format: int32
           x-nullable: true
-      x-order: -270554383-11
+      x-order: -270554383-12
       x-super: '#/components/schemas/ClientErr'
     Unauthenticated:
       required:
@@ -671,7 +673,7 @@ components:
           USER_NOT_FOUND: '#/components/schemas/UserNotFound'
           TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
           UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
-      x-order: -270554383-8
+      x-order: -270554383-9
       x-sealed: false
       x-super: '#/components/schemas/ClientErr'
     UserLoginAlreadyTaken:
@@ -689,7 +691,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-0
+      x-order: -270554383-1
       x-super: '#/components/schemas/ClientErr'
     UserNotFound:
       required:
@@ -708,6 +710,38 @@ components:
           x-nullable: true
       x-order: -2065236468-2
       x-super: '#/components/schemas/Unauthenticated'
+    UserSimpleLoginIsIncorrect:
+      required:
+      - code
+      - devMsg
+      - loginId
+      - notAlphanumericOrDashUnderscorePoint
+      - tooLong
+      - tooShort
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+        loginId:
+          $ref: '#/components/schemas/LoginId'
+        tooShort:
+          type: boolean
+        tooLong:
+          type: boolean
+        phoneNumber:
+          type: boolean
+        notAlphanumericOrDashUnderscorePoint:
+          type: boolean
+          description: "Login contains symbols other than a-z, A-Z, 0-9, -, _, ."
+      x-order: -270554383-0
+      x-super: '#/components/schemas/ClientErr'
     AccessTokenCfg:
       type: object
       properties:
@@ -880,55 +914,6 @@ components:
     DbCfg:
       type: object
       x-order: -1580107990-0
-    DbsCfg:
-      required:
-      - rateLimiter
-      - session
-      - user
-      type: object
-      properties:
-        user:
-          description: User database config
-          anyOf:
-          - $ref: '#/components/schemas/InMemoryCfg'
-          - $ref: '#/components/schemas/InTokenCfg'
-          - $ref: '#/components/schemas/MongoCfg'
-          - $ref: '#/components/schemas/RedisCfg'
-          - $ref: '#/components/schemas/RemoteDbCfg'
-          - $ref: '#/components/schemas/MysqlCfg'
-          - $ref: '#/components/schemas/PostgresCfg'
-          - $ref: '#/components/schemas/SqliteCfg'
-        session:
-          description: |-
-            Session database config.
-
-            If you aren't using cluster, prefer in-memory database.
-
-            You can use in-token to not use database at all. Use it with `token.access.cacheUnauthenticated = true` and
-            `token.access.cache != null` values.
-          anyOf:
-          - $ref: '#/components/schemas/InMemoryCfg'
-          - $ref: '#/components/schemas/InTokenCfg'
-          - $ref: '#/components/schemas/MongoCfg'
-          - $ref: '#/components/schemas/RedisCfg'
-          - $ref: '#/components/schemas/RemoteDbCfg'
-          - $ref: '#/components/schemas/MysqlCfg'
-          - $ref: '#/components/schemas/PostgresCfg'
-          - $ref: '#/components/schemas/SqliteCfg'
-        rateLimiter:
-          description: "Database for rate-limiters. If you don't use rate-limiter\
-            \ leave this empty (`{}`)."
-          anyOf:
-          - $ref: '#/components/schemas/InMemoryCfg'
-          - $ref: '#/components/schemas/InTokenCfg'
-          - $ref: '#/components/schemas/MongoCfg'
-          - $ref: '#/components/schemas/RedisCfg'
-          - $ref: '#/components/schemas/RemoteDbCfg'
-          - $ref: '#/components/schemas/MysqlCfg'
-          - $ref: '#/components/schemas/PostgresCfg'
-          - $ref: '#/components/schemas/SqliteCfg'
-      description: Database connection configs
-      x-order: -1723799702-3
     Duration:
       type: string
     EmailAuthCfg:
@@ -1622,11 +1607,11 @@ components:
             type: string
       x-order: 842893688-0
       x-super: '#/components/schemas/DbCfg'
-    SHAppCfg:
+    ShAppCfg:
       type: object
       properties:
         http:
-          $ref: '#/components/schemas/SHHttpCfg'
+          $ref: '#/components/schemas/ShHttpCfg'
         logins:
           uniqueItems: true
           type: array
@@ -1679,7 +1664,7 @@ components:
             - api: entry that allows user to generate API keys and connect third-party app
             - action: additional authentication (e.g. code from sms) requested before e.g. payment
         db:
-          $ref: '#/components/schemas/DbsCfg'
+          $ref: '#/components/schemas/ShDbsCfg'
         token:
           $ref: '#/components/schemas/TokenCfg'
         rateLimiters:
@@ -1702,8 +1687,53 @@ components:
           $ref: '#/components/schemas/I18nCfg'
         $schema:
           type: string
-      x-order: 578911261-0
-    SHHttpCfg:
+      x-order: -1414553603-0
+    ShDbsCfg:
+      type: object
+      properties:
+        user:
+          description: User database config
+          anyOf:
+          - $ref: '#/components/schemas/InMemoryCfg'
+          - $ref: '#/components/schemas/InTokenCfg'
+          - $ref: '#/components/schemas/MongoCfg'
+          - $ref: '#/components/schemas/RedisCfg'
+          - $ref: '#/components/schemas/RemoteDbCfg'
+          - $ref: '#/components/schemas/MysqlCfg'
+          - $ref: '#/components/schemas/PostgresCfg'
+          - $ref: '#/components/schemas/SqliteCfg'
+        session:
+          description: |-
+            Session database config.
+
+            If you aren't using cluster, prefer in-memory database.
+
+            You can use in-token to not use database at all. Use it with `token.access.cacheUnauthenticated = true` and
+            `token.access.cache != null` values.
+          anyOf:
+          - $ref: '#/components/schemas/InMemoryCfg'
+          - $ref: '#/components/schemas/InTokenCfg'
+          - $ref: '#/components/schemas/MongoCfg'
+          - $ref: '#/components/schemas/RedisCfg'
+          - $ref: '#/components/schemas/RemoteDbCfg'
+          - $ref: '#/components/schemas/MysqlCfg'
+          - $ref: '#/components/schemas/PostgresCfg'
+          - $ref: '#/components/schemas/SqliteCfg'
+        rateLimiter:
+          description: "Database for rate-limiters. If you don't use rate-limiter\
+            \ leave this empty (`{}`)."
+          anyOf:
+          - $ref: '#/components/schemas/InMemoryCfg'
+          - $ref: '#/components/schemas/InTokenCfg'
+          - $ref: '#/components/schemas/MongoCfg'
+          - $ref: '#/components/schemas/RedisCfg'
+          - $ref: '#/components/schemas/RemoteDbCfg'
+          - $ref: '#/components/schemas/MysqlCfg'
+          - $ref: '#/components/schemas/PostgresCfg'
+          - $ref: '#/components/schemas/SqliteCfg'
+      description: Database connection configs
+      x-order: -1414553603-2
+    ShHttpCfg:
       type: object
       properties:
         port:
@@ -1722,7 +1752,7 @@ components:
           description: "If true, X-Forwarded-For header is used to get client's IP\
             \ address"
       description: Http server config
-      x-order: 578911261-1
+      x-order: -1414553603-1
     SqliteCfg:
       type: object
       properties:

@@ -793,6 +793,24 @@ export interface ClientErr {
      * @memberof ClientErr
      */
     'expiredAt'?: number;
+    /**
+     * 
+     * @type {LoginId}
+     * @memberof ClientErr
+     */
+    'loginId'?: LoginId;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ClientErr
+     */
+    'phoneNumber'?: boolean;
+    /**
+     * Login contains symbols other than a-z, A-Z, 0-9, -, _, .
+     * @type {boolean}
+     * @memberof ClientErr
+     */
+    'notAlphanumericOrDashUnderscorePoint'?: boolean;
 }
 /**
  * 
@@ -812,10 +830,11 @@ export const ClientErrCode = {
     AccessDenied: 'ACCESS_DENIED',
     UserNotFound: 'USER_NOT_FOUND',
     SignatureIsIncorrect: 'SIGNATURE_IS_INCORRECT',
+    UserSimpleLoginIsIncorrect: 'USER_SIMPLE_LOGIN_IS_INCORRECT',
     UserLoginAlreadyTaken: 'USER_LOGIN_ALREADY_TAKEN',
-    AuthIsNotEnabled: 'AUTH_IS_NOT_ENABLED',
     TokenExpired: 'TOKEN_EXPIRED',
     TooManyReqs: 'TOO_MANY_REQS',
+    AuthIsNotEnabled: 'AUTH_IS_NOT_ENABLED',
     AuthIsNotConfirmed: 'AUTH_IS_NOT_CONFIRMED',
     AuthRequiresAnother: 'AUTH_REQUIRES_ANOTHER',
     CodeIsExpired: 'CODE_IS_EXPIRED',
@@ -1087,358 +1106,6 @@ export interface DbHealthRes {
      * @memberof DbHealthRes
      */
     'rateLimiter': HealthStatusRes;
-}
-/**
- * Database connection configs
- * @export
- * @interface DbsCfg
- */
-export interface DbsCfg {
-    /**
-     * 
-     * @type {DbsCfgUser}
-     * @memberof DbsCfg
-     */
-    'user': DbsCfgUser;
-    /**
-     * 
-     * @type {DbsCfgSession}
-     * @memberof DbsCfg
-     */
-    'session': DbsCfgSession;
-    /**
-     * 
-     * @type {DbsCfgRateLimiter}
-     * @memberof DbsCfg
-     */
-    'rateLimiter': DbsCfgRateLimiter;
-}
-/**
- * Database for rate-limiters. If you don\'t use rate-limiter leave this empty (`{}`).
- * @export
- * @interface DbsCfgRateLimiter
- */
-export interface DbsCfgRateLimiter {
-    /**
-     * 
-     * @type {boolean}
-     * @memberof DbsCfgRateLimiter
-     */
-    'inMemory'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof DbsCfgRateLimiter
-     */
-    'inToken'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof DbsCfgRateLimiter
-     */
-    'mongodb'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof DbsCfgRateLimiter
-     */
-    'database'?: number;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof DbsCfgRateLimiter
-     */
-    'redis'?: Array<string>;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof DbsCfgRateLimiter
-     */
-    'cluster'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof DbsCfgRateLimiter
-     */
-    'user'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DbsCfgRateLimiter
-     */
-    'password'?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof DbsCfgRateLimiter
-     */
-    'ssl'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof DbsCfgRateLimiter
-     */
-    'maxConnections'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof DbsCfgRateLimiter
-     */
-    'remote'?: string;
-    /**
-     * 
-     * @type {{ [key: string]: string; }}
-     * @memberof DbsCfgRateLimiter
-     */
-    'query'?: { [key: string]: string; };
-    /**
-     * 
-     * @type {{ [key: string]: string; }}
-     * @memberof DbsCfgRateLimiter
-     */
-    'headers'?: { [key: string]: string; };
-    /**
-     * 
-     * @type {string}
-     * @memberof DbsCfgRateLimiter
-     */
-    'mysql'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DbsCfgRateLimiter
-     */
-    'username'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DbsCfgRateLimiter
-     */
-    'postgres'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DbsCfgRateLimiter
-     */
-    'sqlite'?: string;
-}
-/**
- * Session database config.  If you aren\'t using cluster, prefer in-memory database.  You can use in-token to not use database at all. Use it with `token.access.cacheUnauthenticated = true` and `token.access.cache != null` values.
- * @export
- * @interface DbsCfgSession
- */
-export interface DbsCfgSession {
-    /**
-     * 
-     * @type {boolean}
-     * @memberof DbsCfgSession
-     */
-    'inMemory'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof DbsCfgSession
-     */
-    'inToken'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof DbsCfgSession
-     */
-    'mongodb'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof DbsCfgSession
-     */
-    'database'?: number;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof DbsCfgSession
-     */
-    'redis'?: Array<string>;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof DbsCfgSession
-     */
-    'cluster'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof DbsCfgSession
-     */
-    'user'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DbsCfgSession
-     */
-    'password'?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof DbsCfgSession
-     */
-    'ssl'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof DbsCfgSession
-     */
-    'maxConnections'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof DbsCfgSession
-     */
-    'remote'?: string;
-    /**
-     * 
-     * @type {{ [key: string]: string; }}
-     * @memberof DbsCfgSession
-     */
-    'query'?: { [key: string]: string; };
-    /**
-     * 
-     * @type {{ [key: string]: string; }}
-     * @memberof DbsCfgSession
-     */
-    'headers'?: { [key: string]: string; };
-    /**
-     * 
-     * @type {string}
-     * @memberof DbsCfgSession
-     */
-    'mysql'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DbsCfgSession
-     */
-    'username'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DbsCfgSession
-     */
-    'postgres'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DbsCfgSession
-     */
-    'sqlite'?: string;
-}
-/**
- * User database config
- * @export
- * @interface DbsCfgUser
- */
-export interface DbsCfgUser {
-    /**
-     * 
-     * @type {boolean}
-     * @memberof DbsCfgUser
-     */
-    'inMemory'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof DbsCfgUser
-     */
-    'inToken'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof DbsCfgUser
-     */
-    'mongodb'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof DbsCfgUser
-     */
-    'database'?: number;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof DbsCfgUser
-     */
-    'redis'?: Array<string>;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof DbsCfgUser
-     */
-    'cluster'?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof DbsCfgUser
-     */
-    'user'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DbsCfgUser
-     */
-    'password'?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof DbsCfgUser
-     */
-    'ssl'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof DbsCfgUser
-     */
-    'maxConnections'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof DbsCfgUser
-     */
-    'remote'?: string;
-    /**
-     * 
-     * @type {{ [key: string]: string; }}
-     * @memberof DbsCfgUser
-     */
-    'query'?: { [key: string]: string; };
-    /**
-     * 
-     * @type {{ [key: string]: string; }}
-     * @memberof DbsCfgUser
-     */
-    'headers'?: { [key: string]: string; };
-    /**
-     * 
-     * @type {string}
-     * @memberof DbsCfgUser
-     */
-    'mysql'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DbsCfgUser
-     */
-    'username'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DbsCfgUser
-     */
-    'postgres'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DbsCfgUser
-     */
-    'sqlite'?: string;
 }
 /**
  * 
@@ -1914,6 +1581,24 @@ export interface Err {
      * @memberof Err
      */
     'expiredAt'?: number;
+    /**
+     * 
+     * @type {LoginId}
+     * @memberof Err
+     */
+    'loginId'?: LoginId;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Err
+     */
+    'phoneNumber'?: boolean;
+    /**
+     * Login contains symbols other than a-z, A-Z, 0-9, -, _, .
+     * @type {boolean}
+     * @memberof Err
+     */
+    'notAlphanumericOrDashUnderscorePoint'?: boolean;
 }
 /**
  * 
@@ -1968,10 +1653,11 @@ export const ErrCode = {
     AccessDenied: 'ACCESS_DENIED',
     UserNotFound: 'USER_NOT_FOUND',
     SignatureIsIncorrect: 'SIGNATURE_IS_INCORRECT',
+    UserSimpleLoginIsIncorrect: 'USER_SIMPLE_LOGIN_IS_INCORRECT',
     UserLoginAlreadyTaken: 'USER_LOGIN_ALREADY_TAKEN',
-    AuthIsNotEnabled: 'AUTH_IS_NOT_ENABLED',
     TokenExpired: 'TOKEN_EXPIRED',
     TooManyReqs: 'TOO_MANY_REQS',
+    AuthIsNotEnabled: 'AUTH_IS_NOT_ENABLED',
     AuthIsNotConfirmed: 'AUTH_IS_NOT_CONFIRMED',
     NoAuthAvailableForFactor: 'NO_AUTH_AVAILABLE_FOR_FACTOR',
     AuthRequiresAnother: 'AUTH_REQUIRES_ANOTHER',
@@ -3029,6 +2715,44 @@ export interface PostgresCfg {
 /**
  * 
  * @export
+ * @interface PublicCfgAuth
+ */
+export interface PublicCfgAuth {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicCfgAuth
+     */
+    'auth': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicCfgAuth
+     */
+    'authType': string;
+}
+/**
+ * 
+ * @export
+ * @interface PublicCfgRes
+ */
+export interface PublicCfgRes {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof PublicCfgRes
+     */
+    'logins': Array<string>;
+    /**
+     * 
+     * @type {Array<PublicCfgAuth>}
+     * @memberof PublicCfgRes
+     */
+    'auths': Array<PublicCfgAuth>;
+}
+/**
+ * 
+ * @export
  * @interface QuestionsAnswersIncorrect
  */
 export interface QuestionsAnswersIncorrect {
@@ -3488,345 +3212,6 @@ export interface RemoteDbCfg {
 /**
  * 
  * @export
- * @interface SHAppCfg
- */
-export interface SHAppCfg {
-    /**
-     * 
-     * @type {SHHttpCfg}
-     * @memberof SHAppCfg
-     */
-    'http'?: SHHttpCfg;
-    /**
-     * Types of logins that can be used for identification.  If the login type is not specified in the auth config - it will be considered a simple login: the user can set any name. E.g. username.  If the login type is specified in the auth config, this login will be generated by the corresponding authenticator. E.g. email, phone or facebook account id.  
-     * @type {Set<string>}
-     * @memberof SHAppCfg
-     */
-    'logins'?: Set<string>;
-    /**
-     * List of auth names and auth configs  To use builtin auths (not a plugin or remote) follow the example: `\"password\": { ... }` or `\"anyAuthName\": { \"builtin\": \"password\", ... }` 
-     * @type {{ [key: string]: SHAppCfgAuthsValue; }}
-     * @memberof SHAppCfg
-     */
-    'auths'?: { [key: string]: SHAppCfgAuthsValue; };
-    /**
-     * List of app entries. Entry usually represents UI used for signing in/up or additional authentication before action. E.g.: - app: main entry that requests user login/email + password and 2fa (if enabled) - api: entry that allows user to generate API keys and connect third-party app - action: additional authentication (e.g. code from sms) requested before e.g. payment 
-     * @type {{ [key: string]: EntryCfg; }}
-     * @memberof SHAppCfg
-     */
-    'entries'?: { [key: string]: EntryCfg; };
-    /**
-     * 
-     * @type {DbsCfg}
-     * @memberof SHAppCfg
-     */
-    'db'?: DbsCfg;
-    /**
-     * 
-     * @type {TokenCfg}
-     * @memberof SHAppCfg
-     */
-    'token'?: TokenCfg;
-    /**
-     * List of rate limiters 
-     * @type {{ [key: string]: RateLimiterCfg; }}
-     * @memberof SHAppCfg
-     */
-    'rateLimiters'?: { [key: string]: RateLimiterCfg; };
-    /**
-     * The key that app uses for RSA certificate generation used for token signature. If `null` - app will generate secret automatically during startup.
-     * @type {string}
-     * @memberof SHAppCfg
-     */
-    'secret'?: string;
-    /**
-     * Set this key if you want to restrict access to the health-check.
-     * @type {string}
-     * @memberof SHAppCfg
-     */
-    'healthCheckKey'?: string;
-    /**
-     * 
-     * @type {I18nCfg}
-     * @memberof SHAppCfg
-     */
-    'i18n'?: I18nCfg;
-    /**
-     * 
-     * @type {string}
-     * @memberof SHAppCfg
-     */
-    '$schema'?: string;
-}
-/**
- * 
- * @export
- * @interface SHAppCfgAuthsValue
- */
-export interface SHAppCfgAuthsValue {
-    /**
-     * Path to the API that implements plugin.
-     * @type {string}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'remote'?: string;
-    /**
-     * If this is not null, app forbids to add this auth until listed auth enabled. - if this a string -> require specified auth to be enabled before this. - array of strings -> require any of listed auths to be enabled - array of arrays of strings -> works as `[ [ \"auth1\" and \"auth2\" ] or [ \"auth1\" and \"auth2\" ] ]`
-     * @type {Array<Array<string>>}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'requiresAuth'?: Array<Array<string>>;
-    /**
-     * When this is set to true app will attempt next auth in case of error on current. It\'s works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be executed only when IP auth is failed. If set to false any error on this auth will stop the whole request execution.
-     * @type {boolean}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'skipOnFail'?: boolean;
-    /**
-     * Apply rate limiter for this auth.
-     * @type {string}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'rateLimiter'?: string;
-    /**
-     * Every auth execution will burn this amount of quota. Takes place only when rate limiter is specified
-     * @type {number}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'burnQuota'?: number;
-    /**
-     * Add query params after `?` symbol in url. 
-     * @type {{ [key: string]: string; }}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'query'?: { [key: string]: string; };
-    /**
-     * Add headers to request. 
-     * @type {{ [key: string]: string; }}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'headers'?: { [key: string]: string; };
-    /**
-     * 
-     * @type {CodeCfg}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'code'?: CodeCfg;
-    /**
-     * Email server address/IP.
-     * @type {string}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'server'?: string;
-    /**
-     * Email address of sender.
-     * @type {string}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'sender'?: string;
-    /**
-     * SMTP username.
-     * @type {string}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'username'?: string;
-    /**
-     * SMTP password.
-     * @type {string}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'password'?: string;
-    /**
-     * If not null, server will create template param `confirmationUrl` that will contain query parameters with confirmation code, session id, etc.
-     * @type {string}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'confirmationUrl'?: string;
-    /**
-     * List of email templates. Key - name of template (can be used lately on frontend), value - path to template. App uses handlebars templates to generate emails. See docs here https://handlebarsjs.com  Email templates received `confirmationUrl`, `action`, `user`, `session`, `codeId`, `code`, `lang`, `headers` as template params, e.g. you can print user id as `{{ user.id }}`.  Template engine also provides `i18n` helper for localisation. E.g. `{{i18n \'confirmationButton\' default=\'Confirm\'}}` searches key `confirmationButton` in files specified by `i18n.dir` config.  It allows setting subject of email using `title` html tag, e.g. `<title>Email subject</title>`.  
-     * @type {{ [key: string]: string; }}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'templates'?: { [key: string]: string; };
-    /**
-     * Additional params for template. 
-     * @type {{ [key: string]: string; }}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'templateParams'?: { [key: string]: string; };
-    /**
-     * This allows to drop last bytes of IP. So it allows to authenticate factor when ip has rough match, e.g. the same country, same city, or same internet provider.
-     * @type {number}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'ipBytesToIgnore'?: number;
-    /**
-     * History of IP addresses user used to sign-in. Authenticated when user attempts to sign in with one of stored IPs.
-     * @type {number}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'historySize'?: number;
-    /**
-     * Path for login in id-token or user-info endpoint response. e.g. `res.user.id` extracts user login from `{ \"res\": { \"user\": { \"id\": \"...\" } } }`
-     * @type {string}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'extractLogin'?: string;
-    /**
-     * Url to get access token by authorisation code.
-     * @type {string}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'tokenUrl'?: string;
-    /**
-     * OAuth client id. Client must be registered on OAuth provider (e.g. facebook, google)
-     * @type {string}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'clientId'?: string;
-    /**
-     * OAuth client secret.
-     * @type {string}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'clientSecret'?: string;
-    /**
-     * If access token provided in request, app tries to extract user id from user-info endpoint.
-     * @type {string}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'userInfoUrl'?: string;
-    /**
-     * Send token in query param.
-     * @type {string}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'sendTokenInQuery'?: string;
-    /**
-     * Send token in Authorisation header.
-     * @type {boolean}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'sendTokenInHeader'?: boolean;
-    /**
-     * Can fill public data by a response of user-info or id-token.
-     * @type {{ [key: string]: string; }}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'extractPublicData'?: { [key: string]: string; };
-    /**
-     * Max length of answer.
-     * @type {number}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'maxLength'?: number;
-    /**
-     * Min length of answer. Length are checked after all answer transformation.
-     * @type {number}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'minLength'?: number;
-    /**
-     * Require password to contain at least one digit.
-     * @type {boolean}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'requireNumber'?: boolean;
-    /**
-     * Require password to contain at least one symbol e.g. @, !, &...
-     * @type {boolean}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'requireSymbol'?: boolean;
-    /**
-     * This requires password to contain both lowercase and uppercase letters.
-     * @type {boolean}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'requireUpperCase'?: boolean;
-    /**
-     * Password will be checked against table 1,000,000 of most overused passwords.
-     * @type {boolean}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'forbidCommonPasswords'?: boolean;
-    /**
-     * Rejects passwords that match username, email, anything that used as a login according to logins config.
-     * @type {boolean}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'forbidLoginAsPassword'?: boolean;
-    /**
-     * 
-     * @type {PasswordHistoryCfg}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'forbidReusingPassword'?: PasswordHistoryCfg;
-    /**
-     * Allows to calculate password strength based on mentioned criteria. Requirements will be checked one by one until first failed. 
-     * @type {{ [key: string]: PasswordStrengthRequirements; }}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'strength'?: { [key: string]: PasswordStrengthRequirements; };
-    /**
-     * Transform user answer to lowercase letters. This allows user still pass a check when he wrote name or city with different cases. `false` means strict match, so \"John\" != \"john\"
-     * @type {boolean}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'lowercase'?: boolean;
-    /**
-     * Remove all non-letters from user answer.
-     * @type {boolean}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'removeSymbols'?: boolean;
-    /**
-     * Remove all spaces from user answer.
-     * @type {boolean}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'removeSpaces'?: boolean;
-    /**
-     * Min number of answers required to pass this check.
-     * @type {number}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'answersRequired'?: number;
-    /**
-     * Max answers that user can save.
-     * @type {number}
-     * @memberof SHAppCfgAuthsValue
-     */
-    'maxAnswers'?: number;
-}
-/**
- * Http server config
- * @export
- * @interface SHHttpCfg
- */
-export interface SHHttpCfg {
-    /**
-     * A port that the server will use to accept http requests 
-     * @type {number}
-     * @memberof SHHttpCfg
-     */
-    'port'?: number;
-    /**
-     * IP address to bind to. Usually 0.0.0.0 to accept for any connection or 127.0.0.1 to accept only localhost 
-     * @type {string}
-     * @memberof SHHttpCfg
-     */
-    'bind'?: string;
-    /**
-     * If true, X-Forwarded-For header is used to get client\'s IP address
-     * @type {boolean}
-     * @memberof SHHttpCfg
-     */
-    'proxy'?: boolean;
-}
-/**
- * 
- * @export
  * @interface SaveUserReq
  */
 export interface SaveUserReq {
@@ -4036,6 +3421,697 @@ export interface SessionExpired {
      * @memberof SessionExpired
      */
     'msg'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ShAppCfg
+ */
+export interface ShAppCfg {
+    /**
+     * 
+     * @type {ShHttpCfg}
+     * @memberof ShAppCfg
+     */
+    'http'?: ShHttpCfg;
+    /**
+     * Types of logins that can be used for identification.  If the login type is not specified in the auth config - it will be considered a simple login: the user can set any name. E.g. username.  If the login type is specified in the auth config, this login will be generated by the corresponding authenticator. E.g. email, phone or facebook account id.  
+     * @type {Set<string>}
+     * @memberof ShAppCfg
+     */
+    'logins'?: Set<string>;
+    /**
+     * List of auth names and auth configs  To use builtin auths (not a plugin or remote) follow the example: `\"password\": { ... }` or `\"anyAuthName\": { \"builtin\": \"password\", ... }` 
+     * @type {{ [key: string]: ShAppCfgAuthsValue; }}
+     * @memberof ShAppCfg
+     */
+    'auths'?: { [key: string]: ShAppCfgAuthsValue; };
+    /**
+     * List of app entries. Entry usually represents UI used for signing in/up or additional authentication before action. E.g.: - app: main entry that requests user login/email + password and 2fa (if enabled) - api: entry that allows user to generate API keys and connect third-party app - action: additional authentication (e.g. code from sms) requested before e.g. payment 
+     * @type {{ [key: string]: EntryCfg; }}
+     * @memberof ShAppCfg
+     */
+    'entries'?: { [key: string]: EntryCfg; };
+    /**
+     * 
+     * @type {ShDbsCfg}
+     * @memberof ShAppCfg
+     */
+    'db'?: ShDbsCfg;
+    /**
+     * 
+     * @type {TokenCfg}
+     * @memberof ShAppCfg
+     */
+    'token'?: TokenCfg;
+    /**
+     * List of rate limiters 
+     * @type {{ [key: string]: RateLimiterCfg; }}
+     * @memberof ShAppCfg
+     */
+    'rateLimiters'?: { [key: string]: RateLimiterCfg; };
+    /**
+     * The key that app uses for RSA certificate generation used for token signature. If `null` - app will generate secret automatically during startup.
+     * @type {string}
+     * @memberof ShAppCfg
+     */
+    'secret'?: string;
+    /**
+     * Set this key if you want to restrict access to the health-check.
+     * @type {string}
+     * @memberof ShAppCfg
+     */
+    'healthCheckKey'?: string;
+    /**
+     * 
+     * @type {I18nCfg}
+     * @memberof ShAppCfg
+     */
+    'i18n'?: I18nCfg;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShAppCfg
+     */
+    '$schema'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ShAppCfgAuthsValue
+ */
+export interface ShAppCfgAuthsValue {
+    /**
+     * Path to the API that implements plugin.
+     * @type {string}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'remote'?: string;
+    /**
+     * If this is not null, app forbids to add this auth until listed auth enabled. - if this a string -> require specified auth to be enabled before this. - array of strings -> require any of listed auths to be enabled - array of arrays of strings -> works as `[ [ \"auth1\" and \"auth2\" ] or [ \"auth1\" and \"auth2\" ] ]`
+     * @type {Array<Array<string>>}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'requiresAuth'?: Array<Array<string>>;
+    /**
+     * When this is set to true app will attempt next auth in case of error on current. It\'s works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be executed only when IP auth is failed. If set to false any error on this auth will stop the whole request execution.
+     * @type {boolean}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'skipOnFail'?: boolean;
+    /**
+     * Apply rate limiter for this auth.
+     * @type {string}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'rateLimiter'?: string;
+    /**
+     * Every auth execution will burn this amount of quota. Takes place only when rate limiter is specified
+     * @type {number}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'burnQuota'?: number;
+    /**
+     * Add query params after `?` symbol in url. 
+     * @type {{ [key: string]: string; }}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'query'?: { [key: string]: string; };
+    /**
+     * Add headers to request. 
+     * @type {{ [key: string]: string; }}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'headers'?: { [key: string]: string; };
+    /**
+     * 
+     * @type {CodeCfg}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'code'?: CodeCfg;
+    /**
+     * Email server address/IP.
+     * @type {string}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'server'?: string;
+    /**
+     * Email address of sender.
+     * @type {string}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'sender'?: string;
+    /**
+     * SMTP username.
+     * @type {string}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'username'?: string;
+    /**
+     * SMTP password.
+     * @type {string}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'password'?: string;
+    /**
+     * If not null, server will create template param `confirmationUrl` that will contain query parameters with confirmation code, session id, etc.
+     * @type {string}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'confirmationUrl'?: string;
+    /**
+     * List of email templates. Key - name of template (can be used lately on frontend), value - path to template. App uses handlebars templates to generate emails. See docs here https://handlebarsjs.com  Email templates received `confirmationUrl`, `action`, `user`, `session`, `codeId`, `code`, `lang`, `headers` as template params, e.g. you can print user id as `{{ user.id }}`.  Template engine also provides `i18n` helper for localisation. E.g. `{{i18n \'confirmationButton\' default=\'Confirm\'}}` searches key `confirmationButton` in files specified by `i18n.dir` config.  It allows setting subject of email using `title` html tag, e.g. `<title>Email subject</title>`.  
+     * @type {{ [key: string]: string; }}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'templates'?: { [key: string]: string; };
+    /**
+     * Additional params for template. 
+     * @type {{ [key: string]: string; }}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'templateParams'?: { [key: string]: string; };
+    /**
+     * This allows to drop last bytes of IP. So it allows to authenticate factor when ip has rough match, e.g. the same country, same city, or same internet provider.
+     * @type {number}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'ipBytesToIgnore'?: number;
+    /**
+     * History of IP addresses user used to sign-in. Authenticated when user attempts to sign in with one of stored IPs.
+     * @type {number}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'historySize'?: number;
+    /**
+     * Path for login in id-token or user-info endpoint response. e.g. `res.user.id` extracts user login from `{ \"res\": { \"user\": { \"id\": \"...\" } } }`
+     * @type {string}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'extractLogin'?: string;
+    /**
+     * Url to get access token by authorisation code.
+     * @type {string}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'tokenUrl'?: string;
+    /**
+     * OAuth client id. Client must be registered on OAuth provider (e.g. facebook, google)
+     * @type {string}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'clientId'?: string;
+    /**
+     * OAuth client secret.
+     * @type {string}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'clientSecret'?: string;
+    /**
+     * If access token provided in request, app tries to extract user id from user-info endpoint.
+     * @type {string}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'userInfoUrl'?: string;
+    /**
+     * Send token in query param.
+     * @type {string}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'sendTokenInQuery'?: string;
+    /**
+     * Send token in Authorisation header.
+     * @type {boolean}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'sendTokenInHeader'?: boolean;
+    /**
+     * Can fill public data by a response of user-info or id-token.
+     * @type {{ [key: string]: string; }}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'extractPublicData'?: { [key: string]: string; };
+    /**
+     * Max length of answer.
+     * @type {number}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'maxLength'?: number;
+    /**
+     * Min length of answer. Length are checked after all answer transformation.
+     * @type {number}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'minLength'?: number;
+    /**
+     * Require password to contain at least one digit.
+     * @type {boolean}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'requireNumber'?: boolean;
+    /**
+     * Require password to contain at least one symbol e.g. @, !, &...
+     * @type {boolean}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'requireSymbol'?: boolean;
+    /**
+     * This requires password to contain both lowercase and uppercase letters.
+     * @type {boolean}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'requireUpperCase'?: boolean;
+    /**
+     * Password will be checked against table 1,000,000 of most overused passwords.
+     * @type {boolean}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'forbidCommonPasswords'?: boolean;
+    /**
+     * Rejects passwords that match username, email, anything that used as a login according to logins config.
+     * @type {boolean}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'forbidLoginAsPassword'?: boolean;
+    /**
+     * 
+     * @type {PasswordHistoryCfg}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'forbidReusingPassword'?: PasswordHistoryCfg;
+    /**
+     * Allows to calculate password strength based on mentioned criteria. Requirements will be checked one by one until first failed. 
+     * @type {{ [key: string]: PasswordStrengthRequirements; }}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'strength'?: { [key: string]: PasswordStrengthRequirements; };
+    /**
+     * Transform user answer to lowercase letters. This allows user still pass a check when he wrote name or city with different cases. `false` means strict match, so \"John\" != \"john\"
+     * @type {boolean}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'lowercase'?: boolean;
+    /**
+     * Remove all non-letters from user answer.
+     * @type {boolean}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'removeSymbols'?: boolean;
+    /**
+     * Remove all spaces from user answer.
+     * @type {boolean}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'removeSpaces'?: boolean;
+    /**
+     * Min number of answers required to pass this check.
+     * @type {number}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'answersRequired'?: number;
+    /**
+     * Max answers that user can save.
+     * @type {number}
+     * @memberof ShAppCfgAuthsValue
+     */
+    'maxAnswers'?: number;
+}
+/**
+ * Database connection configs
+ * @export
+ * @interface ShDbsCfg
+ */
+export interface ShDbsCfg {
+    /**
+     * 
+     * @type {ShDbsCfgUser}
+     * @memberof ShDbsCfg
+     */
+    'user'?: ShDbsCfgUser;
+    /**
+     * 
+     * @type {ShDbsCfgSession}
+     * @memberof ShDbsCfg
+     */
+    'session'?: ShDbsCfgSession;
+    /**
+     * 
+     * @type {ShDbsCfgRateLimiter}
+     * @memberof ShDbsCfg
+     */
+    'rateLimiter'?: ShDbsCfgRateLimiter;
+}
+/**
+ * Database for rate-limiters. If you don\'t use rate-limiter leave this empty (`{}`).
+ * @export
+ * @interface ShDbsCfgRateLimiter
+ */
+export interface ShDbsCfgRateLimiter {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ShDbsCfgRateLimiter
+     */
+    'inMemory'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ShDbsCfgRateLimiter
+     */
+    'inToken'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShDbsCfgRateLimiter
+     */
+    'mongodb'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ShDbsCfgRateLimiter
+     */
+    'database'?: number;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ShDbsCfgRateLimiter
+     */
+    'redis'?: Array<string>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ShDbsCfgRateLimiter
+     */
+    'cluster'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShDbsCfgRateLimiter
+     */
+    'user'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShDbsCfgRateLimiter
+     */
+    'password'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ShDbsCfgRateLimiter
+     */
+    'ssl'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof ShDbsCfgRateLimiter
+     */
+    'maxConnections'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShDbsCfgRateLimiter
+     */
+    'remote'?: string;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof ShDbsCfgRateLimiter
+     */
+    'query'?: { [key: string]: string; };
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof ShDbsCfgRateLimiter
+     */
+    'headers'?: { [key: string]: string; };
+    /**
+     * 
+     * @type {string}
+     * @memberof ShDbsCfgRateLimiter
+     */
+    'mysql'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShDbsCfgRateLimiter
+     */
+    'username'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShDbsCfgRateLimiter
+     */
+    'postgres'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShDbsCfgRateLimiter
+     */
+    'sqlite'?: string;
+}
+/**
+ * Session database config.  If you aren\'t using cluster, prefer in-memory database.  You can use in-token to not use database at all. Use it with `token.access.cacheUnauthenticated = true` and `token.access.cache != null` values.
+ * @export
+ * @interface ShDbsCfgSession
+ */
+export interface ShDbsCfgSession {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ShDbsCfgSession
+     */
+    'inMemory'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ShDbsCfgSession
+     */
+    'inToken'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShDbsCfgSession
+     */
+    'mongodb'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ShDbsCfgSession
+     */
+    'database'?: number;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ShDbsCfgSession
+     */
+    'redis'?: Array<string>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ShDbsCfgSession
+     */
+    'cluster'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShDbsCfgSession
+     */
+    'user'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShDbsCfgSession
+     */
+    'password'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ShDbsCfgSession
+     */
+    'ssl'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof ShDbsCfgSession
+     */
+    'maxConnections'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShDbsCfgSession
+     */
+    'remote'?: string;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof ShDbsCfgSession
+     */
+    'query'?: { [key: string]: string; };
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof ShDbsCfgSession
+     */
+    'headers'?: { [key: string]: string; };
+    /**
+     * 
+     * @type {string}
+     * @memberof ShDbsCfgSession
+     */
+    'mysql'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShDbsCfgSession
+     */
+    'username'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShDbsCfgSession
+     */
+    'postgres'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShDbsCfgSession
+     */
+    'sqlite'?: string;
+}
+/**
+ * User database config
+ * @export
+ * @interface ShDbsCfgUser
+ */
+export interface ShDbsCfgUser {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ShDbsCfgUser
+     */
+    'inMemory'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ShDbsCfgUser
+     */
+    'inToken'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShDbsCfgUser
+     */
+    'mongodb'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ShDbsCfgUser
+     */
+    'database'?: number;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ShDbsCfgUser
+     */
+    'redis'?: Array<string>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ShDbsCfgUser
+     */
+    'cluster'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShDbsCfgUser
+     */
+    'user'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShDbsCfgUser
+     */
+    'password'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ShDbsCfgUser
+     */
+    'ssl'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof ShDbsCfgUser
+     */
+    'maxConnections'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShDbsCfgUser
+     */
+    'remote'?: string;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof ShDbsCfgUser
+     */
+    'query'?: { [key: string]: string; };
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof ShDbsCfgUser
+     */
+    'headers'?: { [key: string]: string; };
+    /**
+     * 
+     * @type {string}
+     * @memberof ShDbsCfgUser
+     */
+    'mysql'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShDbsCfgUser
+     */
+    'username'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShDbsCfgUser
+     */
+    'postgres'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ShDbsCfgUser
+     */
+    'sqlite'?: string;
+}
+/**
+ * Http server config
+ * @export
+ * @interface ShHttpCfg
+ */
+export interface ShHttpCfg {
+    /**
+     * A port that the server will use to accept http requests 
+     * @type {number}
+     * @memberof ShHttpCfg
+     */
+    'port'?: number;
+    /**
+     * IP address to bind to. Usually 0.0.0.0 to accept for any connection or 127.0.0.1 to accept only localhost 
+     * @type {string}
+     * @memberof ShHttpCfg
+     */
+    'bind'?: string;
+    /**
+     * If true, X-Forwarded-For header is used to get client\'s IP address
+     * @type {boolean}
+     * @memberof ShHttpCfg
+     */
+    'proxy'?: boolean;
 }
 /**
  * 
@@ -4463,6 +4539,61 @@ export interface UserNotFound {
      */
     'msg'?: string;
 }
+/**
+ * 
+ * @export
+ * @interface UserSimpleLoginIsIncorrect
+ */
+export interface UserSimpleLoginIsIncorrect {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserSimpleLoginIsIncorrect
+     */
+    'code': string;
+    /**
+     * Message for developers.
+     * @type {string}
+     * @memberof UserSimpleLoginIsIncorrect
+     */
+    'devMsg': string;
+    /**
+     * Localised message suitable for UI.
+     * @type {string}
+     * @memberof UserSimpleLoginIsIncorrect
+     */
+    'msg'?: string;
+    /**
+     * 
+     * @type {LoginId}
+     * @memberof UserSimpleLoginIsIncorrect
+     */
+    'loginId': LoginId;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserSimpleLoginIsIncorrect
+     */
+    'tooShort': boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserSimpleLoginIsIncorrect
+     */
+    'tooLong': boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserSimpleLoginIsIncorrect
+     */
+    'phoneNumber'?: boolean;
+    /**
+     * Login contains symbols other than a-z, A-Z, 0-9, -, _, .
+     * @type {boolean}
+     * @memberof UserSimpleLoginIsIncorrect
+     */
+    'notAlphanumericOrDashUnderscorePoint': boolean;
+}
 
 /**
  * AuthorisationApi - axios parameter creator
@@ -4689,6 +4820,36 @@ export const ServerApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
+         * Get server configuration. 
+         * @summary Public server configuration
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cfgPublic: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/server/cfg/public`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Get server plugins state 
          * @summary Server health status
          * @param {string} [key] 
@@ -4739,8 +4900,18 @@ export const ServerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cfg(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SHAppCfg>> {
+        async cfg(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ShAppCfg>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.cfg(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Get server configuration. 
+         * @summary Public server configuration
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cfgPublic(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PublicCfgRes>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cfgPublic(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -4770,8 +4941,17 @@ export const ServerApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cfg(options?: any): AxiosPromise<SHAppCfg> {
+        cfg(options?: any): AxiosPromise<ShAppCfg> {
             return localVarFp.cfg(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get server configuration. 
+         * @summary Public server configuration
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cfgPublic(options?: any): AxiosPromise<PublicCfgRes> {
+            return localVarFp.cfgPublic(options).then((request) => request(axios, basePath));
         },
         /**
          * Get server plugins state 
@@ -4802,6 +4982,17 @@ export class ServerApi extends BaseAPI {
      */
     public cfg(options?: AxiosRequestConfig) {
         return ServerApiFp(this.configuration).cfg(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get server configuration. 
+     * @summary Public server configuration
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ServerApi
+     */
+    public cfgPublic(options?: AxiosRequestConfig) {
+        return ServerApiFp(this.configuration).cfgPublic(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

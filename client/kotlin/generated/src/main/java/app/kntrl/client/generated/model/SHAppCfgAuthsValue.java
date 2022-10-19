@@ -52,10 +52,10 @@ import java.util.Set;
 import app.kntrl.client.generated.infra.JSON;
 
 /**
- * SHAppCfgAuthsValue
+ * ShAppCfgAuthsValue
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
-public class SHAppCfgAuthsValue {
+public class ShAppCfgAuthsValue {
   public static final String SERIALIZED_NAME_REMOTE = "remote";
   @SerializedName(SERIALIZED_NAME_REMOTE)
   private String remote;
@@ -212,10 +212,10 @@ public class SHAppCfgAuthsValue {
   @SerializedName(SERIALIZED_NAME_MAX_ANSWERS)
   private Integer maxAnswers;
 
-  public SHAppCfgAuthsValue() {
+  public ShAppCfgAuthsValue() {
   }
 
-  public SHAppCfgAuthsValue remote(String remote) {
+  public ShAppCfgAuthsValue remote(String remote) {
     
     this.remote = remote;
     return this;
@@ -238,13 +238,13 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue requiresAuth(List<List<String>> requiresAuth) {
+  public ShAppCfgAuthsValue requiresAuth(List<List<String>> requiresAuth) {
     
     this.requiresAuth = requiresAuth;
     return this;
   }
 
-  public SHAppCfgAuthsValue addRequiresAuthItem(List<String> requiresAuthItem) {
+  public ShAppCfgAuthsValue addRequiresAuthItem(List<String> requiresAuthItem) {
     if (this.requiresAuth == null) {
       this.requiresAuth = new ArrayList<>();
     }
@@ -269,7 +269,7 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue skipOnFail(Boolean skipOnFail) {
+  public ShAppCfgAuthsValue skipOnFail(Boolean skipOnFail) {
     
     this.skipOnFail = skipOnFail;
     return this;
@@ -292,7 +292,7 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue rateLimiter(String rateLimiter) {
+  public ShAppCfgAuthsValue rateLimiter(String rateLimiter) {
     
     this.rateLimiter = rateLimiter;
     return this;
@@ -315,7 +315,7 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue burnQuota(Double burnQuota) {
+  public ShAppCfgAuthsValue burnQuota(Double burnQuota) {
     
     this.burnQuota = burnQuota;
     return this;
@@ -338,13 +338,13 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue query(Map<String, String> query) {
+  public ShAppCfgAuthsValue query(Map<String, String> query) {
     
     this.query = query;
     return this;
   }
 
-  public SHAppCfgAuthsValue putQueryItem(String key, String queryItem) {
+  public ShAppCfgAuthsValue putQueryItem(String key, String queryItem) {
     if (this.query == null) {
       this.query = new HashMap<>();
     }
@@ -369,13 +369,13 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue headers(Map<String, String> headers) {
+  public ShAppCfgAuthsValue headers(Map<String, String> headers) {
     
     this.headers = headers;
     return this;
   }
 
-  public SHAppCfgAuthsValue putHeadersItem(String key, String headersItem) {
+  public ShAppCfgAuthsValue putHeadersItem(String key, String headersItem) {
     if (this.headers == null) {
       this.headers = new HashMap<>();
     }
@@ -400,7 +400,7 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue code(CodeCfg code) {
+  public ShAppCfgAuthsValue code(CodeCfg code) {
     
     this.code = code;
     return this;
@@ -423,7 +423,7 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue server(String server) {
+  public ShAppCfgAuthsValue server(String server) {
     
     this.server = server;
     return this;
@@ -446,7 +446,7 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue sender(String sender) {
+  public ShAppCfgAuthsValue sender(String sender) {
     
     this.sender = sender;
     return this;
@@ -469,7 +469,7 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue username(String username) {
+  public ShAppCfgAuthsValue username(String username) {
     
     this.username = username;
     return this;
@@ -492,7 +492,7 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue password(String password) {
+  public ShAppCfgAuthsValue password(String password) {
     
     this.password = password;
     return this;
@@ -515,7 +515,7 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue confirmationUrl(String confirmationUrl) {
+  public ShAppCfgAuthsValue confirmationUrl(String confirmationUrl) {
     
     this.confirmationUrl = confirmationUrl;
     return this;
@@ -538,13 +538,13 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue templates(Map<String, String> templates) {
+  public ShAppCfgAuthsValue templates(Map<String, String> templates) {
     
     this.templates = templates;
     return this;
   }
 
-  public SHAppCfgAuthsValue putTemplatesItem(String key, String templatesItem) {
+  public ShAppCfgAuthsValue putTemplatesItem(String key, String templatesItem) {
     if (this.templates == null) {
       this.templates = new HashMap<>();
     }
@@ -569,13 +569,13 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue templateParams(Map<String, String> templateParams) {
+  public ShAppCfgAuthsValue templateParams(Map<String, String> templateParams) {
     
     this.templateParams = templateParams;
     return this;
   }
 
-  public SHAppCfgAuthsValue putTemplateParamsItem(String key, String templateParamsItem) {
+  public ShAppCfgAuthsValue putTemplateParamsItem(String key, String templateParamsItem) {
     if (this.templateParams == null) {
       this.templateParams = new HashMap<>();
     }
@@ -600,7 +600,7 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue ipBytesToIgnore(Integer ipBytesToIgnore) {
+  public ShAppCfgAuthsValue ipBytesToIgnore(Integer ipBytesToIgnore) {
     
     this.ipBytesToIgnore = ipBytesToIgnore;
     return this;
@@ -623,7 +623,7 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue historySize(Integer historySize) {
+  public ShAppCfgAuthsValue historySize(Integer historySize) {
     
     this.historySize = historySize;
     return this;
@@ -646,7 +646,7 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue extractLogin(String extractLogin) {
+  public ShAppCfgAuthsValue extractLogin(String extractLogin) {
     
     this.extractLogin = extractLogin;
     return this;
@@ -669,7 +669,7 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue tokenUrl(String tokenUrl) {
+  public ShAppCfgAuthsValue tokenUrl(String tokenUrl) {
     
     this.tokenUrl = tokenUrl;
     return this;
@@ -692,7 +692,7 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue clientId(String clientId) {
+  public ShAppCfgAuthsValue clientId(String clientId) {
     
     this.clientId = clientId;
     return this;
@@ -715,7 +715,7 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue clientSecret(String clientSecret) {
+  public ShAppCfgAuthsValue clientSecret(String clientSecret) {
     
     this.clientSecret = clientSecret;
     return this;
@@ -738,7 +738,7 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue userInfoUrl(String userInfoUrl) {
+  public ShAppCfgAuthsValue userInfoUrl(String userInfoUrl) {
     
     this.userInfoUrl = userInfoUrl;
     return this;
@@ -761,7 +761,7 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue sendTokenInQuery(String sendTokenInQuery) {
+  public ShAppCfgAuthsValue sendTokenInQuery(String sendTokenInQuery) {
     
     this.sendTokenInQuery = sendTokenInQuery;
     return this;
@@ -784,7 +784,7 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue sendTokenInHeader(Boolean sendTokenInHeader) {
+  public ShAppCfgAuthsValue sendTokenInHeader(Boolean sendTokenInHeader) {
     
     this.sendTokenInHeader = sendTokenInHeader;
     return this;
@@ -807,13 +807,13 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue extractPublicData(Map<String, String> extractPublicData) {
+  public ShAppCfgAuthsValue extractPublicData(Map<String, String> extractPublicData) {
     
     this.extractPublicData = extractPublicData;
     return this;
   }
 
-  public SHAppCfgAuthsValue putExtractPublicDataItem(String key, String extractPublicDataItem) {
+  public ShAppCfgAuthsValue putExtractPublicDataItem(String key, String extractPublicDataItem) {
     if (this.extractPublicData == null) {
       this.extractPublicData = new HashMap<>();
     }
@@ -838,7 +838,7 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue maxLength(Integer maxLength) {
+  public ShAppCfgAuthsValue maxLength(Integer maxLength) {
     
     this.maxLength = maxLength;
     return this;
@@ -861,7 +861,7 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue minLength(Integer minLength) {
+  public ShAppCfgAuthsValue minLength(Integer minLength) {
     
     this.minLength = minLength;
     return this;
@@ -884,7 +884,7 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue requireNumber(Boolean requireNumber) {
+  public ShAppCfgAuthsValue requireNumber(Boolean requireNumber) {
     
     this.requireNumber = requireNumber;
     return this;
@@ -907,7 +907,7 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue requireSymbol(Boolean requireSymbol) {
+  public ShAppCfgAuthsValue requireSymbol(Boolean requireSymbol) {
     
     this.requireSymbol = requireSymbol;
     return this;
@@ -930,7 +930,7 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue requireUpperCase(Boolean requireUpperCase) {
+  public ShAppCfgAuthsValue requireUpperCase(Boolean requireUpperCase) {
     
     this.requireUpperCase = requireUpperCase;
     return this;
@@ -953,7 +953,7 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue forbidCommonPasswords(Boolean forbidCommonPasswords) {
+  public ShAppCfgAuthsValue forbidCommonPasswords(Boolean forbidCommonPasswords) {
     
     this.forbidCommonPasswords = forbidCommonPasswords;
     return this;
@@ -976,7 +976,7 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue forbidLoginAsPassword(Boolean forbidLoginAsPassword) {
+  public ShAppCfgAuthsValue forbidLoginAsPassword(Boolean forbidLoginAsPassword) {
     
     this.forbidLoginAsPassword = forbidLoginAsPassword;
     return this;
@@ -999,7 +999,7 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue forbidReusingPassword(PasswordHistoryCfg forbidReusingPassword) {
+  public ShAppCfgAuthsValue forbidReusingPassword(PasswordHistoryCfg forbidReusingPassword) {
     
     this.forbidReusingPassword = forbidReusingPassword;
     return this;
@@ -1022,13 +1022,13 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue strength(Map<String, PasswordStrengthRequirements> strength) {
+  public ShAppCfgAuthsValue strength(Map<String, PasswordStrengthRequirements> strength) {
     
     this.strength = strength;
     return this;
   }
 
-  public SHAppCfgAuthsValue putStrengthItem(String key, PasswordStrengthRequirements strengthItem) {
+  public ShAppCfgAuthsValue putStrengthItem(String key, PasswordStrengthRequirements strengthItem) {
     if (this.strength == null) {
       this.strength = new HashMap<>();
     }
@@ -1053,7 +1053,7 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue lowercase(Boolean lowercase) {
+  public ShAppCfgAuthsValue lowercase(Boolean lowercase) {
     
     this.lowercase = lowercase;
     return this;
@@ -1076,7 +1076,7 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue removeSymbols(Boolean removeSymbols) {
+  public ShAppCfgAuthsValue removeSymbols(Boolean removeSymbols) {
     
     this.removeSymbols = removeSymbols;
     return this;
@@ -1099,7 +1099,7 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue removeSpaces(Boolean removeSpaces) {
+  public ShAppCfgAuthsValue removeSpaces(Boolean removeSpaces) {
     
     this.removeSpaces = removeSpaces;
     return this;
@@ -1122,7 +1122,7 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue answersRequired(Integer answersRequired) {
+  public ShAppCfgAuthsValue answersRequired(Integer answersRequired) {
     
     this.answersRequired = answersRequired;
     return this;
@@ -1145,7 +1145,7 @@ public class SHAppCfgAuthsValue {
   }
 
 
-  public SHAppCfgAuthsValue maxAnswers(Integer maxAnswers) {
+  public ShAppCfgAuthsValue maxAnswers(Integer maxAnswers) {
     
     this.maxAnswers = maxAnswers;
     return this;
@@ -1178,7 +1178,7 @@ public class SHAppCfgAuthsValue {
    * Set the additional (undeclared) property with the specified name and value.
    * If the property does not already exist, create it otherwise replace it.
    */
-  public SHAppCfgAuthsValue putAdditionalProperty(String key, Object value) {
+  public ShAppCfgAuthsValue putAdditionalProperty(String key, Object value) {
     if (this.additionalProperties == null) {
         this.additionalProperties = new HashMap<String, Object>();
     }
@@ -1212,7 +1212,7 @@ public class SHAppCfgAuthsValue {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SHAppCfgAuthsValue shAppCfgAuthsValue = (SHAppCfgAuthsValue) o;
+    ShAppCfgAuthsValue shAppCfgAuthsValue = (ShAppCfgAuthsValue) o;
     return Objects.equals(this.remote, shAppCfgAuthsValue.remote) &&
         Objects.equals(this.requiresAuth, shAppCfgAuthsValue.requiresAuth) &&
         Objects.equals(this.skipOnFail, shAppCfgAuthsValue.skipOnFail) &&
@@ -1263,7 +1263,7 @@ public class SHAppCfgAuthsValue {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SHAppCfgAuthsValue {\n");
+    sb.append("class ShAppCfgAuthsValue {\n");
     sb.append("    remote: ").append(toIndentedString(remote)).append("\n");
     sb.append("    requiresAuth: ").append(toIndentedString(requiresAuth)).append("\n");
     sb.append("    skipOnFail: ").append(toIndentedString(skipOnFail)).append("\n");
@@ -1374,14 +1374,14 @@ public class SHAppCfgAuthsValue {
   * Validates the JSON Object and throws an exception if issues found
   *
   * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to SHAppCfgAuthsValue
+  * @throws IOException if the JSON Object is invalid with respect to ShAppCfgAuthsValue
   */
   public static void validateJsonObject(JsonObject jsonObj) throws IOException {
       if (jsonObj == null) {
-        if (SHAppCfgAuthsValue.openapiRequiredFields.isEmpty()) {
+        if (ShAppCfgAuthsValue.openapiRequiredFields.isEmpty()) {
           return;
         } else { // has required fields
-          throw new IllegalArgumentException(String.format("The required field(s) %s in SHAppCfgAuthsValue is not found in the empty JSON string", SHAppCfgAuthsValue.openapiRequiredFields.toString()));
+          throw new IllegalArgumentException(String.format("The required field(s) %s in ShAppCfgAuthsValue is not found in the empty JSON string", ShAppCfgAuthsValue.openapiRequiredFields.toString()));
         }
       }
       if ((jsonObj.get("remote") != null && !jsonObj.get("remote").isJsonNull()) && !jsonObj.get("remote").isJsonPrimitive()) {
@@ -1441,16 +1441,16 @@ public class SHAppCfgAuthsValue {
     @SuppressWarnings("unchecked")
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!SHAppCfgAuthsValue.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'SHAppCfgAuthsValue' and its subtypes
+       if (!ShAppCfgAuthsValue.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'ShAppCfgAuthsValue' and its subtypes
        }
        final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<SHAppCfgAuthsValue> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(SHAppCfgAuthsValue.class));
+       final TypeAdapter<ShAppCfgAuthsValue> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(ShAppCfgAuthsValue.class));
 
-       return (TypeAdapter<T>) new TypeAdapter<SHAppCfgAuthsValue>() {
+       return (TypeAdapter<T>) new TypeAdapter<ShAppCfgAuthsValue>() {
            @Override
-           public void write(JsonWriter out, SHAppCfgAuthsValue value) throws IOException {
+           public void write(JsonWriter out, ShAppCfgAuthsValue value) throws IOException {
              JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
              obj.remove("additionalProperties");
              // serialize additonal properties
@@ -1473,11 +1473,11 @@ public class SHAppCfgAuthsValue {
            }
 
            @Override
-           public SHAppCfgAuthsValue read(JsonReader in) throws IOException {
+           public ShAppCfgAuthsValue read(JsonReader in) throws IOException {
              JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
              validateJsonObject(jsonObj);
              // store additional fields in the deserialized instance
-             SHAppCfgAuthsValue instance = thisAdapter.fromJsonTree(jsonObj);
+             ShAppCfgAuthsValue instance = thisAdapter.fromJsonTree(jsonObj);
              for (Map.Entry<String, JsonElement> entry : jsonObj.entrySet()) {
                if (!openapiFields.contains(entry.getKey())) {
                  if (entry.getValue().isJsonPrimitive()) { // primitive type
@@ -1502,18 +1502,18 @@ public class SHAppCfgAuthsValue {
   }
 
  /**
-  * Create an instance of SHAppCfgAuthsValue given an JSON string
+  * Create an instance of ShAppCfgAuthsValue given an JSON string
   *
   * @param jsonString JSON string
-  * @return An instance of SHAppCfgAuthsValue
-  * @throws IOException if the JSON string is invalid with respect to SHAppCfgAuthsValue
+  * @return An instance of ShAppCfgAuthsValue
+  * @throws IOException if the JSON string is invalid with respect to ShAppCfgAuthsValue
   */
-  public static SHAppCfgAuthsValue fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, SHAppCfgAuthsValue.class);
+  public static ShAppCfgAuthsValue fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, ShAppCfgAuthsValue.class);
   }
 
  /**
-  * Convert an instance of SHAppCfgAuthsValue to an JSON string
+  * Convert an instance of ShAppCfgAuthsValue to an JSON string
   *
   * @return JSON string
   */

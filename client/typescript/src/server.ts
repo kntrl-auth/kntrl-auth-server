@@ -1,4 +1,4 @@
-import { SHAppCfg, HealthRes, HealthStatus, ServerApi } from '../generated';
+import { HealthRes, HealthStatus, ServerApi, ShAppCfg } from '../generated';
 import { handleErr } from './utils';
 import { Session } from './session';
 
@@ -28,7 +28,7 @@ export class ServerSvc {
         }
     }
 
-    async cfg(): Promise<SHAppCfg> {
+    async cfg(): Promise<ShAppCfg> {
         return handleErr(this.api.cfg(await this.session._authenticatedAxiosCfg()), this.session);
     }
 }
