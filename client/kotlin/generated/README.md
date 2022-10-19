@@ -238,6 +238,8 @@ Class | Method | HTTP request | Description
  - [RefreshTokenCfg](docs/RefreshTokenCfg.md)
  - [RefreshTokenReq](docs/RefreshTokenReq.md)
  - [RefreshTokenRes](docs/RefreshTokenRes.md)
+ - [Regex](docs/Regex.md)
+ - [RegexOption](docs/RegexOption.md)
  - [RemoteAuthCfg](docs/RemoteAuthCfg.md)
  - [RemoteDbCfg](docs/RemoteDbCfg.md)
  - [SaveUserReq](docs/SaveUserReq.md)
@@ -267,8 +269,8 @@ Class | Method | HTTP request | Description
  - [UnconfirmedAuthData](docs/UnconfirmedAuthData.md)
  - [User](docs/User.md)
  - [UserLoginAlreadyTaken](docs/UserLoginAlreadyTaken.md)
+ - [UserLoginIsInvalid](docs/UserLoginIsInvalid.md)
  - [UserNotFound](docs/UserNotFound.md)
- - [UserSimpleLoginIsIncorrect](docs/UserSimpleLoginIsIncorrect.md)
 
 
 ## Documentation for Authorization

@@ -184,6 +184,7 @@ public class JSON {
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.RefreshTokenCfg.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.RefreshTokenReq.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.RefreshTokenRes.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.Regex.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.RemoteAuthCfg.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.RemoteDbCfg.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.SaveUserReq.CustomTypeAdapterFactory());
@@ -211,8 +212,8 @@ public class JSON {
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.UnconfirmedAuthData.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.User.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.UserLoginAlreadyTaken.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.UserLoginIsInvalid.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.UserNotFound.CustomTypeAdapterFactory());
-        gsonBuilder.registerTypeAdapterFactory(new app.kntrl.client.generated.model.UserSimpleLoginIsIncorrect.CustomTypeAdapterFactory());
         gson = gsonBuilder.create();
     }
 

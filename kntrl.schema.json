@@ -38,6 +38,26 @@
         }
       ]
     },
+    "loginRequirements": {
+      "type": "object",
+      "additionalProperties": {
+        "x-additionalPropertiesName": "login type",
+        "type": "object",
+        "properties": {
+          "pattern": {
+            "type": "string"
+          },
+          "options": {
+            "uniqueItems": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RegexOption"
+            }
+          }
+        }
+      },
+      "description": "Regexes to validate logins.\n"
+    },
     "auths": {
       "type": "object",
       "additionalProperties": {

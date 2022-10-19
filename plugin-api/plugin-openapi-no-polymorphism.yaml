@@ -468,11 +468,6 @@ components:
           x-nullable: true
         loginId:
           $ref: '#/components/schemas/LoginId'
-        phoneNumber:
-          type: boolean
-        notAlphanumericOrDashUnderscorePoint:
-          type: boolean
-          description: "Login contains symbols other than a-z, A-Z, 0-9, -, _, ."
       additionalProperties: true
       x-order: 2025349183-0
       x-sealed: false
@@ -663,11 +658,6 @@ components:
           x-nullable: true
         loginId:
           $ref: '#/components/schemas/LoginId'
-        phoneNumber:
-          type: boolean
-        notAlphanumericOrDashUnderscorePoint:
-          type: boolean
-          description: "Login contains symbols other than a-z, A-Z, 0-9, -, _, ."
       additionalProperties: true
       x-order: 2025349183-4
       x-sealed: false
@@ -1124,6 +1114,26 @@ components:
           x-nullable: true
       x-order: -270554383-1
       x-super: '#/components/schemas/ClientErr'
+    UserLoginIsInvalid:
+      required:
+      - code
+      - devMsg
+      - loginId
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+        loginId:
+          $ref: '#/components/schemas/LoginId'
+      x-order: -270554383-0
+      x-super: '#/components/schemas/ClientErr'
     UserNotFound:
       required:
       - code
@@ -1141,38 +1151,6 @@ components:
           x-nullable: true
       x-order: -2065236468-2
       x-super: '#/components/schemas/Unauthenticated'
-    UserSimpleLoginIsIncorrect:
-      required:
-      - code
-      - devMsg
-      - loginId
-      - notAlphanumericOrDashUnderscorePoint
-      - tooLong
-      - tooShort
-      type: object
-      properties:
-        code:
-          type: string
-        devMsg:
-          type: string
-          description: Message for developers.
-        msg:
-          type: string
-          description: Localised message suitable for UI.
-          x-nullable: true
-        loginId:
-          $ref: '#/components/schemas/LoginId'
-        tooShort:
-          type: boolean
-        tooLong:
-          type: boolean
-        phoneNumber:
-          type: boolean
-        notAlphanumericOrDashUnderscorePoint:
-          type: boolean
-          description: "Login contains symbols other than a-z, A-Z, 0-9, -, _, ."
-      x-order: -270554383-0
-      x-super: '#/components/schemas/ClientErr'
     RateLimiterState:
       required:
       - burntQuota
@@ -2159,7 +2137,7 @@ components:
       - ACCESS_DENIED
       - USER_NOT_FOUND
       - SIGNATURE_IS_INCORRECT
-      - USER_SIMPLE_LOGIN_IS_INCORRECT
+      - USER_LOGIN_IS_INVALID
       - USER_LOGIN_ALREADY_TAKEN
       - TOKEN_EXPIRED
       - TOO_MANY_REQS
@@ -2195,7 +2173,7 @@ components:
       - ACCESS_DENIED
       - USER_NOT_FOUND
       - SIGNATURE_IS_INCORRECT
-      - USER_SIMPLE_LOGIN_IS_INCORRECT
+      - USER_LOGIN_IS_INVALID
       - USER_LOGIN_ALREADY_TAKEN
       - TOKEN_EXPIRED
       - TOO_MANY_REQS

@@ -751,7 +751,7 @@ components:
           ACCESS_DENIED: '#/components/schemas/AccessDenied'
           USER_NOT_FOUND: '#/components/schemas/UserNotFound'
           SIGNATURE_IS_INCORRECT: '#/components/schemas/SignatureIsIncorrect'
-          USER_SIMPLE_LOGIN_IS_INCORRECT: '#/components/schemas/UserSimpleLoginIsIncorrect'
+          USER_LOGIN_IS_INVALID: '#/components/schemas/UserLoginIsInvalid'
           USER_LOGIN_ALREADY_TAKEN: '#/components/schemas/UserLoginAlreadyTaken'
           TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
           TOO_MANY_REQS: '#/components/schemas/TooManyReqs'
@@ -894,7 +894,7 @@ components:
           ACCESS_DENIED: '#/components/schemas/AccessDenied'
           USER_NOT_FOUND: '#/components/schemas/UserNotFound'
           SIGNATURE_IS_INCORRECT: '#/components/schemas/SignatureIsIncorrect'
-          USER_SIMPLE_LOGIN_IS_INCORRECT: '#/components/schemas/UserSimpleLoginIsIncorrect'
+          USER_LOGIN_IS_INVALID: '#/components/schemas/UserLoginIsInvalid'
           USER_LOGIN_ALREADY_TAKEN: '#/components/schemas/UserLoginAlreadyTaken'
           TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
           TOO_MANY_REQS: '#/components/schemas/TooManyReqs'
@@ -1371,6 +1371,26 @@ components:
           x-nullable: true
       x-order: -270554383-1
       x-super: '#/components/schemas/ClientErr'
+    UserLoginIsInvalid:
+      required:
+      - code
+      - devMsg
+      - loginId
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+        loginId:
+          $ref: '#/components/schemas/LoginId'
+      x-order: -270554383-0
+      x-super: '#/components/schemas/ClientErr'
     UserNotFound:
       required:
       - code
@@ -1388,38 +1408,6 @@ components:
           x-nullable: true
       x-order: -2065236468-2
       x-super: '#/components/schemas/Unauthenticated'
-    UserSimpleLoginIsIncorrect:
-      required:
-      - code
-      - devMsg
-      - loginId
-      - notAlphanumericOrDashUnderscorePoint
-      - tooLong
-      - tooShort
-      type: object
-      properties:
-        code:
-          type: string
-        devMsg:
-          type: string
-          description: Message for developers.
-        msg:
-          type: string
-          description: Localised message suitable for UI.
-          x-nullable: true
-        loginId:
-          $ref: '#/components/schemas/LoginId'
-        tooShort:
-          type: boolean
-        tooLong:
-          type: boolean
-        phoneNumber:
-          type: boolean
-        notAlphanumericOrDashUnderscorePoint:
-          type: boolean
-          description: "Login contains symbols other than a-z, A-Z, 0-9, -, _, ."
-      x-order: -270554383-0
-      x-super: '#/components/schemas/ClientErr'
     AccessToken:
       type: string
       x-order: -2026363309-3
@@ -3121,6 +3109,26 @@ components:
         Long-living token used for generation of new access token.
         This is optional. You can set longer access-token lifetime instead.
       x-order: -1195634750-5
+    Regex:
+      type: object
+      properties:
+        pattern:
+          type: string
+        options:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/RegexOption'
+    RegexOption:
+      type: string
+      enum:
+      - IGNORE_CASE
+      - MULTILINE
+      - LITERAL
+      - UNIX_LINES
+      - COMMENTS
+      - DOT_MATCHES_ALL
+      - CANON_EQ
     RemoteAuthCfg:
       required:
       - remote
@@ -3216,6 +3224,15 @@ components:
           - email
           items:
             type: string
+        loginRequirements:
+          type: object
+          additionalProperties:
+            x-additionalPropertiesName: login type
+            $ref: '#/components/schemas/Regex'
+          description: |
+            Regexes to validate logins.
+          example:
+            username: ""
         auths:
           type: object
           additionalProperties:

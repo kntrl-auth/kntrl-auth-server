@@ -167,14 +167,6 @@ public class ClientErr {
   @SerializedName(SERIALIZED_NAME_LOGIN_ID)
   private LoginId loginId;
 
-  public static final String SERIALIZED_NAME_PHONE_NUMBER = "phoneNumber";
-  @SerializedName(SERIALIZED_NAME_PHONE_NUMBER)
-  private Boolean phoneNumber;
-
-  public static final String SERIALIZED_NAME_NOT_ALPHANUMERIC_OR_DASH_UNDERSCORE_POINT = "notAlphanumericOrDashUnderscorePoint";
-  @SerializedName(SERIALIZED_NAME_NOT_ALPHANUMERIC_OR_DASH_UNDERSCORE_POINT)
-  private Boolean notAlphanumericOrDashUnderscorePoint;
-
   public ClientErr() {
   }
 
@@ -853,52 +845,6 @@ public class ClientErr {
     this.loginId = loginId;
   }
 
-
-  public ClientErr phoneNumber(Boolean phoneNumber) {
-    
-    this.phoneNumber = phoneNumber;
-    return this;
-  }
-
-   /**
-   * Get phoneNumber
-   * @return phoneNumber
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
-
-  public Boolean getPhoneNumber() {
-    return phoneNumber;
-  }
-
-
-  public void setPhoneNumber(Boolean phoneNumber) {
-    this.phoneNumber = phoneNumber;
-  }
-
-
-  public ClientErr notAlphanumericOrDashUnderscorePoint(Boolean notAlphanumericOrDashUnderscorePoint) {
-    
-    this.notAlphanumericOrDashUnderscorePoint = notAlphanumericOrDashUnderscorePoint;
-    return this;
-  }
-
-   /**
-   * Login contains symbols other than a-z, A-Z, 0-9, -, _, .
-   * @return notAlphanumericOrDashUnderscorePoint
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "Login contains symbols other than a-z, A-Z, 0-9, -, _, .")
-
-  public Boolean getNotAlphanumericOrDashUnderscorePoint() {
-    return notAlphanumericOrDashUnderscorePoint;
-  }
-
-
-  public void setNotAlphanumericOrDashUnderscorePoint(Boolean notAlphanumericOrDashUnderscorePoint) {
-    this.notAlphanumericOrDashUnderscorePoint = notAlphanumericOrDashUnderscorePoint;
-  }
-
   /**
    * A container for additional, undeclared properties.
    * This is a holder for any undeclared properties as specified with
@@ -972,15 +918,13 @@ public class ClientErr {
         Objects.equals(this.waitTimeSeconds, clientErr.waitTimeSeconds) &&
         Objects.equals(this.waitTimeMinutes, clientErr.waitTimeMinutes) &&
         Objects.equals(this.expiredAt, clientErr.expiredAt) &&
-        Objects.equals(this.loginId, clientErr.loginId) &&
-        Objects.equals(this.phoneNumber, clientErr.phoneNumber) &&
-        Objects.equals(this.notAlphanumericOrDashUnderscorePoint, clientErr.notAlphanumericOrDashUnderscorePoint)&&
+        Objects.equals(this.loginId, clientErr.loginId)&&
         Objects.equals(this.additionalProperties, clientErr.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(code, devMsg, msg, changedAt, changedDaysAgo, tooLong, tooShort, missingNumber, missingSymbol, missingUpperCase, missingLowerCase, commonPassword, wasUsedBeforeAt, matchesLogin, passwordsMismatch, strength, wasUsedDaysAgo, data, incorrectAnswers, requiresMoreAnswers, questionsNotFound, invalidAnswers, tooManyAnswers, waitTimeMs, waitTimeSeconds, waitTimeMinutes, expiredAt, loginId, phoneNumber, notAlphanumericOrDashUnderscorePoint, additionalProperties);
+    return Objects.hash(code, devMsg, msg, changedAt, changedDaysAgo, tooLong, tooShort, missingNumber, missingSymbol, missingUpperCase, missingLowerCase, commonPassword, wasUsedBeforeAt, matchesLogin, passwordsMismatch, strength, wasUsedDaysAgo, data, incorrectAnswers, requiresMoreAnswers, questionsNotFound, invalidAnswers, tooManyAnswers, waitTimeMs, waitTimeSeconds, waitTimeMinutes, expiredAt, loginId, additionalProperties);
   }
 
   @Override
@@ -1015,8 +959,6 @@ public class ClientErr {
     sb.append("    waitTimeMinutes: ").append(toIndentedString(waitTimeMinutes)).append("\n");
     sb.append("    expiredAt: ").append(toIndentedString(expiredAt)).append("\n");
     sb.append("    loginId: ").append(toIndentedString(loginId)).append("\n");
-    sb.append("    phoneNumber: ").append(toIndentedString(phoneNumber)).append("\n");
-    sb.append("    notAlphanumericOrDashUnderscorePoint: ").append(toIndentedString(notAlphanumericOrDashUnderscorePoint)).append("\n");
     sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -1068,8 +1010,6 @@ public class ClientErr {
     openapiFields.add("waitTimeMinutes");
     openapiFields.add("expiredAt");
     openapiFields.add("loginId");
-    openapiFields.add("phoneNumber");
-    openapiFields.add("notAlphanumericOrDashUnderscorePoint");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();

@@ -18,6 +18,7 @@ import java.util.Arrays;
 import app.kntrl.client.generated.model.EntryCfg;
 import app.kntrl.client.generated.model.I18nCfg;
 import app.kntrl.client.generated.model.RateLimiterCfg;
+import app.kntrl.client.generated.model.Regex;
 import app.kntrl.client.generated.model.ShAppCfgAuthsValue;
 import app.kntrl.client.generated.model.ShDbsCfg;
 import app.kntrl.client.generated.model.ShHttpCfg;
@@ -67,6 +68,10 @@ public class ShAppCfg {
   public static final String SERIALIZED_NAME_LOGINS = "logins";
   @SerializedName(SERIALIZED_NAME_LOGINS)
   private Set<String> logins = null;
+
+  public static final String SERIALIZED_NAME_LOGIN_REQUIREMENTS = "loginRequirements";
+  @SerializedName(SERIALIZED_NAME_LOGIN_REQUIREMENTS)
+  private Map<String, Regex> loginRequirements = null;
 
   public static final String SERIALIZED_NAME_AUTHS = "auths";
   @SerializedName(SERIALIZED_NAME_AUTHS)
@@ -158,6 +163,37 @@ public class ShAppCfg {
 
   public void setLogins(Set<String> logins) {
     this.logins = logins;
+  }
+
+
+  public ShAppCfg loginRequirements(Map<String, Regex> loginRequirements) {
+    
+    this.loginRequirements = loginRequirements;
+    return this;
+  }
+
+  public ShAppCfg putLoginRequirementsItem(String key, Regex loginRequirementsItem) {
+    if (this.loginRequirements == null) {
+      this.loginRequirements = new HashMap<>();
+    }
+    this.loginRequirements.put(key, loginRequirementsItem);
+    return this;
+  }
+
+   /**
+   * Regexes to validate logins. 
+   * @return loginRequirements
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(example = "{\"username\":\"\"}", value = "Regexes to validate logins. ")
+
+  public Map<String, Regex> getLoginRequirements() {
+    return loginRequirements;
+  }
+
+
+  public void setLoginRequirements(Map<String, Regex> loginRequirements) {
+    this.loginRequirements = loginRequirements;
   }
 
 
@@ -439,6 +475,7 @@ public class ShAppCfg {
     ShAppCfg shAppCfg = (ShAppCfg) o;
     return Objects.equals(this.http, shAppCfg.http) &&
         Objects.equals(this.logins, shAppCfg.logins) &&
+        Objects.equals(this.loginRequirements, shAppCfg.loginRequirements) &&
         Objects.equals(this.auths, shAppCfg.auths) &&
         Objects.equals(this.entries, shAppCfg.entries) &&
         Objects.equals(this.db, shAppCfg.db) &&
@@ -453,7 +490,7 @@ public class ShAppCfg {
 
   @Override
   public int hashCode() {
-    return Objects.hash(http, logins, auths, entries, db, token, rateLimiters, secret, healthCheckKey, i18n, $schema, additionalProperties);
+    return Objects.hash(http, logins, loginRequirements, auths, entries, db, token, rateLimiters, secret, healthCheckKey, i18n, $schema, additionalProperties);
   }
 
   @Override
@@ -462,6 +499,7 @@ public class ShAppCfg {
     sb.append("class ShAppCfg {\n");
     sb.append("    http: ").append(toIndentedString(http)).append("\n");
     sb.append("    logins: ").append(toIndentedString(logins)).append("\n");
+    sb.append("    loginRequirements: ").append(toIndentedString(loginRequirements)).append("\n");
     sb.append("    auths: ").append(toIndentedString(auths)).append("\n");
     sb.append("    entries: ").append(toIndentedString(entries)).append("\n");
     sb.append("    db: ").append(toIndentedString(db)).append("\n");
@@ -496,6 +534,7 @@ public class ShAppCfg {
     openapiFields = new HashSet<String>();
     openapiFields.add("http");
     openapiFields.add("logins");
+    openapiFields.add("loginRequirements");
     openapiFields.add("auths");
     openapiFields.add("entries");
     openapiFields.add("db");

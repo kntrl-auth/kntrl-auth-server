@@ -787,7 +787,6 @@ components:
           key: "{}"
         devMsg: devMsg
         waitTimeMinutes: 1
-        notAlphanumericOrDashUnderscorePoint: true
         tooLong: true
         missingSymbol: true
         matchesLogin:
@@ -804,7 +803,6 @@ components:
         wasUsedBeforeAt: 2
         requiresMoreAnswers: true
         waitTimeSeconds: 1
-        phoneNumber: true
         missingLowerCase: true
         passwordsMismatch: true
         wasUsedDaysAgo: 4
@@ -900,11 +898,6 @@ components:
           x-nullable: true
         loginId:
           $ref: '#/components/schemas/LoginId'
-        phoneNumber:
-          type: boolean
-        notAlphanumericOrDashUnderscorePoint:
-          description: "Login contains symbols other than a-z, A-Z, 0-9, -, _, ."
-          type: boolean
       required:
       - code
       - devMsg
@@ -1098,11 +1091,6 @@ components:
           x-nullable: true
         loginId:
           $ref: '#/components/schemas/LoginId'
-        phoneNumber:
-          type: boolean
-        notAlphanumericOrDashUnderscorePoint:
-          description: "Login contains symbols other than a-z, A-Z, 0-9, -, _, ."
-          type: boolean
       required:
       - code
       - devMsg
@@ -1565,6 +1553,26 @@ components:
       type: object
       x-order: -270554383-1
       x-super: '#/components/schemas/ClientErr'
+    UserLoginIsInvalid:
+      properties:
+        code:
+          type: string
+        devMsg:
+          description: Message for developers.
+          type: string
+        msg:
+          description: Localised message suitable for UI.
+          type: string
+          x-nullable: true
+        loginId:
+          $ref: '#/components/schemas/LoginId'
+      required:
+      - code
+      - devMsg
+      - loginId
+      type: object
+      x-order: -270554383-0
+      x-super: '#/components/schemas/ClientErr'
     UserNotFound:
       properties:
         code:
@@ -1582,38 +1590,6 @@ components:
       type: object
       x-order: -2065236468-2
       x-super: '#/components/schemas/Unauthenticated'
-    UserSimpleLoginIsIncorrect:
-      properties:
-        code:
-          type: string
-        devMsg:
-          description: Message for developers.
-          type: string
-        msg:
-          description: Localised message suitable for UI.
-          type: string
-          x-nullable: true
-        loginId:
-          $ref: '#/components/schemas/LoginId'
-        tooShort:
-          type: boolean
-        tooLong:
-          type: boolean
-        phoneNumber:
-          type: boolean
-        notAlphanumericOrDashUnderscorePoint:
-          description: "Login contains symbols other than a-z, A-Z, 0-9, -, _, ."
-          type: boolean
-      required:
-      - code
-      - devMsg
-      - loginId
-      - notAlphanumericOrDashUnderscorePoint
-      - tooLong
-      - tooShort
-      type: object
-      x-order: -270554383-0
-      x-super: '#/components/schemas/ClientErr'
     AccessToken:
       type: string
       x-order: -2026363309-3
@@ -2086,7 +2062,6 @@ components:
             key: "{}"
           devMsg: devMsg
           waitTimeMinutes: 1
-          notAlphanumericOrDashUnderscorePoint: true
           tooLong: true
           missingSymbol: true
           matchesLogin:
@@ -2103,7 +2078,6 @@ components:
           wasUsedBeforeAt: 2
           requiresMoreAnswers: true
           waitTimeSeconds: 1
-          phoneNumber: true
           missingLowerCase: true
           passwordsMismatch: true
           wasUsedDaysAgo: 4
@@ -2317,7 +2291,6 @@ components:
                 key: "{}"
               devMsg: devMsg
               waitTimeMinutes: 1
-              notAlphanumericOrDashUnderscorePoint: true
               tooLong: true
               missingSymbol: true
               matchesLogin:
@@ -2334,7 +2307,6 @@ components:
               wasUsedBeforeAt: 2
               requiresMoreAnswers: true
               waitTimeSeconds: 1
-              phoneNumber: true
               missingLowerCase: true
               passwordsMismatch: true
               wasUsedDaysAgo: 4
@@ -3092,7 +3064,6 @@ components:
                 key: "{}"
               devMsg: devMsg
               waitTimeMinutes: 1
-              notAlphanumericOrDashUnderscorePoint: true
               tooLong: true
               missingSymbol: true
               matchesLogin:
@@ -3109,7 +3080,6 @@ components:
               wasUsedBeforeAt: 2
               requiresMoreAnswers: true
               waitTimeSeconds: 1
-              phoneNumber: true
               missingLowerCase: true
               passwordsMismatch: true
               wasUsedDaysAgo: 4
@@ -4156,6 +4126,26 @@ components:
           type: boolean
       type: object
       x-order: -1195634750-5
+    Regex:
+      properties:
+        pattern:
+          type: string
+        options:
+          items:
+            $ref: '#/components/schemas/RegexOption'
+          type: array
+          uniqueItems: true
+      type: object
+    RegexOption:
+      enum:
+      - IGNORE_CASE
+      - MULTILINE
+      - LITERAL
+      - UNIX_LINES
+      - COMMENTS
+      - DOT_MATCHES_ALL
+      - CANON_EQ
+      type: string
     RemoteAuthCfg:
       description: Authentication implementation config
       properties:
@@ -4259,6 +4249,8 @@ components:
           proxy: true
           bind: 127.0.0.1
           port: 9876
+        loginRequirements:
+          username: ""
         rateLimiters:
           key:
             parent: parent
@@ -4375,6 +4367,14 @@ components:
             type: string
           type: array
           uniqueItems: true
+        loginRequirements:
+          additionalProperties:
+            $ref: '#/components/schemas/Regex'
+          description: |
+            Regexes to validate logins.
+          example:
+            username: ""
+          type: object
         auths:
           additionalProperties:
             $ref: '#/components/schemas/ShAppCfg_auths_value'
@@ -4602,7 +4602,7 @@ components:
       - ACCESS_DENIED
       - USER_NOT_FOUND
       - SIGNATURE_IS_INCORRECT
-      - USER_SIMPLE_LOGIN_IS_INCORRECT
+      - USER_LOGIN_IS_INVALID
       - USER_LOGIN_ALREADY_TAKEN
       - TOKEN_EXPIRED
       - TOO_MANY_REQS
@@ -4638,7 +4638,7 @@ components:
       - ACCESS_DENIED
       - USER_NOT_FOUND
       - SIGNATURE_IS_INCORRECT
-      - USER_SIMPLE_LOGIN_IS_INCORRECT
+      - USER_LOGIN_IS_INVALID
       - USER_LOGIN_ALREADY_TAKEN
       - TOKEN_EXPIRED
       - TOO_MANY_REQS

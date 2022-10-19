@@ -799,18 +799,6 @@ export interface ClientErr {
      * @memberof ClientErr
      */
     'loginId'?: LoginId;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ClientErr
-     */
-    'phoneNumber'?: boolean;
-    /**
-     * Login contains symbols other than a-z, A-Z, 0-9, -, _, .
-     * @type {boolean}
-     * @memberof ClientErr
-     */
-    'notAlphanumericOrDashUnderscorePoint'?: boolean;
 }
 /**
  * 
@@ -830,7 +818,7 @@ export const ClientErrCode = {
     AccessDenied: 'ACCESS_DENIED',
     UserNotFound: 'USER_NOT_FOUND',
     SignatureIsIncorrect: 'SIGNATURE_IS_INCORRECT',
-    UserSimpleLoginIsIncorrect: 'USER_SIMPLE_LOGIN_IS_INCORRECT',
+    UserLoginIsInvalid: 'USER_LOGIN_IS_INVALID',
     UserLoginAlreadyTaken: 'USER_LOGIN_ALREADY_TAKEN',
     TokenExpired: 'TOKEN_EXPIRED',
     TooManyReqs: 'TOO_MANY_REQS',
@@ -1587,18 +1575,6 @@ export interface Err {
      * @memberof Err
      */
     'loginId'?: LoginId;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Err
-     */
-    'phoneNumber'?: boolean;
-    /**
-     * Login contains symbols other than a-z, A-Z, 0-9, -, _, .
-     * @type {boolean}
-     * @memberof Err
-     */
-    'notAlphanumericOrDashUnderscorePoint'?: boolean;
 }
 /**
  * 
@@ -1653,7 +1629,7 @@ export const ErrCode = {
     AccessDenied: 'ACCESS_DENIED',
     UserNotFound: 'USER_NOT_FOUND',
     SignatureIsIncorrect: 'SIGNATURE_IS_INCORRECT',
-    UserSimpleLoginIsIncorrect: 'USER_SIMPLE_LOGIN_IS_INCORRECT',
+    UserLoginIsInvalid: 'USER_LOGIN_IS_INVALID',
     UserLoginAlreadyTaken: 'USER_LOGIN_ALREADY_TAKEN',
     TokenExpired: 'TOKEN_EXPIRED',
     TooManyReqs: 'TOO_MANY_REQS',
@@ -3130,6 +3106,44 @@ export interface RefreshTokenRes {
     'session': Session;
 }
 /**
+ * 
+ * @export
+ * @interface Regex
+ */
+export interface Regex {
+    /**
+     * 
+     * @type {string}
+     * @memberof Regex
+     */
+    'pattern'?: string;
+    /**
+     * 
+     * @type {Set<RegexOption>}
+     * @memberof Regex
+     */
+    'options'?: Set<RegexOption>;
+}
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const RegexOption = {
+    IgnoreCase: 'IGNORE_CASE',
+    Multiline: 'MULTILINE',
+    Literal: 'LITERAL',
+    UnixLines: 'UNIX_LINES',
+    Comments: 'COMMENTS',
+    DotMatchesAll: 'DOT_MATCHES_ALL',
+    CanonEq: 'CANON_EQ'
+} as const;
+
+export type RegexOption = typeof RegexOption[keyof typeof RegexOption];
+
+
+/**
  * Authentication implementation config
  * @export
  * @interface RemoteAuthCfg
@@ -3440,6 +3454,12 @@ export interface ShAppCfg {
      * @memberof ShAppCfg
      */
     'logins'?: Set<string>;
+    /**
+     * Regexes to validate logins. 
+     * @type {{ [key: string]: Regex; }}
+     * @memberof ShAppCfg
+     */
+    'loginRequirements'?: { [key: string]: Regex; };
     /**
      * List of auth names and auth configs  To use builtin auths (not a plugin or remote) follow the example: `\"password\": { ... }` or `\"anyAuthName\": { \"builtin\": \"password\", ... }` 
      * @type {{ [key: string]: ShAppCfgAuthsValue; }}
@@ -4517,6 +4537,37 @@ export interface UserLoginAlreadyTaken {
 /**
  * 
  * @export
+ * @interface UserLoginIsInvalid
+ */
+export interface UserLoginIsInvalid {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserLoginIsInvalid
+     */
+    'code': string;
+    /**
+     * Message for developers.
+     * @type {string}
+     * @memberof UserLoginIsInvalid
+     */
+    'devMsg': string;
+    /**
+     * Localised message suitable for UI.
+     * @type {string}
+     * @memberof UserLoginIsInvalid
+     */
+    'msg'?: string;
+    /**
+     * 
+     * @type {LoginId}
+     * @memberof UserLoginIsInvalid
+     */
+    'loginId': LoginId;
+}
+/**
+ * 
+ * @export
  * @interface UserNotFound
  */
 export interface UserNotFound {
@@ -4538,61 +4589,6 @@ export interface UserNotFound {
      * @memberof UserNotFound
      */
     'msg'?: string;
-}
-/**
- * 
- * @export
- * @interface UserSimpleLoginIsIncorrect
- */
-export interface UserSimpleLoginIsIncorrect {
-    /**
-     * 
-     * @type {string}
-     * @memberof UserSimpleLoginIsIncorrect
-     */
-    'code': string;
-    /**
-     * Message for developers.
-     * @type {string}
-     * @memberof UserSimpleLoginIsIncorrect
-     */
-    'devMsg': string;
-    /**
-     * Localised message suitable for UI.
-     * @type {string}
-     * @memberof UserSimpleLoginIsIncorrect
-     */
-    'msg'?: string;
-    /**
-     * 
-     * @type {LoginId}
-     * @memberof UserSimpleLoginIsIncorrect
-     */
-    'loginId': LoginId;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserSimpleLoginIsIncorrect
-     */
-    'tooShort': boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserSimpleLoginIsIncorrect
-     */
-    'tooLong': boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UserSimpleLoginIsIncorrect
-     */
-    'phoneNumber'?: boolean;
-    /**
-     * Login contains symbols other than a-z, A-Z, 0-9, -, _, .
-     * @type {boolean}
-     * @memberof UserSimpleLoginIsIncorrect
-     */
-    'notAlphanumericOrDashUnderscorePoint': boolean;
 }
 
 /**

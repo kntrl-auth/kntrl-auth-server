@@ -103,6 +103,8 @@ docs/RedisCfg.md
 docs/RefreshTokenCfg.md
 docs/RefreshTokenReq.md
 docs/RefreshTokenRes.md
+docs/Regex.md
+docs/RegexOption.md
 docs/RemoteAuthCfg.md
 docs/RemoteDbCfg.md
 docs/SaveUserReq.md
@@ -137,8 +139,8 @@ docs/UnconfirmedAuthData.md
 docs/User.md
 docs/UserApi.md
 docs/UserLoginAlreadyTaken.md
+docs/UserLoginIsInvalid.md
 docs/UserNotFound.md
-docs/UserSimpleLoginIsIncorrect.md
 git_push.sh
 gradle.properties
 gradle/wrapper/gradle-wrapper.jar
@@ -268,6 +270,8 @@ src/main/java/app/kntrl/client/generated/model/RedisCfg.java
 src/main/java/app/kntrl/client/generated/model/RefreshTokenCfg.java
 src/main/java/app/kntrl/client/generated/model/RefreshTokenReq.java
 src/main/java/app/kntrl/client/generated/model/RefreshTokenRes.java
+src/main/java/app/kntrl/client/generated/model/Regex.java
+src/main/java/app/kntrl/client/generated/model/RegexOption.java
 src/main/java/app/kntrl/client/generated/model/RemoteAuthCfg.java
 src/main/java/app/kntrl/client/generated/model/RemoteDbCfg.java
 src/main/java/app/kntrl/client/generated/model/SaveUserReq.java
@@ -297,8 +301,8 @@ src/main/java/app/kntrl/client/generated/model/UnconfirmedAuth.java
 src/main/java/app/kntrl/client/generated/model/UnconfirmedAuthData.java
 src/main/java/app/kntrl/client/generated/model/User.java
 src/main/java/app/kntrl/client/generated/model/UserLoginAlreadyTaken.java
+src/main/java/app/kntrl/client/generated/model/UserLoginIsInvalid.java
 src/main/java/app/kntrl/client/generated/model/UserNotFound.java
-src/main/java/app/kntrl/client/generated/model/UserSimpleLoginIsIncorrect.java
 src/test/java/app/kntrl/client/generated/api/AuthorisationApiTest.java
 src/test/java/app/kntrl/client/generated/api/ServerApiTest.java
 src/test/java/app/kntrl/client/generated/api/SessionApiTest.java
@@ -401,6 +405,8 @@ src/test/java/app/kntrl/client/generated/model/RedisCfgTest.java
 src/test/java/app/kntrl/client/generated/model/RefreshTokenCfgTest.java
 src/test/java/app/kntrl/client/generated/model/RefreshTokenReqTest.java
 src/test/java/app/kntrl/client/generated/model/RefreshTokenResTest.java
+src/test/java/app/kntrl/client/generated/model/RegexOptionTest.java
+src/test/java/app/kntrl/client/generated/model/RegexTest.java
 src/test/java/app/kntrl/client/generated/model/RemoteAuthCfgTest.java
 src/test/java/app/kntrl/client/generated/model/RemoteDbCfgTest.java
 src/test/java/app/kntrl/client/generated/model/SaveUserReqTest.java
@@ -429,6 +435,6 @@ src/test/java/app/kntrl/client/generated/model/UnauthenticatedTest.java
 src/test/java/app/kntrl/client/generated/model/UnconfirmedAuthDataTest.java
 src/test/java/app/kntrl/client/generated/model/UnconfirmedAuthTest.java
 src/test/java/app/kntrl/client/generated/model/UserLoginAlreadyTakenTest.java
+src/test/java/app/kntrl/client/generated/model/UserLoginIsInvalidTest.java
 src/test/java/app/kntrl/client/generated/model/UserNotFoundTest.java
-src/test/java/app/kntrl/client/generated/model/UserSimpleLoginIsIncorrectTest.java
 src/test/java/app/kntrl/client/generated/model/UserTest.java
