@@ -1619,8 +1619,8 @@ components:
       x-order: -893636857-2
     OAuthResData:
       required:
+      - extractedData
       - login
-      - publicData
       type: object
       additionalProperties: true
       allOf:
@@ -1629,7 +1629,7 @@ components:
         properties:
           login:
             type: string
-          publicData:
+          extractedData:
             $ref: '#/components/schemas/OAuthPublicData'
       x-order: -893636857-4
     OkAuthExecRes:

@@ -21,12 +21,12 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
  **/
 @ApiModel(description = "This data will be sent back to the client.")
 @JsonTypeName("AuthRes_resData")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-20T19:23:38.989036+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-20T22:48:57.779152+03:00[Europe/Kiev]")
 public class AuthResResData extends HashMap<String, Object>  {
   private @Valid String emailSentTo;
   private @Valid String ipEncoded;
   private @Valid String login;
-  private @Valid Map<String, Object> publicData = null;
+  private @Valid Map<String, Object> extractedData = null;
   private @Valid String password;
   private @Valid String strength;
   private @Valid Map<String, Boolean> correct = null;
@@ -92,35 +92,35 @@ public class AuthResResData extends HashMap<String, Object>  {
 
   /**
    **/
-  public AuthResResData publicData(Map<String, Object> publicData) {
-    this.publicData = publicData;
+  public AuthResResData extractedData(Map<String, Object> extractedData) {
+    this.extractedData = extractedData;
     return this;
   }
 
   
   @ApiModelProperty(value = "")
-  @JsonProperty("publicData")
-  public Map<String, Object> getPublicData() {
-    return publicData;
+  @JsonProperty("extractedData")
+  public Map<String, Object> getExtractedData() {
+    return extractedData;
   }
 
-  @JsonProperty("publicData")
-  public void setPublicData(Map<String, Object> publicData) {
-    this.publicData = publicData;
+  @JsonProperty("extractedData")
+  public void setExtractedData(Map<String, Object> extractedData) {
+    this.extractedData = extractedData;
   }
 
-  public AuthResResData putPublicDataItem(String key, Object publicDataItem) {
-    if (this.publicData == null) {
-      this.publicData = new HashMap<>();
+  public AuthResResData putExtractedDataItem(String key, Object extractedDataItem) {
+    if (this.extractedData == null) {
+      this.extractedData = new HashMap<>();
     }
 
-    this.publicData.put(key, publicDataItem);
+    this.extractedData.put(key, extractedDataItem);
     return this;
   }
 
-  public AuthResResData removePublicDataItem(Object publicDataItem) {
-    if (publicDataItem != null && this.publicData != null) {
-      this.publicData.remove(publicDataItem);
+  public AuthResResData removeExtractedDataItem(Object extractedDataItem) {
+    if (extractedDataItem != null && this.extractedData != null) {
+      this.extractedData.remove(extractedDataItem);
     }
 
     return this;
@@ -233,7 +233,7 @@ public class AuthResResData extends HashMap<String, Object>  {
     return Objects.equals(this.emailSentTo, authResResData.emailSentTo) &&
         Objects.equals(this.ipEncoded, authResResData.ipEncoded) &&
         Objects.equals(this.login, authResResData.login) &&
-        Objects.equals(this.publicData, authResResData.publicData) &&
+        Objects.equals(this.extractedData, authResResData.extractedData) &&
         Objects.equals(this.password, authResResData.password) &&
         Objects.equals(this.strength, authResResData.strength) &&
         Objects.equals(this.correct, authResResData.correct) &&
@@ -243,7 +243,7 @@ public class AuthResResData extends HashMap<String, Object>  {
 
   @Override
   public int hashCode() {
-    return Objects.hash(emailSentTo, ipEncoded, login, publicData, password, strength, correct, answersSavedAt, super.hashCode());
+    return Objects.hash(emailSentTo, ipEncoded, login, extractedData, password, strength, correct, answersSavedAt, super.hashCode());
   }
 
   @Override
@@ -254,7 +254,7 @@ public class AuthResResData extends HashMap<String, Object>  {
     sb.append("    emailSentTo: ").append(toIndentedString(emailSentTo)).append("\n");
     sb.append("    ipEncoded: ").append(toIndentedString(ipEncoded)).append("\n");
     sb.append("    login: ").append(toIndentedString(login)).append("\n");
-    sb.append("    publicData: ").append(toIndentedString(publicData)).append("\n");
+    sb.append("    extractedData: ").append(toIndentedString(extractedData)).append("\n");
     sb.append("    password: ").append(toIndentedString(password)).append("\n");
     sb.append("    strength: ").append(toIndentedString(strength)).append("\n");
     sb.append("    correct: ").append(toIndentedString(correct)).append("\n");

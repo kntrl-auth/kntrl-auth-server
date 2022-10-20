@@ -2089,10 +2089,10 @@ components:
           correct:
             HOME_CITY: true
             MOTHER_NAME: false
+          extractedData:
+            key: ""
           ipEncoded: ipEncoded
           login: login
-          publicData:
-            key: ""
         status: OK
       properties:
         status:
@@ -2345,10 +2345,10 @@ components:
               correct:
                 HOME_CITY: true
                 MOTHER_NAME: false
+              extractedData:
+                key: ""
               ipEncoded: ipEncoded
               login: login
-              publicData:
-                key: ""
             status: OK
       properties:
         tokens:
@@ -2504,13 +2504,13 @@ components:
       properties:
         login:
           type: string
-        publicData:
+        extractedData:
           additionalProperties: true
           type: object
           x-order: -893636857-2
       required:
+      - extractedData
       - login
-      - publicData
       type: object
       x-order: -893636857-4
       x-super: '#/components/schemas/AuthResData'
@@ -3252,10 +3252,10 @@ components:
               correct:
                 HOME_CITY: true
                 MOTHER_NAME: false
+              extractedData:
+                key: ""
               ipEncoded: ipEncoded
               login: login
-              publicData:
-                key: ""
             status: OK
       properties:
         user:
@@ -4836,10 +4836,10 @@ components:
         correct:
           HOME_CITY: true
           MOTHER_NAME: false
+        extractedData:
+          key: ""
         ipEncoded: ipEncoded
         login: login
-        publicData:
-          key: ""
       properties:
         emailSentTo:
           description: "Shows user email, that was used to send a code. Email will\
@@ -4849,7 +4849,7 @@ components:
           type: string
         login:
           type: string
-        publicData:
+        extractedData:
           additionalProperties: true
           type: object
           x-order: -893636857-2

@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
  **/
 @ApiModel(description = "Current session data. Null if auth wasn't enabled before. Otherwise, will contain current auth data during authenticate and previous data during update-auth request.")
 @JsonTypeName("AuthReq_authData")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-20T19:23:38.989036+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-20T22:48:57.779152+03:00[Europe/Kiev]")
 public class AuthReqAuthData   {
   private @Valid AuthDataPublic _public;
   private @Valid AuthDataPrivate _private;

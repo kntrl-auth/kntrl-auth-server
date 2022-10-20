@@ -55,9 +55,9 @@ public class OAuthResData {
   @SerializedName(SERIALIZED_NAME_LOGIN)
   private String login;
 
-  public static final String SERIALIZED_NAME_PUBLIC_DATA = "publicData";
-  @SerializedName(SERIALIZED_NAME_PUBLIC_DATA)
-  private Map<String, Object> publicData = new HashMap<>();
+  public static final String SERIALIZED_NAME_EXTRACTED_DATA = "extractedData";
+  @SerializedName(SERIALIZED_NAME_EXTRACTED_DATA)
+  private Map<String, Object> extractedData = new HashMap<>();
 
   public OAuthResData() {
   }
@@ -85,31 +85,31 @@ public class OAuthResData {
   }
 
 
-  public OAuthResData publicData(Map<String, Object> publicData) {
+  public OAuthResData extractedData(Map<String, Object> extractedData) {
     
-    this.publicData = publicData;
+    this.extractedData = extractedData;
     return this;
   }
 
-  public OAuthResData putPublicDataItem(String key, Object publicDataItem) {
-    this.publicData.put(key, publicDataItem);
+  public OAuthResData putExtractedDataItem(String key, Object extractedDataItem) {
+    this.extractedData.put(key, extractedDataItem);
     return this;
   }
 
    /**
-   * Get publicData
-   * @return publicData
+   * Get extractedData
+   * @return extractedData
   **/
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "")
 
-  public Map<String, Object> getPublicData() {
-    return publicData;
+  public Map<String, Object> getExtractedData() {
+    return extractedData;
   }
 
 
-  public void setPublicData(Map<String, Object> publicData) {
-    this.publicData = publicData;
+  public void setExtractedData(Map<String, Object> extractedData) {
+    this.extractedData = extractedData;
   }
 
   /**
@@ -159,13 +159,13 @@ public class OAuthResData {
     }
     OAuthResData oauthResData = (OAuthResData) o;
     return Objects.equals(this.login, oauthResData.login) &&
-        Objects.equals(this.publicData, oauthResData.publicData)&&
+        Objects.equals(this.extractedData, oauthResData.extractedData)&&
         Objects.equals(this.additionalProperties, oauthResData.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(login, publicData, additionalProperties);
+    return Objects.hash(login, extractedData, additionalProperties);
   }
 
   @Override
@@ -173,7 +173,7 @@ public class OAuthResData {
     StringBuilder sb = new StringBuilder();
     sb.append("class OAuthResData {\n");
     sb.append("    login: ").append(toIndentedString(login)).append("\n");
-    sb.append("    publicData: ").append(toIndentedString(publicData)).append("\n");
+    sb.append("    extractedData: ").append(toIndentedString(extractedData)).append("\n");
     sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -198,12 +198,12 @@ public class OAuthResData {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
     openapiFields.add("login");
-    openapiFields.add("publicData");
+    openapiFields.add("extractedData");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
     openapiRequiredFields.add("login");
-    openapiRequiredFields.add("publicData");
+    openapiRequiredFields.add("extractedData");
   }
 
  /**

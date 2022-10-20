@@ -1789,7 +1789,7 @@ components:
               type: string
             login:
               type: string
-            publicData:
+            extractedData:
               $ref: '#/components/schemas/OAuthPublicData'
             password:
               type: string
@@ -1989,13 +1989,13 @@ components:
       x-order: -893636857-2
     OAuthResData:
       required:
+      - extractedData
       - login
-      - publicData
       type: object
       properties:
         login:
           type: string
-        publicData:
+        extractedData:
           $ref: '#/components/schemas/OAuthPublicData'
       additionalProperties: true
       x-order: -893636857-4
@@ -2023,7 +2023,7 @@ components:
               type: string
             login:
               type: string
-            publicData:
+            extractedData:
               $ref: '#/components/schemas/OAuthPublicData'
             password:
               type: string

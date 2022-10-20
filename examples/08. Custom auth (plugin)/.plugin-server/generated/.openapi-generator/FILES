@@ -14,6 +14,7 @@ src/gen/java/kntrl/example/generated/model/AuthIsNotEnabled.java
 src/gen/java/kntrl/example/generated/model/AuthReq.java
 src/gen/java/kntrl/example/generated/model/AuthReqAuthData.java
 src/gen/java/kntrl/example/generated/model/AuthReqCodeToSend.java
+src/gen/java/kntrl/example/generated/model/AuthReqDryRunAuthResData.java
 src/gen/java/kntrl/example/generated/model/AuthReqReqData.java
 src/gen/java/kntrl/example/generated/model/AuthReqSession.java
 src/gen/java/kntrl/example/generated/model/AuthReqUser.java

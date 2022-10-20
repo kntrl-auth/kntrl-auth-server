@@ -17,10 +17,10 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 
 @JsonTypeName("OAuthResData")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-20T19:23:38.989036+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-20T22:48:57.779152+03:00[Europe/Kiev]")
 public class OAuthResData extends HashMap<String, Object>  {
   private @Valid String login;
-  private @Valid Map<String, Object> publicData = new HashMap<>();
+  private @Valid Map<String, Object> extractedData = new HashMap<>();
 
   /**
    **/
@@ -44,36 +44,36 @@ public class OAuthResData extends HashMap<String, Object>  {
 
   /**
    **/
-  public OAuthResData publicData(Map<String, Object> publicData) {
-    this.publicData = publicData;
+  public OAuthResData extractedData(Map<String, Object> extractedData) {
+    this.extractedData = extractedData;
     return this;
   }
 
   
   @ApiModelProperty(required = true, value = "")
-  @JsonProperty("publicData")
+  @JsonProperty("extractedData")
   @NotNull
-  public Map<String, Object> getPublicData() {
-    return publicData;
+  public Map<String, Object> getExtractedData() {
+    return extractedData;
   }
 
-  @JsonProperty("publicData")
-  public void setPublicData(Map<String, Object> publicData) {
-    this.publicData = publicData;
+  @JsonProperty("extractedData")
+  public void setExtractedData(Map<String, Object> extractedData) {
+    this.extractedData = extractedData;
   }
 
-  public OAuthResData putPublicDataItem(String key, Object publicDataItem) {
-    if (this.publicData == null) {
-      this.publicData = new HashMap<>();
+  public OAuthResData putExtractedDataItem(String key, Object extractedDataItem) {
+    if (this.extractedData == null) {
+      this.extractedData = new HashMap<>();
     }
 
-    this.publicData.put(key, publicDataItem);
+    this.extractedData.put(key, extractedDataItem);
     return this;
   }
 
-  public OAuthResData removePublicDataItem(Object publicDataItem) {
-    if (publicDataItem != null && this.publicData != null) {
-      this.publicData.remove(publicDataItem);
+  public OAuthResData removeExtractedDataItem(Object extractedDataItem) {
+    if (extractedDataItem != null && this.extractedData != null) {
+      this.extractedData.remove(extractedDataItem);
     }
 
     return this;
@@ -89,13 +89,13 @@ public class OAuthResData extends HashMap<String, Object>  {
     }
     OAuthResData oauthResData = (OAuthResData) o;
     return Objects.equals(this.login, oauthResData.login) &&
-        Objects.equals(this.publicData, oauthResData.publicData) &&
+        Objects.equals(this.extractedData, oauthResData.extractedData) &&
         super.equals(o);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(login, publicData, super.hashCode());
+    return Objects.hash(login, extractedData, super.hashCode());
   }
 
   @Override
@@ -104,7 +104,7 @@ public class OAuthResData extends HashMap<String, Object>  {
     sb.append("class OAuthResData {\n");
     sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("    login: ").append(toIndentedString(login)).append("\n");
-    sb.append("    publicData: ").append(toIndentedString(publicData)).append("\n");
+    sb.append("    extractedData: ").append(toIndentedString(extractedData)).append("\n");
     sb.append("}");
     return sb.toString();
   }

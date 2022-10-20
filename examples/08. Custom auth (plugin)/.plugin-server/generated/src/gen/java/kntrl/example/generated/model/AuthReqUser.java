@@ -27,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
  **/
 @ApiModel(description = "User loaded from database. Can be null if user isn't identified yet.")
 @JsonTypeName("AuthReq_user")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-20T19:23:38.989036+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-20T22:48:57.779152+03:00[Europe/Kiev]")
 public class AuthReqUser   {
   private @Valid String id;
   private @Valid List<Login> logins = new ArrayList<>();

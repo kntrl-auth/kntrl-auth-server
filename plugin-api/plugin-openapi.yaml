@@ -995,8 +995,8 @@ components:
       x-order: -893636857-2
     OAuthResData:
       required:
+      - extractedData
       - login
-      - publicData
       type: object
       additionalProperties: true
       allOf:
@@ -1005,7 +1005,7 @@ components:
         properties:
           login:
             type: string
-          publicData:
+          extractedData:
             $ref: '#/components/schemas/OAuthPublicData'
       x-order: -893636857-4
     Password:
@@ -1146,8 +1146,15 @@ components:
       type: object
       properties:
         dryRunAuthResData:
-          type: object
           description: Response provided by dry-run execution
+          anyOf:
+          - $ref: '#/components/schemas/AuthResData'
+          - $ref: '#/components/schemas/EmailAuthResData'
+          - $ref: '#/components/schemas/IpAuthResData'
+          - $ref: '#/components/schemas/OAuthResData'
+          - $ref: '#/components/schemas/PasswordUpdateResData'
+          - $ref: '#/components/schemas/QuestionsAuthResData'
+          - $ref: '#/components/schemas/QuestionsUpdateResData'
           x-nullable: true
         user:
           description: User loaded from database. Can be null if user isn't identified

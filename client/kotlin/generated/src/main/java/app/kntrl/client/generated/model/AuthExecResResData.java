@@ -64,9 +64,9 @@ public class AuthExecResResData {
   @SerializedName(SERIALIZED_NAME_LOGIN)
   private String login;
 
-  public static final String SERIALIZED_NAME_PUBLIC_DATA = "publicData";
-  @SerializedName(SERIALIZED_NAME_PUBLIC_DATA)
-  private Map<String, Object> publicData = null;
+  public static final String SERIALIZED_NAME_EXTRACTED_DATA = "extractedData";
+  @SerializedName(SERIALIZED_NAME_EXTRACTED_DATA)
+  private Map<String, Object> extractedData = null;
 
   public static final String SERIALIZED_NAME_PASSWORD = "password";
   @SerializedName(SERIALIZED_NAME_PASSWORD)
@@ -156,34 +156,34 @@ public class AuthExecResResData {
   }
 
 
-  public AuthExecResResData publicData(Map<String, Object> publicData) {
+  public AuthExecResResData extractedData(Map<String, Object> extractedData) {
     
-    this.publicData = publicData;
+    this.extractedData = extractedData;
     return this;
   }
 
-  public AuthExecResResData putPublicDataItem(String key, Object publicDataItem) {
-    if (this.publicData == null) {
-      this.publicData = new HashMap<>();
+  public AuthExecResResData putExtractedDataItem(String key, Object extractedDataItem) {
+    if (this.extractedData == null) {
+      this.extractedData = new HashMap<>();
     }
-    this.publicData.put(key, publicDataItem);
+    this.extractedData.put(key, extractedDataItem);
     return this;
   }
 
    /**
-   * Get publicData
-   * @return publicData
+   * Get extractedData
+   * @return extractedData
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
 
-  public Map<String, Object> getPublicData() {
-    return publicData;
+  public Map<String, Object> getExtractedData() {
+    return extractedData;
   }
 
 
-  public void setPublicData(Map<String, Object> publicData) {
-    this.publicData = publicData;
+  public void setExtractedData(Map<String, Object> extractedData) {
+    this.extractedData = extractedData;
   }
 
 
@@ -335,7 +335,7 @@ public class AuthExecResResData {
     return Objects.equals(this.emailSentTo, authExecResResData.emailSentTo) &&
         Objects.equals(this.ipEncoded, authExecResResData.ipEncoded) &&
         Objects.equals(this.login, authExecResResData.login) &&
-        Objects.equals(this.publicData, authExecResResData.publicData) &&
+        Objects.equals(this.extractedData, authExecResResData.extractedData) &&
         Objects.equals(this.password, authExecResResData.password) &&
         Objects.equals(this.strength, authExecResResData.strength) &&
         Objects.equals(this.correct, authExecResResData.correct) &&
@@ -345,7 +345,7 @@ public class AuthExecResResData {
 
   @Override
   public int hashCode() {
-    return Objects.hash(emailSentTo, ipEncoded, login, publicData, password, strength, correct, answersSavedAt, additionalProperties);
+    return Objects.hash(emailSentTo, ipEncoded, login, extractedData, password, strength, correct, answersSavedAt, additionalProperties);
   }
 
   @Override
@@ -355,7 +355,7 @@ public class AuthExecResResData {
     sb.append("    emailSentTo: ").append(toIndentedString(emailSentTo)).append("\n");
     sb.append("    ipEncoded: ").append(toIndentedString(ipEncoded)).append("\n");
     sb.append("    login: ").append(toIndentedString(login)).append("\n");
-    sb.append("    publicData: ").append(toIndentedString(publicData)).append("\n");
+    sb.append("    extractedData: ").append(toIndentedString(extractedData)).append("\n");
     sb.append("    password: ").append(toIndentedString(password)).append("\n");
     sb.append("    strength: ").append(toIndentedString(strength)).append("\n");
     sb.append("    correct: ").append(toIndentedString(correct)).append("\n");
@@ -386,7 +386,7 @@ public class AuthExecResResData {
     openapiFields.add("emailSentTo");
     openapiFields.add("ipEncoded");
     openapiFields.add("login");
-    openapiFields.add("publicData");
+    openapiFields.add("extractedData");
     openapiFields.add("password");
     openapiFields.add("strength");
     openapiFields.add("correct");

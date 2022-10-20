@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import kntrl.example.generated.model.AuthReqAuthData;
 import kntrl.example.generated.model.AuthReqCodeToSend;
+import kntrl.example.generated.model.AuthReqDryRunAuthResData;
 import kntrl.example.generated.model.AuthReqReqData;
 import kntrl.example.generated.model.AuthReqSession;
 import kntrl.example.generated.model.AuthReqUser;
@@ -21,9 +22,9 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 
 @JsonTypeName("AuthReq")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-20T19:23:38.989036+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-20T22:48:57.779152+03:00[Europe/Kiev]")
 public class AuthReq   {
-  private @Valid Object dryRunAuthResData;
+  private @Valid AuthReqDryRunAuthResData dryRunAuthResData;
   private @Valid AuthReqUser user;
   private @Valid AuthReqSession session;
   private @Valid AuthReqAuthData authData;
@@ -32,22 +33,21 @@ public class AuthReq   {
   private @Valid ReqCtx ctx;
 
   /**
-   * Response provided by dry-run execution
    **/
-  public AuthReq dryRunAuthResData(Object dryRunAuthResData) {
+  public AuthReq dryRunAuthResData(AuthReqDryRunAuthResData dryRunAuthResData) {
     this.dryRunAuthResData = dryRunAuthResData;
     return this;
   }
 
   
-  @ApiModelProperty(value = "Response provided by dry-run execution")
+  @ApiModelProperty(value = "")
   @JsonProperty("dryRunAuthResData")
-  public Object getDryRunAuthResData() {
+  public AuthReqDryRunAuthResData getDryRunAuthResData() {
     return dryRunAuthResData;
   }
 
   @JsonProperty("dryRunAuthResData")
-  public void setDryRunAuthResData(Object dryRunAuthResData) {
+  public void setDryRunAuthResData(AuthReqDryRunAuthResData dryRunAuthResData) {
     this.dryRunAuthResData = dryRunAuthResData;
   }
 
