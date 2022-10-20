@@ -15,6 +15,10 @@ public class SmsAuthController {
 
     @PostMapping("authenticate/dry-run")
     DryRunAuthRes authenticateDryRun(AuthReq req) {
+        new AuthRes()
+                .authData(new AuthResAuthData()
+                        ._private(new AuthDataPrivate().)
+                )
         PhoneNumberUtil.getInstance().parse()
     }
 

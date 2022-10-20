@@ -148,12 +148,12 @@
                   }
                 },
                 "description": "If specified - app generates code and requires auth to be confirmed",
-                "x-order": "2102313733-1"
+                "x-order": "377338786-1"
               }
             },
             "description": "Authentication implementation config",
             "x-order": "658063406-0",
-            "x-super": "#/components/schemas/AuthCfg"
+            "x-super": "#/components/schemas/AuthAppCfg"
           },
           {
             "type": "object",
@@ -200,7 +200,7 @@
                 "maximum": 1.7976931348623157e+308
               }
             },
-            "x-order": "791325901-2",
+            "x-order": "791325901-3",
             "x-super": "#/components/schemas/BuiltInAuthCfg"
           },
           {
@@ -321,10 +321,10 @@
                   }
                 },
                 "description": "If specified - app generates code and requires auth to be confirmed",
-                "x-order": "2102313733-1"
+                "x-order": "377338786-1"
               }
             },
-            "x-order": "-701605246-6",
+            "x-order": "-1025321515-0",
             "x-super": "#/components/schemas/BuiltInAuthCfg"
           },
           {
@@ -386,7 +386,7 @@
                 "maximum": 2147483647
               }
             },
-            "x-order": "2116983897-2",
+            "x-order": "2116983897-3",
             "x-super": "#/components/schemas/BuiltInAuthCfg"
           },
           {
@@ -474,7 +474,7 @@
                 "description": "Can fill public data by a response of user-info or id-token."
               }
             },
-            "x-order": "-51011121-4",
+            "x-order": "-1532051357-0",
             "x-super": "#/components/schemas/BuiltInAuthCfg"
           },
           {
@@ -608,13 +608,13 @@
                     }
                   },
                   "description": "Requirements for password",
-                  "x-order": "-266447761-7"
+                  "x-order": "-49430021-1"
                 },
                 "description": "Allows to calculate password strength based on mentioned criteria. Requirements will be checked one by one\nuntil first failed.\n"
               }
             },
             "description": "Password authentication. To enable this auth set auth name to \"password\" or use \"builtin\": \"password\" param.",
-            "x-order": "-266447761-6",
+            "x-order": "-49430021-0",
             "x-super": "#/components/schemas/BuiltInAuthCfg"
           },
           {
@@ -702,7 +702,7 @@
                 "maximum": 2147483647
               }
             },
-            "x-order": "131730481-5",
+            "x-order": "545691127-0",
             "x-super": "#/components/schemas/BuiltInAuthCfg"
           }
         ],

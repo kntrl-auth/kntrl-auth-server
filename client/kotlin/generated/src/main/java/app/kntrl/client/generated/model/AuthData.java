@@ -15,6 +15,7 @@ package app.kntrl.client.generated.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import app.kntrl.client.generated.model.AuthDataPublic;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -51,7 +52,7 @@ import app.kntrl.client.generated.infra.JSON;
 public class AuthData {
   public static final String SERIALIZED_NAME_PUBLIC = "public";
   @SerializedName(SERIALIZED_NAME_PUBLIC)
-  private Object _public;
+  private AuthDataPublic _public;
 
   public static final String SERIALIZED_NAME_LOGIN = "login";
   @SerializedName(SERIALIZED_NAME_LOGIN)
@@ -60,25 +61,25 @@ public class AuthData {
   public AuthData() {
   }
 
-  public AuthData _public(Object _public) {
+  public AuthData _public(AuthDataPublic _public) {
     
     this._public = _public;
     return this;
   }
 
    /**
-   * Data that are available for API.
+   * Get _public
    * @return _public
   **/
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Data that are available for API.")
+  @ApiModelProperty(required = true, value = "")
 
-  public Object getPublic() {
+  public AuthDataPublic getPublic() {
     return _public;
   }
 
 
-  public void setPublic(Object _public) {
+  public void setPublic(AuthDataPublic _public) {
     this._public = _public;
   }
 

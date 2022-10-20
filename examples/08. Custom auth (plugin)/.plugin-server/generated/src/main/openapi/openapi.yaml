@@ -1277,18 +1277,28 @@ components:
       x-order: 1338599945-1
     AuthData:
       example:
-        private: "{}"
-        public: "{}"
+        private:
+          encodedIps:
+            key: 1
+          passwords:
+          - createdAt: 5
+            hash: hash
+          - createdAt: 5
+            hash: hash
+          questions:
+            key: questions
+          changedAt: 5
+        public:
+          email: email
+          questionsSavedAt:
+            key: 6
+          updatedAt: 0
         login: login
       properties:
         public:
-          description: Data that are available for API.
-          type: object
-          x-super: '#/components/schemas/json'
+          $ref: '#/components/schemas/AuthData_public'
         private:
-          description: Data available only for authenticator.
-          type: object
-          x-super: '#/components/schemas/json'
+          $ref: '#/components/schemas/AuthData_private'
         login:
           description: |-
             If authenticator supports identification, it provides login here. This can be email, phone number,
@@ -1299,18 +1309,41 @@ components:
       - private
       - public
       type: object
+      x-order: 332570507-3
+    AuthPrivateData:
+      additionalProperties: true
+      type: object
+      x-order: 332570507-6
+    AuthPublicData:
+      additionalProperties: true
+      type: object
       x-order: 332570507-4
     AuthRes:
       example:
         authData:
-          private: "{}"
-          public: "{}"
+          private:
+            encodedIps:
+              key: 1
+            passwords:
+            - createdAt: 5
+              hash: hash
+            - createdAt: 5
+              hash: hash
+            questions:
+              key: questions
+            changedAt: 5
+          public:
+            email: email
+            questionsSavedAt:
+              key: 6
+            updatedAt: 0
           login: login
         resData:
           emailSentTo: emailSentTo
           password: password
           answersSavedAt:
-            key: 0
+            questionsSavedAt:
+              key: 0
           strength: strength
           correct:
             HOME_CITY: true
@@ -1318,7 +1351,7 @@ components:
           ipEncoded: ipEncoded
           login: login
           publicData:
-            key: "{}"
+            key: ""
       properties:
         authData:
           $ref: '#/components/schemas/AuthRes_authData'
@@ -1327,48 +1360,132 @@ components:
       required:
       - authData
       type: object
-      x-order: -1249106462-6
+      x-order: -1249106462-9
     AuthResData:
-      type: object
-      x-order: -1249106462-7
-    AuthResDataJson:
       additionalProperties: true
       type: object
-      x-order: -1249106462-8
-      x-super: '#/components/schemas/AuthResData'
-    EmailAuthRes:
+      x-order: -1249106462-10
+    EmailAuthResData:
+      additionalProperties: true
       properties:
         emailSentTo:
           description: "Shows user email, that was used to send a code. Email will\
             \ be partially hidden."
           type: string
       type: object
-      x-order: -701605246-5
+      x-order: 1021533909-5
       x-super: '#/components/schemas/AuthResData'
-    IpAuthRes:
+    EmailPublicData:
+      additionalProperties: true
+      properties:
+        email:
+          description: User email.
+          type: string
+        updatedAt:
+          description: Last time when email was changed.
+          format: int64
+          type: integer
+      required:
+      - email
+      - updatedAt
+      type: object
+      x-order: 1021533909-2
+      x-super: '#/components/schemas/AuthPublicData'
+    IpAuthResData:
+      additionalProperties: true
       properties:
         ipEncoded:
           type: string
       required:
       - ipEncoded
       type: object
-      x-order: 2116983897-1
+      x-order: 2116983897-2
       x-super: '#/components/schemas/AuthResData'
-    OAuthRes:
+    IpPrivateData:
+      additionalProperties: true
+      properties:
+        encodedIps:
+          additionalProperties:
+            format: int64
+            type: integer
+          type: object
+      type: object
+      x-order: 2116983897-1
+      x-super: '#/components/schemas/AuthPrivateData'
+    NoAuthPrivateData:
+      additionalProperties: true
+      type: object
+      x-order: 332570507-7
+      x-super: '#/components/schemas/AuthPrivateData'
+    NoAuthPublicData:
+      additionalProperties: true
+      type: object
+      x-order: 332570507-5
+      x-super: '#/components/schemas/AuthPublicData'
+    OAuthPublicData:
+      additionalProperties: true
+      type: object
+      x-order: -893636857-2
+      x-super: '#/components/schemas/AuthPublicData'
+    OAuthResData:
+      additionalProperties: true
       properties:
         login:
           type: string
         publicData:
-          additionalProperties:
-            type: object
+          additionalProperties: true
           type: object
+          x-order: -893636857-2
+          x-super: '#/components/schemas/AuthPublicData'
       required:
       - login
       - publicData
       type: object
-      x-order: -51011121-2
+      x-order: -893636857-4
       x-super: '#/components/schemas/AuthResData'
-    PasswordUpdateRes:
+    Password:
+      example:
+        createdAt: 5
+        hash: hash
+      properties:
+        hash:
+          type: string
+        createdAt:
+          format: int64
+          type: integer
+      required:
+      - createdAt
+      - hash
+      type: object
+      x-order: 378192899-3
+    PasswordHistory:
+      additionalProperties: true
+      properties:
+        passwords:
+          items:
+            $ref: '#/components/schemas/Password'
+          type: array
+        changedAt:
+          format: int64
+          type: integer
+          x-nullable: true
+      type: object
+      x-order: 378192899-0
+      x-super: '#/components/schemas/AuthPrivateData'
+    PasswordPublicData:
+      additionalProperties: true
+      properties:
+        updatedAt:
+          description: Time when password was updated last time.
+          format: int64
+          type: integer
+      required:
+      - updatedAt
+      type: object
+      x-order: -266447761-2
+      x-super: '#/components/schemas/AuthPublicData'
+    PasswordUpdateResData:
+      additionalProperties: true
       properties:
         password:
           description: If password was generated by app this field contains generated
@@ -1384,7 +1501,8 @@ components:
       type: object
       x-order: -266447761-5
       x-super: '#/components/schemas/AuthResData'
-    QuestionsAuthenticateRes:
+    QuestionsAuthResData:
+      additionalProperties: true
       properties:
         correct:
           additionalProperties:
@@ -1398,38 +1516,87 @@ components:
       required:
       - correct
       type: object
-      x-order: 131730481-3
+      x-order: -213229069-4
       x-super: '#/components/schemas/AuthResData'
-    QuestionsUpdateRes:
+    QuestionsPrivateData:
+      additionalProperties: true
       properties:
-        answersSavedAt:
+        questions:
+          additionalProperties:
+            type: string
+          type: object
+      type: object
+      x-order: -213229069-2
+      x-super: '#/components/schemas/AuthPrivateData'
+    QuestionsPublicData:
+      additionalProperties: true
+      properties:
+        questionsSavedAt:
           additionalProperties:
             format: int64
             type: integer
-          description: Date of last update
           type: object
+      type: object
+      x-order: -213229069-1
+      x-super: '#/components/schemas/AuthPublicData'
+    QuestionsUpdateResData:
+      additionalProperties: true
+      properties:
+        answersSavedAt:
+          $ref: '#/components/schemas/AuthRes_resData_answersSavedAt'
       required:
       - answersSavedAt
       type: object
-      x-order: 131730481-4
+      x-order: -213229069-6
       x-super: '#/components/schemas/AuthResData'
-    json:
+    AppSecretReqData:
       additionalProperties: true
+      properties:
+        secret:
+          type: string
+      required:
+      - secret
       type: object
+      x-order: 791325901-2
+      x-super: '#/components/schemas/AuthReqData'
     AuthReq:
       example:
         dryRunAuthResData: "{}"
-        reqData: "{}"
+        reqData:
+          template: template
+          password: password
+          authorizationCode: authorizationCode
+          answers:
+            HOME_CITY: London
+            MOTHER_NAME: null
+          confirmPassword: confirmPassword
+          secret: secret
+          accessToken: accessToken
+          email: email
         authData:
-          private: "{}"
-          public: "{}"
+          private:
+            encodedIps:
+              key: 1
+            passwords:
+            - createdAt: 5
+              hash: hash
+            - createdAt: 5
+              hash: hash
+            questions:
+              key: questions
+            changedAt: 5
+          public:
+            email: email
+            questionsSavedAt:
+              key: 6
+            updatedAt: 0
           login: login
         session:
           authenticated: true
           systemAccess: true
           signedInAt: 7
           userId: userId
-          expiresAt: 9
+          expiresAt: 1
           nextFactors:
           - supportedAuths:
             - supportedAuths
@@ -1443,7 +1610,7 @@ components:
           authenticatedBy:
             key: authenticatedBy
           newUser: true
-          refreshedAt: 3
+          refreshedAt: 1
           id: id
           identifiedBy:
           - type: type
@@ -1453,16 +1620,16 @@ components:
           unconfirmedAuths:
             key:
               sentCodes:
-              - attemptsLeft: 1
+              - attemptsLeft: 9
                 codeHash: codeHash
-                usedAttempts: 6
-                validUntil: 0
-                sentAt: 5
-              - attemptsLeft: 1
+                usedAttempts: 7
+                validUntil: 2
+                sentAt: 3
+              - attemptsLeft: 9
                 codeHash: codeHash
-                usedAttempts: 6
-                validUntil: 0
-                sentAt: 5
+                usedAttempts: 7
+                validUntil: 2
+                sentAt: 3
           device:
             browser: browser
             mobile: true
@@ -1482,39 +1649,81 @@ components:
           attemptsLeft: 7
           code: code
           codeHash: codeHash
-          usedAttempts: 4
-          validUntil: 2
+          usedAttempts: 6
+          validUntil: 1
           sentAt: 1
         user:
           new: true
-          signedUpAt: 5
+          signedUpAt: 2
           systemAccess: true
           auths:
             key:
               data:
-                private: "{}"
-                public: "{}"
+                private:
+                  encodedIps:
+                    key: 1
+                  passwords:
+                  - createdAt: 5
+                    hash: hash
+                  - createdAt: 5
+                    hash: hash
+                  questions:
+                    key: questions
+                  changedAt: 5
+                public:
+                  email: email
+                  questionsSavedAt:
+                    key: 6
+                  updatedAt: 0
                 login: login
               sentCodes:
               - code:
-                  attemptsLeft: 1
+                  attemptsLeft: 9
                   codeHash: codeHash
-                  usedAttempts: 6
-                  validUntil: 0
-                  sentAt: 5
+                  usedAttempts: 7
+                  validUntil: 2
+                  sentAt: 3
                 data:
-                  private: "{}"
-                  public: "{}"
+                  private:
+                    encodedIps:
+                      key: 1
+                    passwords:
+                    - createdAt: 5
+                      hash: hash
+                    - createdAt: 5
+                      hash: hash
+                    questions:
+                      key: questions
+                    changedAt: 5
+                  public:
+                    email: email
+                    questionsSavedAt:
+                      key: 6
+                    updatedAt: 0
                   login: login
               - code:
-                  attemptsLeft: 1
+                  attemptsLeft: 9
                   codeHash: codeHash
-                  usedAttempts: 6
-                  validUntil: 0
-                  sentAt: 5
+                  usedAttempts: 7
+                  validUntil: 2
+                  sentAt: 3
                 data:
-                  private: "{}"
-                  public: "{}"
+                  private:
+                    encodedIps:
+                      key: 1
+                    passwords:
+                    - createdAt: 5
+                      hash: hash
+                    - createdAt: 5
+                      hash: hash
+                    questions:
+                      key: questions
+                    changedAt: 5
+                  public:
+                    email: email
+                    questionsSavedAt:
+                      key: 6
+                    updatedAt: 0
                   login: login
           id: 2c24704f-198a-4bc4-9718-306ccc97bbdc
           logins:
@@ -1527,7 +1736,7 @@ components:
           factors:
           - factors
           - factors
-          updatedAt: 2
+          updatedAt: 4
       properties:
         dryRunAuthResData:
           description: Response provided by dry-run execution
@@ -1542,8 +1751,7 @@ components:
         codeToSend:
           $ref: '#/components/schemas/AuthReq_codeToSend'
         reqData:
-          description: Request data provided by client.
-          type: object
+          $ref: '#/components/schemas/AuthReq_reqData'
         ctx:
           $ref: '#/components/schemas/ReqCtx'
       required:
@@ -1551,32 +1759,78 @@ components:
       - reqData
       type: object
       x-order: -1249106462-2
+    AuthReqData:
+      additionalProperties: true
+      type: object
+      x-order: -1249106462-4
     AuthUserCfg:
       example:
         data:
-          private: "{}"
-          public: "{}"
+          private:
+            encodedIps:
+              key: 1
+            passwords:
+            - createdAt: 5
+              hash: hash
+            - createdAt: 5
+              hash: hash
+            questions:
+              key: questions
+            changedAt: 5
+          public:
+            email: email
+            questionsSavedAt:
+              key: 6
+            updatedAt: 0
           login: login
         sentCodes:
         - code:
-            attemptsLeft: 1
+            attemptsLeft: 9
             codeHash: codeHash
-            usedAttempts: 6
-            validUntil: 0
-            sentAt: 5
+            usedAttempts: 7
+            validUntil: 2
+            sentAt: 3
           data:
-            private: "{}"
-            public: "{}"
+            private:
+              encodedIps:
+                key: 1
+              passwords:
+              - createdAt: 5
+                hash: hash
+              - createdAt: 5
+                hash: hash
+              questions:
+                key: questions
+              changedAt: 5
+            public:
+              email: email
+              questionsSavedAt:
+                key: 6
+              updatedAt: 0
             login: login
         - code:
-            attemptsLeft: 1
+            attemptsLeft: 9
             codeHash: codeHash
-            usedAttempts: 6
-            validUntil: 0
-            sentAt: 5
+            usedAttempts: 7
+            validUntil: 2
+            sentAt: 3
           data:
-            private: "{}"
-            public: "{}"
+            private:
+              encodedIps:
+                key: 1
+              passwords:
+              - createdAt: 5
+                hash: hash
+              - createdAt: 5
+                hash: hash
+              questions:
+                key: questions
+              changedAt: 5
+            public:
+              email: email
+              questionsSavedAt:
+                key: 6
+              updatedAt: 0
             login: login
       properties:
         data:
@@ -1618,11 +1872,11 @@ components:
       x-order: -1249106462-3
     CodeVerifier:
       example:
-        attemptsLeft: 1
+        attemptsLeft: 9
         codeHash: codeHash
-        usedAttempts: 6
-        validUntil: 0
-        sentAt: 5
+        usedAttempts: 7
+        validUntil: 2
+        sentAt: 3
       properties:
         validUntil:
           format: int64
@@ -1668,6 +1922,37 @@ components:
       - userAgent
       type: object
       x-order: 1837614569-0
+    EmailAuthReqData:
+      additionalProperties: true
+      properties:
+        email:
+          description: |-
+            User email. If email is not null - auth allow identification by email (email auth also must be listed in
+            logins config). Otherwise, uses email of already identified user.
+          type: string
+          x-nullable: true
+        template:
+          description: Template to use.
+          type: string
+          x-nullable: true
+      type: object
+      x-order: 1021533909-3
+      x-super: '#/components/schemas/AuthReqData'
+    EmailUpdateReqData:
+      additionalProperties: true
+      properties:
+        email:
+          description: New email to set.
+          type: string
+        template:
+          description: Template to use.
+          type: string
+          x-nullable: true
+      required:
+      - email
+      type: object
+      x-order: 1021533909-4
+      x-super: '#/components/schemas/AuthReqData'
     Login:
       example:
         unconfirmedLogin: unconfirmedLogin
@@ -1707,6 +1992,84 @@ components:
       - supportedAuths
       type: object
       x-order: 1296788734-0
+    NoAuthReqData:
+      additionalProperties: true
+      type: object
+      x-order: -1249106462-5
+      x-super: '#/components/schemas/AuthReqData'
+    OAuthReqData:
+      additionalProperties: true
+      properties:
+        accessToken:
+          description: If you have access-token - put it here.
+          type: string
+          x-nullable: true
+        authorizationCode:
+          description: If you have authorisation-code - app will exchange it for access-token.
+          type: string
+          x-nullable: true
+      type: object
+      x-order: -893636857-3
+      x-super: '#/components/schemas/AuthReqData'
+    PasswordAuthReqData:
+      additionalProperties: true
+      properties:
+        password:
+          description: User password.
+          type: string
+      required:
+      - password
+      type: object
+      x-order: -266447761-3
+      x-super: '#/components/schemas/AuthReqData'
+    PasswordUpdateReqData:
+      additionalProperties: true
+      properties:
+        password:
+          description: New password to set. If null app generates password automatically.
+          type: string
+          x-nullable: true
+        confirmPassword:
+          description: Password confirmation. If null app doesn't perform this check.
+          type: string
+          x-nullable: true
+      type: object
+      x-order: -266447761-4
+      x-super: '#/components/schemas/AuthReqData'
+    QuestionsAuthReqData:
+      additionalProperties: true
+      properties:
+        answers:
+          additionalProperties:
+            type: string
+          description: |
+            Given answers for questions.
+          example:
+            HOME_CITY: New-York
+            MOTHER_NAME: Emma
+          type: object
+      required:
+      - answers
+      type: object
+      x-order: -213229069-3
+      x-super: '#/components/schemas/AuthReqData'
+    QuestionsUpdateReqData:
+      additionalProperties: true
+      properties:
+        answers:
+          additionalProperties:
+            type: string
+          description: |
+            Answers to save. `null` as value removes answer
+          example:
+            HOME_CITY: London
+            MOTHER_NAME: null
+          type: object
+      required:
+      - answers
+      type: object
+      x-order: -213229069-5
+      x-super: '#/components/schemas/AuthReqData'
     ReqCtx:
       example:
         headers:
@@ -1766,16 +2129,16 @@ components:
         unconfirmedAuths:
           key:
             sentCodes:
-            - attemptsLeft: 1
+            - attemptsLeft: 9
               codeHash: codeHash
-              usedAttempts: 6
-              validUntil: 0
-              sentAt: 5
-            - attemptsLeft: 1
+              usedAttempts: 7
+              validUntil: 2
+              sentAt: 3
+            - attemptsLeft: 9
               codeHash: codeHash
-              usedAttempts: 6
-              validUntil: 0
-              sentAt: 5
+              usedAttempts: 7
+              validUntil: 2
+              sentAt: 3
         device:
           browser: browser
           mobile: true
@@ -1848,16 +2211,16 @@ components:
     UnconfirmedAuth:
       example:
         sentCodes:
-        - attemptsLeft: 1
+        - attemptsLeft: 9
           codeHash: codeHash
-          usedAttempts: 6
-          validUntil: 0
-          sentAt: 5
-        - attemptsLeft: 1
+          usedAttempts: 7
+          validUntil: 2
+          sentAt: 3
+        - attemptsLeft: 9
           codeHash: codeHash
-          usedAttempts: 6
-          validUntil: 0
-          sentAt: 5
+          usedAttempts: 7
+          validUntil: 2
+          sentAt: 3
       properties:
         sentCodes:
           items:
@@ -1868,14 +2231,28 @@ components:
     UnconfirmedAuthData:
       example:
         code:
-          attemptsLeft: 1
+          attemptsLeft: 9
           codeHash: codeHash
-          usedAttempts: 6
-          validUntil: 0
-          sentAt: 5
+          usedAttempts: 7
+          validUntil: 2
+          sentAt: 3
         data:
-          private: "{}"
-          public: "{}"
+          private:
+            encodedIps:
+              key: 1
+            passwords:
+            - createdAt: 5
+              hash: hash
+            - createdAt: 5
+              hash: hash
+            questions:
+              key: questions
+            changedAt: 5
+          public:
+            email: email
+            questionsSavedAt:
+              key: 6
+            updatedAt: 0
           login: login
       properties:
         data:
@@ -1886,7 +2263,7 @@ components:
       - code
       - data
       type: object
-      x-order: 332570507-5
+      x-order: 332570507-8
     User:
       example:
         new: true
@@ -1895,29 +2272,71 @@ components:
         auths:
           key:
             data:
-              private: "{}"
-              public: "{}"
+              private:
+                encodedIps:
+                  key: 1
+                passwords:
+                - createdAt: 5
+                  hash: hash
+                - createdAt: 5
+                  hash: hash
+                questions:
+                  key: questions
+                changedAt: 5
+              public:
+                email: email
+                questionsSavedAt:
+                  key: 6
+                updatedAt: 0
               login: login
             sentCodes:
             - code:
-                attemptsLeft: 1
+                attemptsLeft: 9
                 codeHash: codeHash
-                usedAttempts: 6
-                validUntil: 0
-                sentAt: 5
+                usedAttempts: 7
+                validUntil: 2
+                sentAt: 3
               data:
-                private: "{}"
-                public: "{}"
+                private:
+                  encodedIps:
+                    key: 1
+                  passwords:
+                  - createdAt: 5
+                    hash: hash
+                  - createdAt: 5
+                    hash: hash
+                  questions:
+                    key: questions
+                  changedAt: 5
+                public:
+                  email: email
+                  questionsSavedAt:
+                    key: 6
+                  updatedAt: 0
                 login: login
             - code:
-                attemptsLeft: 1
+                attemptsLeft: 9
                 codeHash: codeHash
-                usedAttempts: 6
-                validUntil: 0
-                sentAt: 5
+                usedAttempts: 7
+                validUntil: 2
+                sentAt: 3
               data:
-                private: "{}"
-                public: "{}"
+                private:
+                  encodedIps:
+                    key: 1
+                  passwords:
+                  - createdAt: 5
+                    hash: hash
+                  - createdAt: 5
+                    hash: hash
+                  questions:
+                    key: questions
+                  changedAt: 5
+                public:
+                  email: email
+                  questionsSavedAt:
+                    key: 6
+                  updatedAt: 0
                 login: login
         id: 2c24704f-198a-4bc4-9718-306ccc97bbdc
         logins:
@@ -1982,7 +2401,7 @@ components:
           type: string
           x-nullable: true
       type: object
-      x-order: 332570507-3
+      x-order: -1249106462-8
     DryRunAuthRes:
       example:
         authData:
@@ -1991,7 +2410,8 @@ components:
           emailSentTo: emailSentTo
           password: password
           answersSavedAt:
-            key: 0
+            questionsSavedAt:
+              key: 0
           strength: strength
           correct:
             HOME_CITY: true
@@ -1999,14 +2419,14 @@ components:
           ipEncoded: ipEncoded
           login: login
           publicData:
-            key: "{}"
+            key: ""
       properties:
         authData:
           $ref: '#/components/schemas/DryRunAuthRes_authData'
         resData:
           $ref: '#/components/schemas/AuthRes_resData'
       type: object
-      x-order: -1249106462-5
+      x-order: -1249106462-7
     FindSessionRes:
       example:
         session:
@@ -2038,16 +2458,16 @@ components:
           unconfirmedAuths:
             key:
               sentCodes:
-              - attemptsLeft: 1
+              - attemptsLeft: 9
                 codeHash: codeHash
-                usedAttempts: 6
-                validUntil: 0
-                sentAt: 5
-              - attemptsLeft: 1
+                usedAttempts: 7
+                validUntil: 2
+                sentAt: 3
+              - attemptsLeft: 9
                 codeHash: codeHash
-                usedAttempts: 6
-                validUntil: 0
-                sentAt: 5
+                usedAttempts: 7
+                validUntil: 2
+                sentAt: 3
           device:
             browser: browser
             mobile: true
@@ -2089,16 +2509,16 @@ components:
           unconfirmedAuths:
             key:
               sentCodes:
-              - attemptsLeft: 1
+              - attemptsLeft: 9
                 codeHash: codeHash
-                usedAttempts: 6
-                validUntil: 0
-                sentAt: 5
-              - attemptsLeft: 1
+                usedAttempts: 7
+                validUntil: 2
+                sentAt: 3
+              - attemptsLeft: 9
                 codeHash: codeHash
-                usedAttempts: 6
-                validUntil: 0
-                sentAt: 5
+                usedAttempts: 7
+                validUntil: 2
+                sentAt: 3
           device:
             browser: browser
             mobile: true
@@ -2132,16 +2552,16 @@ components:
           unconfirmedAuths:
             key:
               sentCodes:
-              - attemptsLeft: 1
+              - attemptsLeft: 9
                 codeHash: codeHash
-                usedAttempts: 6
-                validUntil: 0
-                sentAt: 5
-              - attemptsLeft: 1
+                usedAttempts: 7
+                validUntil: 2
+                sentAt: 3
+              - attemptsLeft: 9
                 codeHash: codeHash
-                usedAttempts: 6
-                validUntil: 0
-                sentAt: 5
+                usedAttempts: 7
+                validUntil: 2
+                sentAt: 3
           device:
             browser: browser
             mobile: true
@@ -2191,16 +2611,16 @@ components:
           unconfirmedAuths:
             key:
               sentCodes:
-              - attemptsLeft: 1
+              - attemptsLeft: 9
                 codeHash: codeHash
-                usedAttempts: 6
-                validUntil: 0
-                sentAt: 5
-              - attemptsLeft: 1
+                usedAttempts: 7
+                validUntil: 2
+                sentAt: 3
+              - attemptsLeft: 9
                 codeHash: codeHash
-                usedAttempts: 6
-                validUntil: 0
-                sentAt: 5
+                usedAttempts: 7
+                validUntil: 2
+                sentAt: 3
           device:
             browser: browser
             mobile: true
@@ -2239,16 +2659,16 @@ components:
           unconfirmedAuths:
             key:
               sentCodes:
-              - attemptsLeft: 1
+              - attemptsLeft: 9
                 codeHash: codeHash
-                usedAttempts: 6
-                validUntil: 0
-                sentAt: 5
-              - attemptsLeft: 1
+                usedAttempts: 7
+                validUntil: 2
+                sentAt: 3
+              - attemptsLeft: 9
                 codeHash: codeHash
-                usedAttempts: 6
-                validUntil: 0
-                sentAt: 5
+                usedAttempts: 7
+                validUntil: 2
+                sentAt: 3
           device:
             browser: browser
             mobile: true
@@ -2280,29 +2700,71 @@ components:
           auths:
             key:
               data:
-                private: "{}"
-                public: "{}"
+                private:
+                  encodedIps:
+                    key: 1
+                  passwords:
+                  - createdAt: 5
+                    hash: hash
+                  - createdAt: 5
+                    hash: hash
+                  questions:
+                    key: questions
+                  changedAt: 5
+                public:
+                  email: email
+                  questionsSavedAt:
+                    key: 6
+                  updatedAt: 0
                 login: login
               sentCodes:
               - code:
-                  attemptsLeft: 1
+                  attemptsLeft: 9
                   codeHash: codeHash
-                  usedAttempts: 6
-                  validUntil: 0
-                  sentAt: 5
+                  usedAttempts: 7
+                  validUntil: 2
+                  sentAt: 3
                 data:
-                  private: "{}"
-                  public: "{}"
+                  private:
+                    encodedIps:
+                      key: 1
+                    passwords:
+                    - createdAt: 5
+                      hash: hash
+                    - createdAt: 5
+                      hash: hash
+                    questions:
+                      key: questions
+                    changedAt: 5
+                  public:
+                    email: email
+                    questionsSavedAt:
+                      key: 6
+                    updatedAt: 0
                   login: login
               - code:
-                  attemptsLeft: 1
+                  attemptsLeft: 9
                   codeHash: codeHash
-                  usedAttempts: 6
-                  validUntil: 0
-                  sentAt: 5
+                  usedAttempts: 7
+                  validUntil: 2
+                  sentAt: 3
                 data:
-                  private: "{}"
-                  public: "{}"
+                  private:
+                    encodedIps:
+                      key: 1
+                    passwords:
+                    - createdAt: 5
+                      hash: hash
+                    - createdAt: 5
+                      hash: hash
+                    questions:
+                      key: questions
+                    changedAt: 5
+                  public:
+                    email: email
+                    questionsSavedAt:
+                      key: 6
+                    updatedAt: 0
                   login: login
           id: 2c24704f-198a-4bc4-9718-306ccc97bbdc
           logins:
@@ -2330,29 +2792,71 @@ components:
           auths:
             key:
               data:
-                private: "{}"
-                public: "{}"
+                private:
+                  encodedIps:
+                    key: 1
+                  passwords:
+                  - createdAt: 5
+                    hash: hash
+                  - createdAt: 5
+                    hash: hash
+                  questions:
+                    key: questions
+                  changedAt: 5
+                public:
+                  email: email
+                  questionsSavedAt:
+                    key: 6
+                  updatedAt: 0
                 login: login
               sentCodes:
               - code:
-                  attemptsLeft: 1
+                  attemptsLeft: 9
                   codeHash: codeHash
-                  usedAttempts: 6
-                  validUntil: 0
-                  sentAt: 5
+                  usedAttempts: 7
+                  validUntil: 2
+                  sentAt: 3
                 data:
-                  private: "{}"
-                  public: "{}"
+                  private:
+                    encodedIps:
+                      key: 1
+                    passwords:
+                    - createdAt: 5
+                      hash: hash
+                    - createdAt: 5
+                      hash: hash
+                    questions:
+                      key: questions
+                    changedAt: 5
+                  public:
+                    email: email
+                    questionsSavedAt:
+                      key: 6
+                    updatedAt: 0
                   login: login
               - code:
-                  attemptsLeft: 1
+                  attemptsLeft: 9
                   codeHash: codeHash
-                  usedAttempts: 6
-                  validUntil: 0
-                  sentAt: 5
+                  usedAttempts: 7
+                  validUntil: 2
+                  sentAt: 3
                 data:
-                  private: "{}"
-                  public: "{}"
+                  private:
+                    encodedIps:
+                      key: 1
+                    passwords:
+                    - createdAt: 5
+                      hash: hash
+                    - createdAt: 5
+                      hash: hash
+                    questions:
+                      key: questions
+                    changedAt: 5
+                  public:
+                    email: email
+                    questionsSavedAt:
+                      key: 6
+                    updatedAt: 0
                   login: login
           id: 2c24704f-198a-4bc4-9718-306ccc97bbdc
           logins:
@@ -2372,29 +2876,71 @@ components:
           auths:
             key:
               data:
-                private: "{}"
-                public: "{}"
+                private:
+                  encodedIps:
+                    key: 1
+                  passwords:
+                  - createdAt: 5
+                    hash: hash
+                  - createdAt: 5
+                    hash: hash
+                  questions:
+                    key: questions
+                  changedAt: 5
+                public:
+                  email: email
+                  questionsSavedAt:
+                    key: 6
+                  updatedAt: 0
                 login: login
               sentCodes:
               - code:
-                  attemptsLeft: 1
+                  attemptsLeft: 9
                   codeHash: codeHash
-                  usedAttempts: 6
-                  validUntil: 0
-                  sentAt: 5
+                  usedAttempts: 7
+                  validUntil: 2
+                  sentAt: 3
                 data:
-                  private: "{}"
-                  public: "{}"
+                  private:
+                    encodedIps:
+                      key: 1
+                    passwords:
+                    - createdAt: 5
+                      hash: hash
+                    - createdAt: 5
+                      hash: hash
+                    questions:
+                      key: questions
+                    changedAt: 5
+                  public:
+                    email: email
+                    questionsSavedAt:
+                      key: 6
+                    updatedAt: 0
                   login: login
               - code:
-                  attemptsLeft: 1
+                  attemptsLeft: 9
                   codeHash: codeHash
-                  usedAttempts: 6
-                  validUntil: 0
-                  sentAt: 5
+                  usedAttempts: 7
+                  validUntil: 2
+                  sentAt: 3
                 data:
-                  private: "{}"
-                  public: "{}"
+                  private:
+                    encodedIps:
+                      key: 1
+                    passwords:
+                    - createdAt: 5
+                      hash: hash
+                    - createdAt: 5
+                      hash: hash
+                    questions:
+                      key: questions
+                    changedAt: 5
+                  public:
+                    email: email
+                    questionsSavedAt:
+                      key: 6
+                    updatedAt: 0
                   login: login
           id: 2c24704f-198a-4bc4-9718-306ccc97bbdc
           logins:
@@ -2415,29 +2961,71 @@ components:
           auths:
             key:
               data:
-                private: "{}"
-                public: "{}"
+                private:
+                  encodedIps:
+                    key: 1
+                  passwords:
+                  - createdAt: 5
+                    hash: hash
+                  - createdAt: 5
+                    hash: hash
+                  questions:
+                    key: questions
+                  changedAt: 5
+                public:
+                  email: email
+                  questionsSavedAt:
+                    key: 6
+                  updatedAt: 0
                 login: login
               sentCodes:
               - code:
-                  attemptsLeft: 1
+                  attemptsLeft: 9
                   codeHash: codeHash
-                  usedAttempts: 6
-                  validUntil: 0
-                  sentAt: 5
+                  usedAttempts: 7
+                  validUntil: 2
+                  sentAt: 3
                 data:
-                  private: "{}"
-                  public: "{}"
+                  private:
+                    encodedIps:
+                      key: 1
+                    passwords:
+                    - createdAt: 5
+                      hash: hash
+                    - createdAt: 5
+                      hash: hash
+                    questions:
+                      key: questions
+                    changedAt: 5
+                  public:
+                    email: email
+                    questionsSavedAt:
+                      key: 6
+                    updatedAt: 0
                   login: login
               - code:
-                  attemptsLeft: 1
+                  attemptsLeft: 9
                   codeHash: codeHash
-                  usedAttempts: 6
-                  validUntil: 0
-                  sentAt: 5
+                  usedAttempts: 7
+                  validUntil: 2
+                  sentAt: 3
                 data:
-                  private: "{}"
-                  public: "{}"
+                  private:
+                    encodedIps:
+                      key: 1
+                    passwords:
+                    - createdAt: 5
+                      hash: hash
+                    - createdAt: 5
+                      hash: hash
+                    questions:
+                      key: questions
+                    changedAt: 5
+                  public:
+                    email: email
+                    questionsSavedAt:
+                      key: 6
+                    updatedAt: 0
                   login: login
           id: 2c24704f-198a-4bc4-9718-306ccc97bbdc
           logins:
@@ -2457,29 +3045,71 @@ components:
           auths:
             key:
               data:
-                private: "{}"
-                public: "{}"
+                private:
+                  encodedIps:
+                    key: 1
+                  passwords:
+                  - createdAt: 5
+                    hash: hash
+                  - createdAt: 5
+                    hash: hash
+                  questions:
+                    key: questions
+                  changedAt: 5
+                public:
+                  email: email
+                  questionsSavedAt:
+                    key: 6
+                  updatedAt: 0
                 login: login
               sentCodes:
               - code:
-                  attemptsLeft: 1
+                  attemptsLeft: 9
                   codeHash: codeHash
-                  usedAttempts: 6
-                  validUntil: 0
-                  sentAt: 5
+                  usedAttempts: 7
+                  validUntil: 2
+                  sentAt: 3
                 data:
-                  private: "{}"
-                  public: "{}"
+                  private:
+                    encodedIps:
+                      key: 1
+                    passwords:
+                    - createdAt: 5
+                      hash: hash
+                    - createdAt: 5
+                      hash: hash
+                    questions:
+                      key: questions
+                    changedAt: 5
+                  public:
+                    email: email
+                    questionsSavedAt:
+                      key: 6
+                    updatedAt: 0
                   login: login
               - code:
-                  attemptsLeft: 1
+                  attemptsLeft: 9
                   codeHash: codeHash
-                  usedAttempts: 6
-                  validUntil: 0
-                  sentAt: 5
+                  usedAttempts: 7
+                  validUntil: 2
+                  sentAt: 3
                 data:
-                  private: "{}"
-                  public: "{}"
+                  private:
+                    encodedIps:
+                      key: 1
+                    passwords:
+                    - createdAt: 5
+                      hash: hash
+                    - createdAt: 5
+                      hash: hash
+                    questions:
+                      key: questions
+                    changedAt: 5
+                  public:
+                    email: email
+                    questionsSavedAt:
+                      key: 6
+                    updatedAt: 0
                   login: login
           id: 2c24704f-198a-4bc4-9718-306ccc97bbdc
           logins:
@@ -2519,29 +3149,71 @@ components:
           auths:
             key:
               data:
-                private: "{}"
-                public: "{}"
+                private:
+                  encodedIps:
+                    key: 1
+                  passwords:
+                  - createdAt: 5
+                    hash: hash
+                  - createdAt: 5
+                    hash: hash
+                  questions:
+                    key: questions
+                  changedAt: 5
+                public:
+                  email: email
+                  questionsSavedAt:
+                    key: 6
+                  updatedAt: 0
                 login: login
               sentCodes:
               - code:
-                  attemptsLeft: 1
+                  attemptsLeft: 9
                   codeHash: codeHash
-                  usedAttempts: 6
-                  validUntil: 0
-                  sentAt: 5
+                  usedAttempts: 7
+                  validUntil: 2
+                  sentAt: 3
                 data:
-                  private: "{}"
-                  public: "{}"
+                  private:
+                    encodedIps:
+                      key: 1
+                    passwords:
+                    - createdAt: 5
+                      hash: hash
+                    - createdAt: 5
+                      hash: hash
+                    questions:
+                      key: questions
+                    changedAt: 5
+                  public:
+                    email: email
+                    questionsSavedAt:
+                      key: 6
+                    updatedAt: 0
                   login: login
               - code:
-                  attemptsLeft: 1
+                  attemptsLeft: 9
                   codeHash: codeHash
-                  usedAttempts: 6
-                  validUntil: 0
-                  sentAt: 5
+                  usedAttempts: 7
+                  validUntil: 2
+                  sentAt: 3
                 data:
-                  private: "{}"
-                  public: "{}"
+                  private:
+                    encodedIps:
+                      key: 1
+                    passwords:
+                    - createdAt: 5
+                      hash: hash
+                    - createdAt: 5
+                      hash: hash
+                    questions:
+                      key: questions
+                    changedAt: 5
+                  public:
+                    email: email
+                    questionsSavedAt:
+                      key: 6
+                    updatedAt: 0
                   login: login
           id: 2c24704f-198a-4bc4-9718-306ccc97bbdc
           logins:
@@ -2561,29 +3233,71 @@ components:
           auths:
             key:
               data:
-                private: "{}"
-                public: "{}"
+                private:
+                  encodedIps:
+                    key: 1
+                  passwords:
+                  - createdAt: 5
+                    hash: hash
+                  - createdAt: 5
+                    hash: hash
+                  questions:
+                    key: questions
+                  changedAt: 5
+                public:
+                  email: email
+                  questionsSavedAt:
+                    key: 6
+                  updatedAt: 0
                 login: login
               sentCodes:
               - code:
-                  attemptsLeft: 1
+                  attemptsLeft: 9
                   codeHash: codeHash
-                  usedAttempts: 6
-                  validUntil: 0
-                  sentAt: 5
+                  usedAttempts: 7
+                  validUntil: 2
+                  sentAt: 3
                 data:
-                  private: "{}"
-                  public: "{}"
+                  private:
+                    encodedIps:
+                      key: 1
+                    passwords:
+                    - createdAt: 5
+                      hash: hash
+                    - createdAt: 5
+                      hash: hash
+                    questions:
+                      key: questions
+                    changedAt: 5
+                  public:
+                    email: email
+                    questionsSavedAt:
+                      key: 6
+                    updatedAt: 0
                   login: login
               - code:
-                  attemptsLeft: 1
+                  attemptsLeft: 9
                   codeHash: codeHash
-                  usedAttempts: 6
-                  validUntil: 0
-                  sentAt: 5
+                  usedAttempts: 7
+                  validUntil: 2
+                  sentAt: 3
                 data:
-                  private: "{}"
-                  public: "{}"
+                  private:
+                    encodedIps:
+                      key: 1
+                    passwords:
+                    - createdAt: 5
+                      hash: hash
+                    - createdAt: 5
+                      hash: hash
+                    questions:
+                      key: questions
+                    changedAt: 5
+                  public:
+                    email: email
+                    questionsSavedAt:
+                      key: 6
+                    updatedAt: 0
                   login: login
           id: 2c24704f-198a-4bc4-9718-306ccc97bbdc
           logins:
@@ -2712,21 +3426,84 @@ components:
       - INTEGRATION_ERR
       - ANY_ERR
       type: string
+    AuthData_public:
+      additionalProperties: true
+      example:
+        email: email
+        questionsSavedAt:
+          key: 6
+        updatedAt: 0
+      properties:
+        email:
+          description: User email.
+          type: string
+        updatedAt:
+          description: Time when password was updated last time.
+          format: int64
+          type: integer
+        questionsSavedAt:
+          additionalProperties:
+            format: int64
+            type: integer
+          type: object
+      type: object
+    AuthData_private:
+      additionalProperties: true
+      example:
+        encodedIps:
+          key: 1
+        passwords:
+        - createdAt: 5
+          hash: hash
+        - createdAt: 5
+          hash: hash
+        questions:
+          key: questions
+        changedAt: 5
+      properties:
+        encodedIps:
+          additionalProperties:
+            format: int64
+            type: integer
+          type: object
+        passwords:
+          items:
+            $ref: '#/components/schemas/Password'
+          type: array
+        changedAt:
+          format: int64
+          type: integer
+          x-nullable: true
+        questions:
+          additionalProperties:
+            type: string
+          type: object
+      type: object
     AuthRes_authData:
       description: New auth data to save
       example:
-        private: "{}"
-        public: "{}"
+        private:
+          encodedIps:
+            key: 1
+          passwords:
+          - createdAt: 5
+            hash: hash
+          - createdAt: 5
+            hash: hash
+          questions:
+            key: questions
+          changedAt: 5
+        public:
+          email: email
+          questionsSavedAt:
+            key: 6
+          updatedAt: 0
         login: login
       properties:
         public:
-          description: Data that are available for API.
-          type: object
-          x-super: '#/components/schemas/json'
+          $ref: '#/components/schemas/AuthData_public'
         private:
-          description: Data available only for authenticator.
-          type: object
-          x-super: '#/components/schemas/json'
+          $ref: '#/components/schemas/AuthData_private'
         login:
           description: |-
             If authenticator supports identification, it provides login here. This can be email, phone number,
@@ -2738,6 +3515,19 @@ components:
       - public
       type: object
       x-super: '#/components/schemas/AuthData'
+    AuthRes_resData_answersSavedAt:
+      description: Date of last update
+      example:
+        questionsSavedAt:
+          key: 0
+      properties:
+        questionsSavedAt:
+          additionalProperties:
+            format: int64
+            type: integer
+          type: object
+      type: object
+      x-super: '#/components/schemas/QuestionsPublicData'
     AuthRes_resData:
       additionalProperties: true
       description: This data will be sent back to the client.
@@ -2745,7 +3535,8 @@ components:
         emailSentTo: emailSentTo
         password: password
         answersSavedAt:
-          key: 0
+          questionsSavedAt:
+            key: 0
         strength: strength
         correct:
           HOME_CITY: true
@@ -2753,7 +3544,7 @@ components:
         ipEncoded: ipEncoded
         login: login
         publicData:
-          key: "{}"
+          key: ""
       properties:
         emailSentTo:
           description: "Shows user email, that was used to send a code. Email will\
@@ -2764,9 +3555,10 @@ components:
         login:
           type: string
         publicData:
-          additionalProperties:
-            type: object
+          additionalProperties: true
           type: object
+          x-order: -893636857-2
+          x-super: '#/components/schemas/AuthPublicData'
         password:
           description: If password was generated by app this field contains generated
             password.
@@ -2786,11 +3578,7 @@ components:
             MOTHER_NAME: false
           type: object
         answersSavedAt:
-          additionalProperties:
-            format: int64
-            type: integer
-          description: Date of last update
-          type: object
+          $ref: '#/components/schemas/AuthRes_resData_answersSavedAt'
       type: object
       x-nullable: true
     AuthReq_user:
@@ -2798,34 +3586,76 @@ components:
         yet.
       example:
         new: true
-        signedUpAt: 5
+        signedUpAt: 2
         systemAccess: true
         auths:
           key:
             data:
-              private: "{}"
-              public: "{}"
+              private:
+                encodedIps:
+                  key: 1
+                passwords:
+                - createdAt: 5
+                  hash: hash
+                - createdAt: 5
+                  hash: hash
+                questions:
+                  key: questions
+                changedAt: 5
+              public:
+                email: email
+                questionsSavedAt:
+                  key: 6
+                updatedAt: 0
               login: login
             sentCodes:
             - code:
-                attemptsLeft: 1
+                attemptsLeft: 9
                 codeHash: codeHash
-                usedAttempts: 6
-                validUntil: 0
-                sentAt: 5
+                usedAttempts: 7
+                validUntil: 2
+                sentAt: 3
               data:
-                private: "{}"
-                public: "{}"
+                private:
+                  encodedIps:
+                    key: 1
+                  passwords:
+                  - createdAt: 5
+                    hash: hash
+                  - createdAt: 5
+                    hash: hash
+                  questions:
+                    key: questions
+                  changedAt: 5
+                public:
+                  email: email
+                  questionsSavedAt:
+                    key: 6
+                  updatedAt: 0
                 login: login
             - code:
-                attemptsLeft: 1
+                attemptsLeft: 9
                 codeHash: codeHash
-                usedAttempts: 6
-                validUntil: 0
-                sentAt: 5
+                usedAttempts: 7
+                validUntil: 2
+                sentAt: 3
               data:
-                private: "{}"
-                public: "{}"
+                private:
+                  encodedIps:
+                    key: 1
+                  passwords:
+                  - createdAt: 5
+                    hash: hash
+                  - createdAt: 5
+                    hash: hash
+                  questions:
+                    key: questions
+                  changedAt: 5
+                public:
+                  email: email
+                  questionsSavedAt:
+                    key: 6
+                  updatedAt: 0
                 login: login
         id: 2c24704f-198a-4bc4-9718-306ccc97bbdc
         logins:
@@ -2838,7 +3668,7 @@ components:
         factors:
         - factors
         - factors
-        updatedAt: 2
+        updatedAt: 4
       properties:
         id:
           description: |
@@ -2889,7 +3719,7 @@ components:
         systemAccess: true
         signedInAt: 7
         userId: userId
-        expiresAt: 9
+        expiresAt: 1
         nextFactors:
         - supportedAuths:
           - supportedAuths
@@ -2903,7 +3733,7 @@ components:
         authenticatedBy:
           key: authenticatedBy
         newUser: true
-        refreshedAt: 3
+        refreshedAt: 1
         id: id
         identifiedBy:
         - type: type
@@ -2913,16 +3743,16 @@ components:
         unconfirmedAuths:
           key:
             sentCodes:
-            - attemptsLeft: 1
+            - attemptsLeft: 9
               codeHash: codeHash
-              usedAttempts: 6
-              validUntil: 0
-              sentAt: 5
-            - attemptsLeft: 1
+              usedAttempts: 7
+              validUntil: 2
+              sentAt: 3
+            - attemptsLeft: 9
               codeHash: codeHash
-              usedAttempts: 6
-              validUntil: 0
-              sentAt: 5
+              usedAttempts: 7
+              validUntil: 2
+              sentAt: 3
         device:
           browser: browser
           mobile: true
@@ -2998,18 +3828,28 @@ components:
         Current session data. Null if auth wasn't enabled before. Otherwise, will contain current auth data during
         authenticate and previous data during update-auth request.
       example:
-        private: "{}"
-        public: "{}"
+        private:
+          encodedIps:
+            key: 1
+          passwords:
+          - createdAt: 5
+            hash: hash
+          - createdAt: 5
+            hash: hash
+          questions:
+            key: questions
+          changedAt: 5
+        public:
+          email: email
+          questionsSavedAt:
+            key: 6
+          updatedAt: 0
         login: login
       properties:
         public:
-          description: Data that are available for API.
-          type: object
-          x-super: '#/components/schemas/json'
+          $ref: '#/components/schemas/AuthData_public'
         private:
-          description: Data available only for authenticator.
-          type: object
-          x-super: '#/components/schemas/json'
+          $ref: '#/components/schemas/AuthData_private'
         login:
           description: |-
             If authenticator supports identification, it provides login here. This can be email, phone number,
@@ -3028,8 +3868,8 @@ components:
         attemptsLeft: 7
         code: code
         codeHash: codeHash
-        usedAttempts: 4
-        validUntil: 2
+        usedAttempts: 6
+        validUntil: 1
         sentAt: 1
       properties:
         validUntil:
@@ -3058,6 +3898,55 @@ components:
       type: object
       x-nullable: true
       x-super: '#/components/schemas/Code'
+    AuthReq_reqData:
+      additionalProperties: true
+      example:
+        template: template
+        password: password
+        authorizationCode: authorizationCode
+        answers:
+          HOME_CITY: London
+          MOTHER_NAME: null
+        confirmPassword: confirmPassword
+        secret: secret
+        accessToken: accessToken
+        email: email
+      properties:
+        secret:
+          type: string
+        email:
+          description: New email to set.
+          type: string
+        template:
+          description: Template to use.
+          type: string
+          x-nullable: true
+        accessToken:
+          description: If you have access-token - put it here.
+          type: string
+          x-nullable: true
+        authorizationCode:
+          description: If you have authorisation-code - app will exchange it for access-token.
+          type: string
+          x-nullable: true
+        password:
+          description: New password to set. If null app generates password automatically.
+          type: string
+          x-nullable: true
+        confirmPassword:
+          description: Password confirmation. If null app doesn't perform this check.
+          type: string
+          x-nullable: true
+        answers:
+          additionalProperties:
+            type: string
+          description: |
+            Answers to save. `null` as value removes answer
+          example:
+            HOME_CITY: London
+            MOTHER_NAME: null
+          type: object
+      type: object
     DryRunAuthRes_authData:
       description: New auth data to save
       example:
@@ -3103,16 +3992,16 @@ components:
         unconfirmedAuths:
           key:
             sentCodes:
-            - attemptsLeft: 1
+            - attemptsLeft: 9
               codeHash: codeHash
-              usedAttempts: 6
-              validUntil: 0
-              sentAt: 5
-            - attemptsLeft: 1
+              usedAttempts: 7
+              validUntil: 2
+              sentAt: 3
+            - attemptsLeft: 9
               codeHash: codeHash
-              usedAttempts: 6
-              validUntil: 0
-              sentAt: 5
+              usedAttempts: 7
+              validUntil: 2
+              sentAt: 3
         device:
           browser: browser
           mobile: true
@@ -3214,16 +4103,16 @@ components:
         unconfirmedAuths:
           key:
             sentCodes:
-            - attemptsLeft: 1
+            - attemptsLeft: 9
               codeHash: codeHash
-              usedAttempts: 6
-              validUntil: 0
-              sentAt: 5
-            - attemptsLeft: 1
+              usedAttempts: 7
+              validUntil: 2
+              sentAt: 3
+            - attemptsLeft: 9
               codeHash: codeHash
-              usedAttempts: 6
-              validUntil: 0
-              sentAt: 5
+              usedAttempts: 7
+              validUntil: 2
+              sentAt: 3
         device:
           browser: browser
           mobile: true

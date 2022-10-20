@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import kntrl.example.generated.model.AuthReqAuthData;
 import kntrl.example.generated.model.AuthReqCodeToSend;
+import kntrl.example.generated.model.AuthReqReqData;
 import kntrl.example.generated.model.AuthReqSession;
 import kntrl.example.generated.model.AuthReqUser;
 import kntrl.example.generated.model.ReqCtx;
@@ -20,14 +21,14 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 
 @JsonTypeName("AuthReq")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-19T21:13:03.480932+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-20T19:23:38.989036+03:00[Europe/Kiev]")
 public class AuthReq   {
   private @Valid Object dryRunAuthResData;
   private @Valid AuthReqUser user;
   private @Valid AuthReqSession session;
   private @Valid AuthReqAuthData authData;
   private @Valid AuthReqCodeToSend codeToSend;
-  private @Valid Object reqData;
+  private @Valid AuthReqReqData reqData;
   private @Valid ReqCtx ctx;
 
   /**
@@ -127,23 +128,22 @@ public class AuthReq   {
   }
 
   /**
-   * Request data provided by client.
    **/
-  public AuthReq reqData(Object reqData) {
+  public AuthReq reqData(AuthReqReqData reqData) {
     this.reqData = reqData;
     return this;
   }
 
   
-  @ApiModelProperty(required = true, value = "Request data provided by client.")
+  @ApiModelProperty(required = true, value = "")
   @JsonProperty("reqData")
   @NotNull
-  public Object getReqData() {
+  public AuthReqReqData getReqData() {
     return reqData;
   }
 
   @JsonProperty("reqData")
-  public void setReqData(Object reqData) {
+  public void setReqData(AuthReqReqData reqData) {
     this.reqData = reqData;
   }
 

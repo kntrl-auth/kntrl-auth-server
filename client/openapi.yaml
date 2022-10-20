@@ -1414,16 +1414,20 @@ components:
       type: object
       properties:
         public:
-          description: Data that are available for API.
-          allOf:
-          - $ref: '#/components/schemas/json'
+          anyOf:
+          - $ref: '#/components/schemas/AuthPublicData'
+          - $ref: '#/components/schemas/EmailPublicData'
+          - $ref: '#/components/schemas/NoAuthPublicData'
+          - $ref: '#/components/schemas/OAuthPublicData'
+          - $ref: '#/components/schemas/PasswordPublicData'
+          - $ref: '#/components/schemas/QuestionsPublicData'
         login:
           type: string
           description: |-
             If authenticator supports identification, it provides login here. This can be email, phone number,
             facebook account id, etc.
           x-nullable: true
-      x-order: 332570507-4
+      x-order: 332570507-3
     AuthExecRes:
       required:
       - status
@@ -1442,15 +1446,18 @@ components:
         x-explicitMappingOnly: true
       x-order: -73723375-2
       x-sealed: true
-    AuthResData:
-      type: object
-      x-order: -1249106462-7
-    AuthResDataJson:
+    AuthPrivateData:
       type: object
       additionalProperties: true
-      allOf:
-      - $ref: '#/components/schemas/AuthResData'
-      x-order: -1249106462-8
+      x-order: 332570507-6
+    AuthPublicData:
+      type: object
+      additionalProperties: true
+      x-order: 332570507-4
+    AuthResData:
+      type: object
+      additionalProperties: true
+      x-order: -1249106462-10
     AuthUserCfg:
       type: object
       properties:
@@ -1508,8 +1515,9 @@ components:
         hasAttemptsLeft:
           type: boolean
       x-order: -1249106462-3
-    EmailAuthRes:
+    EmailAuthResData:
       type: object
+      additionalProperties: true
       allOf:
       - $ref: '#/components/schemas/AuthResData'
       - type: object
@@ -1518,7 +1526,25 @@ components:
             type: string
             description: "Shows user email, that was used to send a code. Email will\
               \ be partially hidden."
-      x-order: -701605246-5
+      x-order: 1021533909-5
+    EmailPublicData:
+      required:
+      - email
+      - updatedAt
+      type: object
+      additionalProperties: true
+      allOf:
+      - $ref: '#/components/schemas/AuthPublicData'
+      - type: object
+        properties:
+          email:
+            type: string
+            description: User email.
+          updatedAt:
+            type: integer
+            description: Last time when email was changed.
+            format: int64
+      x-order: 1021533909-2
     ErrAuthExecRes:
       required:
       - err
@@ -1532,16 +1558,30 @@ components:
           err:
             $ref: '#/components/schemas/Err'
       x-order: -73723375-4
-    IpAuthRes:
+    IpAuthResData:
       required:
       - ipEncoded
       type: object
+      additionalProperties: true
       allOf:
       - $ref: '#/components/schemas/AuthResData'
       - type: object
         properties:
           ipEncoded:
             type: string
+      x-order: 2116983897-2
+    IpPrivateData:
+      type: object
+      additionalProperties: true
+      allOf:
+      - $ref: '#/components/schemas/AuthPrivateData'
+      - type: object
+        properties:
+          encodedIps:
+            type: object
+            additionalProperties:
+              type: integer
+              format: int64
       x-order: 2116983897-1
     Login:
       required:
@@ -1561,11 +1601,28 @@ components:
         confirmed:
           type: boolean
       x-order: -2010674509-0
-    OAuthRes:
+    NoAuthPrivateData:
+      type: object
+      additionalProperties: true
+      allOf:
+      - $ref: '#/components/schemas/AuthPrivateData'
+      x-order: 332570507-7
+    NoAuthPublicData:
+      type: object
+      additionalProperties: true
+      allOf:
+      - $ref: '#/components/schemas/AuthPublicData'
+      x-order: 332570507-5
+    OAuthPublicData:
+      type: object
+      additionalProperties: true
+      x-order: -893636857-2
+    OAuthResData:
       required:
       - login
       - publicData
       type: object
+      additionalProperties: true
       allOf:
       - $ref: '#/components/schemas/AuthResData'
       - type: object
@@ -1573,9 +1630,8 @@ components:
           login:
             type: string
           publicData:
-            type: object
-            additionalProperties: {}
-      x-order: -51011121-2
+            $ref: '#/components/schemas/OAuthPublicData'
+      x-order: -893636857-4
     OkAuthExecRes:
       type: object
       allOf:
@@ -1586,18 +1642,61 @@ components:
             $ref: '#/components/schemas/Code'
           resData:
             anyOf:
-            - $ref: '#/components/schemas/AuthResDataJson'
-            - $ref: '#/components/schemas/EmailAuthRes'
-            - $ref: '#/components/schemas/IpAuthRes'
-            - $ref: '#/components/schemas/OAuthRes'
-            - $ref: '#/components/schemas/PasswordUpdateRes'
-            - $ref: '#/components/schemas/QuestionsAuthenticateRes'
-            - $ref: '#/components/schemas/QuestionsUpdateRes'
+            - $ref: '#/components/schemas/AuthResData'
+            - $ref: '#/components/schemas/EmailAuthResData'
+            - $ref: '#/components/schemas/IpAuthResData'
+            - $ref: '#/components/schemas/OAuthResData'
+            - $ref: '#/components/schemas/PasswordUpdateResData'
+            - $ref: '#/components/schemas/QuestionsAuthResData'
+            - $ref: '#/components/schemas/QuestionsUpdateResData'
       x-order: -73723375-3
-    PasswordUpdateRes:
+    Password:
+      required:
+      - createdAt
+      - hash
+      type: object
+      properties:
+        hash:
+          type: string
+        createdAt:
+          type: integer
+          format: int64
+      x-order: 378192899-3
+    PasswordHistory:
+      type: object
+      additionalProperties: true
+      allOf:
+      - $ref: '#/components/schemas/AuthPrivateData'
+      - type: object
+        properties:
+          passwords:
+            type: array
+            items:
+              $ref: '#/components/schemas/Password'
+          changedAt:
+            type: integer
+            format: int64
+            x-nullable: true
+      x-order: 378192899-0
+    PasswordPublicData:
+      required:
+      - updatedAt
+      type: object
+      additionalProperties: true
+      allOf:
+      - $ref: '#/components/schemas/AuthPublicData'
+      - type: object
+        properties:
+          updatedAt:
+            type: integer
+            description: Time when password was updated last time.
+            format: int64
+      x-order: -266447761-2
+    PasswordUpdateResData:
       required:
       - password
       type: object
+      additionalProperties: true
       allOf:
       - $ref: '#/components/schemas/AuthResData'
       - type: object
@@ -1612,10 +1711,11 @@ components:
               failed.
             x-nullable: true
       x-order: -266447761-5
-    QuestionsAuthenticateRes:
+    QuestionsAuthResData:
       required:
       - correct
       type: object
+      additionalProperties: true
       allOf:
       - $ref: '#/components/schemas/AuthResData'
       - type: object
@@ -1629,22 +1729,43 @@ components:
             example:
               HOME_CITY: true
               MOTHER_NAME: false
-      x-order: 131730481-3
-    QuestionsUpdateRes:
+      x-order: -213229069-4
+    QuestionsPrivateData:
+      type: object
+      additionalProperties: true
+      allOf:
+      - $ref: '#/components/schemas/AuthPrivateData'
+      - type: object
+        properties:
+          questions:
+            type: object
+            additionalProperties:
+              type: string
+      x-order: -213229069-2
+    QuestionsPublicData:
+      type: object
+      properties:
+        questionsSavedAt:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+      additionalProperties: true
+      x-order: -213229069-1
+    QuestionsUpdateResData:
       required:
       - answersSavedAt
       type: object
+      additionalProperties: true
       allOf:
       - $ref: '#/components/schemas/AuthResData'
       - type: object
         properties:
           answersSavedAt:
-            type: object
-            additionalProperties:
-              type: integer
-              format: int64
             description: Date of last update
-      x-order: 131730481-4
+            allOf:
+            - $ref: '#/components/schemas/QuestionsPublicData'
+      x-order: -213229069-6
     SkippedAuthExecRes:
       type: object
       allOf:
@@ -1664,7 +1785,7 @@ components:
           $ref: '#/components/schemas/AuthData'
         code:
           $ref: '#/components/schemas/CodeVerifier'
-      x-order: 332570507-5
+      x-order: 332570507-8
     User:
       required:
       - auths
@@ -1712,29 +1833,22 @@ components:
         new:
           type: boolean
       x-order: 276900135-0
-    json:
-      type: object
-      additionalProperties: true
-    AppSecretReq:
+    AppSecretReqData:
       required:
       - secret
       type: object
+      additionalProperties: true
       allOf:
       - $ref: '#/components/schemas/AuthReqData'
       - type: object
         properties:
           secret:
             type: string
-      x-order: 791325901-3
+      x-order: 791325901-2
     AuthReqData:
       type: object
-      x-order: 1333651370-0
-    AuthReqDataJson:
-      type: object
       additionalProperties: true
-      allOf:
-      - $ref: '#/components/schemas/AuthReqData'
-      x-order: 1333651370-1
+      x-order: -1249106462-4
     AuthenticateReq:
       type: object
       properties:
@@ -1753,23 +1867,25 @@ components:
           additionalProperties:
             x-additionalPropertiesName: auth
             anyOf:
-            - $ref: '#/components/schemas/AppSecretReq'
-            - $ref: '#/components/schemas/AuthReqDataJson'
-            - $ref: '#/components/schemas/EmailAuthenticateReq'
-            - $ref: '#/components/schemas/EmailUpdateReq'
-            - $ref: '#/components/schemas/OAuthReq'
-            - $ref: '#/components/schemas/PasswordAuthenticateReq'
-            - $ref: '#/components/schemas/PasswordUpdateReq'
-            - $ref: '#/components/schemas/QuestionsAuthenticateReq'
-            - $ref: '#/components/schemas/QuestionsUpdateReq'
+            - $ref: '#/components/schemas/AppSecretReqData'
+            - $ref: '#/components/schemas/AuthReqData'
+            - $ref: '#/components/schemas/EmailAuthReqData'
+            - $ref: '#/components/schemas/EmailUpdateReqData'
+            - $ref: '#/components/schemas/NoAuthReqData'
+            - $ref: '#/components/schemas/OAuthReqData'
+            - $ref: '#/components/schemas/PasswordAuthReqData'
+            - $ref: '#/components/schemas/PasswordUpdateReqData'
+            - $ref: '#/components/schemas/QuestionsAuthReqData'
+            - $ref: '#/components/schemas/QuestionsUpdateReqData'
           description: |
             Request for authenticators
         dryRun:
           type: boolean
           description: Execute only validation ща authenticator requests.
       x-order: 2094520596-2
-    EmailAuthenticateReq:
+    EmailAuthReqData:
       type: object
+      additionalProperties: true
       allOf:
       - $ref: '#/components/schemas/AuthReqData'
       - type: object
@@ -1784,11 +1900,12 @@ components:
             type: string
             description: Template to use.
             x-nullable: true
-      x-order: -701605246-3
-    EmailUpdateReq:
+      x-order: 1021533909-3
+    EmailUpdateReqData:
       required:
       - email
       type: object
+      additionalProperties: true
       allOf:
       - $ref: '#/components/schemas/AuthReqData'
       - type: object
@@ -1800,7 +1917,7 @@ components:
             type: string
             description: Template to use.
             x-nullable: true
-      x-order: -701605246-4
+      x-order: 1021533909-4
     NewSessionReq:
       required:
       - entry
@@ -1828,15 +1945,16 @@ components:
           additionalProperties:
             x-additionalPropertiesName: auth
             anyOf:
-            - $ref: '#/components/schemas/AppSecretReq'
-            - $ref: '#/components/schemas/AuthReqDataJson'
-            - $ref: '#/components/schemas/EmailAuthenticateReq'
-            - $ref: '#/components/schemas/EmailUpdateReq'
-            - $ref: '#/components/schemas/OAuthReq'
-            - $ref: '#/components/schemas/PasswordAuthenticateReq'
-            - $ref: '#/components/schemas/PasswordUpdateReq'
-            - $ref: '#/components/schemas/QuestionsAuthenticateReq'
-            - $ref: '#/components/schemas/QuestionsUpdateReq'
+            - $ref: '#/components/schemas/AppSecretReqData'
+            - $ref: '#/components/schemas/AuthReqData'
+            - $ref: '#/components/schemas/EmailAuthReqData'
+            - $ref: '#/components/schemas/EmailUpdateReqData'
+            - $ref: '#/components/schemas/NoAuthReqData'
+            - $ref: '#/components/schemas/OAuthReqData'
+            - $ref: '#/components/schemas/PasswordAuthReqData'
+            - $ref: '#/components/schemas/PasswordUpdateReqData'
+            - $ref: '#/components/schemas/QuestionsAuthReqData'
+            - $ref: '#/components/schemas/QuestionsUpdateReqData'
           description: |
             Request for authenticators
         signIn:
@@ -1847,8 +1965,15 @@ components:
           type: boolean
           description: Execute only validation ща authenticator requests.
       x-order: 2094520596-1
-    OAuthReq:
+    NoAuthReqData:
       type: object
+      additionalProperties: true
+      allOf:
+      - $ref: '#/components/schemas/AuthReqData'
+      x-order: -1249106462-5
+    OAuthReqData:
+      type: object
+      additionalProperties: true
       allOf:
       - $ref: '#/components/schemas/AuthReqData'
       - type: object
@@ -1862,11 +1987,12 @@ components:
             description: If you have authorisation-code - app will exchange it for
               access-token.
             x-nullable: true
-      x-order: -51011121-1
-    PasswordAuthenticateReq:
+      x-order: -893636857-3
+    PasswordAuthReqData:
       required:
       - password
       type: object
+      additionalProperties: true
       allOf:
       - $ref: '#/components/schemas/AuthReqData'
       - type: object
@@ -1875,8 +2001,9 @@ components:
             type: string
             description: User password.
       x-order: -266447761-3
-    PasswordUpdateReq:
+    PasswordUpdateReqData:
       type: object
+      additionalProperties: true
       allOf:
       - $ref: '#/components/schemas/AuthReqData'
       - type: object
@@ -1890,10 +2017,11 @@ components:
             description: Password confirmation. If null app doesn't perform this check.
             x-nullable: true
       x-order: -266447761-4
-    QuestionsAuthenticateReq:
+    QuestionsAuthReqData:
       required:
       - answers
       type: object
+      additionalProperties: true
       allOf:
       - $ref: '#/components/schemas/AuthReqData'
       - type: object
@@ -1907,11 +2035,12 @@ components:
             example:
               HOME_CITY: New-York
               MOTHER_NAME: Emma
-      x-order: 131730481-1
-    QuestionsUpdateReq:
+      x-order: -213229069-3
+    QuestionsUpdateReqData:
       required:
       - answers
       type: object
+      additionalProperties: true
       allOf:
       - $ref: '#/components/schemas/AuthReqData'
       - type: object
@@ -1925,7 +2054,7 @@ components:
             example:
               HOME_CITY: London
               MOTHER_NAME: null
-      x-order: 131730481-2
+      x-order: -213229069-5
     ConfirmSessionAuthsReq:
       required:
       - receivedCodes
@@ -2023,15 +2152,16 @@ components:
             additionalProperties:
               x-additionalPropertiesName: auth
               anyOf:
-              - $ref: '#/components/schemas/AppSecretReq'
-              - $ref: '#/components/schemas/AuthReqDataJson'
-              - $ref: '#/components/schemas/EmailAuthenticateReq'
-              - $ref: '#/components/schemas/EmailUpdateReq'
-              - $ref: '#/components/schemas/OAuthReq'
-              - $ref: '#/components/schemas/PasswordAuthenticateReq'
-              - $ref: '#/components/schemas/PasswordUpdateReq'
-              - $ref: '#/components/schemas/QuestionsAuthenticateReq'
-              - $ref: '#/components/schemas/QuestionsUpdateReq'
+              - $ref: '#/components/schemas/AppSecretReqData'
+              - $ref: '#/components/schemas/AuthReqData'
+              - $ref: '#/components/schemas/EmailAuthReqData'
+              - $ref: '#/components/schemas/EmailUpdateReqData'
+              - $ref: '#/components/schemas/NoAuthReqData'
+              - $ref: '#/components/schemas/OAuthReqData'
+              - $ref: '#/components/schemas/PasswordAuthReqData'
+              - $ref: '#/components/schemas/PasswordUpdateReqData'
+              - $ref: '#/components/schemas/QuestionsAuthReqData'
+              - $ref: '#/components/schemas/QuestionsUpdateReqData'
           dryRun:
             type: boolean
           systemAccess:
@@ -2059,15 +2189,16 @@ components:
           additionalProperties:
             x-additionalPropertiesName: auth
             anyOf:
-            - $ref: '#/components/schemas/AppSecretReq'
-            - $ref: '#/components/schemas/AuthReqDataJson'
-            - $ref: '#/components/schemas/EmailAuthenticateReq'
-            - $ref: '#/components/schemas/EmailUpdateReq'
-            - $ref: '#/components/schemas/OAuthReq'
-            - $ref: '#/components/schemas/PasswordAuthenticateReq'
-            - $ref: '#/components/schemas/PasswordUpdateReq'
-            - $ref: '#/components/schemas/QuestionsAuthenticateReq'
-            - $ref: '#/components/schemas/QuestionsUpdateReq'
+            - $ref: '#/components/schemas/AppSecretReqData'
+            - $ref: '#/components/schemas/AuthReqData'
+            - $ref: '#/components/schemas/EmailAuthReqData'
+            - $ref: '#/components/schemas/EmailUpdateReqData'
+            - $ref: '#/components/schemas/NoAuthReqData'
+            - $ref: '#/components/schemas/OAuthReqData'
+            - $ref: '#/components/schemas/PasswordAuthReqData'
+            - $ref: '#/components/schemas/PasswordUpdateReqData'
+            - $ref: '#/components/schemas/QuestionsAuthReqData'
+            - $ref: '#/components/schemas/QuestionsUpdateReqData'
         dryRun:
           type: boolean
       x-order: -1847312442-1
@@ -2122,8 +2253,8 @@ components:
       type: object
       allOf:
       - $ref: '#/components/schemas/BuiltInAuthCfg'
-      x-order: 791325901-2
-    AuthCfg:
+      x-order: 791325901-3
+    AuthAppCfg:
       type: object
       properties:
         requiresAuth:
@@ -2155,7 +2286,7 @@ components:
             place only when rate limiter is specified
           format: double
       description: Authentication implementation config
-      x-order: 2102313733-0
+      x-order: 377338786-0
     AuthCodeHandlerCfg:
       required:
       - clientId
@@ -2173,12 +2304,12 @@ components:
           type: string
           description: OAuth client secret.
           x-nullable: true
-      x-order: -51011121-5
+      x-order: -1532051357-1
     BuiltInAuthCfg:
       type: object
       description: Authentication implementation config
       allOf:
-      - $ref: '#/components/schemas/AuthCfg'
+      - $ref: '#/components/schemas/AuthAppCfg'
       - type: object
         properties:
           requiresAuth:
@@ -2237,7 +2368,7 @@ components:
           description: Max attempts to enter the code.
           format: int32
       description: If specified - app generates code and requires auth to be confirmed
-      x-order: 2102313733-1
+      x-order: 377338786-1
     DbCfg:
       type: object
       x-order: -1580107990-0
@@ -2301,7 +2432,7 @@ components:
               Additional params for template.
           code:
             $ref: '#/components/schemas/CodeCfg'
-      x-order: -701605246-6
+      x-order: -1025321515-0
     EntryAccessTokenCfg:
       type: object
       properties:
@@ -2428,7 +2559,7 @@ components:
               History of IP addresses user used to sign-in. Authenticated when user attempts to sign in with one of stored
               IPs.
             format: int32
-      x-order: 2116983897-2
+      x-order: 2116983897-3
     JdbcCfg:
       type: object
       allOf:
@@ -2513,7 +2644,7 @@ components:
             additionalProperties:
               type: string
             description: Can fill public data by a response of user-info or id-token.
-      x-order: -51011121-4
+      x-order: -1532051357-0
     PasswordAuthCfg:
       type: object
       description: "Password authentication. To enable this auth set auth name to\
@@ -2560,7 +2691,7 @@ components:
             description: |
               Allows to calculate password strength based on mentioned criteria. Requirements will be checked one by one
               until first failed.
-      x-order: -266447761-6
+      x-order: -49430021-0
     PasswordHistoryCfg:
       type: object
       properties:
@@ -2602,7 +2733,7 @@ components:
           description: "Rejects passwords that match username, email, anything that\
             \ used as a login according to logins config."
       description: Requirements for password
-      x-order: -266447761-7
+      x-order: -49430021-1
     PostgresCfg:
       type: object
       allOf:
@@ -2653,7 +2784,7 @@ components:
             type: integer
             description: Max answers that user can save.
             format: int32
-      x-order: 131730481-5
+      x-order: 545691127-0
     RateLimiterCfg:
       type: object
       properties:
@@ -2745,7 +2876,7 @@ components:
       type: object
       description: Authentication implementation config
       allOf:
-      - $ref: '#/components/schemas/AuthCfg'
+      - $ref: '#/components/schemas/AuthAppCfg'
       - type: object
         properties:
           remote:
@@ -3016,7 +3147,7 @@ components:
         sendTokenInHeader:
           type: boolean
           description: Send token in Authorisation header.
-      x-order: -51011121-6
+      x-order: -1532051357-2
     regex:
       type: string
   securitySchemes:

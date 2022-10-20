@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.HashMap;
 import java.util.Map;
+import kntrl.example.generated.model.AuthResResDataAnswersSavedAt;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
@@ -20,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
  **/
 @ApiModel(description = "This data will be sent back to the client.")
 @JsonTypeName("AuthRes_resData")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-19T21:13:03.480932+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-20T19:23:38.989036+03:00[Europe/Kiev]")
 public class AuthResResData extends HashMap<String, Object>  {
   private @Valid String emailSentTo;
   private @Valid String ipEncoded;
@@ -29,7 +30,7 @@ public class AuthResResData extends HashMap<String, Object>  {
   private @Valid String password;
   private @Valid String strength;
   private @Valid Map<String, Boolean> correct = null;
-  private @Valid Map<String, Long> answersSavedAt = null;
+  private @Valid AuthResResDataAnswersSavedAt answersSavedAt;
 
   /**
    * Shows user email, that was used to send a code. Email will be partially hidden.
@@ -201,41 +202,24 @@ public class AuthResResData extends HashMap<String, Object>  {
     return this;
   }
   /**
-   * Date of last update
    **/
-  public AuthResResData answersSavedAt(Map<String, Long> answersSavedAt) {
+  public AuthResResData answersSavedAt(AuthResResDataAnswersSavedAt answersSavedAt) {
     this.answersSavedAt = answersSavedAt;
     return this;
   }
 
   
-  @ApiModelProperty(value = "Date of last update")
+  @ApiModelProperty(value = "")
   @JsonProperty("answersSavedAt")
-  public Map<String, Long> getAnswersSavedAt() {
+  public AuthResResDataAnswersSavedAt getAnswersSavedAt() {
     return answersSavedAt;
   }
 
   @JsonProperty("answersSavedAt")
-  public void setAnswersSavedAt(Map<String, Long> answersSavedAt) {
+  public void setAnswersSavedAt(AuthResResDataAnswersSavedAt answersSavedAt) {
     this.answersSavedAt = answersSavedAt;
   }
 
-  public AuthResResData putAnswersSavedAtItem(String key, Long answersSavedAtItem) {
-    if (this.answersSavedAt == null) {
-      this.answersSavedAt = new HashMap<>();
-    }
-
-    this.answersSavedAt.put(key, answersSavedAtItem);
-    return this;
-  }
-
-  public AuthResResData removeAnswersSavedAtItem(Long answersSavedAtItem) {
-    if (answersSavedAtItem != null && this.answersSavedAt != null) {
-      this.answersSavedAt.remove(answersSavedAtItem);
-    }
-
-    return this;
-  }
 
   @Override
   public boolean equals(Object o) {

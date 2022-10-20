@@ -3,6 +3,8 @@ package kntrl.example.generated.model;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import kntrl.example.generated.model.AuthDataPrivate;
+import kntrl.example.generated.model.AuthDataPublic;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 
@@ -18,51 +20,49 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
  **/
 @ApiModel(description = "New auth data to save")
 @JsonTypeName("AuthRes_authData")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-19T21:13:03.480932+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-20T19:23:38.989036+03:00[Europe/Kiev]")
 public class AuthResAuthData   {
-  private @Valid Object _public;
-  private @Valid Object _private;
+  private @Valid AuthDataPublic _public;
+  private @Valid AuthDataPrivate _private;
   private @Valid String login;
 
   /**
-   * Data that are available for API.
    **/
-  public AuthResAuthData _public(Object _public) {
+  public AuthResAuthData _public(AuthDataPublic _public) {
     this._public = _public;
     return this;
   }
 
   
-  @ApiModelProperty(required = true, value = "Data that are available for API.")
+  @ApiModelProperty(required = true, value = "")
   @JsonProperty("public")
   @NotNull
-  public Object getPublic() {
+  public AuthDataPublic getPublic() {
     return _public;
   }
 
   @JsonProperty("public")
-  public void setPublic(Object _public) {
+  public void setPublic(AuthDataPublic _public) {
     this._public = _public;
   }
 
   /**
-   * Data available only for authenticator.
    **/
-  public AuthResAuthData _private(Object _private) {
+  public AuthResAuthData _private(AuthDataPrivate _private) {
     this._private = _private;
     return this;
   }
 
   
-  @ApiModelProperty(required = true, value = "Data available only for authenticator.")
+  @ApiModelProperty(required = true, value = "")
   @JsonProperty("private")
   @NotNull
-  public Object getPrivate() {
+  public AuthDataPrivate getPrivate() {
     return _private;
   }
 
   @JsonProperty("private")
-  public void setPrivate(Object _private) {
+  public void setPrivate(AuthDataPrivate _private) {
     this._private = _private;
   }
 

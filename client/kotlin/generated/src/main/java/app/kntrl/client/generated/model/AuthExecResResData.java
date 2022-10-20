@@ -15,6 +15,7 @@ package app.kntrl.client.generated.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import app.kntrl.client.generated.model.AuthExecResResDataAnswersSavedAt;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -81,7 +82,7 @@ public class AuthExecResResData {
 
   public static final String SERIALIZED_NAME_ANSWERS_SAVED_AT = "answersSavedAt";
   @SerializedName(SERIALIZED_NAME_ANSWERS_SAVED_AT)
-  private Map<String, Long> answersSavedAt = null;
+  private AuthExecResResDataAnswersSavedAt answersSavedAt;
 
   public AuthExecResResData() {
   }
@@ -263,33 +264,25 @@ public class AuthExecResResData {
   }
 
 
-  public AuthExecResResData answersSavedAt(Map<String, Long> answersSavedAt) {
+  public AuthExecResResData answersSavedAt(AuthExecResResDataAnswersSavedAt answersSavedAt) {
     
     this.answersSavedAt = answersSavedAt;
     return this;
   }
 
-  public AuthExecResResData putAnswersSavedAtItem(String key, Long answersSavedAtItem) {
-    if (this.answersSavedAt == null) {
-      this.answersSavedAt = new HashMap<>();
-    }
-    this.answersSavedAt.put(key, answersSavedAtItem);
-    return this;
-  }
-
    /**
-   * Date of last update
+   * Get answersSavedAt
    * @return answersSavedAt
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Date of last update")
+  @ApiModelProperty(value = "")
 
-  public Map<String, Long> getAnswersSavedAt() {
+  public AuthExecResResDataAnswersSavedAt getAnswersSavedAt() {
     return answersSavedAt;
   }
 
 
-  public void setAnswersSavedAt(Map<String, Long> answersSavedAt) {
+  public void setAnswersSavedAt(AuthExecResResDataAnswersSavedAt answersSavedAt) {
     this.answersSavedAt = answersSavedAt;
   }
 
@@ -431,6 +424,10 @@ public class AuthExecResResData {
       }
       if ((jsonObj.get("strength") != null && !jsonObj.get("strength").isJsonNull()) && !jsonObj.get("strength").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `strength` to be a primitive type in the JSON string but got `%s`", jsonObj.get("strength").toString()));
+      }
+      // validate the optional field `answersSavedAt`
+      if (jsonObj.get("answersSavedAt") != null && !jsonObj.get("answersSavedAt").isJsonNull()) {
+        AuthExecResResDataAnswersSavedAt.validateJsonObject(jsonObj.getAsJsonObject("answersSavedAt"));
       }
   }
 
