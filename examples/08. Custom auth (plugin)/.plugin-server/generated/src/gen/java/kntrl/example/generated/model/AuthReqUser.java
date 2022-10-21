@@ -27,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
  **/
 @ApiModel(description = "User loaded from database. Can be null if user isn't identified yet.")
 @JsonTypeName("AuthReq_user")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-20T22:48:57.779152+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-21T17:10:42.806916+03:00[Europe/Kiev]")
 public class AuthReqUser   {
   private @Valid String id;
   private @Valid List<Login> logins = new ArrayList<>();
@@ -36,7 +36,6 @@ public class AuthReqUser   {
   private @Valid Long signedUpAt;
   private @Valid Long updatedAt;
   private @Valid Boolean systemAccess;
-  private @Valid Boolean _new;
 
   /**
    * Generated user uuid 
@@ -230,25 +229,6 @@ public class AuthReqUser   {
     this.systemAccess = systemAccess;
   }
 
-  /**
-   **/
-  public AuthReqUser _new(Boolean _new) {
-    this._new = _new;
-    return this;
-  }
-
-  
-  @ApiModelProperty(value = "")
-  @JsonProperty("new")
-  public Boolean getNew() {
-    return _new;
-  }
-
-  @JsonProperty("new")
-  public void setNew(Boolean _new) {
-    this._new = _new;
-  }
-
 
   @Override
   public boolean equals(Object o) {
@@ -265,13 +245,12 @@ public class AuthReqUser   {
         Objects.equals(this.factors, authReqUser.factors) &&
         Objects.equals(this.signedUpAt, authReqUser.signedUpAt) &&
         Objects.equals(this.updatedAt, authReqUser.updatedAt) &&
-        Objects.equals(this.systemAccess, authReqUser.systemAccess) &&
-        Objects.equals(this._new, authReqUser._new);
+        Objects.equals(this.systemAccess, authReqUser.systemAccess);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, logins, auths, factors, signedUpAt, updatedAt, systemAccess, _new);
+    return Objects.hash(id, logins, auths, factors, signedUpAt, updatedAt, systemAccess);
   }
 
   @Override
@@ -286,7 +265,6 @@ public class AuthReqUser   {
     sb.append("    signedUpAt: ").append(toIndentedString(signedUpAt)).append("\n");
     sb.append("    updatedAt: ").append(toIndentedString(updatedAt)).append("\n");
     sb.append("    systemAccess: ").append(toIndentedString(systemAccess)).append("\n");
-    sb.append("    _new: ").append(toIndentedString(_new)).append("\n");
     sb.append("}");
     return sb.toString();
   }

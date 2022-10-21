@@ -2273,7 +2273,6 @@ components:
                   login: login
               confirmed: true
           id: 2c24704f-198a-4bc4-9718-306ccc97bbdc
-          isNew: true
           logins:
           - unconfirmedLogin: unconfirmedLogin
             type: type
@@ -2719,7 +2718,6 @@ components:
                 login: login
             confirmed: true
         id: 2c24704f-198a-4bc4-9718-306ccc97bbdc
-        isNew: true
         logins:
         - unconfirmedLogin: unconfirmedLogin
           type: type
@@ -2761,12 +2759,10 @@ components:
         updatedAt:
           format: int64
           type: integer
-        isNew:
+        new:
           type: boolean
         systemAccess:
           description: Allows to access to any user in the app.
-          type: boolean
-        new:
           type: boolean
       required:
       - auths
@@ -3180,7 +3176,6 @@ components:
                   login: login
               confirmed: true
           id: 2c24704f-198a-4bc4-9718-306ccc97bbdc
-          isNew: true
           logins:
           - unconfirmedLogin: unconfirmedLogin
             type: type

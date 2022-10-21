@@ -4636,19 +4636,13 @@ export interface User {
      * @type {boolean}
      * @memberof User
      */
-    'isNew'?: boolean;
+    'new'?: boolean;
     /**
      * Allows to access to any user in the app.
      * @type {boolean}
      * @memberof User
      */
     'systemAccess'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof User
-     */
-    'new'?: boolean;
 }
 /**
  * 

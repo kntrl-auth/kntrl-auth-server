@@ -1666,7 +1666,6 @@ components:
           validUntil: 1
           sentAt: 1
         user:
-          new: true
           signedUpAt: 2
           systemAccess: true
           auths:
@@ -2277,7 +2276,6 @@ components:
       x-order: 332570507-8
     User:
       example:
-        new: true
         signedUpAt: 0
         systemAccess: true
         auths:
@@ -2391,8 +2389,6 @@ components:
           type: integer
         systemAccess:
           description: Allows to access to any user in the app.
-          type: boolean
-        new:
           type: boolean
       required:
       - auths
@@ -2705,7 +2701,6 @@ components:
     FindUserRes:
       example:
         user:
-          new: true
           signedUpAt: 0
           systemAccess: true
           auths:
@@ -2797,8 +2792,7 @@ components:
     SaveUserReq:
       example:
         newUsers:
-        - new: true
-          signedUpAt: 0
+        - signedUpAt: 0
           systemAccess: true
           auths:
             key:
@@ -2881,8 +2875,7 @@ components:
           - factors
           - factors
           updatedAt: 6
-        - new: true
-          signedUpAt: 0
+        - signedUpAt: 0
           systemAccess: true
           auths:
             key:
@@ -2966,8 +2959,7 @@ components:
           - factors
           updatedAt: 6
         updatedUsersOrLogins:
-        - new: true
-          signedUpAt: 0
+        - signedUpAt: 0
           systemAccess: true
           auths:
             key:
@@ -3050,8 +3042,7 @@ components:
           - factors
           - factors
           updatedAt: 6
-        - new: true
-          signedUpAt: 0
+        - signedUpAt: 0
           systemAccess: true
           auths:
             key:
@@ -3154,8 +3145,7 @@ components:
         - type: type
           login: login
         updatedUsers:
-        - new: true
-          signedUpAt: 0
+        - signedUpAt: 0
           systemAccess: true
           auths:
             key:
@@ -3238,8 +3228,7 @@ components:
           - factors
           - factors
           updatedAt: 6
-        - new: true
-          signedUpAt: 0
+        - signedUpAt: 0
           systemAccess: true
           auths:
             key:
@@ -3649,7 +3638,6 @@ components:
       description: User loaded from database. Can be null if user isn't identified
         yet.
       example:
-        new: true
         signedUpAt: 2
         systemAccess: true
         auths:
@@ -3763,8 +3751,6 @@ components:
           type: integer
         systemAccess:
           description: Allows to access to any user in the app.
-          type: boolean
-        new:
           type: boolean
       required:
       - auths

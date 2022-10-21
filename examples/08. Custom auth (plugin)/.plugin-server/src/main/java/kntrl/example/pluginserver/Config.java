@@ -22,11 +22,19 @@ public class Config implements WebMvcConfigurer {
 
         @Override
         public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-            if (key.equals(request.getParameter("key"))) {
+            String keyFromQuery = request.getParameter("access_key");
+            if (keyFromQuery == null) {
+                response.setStatus(403);
+                response.getWriter().write("{ \"code\": \"INTEGRATION_ERR\", \"devMsg\": \"No access key\" }");
+                response.getWriter().flush();
+                return false;
+            }
+
+            if (key.equals(keyFromQuery)) {
                 return true;
             } else {
                 response.setStatus(403);
-                response.getWriter().write("Access denied");
+                response.getWriter().write("{ \"code\": \"INTEGRATION_ERR\", \"devMsg\": \"Wrong key\" }");
                 response.getWriter().flush();
                 return false;
             }

@@ -6,56 +6,69 @@ import com.google.i18n.phonenumbers.Phonenumber;
 import kntrl.example.generated.model.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 import java.util.function.Supplier;
 
 @RestController
 @RequestMapping("/my/api/auth-plugins/sms/plugin/auth")
-public class SmsAuthController {
+public class SmsAuthService {
     private final static String REQ_DATA_PHONE = "phone";
     private final static String REQ_DATA_MSG_TYPE = "msgType";
 
-    private final static String DRY_RUN_RES_PHONE = "phone";
+    private final static String RES_DATA_PHONE = "phone";
     private final static String PUBLIC_DATA_PHONE = "phone";
 
     @PostMapping("authenticate/dry-run")
-    DryRunAuthRes authenticateDryRun(AuthReq req) {
-        return logRequest("authenticate/dry-run", req, () -> dryRun(req));
+    DryRunAuthRes authenticateDryRun(@RequestBody AuthReq req) {
+        return logRequest("authenticate/dry-run", req, () -> dryRun(req, false));
     }
 
     @PostMapping("authenticate")
-    AuthRes authenticate(AuthReq req) {
+    AuthRes authenticate(@RequestBody AuthReq req) {
         return logRequest("authenticate", req, () -> sendAuthSms(req));
     }
 
     @PostMapping("update/dry-run")
-    DryRunAuthRes updateAuthDryRun(AuthReq req) {
-        return logRequest("update/dry-run", req, () -> dryRun(req));
+    DryRunAuthRes updateAuthDryRun(@RequestBody AuthReq req) {
+        return logRequest("update/dry-run", req, () -> dryRun(req, true));
     }
 
     @PostMapping("update")
-    AuthRes updateAuth(AuthReq req) {
+    AuthRes updateAuth(@RequestBody AuthReq req) {
         return logRequest("update", req, () -> sendAuthSms(req));
     }
 
     @ExceptionHandler({ AuthPluginException.class })
     ResponseEntity<PluginClientErr> onError(AuthPluginException ex) {
+        System.out.println("Error: " + ex.getErr());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getErr());
     }
 
-    private DryRunAuthRes dryRun(AuthReq req) {
-        String phone = Optional.of(req.getReqData().get(REQ_DATA_PHONE))
+    private DryRunAuthRes dryRun(AuthReq req, Boolean isUpdate) {
+        Optional<String> phoneFromReq = Optional.of(req.getReqData().get(REQ_DATA_PHONE))
                 .map(Object::toString)
-                .map(SmsAuthController::parsePhone)
-                .orElseThrow(() -> AuthPluginException.incorrectRequest);
+                .map(SmsAuthService::parsePhone);
+
+        String phone;
+        if (isUpdate) {
+            // When updating phone, new phone must be present in the request.
+            phone = phoneFromReq.orElseThrow(() -> AuthPluginException.incorrectRequest);
+        } else {
+            // When authenticating using phone, phone can be taken from request (identification) or from auth data
+            // (action confirmation)
+            Optional<String> phoneFromAuthData = Optional.of(req.getAuthData())
+                    .map(authData -> (String) authData.getPublic().get(PUBLIC_DATA_PHONE));
+            if (phoneFromAuthData.isPresent() && phoneFromReq.isPresent()
+                    && !phoneFromAuthData.get().equals(phoneFromReq.get())) {
+                throw AuthPluginException.incorrectPhone;
+            }
+            phone = phoneFromAuthData.or(() -> phoneFromReq).orElseThrow(() -> AuthPluginException.incorrectRequest);
+        }
 
         AuthResResData res = new AuthResResData();
-        res.put(DRY_RUN_RES_PHONE, phone);
+        res.put(RES_DATA_PHONE, phone);
 
         return new DryRunAuthRes()
                 .authData(new DryRunAuthResAuthData().login(phone))
@@ -63,7 +76,8 @@ public class SmsAuthController {
     }
 
     private static AuthRes sendAuthSms(AuthReq req) {
-        String parsedPhone = ((String) req.getDryRunAuthResData().get(DRY_RUN_RES_PHONE));
+        // Phone is already parsed during dry-run
+        String parsedPhone = ((String) req.getDryRunAuthResData().get(RES_DATA_PHONE));
 
         sendSms(parsedPhone, req.getCodeToSend().getCode(), req.getReqData());
 
@@ -71,11 +85,12 @@ public class SmsAuthController {
         publicData.put(PUBLIC_DATA_PHONE, parsedPhone);
 
         AuthResResData res = new AuthResResData();
-        res.put(DRY_RUN_RES_PHONE, parsedPhone);
+        res.put(RES_DATA_PHONE, parsedPhone);
 
         return new AuthRes()
                 .authData(new AuthResAuthData()
                         ._public(publicData)
+                        ._private(new AuthDataPrivate())
                         .login(parsedPhone))
                 .resData(res);
     }
@@ -85,7 +100,7 @@ public class SmsAuthController {
         try {
             Phonenumber.PhoneNumber phoneNumber = phoneUtil.parse(phoneRaw, "US");
 
-            if (!phoneUtil.isValidNumber(phoneNumber)) throw AuthPluginException.incorrectPhone;
+            if (!phoneUtil.isValidNumber(phoneNumber)) throw AuthPluginException.invalidPhone;
 
             return phoneUtil.format(phoneNumber, PhoneNumberUtil.PhoneNumberFormat.E164);
         } catch (NumberParseException e) {
@@ -101,11 +116,13 @@ public class SmsAuthController {
     }
 
     private static String createSmsMessage(AuthReqReqData reqData) {
-        String messageType = reqData.get(REQ_DATA_MSG_TYPE).toString();
+        String messageType = Optional.of(reqData.get(REQ_DATA_MSG_TYPE))
+                .map(Object::toString)
+                .orElse("default");
         switch (messageType) {
-            case "signInOrUp": return "To confirm phone number, enter the code: ";
-            case "payment": return "To confirm payment for, enter the code: ";
-            default: return "To confirm action, enter the code: ";
+            case "signUp": return "To confirm the phone number, enter the code: ";
+            case "payment": return "To confirm the payment, enter the code: ";
+            default: return "To confirm the action, enter the code: ";
         }
     }
 
@@ -119,10 +136,12 @@ public class SmsAuthController {
     public static class AuthPluginException extends RuntimeException {
         public static AuthPluginException incorrectRequest =
                 new AuthPluginException("INTEGRATION_ERR", "Incorrect sms auth request");
+        public static AuthPluginException invalidPhone =
+                new AuthPluginException("PHONE_NUMBER_IS_INVALID", "Invalid phone number");
+        public static AuthPluginException notAPhoneNumber =
+                new AuthPluginException("PHONE_NUMBER_IS_INVALID", "Not a phone number");
         public static AuthPluginException incorrectPhone =
                 new AuthPluginException("PHONE_NUMBER_IS_INCORRECT", "Incorrect phone number");
-        public static AuthPluginException notAPhoneNumber =
-                new AuthPluginException("PHONE_NUMBER_IS_INCORRECT", "Not a phone number");
 
         private final PluginClientErr err;
 

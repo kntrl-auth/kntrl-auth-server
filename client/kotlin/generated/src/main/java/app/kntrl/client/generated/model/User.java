@@ -81,17 +81,13 @@ public class User {
   @SerializedName(SERIALIZED_NAME_UPDATED_AT)
   private Long updatedAt;
 
-  public static final String SERIALIZED_NAME_IS_NEW = "isNew";
-  @SerializedName(SERIALIZED_NAME_IS_NEW)
-  private Boolean isNew;
+  public static final String SERIALIZED_NAME_NEW = "new";
+  @SerializedName(SERIALIZED_NAME_NEW)
+  private Boolean _new;
 
   public static final String SERIALIZED_NAME_SYSTEM_ACCESS = "systemAccess";
   @SerializedName(SERIALIZED_NAME_SYSTEM_ACCESS)
   private Boolean systemAccess;
-
-  public static final String SERIALIZED_NAME_NEW = "new";
-  @SerializedName(SERIALIZED_NAME_NEW)
-  private Boolean _new;
 
   public User() {
   }
@@ -249,26 +245,26 @@ public class User {
   }
 
 
-  public User isNew(Boolean isNew) {
+  public User _new(Boolean _new) {
     
-    this.isNew = isNew;
+    this._new = _new;
     return this;
   }
 
    /**
-   * Get isNew
-   * @return isNew
+   * Get _new
+   * @return _new
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
 
-  public Boolean getIsNew() {
-    return isNew;
+  public Boolean getNew() {
+    return _new;
   }
 
 
-  public void setIsNew(Boolean isNew) {
-    this.isNew = isNew;
+  public void setNew(Boolean _new) {
+    this._new = _new;
   }
 
 
@@ -292,29 +288,6 @@ public class User {
 
   public void setSystemAccess(Boolean systemAccess) {
     this.systemAccess = systemAccess;
-  }
-
-
-  public User _new(Boolean _new) {
-    
-    this._new = _new;
-    return this;
-  }
-
-   /**
-   * Get _new
-   * @return _new
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
-
-  public Boolean getNew() {
-    return _new;
-  }
-
-
-  public void setNew(Boolean _new) {
-    this._new = _new;
   }
 
   /**
@@ -369,15 +342,14 @@ public class User {
         Objects.equals(this.factors, user.factors) &&
         Objects.equals(this.signedUpAt, user.signedUpAt) &&
         Objects.equals(this.updatedAt, user.updatedAt) &&
-        Objects.equals(this.isNew, user.isNew) &&
-        Objects.equals(this.systemAccess, user.systemAccess) &&
-        Objects.equals(this._new, user._new)&&
+        Objects.equals(this._new, user._new) &&
+        Objects.equals(this.systemAccess, user.systemAccess)&&
         Objects.equals(this.additionalProperties, user.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, logins, auths, factors, signedUpAt, updatedAt, isNew, systemAccess, _new, additionalProperties);
+    return Objects.hash(id, logins, auths, factors, signedUpAt, updatedAt, _new, systemAccess, additionalProperties);
   }
 
   @Override
@@ -390,9 +362,8 @@ public class User {
     sb.append("    factors: ").append(toIndentedString(factors)).append("\n");
     sb.append("    signedUpAt: ").append(toIndentedString(signedUpAt)).append("\n");
     sb.append("    updatedAt: ").append(toIndentedString(updatedAt)).append("\n");
-    sb.append("    isNew: ").append(toIndentedString(isNew)).append("\n");
-    sb.append("    systemAccess: ").append(toIndentedString(systemAccess)).append("\n");
     sb.append("    _new: ").append(toIndentedString(_new)).append("\n");
+    sb.append("    systemAccess: ").append(toIndentedString(systemAccess)).append("\n");
     sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -422,9 +393,8 @@ public class User {
     openapiFields.add("factors");
     openapiFields.add("signedUpAt");
     openapiFields.add("updatedAt");
-    openapiFields.add("isNew");
-    openapiFields.add("systemAccess");
     openapiFields.add("new");
+    openapiFields.add("systemAccess");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();

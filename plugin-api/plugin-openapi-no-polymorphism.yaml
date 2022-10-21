@@ -1639,8 +1639,6 @@ components:
             systemAccess:
               type: boolean
               description: Allows to access to any user in the app.
-            new:
-              type: boolean
           description: User loaded from database. Can be null if user isn't identified
             yet.
           x-nullable: true
@@ -2204,8 +2202,6 @@ components:
         systemAccess:
           type: boolean
           description: Allows to access to any user in the app.
-        new:
-          type: boolean
       x-order: 276900135-0
     DryRunAuthData:
       type: object

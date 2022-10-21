@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 
 @JsonTypeName("User")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-20T22:48:57.779152+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-21T17:10:42.806916+03:00[Europe/Kiev]")
 public class User   {
   private @Valid String id;
   private @Valid List<Login> logins = new ArrayList<>();
@@ -33,7 +33,6 @@ public class User   {
   private @Valid Long signedUpAt;
   private @Valid Long updatedAt;
   private @Valid Boolean systemAccess;
-  private @Valid Boolean _new;
 
   /**
    * Generated user uuid 
@@ -227,25 +226,6 @@ public class User   {
     this.systemAccess = systemAccess;
   }
 
-  /**
-   **/
-  public User _new(Boolean _new) {
-    this._new = _new;
-    return this;
-  }
-
-  
-  @ApiModelProperty(value = "")
-  @JsonProperty("new")
-  public Boolean getNew() {
-    return _new;
-  }
-
-  @JsonProperty("new")
-  public void setNew(Boolean _new) {
-    this._new = _new;
-  }
-
 
   @Override
   public boolean equals(Object o) {
@@ -262,13 +242,12 @@ public class User   {
         Objects.equals(this.factors, user.factors) &&
         Objects.equals(this.signedUpAt, user.signedUpAt) &&
         Objects.equals(this.updatedAt, user.updatedAt) &&
-        Objects.equals(this.systemAccess, user.systemAccess) &&
-        Objects.equals(this._new, user._new);
+        Objects.equals(this.systemAccess, user.systemAccess);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, logins, auths, factors, signedUpAt, updatedAt, systemAccess, _new);
+    return Objects.hash(id, logins, auths, factors, signedUpAt, updatedAt, systemAccess);
   }
 
   @Override
@@ -283,7 +262,6 @@ public class User   {
     sb.append("    signedUpAt: ").append(toIndentedString(signedUpAt)).append("\n");
     sb.append("    updatedAt: ").append(toIndentedString(updatedAt)).append("\n");
     sb.append("    systemAccess: ").append(toIndentedString(systemAccess)).append("\n");
-    sb.append("    _new: ").append(toIndentedString(_new)).append("\n");
     sb.append("}");
     return sb.toString();
   }
