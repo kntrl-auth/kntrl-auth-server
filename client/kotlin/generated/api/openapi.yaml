@@ -3459,7 +3459,7 @@ components:
     AccessTokenCfg:
       description: Short-living token used for authentication.
       example:
-        cache: cache
+        cache: JWT
         cookie: true
         cacheUnauthenticated: true
         ttl: 1d
@@ -3471,6 +3471,9 @@ components:
           description: |-
             If not null - access token contains signed session data, so it's not required to request session database for
             access check.
+          enum:
+          - JWT
+          - BINARY
           type: string
           x-nullable: true
           x-super: '#/components/schemas/Cache'
@@ -4464,7 +4467,7 @@ components:
           dir: ./i18n
         token:
           access:
-            cache: cache
+            cache: JWT
             cookie: true
             cacheUnauthenticated: true
             ttl: 1d
@@ -4673,7 +4676,7 @@ components:
       description: Token lifetime config.
       example:
         access:
-          cache: cache
+          cache: JWT
           cookie: true
           cacheUnauthenticated: true
           ttl: 1d

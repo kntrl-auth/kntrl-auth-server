@@ -1,11 +1,6 @@
 package kntrl.example.generated.model;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import javax.validation.constraints.*;
-import javax.validation.Valid;
 
-import io.swagger.annotations.*;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -15,13 +10,13 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 
 @JsonTypeName("CodeVerifier")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-21T17:10:42.806916+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-22T00:20:30.250260+03:00[Europe/Kiev]")
 public class CodeVerifier   {
-  private @Valid Long validUntil;
-  private @Valid Integer usedAttempts;
-  private @Valid Integer attemptsLeft;
-  private @Valid String codeHash;
-  private @Valid Long sentAt;
+  private Long validUntil;
+  private Integer usedAttempts;
+  private Integer attemptsLeft;
+  private String codeHash;
+  private Long sentAt;
 
   /**
    **/
@@ -31,9 +26,7 @@ public class CodeVerifier   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("validUntil")
-  @NotNull
   public Long getValidUntil() {
     return validUntil;
   }
@@ -51,9 +44,7 @@ public class CodeVerifier   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("usedAttempts")
-  @NotNull
   public Integer getUsedAttempts() {
     return usedAttempts;
   }
@@ -71,9 +62,7 @@ public class CodeVerifier   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("attemptsLeft")
-  @NotNull
   public Integer getAttemptsLeft() {
     return attemptsLeft;
   }
@@ -91,9 +80,7 @@ public class CodeVerifier   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("codeHash")
-  @NotNull
   public String getCodeHash() {
     return codeHash;
   }
@@ -111,9 +98,7 @@ public class CodeVerifier   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("sentAt")
-  @NotNull
   public Long getSentAt() {
     return sentAt;
   }

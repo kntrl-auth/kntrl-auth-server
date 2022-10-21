@@ -133,15 +133,17 @@ Generate an HTTP client for any other language by any OpenApi generator (e.g. [t
 The OpenAPI specification is located in [client folder](client):
 
 - [openapi-no-polymorphism.yaml](client/openapi-no-polymorphism.yaml) - simplified specification (without inheritance and polymorphism). All generators should support this specification.
+- [openapi-no-additionalProperties.yaml](client/openapi-no-additionalProperties.yaml) - the same as one above, but with workaround for additionalProperties handling bug in some generators.
 - [openapi-no-inheritance.yaml](client/openapi-no-inheritance.yaml) - simplified specification (without inheritance). Some generators support this.
 - [openapi.yaml](client/openapi.yaml) - specification with discriminators and inheritance. Most of the generators produce incorrect code for this.
 
-**TL;DR;** if you're not sure which specification to use, just use [openapi-no-polymorphism.yaml](client/openapi-no-polymorphism.yaml), e.g.:
+**TL;DR;** if you're not sure which specification to use, just use [openapi-no-polymorphism.yaml](client/openapi-no-polymorphism.yaml), and then
+[openapi-no-additionalProperties.yaml](client/openapi-no-additionalProperties.yaml) if former one doesn't work. E.g.:
 ```shell
 openapi-generator-cli generate -i ./client/openapi-no-polymorphism.yaml -g go -o ./generated/client
 ```
 **WARN**: it's strongly recommended to disable rejection of not-known fields. E.g. for java generator set 
-`disallowAdditionalPropertiesIfNotPresent` to `false`.
+`disallowAdditionalPropertiesIfNotPresent` to `false`, or disable Jackson FAIL_ON_UNKNOWN_PROPERTIES.
 
 #### Option 3 - call HTTP API manually
 Check [API docs](https://kntrl-auth.github.io/kntrl-auth-server/apidocs) for HTTP API documentation.

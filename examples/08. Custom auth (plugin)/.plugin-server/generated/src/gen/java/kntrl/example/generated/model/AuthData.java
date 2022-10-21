@@ -1,13 +1,8 @@
 package kntrl.example.generated.model;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import kntrl.example.generated.model.AuthDataPrivate;
-import kntrl.example.generated.model.AuthDataPublic;
-import javax.validation.constraints.*;
-import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
-import io.swagger.annotations.*;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -17,52 +12,80 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 
 @JsonTypeName("AuthData")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-21T17:10:42.806916+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-22T00:20:30.250260+03:00[Europe/Kiev]")
 public class AuthData   {
-  private @Valid AuthDataPublic _public;
-  private @Valid AuthDataPrivate _private;
-  private @Valid String login;
+  private Map<String, Object> _public = new HashMap<>();
+  private Map<String, Object> _private = new HashMap<>();
+  private String login;
 
   /**
    **/
-  public AuthData _public(AuthDataPublic _public) {
+  public AuthData _public(Map<String, Object> _public) {
     this._public = _public;
     return this;
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("public")
-  @NotNull
-  public AuthDataPublic getPublic() {
+  public Map<String, Object> getPublic() {
     return _public;
   }
 
   @JsonProperty("public")
-  public void setPublic(AuthDataPublic _public) {
+  public void setPublic(Map<String, Object> _public) {
     this._public = _public;
   }
 
+  public AuthData putPublicItem(String key, Object _publicItem) {
+    if (this._public == null) {
+      this._public = new HashMap<>();
+    }
+
+    this._public.put(key, _publicItem);
+    return this;
+  }
+
+  public AuthData removePublicItem(Object _publicItem) {
+    if (_publicItem != null && this._public != null) {
+      this._public.remove(_publicItem);
+    }
+
+    return this;
+  }
   /**
    **/
-  public AuthData _private(AuthDataPrivate _private) {
+  public AuthData _private(Map<String, Object> _private) {
     this._private = _private;
     return this;
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("private")
-  @NotNull
-  public AuthDataPrivate getPrivate() {
+  public Map<String, Object> getPrivate() {
     return _private;
   }
 
   @JsonProperty("private")
-  public void setPrivate(AuthDataPrivate _private) {
+  public void setPrivate(Map<String, Object> _private) {
     this._private = _private;
   }
 
+  public AuthData putPrivateItem(String key, Object _privateItem) {
+    if (this._private == null) {
+      this._private = new HashMap<>();
+    }
+
+    this._private.put(key, _privateItem);
+    return this;
+  }
+
+  public AuthData removePrivateItem(Object _privateItem) {
+    if (_privateItem != null && this._private != null) {
+      this._private.remove(_privateItem);
+    }
+
+    return this;
+  }
   /**
    * If authenticator supports identification, it provides login here. This can be email, phone number, facebook account id, etc.
    **/
@@ -72,7 +95,6 @@ public class AuthData   {
   }
 
   
-  @ApiModelProperty(value = "If authenticator supports identification, it provides login here. This can be email, phone number, facebook account id, etc.")
   @JsonProperty("login")
   public String getLogin() {
     return login;

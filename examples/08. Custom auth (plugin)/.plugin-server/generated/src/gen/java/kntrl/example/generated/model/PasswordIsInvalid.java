@@ -1,12 +1,7 @@
 package kntrl.example.generated.model;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import kntrl.example.generated.model.LoginId;
-import javax.validation.constraints.*;
-import javax.validation.Valid;
 
-import io.swagger.annotations.*;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -16,23 +11,23 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 
 @JsonTypeName("PasswordIsInvalid")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-21T17:10:42.806916+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-22T00:20:30.250260+03:00[Europe/Kiev]")
 public class PasswordIsInvalid   {
-  private @Valid String code;
-  private @Valid String devMsg;
-  private @Valid String msg;
-  private @Valid Boolean tooLong;
-  private @Valid Boolean tooShort;
-  private @Valid Boolean missingNumber;
-  private @Valid Boolean missingSymbol;
-  private @Valid Boolean missingUpperCase;
-  private @Valid Boolean missingLowerCase;
-  private @Valid Boolean commonPassword;
-  private @Valid Long wasUsedBeforeAt;
-  private @Valid LoginId matchesLogin;
-  private @Valid Boolean passwordsMismatch;
-  private @Valid String strength;
-  private @Valid Long wasUsedDaysAgo;
+  private String code;
+  private String devMsg;
+  private String msg;
+  private Boolean tooLong;
+  private Boolean tooShort;
+  private Boolean missingNumber;
+  private Boolean missingSymbol;
+  private Boolean missingUpperCase;
+  private Boolean missingLowerCase;
+  private Boolean commonPassword;
+  private Long wasUsedBeforeAt;
+  private LoginId matchesLogin;
+  private Boolean passwordsMismatch;
+  private String strength;
+  private Long wasUsedDaysAgo;
 
   /**
    **/
@@ -42,9 +37,7 @@ public class PasswordIsInvalid   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("code")
-  @NotNull
   public String getCode() {
     return code;
   }
@@ -63,9 +56,7 @@ public class PasswordIsInvalid   {
   }
 
   
-  @ApiModelProperty(required = true, value = "Message for developers.")
   @JsonProperty("devMsg")
-  @NotNull
   public String getDevMsg() {
     return devMsg;
   }
@@ -84,7 +75,6 @@ public class PasswordIsInvalid   {
   }
 
   
-  @ApiModelProperty(value = "Localised message suitable for UI.")
   @JsonProperty("msg")
   public String getMsg() {
     return msg;
@@ -103,9 +93,7 @@ public class PasswordIsInvalid   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("tooLong")
-  @NotNull
   public Boolean getTooLong() {
     return tooLong;
   }
@@ -123,9 +111,7 @@ public class PasswordIsInvalid   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("tooShort")
-  @NotNull
   public Boolean getTooShort() {
     return tooShort;
   }
@@ -143,9 +129,7 @@ public class PasswordIsInvalid   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("missingNumber")
-  @NotNull
   public Boolean getMissingNumber() {
     return missingNumber;
   }
@@ -163,9 +147,7 @@ public class PasswordIsInvalid   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("missingSymbol")
-  @NotNull
   public Boolean getMissingSymbol() {
     return missingSymbol;
   }
@@ -183,9 +165,7 @@ public class PasswordIsInvalid   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("missingUpperCase")
-  @NotNull
   public Boolean getMissingUpperCase() {
     return missingUpperCase;
   }
@@ -203,9 +183,7 @@ public class PasswordIsInvalid   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("missingLowerCase")
-  @NotNull
   public Boolean getMissingLowerCase() {
     return missingLowerCase;
   }
@@ -223,9 +201,7 @@ public class PasswordIsInvalid   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("commonPassword")
-  @NotNull
   public Boolean getCommonPassword() {
     return commonPassword;
   }
@@ -243,7 +219,6 @@ public class PasswordIsInvalid   {
   }
 
   
-  @ApiModelProperty(value = "")
   @JsonProperty("wasUsedBeforeAt")
   public Long getWasUsedBeforeAt() {
     return wasUsedBeforeAt;
@@ -262,7 +237,6 @@ public class PasswordIsInvalid   {
   }
 
   
-  @ApiModelProperty(value = "")
   @JsonProperty("matchesLogin")
   public LoginId getMatchesLogin() {
     return matchesLogin;
@@ -281,9 +255,7 @@ public class PasswordIsInvalid   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("passwordsMismatch")
-  @NotNull
   public Boolean getPasswordsMismatch() {
     return passwordsMismatch;
   }
@@ -301,7 +273,6 @@ public class PasswordIsInvalid   {
   }
 
   
-  @ApiModelProperty(value = "")
   @JsonProperty("strength")
   public String getStrength() {
     return strength;
@@ -320,7 +291,6 @@ public class PasswordIsInvalid   {
   }
 
   
-  @ApiModelProperty(value = "")
   @JsonProperty("wasUsedDaysAgo")
   public Long getWasUsedDaysAgo() {
     return wasUsedDaysAgo;

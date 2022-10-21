@@ -54,9 +54,56 @@ public class AccessTokenCfg {
   @SerializedName(SERIALIZED_NAME_COOKIE)
   private Boolean cookie;
 
+  /**
+   * If not null - access token contains signed session data, so it&#39;s not required to request session database for access check.
+   */
+  @JsonAdapter(CacheEnum.Adapter.class)
+  public enum CacheEnum {
+    JWT("JWT"),
+    
+    BINARY("BINARY");
+
+    private String value;
+
+    CacheEnum(String value) {
+      this.value = value;
+    }
+
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    public static CacheEnum fromValue(String value) {
+      for (CacheEnum b : CacheEnum.values()) {
+        if (b.value.equals(value)) {
+          return b;
+        }
+      }
+      throw new IllegalArgumentException("Unexpected value '" + value + "'");
+    }
+
+    public static class Adapter extends TypeAdapter<CacheEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final CacheEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public CacheEnum read(final JsonReader jsonReader) throws IOException {
+        String value =  jsonReader.nextString();
+        return CacheEnum.fromValue(value);
+      }
+    }
+  }
+
   public static final String SERIALIZED_NAME_CACHE = "cache";
   @SerializedName(SERIALIZED_NAME_CACHE)
-  private String cache;
+  private CacheEnum cache;
 
   public static final String SERIALIZED_NAME_CACHE_UNAUTHENTICATED = "cacheUnauthenticated";
   @SerializedName(SERIALIZED_NAME_CACHE_UNAUTHENTICATED)
@@ -92,7 +139,7 @@ public class AccessTokenCfg {
   }
 
 
-  public AccessTokenCfg cache(String cache) {
+  public AccessTokenCfg cache(CacheEnum cache) {
     
     this.cache = cache;
     return this;
@@ -105,12 +152,12 @@ public class AccessTokenCfg {
   @javax.annotation.Nullable
   @ApiModelProperty(value = "If not null - access token contains signed session data, so it's not required to request session database for access check.")
 
-  public String getCache() {
+  public CacheEnum getCache() {
     return cache;
   }
 
 
-  public void setCache(String cache) {
+  public void setCache(CacheEnum cache) {
     this.cache = cache;
   }
 

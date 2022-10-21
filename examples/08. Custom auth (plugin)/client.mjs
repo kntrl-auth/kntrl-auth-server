@@ -21,7 +21,7 @@ async function example() {
   const signUpRes = await signUpSession.authenticate({
     authReqs: {
       sms: {
-        phone: '+1-202-555-0167',
+        phone: '+1-202-555-016',
         msgType: 'signUp'
       }
     }

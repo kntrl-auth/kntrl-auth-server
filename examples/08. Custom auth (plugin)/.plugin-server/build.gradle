@@ -24,15 +24,13 @@ dependencies {
 
 	swaggerCodegen 'org.openapitools:openapi-generator-cli:6.2.0'
 	implementation 'com.fasterxml.jackson.core:jackson-databind'
-	implementation 'io.swagger:swagger-annotations:1.6.8'
-	implementation 'javax.validation:validation-api:2.0.1.Final'
 	implementation 'com.googlecode.libphonenumber:libphonenumber:8.12.57'
 }
 
 task generateOpenapiModels(type: GenerateSwaggerCode) {
 	group 'openapi'
 	language = 'jaxrs-spec'
-	inputFile = file('../../../plugin-api/plugin-openapi-no-polymorphism.yaml')
+	inputFile = file('../../../plugin-api/plugin-openapi-no-additionalProperties.yaml')
 	outputDir = file('generated')
 	additionalProperties = [
 			'interfaceOnly': 'true',
@@ -41,7 +39,9 @@ task generateOpenapiModels(type: GenerateSwaggerCode) {
 			'groupId': 'kntrl',
 			'artifactId': 'plugin-server-interface',
 			'artifactVersion': '0.1',
-			'disallowAdditionalPropertiesIfNotPresent': 'false'
+			'disallowAdditionalPropertiesIfNotPresent': 'false',
+			'useSwaggerAnnotations': 'false',
+			'useBeanValidation': 'false'
 	]
 }
 

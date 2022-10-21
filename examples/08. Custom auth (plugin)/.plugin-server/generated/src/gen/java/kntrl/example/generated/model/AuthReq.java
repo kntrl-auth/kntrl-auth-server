@@ -1,18 +1,13 @@
 package kntrl.example.generated.model;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import java.util.HashMap;
+import java.util.Map;
 import kntrl.example.generated.model.AuthReqAuthData;
 import kntrl.example.generated.model.AuthReqCodeToSend;
-import kntrl.example.generated.model.AuthReqDryRunAuthResData;
-import kntrl.example.generated.model.AuthReqReqData;
 import kntrl.example.generated.model.AuthReqSession;
 import kntrl.example.generated.model.AuthReqUser;
 import kntrl.example.generated.model.ReqCtx;
-import javax.validation.constraints.*;
-import javax.validation.Valid;
 
-import io.swagger.annotations.*;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -22,35 +17,51 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 
 @JsonTypeName("AuthReq")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-21T17:10:42.806916+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-22T00:20:30.250260+03:00[Europe/Kiev]")
 public class AuthReq   {
-  private @Valid AuthReqDryRunAuthResData dryRunAuthResData;
-  private @Valid AuthReqUser user;
-  private @Valid AuthReqSession session;
-  private @Valid AuthReqAuthData authData;
-  private @Valid AuthReqCodeToSend codeToSend;
-  private @Valid AuthReqReqData reqData;
-  private @Valid ReqCtx ctx;
+  private Map<String, Object> dryRunAuthResData = null;
+  private AuthReqUser user;
+  private AuthReqSession session;
+  private AuthReqAuthData authData;
+  private AuthReqCodeToSend codeToSend;
+  private Map<String, Object> reqData = new HashMap<>();
+  private ReqCtx ctx;
 
   /**
+   * Response provided by dry-run execution
    **/
-  public AuthReq dryRunAuthResData(AuthReqDryRunAuthResData dryRunAuthResData) {
+  public AuthReq dryRunAuthResData(Map<String, Object> dryRunAuthResData) {
     this.dryRunAuthResData = dryRunAuthResData;
     return this;
   }
 
   
-  @ApiModelProperty(value = "")
   @JsonProperty("dryRunAuthResData")
-  public AuthReqDryRunAuthResData getDryRunAuthResData() {
+  public Map<String, Object> getDryRunAuthResData() {
     return dryRunAuthResData;
   }
 
   @JsonProperty("dryRunAuthResData")
-  public void setDryRunAuthResData(AuthReqDryRunAuthResData dryRunAuthResData) {
+  public void setDryRunAuthResData(Map<String, Object> dryRunAuthResData) {
     this.dryRunAuthResData = dryRunAuthResData;
   }
 
+  public AuthReq putDryRunAuthResDataItem(String key, Object dryRunAuthResDataItem) {
+    if (this.dryRunAuthResData == null) {
+      this.dryRunAuthResData = new HashMap<>();
+    }
+
+    this.dryRunAuthResData.put(key, dryRunAuthResDataItem);
+    return this;
+  }
+
+  public AuthReq removeDryRunAuthResDataItem(Object dryRunAuthResDataItem) {
+    if (dryRunAuthResDataItem != null && this.dryRunAuthResData != null) {
+      this.dryRunAuthResData.remove(dryRunAuthResDataItem);
+    }
+
+    return this;
+  }
   /**
    **/
   public AuthReq user(AuthReqUser user) {
@@ -59,7 +70,6 @@ public class AuthReq   {
   }
 
   
-  @ApiModelProperty(value = "")
   @JsonProperty("user")
   public AuthReqUser getUser() {
     return user;
@@ -78,7 +88,6 @@ public class AuthReq   {
   }
 
   
-  @ApiModelProperty(value = "")
   @JsonProperty("session")
   public AuthReqSession getSession() {
     return session;
@@ -97,7 +106,6 @@ public class AuthReq   {
   }
 
   
-  @ApiModelProperty(value = "")
   @JsonProperty("authData")
   public AuthReqAuthData getAuthData() {
     return authData;
@@ -116,7 +124,6 @@ public class AuthReq   {
   }
 
   
-  @ApiModelProperty(value = "")
   @JsonProperty("codeToSend")
   public AuthReqCodeToSend getCodeToSend() {
     return codeToSend;
@@ -129,24 +136,38 @@ public class AuthReq   {
 
   /**
    **/
-  public AuthReq reqData(AuthReqReqData reqData) {
+  public AuthReq reqData(Map<String, Object> reqData) {
     this.reqData = reqData;
     return this;
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("reqData")
-  @NotNull
-  public AuthReqReqData getReqData() {
+  public Map<String, Object> getReqData() {
     return reqData;
   }
 
   @JsonProperty("reqData")
-  public void setReqData(AuthReqReqData reqData) {
+  public void setReqData(Map<String, Object> reqData) {
     this.reqData = reqData;
   }
 
+  public AuthReq putReqDataItem(String key, Object reqDataItem) {
+    if (this.reqData == null) {
+      this.reqData = new HashMap<>();
+    }
+
+    this.reqData.put(key, reqDataItem);
+    return this;
+  }
+
+  public AuthReq removeReqDataItem(Object reqDataItem) {
+    if (reqDataItem != null && this.reqData != null) {
+      this.reqData.remove(reqDataItem);
+    }
+
+    return this;
+  }
   /**
    **/
   public AuthReq ctx(ReqCtx ctx) {
@@ -155,9 +176,7 @@ public class AuthReq   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("ctx")
-  @NotNull
   public ReqCtx getCtx() {
     return ctx;
   }

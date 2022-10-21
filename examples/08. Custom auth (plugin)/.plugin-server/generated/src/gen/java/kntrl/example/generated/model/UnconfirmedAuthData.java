@@ -1,13 +1,8 @@
 package kntrl.example.generated.model;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import kntrl.example.generated.model.AuthData;
 import kntrl.example.generated.model.CodeVerifier;
-import javax.validation.constraints.*;
-import javax.validation.Valid;
 
-import io.swagger.annotations.*;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -17,10 +12,10 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 
 @JsonTypeName("UnconfirmedAuthData")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-21T17:10:42.806916+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-22T00:20:30.250260+03:00[Europe/Kiev]")
 public class UnconfirmedAuthData   {
-  private @Valid AuthData data;
-  private @Valid CodeVerifier code;
+  private AuthData data;
+  private CodeVerifier code;
 
   /**
    **/
@@ -30,9 +25,7 @@ public class UnconfirmedAuthData   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("data")
-  @NotNull
   public AuthData getData() {
     return data;
   }
@@ -50,9 +43,7 @@ public class UnconfirmedAuthData   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("code")
-  @NotNull
   public CodeVerifier getCode() {
     return code;
   }

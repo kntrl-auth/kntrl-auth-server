@@ -1,12 +1,7 @@
 package kntrl.example.generated.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import javax.validation.constraints.*;
-import javax.validation.Valid;
 
-import io.swagger.annotations.*;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -16,16 +11,16 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 /**
  * Generated code. Will be null if no code-config specified.
  **/
-@ApiModel(description = "Generated code. Will be null if no code-config specified.")
+
 @JsonTypeName("AuthReq_codeToSend")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-21T17:10:42.806916+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-22T00:20:30.250260+03:00[Europe/Kiev]")
 public class AuthReqCodeToSend   {
-  private @Valid Long validUntil;
-  private @Valid Integer usedAttempts;
-  private @Valid Integer attemptsLeft;
-  private @Valid String codeHash;
-  private @Valid Long sentAt;
-  private @Valid String code;
+  private Long validUntil;
+  private Integer usedAttempts;
+  private Integer attemptsLeft;
+  private String codeHash;
+  private Long sentAt;
+  private String code;
 
   /**
    **/
@@ -35,9 +30,7 @@ public class AuthReqCodeToSend   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("validUntil")
-  @NotNull
   public Long getValidUntil() {
     return validUntil;
   }
@@ -55,9 +48,7 @@ public class AuthReqCodeToSend   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("usedAttempts")
-  @NotNull
   public Integer getUsedAttempts() {
     return usedAttempts;
   }
@@ -75,9 +66,7 @@ public class AuthReqCodeToSend   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("attemptsLeft")
-  @NotNull
   public Integer getAttemptsLeft() {
     return attemptsLeft;
   }
@@ -95,9 +84,7 @@ public class AuthReqCodeToSend   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("codeHash")
-  @NotNull
   public String getCodeHash() {
     return codeHash;
   }
@@ -115,9 +102,7 @@ public class AuthReqCodeToSend   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("sentAt")
-  @NotNull
   public Long getSentAt() {
     return sentAt;
   }
@@ -135,9 +120,7 @@ public class AuthReqCodeToSend   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("code")
-  @NotNull
   public String getCode() {
     return code;
   }

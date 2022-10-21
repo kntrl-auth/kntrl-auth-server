@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -41,7 +42,7 @@ public class SmsAuthService {
     }
 
     @ExceptionHandler({ AuthPluginException.class })
-    ResponseEntity<PluginClientErr> onError(AuthPluginException ex) {
+    ResponseEntity<Map<String, String>> onError(AuthPluginException ex) {
         System.out.println("Error: " + ex.getErr());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getErr());
     }
@@ -67,12 +68,9 @@ public class SmsAuthService {
             phone = phoneFromAuthData.or(() -> phoneFromReq).orElseThrow(() -> AuthPluginException.incorrectRequest);
         }
 
-        AuthResResData res = new AuthResResData();
-        res.put(RES_DATA_PHONE, phone);
-
         return new DryRunAuthRes()
                 .authData(new DryRunAuthResAuthData().login(phone))
-                .resData(res);
+                .resData(Map.of(RES_DATA_PHONE, phone));
     }
 
     private static AuthRes sendAuthSms(AuthReq req) {
@@ -81,18 +79,12 @@ public class SmsAuthService {
 
         sendSms(parsedPhone, req.getCodeToSend().getCode(), req.getReqData());
 
-        AuthDataPublic publicData = new AuthDataPublic();
-        publicData.put(PUBLIC_DATA_PHONE, parsedPhone);
-
-        AuthResResData res = new AuthResResData();
-        res.put(RES_DATA_PHONE, parsedPhone);
-
         return new AuthRes()
                 .authData(new AuthResAuthData()
-                        ._public(publicData)
-                        ._private(new AuthDataPrivate())
+                        ._public(Map.of(PUBLIC_DATA_PHONE, parsedPhone))
+                        ._private(Map.of())
                         .login(parsedPhone))
-                .resData(res);
+                .resData(Map.of(RES_DATA_PHONE, parsedPhone));
     }
 
     private static String parsePhone(String phoneRaw) {
@@ -108,14 +100,14 @@ public class SmsAuthService {
         }
     }
 
-    private static void sendSms(String phone, String code, AuthReqReqData reqData) {
+    private static void sendSms(String phone, String code, Map<String, Object> reqData) {
         String text = createSmsMessage(reqData) + code;
         System.out.println("Sending sms to " + phone + "...");
         System.out.println("Sms: " + text);
         System.out.println("Sms sent.");
     }
 
-    private static String createSmsMessage(AuthReqReqData reqData) {
+    private static String createSmsMessage(Map<String, Object> reqData) {
         String messageType = Optional.of(reqData.get(REQ_DATA_MSG_TYPE))
                 .map(Object::toString)
                 .orElse("default");
@@ -143,13 +135,16 @@ public class SmsAuthService {
         public static AuthPluginException incorrectPhone =
                 new AuthPluginException("PHONE_NUMBER_IS_INCORRECT", "Incorrect phone number");
 
-        private final PluginClientErr err;
+        private final Map<String, String> err;
 
         public AuthPluginException(String code, String devMsg) {
-            this.err = new PluginClientErr().code(code).devMsg(devMsg);
+            this.err = Map.of(
+                    PluginClientErrProps.CODE.toString(), code,
+                    PluginClientErrProps.DEVMSG.toString(), devMsg
+            );
         }
 
-        public PluginClientErr getErr() {
+        public Map<String, String> getErr() {
             return err;
         }
     }

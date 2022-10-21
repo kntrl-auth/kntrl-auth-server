@@ -1,11 +1,6 @@
 package kntrl.example.generated.model;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import javax.validation.constraints.*;
-import javax.validation.Valid;
 
-import io.swagger.annotations.*;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -15,14 +10,14 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 
 @JsonTypeName("TooManyReqs")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-21T17:10:42.806916+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-22T00:20:30.250260+03:00[Europe/Kiev]")
 public class TooManyReqs   {
-  private @Valid String code;
-  private @Valid String devMsg;
-  private @Valid String msg;
-  private @Valid Integer waitTimeMs;
-  private @Valid Integer waitTimeSeconds;
-  private @Valid Integer waitTimeMinutes;
+  private String code;
+  private String devMsg;
+  private String msg;
+  private Integer waitTimeMs;
+  private Integer waitTimeSeconds;
+  private Integer waitTimeMinutes;
 
   /**
    **/
@@ -32,9 +27,7 @@ public class TooManyReqs   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("code")
-  @NotNull
   public String getCode() {
     return code;
   }
@@ -53,9 +46,7 @@ public class TooManyReqs   {
   }
 
   
-  @ApiModelProperty(required = true, value = "Message for developers.")
   @JsonProperty("devMsg")
-  @NotNull
   public String getDevMsg() {
     return devMsg;
   }
@@ -74,7 +65,6 @@ public class TooManyReqs   {
   }
 
   
-  @ApiModelProperty(value = "Localised message suitable for UI.")
   @JsonProperty("msg")
   public String getMsg() {
     return msg;
@@ -93,7 +83,6 @@ public class TooManyReqs   {
   }
 
   
-  @ApiModelProperty(value = "")
   @JsonProperty("waitTimeMs")
   public Integer getWaitTimeMs() {
     return waitTimeMs;
@@ -112,7 +101,6 @@ public class TooManyReqs   {
   }
 
   
-  @ApiModelProperty(value = "")
   @JsonProperty("waitTimeSeconds")
   public Integer getWaitTimeSeconds() {
     return waitTimeSeconds;
@@ -131,7 +119,6 @@ public class TooManyReqs   {
   }
 
   
-  @ApiModelProperty(value = "")
   @JsonProperty("waitTimeMinutes")
   public Integer getWaitTimeMinutes() {
     return waitTimeMinutes;

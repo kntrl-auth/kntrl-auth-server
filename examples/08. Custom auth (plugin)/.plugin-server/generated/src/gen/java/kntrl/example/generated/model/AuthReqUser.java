@@ -2,8 +2,6 @@ package kntrl.example.generated.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -12,10 +10,7 @@ import java.util.Map;
 import java.util.Set;
 import kntrl.example.generated.model.AuthUserCfg;
 import kntrl.example.generated.model.Login;
-import javax.validation.constraints.*;
-import javax.validation.Valid;
 
-import io.swagger.annotations.*;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -25,17 +20,17 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 /**
  * User loaded from database. Can be null if user isn&#39;t identified yet.
  **/
-@ApiModel(description = "User loaded from database. Can be null if user isn't identified yet.")
+
 @JsonTypeName("AuthReq_user")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-21T17:10:42.806916+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-22T00:20:30.250260+03:00[Europe/Kiev]")
 public class AuthReqUser   {
-  private @Valid String id;
-  private @Valid List<Login> logins = new ArrayList<>();
-  private @Valid Map<String, AuthUserCfg> auths = new HashMap<>();
-  private @Valid Set<String> factors = new LinkedHashSet<>();
-  private @Valid Long signedUpAt;
-  private @Valid Long updatedAt;
-  private @Valid Boolean systemAccess;
+  private String id;
+  private List<Login> logins = new ArrayList<>();
+  private Map<String, AuthUserCfg> auths = new HashMap<>();
+  private Set<String> factors = new LinkedHashSet<>();
+  private Long signedUpAt;
+  private Long updatedAt;
+  private Boolean systemAccess;
 
   /**
    * Generated user uuid 
@@ -46,9 +41,7 @@ public class AuthReqUser   {
   }
 
   
-  @ApiModelProperty(example = "2c24704f-198a-4bc4-9718-306ccc97bbdc", required = true, value = "Generated user uuid ")
   @JsonProperty("id")
-  @NotNull
   public String getId() {
     return id;
   }
@@ -66,9 +59,7 @@ public class AuthReqUser   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("logins")
-  @NotNull
   public List<Login> getLogins() {
     return logins;
   }
@@ -103,9 +94,7 @@ public class AuthReqUser   {
   }
 
   
-  @ApiModelProperty(required = true, value = "Public data of confirmed auths and sent codes for unconfirmed auths. ")
   @JsonProperty("auths")
-  @NotNull
   public Map<String, AuthUserCfg> getAuths() {
     return auths;
   }
@@ -140,9 +129,7 @@ public class AuthReqUser   {
   }
 
   
-  @ApiModelProperty(required = true, value = "Enabled factors")
   @JsonProperty("factors")
-  @NotNull
   public Set<String> getFactors() {
     return factors;
   }
@@ -177,9 +164,7 @@ public class AuthReqUser   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("signedUpAt")
-  @NotNull
   public Long getSignedUpAt() {
     return signedUpAt;
   }
@@ -197,9 +182,7 @@ public class AuthReqUser   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("updatedAt")
-  @NotNull
   public Long getUpdatedAt() {
     return updatedAt;
   }
@@ -218,7 +201,6 @@ public class AuthReqUser   {
   }
 
   
-  @ApiModelProperty(value = "Allows to access to any user in the app.")
   @JsonProperty("systemAccess")
   public Boolean getSystemAccess() {
     return systemAccess;

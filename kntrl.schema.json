@@ -1356,6 +1356,10 @@
             "cache": {
               "type": "string",
               "description": "If not null - access token contains signed session data, so it's not required to request session database for\naccess check.",
+              "enum": [
+                "JWT",
+                "BINARY"
+              ],
               "x-nullable": true,
               "x-super": "#/components/schemas/Cache"
             },

@@ -1,16 +1,11 @@
 package kntrl.example.generated.model;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import kntrl.example.generated.model.Login;
 import kntrl.example.generated.model.LoginId;
 import kntrl.example.generated.model.User;
-import javax.validation.constraints.*;
-import javax.validation.Valid;
 
-import io.swagger.annotations.*;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -20,14 +15,14 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 
 @JsonTypeName("SaveUserReq")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-21T17:10:42.806916+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-22T00:20:30.250260+03:00[Europe/Kiev]")
 public class SaveUserReq   {
-  private @Valid List<LoginId> removedLogins = new ArrayList<>();
-  private @Valid List<User> updatedUsers = new ArrayList<>();
-  private @Valid List<User> newUsers = new ArrayList<>();
-  private @Valid List<Login> updatedLogins = new ArrayList<>();
-  private @Valid List<Login> newLogins = new ArrayList<>();
-  private @Valid List<User> updatedUsersOrLogins = new ArrayList<>();
+  private List<LoginId> removedLogins = new ArrayList<>();
+  private List<User> updatedUsers = new ArrayList<>();
+  private List<User> newUsers = new ArrayList<>();
+  private List<Login> updatedLogins = new ArrayList<>();
+  private List<Login> newLogins = new ArrayList<>();
+  private List<User> updatedUsersOrLogins = new ArrayList<>();
 
   /**
    * Login ids to remove.
@@ -38,9 +33,7 @@ public class SaveUserReq   {
   }
 
   
-  @ApiModelProperty(required = true, value = "Login ids to remove.")
   @JsonProperty("removedLogins")
-  @NotNull
   public List<LoginId> getRemovedLogins() {
     return removedLogins;
   }
@@ -75,9 +68,7 @@ public class SaveUserReq   {
   }
 
   
-  @ApiModelProperty(required = true, value = "User that must be updated. This list doesn't include users that have new/updated/removed logins only.")
   @JsonProperty("updatedUsers")
-  @NotNull
   public List<User> getUpdatedUsers() {
     return updatedUsers;
   }
@@ -112,9 +103,7 @@ public class SaveUserReq   {
   }
 
   
-  @ApiModelProperty(required = true, value = "Users to insert")
   @JsonProperty("newUsers")
-  @NotNull
   public List<User> getNewUsers() {
     return newUsers;
   }
@@ -149,9 +138,7 @@ public class SaveUserReq   {
   }
 
   
-  @ApiModelProperty(required = true, value = "Logins to update")
   @JsonProperty("updatedLogins")
-  @NotNull
   public List<Login> getUpdatedLogins() {
     return updatedLogins;
   }
@@ -186,9 +173,7 @@ public class SaveUserReq   {
   }
 
   
-  @ApiModelProperty(required = true, value = "Logins to insert")
   @JsonProperty("newLogins")
-  @NotNull
   public List<Login> getNewLogins() {
     return newLogins;
   }
@@ -223,9 +208,7 @@ public class SaveUserReq   {
   }
 
   
-  @ApiModelProperty(required = true, value = "Alternative field, if users and logins stored withing single document - prefer this field + `newUsers`")
   @JsonProperty("updatedUsersOrLogins")
-  @NotNull
   public List<User> getUpdatedUsersOrLogins() {
     return updatedUsersOrLogins;
   }

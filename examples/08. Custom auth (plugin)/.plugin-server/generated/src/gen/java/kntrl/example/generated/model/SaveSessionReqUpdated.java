@@ -1,8 +1,6 @@
 package kntrl.example.generated.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,10 +9,7 @@ import kntrl.example.generated.model.Device;
 import kntrl.example.generated.model.LoginId;
 import kntrl.example.generated.model.NextFactor;
 import kntrl.example.generated.model.UnconfirmedAuth;
-import javax.validation.constraints.*;
-import javax.validation.Valid;
 
-import io.swagger.annotations.*;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -24,24 +19,24 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 /**
  * Session to update.
  **/
-@ApiModel(description = "Session to update.")
+
 @JsonTypeName("SaveSessionReq_updated")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-21T17:10:42.806916+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-22T00:20:30.250260+03:00[Europe/Kiev]")
 public class SaveSessionReqUpdated   {
-  private @Valid String id;
-  private @Valid String entry;
-  private @Valid List<LoginId> identifiedBy = new ArrayList<>();
-  private @Valid String userId;
-  private @Valid Map<String, String> authenticatedBy = new HashMap<>();
-  private @Valid Map<String, UnconfirmedAuth> unconfirmedAuths = new HashMap<>();
-  private @Valid List<NextFactor> nextFactors = new ArrayList<>();
-  private @Valid Long signedInAt;
-  private @Valid Long expiresAt;
-  private @Valid Long refreshedAt;
-  private @Valid Boolean newUser;
-  private @Valid Device device;
-  private @Valid Boolean systemAccess;
-  private @Valid Boolean authenticated;
+  private String id;
+  private String entry;
+  private List<LoginId> identifiedBy = new ArrayList<>();
+  private String userId;
+  private Map<String, String> authenticatedBy = new HashMap<>();
+  private Map<String, UnconfirmedAuth> unconfirmedAuths = new HashMap<>();
+  private List<NextFactor> nextFactors = new ArrayList<>();
+  private Long signedInAt;
+  private Long expiresAt;
+  private Long refreshedAt;
+  private Boolean newUser;
+  private Device device;
+  private Boolean systemAccess;
+  private Boolean authenticated;
 
   /**
    **/
@@ -51,9 +46,7 @@ public class SaveSessionReqUpdated   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("id")
-  @NotNull
   public String getId() {
     return id;
   }
@@ -72,9 +65,7 @@ public class SaveSessionReqUpdated   {
   }
 
   
-  @ApiModelProperty(required = true, value = "Entry that authenticates this session")
   @JsonProperty("entry")
-  @NotNull
   public String getEntry() {
     return entry;
   }
@@ -93,9 +84,7 @@ public class SaveSessionReqUpdated   {
   }
 
   
-  @ApiModelProperty(required = true, value = "Login used to identify this user")
   @JsonProperty("identifiedBy")
-  @NotNull
   public List<LoginId> getIdentifiedBy() {
     return identifiedBy;
   }
@@ -129,7 +118,6 @@ public class SaveSessionReqUpdated   {
   }
 
   
-  @ApiModelProperty(value = "")
   @JsonProperty("userId")
   public String getUserId() {
     return userId;
@@ -149,9 +137,7 @@ public class SaveSessionReqUpdated   {
   }
 
   
-  @ApiModelProperty(required = true, value = "Authenticator used for factors ")
   @JsonProperty("authenticatedBy")
-  @NotNull
   public Map<String, String> getAuthenticatedBy() {
     return authenticatedBy;
   }
@@ -186,9 +172,7 @@ public class SaveSessionReqUpdated   {
   }
 
   
-  @ApiModelProperty(required = true, value = "Auths that waiting for confirmation ")
   @JsonProperty("unconfirmedAuths")
-  @NotNull
   public Map<String, UnconfirmedAuth> getUnconfirmedAuths() {
     return unconfirmedAuths;
   }
@@ -223,9 +207,7 @@ public class SaveSessionReqUpdated   {
   }
 
   
-  @ApiModelProperty(required = true, value = "List of factors needed to authenticate this session")
   @JsonProperty("nextFactors")
-  @NotNull
   public List<NextFactor> getNextFactors() {
     return nextFactors;
   }
@@ -259,9 +241,7 @@ public class SaveSessionReqUpdated   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("signedInAt")
-  @NotNull
   public Long getSignedInAt() {
     return signedInAt;
   }
@@ -279,9 +259,7 @@ public class SaveSessionReqUpdated   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("expiresAt")
-  @NotNull
   public Long getExpiresAt() {
     return expiresAt;
   }
@@ -299,9 +277,7 @@ public class SaveSessionReqUpdated   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("refreshedAt")
-  @NotNull
   public Long getRefreshedAt() {
     return refreshedAt;
   }
@@ -319,9 +295,7 @@ public class SaveSessionReqUpdated   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("newUser")
-  @NotNull
   public Boolean getNewUser() {
     return newUser;
   }
@@ -339,9 +313,7 @@ public class SaveSessionReqUpdated   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("device")
-  @NotNull
   public Device getDevice() {
     return device;
   }
@@ -359,9 +331,7 @@ public class SaveSessionReqUpdated   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("systemAccess")
-  @NotNull
   public Boolean getSystemAccess() {
     return systemAccess;
   }
@@ -379,7 +349,6 @@ public class SaveSessionReqUpdated   {
   }
 
   
-  @ApiModelProperty(value = "")
   @JsonProperty("authenticated")
   public Boolean getAuthenticated() {
     return authenticated;

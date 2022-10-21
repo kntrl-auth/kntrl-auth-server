@@ -1,15 +1,10 @@
 package kntrl.example.generated.model;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import kntrl.example.generated.model.SaveSessionReqNew;
 import kntrl.example.generated.model.SaveSessionReqUpdated;
-import javax.validation.constraints.*;
-import javax.validation.Valid;
 
-import io.swagger.annotations.*;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -19,12 +14,12 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 
 @JsonTypeName("SaveSessionReq")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-21T17:10:42.806916+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-22T00:20:30.250260+03:00[Europe/Kiev]")
 public class SaveSessionReq   {
-  private @Valid String userId;
-  private @Valid SaveSessionReqUpdated updated;
-  private @Valid SaveSessionReqNew _new;
-  private @Valid List<String> removed = new ArrayList<>();
+  private String userId;
+  private SaveSessionReqUpdated updated;
+  private SaveSessionReqNew _new;
+  private List<String> removed = new ArrayList<>();
 
   /**
    **/
@@ -34,7 +29,6 @@ public class SaveSessionReq   {
   }
 
   
-  @ApiModelProperty(value = "")
   @JsonProperty("userId")
   public String getUserId() {
     return userId;
@@ -53,7 +47,6 @@ public class SaveSessionReq   {
   }
 
   
-  @ApiModelProperty(value = "")
   @JsonProperty("updated")
   public SaveSessionReqUpdated getUpdated() {
     return updated;
@@ -72,7 +65,6 @@ public class SaveSessionReq   {
   }
 
   
-  @ApiModelProperty(value = "")
   @JsonProperty("new")
   public SaveSessionReqNew getNew() {
     return _new;
@@ -92,9 +84,7 @@ public class SaveSessionReq   {
   }
 
   
-  @ApiModelProperty(required = true, value = "Session ids to remove")
   @JsonProperty("removed")
-  @NotNull
   public List<String> getRemoved() {
     return removed;
   }

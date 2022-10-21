@@ -1,12 +1,7 @@
 package kntrl.example.generated.model;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import kntrl.example.generated.model.LoginId;
-import javax.validation.constraints.*;
-import javax.validation.Valid;
 
-import io.swagger.annotations.*;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -16,12 +11,12 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 
 @JsonTypeName("UserLoginIsInvalid")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-21T17:10:42.806916+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-22T00:20:30.250260+03:00[Europe/Kiev]")
 public class UserLoginIsInvalid   {
-  private @Valid String code;
-  private @Valid String devMsg;
-  private @Valid String msg;
-  private @Valid LoginId loginId;
+  private String code;
+  private String devMsg;
+  private String msg;
+  private LoginId loginId;
 
   /**
    **/
@@ -31,9 +26,7 @@ public class UserLoginIsInvalid   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("code")
-  @NotNull
   public String getCode() {
     return code;
   }
@@ -52,9 +45,7 @@ public class UserLoginIsInvalid   {
   }
 
   
-  @ApiModelProperty(required = true, value = "Message for developers.")
   @JsonProperty("devMsg")
-  @NotNull
   public String getDevMsg() {
     return devMsg;
   }
@@ -73,7 +64,6 @@ public class UserLoginIsInvalid   {
   }
 
   
-  @ApiModelProperty(value = "Localised message suitable for UI.")
   @JsonProperty("msg")
   public String getMsg() {
     return msg;
@@ -92,9 +82,7 @@ public class UserLoginIsInvalid   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("loginId")
-  @NotNull
   public LoginId getLoginId() {
     return loginId;
   }

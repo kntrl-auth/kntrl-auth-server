@@ -1,14 +1,9 @@
 package kntrl.example.generated.model;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import kntrl.example.generated.model.CodeVerifier;
-import javax.validation.constraints.*;
-import javax.validation.Valid;
 
-import io.swagger.annotations.*;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -18,9 +13,9 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 
 @JsonTypeName("UnconfirmedAuth")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-21T17:10:42.806916+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-22T00:20:30.250260+03:00[Europe/Kiev]")
 public class UnconfirmedAuth   {
-  private @Valid List<CodeVerifier> sentCodes = null;
+  private List<CodeVerifier> sentCodes = null;
 
   /**
    **/
@@ -30,7 +25,6 @@ public class UnconfirmedAuth   {
   }
 
   
-  @ApiModelProperty(value = "")
   @JsonProperty("sentCodes")
   public List<CodeVerifier> getSentCodes() {
     return sentCodes;

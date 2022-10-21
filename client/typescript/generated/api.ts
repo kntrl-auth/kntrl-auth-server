@@ -63,7 +63,7 @@ export interface AccessTokenCfg {
      * @type {string}
      * @memberof AccessTokenCfg
      */
-    'cache'?: string;
+    'cache'?: AccessTokenCfgCacheEnum;
     /**
      * By default, unauthenticated sessions can\'t be cached.
      * @type {boolean}
@@ -77,6 +77,14 @@ export interface AccessTokenCfg {
      */
     'ttl'?: string;
 }
+
+export const AccessTokenCfgCacheEnum = {
+    Jwt: 'JWT',
+    Binary: 'BINARY'
+} as const;
+
+export type AccessTokenCfgCacheEnum = typeof AccessTokenCfgCacheEnum[keyof typeof AccessTokenCfgCacheEnum];
+
 /**
  * 
  * @export

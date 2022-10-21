@@ -1,13 +1,9 @@
 package kntrl.example.generated.model;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import java.util.HashMap;
+import java.util.Map;
 import kntrl.example.generated.model.AuthResAuthData;
-import kntrl.example.generated.model.AuthResResData;
-import javax.validation.constraints.*;
-import javax.validation.Valid;
 
-import io.swagger.annotations.*;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -17,10 +13,10 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 
 @JsonTypeName("AuthRes")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-21T17:10:42.806916+03:00[Europe/Kiev]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2022-10-22T00:20:30.250260+03:00[Europe/Kiev]")
 public class AuthRes   {
-  private @Valid AuthResAuthData authData;
-  private @Valid AuthResResData resData;
+  private AuthResAuthData authData;
+  private Map<String, Object> resData = null;
 
   /**
    **/
@@ -30,9 +26,7 @@ public class AuthRes   {
   }
 
   
-  @ApiModelProperty(required = true, value = "")
   @JsonProperty("authData")
-  @NotNull
   public AuthResAuthData getAuthData() {
     return authData;
   }
@@ -43,24 +37,40 @@ public class AuthRes   {
   }
 
   /**
+   * This data will be sent back to the client.
    **/
-  public AuthRes resData(AuthResResData resData) {
+  public AuthRes resData(Map<String, Object> resData) {
     this.resData = resData;
     return this;
   }
 
   
-  @ApiModelProperty(value = "")
   @JsonProperty("resData")
-  public AuthResResData getResData() {
+  public Map<String, Object> getResData() {
     return resData;
   }
 
   @JsonProperty("resData")
-  public void setResData(AuthResResData resData) {
+  public void setResData(Map<String, Object> resData) {
     this.resData = resData;
   }
 
+  public AuthRes putResDataItem(String key, Object resDataItem) {
+    if (this.resData == null) {
+      this.resData = new HashMap<>();
+    }
+
+    this.resData.put(key, resDataItem);
+    return this;
+  }
+
+  public AuthRes removeResDataItem(Object resDataItem) {
+    if (resDataItem != null && this.resData != null) {
+      this.resData.remove(resDataItem);
+    }
+
+    return this;
+  }
 
   @Override
   public boolean equals(Object o) {
