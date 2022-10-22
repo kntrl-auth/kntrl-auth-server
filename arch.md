@@ -11,7 +11,7 @@ Why? Because access-check is app specific, resource can be limited by role, rati
 Although there are some common approaches for authorisation, e.g. RBAC, we decided that it's not what Kntrl about right now.
 
 
-## Identification
+## 🥷 Identification
 
 Identification is enabled by the `logins` section in config. A login can be just user-inputted text (like "username") or can be
 provided by an authenticator (like "email" or "facebook").
@@ -19,7 +19,7 @@ provided by an authenticator (like "email" or "facebook").
 Logins are logic-less - it's just the id of a user.
 
 
-## Authentication
+## ✅ Authentication
 
 Authenticator - is a component that takes user data from database (if the user already identified), authentication request, 
 verification code (if it's specified in the config) and executes one of next:
@@ -34,7 +34,7 @@ verification code (if it's specified in the config) and executes one of next:
 For more details check [Plugin API](https://kntrl-auth.github.io/kntrl-auth-server/apidocs/plugin#tag/pluginauth).
 
 
-## Authentication flow, 2FA, action confirmation, API keys
+## 📱 Authentication flow, 2FA, action confirmation, API keys
 
 Next important concept is `entries`. For simplicity, you can treat entries as UI that handles sign-in or requests
 confirmation from a user. You may have separate entries for:
@@ -55,7 +55,7 @@ You may have as many factors per entry as you need. Factors can be required
 (a user can't enter if they don't have corresponding authenticator enabled) or optional (authenticator executed only if factor is enabled).
 
 
-## Restoring access
+## 🔑 Restoring access
 
 Access restoring is handled by:
 
@@ -69,7 +69,7 @@ Also, this flow may contain authenticators that are not available for regular si
 only for restoring access, but not for regular sign-in.
 
 
-## Access checks
+## 🔓 Access checks
 
 On backend, to allow/disallow a user to perform some actions, you should validate a session with user access-token 
 (check SDK/API docs/examples) and check that session `entry` and `userId` fields correspond requirements for an action (this is app-specific logic).

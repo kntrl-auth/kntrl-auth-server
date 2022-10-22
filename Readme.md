@@ -17,7 +17,7 @@ integration with existing database and codebase via plugins, action confirmation
 - Authenticate by **password, email, IP, secret questions**, **Facebook** OAuth2, **Google** OAuth2, etc.
 - **API key** management supported
 - Configurable **multifactor authentication**
-- **Action confirmation** (e.g. "enter code from email to confirm payment")
+- **Action confirmation** (e.g. "enter the code from email to confirm payment")
 - Restore account access (e.g. "forgot password") supported
 - Configurable **token rotation** (access and refresh tokens)
 - Clint side access token caching and signature (**JWT** supported)

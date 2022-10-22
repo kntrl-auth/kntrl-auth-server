@@ -1,9 +1,9 @@
 {
-  logins: [ "email" ],
+  logins: [ "username", "email" ],
 
   auths: {
     email: {
-      server: "localhost:1025",
+      server: "maildev:1025",
       sender: "test@test.com",
       code: {},
     },
@@ -13,7 +13,10 @@
   entries: {
     app: {
       factorsRequired: {
-        first: [ "email", "password" ]
+        first: [ "password" ]
+      },
+      factorsOptional: {
+        second: [ "email" ]
       },
       editAccount: true
     }
