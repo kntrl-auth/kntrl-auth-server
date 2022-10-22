@@ -34,7 +34,7 @@ class Session(
     }
 
     fun get(): SessionModel = handleErr(this) {
-        val res = SessionApi(_authenticatedOpenapiClient()).session
+        val res = SessionApi(authenticatedOpenapiClient()).session
         update(null, res)
         res
     }
@@ -42,13 +42,13 @@ class Session(
 
     fun authenticate(req: AuthenticateReq): AuthenticateRes = handleErr(this) {
         val res = if (newSessionReq != null) {
-            SessionApi(_authenticatedOpenapiClient()).newSession(newSessionReq!!.apply {
+            SessionApi(authenticatedOpenapiClient()).newSession(newSessionReq!!.apply {
                 factors = req.factors
                 authReqs = req.authReqs
                 dryRun = req.dryRun
             })
         } else {
-            SessionApi(_authenticatedOpenapiClient()).authenticate(req)
+            SessionApi(authenticatedOpenapiClient()).authenticate(req)
         }
         if (res.tokens?.access != null) newSessionReq = null
         update(res.tokens, res.session)
@@ -57,14 +57,19 @@ class Session(
 
     fun confirm(receivedCodes: Map<String, Map<String, String>>): AuthenticateRes = confirm(null, receivedCodes)
     fun confirm(sessionId: String?, receivedCodes: Map<String, Map<String, String>>): AuthenticateRes = handleErr(this) {
-        val res = SessionApi(_authenticatedOpenapiClient()).confirmSessionAuths(
+        val res = SessionApi(authenticatedOpenapiClient()).confirmSessionAuths(
             ConfirmSessionAuthsReq().sessionId(sessionId).receivedCodes(receivedCodes))
         update(res.tokens, res.session)
         res
     }
 
-    fun signOut() = handleErr(this) {
-        SessionApi(_authenticatedOpenapiClient()).signOut()
+    fun signOut() = signOut(null)
+    fun signOut(sessionId: String?) = handleErr(this) {
+        if (sessionId != null) {
+            SessionApi(authenticatedOpenapiClient()).delSession(sessionId)
+        } else {
+            SessionApi(authenticatedOpenapiClient()).signOut()
+        }
     }
 
     fun refreshAccessToken() = refreshAccessToken(null)
@@ -99,11 +104,17 @@ class Session(
 
     fun authorize() = authorize(null)
     fun authorize(rateLimiter: RateLimiterReq?): AuthorizeRes = handleErr(this) {
-        AuthorisationApi(_authenticatedOpenapiClient())
+        AuthorisationApi(authenticatedOpenapiClient())
             .authorize(AuthorizeReq().rateLimiter(rateLimiter))
     }
 
-    fun _authenticatedOpenapiClient() = if (this.tokens == null) {
+    fun allSession() = allSession(null, null)
+    fun allSession(entry: String) = allSession(entry, null)
+    fun allSession(entry: String?, userId: String?) = handleErr(this) {
+        SessionApi(authenticatedOpenapiClient()).getAll(entry, userId)
+    }
+
+    fun authenticatedOpenapiClient() = if (this.tokens == null) {
         this.client
     } else {
         ApiClient(client.httpClient).apply {

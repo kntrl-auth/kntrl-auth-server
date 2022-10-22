@@ -12,15 +12,16 @@
       }
     },
 
-    // Creating new session will result in new access-token generated. This access-token can be used as API key
+    // Creating new sessions will result in new access-token generation. This access-token can be used as API key
     // for applications
     apiKey: {
       accessToken: {
         // API key shouldn't expire, so we are choosing a long enough lifetime.
         ttl: '10y',
-        // To
+        // Disable caching to make the access token revocable at any time
         cache: false,
       },
+      // Access token can't overlive session so this value should be specified too
       ttl: '10y',
 
       // To generate new api-key, user must be already authenticated

@@ -81,8 +81,12 @@ export class Session implements SessionModel {
         return res;
     }
 
-    async signOut(): Promise<void> {
-        await handleErr(this.api.signOut(await this._authenticatedAxiosCfg()), this);
+    async signOut(sessionId?: string): Promise<void> {
+        if (sessionId) {
+            await handleErr(this.api.delSession(sessionId, await this._authenticatedAxiosCfg()), this);
+        } else {
+            await handleErr(this.api.signOut(await this._authenticatedAxiosCfg()), this);
+        }
     }
 
     async refreshAccessToken(refreshToken?: string, errOnMissingToken?: any): Promise<RefreshTokenRes> {

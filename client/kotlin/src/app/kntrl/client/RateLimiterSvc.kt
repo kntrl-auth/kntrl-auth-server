@@ -6,7 +6,7 @@ import app.kntrl.client.generated.model.RateLimiterReq
 
 class RateLimiterSvc(private val session: Session) {
     fun limit(rateLimiterId: String, quotaToBurn: Double): AuthorizeRes = handleErr(session) {
-        AuthorisationApi(session._authenticatedOpenapiClient())
+        AuthorisationApi(session.authenticatedOpenapiClient())
             .limit(RateLimiterReq().id(rateLimiterId).quotaToBurn(quotaToBurn))
     }
 }

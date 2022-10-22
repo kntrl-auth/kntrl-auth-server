@@ -1,13 +1,12 @@
 package app.kntrl.client
 
 import app.kntrl.client.generated.api.ServerApi
-import app.kntrl.client.generated.infra.ApiClient
 import app.kntrl.client.generated.infra.ApiException
 import app.kntrl.client.generated.model.*
 
 class ServerSvc(private val session: Session) {
     fun health(key: String? = null): HealthRes = try {
-        handleErr(session) { ServerApi(session._authenticatedOpenapiClient()).health(key) }
+        handleErr(session) { ServerApi(session.authenticatedOpenapiClient()).health(key) }
     } catch (ex: ApiException) {
         if (ex.code != 0) throw ex
 
@@ -27,5 +26,5 @@ class ServerSvc(private val session: Session) {
         }
     }
 
-    fun cfg(): SHAppCfg = handleErr(session) { ServerApi(session._authenticatedOpenapiClient()).cfg() }
+    fun cfg(): SHAppCfg = handleErr(session) { ServerApi(session.authenticatedOpenapiClient()).cfg() }
 }

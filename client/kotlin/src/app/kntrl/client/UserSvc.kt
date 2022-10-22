@@ -8,13 +8,13 @@ import app.kntrl.client.generated.model.SaveUserReq as SaveUserReqModel
 import app.kntrl.client.generated.model.User as UserModel
 
 class UserSvc(private val session: Session) {
-    fun get(): UserModel = handleErr(session) { UserApi(session._authenticatedOpenapiClient()).user }
+    fun get(): UserModel = handleErr(session) { UserApi(session.authenticatedOpenapiClient()).user }
     fun save(req: SaveUserReqModel): SaveUserRes = handleErr(session) {
-        UserApi(session._authenticatedOpenapiClient()).saveUser(req)
+        UserApi(session.authenticatedOpenapiClient()).saveUser(req)
     }
     fun confirmAuth(receivedCodes: Map<String, Map<String, String>>): SaveUserRes = confirmAuth(null, receivedCodes)
     fun confirmAuth(userId: String?, receivedCodes: Map<String, Map<String, String>>): SaveUserRes = handleErr(session) {
-        UserApi(session._authenticatedOpenapiClient())
+        UserApi(session.authenticatedOpenapiClient())
             .confirmUserAuths(ConfirmUserAuthsReq().userId(userId).receivedCodes(receivedCodes))
     }
 }
