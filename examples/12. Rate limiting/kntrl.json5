@@ -1,22 +1,19 @@
 {
-  logins: [ "email" ],
+  logins: [ "username" ],
 
   auths: {
-    email: {
-      server: "localhost:1025",
-      sender: "test@test.com",
-
+    password: {
       // Apply "short" rate limiter to every execution of "email" auth
       rateLimiter: "short",
       // Every call to "email" authenticator will burn 1.0 of rate-limiter allocated quote.
-      burnQuota: 1
+      burnQuota: 0.5
     },
   },
 
   entries: {
     app: {
       factorsRequired: {
-        first: [ "email" ]
+        first: [ "password" ]
       }
     }
   },
@@ -36,10 +33,10 @@
       // Different IPs will have different rate-limiters
       ip: true,
 
-      // All timeline will be split to 10s time windows, every time window will receive 1.0 of quota
+      // All timeline will be split in 10s time windows, every time window will receive 1.0 of quota
       period: "10s",
 
-      // If request comes too fast - it will be delayed according to current time window
+      // If request comes too fast - it will be delayed according to current time window.
       alignLoad: true
     }
   }
