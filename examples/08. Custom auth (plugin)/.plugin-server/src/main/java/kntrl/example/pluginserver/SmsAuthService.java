@@ -4,6 +4,8 @@ import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
 import kntrl.example.generated.model.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,8 @@ import java.util.function.Supplier;
 @RestController
 @RequestMapping("/my/api/auth-plugins/sms/plugin/auth")
 public class SmsAuthService {
+    private static final Logger log = LoggerFactory.getLogger(SmsAuthService.class);
+    
     private final static String REQ_DATA_PHONE = "phone";
     private final static String REQ_DATA_MSG_TYPE = "msgType";
 
@@ -43,12 +47,12 @@ public class SmsAuthService {
 
     @ExceptionHandler({ AuthPluginException.class })
     ResponseEntity<Map<String, String>> onError(AuthPluginException ex) {
-        System.out.println("Error: " + ex.getErr());
+        log.error("Error: " + ex.getErr());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getErr());
     }
 
     private DryRunAuthRes dryRun(AuthReq req, Boolean isUpdate) {
-        Optional<String> phoneFromReq = Optional.of(req.getReqData().get(REQ_DATA_PHONE))
+        Optional<String> phoneFromReq = Optional.ofNullable(req.getReqData().get(REQ_DATA_PHONE))
                 .map(Object::toString)
                 .map(SmsAuthService::parsePhone);
 
@@ -59,7 +63,7 @@ public class SmsAuthService {
         } else {
             // When authenticating using phone, phone can be taken from request (identification) or from auth data
             // (action confirmation)
-            Optional<String> phoneFromAuthData = Optional.of(req.getAuthData())
+            Optional<String> phoneFromAuthData = Optional.ofNullable(req.getAuthData())
                     .map(authData -> (String) authData.getPublic().get(PUBLIC_DATA_PHONE));
             if (phoneFromAuthData.isPresent() && phoneFromReq.isPresent()
                     && !phoneFromAuthData.get().equals(phoneFromReq.get())) {
@@ -102,13 +106,13 @@ public class SmsAuthService {
 
     private static void sendSms(String phone, String code, Map<String, Object> reqData) {
         String text = createSmsMessage(reqData) + code;
-        System.out.println("Sending sms to " + phone + "...");
-        System.out.println("Sms: " + text);
-        System.out.println("Sms sent.");
+        log.info("Sending sms to " + phone + "...");
+        log.info("Sms: " + text);
+        log.info("Sms sent.");
     }
 
     private static String createSmsMessage(Map<String, Object> reqData) {
-        String messageType = Optional.of(reqData.get(REQ_DATA_MSG_TYPE))
+        String messageType = Optional.ofNullable(reqData.get(REQ_DATA_MSG_TYPE))
                 .map(Object::toString)
                 .orElse("default");
         switch (messageType) {
@@ -119,9 +123,9 @@ public class SmsAuthService {
     }
 
     private static <RS> RS logRequest(String actionName, Object rq, Supplier<RS> action) {
-        System.out.println("Handling " + actionName + " request: " + rq);
+        log.info("Handling " + actionName + " request: " + rq);
         RS res = action.get();
-        System.out.println("Response: " + res);
+        log.info("Response: " + res);
         return res;
     }
 
@@ -135,17 +139,17 @@ public class SmsAuthService {
         public static AuthPluginException incorrectPhone =
                 new AuthPluginException("PHONE_NUMBER_IS_INCORRECT", "Incorrect phone number");
 
-        private final Map<String, String> err;
+        private final Map<String, String> errFields;
 
         public AuthPluginException(String code, String devMsg) {
-            this.err = Map.of(
+            this.errFields = Map.of(
                     PluginClientErrProps.CODE.toString(), code,
                     PluginClientErrProps.DEVMSG.toString(), devMsg
             );
         }
 
         public Map<String, String> getErr() {
-            return err;
+            return errFields;
         }
     }
 }

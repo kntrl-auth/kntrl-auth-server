@@ -56,4 +56,4 @@ async function example() {
   }
 }
 
-example().then(() => {}).catch(err => console.log(err));
+example().catch(err => console.log(err));

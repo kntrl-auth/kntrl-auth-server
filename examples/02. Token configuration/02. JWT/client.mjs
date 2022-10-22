@@ -39,4 +39,4 @@ async function loadSessionTokens() {
   return signUpRes.tokens;
 }
 
-example().then(() => {}).catch(err => console.log(err));
+example().catch(err => console.log(err));
