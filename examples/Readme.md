@@ -1,8 +1,8 @@
 ### How to read these examples
 
 Example folders may contain:
-- `Readme.md` with description of example
-- `docker-compose.yml` is docker environment to run the example
+- `Readme.md` with description of an example
+- `docker-compose.yml` is docker environment to run an example
 - `kntrl.json5` file contains the app configuration
 - `client.**` contains short example of frontend and/or backend integration
 

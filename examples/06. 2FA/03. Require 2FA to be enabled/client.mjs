@@ -14,7 +14,7 @@ async function example() {
     },
     signUp: true,
   });
-  const signUpRes = await signUpSession.authenticate({
+  await signUpSession.authenticate({
     authReqs: {
       password: {},
     }
