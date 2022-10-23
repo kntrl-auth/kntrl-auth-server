@@ -3,6 +3,9 @@
 
   auths: {
     phone: {
+      // Connect from docker to host
+      // remote: "http://host.docker.internal:8080/my/api/auth-plugins/sms",
+
       remote: "http://plugin-server:8080/my/api/auth-plugins/sms",
       query: {
         access_key: "34VxHAWeDhY4Ir4H2RaNcMpUwLt7OF"

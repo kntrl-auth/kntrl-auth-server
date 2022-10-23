@@ -17,8 +17,9 @@
 
     forgotPassword: {
       factorsRequired: {
-        first: [ "questions" ]
-      }
+        first: [ "questions" ],
+      },
+      editAccount: true
     }
   }
 }
