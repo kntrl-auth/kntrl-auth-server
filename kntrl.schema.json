@@ -280,15 +280,15 @@
                   "type": "string",
                   "x-additionalPropertiesName": "templateName"
                 },
-                "description": "List of email templates. Key - name of template (can be used lately on frontend), value - path to template.\nApp uses handlebars templates to generate emails. See docs here https://handlebarsjs.com\n\nEmail templates received `confirmationUrl`, `action`, `user`, `session`, `codeId`, `code`, `lang`, `headers`\nas template params, e.g. you can print user id as `{{ user.id }}`.\n\nTemplate engine also provides `i18n` helper for localisation. E.g. `{{i18n 'confirmationButton' default='Confirm'}}`\nsearches key `confirmationButton` in files specified by `i18n.dir` config.\n\nIt allows setting subject of email using `title` html tag, e.g. `<title>Email subject</title>`.\n\n"
+                "description": "List of email templates. Key - is name of a template (can be used lately on frontend), value - is path to the template.\nApp uses handlebars templates to generate emails. See docs here https://handlebarsjs.com\n\nEmail templates receives `confirmationUrl`, `action`, `user`, `session`, `codeId`, `code`, `codeExpiresInMinutes`,\n`lang`, `headers` as template params, e.g. you can print user id as `{{user.id}}`.\n\nTemplate engine also provides `i18n` helper for localisation. E.g. `{{i18n 'confirmationButton' default='Confirm'}}`\nsearches key `confirmationButton` in files specified by `i18n.dir` config.\n\nUse `{{err ERR_CODE msg='Localised message (if null, will be taken from i18n file)' devMsg='dev message'}}` to\nraise an error in a template.\n\nIt allows setting subject of email using `title` html tag, e.g. `<title>Email subject</title>`.\n\n"
               },
               "templateParams": {
                 "type": "object",
                 "additionalProperties": {
-                  "type": "string",
+                  "type": "object",
                   "x-additionalPropertiesName": "paramName"
                 },
-                "description": "Additional params for template.\n"
+                "description": "Additional params for templates that can be passed in request. Key - is a name of additional parameter, value - is\na default value for this parameter (when no value present in request)\n"
               },
               "code": {
                 "type": "object",
@@ -1414,11 +1414,11 @@
         "properties": {
           "userId": {
             "type": "boolean",
-            "description": "Create different rate limiters for different users."
+            "description": "Create different rate limiters for different users.\nEnabled by default."
           },
           "ip": {
             "type": "boolean",
-            "description": "Create different rate limiters for different ips."
+            "description": "Create different rate limiters for different ips.\nDisabled by default."
           },
           "quota": {
             "type": "number",

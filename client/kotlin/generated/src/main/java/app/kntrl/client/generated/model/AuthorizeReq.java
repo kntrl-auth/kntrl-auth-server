@@ -24,6 +24,8 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -50,12 +52,47 @@ import app.kntrl.client.generated.infra.JSON;
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class AuthorizeReq {
+  public static final String SERIALIZED_NAME_REQUIRE_SCOPES = "requireScopes";
+  @SerializedName(SERIALIZED_NAME_REQUIRE_SCOPES)
+  private List<String> requireScopes = null;
+
   public static final String SERIALIZED_NAME_RATE_LIMITER = "rateLimiter";
   @SerializedName(SERIALIZED_NAME_RATE_LIMITER)
   private RateLimiterReq rateLimiter;
 
   public AuthorizeReq() {
   }
+
+  public AuthorizeReq requireScopes(List<String> requireScopes) {
+    
+    this.requireScopes = requireScopes;
+    return this;
+  }
+
+  public AuthorizeReq addRequireScopesItem(String requireScopesItem) {
+    if (this.requireScopes == null) {
+      this.requireScopes = new ArrayList<>();
+    }
+    this.requireScopes.add(requireScopesItem);
+    return this;
+  }
+
+   /**
+   * Get requireScopes
+   * @return requireScopes
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public List<String> getRequireScopes() {
+    return requireScopes;
+  }
+
+
+  public void setRequireScopes(List<String> requireScopes) {
+    this.requireScopes = requireScopes;
+  }
+
 
   public AuthorizeReq rateLimiter(RateLimiterReq rateLimiter) {
     
@@ -125,19 +162,21 @@ public class AuthorizeReq {
       return false;
     }
     AuthorizeReq authorizeReq = (AuthorizeReq) o;
-    return Objects.equals(this.rateLimiter, authorizeReq.rateLimiter)&&
+    return Objects.equals(this.requireScopes, authorizeReq.requireScopes) &&
+        Objects.equals(this.rateLimiter, authorizeReq.rateLimiter)&&
         Objects.equals(this.additionalProperties, authorizeReq.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(rateLimiter, additionalProperties);
+    return Objects.hash(requireScopes, rateLimiter, additionalProperties);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class AuthorizeReq {\n");
+    sb.append("    requireScopes: ").append(toIndentedString(requireScopes)).append("\n");
     sb.append("    rateLimiter: ").append(toIndentedString(rateLimiter)).append("\n");
     sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");
@@ -162,6 +201,7 @@ public class AuthorizeReq {
   static {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
+    openapiFields.add("requireScopes");
     openapiFields.add("rateLimiter");
 
     // a set of required properties/fields (JSON key names)
@@ -181,6 +221,10 @@ public class AuthorizeReq {
         } else { // has required fields
           throw new IllegalArgumentException(String.format("The required field(s) %s in AuthorizeReq is not found in the empty JSON string", AuthorizeReq.openapiRequiredFields.toString()));
         }
+      }
+      // ensure the json data is an array
+      if ((jsonObj.get("requireScopes") != null && !jsonObj.get("requireScopes").isJsonNull()) && !jsonObj.get("requireScopes").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `requireScopes` to be an array in the JSON string but got `%s`", jsonObj.get("requireScopes").toString()));
       }
       // validate the optional field `rateLimiter`
       if (jsonObj.get("rateLimiter") != null && !jsonObj.get("rateLimiter").isJsonNull()) {

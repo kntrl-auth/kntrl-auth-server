@@ -410,16 +410,17 @@ components:
           SIGNATURE_IS_INCORRECT: '#/components/schemas/SignatureIsIncorrect'
           USER_LOGIN_IS_INVALID: '#/components/schemas/UserLoginIsInvalid'
           USER_LOGIN_ALREADY_TAKEN: '#/components/schemas/UserLoginAlreadyTaken'
+          UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
           TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
           TOO_MANY_REQS: '#/components/schemas/TooManyReqs'
           AUTH_IS_NOT_ENABLED: '#/components/schemas/AuthIsNotEnabled'
           AUTH_IS_NOT_CONFIRMED: '#/components/schemas/AuthIsNotConfirmed'
+          SCOPE_NOT_FOUND: '#/components/schemas/ScopeNotFound'
           NO_AUTH_AVAILABLE_FOR_FACTOR: '#/components/schemas/NoAuthAvailableForFactor'
           AUTH_REQUIRES_ANOTHER: '#/components/schemas/AuthRequiresAnother'
           CODE_IS_EXPIRED: '#/components/schemas/CodeIsExpired'
           CODE_TOO_MANY_ATTEMPTS: '#/components/schemas/CodeTooManyAttempts'
           CODE_IS_INCORRECT: '#/components/schemas/CodeIsIncorrect'
-          UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
           SERVER_ERR: '#/components/schemas/ServerErr'
           INTEGRATION_ERR: '#/components/schemas/IntegrationErr'
           ANY_ERR: '#/components/schemas/AnyErr'
@@ -474,7 +475,7 @@ components:
       type: object
       allOf:
       - $ref: '#/components/schemas/ClientErr'
-      x-order: -270554383-5
+      x-order: -270554383-6
     ClientErr:
       required:
       - code
@@ -496,15 +497,16 @@ components:
           SIGNATURE_IS_INCORRECT: '#/components/schemas/SignatureIsIncorrect'
           USER_LOGIN_IS_INVALID: '#/components/schemas/UserLoginIsInvalid'
           USER_LOGIN_ALREADY_TAKEN: '#/components/schemas/UserLoginAlreadyTaken'
+          UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
           TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
           TOO_MANY_REQS: '#/components/schemas/TooManyReqs'
           AUTH_IS_NOT_ENABLED: '#/components/schemas/AuthIsNotEnabled'
           AUTH_IS_NOT_CONFIRMED: '#/components/schemas/AuthIsNotConfirmed'
+          SCOPE_NOT_FOUND: '#/components/schemas/ScopeNotFound'
           AUTH_REQUIRES_ANOTHER: '#/components/schemas/AuthRequiresAnother'
           CODE_IS_EXPIRED: '#/components/schemas/CodeIsExpired'
           CODE_TOO_MANY_ATTEMPTS: '#/components/schemas/CodeTooManyAttempts'
           CODE_IS_INCORRECT: '#/components/schemas/CodeIsIncorrect'
-          UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
       allOf:
       - $ref: '#/components/schemas/Err'
       - type: object
@@ -524,17 +526,17 @@ components:
       type: object
       allOf:
       - $ref: '#/components/schemas/ClientErr'
-      x-order: -270554383-6
+      x-order: -270554383-7
     CodeIsIncorrect:
       type: object
       allOf:
       - $ref: '#/components/schemas/ClientErr'
-      x-order: -270554383-8
+      x-order: -270554383-9
     CodeTooManyAttempts:
       type: object
       allOf:
       - $ref: '#/components/schemas/ClientErr'
-      x-order: -270554383-7
+      x-order: -270554383-8
     EmailIsIncorrect:
       type: object
       allOf:
@@ -590,7 +592,7 @@ components:
       type: object
       allOf:
       - $ref: '#/components/schemas/IntegrationErr'
-      x-order: -270554383-4
+      x-order: -270554383-5
     PasswordIsIncorrect:
       type: object
       allOf:
@@ -699,6 +701,19 @@ components:
           tooManyAnswers:
             type: boolean
       x-order: -1279700867-8
+    ScopeNotFound:
+      required:
+      - scopes
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ClientErr'
+      - type: object
+        properties:
+          scopes:
+            type: array
+            items:
+              type: string
+      x-order: -270554383-4
     ServerErr:
       required:
       - code
@@ -744,7 +759,7 @@ components:
             type: integer
             format: int64
             x-nullable: true
-      x-order: -270554383-11
+      x-order: -270554383-12
     TooManyReqs:
       type: object
       allOf:
@@ -763,7 +778,7 @@ components:
             type: integer
             format: int32
             x-nullable: true
-      x-order: -270554383-12
+      x-order: -270554383-13
     Unauthenticated:
       required:
       - code
@@ -774,11 +789,11 @@ components:
           SESSION_EXPIRED: '#/components/schemas/SessionExpired'
           ACCESS_DENIED: '#/components/schemas/AccessDenied'
           USER_NOT_FOUND: '#/components/schemas/UserNotFound'
-          TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
           UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
+          TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
       allOf:
       - $ref: '#/components/schemas/ClientErr'
-      x-order: -270554383-9
+      x-order: -270554383-10
       x-sealed: false
     UserLoginAlreadyTaken:
       type: object
@@ -1085,7 +1100,7 @@ components:
             description: |
               Shows is answer was correct.
             example:
-              HOME_CITY: true
+              HOMETOWN: true
               MOTHER_NAME: false
       x-order: -213229069-4
     QuestionsPrivateData:
@@ -1295,6 +1310,12 @@ components:
             type: string
             description: Template to use.
             x-nullable: true
+          templateParams:
+            type: object
+            additionalProperties:
+              type: object
+            description: Template params
+            x-nullable: true
       x-order: 1021533909-3
     EmailUpdateReqData:
       required:
@@ -1311,6 +1332,12 @@ components:
           template:
             type: string
             description: Template to use.
+            x-nullable: true
+          templateParams:
+            type: object
+            additionalProperties:
+              type: object
+            description: Template params
             x-nullable: true
       x-order: 1021533909-4
     Login:
@@ -1411,7 +1438,7 @@ components:
             description: |
               Given answers for questions.
             example:
-              HOME_CITY: New-York
+              HOMETOWN: New-York
               MOTHER_NAME: Emma
       x-order: -213229069-3
     QuestionsUpdateReqData:
@@ -1430,7 +1457,7 @@ components:
             description: |
               Answers to save. `null` as value removes answer
             example:
-              HOME_CITY: London
+              HOMETOWN: London
               MOTHER_NAME: null
       x-order: -213229069-5
     ReqCtx:
@@ -1512,6 +1539,13 @@ components:
           format: int64
         newUser:
           type: boolean
+        scopes:
+          type: array
+          description: App services list that this session is allowed to access. Null
+            if allowed to access any scope
+          items:
+            type: string
+          x-nullable: true
         device:
           $ref: '#/components/schemas/Device'
         systemAccess:
@@ -1579,7 +1613,7 @@ components:
           format: int64
         systemAccess:
           type: boolean
-          description: Allows to access to any user in the app.
+          description: Allows to edit any user in the app.
       x-order: 276900135-0
     DryRunAuthData:
       type: object

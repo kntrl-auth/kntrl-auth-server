@@ -84,11 +84,11 @@ public class RateLimiterCfg {
   }
 
    /**
-   * Create different rate limiters for different users.
+   * Create different rate limiters for different users. Enabled by default.
    * @return userId
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Create different rate limiters for different users.")
+  @ApiModelProperty(value = "Create different rate limiters for different users. Enabled by default.")
 
   public Boolean getUserId() {
     return userId;
@@ -107,11 +107,11 @@ public class RateLimiterCfg {
   }
 
    /**
-   * Create different rate limiters for different ips.
+   * Create different rate limiters for different ips. Disabled by default.
    * @return ip
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Create different rate limiters for different ips.")
+  @ApiModelProperty(value = "Create different rate limiters for different ips. Disabled by default.")
 
   public Boolean getIp() {
     return ip;

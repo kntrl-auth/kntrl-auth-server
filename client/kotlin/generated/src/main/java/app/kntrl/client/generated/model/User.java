@@ -275,11 +275,11 @@ public class User {
   }
 
    /**
-   * Allows to access to any user in the app.
+   * Allows to edit any user in the app.
    * @return systemAccess
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Allows to access to any user in the app.")
+  @ApiModelProperty(value = "Allows to edit any user in the app.")
 
   public Boolean getSystemAccess() {
     return systemAccess;

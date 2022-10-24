@@ -74,7 +74,7 @@ public class QuestionsUpdateReqData {
    * @return answers
   **/
   @javax.annotation.Nonnull
-  @ApiModelProperty(example = "{\"HOME_CITY\":\"London\",\"MOTHER_NAME\":null}", required = true, value = "Answers to save. `null` as value removes answer ")
+  @ApiModelProperty(example = "{\"HOMETOWN\":\"London\",\"MOTHER_NAME\":null}", required = true, value = "Answers to save. `null` as value removes answer ")
 
   public Map<String, String> getAnswers() {
     return answers;

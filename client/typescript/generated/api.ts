@@ -107,6 +107,31 @@ export interface AnswerErr {
 /**
  * 
  * @export
+ * @interface AnswersTransformationCfg
+ */
+export interface AnswersTransformationCfg {
+    /**
+     * Transform user answer to lowercase letters. This allows user still pass a check when he wrote name or city with different cases. `false` means strict match, so \"John\" != \"john\"
+     * @type {boolean}
+     * @memberof AnswersTransformationCfg
+     */
+    'lowercase'?: boolean;
+    /**
+     * Remove all non-letters from user answer.
+     * @type {boolean}
+     * @memberof AnswersTransformationCfg
+     */
+    'removeSymbols'?: boolean;
+    /**
+     * Remove all spaces from user answer.
+     * @type {boolean}
+     * @memberof AnswersTransformationCfg
+     */
+    'removeSpaces'?: boolean;
+}
+/**
+ * 
+ * @export
  * @interface AnyErr
  */
 export interface AnyErr {
@@ -541,6 +566,12 @@ export interface AuthenticateReqAuthReqsValue {
      */
     'template'?: string;
     /**
+     * Template params
+     * @type {{ [key: string]: object; }}
+     * @memberof AuthenticateReqAuthReqsValue
+     */
+    'templateParams'?: { [key: string]: object; };
+    /**
      * If you have access-token - put it here.
      * @type {string}
      * @memberof AuthenticateReqAuthReqsValue
@@ -608,6 +639,12 @@ export interface AuthenticateRes {
  * @interface AuthorizeReq
  */
 export interface AuthorizeReq {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof AuthorizeReq
+     */
+    'requireScopes'?: Array<string>;
     /**
      * 
      * @type {RateLimiterReq}
@@ -815,6 +852,12 @@ export interface ClientErr {
     'tooManyAnswers'?: boolean;
     /**
      * 
+     * @type {Array<string>}
+     * @memberof ClientErr
+     */
+    'scopes'?: Array<string>;
+    /**
+     * 
      * @type {number}
      * @memberof ClientErr
      */
@@ -864,15 +907,16 @@ export const ClientErrCode = {
     SignatureIsIncorrect: 'SIGNATURE_IS_INCORRECT',
     UserLoginIsInvalid: 'USER_LOGIN_IS_INVALID',
     UserLoginAlreadyTaken: 'USER_LOGIN_ALREADY_TAKEN',
+    Unauthenticated: 'UNAUTHENTICATED',
     TokenExpired: 'TOKEN_EXPIRED',
     TooManyReqs: 'TOO_MANY_REQS',
     AuthIsNotEnabled: 'AUTH_IS_NOT_ENABLED',
     AuthIsNotConfirmed: 'AUTH_IS_NOT_CONFIRMED',
+    ScopeNotFound: 'SCOPE_NOT_FOUND',
     AuthRequiresAnother: 'AUTH_REQUIRES_ANOTHER',
     CodeIsExpired: 'CODE_IS_EXPIRED',
     CodeTooManyAttempts: 'CODE_TOO_MANY_ATTEMPTS',
-    CodeIsIncorrect: 'CODE_IS_INCORRECT',
-    Unauthenticated: 'UNAUTHENTICATED'
+    CodeIsIncorrect: 'CODE_IS_INCORRECT'
 } as const;
 
 export type ClientErrCode = typeof ClientErrCode[keyof typeof ClientErrCode];
@@ -1089,7 +1133,7 @@ export interface ConfirmSessionAuthsReq {
      */
     'sessionId'?: string;
     /**
-     * Code from authenticate/new-session response. 
+     * The code from authenticate/new-session response. 
      * @type {{ [key: string]: { [key: string]: string; }; }}
      * @memberof ConfirmSessionAuthsReq
      */
@@ -1108,7 +1152,7 @@ export interface ConfirmUserAuthsReq {
      */
     'userId'?: string;
     /**
-     * Code from save-user response. 
+     * The code from save-user response. 
      * @type {{ [key: string]: { [key: string]: string; }; }}
      * @memberof ConfirmUserAuthsReq
      */
@@ -1268,17 +1312,17 @@ export interface EmailAuthCfg {
      */
     'confirmationUrl'?: string;
     /**
-     * List of email templates. Key - name of template (can be used lately on frontend), value - path to template. App uses handlebars templates to generate emails. See docs here https://handlebarsjs.com  Email templates received `confirmationUrl`, `action`, `user`, `session`, `codeId`, `code`, `lang`, `headers` as template params, e.g. you can print user id as `{{ user.id }}`.  Template engine also provides `i18n` helper for localisation. E.g. `{{i18n \'confirmationButton\' default=\'Confirm\'}}` searches key `confirmationButton` in files specified by `i18n.dir` config.  It allows setting subject of email using `title` html tag, e.g. `<title>Email subject</title>`.  
+     * List of email templates. Key - is name of a template (can be used lately on frontend), value - is path to the template. App uses handlebars templates to generate emails. See docs here https://handlebarsjs.com  Email templates receives `confirmationUrl`, `action`, `user`, `session`, `codeId`, `code`, `codeExpiresInMinutes`, `lang`, `headers` as template params, e.g. you can print user id as `{{user.id}}`.  Template engine also provides `i18n` helper for localisation. E.g. `{{i18n \'confirmationButton\' default=\'Confirm\'}}` searches key `confirmationButton` in files specified by `i18n.dir` config.  Use `{{err ERR_CODE msg=\'Localised message (if null, will be taken from i18n file)\' devMsg=\'dev message\'}}` to raise an error in a template.  It allows setting subject of email using `title` html tag, e.g. `<title>Email subject</title>`.  
      * @type {{ [key: string]: string; }}
      * @memberof EmailAuthCfg
      */
     'templates'?: { [key: string]: string; };
     /**
-     * Additional params for template. 
-     * @type {{ [key: string]: string; }}
+     * Additional params for templates that can be passed in request. Key - is a name of additional parameter, value - is a default value for this parameter (when no value present in request) 
+     * @type {{ [key: string]: object; }}
      * @memberof EmailAuthCfg
      */
-    'templateParams'?: { [key: string]: string; };
+    'templateParams'?: { [key: string]: object; };
     /**
      * 
      * @type {CodeCfg}
@@ -1306,6 +1350,12 @@ export interface EmailAuthReqData {
      * @memberof EmailAuthReqData
      */
     'template'?: string;
+    /**
+     * Template params
+     * @type {{ [key: string]: object; }}
+     * @memberof EmailAuthReqData
+     */
+    'templateParams'?: { [key: string]: object; };
 }
 /**
  * 
@@ -1388,6 +1438,12 @@ export interface EmailUpdateReqData {
      * @memberof EmailUpdateReqData
      */
     'template'?: string;
+    /**
+     * Template params
+     * @type {{ [key: string]: object; }}
+     * @memberof EmailUpdateReqData
+     */
+    'templateParams'?: { [key: string]: object; };
 }
 /**
  * 
@@ -1612,6 +1668,12 @@ export interface Err {
     'tooManyAnswers'?: boolean;
     /**
      * 
+     * @type {Array<string>}
+     * @memberof Err
+     */
+    'scopes'?: Array<string>;
+    /**
+     * 
      * @type {number}
      * @memberof Err
      */
@@ -1696,16 +1758,17 @@ export const ErrCode = {
     SignatureIsIncorrect: 'SIGNATURE_IS_INCORRECT',
     UserLoginIsInvalid: 'USER_LOGIN_IS_INVALID',
     UserLoginAlreadyTaken: 'USER_LOGIN_ALREADY_TAKEN',
+    Unauthenticated: 'UNAUTHENTICATED',
     TokenExpired: 'TOKEN_EXPIRED',
     TooManyReqs: 'TOO_MANY_REQS',
     AuthIsNotEnabled: 'AUTH_IS_NOT_ENABLED',
     AuthIsNotConfirmed: 'AUTH_IS_NOT_CONFIRMED',
+    ScopeNotFound: 'SCOPE_NOT_FOUND',
     NoAuthAvailableForFactor: 'NO_AUTH_AVAILABLE_FOR_FACTOR',
     AuthRequiresAnother: 'AUTH_REQUIRES_ANOTHER',
     CodeIsExpired: 'CODE_IS_EXPIRED',
     CodeTooManyAttempts: 'CODE_TOO_MANY_ATTEMPTS',
     CodeIsIncorrect: 'CODE_IS_INCORRECT',
-    Unauthenticated: 'UNAUTHENTICATED',
     ServerErr: 'SERVER_ERR',
     IntegrationErr: 'INTEGRATION_ERR',
     AnyErr: 'ANY_ERR'
@@ -2137,6 +2200,12 @@ export interface NewSessionReq {
      * @memberof NewSessionReq
      */
     'authReqs'?: { [key: string]: AuthenticateReqAuthReqsValue; };
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof NewSessionReq
+     */
+    'scopes'?: Array<string>;
     /**
      * 
      * @type {boolean}
@@ -3125,13 +3194,13 @@ export interface QuestionsUpdateResData {
  */
 export interface RateLimiterCfg {
     /**
-     * Create different rate limiters for different users.
+     * Create different rate limiters for different users. Enabled by default.
      * @type {boolean}
      * @memberof RateLimiterCfg
      */
     'userId'?: boolean;
     /**
-     * Create different rate limiters for different ips.
+     * Create different rate limiters for different ips. Disabled by default.
      * @type {boolean}
      * @memberof RateLimiterCfg
      */
@@ -3425,6 +3494,37 @@ export interface SaveUserRes {
 /**
  * 
  * @export
+ * @interface ScopeNotFound
+ */
+export interface ScopeNotFound {
+    /**
+     * 
+     * @type {string}
+     * @memberof ScopeNotFound
+     */
+    'code': string;
+    /**
+     * Message for developers.
+     * @type {string}
+     * @memberof ScopeNotFound
+     */
+    'devMsg': string;
+    /**
+     * Localised message suitable for UI.
+     * @type {string}
+     * @memberof ScopeNotFound
+     */
+    'msg'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof ScopeNotFound
+     */
+    'scopes': Array<string>;
+}
+/**
+ * 
+ * @export
  * @interface ServerErr
  */
 export interface ServerErr {
@@ -3535,6 +3635,12 @@ export interface Session {
      * @memberof Session
      */
     'newUser': boolean;
+    /**
+     * App services list that this session is allowed to access. Null if allowed to access any scope
+     * @type {Array<string>}
+     * @memberof Session
+     */
+    'scopes'?: Array<string>;
     /**
      * 
      * @type {Device}
@@ -3749,17 +3855,17 @@ export interface ShAppCfgAuthsValue {
      */
     'confirmationUrl'?: string;
     /**
-     * List of email templates. Key - name of template (can be used lately on frontend), value - path to template. App uses handlebars templates to generate emails. See docs here https://handlebarsjs.com  Email templates received `confirmationUrl`, `action`, `user`, `session`, `codeId`, `code`, `lang`, `headers` as template params, e.g. you can print user id as `{{ user.id }}`.  Template engine also provides `i18n` helper for localisation. E.g. `{{i18n \'confirmationButton\' default=\'Confirm\'}}` searches key `confirmationButton` in files specified by `i18n.dir` config.  It allows setting subject of email using `title` html tag, e.g. `<title>Email subject</title>`.  
+     * List of email templates. Key - is name of a template (can be used lately on frontend), value - is path to the template. App uses handlebars templates to generate emails. See docs here https://handlebarsjs.com  Email templates receives `confirmationUrl`, `action`, `user`, `session`, `codeId`, `code`, `codeExpiresInMinutes`, `lang`, `headers` as template params, e.g. you can print user id as `{{user.id}}`.  Template engine also provides `i18n` helper for localisation. E.g. `{{i18n \'confirmationButton\' default=\'Confirm\'}}` searches key `confirmationButton` in files specified by `i18n.dir` config.  Use `{{err ERR_CODE msg=\'Localised message (if null, will be taken from i18n file)\' devMsg=\'dev message\'}}` to raise an error in a template.  It allows setting subject of email using `title` html tag, e.g. `<title>Email subject</title>`.  
      * @type {{ [key: string]: string; }}
      * @memberof ShAppCfgAuthsValue
      */
     'templates'?: { [key: string]: string; };
     /**
-     * Additional params for template. 
-     * @type {{ [key: string]: string; }}
+     * Additional params for templates that can be passed in request. Key - is a name of additional parameter, value - is a default value for this parameter (when no value present in request) 
+     * @type {{ [key: string]: object; }}
      * @memberof ShAppCfgAuthsValue
      */
-    'templateParams'?: { [key: string]: string; };
+    'templateParams'?: { [key: string]: object; };
     /**
      * This allows to drop last bytes of IP. So it allows to authenticate factor when ip has rough match, e.g. the same country, same city, or same internet provider.
      * @type {number}
@@ -4558,8 +4664,8 @@ export const UnauthenticatedCode = {
     SessionExpired: 'SESSION_EXPIRED',
     AccessDenied: 'ACCESS_DENIED',
     UserNotFound: 'USER_NOT_FOUND',
-    TokenExpired: 'TOKEN_EXPIRED',
-    Unauthenticated: 'UNAUTHENTICATED'
+    Unauthenticated: 'UNAUTHENTICATED',
+    TokenExpired: 'TOKEN_EXPIRED'
 } as const;
 
 export type UnauthenticatedCode = typeof UnauthenticatedCode[keyof typeof UnauthenticatedCode];
@@ -4646,7 +4752,7 @@ export interface User {
      */
     'new'?: boolean;
     /**
-     * Allows to access to any user in the app.
+     * Allows to edit any user in the app.
      * @type {boolean}
      * @memberof User
      */
@@ -5721,7 +5827,7 @@ export const SignatureApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Sign data using specified secret. 
+         * Sign data using specified secret. When secret is null - use app secret (specified in kntrl.json5) with SHA256withRSA algorithm. Otherwise - use secret from query with HmacSHA256 algorithm. 
          * @summary (Backend API) sign data
          * @param {string} body 
          * @param {string} [secret] 
@@ -5766,7 +5872,7 @@ export const SignatureApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Validates data signature 
+         * Validates data signature. See /sign API for details. 
          * @summary Validate signature
          * @param {string} signature 
          * @param {string} body 
@@ -5834,7 +5940,7 @@ export const SignatureApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Sign data using specified secret. 
+         * Sign data using specified secret. When secret is null - use app secret (specified in kntrl.json5) with SHA256withRSA algorithm. Otherwise - use secret from query with HmacSHA256 algorithm. 
          * @summary (Backend API) sign data
          * @param {string} body 
          * @param {string} [secret] 
@@ -5846,7 +5952,7 @@ export const SignatureApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Validates data signature 
+         * Validates data signature. See /sign API for details. 
          * @summary Validate signature
          * @param {string} signature 
          * @param {string} body 
@@ -5878,7 +5984,7 @@ export const SignatureApiFactory = function (configuration?: Configuration, base
             return localVarFp.getPublicKey(options).then((request) => request(axios, basePath));
         },
         /**
-         * Sign data using specified secret. 
+         * Sign data using specified secret. When secret is null - use app secret (specified in kntrl.json5) with SHA256withRSA algorithm. Otherwise - use secret from query with HmacSHA256 algorithm. 
          * @summary (Backend API) sign data
          * @param {string} body 
          * @param {string} [secret] 
@@ -5889,7 +5995,7 @@ export const SignatureApiFactory = function (configuration?: Configuration, base
             return localVarFp.sign(body, secret, options).then((request) => request(axios, basePath));
         },
         /**
-         * Validates data signature 
+         * Validates data signature. See /sign API for details. 
          * @summary Validate signature
          * @param {string} signature 
          * @param {string} body 
@@ -5922,7 +6028,7 @@ export class SignatureApi extends BaseAPI {
     }
 
     /**
-     * Sign data using specified secret. 
+     * Sign data using specified secret. When secret is null - use app secret (specified in kntrl.json5) with SHA256withRSA algorithm. Otherwise - use secret from query with HmacSHA256 algorithm. 
      * @summary (Backend API) sign data
      * @param {string} body 
      * @param {string} [secret] 
@@ -5935,7 +6041,7 @@ export class SignatureApi extends BaseAPI {
     }
 
     /**
-     * Validates data signature 
+     * Validates data signature. See /sign API for details. 
      * @summary Validate signature
      * @param {string} signature 
      * @param {string} body 

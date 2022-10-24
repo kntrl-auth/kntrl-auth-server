@@ -96,7 +96,7 @@ public class EmailAuthCfg {
 
   public static final String SERIALIZED_NAME_TEMPLATE_PARAMS = "templateParams";
   @SerializedName(SERIALIZED_NAME_TEMPLATE_PARAMS)
-  private Map<String, String> templateParams = null;
+  private Map<String, Object> templateParams = null;
 
   public static final String SERIALIZED_NAME_CODE = "code";
   @SerializedName(SERIALIZED_NAME_CODE)
@@ -335,11 +335,11 @@ public class EmailAuthCfg {
   }
 
    /**
-   * List of email templates. Key - name of template (can be used lately on frontend), value - path to template. App uses handlebars templates to generate emails. See docs here https://handlebarsjs.com  Email templates received &#x60;confirmationUrl&#x60;, &#x60;action&#x60;, &#x60;user&#x60;, &#x60;session&#x60;, &#x60;codeId&#x60;, &#x60;code&#x60;, &#x60;lang&#x60;, &#x60;headers&#x60; as template params, e.g. you can print user id as &#x60;{{ user.id }}&#x60;.  Template engine also provides &#x60;i18n&#x60; helper for localisation. E.g. &#x60;{{i18n &#39;confirmationButton&#39; default&#x3D;&#39;Confirm&#39;}}&#x60; searches key &#x60;confirmationButton&#x60; in files specified by &#x60;i18n.dir&#x60; config.  It allows setting subject of email using &#x60;title&#x60; html tag, e.g. &#x60;&lt;title&gt;Email subject&lt;/title&gt;&#x60;.  
+   * List of email templates. Key - is name of a template (can be used lately on frontend), value - is path to the template. App uses handlebars templates to generate emails. See docs here https://handlebarsjs.com  Email templates receives &#x60;confirmationUrl&#x60;, &#x60;action&#x60;, &#x60;user&#x60;, &#x60;session&#x60;, &#x60;codeId&#x60;, &#x60;code&#x60;, &#x60;codeExpiresInMinutes&#x60;, &#x60;lang&#x60;, &#x60;headers&#x60; as template params, e.g. you can print user id as &#x60;{{user.id}}&#x60;.  Template engine also provides &#x60;i18n&#x60; helper for localisation. E.g. &#x60;{{i18n &#39;confirmationButton&#39; default&#x3D;&#39;Confirm&#39;}}&#x60; searches key &#x60;confirmationButton&#x60; in files specified by &#x60;i18n.dir&#x60; config.  Use &#x60;{{err ERR_CODE msg&#x3D;&#39;Localised message (if null, will be taken from i18n file)&#39; devMsg&#x3D;&#39;dev message&#39;}}&#x60; to raise an error in a template.  It allows setting subject of email using &#x60;title&#x60; html tag, e.g. &#x60;&lt;title&gt;Email subject&lt;/title&gt;&#x60;.  
    * @return templates
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "{\"welcome\":\"./welcome.html.hbs\",\"restoreAccess\":\"./restore.html.hbs\"}", value = "List of email templates. Key - name of template (can be used lately on frontend), value - path to template. App uses handlebars templates to generate emails. See docs here https://handlebarsjs.com  Email templates received `confirmationUrl`, `action`, `user`, `session`, `codeId`, `code`, `lang`, `headers` as template params, e.g. you can print user id as `{{ user.id }}`.  Template engine also provides `i18n` helper for localisation. E.g. `{{i18n 'confirmationButton' default='Confirm'}}` searches key `confirmationButton` in files specified by `i18n.dir` config.  It allows setting subject of email using `title` html tag, e.g. `<title>Email subject</title>`.  ")
+  @ApiModelProperty(example = "{\"welcome\":\"./welcome.html.hbs\",\"restoreAccess\":\"./restore.html.hbs\"}", value = "List of email templates. Key - is name of a template (can be used lately on frontend), value - is path to the template. App uses handlebars templates to generate emails. See docs here https://handlebarsjs.com  Email templates receives `confirmationUrl`, `action`, `user`, `session`, `codeId`, `code`, `codeExpiresInMinutes`, `lang`, `headers` as template params, e.g. you can print user id as `{{user.id}}`.  Template engine also provides `i18n` helper for localisation. E.g. `{{i18n 'confirmationButton' default='Confirm'}}` searches key `confirmationButton` in files specified by `i18n.dir` config.  Use `{{err ERR_CODE msg='Localised message (if null, will be taken from i18n file)' devMsg='dev message'}}` to raise an error in a template.  It allows setting subject of email using `title` html tag, e.g. `<title>Email subject</title>`.  ")
 
   public Map<String, String> getTemplates() {
     return templates;
@@ -351,13 +351,13 @@ public class EmailAuthCfg {
   }
 
 
-  public EmailAuthCfg templateParams(Map<String, String> templateParams) {
+  public EmailAuthCfg templateParams(Map<String, Object> templateParams) {
     
     this.templateParams = templateParams;
     return this;
   }
 
-  public EmailAuthCfg putTemplateParamsItem(String key, String templateParamsItem) {
+  public EmailAuthCfg putTemplateParamsItem(String key, Object templateParamsItem) {
     if (this.templateParams == null) {
       this.templateParams = new HashMap<>();
     }
@@ -366,18 +366,18 @@ public class EmailAuthCfg {
   }
 
    /**
-   * Additional params for template. 
+   * Additional params for templates that can be passed in request. Key - is a name of additional parameter, value - is a default value for this parameter (when no value present in request) 
    * @return templateParams
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Additional params for template. ")
+  @ApiModelProperty(value = "Additional params for templates that can be passed in request. Key - is a name of additional parameter, value - is a default value for this parameter (when no value present in request) ")
 
-  public Map<String, String> getTemplateParams() {
+  public Map<String, Object> getTemplateParams() {
     return templateParams;
   }
 
 
-  public void setTemplateParams(Map<String, String> templateParams) {
+  public void setTemplateParams(Map<String, Object> templateParams) {
     this.templateParams = templateParams;
   }
 

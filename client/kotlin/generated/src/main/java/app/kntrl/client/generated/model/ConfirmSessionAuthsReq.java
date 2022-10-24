@@ -97,11 +97,11 @@ public class ConfirmSessionAuthsReq {
   }
 
    /**
-   * Code from authenticate/new-session response. 
+   * The code from authenticate/new-session response. 
    * @return receivedCodes
   **/
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Code from authenticate/new-session response. ")
+  @ApiModelProperty(required = true, value = "The code from authenticate/new-session response. ")
 
   public Map<String, Map<String, String>> getReceivedCodes() {
     return receivedCodes;

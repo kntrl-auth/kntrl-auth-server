@@ -476,7 +476,8 @@ paths:
   /api/signature/verify:
     post:
       description: |
-        Validates data signature
+        Validates data signature.
+        See /sign API for details.
       operationId: verify
       parameters:
       - explode: true
@@ -526,6 +527,8 @@ paths:
     post:
       description: |
         Sign data using specified secret.
+        When secret is null - use app secret (specified in kntrl.json5) with SHA256withRSA algorithm.
+        Otherwise - use secret from query with HmacSHA256 algorithm.
       operationId: sign
       parameters:
       - explode: true
@@ -810,6 +813,9 @@ components:
             tooLong: true
         waitTimeMs: 1
         changedAt: 2
+        scopes:
+        - scopes
+        - scopes
         changedDaysAgo: 4
       properties:
         code:
@@ -873,6 +879,10 @@ components:
           type: object
         tooManyAnswers:
           type: boolean
+        scopes:
+          items:
+            type: string
+          type: array
         waitTimeMs:
           format: int32
           type: integer
@@ -995,7 +1005,7 @@ components:
       - code
       - devMsg
       type: object
-      x-order: -270554383-5
+      x-order: -270554383-6
       x-super: '#/components/schemas/ClientErr'
     ClientErr:
       additionalProperties: true
@@ -1061,6 +1071,10 @@ components:
           type: object
         tooManyAnswers:
           type: boolean
+        scopes:
+          items:
+            type: string
+          type: array
         waitTimeMs:
           format: int32
           type: integer
@@ -1101,7 +1115,7 @@ components:
       - code
       - devMsg
       type: object
-      x-order: -270554383-6
+      x-order: -270554383-7
       x-super: '#/components/schemas/ClientErr'
     CodeIsIncorrect:
       properties:
@@ -1118,7 +1132,7 @@ components:
       - code
       - devMsg
       type: object
-      x-order: -270554383-8
+      x-order: -270554383-9
       x-super: '#/components/schemas/ClientErr'
     CodeTooManyAttempts:
       properties:
@@ -1135,7 +1149,7 @@ components:
       - code
       - devMsg
       type: object
-      x-order: -270554383-7
+      x-order: -270554383-8
       x-super: '#/components/schemas/ClientErr'
     EmailIsIncorrect:
       properties:
@@ -1224,7 +1238,7 @@ components:
       - code
       - devMsg
       type: object
-      x-order: -270554383-4
+      x-order: -270554383-5
       x-super: '#/components/schemas/IntegrationErr'
     PasswordIsIncorrect:
       properties:
@@ -1394,6 +1408,28 @@ components:
       type: object
       x-order: -1279700867-8
       x-super: '#/components/schemas/ClientErr'
+    ScopeNotFound:
+      properties:
+        code:
+          type: string
+        devMsg:
+          description: Message for developers.
+          type: string
+        msg:
+          description: Localised message suitable for UI.
+          type: string
+          x-nullable: true
+        scopes:
+          items:
+            type: string
+          type: array
+      required:
+      - code
+      - devMsg
+      - scopes
+      type: object
+      x-order: -270554383-4
+      x-super: '#/components/schemas/ClientErr'
     ServerErr:
       additionalProperties: true
       properties:
@@ -1466,7 +1502,7 @@ components:
       - code
       - devMsg
       type: object
-      x-order: -270554383-11
+      x-order: -270554383-12
       x-super: '#/components/schemas/Unauthenticated'
     TooManyReqs:
       properties:
@@ -1495,7 +1531,7 @@ components:
       - code
       - devMsg
       type: object
-      x-order: -270554383-12
+      x-order: -270554383-13
       x-super: '#/components/schemas/ClientErr'
     Unauthenticated:
       additionalProperties: true
@@ -1517,7 +1553,7 @@ components:
       - code
       - devMsg
       type: object
-      x-order: -270554383-9
+      x-order: -270554383-10
       x-sealed: false
       x-super: '#/components/schemas/ClientErr'
     UserLoginAlreadyTaken:
@@ -1677,6 +1713,9 @@ components:
           newUser: true
           refreshedAt: 7
           id: id
+          scopes:
+          - scopes
+          - scopes
           identifiedBy:
           - type: type
             login: login
@@ -1739,6 +1778,9 @@ components:
         newUser: true
         refreshedAt: 7
         id: id
+        scopes:
+        - scopes
+        - scopes
         identifiedBy:
         - type: type
           login: login
@@ -1807,6 +1849,13 @@ components:
           type: integer
         newUser:
           type: boolean
+        scopes:
+          description: App services list that this session is allowed to access. Null
+            if allowed to access any scope
+          items:
+            type: string
+          type: array
+          x-nullable: true
         device:
           $ref: '#/components/schemas/Device'
         systemAccess:
@@ -2078,6 +2127,9 @@ components:
               tooLong: true
           waitTimeMs: 1
           changedAt: 2
+          scopes:
+          - scopes
+          - scopes
           changedDaysAgo: 4
         resData:
           emailSentTo: emailSentTo
@@ -2087,7 +2139,7 @@ components:
               key: 1
           strength: strength
           correct:
-            HOME_CITY: true
+            HOMETOWN: true
             MOTHER_NAME: false
           extractedData:
             key: ""
@@ -2200,6 +2252,9 @@ components:
           newUser: true
           refreshedAt: 7
           id: id
+          scopes:
+          - scopes
+          - scopes
           identifiedBy:
           - type: type
             login: login
@@ -2333,6 +2388,9 @@ components:
                   tooLong: true
               waitTimeMs: 1
               changedAt: 2
+              scopes:
+              - scopes
+              - scopes
               changedDaysAgo: 4
             resData:
               emailSentTo: emailSentTo
@@ -2342,7 +2400,7 @@ components:
                   key: 1
               strength: strength
               correct:
-                HOME_CITY: true
+                HOMETOWN: true
                 MOTHER_NAME: false
               extractedData:
                 key: ""
@@ -2594,7 +2652,7 @@ components:
           description: |
             Shows is answer was correct.
           example:
-            HOME_CITY: true
+            HOMETOWN: true
             MOTHER_NAME: false
           type: object
       required:
@@ -2762,7 +2820,7 @@ components:
         new:
           type: boolean
         systemAccess:
-          description: Allows to access to any user in the app.
+          description: Allows to edit any user in the app.
           type: boolean
       required:
       - auths
@@ -2795,8 +2853,10 @@ components:
             password: password
             authorizationCode: authorizationCode
             answers:
-              HOME_CITY: London
+              HOMETOWN: London
               MOTHER_NAME: null
+            templateParams:
+              key: "{}"
             confirmPassword: confirmPassword
             secret: secret
             accessToken: accessToken
@@ -2839,6 +2899,12 @@ components:
           description: Template to use.
           type: string
           x-nullable: true
+        templateParams:
+          additionalProperties:
+            type: object
+          description: Template params
+          type: object
+          x-nullable: true
       type: object
       x-order: 1021533909-3
       x-super: '#/components/schemas/AuthReqData'
@@ -2851,6 +2917,12 @@ components:
         template:
           description: Template to use.
           type: string
+          x-nullable: true
+        templateParams:
+          additionalProperties:
+            type: object
+          description: Template params
+          type: object
           x-nullable: true
       required:
       - email
@@ -2865,8 +2937,10 @@ components:
             password: password
             authorizationCode: authorizationCode
             answers:
-              HOME_CITY: London
+              HOMETOWN: London
               MOTHER_NAME: null
+            templateParams:
+              key: "{}"
             confirmPassword: confirmPassword
             secret: secret
             accessToken: accessToken
@@ -2874,6 +2948,9 @@ components:
         entry: entry
         dryRun: true
         signIn: true
+        scopes:
+        - scopes
+        - scopes
         logins:
           key: logins
         signUp: true
@@ -2903,6 +2980,11 @@ components:
           description: |
             Request for authenticators
           type: object
+        scopes:
+          items:
+            type: string
+          type: array
+          x-nullable: true
         signIn:
           type: boolean
         signUp:
@@ -2967,7 +3049,7 @@ components:
           description: |
             Given answers for questions.
           example:
-            HOME_CITY: New-York
+            HOMETOWN: New-York
             MOTHER_NAME: Emma
           type: object
       required:
@@ -2984,7 +3066,7 @@ components:
           description: |
             Answers to save. `null` as value removes answer
           example:
-            HOME_CITY: London
+            HOMETOWN: London
             MOTHER_NAME: null
           type: object
       required:
@@ -3013,7 +3095,7 @@ components:
             type: object
             x-additionalPropertiesName: auth
           description: |
-            Code from authenticate/new-session response.
+            The code from authenticate/new-session response.
           type: object
       required:
       - receivedCodes
@@ -3046,6 +3128,9 @@ components:
           newUser: true
           refreshedAt: 7
           id: id
+          scopes:
+          - scopes
+          - scopes
           identifiedBy:
           - type: type
             login: login
@@ -3092,6 +3177,9 @@ components:
           newUser: true
           refreshedAt: 7
           id: id
+          scopes:
+          - scopes
+          - scopes
           identifiedBy:
           - type: type
             login: login
@@ -3236,6 +3324,9 @@ components:
                   tooLong: true
               waitTimeMs: 1
               changedAt: 2
+              scopes:
+              - scopes
+              - scopes
               changedDaysAgo: 4
             resData:
               emailSentTo: emailSentTo
@@ -3245,7 +3336,7 @@ components:
                   key: 1
               strength: strength
               correct:
-                HOME_CITY: true
+                HOMETOWN: true
                 MOTHER_NAME: false
               extractedData:
                 key: ""
@@ -3284,7 +3375,7 @@ components:
             type: object
             x-additionalPropertiesName: auth
           description: |
-            Code from save-user response.
+            The code from save-user response.
           type: object
       required:
       - receivedCodes
@@ -3298,8 +3389,10 @@ components:
             password: password
             authorizationCode: authorizationCode
             answers:
-              HOME_CITY: London
+              HOMETOWN: London
               MOTHER_NAME: null
+            templateParams:
+              key: "{}"
             confirmPassword: confirmPassword
             secret: secret
             accessToken: accessToken
@@ -3344,8 +3437,10 @@ components:
             password: password
             authorizationCode: authorizationCode
             answers:
-              HOME_CITY: London
+              HOMETOWN: London
               MOTHER_NAME: null
+            templateParams:
+              key: "{}"
             confirmPassword: confirmPassword
             secret: secret
             accessToken: accessToken
@@ -3401,6 +3496,9 @@ components:
           newUser: true
           refreshedAt: 7
           id: id
+          scopes:
+          - scopes
+          - scopes
           identifiedBy:
           - type: type
             login: login
@@ -3436,7 +3534,15 @@ components:
         rateLimiter:
           quotaToBurn: 0.8008281904610115
           id: id
+        requireScopes:
+        - requireScopes
+        - requireScopes
       properties:
+        requireScopes:
+          items:
+            type: string
+          type: array
+          x-nullable: true
         rateLimiter:
           $ref: '#/components/schemas/RateLimiterReq'
       type: object
@@ -3487,6 +3593,21 @@ components:
           type: string
       type: object
       x-order: -1195634750-1
+    AnswersTransformationCfg:
+      properties:
+        lowercase:
+          description: |-
+            Transform user answer to lowercase letters. This allows user still pass a check when he wrote name or city
+            with different cases. `false` means strict match, so "John" != "john"
+          type: boolean
+        removeSymbols:
+          description: Remove all non-letters from user answer.
+          type: boolean
+        removeSpaces:
+          description: Remove all spaces from user answer.
+          type: boolean
+      type: object
+      x-order: 545691127-1
     AppSecretAuthCfg:
       properties:
         requiresAuth:
@@ -3693,14 +3814,17 @@ components:
             type: string
             x-additionalPropertiesName: templateName
           description: |+
-            List of email templates. Key - name of template (can be used lately on frontend), value - path to template.
+            List of email templates. Key - is name of a template (can be used lately on frontend), value - is path to the template.
             App uses handlebars templates to generate emails. See docs here https://handlebarsjs.com
 
-            Email templates received `confirmationUrl`, `action`, `user`, `session`, `codeId`, `code`, `lang`, `headers`
-            as template params, e.g. you can print user id as `{{ user.id }}`.
+            Email templates receives `confirmationUrl`, `action`, `user`, `session`, `codeId`, `code`, `codeExpiresInMinutes`,
+            `lang`, `headers` as template params, e.g. you can print user id as `{{user.id}}`.
 
             Template engine also provides `i18n` helper for localisation. E.g. `{{i18n 'confirmationButton' default='Confirm'}}`
             searches key `confirmationButton` in files specified by `i18n.dir` config.
+
+            Use `{{err ERR_CODE msg='Localised message (if null, will be taken from i18n file)' devMsg='dev message'}}` to
+            raise an error in a template.
 
             It allows setting subject of email using `title` html tag, e.g. `<title>Email subject</title>`.
 
@@ -3710,10 +3834,11 @@ components:
           type: object
         templateParams:
           additionalProperties:
-            type: string
+            type: object
             x-additionalPropertiesName: paramName
           description: |
-            Additional params for template.
+            Additional params for templates that can be passed in request. Key - is a name of additional parameter, value - is
+            a default value for this parameter (when no value present in request)
           type: object
         code:
           $ref: '#/components/schemas/CodeCfg'
@@ -4193,10 +4318,14 @@ components:
         userId: true
       properties:
         userId:
-          description: Create different rate limiters for different users.
+          description: |-
+            Create different rate limiters for different users.
+            Enabled by default.
           type: boolean
         ip:
-          description: Create different rate limiters for different ips.
+          description: |-
+            Create different rate limiters for different ips.
+            Disabled by default.
           type: boolean
         quota:
           description: |-
@@ -4720,8 +4849,8 @@ components:
       - SESSION_EXPIRED
       - ACCESS_DENIED
       - USER_NOT_FOUND
-      - TOKEN_EXPIRED
       - UNAUTHENTICATED
+      - TOKEN_EXPIRED
       type: string
     ClientErrCode:
       enum:
@@ -4738,15 +4867,16 @@ components:
       - SIGNATURE_IS_INCORRECT
       - USER_LOGIN_IS_INVALID
       - USER_LOGIN_ALREADY_TAKEN
+      - UNAUTHENTICATED
       - TOKEN_EXPIRED
       - TOO_MANY_REQS
       - AUTH_IS_NOT_ENABLED
       - AUTH_IS_NOT_CONFIRMED
+      - SCOPE_NOT_FOUND
       - AUTH_REQUIRES_ANOTHER
       - CODE_IS_EXPIRED
       - CODE_TOO_MANY_ATTEMPTS
       - CODE_IS_INCORRECT
-      - UNAUTHENTICATED
       type: string
     IntegrationErrCode:
       enum:
@@ -4774,16 +4904,17 @@ components:
       - SIGNATURE_IS_INCORRECT
       - USER_LOGIN_IS_INVALID
       - USER_LOGIN_ALREADY_TAKEN
+      - UNAUTHENTICATED
       - TOKEN_EXPIRED
       - TOO_MANY_REQS
       - AUTH_IS_NOT_ENABLED
       - AUTH_IS_NOT_CONFIRMED
+      - SCOPE_NOT_FOUND
       - NO_AUTH_AVAILABLE_FOR_FACTOR
       - AUTH_REQUIRES_ANOTHER
       - CODE_IS_EXPIRED
       - CODE_TOO_MANY_ATTEMPTS
       - CODE_IS_INCORRECT
-      - UNAUTHENTICATED
       - SERVER_ERR
       - INTEGRATION_ERR
       - ANY_ERR
@@ -4832,7 +4963,7 @@ components:
             key: 1
         strength: strength
         correct:
-          HOME_CITY: true
+          HOMETOWN: true
           MOTHER_NAME: false
         extractedData:
           key: ""
@@ -4866,7 +4997,7 @@ components:
           description: |
             Shows is answer was correct.
           example:
-            HOME_CITY: true
+            HOMETOWN: true
             MOTHER_NAME: false
           type: object
         answersSavedAt:
@@ -4879,8 +5010,10 @@ components:
         password: password
         authorizationCode: authorizationCode
         answers:
-          HOME_CITY: London
+          HOMETOWN: London
           MOTHER_NAME: null
+        templateParams:
+          key: "{}"
         confirmPassword: confirmPassword
         secret: secret
         accessToken: accessToken
@@ -4894,6 +5027,12 @@ components:
         template:
           description: Template to use.
           type: string
+          x-nullable: true
+        templateParams:
+          additionalProperties:
+            type: object
+          description: Template params
+          type: object
           x-nullable: true
         accessToken:
           description: If you have access-token - put it here.
@@ -4917,7 +5056,7 @@ components:
           description: |
             Answers to save. `null` as value removes answer
           example:
-            HOME_CITY: London
+            HOMETOWN: London
             MOTHER_NAME: null
           type: object
       type: object
@@ -5012,14 +5151,17 @@ components:
             type: string
             x-additionalPropertiesName: templateName
           description: |+
-            List of email templates. Key - name of template (can be used lately on frontend), value - path to template.
+            List of email templates. Key - is name of a template (can be used lately on frontend), value - is path to the template.
             App uses handlebars templates to generate emails. See docs here https://handlebarsjs.com
 
-            Email templates received `confirmationUrl`, `action`, `user`, `session`, `codeId`, `code`, `lang`, `headers`
-            as template params, e.g. you can print user id as `{{ user.id }}`.
+            Email templates receives `confirmationUrl`, `action`, `user`, `session`, `codeId`, `code`, `codeExpiresInMinutes`,
+            `lang`, `headers` as template params, e.g. you can print user id as `{{user.id}}`.
 
             Template engine also provides `i18n` helper for localisation. E.g. `{{i18n 'confirmationButton' default='Confirm'}}`
             searches key `confirmationButton` in files specified by `i18n.dir` config.
+
+            Use `{{err ERR_CODE msg='Localised message (if null, will be taken from i18n file)' devMsg='dev message'}}` to
+            raise an error in a template.
 
             It allows setting subject of email using `title` html tag, e.g. `<title>Email subject</title>`.
 
@@ -5029,10 +5171,11 @@ components:
           type: object
         templateParams:
           additionalProperties:
-            type: string
+            type: object
             x-additionalPropertiesName: paramName
           description: |
-            Additional params for template.
+            Additional params for templates that can be passed in request. Key - is a name of additional parameter, value - is
+            a default value for this parameter (when no value present in request)
           type: object
         ipBytesToIgnore:
           description: |-

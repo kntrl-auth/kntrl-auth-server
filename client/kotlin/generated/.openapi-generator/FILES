@@ -9,6 +9,7 @@ build.sbt
 docs/AccessDenied.md
 docs/AccessTokenCfg.md
 docs/AnswerErr.md
+docs/AnswersTransformationCfg.md
 docs/AnyErr.md
 docs/AppSecretAuthCfg.md
 docs/AppSecretReqData.md
@@ -116,6 +117,7 @@ docs/RemoteAuthCfg.md
 docs/RemoteDbCfg.md
 docs/SaveUserReq.md
 docs/SaveUserRes.md
+docs/ScopeNotFound.md
 docs/ServerApi.md
 docs/ServerErr.md
 docs/ServerErrCode.md
@@ -184,6 +186,7 @@ src/main/java/app/kntrl/client/generated/model/AbstractOpenApiSchema.java
 src/main/java/app/kntrl/client/generated/model/AccessDenied.java
 src/main/java/app/kntrl/client/generated/model/AccessTokenCfg.java
 src/main/java/app/kntrl/client/generated/model/AnswerErr.java
+src/main/java/app/kntrl/client/generated/model/AnswersTransformationCfg.java
 src/main/java/app/kntrl/client/generated/model/AnyErr.java
 src/main/java/app/kntrl/client/generated/model/AppSecretAuthCfg.java
 src/main/java/app/kntrl/client/generated/model/AppSecretReqData.java
@@ -290,6 +293,7 @@ src/main/java/app/kntrl/client/generated/model/RemoteAuthCfg.java
 src/main/java/app/kntrl/client/generated/model/RemoteDbCfg.java
 src/main/java/app/kntrl/client/generated/model/SaveUserReq.java
 src/main/java/app/kntrl/client/generated/model/SaveUserRes.java
+src/main/java/app/kntrl/client/generated/model/ScopeNotFound.java
 src/main/java/app/kntrl/client/generated/model/ServerErr.java
 src/main/java/app/kntrl/client/generated/model/ServerErrCode.java
 src/main/java/app/kntrl/client/generated/model/Session.java
@@ -326,6 +330,7 @@ src/test/java/app/kntrl/client/generated/api/UserApiTest.java
 src/test/java/app/kntrl/client/generated/model/AccessDeniedTest.java
 src/test/java/app/kntrl/client/generated/model/AccessTokenCfgTest.java
 src/test/java/app/kntrl/client/generated/model/AnswerErrTest.java
+src/test/java/app/kntrl/client/generated/model/AnswersTransformationCfgTest.java
 src/test/java/app/kntrl/client/generated/model/AnyErrTest.java
 src/test/java/app/kntrl/client/generated/model/AppSecretAuthCfgTest.java
 src/test/java/app/kntrl/client/generated/model/AppSecretReqDataTest.java
@@ -432,6 +437,7 @@ src/test/java/app/kntrl/client/generated/model/RemoteAuthCfgTest.java
 src/test/java/app/kntrl/client/generated/model/RemoteDbCfgTest.java
 src/test/java/app/kntrl/client/generated/model/SaveUserReqTest.java
 src/test/java/app/kntrl/client/generated/model/SaveUserResTest.java
+src/test/java/app/kntrl/client/generated/model/ScopeNotFoundTest.java
 src/test/java/app/kntrl/client/generated/model/ServerErrCodeTest.java
 src/test/java/app/kntrl/client/generated/model/ServerErrTest.java
 src/test/java/app/kntrl/client/generated/model/SessionExpiredTest.java

@@ -101,6 +101,10 @@ public class Session {
   @SerializedName(SERIALIZED_NAME_NEW_USER)
   private Boolean newUser;
 
+  public static final String SERIALIZED_NAME_SCOPES = "scopes";
+  @SerializedName(SERIALIZED_NAME_SCOPES)
+  private List<String> scopes = null;
+
   public static final String SERIALIZED_NAME_DEVICE = "device";
   @SerializedName(SERIALIZED_NAME_DEVICE)
   private Device device;
@@ -393,6 +397,37 @@ public class Session {
   }
 
 
+  public Session scopes(List<String> scopes) {
+    
+    this.scopes = scopes;
+    return this;
+  }
+
+  public Session addScopesItem(String scopesItem) {
+    if (this.scopes == null) {
+      this.scopes = new ArrayList<>();
+    }
+    this.scopes.add(scopesItem);
+    return this;
+  }
+
+   /**
+   * App services list that this session is allowed to access. Null if allowed to access any scope
+   * @return scopes
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "App services list that this session is allowed to access. Null if allowed to access any scope")
+
+  public List<String> getScopes() {
+    return scopes;
+  }
+
+
+  public void setScopes(List<String> scopes) {
+    this.scopes = scopes;
+  }
+
+
   public Session device(Device device) {
     
     this.device = device;
@@ -541,6 +576,7 @@ public class Session {
         Objects.equals(this.expiresAt, session.expiresAt) &&
         Objects.equals(this.refreshedAt, session.refreshedAt) &&
         Objects.equals(this.newUser, session.newUser) &&
+        Objects.equals(this.scopes, session.scopes) &&
         Objects.equals(this.device, session.device) &&
         Objects.equals(this.systemAccess, session.systemAccess) &&
         Objects.equals(this.expired, session.expired) &&
@@ -550,7 +586,7 @@ public class Session {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, entry, identifiedBy, userId, authenticatedBy, unconfirmedAuths, nextFactors, signedInAt, expiresAt, refreshedAt, newUser, device, systemAccess, expired, authenticated, additionalProperties);
+    return Objects.hash(id, entry, identifiedBy, userId, authenticatedBy, unconfirmedAuths, nextFactors, signedInAt, expiresAt, refreshedAt, newUser, scopes, device, systemAccess, expired, authenticated, additionalProperties);
   }
 
   @Override
@@ -568,6 +604,7 @@ public class Session {
     sb.append("    expiresAt: ").append(toIndentedString(expiresAt)).append("\n");
     sb.append("    refreshedAt: ").append(toIndentedString(refreshedAt)).append("\n");
     sb.append("    newUser: ").append(toIndentedString(newUser)).append("\n");
+    sb.append("    scopes: ").append(toIndentedString(scopes)).append("\n");
     sb.append("    device: ").append(toIndentedString(device)).append("\n");
     sb.append("    systemAccess: ").append(toIndentedString(systemAccess)).append("\n");
     sb.append("    expired: ").append(toIndentedString(expired)).append("\n");
@@ -606,6 +643,7 @@ public class Session {
     openapiFields.add("expiresAt");
     openapiFields.add("refreshedAt");
     openapiFields.add("newUser");
+    openapiFields.add("scopes");
     openapiFields.add("device");
     openapiFields.add("systemAccess");
     openapiFields.add("expired");
@@ -684,6 +722,10 @@ public class Session {
             NextFactor.validateJsonObject(jsonArraynextFactors.get(i).getAsJsonObject());
           };
         }
+      }
+      // ensure the json data is an array
+      if ((jsonObj.get("scopes") != null && !jsonObj.get("scopes").isJsonNull()) && !jsonObj.get("scopes").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `scopes` to be an array in the JSON string but got `%s`", jsonObj.get("scopes").toString()));
       }
       // validate the optional field `device`
       if (jsonObj.get("device") != null && !jsonObj.get("device").isJsonNull()) {

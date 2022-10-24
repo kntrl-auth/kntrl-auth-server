@@ -63,6 +63,10 @@ public class AuthenticateReqAuthReqsValue {
   @SerializedName(SERIALIZED_NAME_TEMPLATE)
   private String template;
 
+  public static final String SERIALIZED_NAME_TEMPLATE_PARAMS = "templateParams";
+  @SerializedName(SERIALIZED_NAME_TEMPLATE_PARAMS)
+  private Map<String, Object> templateParams = null;
+
   public static final String SERIALIZED_NAME_ACCESS_TOKEN = "accessToken";
   @SerializedName(SERIALIZED_NAME_ACCESS_TOKEN)
   private String accessToken;
@@ -152,6 +156,37 @@ public class AuthenticateReqAuthReqsValue {
 
   public void setTemplate(String template) {
     this.template = template;
+  }
+
+
+  public AuthenticateReqAuthReqsValue templateParams(Map<String, Object> templateParams) {
+    
+    this.templateParams = templateParams;
+    return this;
+  }
+
+  public AuthenticateReqAuthReqsValue putTemplateParamsItem(String key, Object templateParamsItem) {
+    if (this.templateParams == null) {
+      this.templateParams = new HashMap<>();
+    }
+    this.templateParams.put(key, templateParamsItem);
+    return this;
+  }
+
+   /**
+   * Template params
+   * @return templateParams
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Template params")
+
+  public Map<String, Object> getTemplateParams() {
+    return templateParams;
+  }
+
+
+  public void setTemplateParams(Map<String, Object> templateParams) {
+    this.templateParams = templateParams;
   }
 
 
@@ -266,7 +301,7 @@ public class AuthenticateReqAuthReqsValue {
    * @return answers
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "{\"HOME_CITY\":\"London\",\"MOTHER_NAME\":null}", value = "Answers to save. `null` as value removes answer ")
+  @ApiModelProperty(example = "{\"HOMETOWN\":\"London\",\"MOTHER_NAME\":null}", value = "Answers to save. `null` as value removes answer ")
 
   public Map<String, String> getAnswers() {
     return answers;
@@ -326,6 +361,7 @@ public class AuthenticateReqAuthReqsValue {
     return Objects.equals(this.secret, authenticateReqAuthReqsValue.secret) &&
         Objects.equals(this.email, authenticateReqAuthReqsValue.email) &&
         Objects.equals(this.template, authenticateReqAuthReqsValue.template) &&
+        Objects.equals(this.templateParams, authenticateReqAuthReqsValue.templateParams) &&
         Objects.equals(this.accessToken, authenticateReqAuthReqsValue.accessToken) &&
         Objects.equals(this.authorizationCode, authenticateReqAuthReqsValue.authorizationCode) &&
         Objects.equals(this.password, authenticateReqAuthReqsValue.password) &&
@@ -336,7 +372,7 @@ public class AuthenticateReqAuthReqsValue {
 
   @Override
   public int hashCode() {
-    return Objects.hash(secret, email, template, accessToken, authorizationCode, password, confirmPassword, answers, additionalProperties);
+    return Objects.hash(secret, email, template, templateParams, accessToken, authorizationCode, password, confirmPassword, answers, additionalProperties);
   }
 
   @Override
@@ -346,6 +382,7 @@ public class AuthenticateReqAuthReqsValue {
     sb.append("    secret: ").append(toIndentedString(secret)).append("\n");
     sb.append("    email: ").append(toIndentedString(email)).append("\n");
     sb.append("    template: ").append(toIndentedString(template)).append("\n");
+    sb.append("    templateParams: ").append(toIndentedString(templateParams)).append("\n");
     sb.append("    accessToken: ").append(toIndentedString(accessToken)).append("\n");
     sb.append("    authorizationCode: ").append(toIndentedString(authorizationCode)).append("\n");
     sb.append("    password: ").append(toIndentedString(password)).append("\n");
@@ -377,6 +414,7 @@ public class AuthenticateReqAuthReqsValue {
     openapiFields.add("secret");
     openapiFields.add("email");
     openapiFields.add("template");
+    openapiFields.add("templateParams");
     openapiFields.add("accessToken");
     openapiFields.add("authorizationCode");
     openapiFields.add("password");

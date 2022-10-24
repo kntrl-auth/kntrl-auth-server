@@ -252,7 +252,7 @@ public class AuthExecResResData {
    * @return correct
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "{\"HOME_CITY\":true,\"MOTHER_NAME\":false}", value = "Shows is answer was correct. ")
+  @ApiModelProperty(example = "{\"HOMETOWN\":true,\"MOTHER_NAME\":false}", value = "Shows is answer was correct. ")
 
   public Map<String, Boolean> getCorrect() {
     return correct;

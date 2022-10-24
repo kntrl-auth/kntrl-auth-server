@@ -279,7 +279,7 @@ public class SignatureApi {
 
     /**
      * (Backend API) sign data
-     * Sign data using specified secret. 
+     * Sign data using specified secret. When secret is null - use app secret (specified in kntrl.json5) with SHA256withRSA algorithm. Otherwise - use secret from query with HmacSHA256 algorithm. 
      * @param body  (required)
      * @param secret  (optional)
      * @return String
@@ -299,7 +299,7 @@ public class SignatureApi {
 
     /**
      * (Backend API) sign data
-     * Sign data using specified secret. 
+     * Sign data using specified secret. When secret is null - use app secret (specified in kntrl.json5) with SHA256withRSA algorithm. Otherwise - use secret from query with HmacSHA256 algorithm. 
      * @param body  (required)
      * @param secret  (optional)
      * @return ApiResponse&lt;String&gt;
@@ -320,7 +320,7 @@ public class SignatureApi {
 
     /**
      * (Backend API) sign data (asynchronously)
-     * Sign data using specified secret. 
+     * Sign data using specified secret. When secret is null - use app secret (specified in kntrl.json5) with SHA256withRSA algorithm. Otherwise - use secret from query with HmacSHA256 algorithm. 
      * @param body  (required)
      * @param secret  (optional)
      * @param _callback The callback to be executed when the API call finishes
@@ -431,7 +431,7 @@ public class SignatureApi {
 
     /**
      * Validate signature
-     * Validates data signature 
+     * Validates data signature. See /sign API for details. 
      * @param signature  (required)
      * @param body  (required)
      * @param secret  (optional)
@@ -450,7 +450,7 @@ public class SignatureApi {
 
     /**
      * Validate signature
-     * Validates data signature 
+     * Validates data signature. See /sign API for details. 
      * @param signature  (required)
      * @param body  (required)
      * @param secret  (optional)
@@ -471,7 +471,7 @@ public class SignatureApi {
 
     /**
      * Validate signature (asynchronously)
-     * Validates data signature 
+     * Validates data signature. See /sign API for details. 
      * @param signature  (required)
      * @param body  (required)
      * @param secret  (optional)

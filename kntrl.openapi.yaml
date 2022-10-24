@@ -75,16 +75,17 @@ components:
           SIGNATURE_IS_INCORRECT: '#/components/schemas/SignatureIsIncorrect'
           USER_LOGIN_IS_INVALID: '#/components/schemas/UserLoginIsInvalid'
           USER_LOGIN_ALREADY_TAKEN: '#/components/schemas/UserLoginAlreadyTaken'
+          UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
           TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
           TOO_MANY_REQS: '#/components/schemas/TooManyReqs'
           AUTH_IS_NOT_ENABLED: '#/components/schemas/AuthIsNotEnabled'
           AUTH_IS_NOT_CONFIRMED: '#/components/schemas/AuthIsNotConfirmed'
+          SCOPE_NOT_FOUND: '#/components/schemas/ScopeNotFound'
           NO_AUTH_AVAILABLE_FOR_FACTOR: '#/components/schemas/NoAuthAvailableForFactor'
           AUTH_REQUIRES_ANOTHER: '#/components/schemas/AuthRequiresAnother'
           CODE_IS_EXPIRED: '#/components/schemas/CodeIsExpired'
           CODE_TOO_MANY_ATTEMPTS: '#/components/schemas/CodeTooManyAttempts'
           CODE_IS_INCORRECT: '#/components/schemas/CodeIsIncorrect'
-          UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
           SERVER_ERR: '#/components/schemas/ServerErr'
           INTEGRATION_ERR: '#/components/schemas/IntegrationErr'
           ANY_ERR: '#/components/schemas/AnyErr'
@@ -185,7 +186,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-5
+      x-order: -270554383-6
       x-super: '#/components/schemas/ClientErr'
     ClientErr:
       required:
@@ -218,15 +219,16 @@ components:
           SIGNATURE_IS_INCORRECT: '#/components/schemas/SignatureIsIncorrect'
           USER_LOGIN_IS_INVALID: '#/components/schemas/UserLoginIsInvalid'
           USER_LOGIN_ALREADY_TAKEN: '#/components/schemas/UserLoginAlreadyTaken'
+          UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
           TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
           TOO_MANY_REQS: '#/components/schemas/TooManyReqs'
           AUTH_IS_NOT_ENABLED: '#/components/schemas/AuthIsNotEnabled'
           AUTH_IS_NOT_CONFIRMED: '#/components/schemas/AuthIsNotConfirmed'
+          SCOPE_NOT_FOUND: '#/components/schemas/ScopeNotFound'
           AUTH_REQUIRES_ANOTHER: '#/components/schemas/AuthRequiresAnother'
           CODE_IS_EXPIRED: '#/components/schemas/CodeIsExpired'
           CODE_TOO_MANY_ATTEMPTS: '#/components/schemas/CodeTooManyAttempts'
           CODE_IS_INCORRECT: '#/components/schemas/CodeIsIncorrect'
-          UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
       x-order: 2025349183-4
       x-sealed: false
       x-super: '#/components/schemas/Err'
@@ -245,7 +247,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-6
+      x-order: -270554383-7
       x-super: '#/components/schemas/ClientErr'
     CodeIsIncorrect:
       required:
@@ -262,7 +264,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-8
+      x-order: -270554383-9
       x-super: '#/components/schemas/ClientErr'
     CodeTooManyAttempts:
       required:
@@ -279,7 +281,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-7
+      x-order: -270554383-8
       x-super: '#/components/schemas/ClientErr'
     EmailIsIncorrect:
       required:
@@ -369,7 +371,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-4
+      x-order: -270554383-5
       x-super: '#/components/schemas/IntegrationErr'
     PasswordIsIncorrect:
       required:
@@ -539,6 +541,28 @@ components:
           type: boolean
       x-order: -1279700867-8
       x-super: '#/components/schemas/ClientErr'
+    ScopeNotFound:
+      required:
+      - code
+      - devMsg
+      - scopes
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+        scopes:
+          type: array
+          items:
+            type: string
+      x-order: -270554383-4
+      x-super: '#/components/schemas/ClientErr'
     ServerErr:
       required:
       - code
@@ -615,7 +639,7 @@ components:
           type: integer
           format: int64
           x-nullable: true
-      x-order: -270554383-11
+      x-order: -270554383-12
       x-super: '#/components/schemas/Unauthenticated'
     TooManyReqs:
       required:
@@ -644,7 +668,7 @@ components:
           type: integer
           format: int32
           x-nullable: true
-      x-order: -270554383-12
+      x-order: -270554383-13
       x-super: '#/components/schemas/ClientErr'
     Unauthenticated:
       required:
@@ -667,9 +691,9 @@ components:
           SESSION_EXPIRED: '#/components/schemas/SessionExpired'
           ACCESS_DENIED: '#/components/schemas/AccessDenied'
           USER_NOT_FOUND: '#/components/schemas/UserNotFound'
-          TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
           UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
-      x-order: -270554383-9
+          TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
+      x-order: -270554383-10
       x-sealed: false
       x-super: '#/components/schemas/ClientErr'
     UserLoginAlreadyTaken:
@@ -752,6 +776,21 @@ components:
           example: 1d
       description: Short-living token used for authentication.
       x-order: -1195634750-1
+    AnswersTransformationCfg:
+      type: object
+      properties:
+        lowercase:
+          type: boolean
+          description: |-
+            Transform user answer to lowercase letters. This allows user still pass a check when he wrote name or city
+            with different cases. `false` means strict match, so "John" != "john"
+        removeSymbols:
+          type: boolean
+          description: Remove all non-letters from user answer.
+        removeSpaces:
+          type: boolean
+          description: Remove all spaces from user answer.
+      x-order: 545691127-1
     AppSecretAuthCfg:
       type: object
       properties:
@@ -963,14 +1002,17 @@ components:
             type: string
             x-additionalPropertiesName: templateName
           description: |+
-            List of email templates. Key - name of template (can be used lately on frontend), value - path to template.
+            List of email templates. Key - is name of a template (can be used lately on frontend), value - is path to the template.
             App uses handlebars templates to generate emails. See docs here https://handlebarsjs.com
 
-            Email templates received `confirmationUrl`, `action`, `user`, `session`, `codeId`, `code`, `lang`, `headers`
-            as template params, e.g. you can print user id as `{{ user.id }}`.
+            Email templates receives `confirmationUrl`, `action`, `user`, `session`, `codeId`, `code`, `codeExpiresInMinutes`,
+            `lang`, `headers` as template params, e.g. you can print user id as `{{user.id}}`.
 
             Template engine also provides `i18n` helper for localisation. E.g. `{{i18n 'confirmationButton' default='Confirm'}}`
             searches key `confirmationButton` in files specified by `i18n.dir` config.
+
+            Use `{{err ERR_CODE msg='Localised message (if null, will be taken from i18n file)' devMsg='dev message'}}` to
+            raise an error in a template.
 
             It allows setting subject of email using `title` html tag, e.g. `<title>Email subject</title>`.
 
@@ -980,10 +1022,11 @@ components:
         templateParams:
           type: object
           additionalProperties:
-            type: string
+            type: object
             x-additionalPropertiesName: paramName
           description: |
-            Additional params for template.
+            Additional params for templates that can be passed in request. Key - is a name of additional parameter, value - is
+            a default value for this parameter (when no value present in request)
         code:
           $ref: '#/components/schemas/CodeCfg'
       x-order: -1025321515-0
@@ -1444,10 +1487,14 @@ components:
       properties:
         userId:
           type: boolean
-          description: Create different rate limiters for different users.
+          description: |-
+            Create different rate limiters for different users.
+            Enabled by default.
         ip:
           type: boolean
-          description: Create different rate limiters for different ips.
+          description: |-
+            Create different rate limiters for different ips.
+            Disabled by default.
         quota:
           type: number
           description: |-

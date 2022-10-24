@@ -74,7 +74,7 @@ public class QuestionsAuthResData {
    * @return correct
   **/
   @javax.annotation.Nonnull
-  @ApiModelProperty(example = "{\"HOME_CITY\":true,\"MOTHER_NAME\":false}", required = true, value = "Shows is answer was correct. ")
+  @ApiModelProperty(example = "{\"HOMETOWN\":true,\"MOTHER_NAME\":false}", required = true, value = "Shows is answer was correct. ")
 
   public Map<String, Boolean> getCorrect() {
     return correct;

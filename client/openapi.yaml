@@ -456,7 +456,8 @@ paths:
       - signature
       summary: Validate signature
       description: |
-        Validates data signature
+        Validates data signature.
+        See /sign API for details.
       operationId: verify
       parameters:
       - name: signature
@@ -500,6 +501,8 @@ paths:
       summary: (Backend API) sign data
       description: |
         Sign data using specified secret.
+        When secret is null - use app secret (specified in kntrl.json5) with SHA256withRSA algorithm.
+        Otherwise - use secret from query with HmacSHA256 algorithm.
       operationId: sign
       parameters:
       - name: secret
@@ -753,16 +756,17 @@ components:
           SIGNATURE_IS_INCORRECT: '#/components/schemas/SignatureIsIncorrect'
           USER_LOGIN_IS_INVALID: '#/components/schemas/UserLoginIsInvalid'
           USER_LOGIN_ALREADY_TAKEN: '#/components/schemas/UserLoginAlreadyTaken'
+          UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
           TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
           TOO_MANY_REQS: '#/components/schemas/TooManyReqs'
           AUTH_IS_NOT_ENABLED: '#/components/schemas/AuthIsNotEnabled'
           AUTH_IS_NOT_CONFIRMED: '#/components/schemas/AuthIsNotConfirmed'
+          SCOPE_NOT_FOUND: '#/components/schemas/ScopeNotFound'
           NO_AUTH_AVAILABLE_FOR_FACTOR: '#/components/schemas/NoAuthAvailableForFactor'
           AUTH_REQUIRES_ANOTHER: '#/components/schemas/AuthRequiresAnother'
           CODE_IS_EXPIRED: '#/components/schemas/CodeIsExpired'
           CODE_TOO_MANY_ATTEMPTS: '#/components/schemas/CodeTooManyAttempts'
           CODE_IS_INCORRECT: '#/components/schemas/CodeIsIncorrect'
-          UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
           SERVER_ERR: '#/components/schemas/ServerErr'
           INTEGRATION_ERR: '#/components/schemas/IntegrationErr'
           ANY_ERR: '#/components/schemas/AnyErr'
@@ -818,7 +822,7 @@ components:
       type: object
       allOf:
       - $ref: '#/components/schemas/ClientErr'
-      x-order: -270554383-5
+      x-order: -270554383-6
     ClientErr:
       required:
       - code
@@ -840,15 +844,16 @@ components:
           SIGNATURE_IS_INCORRECT: '#/components/schemas/SignatureIsIncorrect'
           USER_LOGIN_IS_INVALID: '#/components/schemas/UserLoginIsInvalid'
           USER_LOGIN_ALREADY_TAKEN: '#/components/schemas/UserLoginAlreadyTaken'
+          UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
           TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
           TOO_MANY_REQS: '#/components/schemas/TooManyReqs'
           AUTH_IS_NOT_ENABLED: '#/components/schemas/AuthIsNotEnabled'
           AUTH_IS_NOT_CONFIRMED: '#/components/schemas/AuthIsNotConfirmed'
+          SCOPE_NOT_FOUND: '#/components/schemas/ScopeNotFound'
           AUTH_REQUIRES_ANOTHER: '#/components/schemas/AuthRequiresAnother'
           CODE_IS_EXPIRED: '#/components/schemas/CodeIsExpired'
           CODE_TOO_MANY_ATTEMPTS: '#/components/schemas/CodeTooManyAttempts'
           CODE_IS_INCORRECT: '#/components/schemas/CodeIsIncorrect'
-          UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
         x-explicitMappingOnly: true
       allOf:
       - $ref: '#/components/schemas/Err'
@@ -869,17 +874,17 @@ components:
       type: object
       allOf:
       - $ref: '#/components/schemas/ClientErr'
-      x-order: -270554383-6
+      x-order: -270554383-7
     CodeIsIncorrect:
       type: object
       allOf:
       - $ref: '#/components/schemas/ClientErr'
-      x-order: -270554383-8
+      x-order: -270554383-9
     CodeTooManyAttempts:
       type: object
       allOf:
       - $ref: '#/components/schemas/ClientErr'
-      x-order: -270554383-7
+      x-order: -270554383-8
     EmailIsIncorrect:
       type: object
       allOf:
@@ -936,7 +941,7 @@ components:
       type: object
       allOf:
       - $ref: '#/components/schemas/IntegrationErr'
-      x-order: -270554383-4
+      x-order: -270554383-5
     PasswordIsIncorrect:
       type: object
       allOf:
@@ -1045,6 +1050,19 @@ components:
           tooManyAnswers:
             type: boolean
       x-order: -1279700867-8
+    ScopeNotFound:
+      required:
+      - scopes
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ClientErr'
+      - type: object
+        properties:
+          scopes:
+            type: array
+            items:
+              type: string
+      x-order: -270554383-4
     ServerErr:
       required:
       - code
@@ -1091,7 +1109,7 @@ components:
             type: integer
             format: int64
             x-nullable: true
-      x-order: -270554383-11
+      x-order: -270554383-12
     TooManyReqs:
       type: object
       allOf:
@@ -1110,7 +1128,7 @@ components:
             type: integer
             format: int32
             x-nullable: true
-      x-order: -270554383-12
+      x-order: -270554383-13
     Unauthenticated:
       required:
       - code
@@ -1121,12 +1139,12 @@ components:
           SESSION_EXPIRED: '#/components/schemas/SessionExpired'
           ACCESS_DENIED: '#/components/schemas/AccessDenied'
           USER_NOT_FOUND: '#/components/schemas/UserNotFound'
-          TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
           UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
+          TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
         x-explicitMappingOnly: true
       allOf:
       - $ref: '#/components/schemas/ClientErr'
-      x-order: -270554383-9
+      x-order: -270554383-10
       x-sealed: false
     UserLoginAlreadyTaken:
       type: object
@@ -1282,6 +1300,13 @@ components:
           format: int64
         newUser:
           type: boolean
+        scopes:
+          type: array
+          description: App services list that this session is allowed to access. Null
+            if allowed to access any scope
+          items:
+            type: string
+          x-nullable: true
         device:
           $ref: '#/components/schemas/Device'
         systemAccess:
@@ -1727,7 +1752,7 @@ components:
             description: |
               Shows is answer was correct.
             example:
-              HOME_CITY: true
+              HOMETOWN: true
               MOTHER_NAME: false
       x-order: -213229069-4
     QuestionsPrivateData:
@@ -1829,7 +1854,7 @@ components:
           type: boolean
         systemAccess:
           type: boolean
-          description: Allows to access to any user in the app.
+          description: Allows to edit any user in the app.
       x-order: 276900135-0
     AppSecretReqData:
       required:
@@ -1898,6 +1923,12 @@ components:
             type: string
             description: Template to use.
             x-nullable: true
+          templateParams:
+            type: object
+            additionalProperties:
+              type: object
+            description: Template params
+            x-nullable: true
       x-order: 1021533909-3
     EmailUpdateReqData:
       required:
@@ -1914,6 +1945,12 @@ components:
           template:
             type: string
             description: Template to use.
+            x-nullable: true
+          templateParams:
+            type: object
+            additionalProperties:
+              type: object
+            description: Template params
             x-nullable: true
       x-order: 1021533909-4
     NewSessionReq:
@@ -1955,6 +1992,11 @@ components:
             - $ref: '#/components/schemas/QuestionsUpdateReqData'
           description: |
             Request for authenticators
+        scopes:
+          type: array
+          items:
+            type: string
+          x-nullable: true
         signIn:
           type: boolean
         signUp:
@@ -2031,7 +2073,7 @@ components:
             description: |
               Given answers for questions.
             example:
-              HOME_CITY: New-York
+              HOMETOWN: New-York
               MOTHER_NAME: Emma
       x-order: -213229069-3
     QuestionsUpdateReqData:
@@ -2050,7 +2092,7 @@ components:
             description: |
               Answers to save. `null` as value removes answer
             example:
-              HOME_CITY: London
+              HOMETOWN: London
               MOTHER_NAME: null
       x-order: -213229069-5
     ConfirmSessionAuthsReq:
@@ -2073,7 +2115,7 @@ components:
               x-additionalPropertiesName: codeId
             x-additionalPropertiesName: auth
           description: |
-            Code from authenticate/new-session response.
+            The code from authenticate/new-session response.
       x-order: 2094520596-4
     SignOutRes:
       type: object
@@ -2124,7 +2166,7 @@ components:
               x-additionalPropertiesName: codeId
             x-additionalPropertiesName: auth
           description: |
-            Code from save-user response.
+            The code from save-user response.
       x-order: -1847312442-4
     EditUserReq:
       type: object
@@ -2209,6 +2251,11 @@ components:
     AuthorizeReq:
       type: object
       properties:
+        requireScopes:
+          type: array
+          items:
+            type: string
+          x-nullable: true
         rateLimiter:
           $ref: '#/components/schemas/RateLimiterReq'
       x-order: -2047680577-1
@@ -2247,6 +2294,21 @@ components:
           example: 1d
       description: Short-living token used for authentication.
       x-order: -1195634750-1
+    AnswersTransformationCfg:
+      type: object
+      properties:
+        lowercase:
+          type: boolean
+          description: |-
+            Transform user answer to lowercase letters. This allows user still pass a check when he wrote name or city
+            with different cases. `false` means strict match, so "John" != "john"
+        removeSymbols:
+          type: boolean
+          description: Remove all non-letters from user answer.
+        removeSpaces:
+          type: boolean
+          description: Remove all spaces from user answer.
+      x-order: 545691127-1
     AppSecretAuthCfg:
       type: object
       allOf:
@@ -2407,14 +2469,17 @@ components:
               type: string
               x-additionalPropertiesName: templateName
             description: |+
-              List of email templates. Key - name of template (can be used lately on frontend), value - path to template.
+              List of email templates. Key - is name of a template (can be used lately on frontend), value - is path to the template.
               App uses handlebars templates to generate emails. See docs here https://handlebarsjs.com
 
-              Email templates received `confirmationUrl`, `action`, `user`, `session`, `codeId`, `code`, `lang`, `headers`
-              as template params, e.g. you can print user id as `{{ user.id }}`.
+              Email templates receives `confirmationUrl`, `action`, `user`, `session`, `codeId`, `code`, `codeExpiresInMinutes`,
+              `lang`, `headers` as template params, e.g. you can print user id as `{{user.id}}`.
 
               Template engine also provides `i18n` helper for localisation. E.g. `{{i18n 'confirmationButton' default='Confirm'}}`
               searches key `confirmationButton` in files specified by `i18n.dir` config.
+
+              Use `{{err ERR_CODE msg='Localised message (if null, will be taken from i18n file)' devMsg='dev message'}}` to
+              raise an error in a template.
 
               It allows setting subject of email using `title` html tag, e.g. `<title>Email subject</title>`.
 
@@ -2424,10 +2489,11 @@ components:
           templateParams:
             type: object
             additionalProperties:
-              type: string
+              type: object
               x-additionalPropertiesName: paramName
             description: |
-              Additional params for template.
+              Additional params for templates that can be passed in request. Key - is a name of additional parameter, value - is
+              a default value for this parameter (when no value present in request)
           code:
             $ref: '#/components/schemas/CodeCfg'
       x-order: -1025321515-0
@@ -2788,10 +2854,14 @@ components:
       properties:
         userId:
           type: boolean
-          description: Create different rate limiters for different users.
+          description: |-
+            Create different rate limiters for different users.
+            Enabled by default.
         ip:
           type: boolean
-          description: Create different rate limiters for different ips.
+          description: |-
+            Create different rate limiters for different ips.
+            Disabled by default.
         quota:
           type: number
           description: |-

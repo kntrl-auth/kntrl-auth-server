@@ -23,6 +23,8 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -56,6 +58,10 @@ public class EmailUpdateReqData {
   public static final String SERIALIZED_NAME_TEMPLATE = "template";
   @SerializedName(SERIALIZED_NAME_TEMPLATE)
   private String template;
+
+  public static final String SERIALIZED_NAME_TEMPLATE_PARAMS = "templateParams";
+  @SerializedName(SERIALIZED_NAME_TEMPLATE_PARAMS)
+  private Map<String, Object> templateParams = null;
 
   public EmailUpdateReqData() {
   }
@@ -105,6 +111,37 @@ public class EmailUpdateReqData {
     this.template = template;
   }
 
+
+  public EmailUpdateReqData templateParams(Map<String, Object> templateParams) {
+    
+    this.templateParams = templateParams;
+    return this;
+  }
+
+  public EmailUpdateReqData putTemplateParamsItem(String key, Object templateParamsItem) {
+    if (this.templateParams == null) {
+      this.templateParams = new HashMap<>();
+    }
+    this.templateParams.put(key, templateParamsItem);
+    return this;
+  }
+
+   /**
+   * Template params
+   * @return templateParams
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Template params")
+
+  public Map<String, Object> getTemplateParams() {
+    return templateParams;
+  }
+
+
+  public void setTemplateParams(Map<String, Object> templateParams) {
+    this.templateParams = templateParams;
+  }
+
   /**
    * A container for additional, undeclared properties.
    * This is a holder for any undeclared properties as specified with
@@ -152,13 +189,14 @@ public class EmailUpdateReqData {
     }
     EmailUpdateReqData emailUpdateReqData = (EmailUpdateReqData) o;
     return Objects.equals(this.email, emailUpdateReqData.email) &&
-        Objects.equals(this.template, emailUpdateReqData.template)&&
+        Objects.equals(this.template, emailUpdateReqData.template) &&
+        Objects.equals(this.templateParams, emailUpdateReqData.templateParams)&&
         Objects.equals(this.additionalProperties, emailUpdateReqData.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(email, template, additionalProperties);
+    return Objects.hash(email, template, templateParams, additionalProperties);
   }
 
   @Override
@@ -167,6 +205,7 @@ public class EmailUpdateReqData {
     sb.append("class EmailUpdateReqData {\n");
     sb.append("    email: ").append(toIndentedString(email)).append("\n");
     sb.append("    template: ").append(toIndentedString(template)).append("\n");
+    sb.append("    templateParams: ").append(toIndentedString(templateParams)).append("\n");
     sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -192,6 +231,7 @@ public class EmailUpdateReqData {
     openapiFields = new HashSet<String>();
     openapiFields.add("email");
     openapiFields.add("template");
+    openapiFields.add("templateParams");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();

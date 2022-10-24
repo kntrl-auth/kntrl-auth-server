@@ -74,7 +74,7 @@ public class QuestionsAuthReqData {
    * @return answers
   **/
   @javax.annotation.Nonnull
-  @ApiModelProperty(example = "{\"HOME_CITY\":\"New-York\",\"MOTHER_NAME\":\"Emma\"}", required = true, value = "Given answers for questions. ")
+  @ApiModelProperty(example = "{\"HOMETOWN\":\"New-York\",\"MOTHER_NAME\":\"Emma\"}", required = true, value = "Given answers for questions. ")
 
   public Map<String, String> getAnswers() {
     return answers;

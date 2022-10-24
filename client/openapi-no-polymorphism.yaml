@@ -456,7 +456,8 @@ paths:
       - signature
       summary: Validate signature
       description: |
-        Validates data signature
+        Validates data signature.
+        See /sign API for details.
       operationId: verify
       parameters:
       - name: signature
@@ -500,6 +501,8 @@ paths:
       summary: (Backend API) sign data
       description: |
         Sign data using specified secret.
+        When secret is null - use app secret (specified in kntrl.json5) with SHA256withRSA algorithm.
+        Otherwise - use secret from query with HmacSHA256 algorithm.
       operationId: sign
       parameters:
       - name: secret
@@ -788,6 +791,10 @@ components:
             $ref: '#/components/schemas/AnswerErr'
         tooManyAnswers:
           type: boolean
+        scopes:
+          type: array
+          items:
+            type: string
         waitTimeMs:
           type: integer
           format: int32
@@ -904,7 +911,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-5
+      x-order: -270554383-6
       x-super: '#/components/schemas/ClientErr'
     ClientErr:
       required:
@@ -973,6 +980,10 @@ components:
             $ref: '#/components/schemas/AnswerErr'
         tooManyAnswers:
           type: boolean
+        scopes:
+          type: array
+          items:
+            type: string
         waitTimeMs:
           type: integer
           format: int32
@@ -1010,7 +1021,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-6
+      x-order: -270554383-7
       x-super: '#/components/schemas/ClientErr'
     CodeIsIncorrect:
       required:
@@ -1027,7 +1038,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-8
+      x-order: -270554383-9
       x-super: '#/components/schemas/ClientErr'
     CodeTooManyAttempts:
       required:
@@ -1044,7 +1055,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-7
+      x-order: -270554383-8
       x-super: '#/components/schemas/ClientErr'
     EmailIsIncorrect:
       required:
@@ -1130,7 +1141,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-4
+      x-order: -270554383-5
       x-super: '#/components/schemas/IntegrationErr'
     PasswordIsIncorrect:
       required:
@@ -1300,6 +1311,28 @@ components:
           type: boolean
       x-order: -1279700867-8
       x-super: '#/components/schemas/ClientErr'
+    ScopeNotFound:
+      required:
+      - code
+      - devMsg
+      - scopes
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+        scopes:
+          type: array
+          items:
+            type: string
+      x-order: -270554383-4
+      x-super: '#/components/schemas/ClientErr'
     ServerErr:
       required:
       - code
@@ -1372,7 +1405,7 @@ components:
           type: integer
           format: int64
           x-nullable: true
-      x-order: -270554383-11
+      x-order: -270554383-12
       x-super: '#/components/schemas/Unauthenticated'
     TooManyReqs:
       required:
@@ -1401,7 +1434,7 @@ components:
           type: integer
           format: int32
           x-nullable: true
-      x-order: -270554383-12
+      x-order: -270554383-13
       x-super: '#/components/schemas/ClientErr'
     Unauthenticated:
       required:
@@ -1423,7 +1456,7 @@ components:
           format: int64
           x-nullable: true
       additionalProperties: true
-      x-order: -270554383-9
+      x-order: -270554383-10
       x-sealed: false
       x-super: '#/components/schemas/ClientErr'
     UserLoginAlreadyTaken:
@@ -1612,6 +1645,13 @@ components:
           format: int64
         newUser:
           type: boolean
+        scopes:
+          type: array
+          description: App services list that this session is allowed to access. Null
+            if allowed to access any scope
+          items:
+            type: string
+          x-nullable: true
         device:
           $ref: '#/components/schemas/Device'
         systemAccess:
@@ -1807,7 +1847,7 @@ components:
               description: |
                 Shows is answer was correct.
               example:
-                HOME_CITY: true
+                HOMETOWN: true
                 MOTHER_NAME: false
             answersSavedAt:
               type: object
@@ -2041,7 +2081,7 @@ components:
               description: |
                 Shows is answer was correct.
               example:
-                HOME_CITY: true
+                HOMETOWN: true
                 MOTHER_NAME: false
             answersSavedAt:
               type: object
@@ -2123,7 +2163,7 @@ components:
           description: |
             Shows is answer was correct.
           example:
-            HOME_CITY: true
+            HOMETOWN: true
             MOTHER_NAME: false
       additionalProperties: true
       x-order: -213229069-4
@@ -2234,7 +2274,7 @@ components:
           type: boolean
         systemAccess:
           type: boolean
-          description: Allows to access to any user in the app.
+          description: Allows to edit any user in the app.
       x-order: 276900135-0
     AppSecretReqData:
       required:
@@ -2276,6 +2316,12 @@ components:
                 type: string
                 description: Template to use.
                 x-nullable: true
+              templateParams:
+                type: object
+                additionalProperties:
+                  type: object
+                description: Template params
+                x-nullable: true
               accessToken:
                 type: string
                 description: If you have access-token - put it here.
@@ -2301,7 +2347,7 @@ components:
                 description: |
                   Answers to save. `null` as value removes answer
                 example:
-                  HOME_CITY: London
+                  HOMETOWN: London
                   MOTHER_NAME: null
             additionalProperties: true
             x-additionalPropertiesName: auth
@@ -2324,6 +2370,12 @@ components:
           type: string
           description: Template to use.
           x-nullable: true
+        templateParams:
+          type: object
+          additionalProperties:
+            type: object
+          description: Template params
+          x-nullable: true
       additionalProperties: true
       x-order: 1021533909-3
       x-super: '#/components/schemas/AuthReqData'
@@ -2338,6 +2390,12 @@ components:
         template:
           type: string
           description: Template to use.
+          x-nullable: true
+        templateParams:
+          type: object
+          additionalProperties:
+            type: object
+          description: Template params
           x-nullable: true
       additionalProperties: true
       x-order: 1021533909-4
@@ -2377,6 +2435,12 @@ components:
                 type: string
                 description: Template to use.
                 x-nullable: true
+              templateParams:
+                type: object
+                additionalProperties:
+                  type: object
+                description: Template params
+                x-nullable: true
               accessToken:
                 type: string
                 description: If you have access-token - put it here.
@@ -2402,12 +2466,17 @@ components:
                 description: |
                   Answers to save. `null` as value removes answer
                 example:
-                  HOME_CITY: London
+                  HOMETOWN: London
                   MOTHER_NAME: null
             additionalProperties: true
             x-additionalPropertiesName: auth
           description: |
             Request for authenticators
+        scopes:
+          type: array
+          items:
+            type: string
+          x-nullable: true
         signIn:
           type: boolean
         signUp:
@@ -2472,7 +2541,7 @@ components:
           description: |
             Given answers for questions.
           example:
-            HOME_CITY: New-York
+            HOMETOWN: New-York
             MOTHER_NAME: Emma
       additionalProperties: true
       x-order: -213229069-3
@@ -2489,7 +2558,7 @@ components:
           description: |
             Answers to save. `null` as value removes answer
           example:
-            HOME_CITY: London
+            HOMETOWN: London
             MOTHER_NAME: null
       additionalProperties: true
       x-order: -213229069-5
@@ -2514,7 +2583,7 @@ components:
               x-additionalPropertiesName: codeId
             x-additionalPropertiesName: auth
           description: |
-            Code from authenticate/new-session response.
+            The code from authenticate/new-session response.
       x-order: 2094520596-4
     SignOutRes:
       type: object
@@ -2564,7 +2633,7 @@ components:
               x-additionalPropertiesName: codeId
             x-additionalPropertiesName: auth
           description: |
-            Code from save-user response.
+            The code from save-user response.
       x-order: -1847312442-4
     EditUserReq:
       type: object
@@ -2595,6 +2664,12 @@ components:
                 type: string
                 description: Template to use.
                 x-nullable: true
+              templateParams:
+                type: object
+                additionalProperties:
+                  type: object
+                description: Template params
+                x-nullable: true
               accessToken:
                 type: string
                 description: If you have access-token - put it here.
@@ -2620,7 +2695,7 @@ components:
                 description: |
                   Answers to save. `null` as value removes answer
                 example:
-                  HOME_CITY: London
+                  HOMETOWN: London
                   MOTHER_NAME: null
             additionalProperties: true
             x-additionalPropertiesName: auth
@@ -2660,6 +2735,12 @@ components:
                 type: string
                 description: Template to use.
                 x-nullable: true
+              templateParams:
+                type: object
+                additionalProperties:
+                  type: object
+                description: Template params
+                x-nullable: true
               accessToken:
                 type: string
                 description: If you have access-token - put it here.
@@ -2685,7 +2766,7 @@ components:
                 description: |
                   Answers to save. `null` as value removes answer
                 example:
-                  HOME_CITY: London
+                  HOMETOWN: London
                   MOTHER_NAME: null
             additionalProperties: true
             x-additionalPropertiesName: auth
@@ -2701,6 +2782,11 @@ components:
     AuthorizeReq:
       type: object
       properties:
+        requireScopes:
+          type: array
+          items:
+            type: string
+          x-nullable: true
         rateLimiter:
           $ref: '#/components/schemas/RateLimiterReq'
       x-order: -2047680577-1
@@ -2742,6 +2828,21 @@ components:
           example: 1d
       description: Short-living token used for authentication.
       x-order: -1195634750-1
+    AnswersTransformationCfg:
+      type: object
+      properties:
+        lowercase:
+          type: boolean
+          description: |-
+            Transform user answer to lowercase letters. This allows user still pass a check when he wrote name or city
+            with different cases. `false` means strict match, so "John" != "john"
+        removeSymbols:
+          type: boolean
+          description: Remove all non-letters from user answer.
+        removeSpaces:
+          type: boolean
+          description: Remove all spaces from user answer.
+      x-order: 545691127-1
     AppSecretAuthCfg:
       type: object
       properties:
@@ -2953,14 +3054,17 @@ components:
             type: string
             x-additionalPropertiesName: templateName
           description: |+
-            List of email templates. Key - name of template (can be used lately on frontend), value - path to template.
+            List of email templates. Key - is name of a template (can be used lately on frontend), value - is path to the template.
             App uses handlebars templates to generate emails. See docs here https://handlebarsjs.com
 
-            Email templates received `confirmationUrl`, `action`, `user`, `session`, `codeId`, `code`, `lang`, `headers`
-            as template params, e.g. you can print user id as `{{ user.id }}`.
+            Email templates receives `confirmationUrl`, `action`, `user`, `session`, `codeId`, `code`, `codeExpiresInMinutes`,
+            `lang`, `headers` as template params, e.g. you can print user id as `{{user.id}}`.
 
             Template engine also provides `i18n` helper for localisation. E.g. `{{i18n 'confirmationButton' default='Confirm'}}`
             searches key `confirmationButton` in files specified by `i18n.dir` config.
+
+            Use `{{err ERR_CODE msg='Localised message (if null, will be taken from i18n file)' devMsg='dev message'}}` to
+            raise an error in a template.
 
             It allows setting subject of email using `title` html tag, e.g. `<title>Email subject</title>`.
 
@@ -2970,10 +3074,11 @@ components:
         templateParams:
           type: object
           additionalProperties:
-            type: string
+            type: object
             x-additionalPropertiesName: paramName
           description: |
-            Additional params for template.
+            Additional params for templates that can be passed in request. Key - is a name of additional parameter, value - is
+            a default value for this parameter (when no value present in request)
         code:
           $ref: '#/components/schemas/CodeCfg'
       x-order: -1025321515-0
@@ -3434,10 +3539,14 @@ components:
       properties:
         userId:
           type: boolean
-          description: Create different rate limiters for different users.
+          description: |-
+            Create different rate limiters for different users.
+            Enabled by default.
         ip:
           type: boolean
-          description: Create different rate limiters for different ips.
+          description: |-
+            Create different rate limiters for different ips.
+            Disabled by default.
         quota:
           type: number
           description: |-
@@ -3693,14 +3802,17 @@ components:
                   type: string
                   x-additionalPropertiesName: templateName
                 description: |+
-                  List of email templates. Key - name of template (can be used lately on frontend), value - path to template.
+                  List of email templates. Key - is name of a template (can be used lately on frontend), value - is path to the template.
                   App uses handlebars templates to generate emails. See docs here https://handlebarsjs.com
 
-                  Email templates received `confirmationUrl`, `action`, `user`, `session`, `codeId`, `code`, `lang`, `headers`
-                  as template params, e.g. you can print user id as `{{ user.id }}`.
+                  Email templates receives `confirmationUrl`, `action`, `user`, `session`, `codeId`, `code`, `codeExpiresInMinutes`,
+                  `lang`, `headers` as template params, e.g. you can print user id as `{{user.id}}`.
 
                   Template engine also provides `i18n` helper for localisation. E.g. `{{i18n 'confirmationButton' default='Confirm'}}`
                   searches key `confirmationButton` in files specified by `i18n.dir` config.
+
+                  Use `{{err ERR_CODE msg='Localised message (if null, will be taken from i18n file)' devMsg='dev message'}}` to
+                  raise an error in a template.
 
                   It allows setting subject of email using `title` html tag, e.g. `<title>Email subject</title>`.
 
@@ -3710,10 +3822,11 @@ components:
               templateParams:
                 type: object
                 additionalProperties:
-                  type: string
+                  type: object
                   x-additionalPropertiesName: paramName
                 description: |
-                  Additional params for template.
+                  Additional params for templates that can be passed in request. Key - is a name of additional parameter, value - is
+                  a default value for this parameter (when no value present in request)
               ipBytesToIgnore:
                 type: integer
                 description: |-
@@ -4083,8 +4196,8 @@ components:
       - SESSION_EXPIRED
       - ACCESS_DENIED
       - USER_NOT_FOUND
-      - TOKEN_EXPIRED
       - UNAUTHENTICATED
+      - TOKEN_EXPIRED
     ClientErrCode:
       type: string
       enum:
@@ -4101,15 +4214,16 @@ components:
       - SIGNATURE_IS_INCORRECT
       - USER_LOGIN_IS_INVALID
       - USER_LOGIN_ALREADY_TAKEN
+      - UNAUTHENTICATED
       - TOKEN_EXPIRED
       - TOO_MANY_REQS
       - AUTH_IS_NOT_ENABLED
       - AUTH_IS_NOT_CONFIRMED
+      - SCOPE_NOT_FOUND
       - AUTH_REQUIRES_ANOTHER
       - CODE_IS_EXPIRED
       - CODE_TOO_MANY_ATTEMPTS
       - CODE_IS_INCORRECT
-      - UNAUTHENTICATED
     IntegrationErrCode:
       type: string
       enum:
@@ -4137,16 +4251,17 @@ components:
       - SIGNATURE_IS_INCORRECT
       - USER_LOGIN_IS_INVALID
       - USER_LOGIN_ALREADY_TAKEN
+      - UNAUTHENTICATED
       - TOKEN_EXPIRED
       - TOO_MANY_REQS
       - AUTH_IS_NOT_ENABLED
       - AUTH_IS_NOT_CONFIRMED
+      - SCOPE_NOT_FOUND
       - NO_AUTH_AVAILABLE_FOR_FACTOR
       - AUTH_REQUIRES_ANOTHER
       - CODE_IS_EXPIRED
       - CODE_TOO_MANY_ATTEMPTS
       - CODE_IS_INCORRECT
-      - UNAUTHENTICATED
       - SERVER_ERR
       - INTEGRATION_ERR
       - ANY_ERR

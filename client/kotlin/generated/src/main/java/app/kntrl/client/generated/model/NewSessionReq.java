@@ -24,7 +24,9 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.google.gson.Gson;
@@ -67,6 +69,10 @@ public class NewSessionReq {
   public static final String SERIALIZED_NAME_AUTH_REQS = "authReqs";
   @SerializedName(SERIALIZED_NAME_AUTH_REQS)
   private Map<String, AuthenticateReqAuthReqsValue> authReqs = null;
+
+  public static final String SERIALIZED_NAME_SCOPES = "scopes";
+  @SerializedName(SERIALIZED_NAME_SCOPES)
+  private List<String> scopes = null;
 
   public static final String SERIALIZED_NAME_SIGN_IN = "signIn";
   @SerializedName(SERIALIZED_NAME_SIGN_IN)
@@ -199,6 +205,37 @@ public class NewSessionReq {
   }
 
 
+  public NewSessionReq scopes(List<String> scopes) {
+    
+    this.scopes = scopes;
+    return this;
+  }
+
+  public NewSessionReq addScopesItem(String scopesItem) {
+    if (this.scopes == null) {
+      this.scopes = new ArrayList<>();
+    }
+    this.scopes.add(scopesItem);
+    return this;
+  }
+
+   /**
+   * Get scopes
+   * @return scopes
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public List<String> getScopes() {
+    return scopes;
+  }
+
+
+  public void setScopes(List<String> scopes) {
+    this.scopes = scopes;
+  }
+
+
   public NewSessionReq signIn(Boolean signIn) {
     
     this.signIn = signIn;
@@ -317,6 +354,7 @@ public class NewSessionReq {
         Objects.equals(this.logins, newSessionReq.logins) &&
         Objects.equals(this.factors, newSessionReq.factors) &&
         Objects.equals(this.authReqs, newSessionReq.authReqs) &&
+        Objects.equals(this.scopes, newSessionReq.scopes) &&
         Objects.equals(this.signIn, newSessionReq.signIn) &&
         Objects.equals(this.signUp, newSessionReq.signUp) &&
         Objects.equals(this.dryRun, newSessionReq.dryRun)&&
@@ -325,7 +363,7 @@ public class NewSessionReq {
 
   @Override
   public int hashCode() {
-    return Objects.hash(entry, logins, factors, authReqs, signIn, signUp, dryRun, additionalProperties);
+    return Objects.hash(entry, logins, factors, authReqs, scopes, signIn, signUp, dryRun, additionalProperties);
   }
 
   @Override
@@ -336,6 +374,7 @@ public class NewSessionReq {
     sb.append("    logins: ").append(toIndentedString(logins)).append("\n");
     sb.append("    factors: ").append(toIndentedString(factors)).append("\n");
     sb.append("    authReqs: ").append(toIndentedString(authReqs)).append("\n");
+    sb.append("    scopes: ").append(toIndentedString(scopes)).append("\n");
     sb.append("    signIn: ").append(toIndentedString(signIn)).append("\n");
     sb.append("    signUp: ").append(toIndentedString(signUp)).append("\n");
     sb.append("    dryRun: ").append(toIndentedString(dryRun)).append("\n");
@@ -366,6 +405,7 @@ public class NewSessionReq {
     openapiFields.add("logins");
     openapiFields.add("factors");
     openapiFields.add("authReqs");
+    openapiFields.add("scopes");
     openapiFields.add("signIn");
     openapiFields.add("signUp");
     openapiFields.add("dryRun");
@@ -398,6 +438,10 @@ public class NewSessionReq {
       }
       if ((jsonObj.get("entry") != null && !jsonObj.get("entry").isJsonNull()) && !jsonObj.get("entry").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `entry` to be a primitive type in the JSON string but got `%s`", jsonObj.get("entry").toString()));
+      }
+      // ensure the json data is an array
+      if ((jsonObj.get("scopes") != null && !jsonObj.get("scopes").isJsonNull()) && !jsonObj.get("scopes").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `scopes` to be an array in the JSON string but got `%s`", jsonObj.get("scopes").toString()));
       }
   }
 

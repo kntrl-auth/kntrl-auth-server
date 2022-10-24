@@ -410,16 +410,17 @@ components:
           SIGNATURE_IS_INCORRECT: '#/components/schemas/SignatureIsIncorrect'
           USER_LOGIN_IS_INVALID: '#/components/schemas/UserLoginIsInvalid'
           USER_LOGIN_ALREADY_TAKEN: '#/components/schemas/UserLoginAlreadyTaken'
+          UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
           TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
           TOO_MANY_REQS: '#/components/schemas/TooManyReqs'
           AUTH_IS_NOT_ENABLED: '#/components/schemas/AuthIsNotEnabled'
           AUTH_IS_NOT_CONFIRMED: '#/components/schemas/AuthIsNotConfirmed'
+          SCOPE_NOT_FOUND: '#/components/schemas/ScopeNotFound'
           NO_AUTH_AVAILABLE_FOR_FACTOR: '#/components/schemas/NoAuthAvailableForFactor'
           AUTH_REQUIRES_ANOTHER: '#/components/schemas/AuthRequiresAnother'
           CODE_IS_EXPIRED: '#/components/schemas/CodeIsExpired'
           CODE_TOO_MANY_ATTEMPTS: '#/components/schemas/CodeTooManyAttempts'
           CODE_IS_INCORRECT: '#/components/schemas/CodeIsIncorrect'
-          UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
           SERVER_ERR: '#/components/schemas/ServerErr'
           INTEGRATION_ERR: '#/components/schemas/IntegrationErr'
           ANY_ERR: '#/components/schemas/AnyErr'
@@ -520,7 +521,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-5
+      x-order: -270554383-6
       x-super: '#/components/schemas/ClientErr'
     ClientErr:
       required:
@@ -553,15 +554,16 @@ components:
           SIGNATURE_IS_INCORRECT: '#/components/schemas/SignatureIsIncorrect'
           USER_LOGIN_IS_INVALID: '#/components/schemas/UserLoginIsInvalid'
           USER_LOGIN_ALREADY_TAKEN: '#/components/schemas/UserLoginAlreadyTaken'
+          UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
           TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
           TOO_MANY_REQS: '#/components/schemas/TooManyReqs'
           AUTH_IS_NOT_ENABLED: '#/components/schemas/AuthIsNotEnabled'
           AUTH_IS_NOT_CONFIRMED: '#/components/schemas/AuthIsNotConfirmed'
+          SCOPE_NOT_FOUND: '#/components/schemas/ScopeNotFound'
           AUTH_REQUIRES_ANOTHER: '#/components/schemas/AuthRequiresAnother'
           CODE_IS_EXPIRED: '#/components/schemas/CodeIsExpired'
           CODE_TOO_MANY_ATTEMPTS: '#/components/schemas/CodeTooManyAttempts'
           CODE_IS_INCORRECT: '#/components/schemas/CodeIsIncorrect'
-          UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
       x-order: 2025349183-4
       x-sealed: false
       x-super: '#/components/schemas/Err'
@@ -580,7 +582,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-6
+      x-order: -270554383-7
       x-super: '#/components/schemas/ClientErr'
     CodeIsIncorrect:
       required:
@@ -597,7 +599,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-8
+      x-order: -270554383-9
       x-super: '#/components/schemas/ClientErr'
     CodeTooManyAttempts:
       required:
@@ -614,7 +616,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-7
+      x-order: -270554383-8
       x-super: '#/components/schemas/ClientErr'
     EmailIsIncorrect:
       required:
@@ -704,7 +706,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-4
+      x-order: -270554383-5
       x-super: '#/components/schemas/IntegrationErr'
     PasswordIsIncorrect:
       required:
@@ -874,6 +876,28 @@ components:
           type: boolean
       x-order: -1279700867-8
       x-super: '#/components/schemas/ClientErr'
+    ScopeNotFound:
+      required:
+      - code
+      - devMsg
+      - scopes
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+        scopes:
+          type: array
+          items:
+            type: string
+      x-order: -270554383-4
+      x-super: '#/components/schemas/ClientErr'
     ServerErr:
       required:
       - code
@@ -950,7 +974,7 @@ components:
           type: integer
           format: int64
           x-nullable: true
-      x-order: -270554383-11
+      x-order: -270554383-12
       x-super: '#/components/schemas/Unauthenticated'
     TooManyReqs:
       required:
@@ -979,7 +1003,7 @@ components:
           type: integer
           format: int32
           x-nullable: true
-      x-order: -270554383-12
+      x-order: -270554383-13
       x-super: '#/components/schemas/ClientErr'
     Unauthenticated:
       required:
@@ -1002,9 +1026,9 @@ components:
           SESSION_EXPIRED: '#/components/schemas/SessionExpired'
           ACCESS_DENIED: '#/components/schemas/AccessDenied'
           USER_NOT_FOUND: '#/components/schemas/UserNotFound'
-          TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
           UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
-      x-order: -270554383-9
+          TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
+      x-order: -270554383-10
       x-sealed: false
       x-super: '#/components/schemas/ClientErr'
     UserLoginAlreadyTaken:
@@ -1347,7 +1371,7 @@ components:
           description: |
             Shows is answer was correct.
           example:
-            HOME_CITY: true
+            HOMETOWN: true
             MOTHER_NAME: false
       additionalProperties: true
       x-order: -213229069-4
@@ -1458,7 +1482,7 @@ components:
               format: int64
             systemAccess:
               type: boolean
-              description: Allows to access to any user in the app.
+              description: Allows to edit any user in the app.
           description: User loaded from database. Can be null if user isn't identified
             yet.
           x-nullable: true
@@ -1522,6 +1546,13 @@ components:
               format: int64
             newUser:
               type: boolean
+            scopes:
+              type: array
+              description: App services list that this session is allowed to access.
+                Null if allowed to access any scope
+              items:
+                type: string
+              x-nullable: true
             device:
               $ref: '#/components/schemas/Device'
             systemAccess:
@@ -1704,6 +1735,12 @@ components:
           type: string
           description: Template to use.
           x-nullable: true
+        templateParams:
+          type: object
+          additionalProperties:
+            type: object
+          description: Template params
+          x-nullable: true
       additionalProperties: true
       x-order: 1021533909-3
       x-super: '#/components/schemas/AuthReqData'
@@ -1718,6 +1755,12 @@ components:
         template:
           type: string
           description: Template to use.
+          x-nullable: true
+        templateParams:
+          type: object
+          additionalProperties:
+            type: object
+          description: Template params
           x-nullable: true
       additionalProperties: true
       x-order: 1021533909-4
@@ -1808,7 +1851,7 @@ components:
           description: |
             Given answers for questions.
           example:
-            HOME_CITY: New-York
+            HOMETOWN: New-York
             MOTHER_NAME: Emma
       additionalProperties: true
       x-order: -213229069-3
@@ -1825,7 +1868,7 @@ components:
           description: |
             Answers to save. `null` as value removes answer
           example:
-            HOME_CITY: London
+            HOMETOWN: London
             MOTHER_NAME: null
       additionalProperties: true
       x-order: -213229069-5
@@ -1908,6 +1951,13 @@ components:
           format: int64
         newUser:
           type: boolean
+        scopes:
+          type: array
+          description: App services list that this session is allowed to access. Null
+            if allowed to access any scope
+          items:
+            type: string
+          x-nullable: true
         device:
           $ref: '#/components/schemas/Device'
         systemAccess:
@@ -1974,7 +2024,7 @@ components:
           format: int64
         systemAccess:
           type: boolean
-          description: Allows to access to any user in the app.
+          description: Allows to edit any user in the app.
       x-order: 276900135-0
     DryRunAuthData:
       type: object
@@ -2099,6 +2149,13 @@ components:
               format: int64
             newUser:
               type: boolean
+            scopes:
+              type: array
+              description: App services list that this session is allowed to access.
+                Null if allowed to access any scope
+              items:
+                type: string
+              x-nullable: true
             device:
               $ref: '#/components/schemas/Device'
             systemAccess:
@@ -2167,6 +2224,13 @@ components:
               format: int64
             newUser:
               type: boolean
+            scopes:
+              type: array
+              description: App services list that this session is allowed to access.
+                Null if allowed to access any scope
+              items:
+                type: string
+              x-nullable: true
             device:
               $ref: '#/components/schemas/Device'
             systemAccess:

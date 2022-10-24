@@ -97,11 +97,11 @@ public class ConfirmUserAuthsReq {
   }
 
    /**
-   * Code from save-user response. 
+   * The code from save-user response. 
    * @return receivedCodes
   **/
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "Code from save-user response. ")
+  @ApiModelProperty(required = true, value = "The code from save-user response. ")
 
   public Map<String, Map<String, String>> getReceivedCodes() {
     return receivedCodes;
