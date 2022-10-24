@@ -1,0 +1,26 @@
+{
+  logins: [ "facebook" ],
+
+  auths: {
+    // Check corresponding auth provider to get these data.
+    // E.g. for facebook it's located here: https://developers.facebook.com/docs/facebook-login/guides/advanced/manual-flow
+
+    facebook: {
+      builtin: "oauth",
+      clientId: "394838444474913",
+      clientSecret: "72b35c1226a6439f7f1a15db4d44ab26",
+      tokenUrl: "https://graph.facebook.com/v15.0/oauth/access_token",
+
+      // Path to user id in access-token
+      extractLogin : "data.user_id"
+    }
+  },
+
+  entries: {
+    app: {
+      factorsRequired: {
+        first: [ "facebook" ]
+      },
+    }
+  }
+}
