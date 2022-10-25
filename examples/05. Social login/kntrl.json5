@@ -9,8 +9,8 @@
       builtin: "oauth/facebook",
 
       exchangeAuthCode: {
-        clientId: "394838444474913",
-        clientSecret: "72b35c1226a6439f7f1a15db4d44ab26",
+        clientId: "<client-id>",
+        clientSecret: "<client-secret>",
       },
     }
   },
