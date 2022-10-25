@@ -84,7 +84,7 @@ public class RateLimiterCfg {
   }
 
    /**
-   * Create different rate limiters for different users. Enabled by default.
+   * Create different rate limiters for different users.
    * @return userId
   **/
   @javax.annotation.Nullable
