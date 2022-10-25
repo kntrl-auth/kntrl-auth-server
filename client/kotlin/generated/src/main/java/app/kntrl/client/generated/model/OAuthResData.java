@@ -51,65 +51,65 @@ import app.kntrl.client.generated.infra.JSON;
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class OAuthResData {
-  public static final String SERIALIZED_NAME_LOGIN = "login";
-  @SerializedName(SERIALIZED_NAME_LOGIN)
-  private String login;
+  public static final String SERIALIZED_NAME_EXTRACTED_LOGIN = "extractedLogin";
+  @SerializedName(SERIALIZED_NAME_EXTRACTED_LOGIN)
+  private String extractedLogin;
 
-  public static final String SERIALIZED_NAME_EXTRACTED_DATA = "extractedData";
-  @SerializedName(SERIALIZED_NAME_EXTRACTED_DATA)
-  private Map<String, Object> extractedData = new HashMap<>();
+  public static final String SERIALIZED_NAME_EXTRACTED_PUBLIC_DATA = "extractedPublicData";
+  @SerializedName(SERIALIZED_NAME_EXTRACTED_PUBLIC_DATA)
+  private Map<String, Object> extractedPublicData = new HashMap<>();
 
   public OAuthResData() {
   }
 
-  public OAuthResData login(String login) {
+  public OAuthResData extractedLogin(String extractedLogin) {
     
-    this.login = login;
+    this.extractedLogin = extractedLogin;
     return this;
   }
 
    /**
-   * Get login
-   * @return login
+   * Get extractedLogin
+   * @return extractedLogin
   **/
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "")
 
-  public String getLogin() {
-    return login;
+  public String getExtractedLogin() {
+    return extractedLogin;
   }
 
 
-  public void setLogin(String login) {
-    this.login = login;
+  public void setExtractedLogin(String extractedLogin) {
+    this.extractedLogin = extractedLogin;
   }
 
 
-  public OAuthResData extractedData(Map<String, Object> extractedData) {
+  public OAuthResData extractedPublicData(Map<String, Object> extractedPublicData) {
     
-    this.extractedData = extractedData;
+    this.extractedPublicData = extractedPublicData;
     return this;
   }
 
-  public OAuthResData putExtractedDataItem(String key, Object extractedDataItem) {
-    this.extractedData.put(key, extractedDataItem);
+  public OAuthResData putExtractedPublicDataItem(String key, Object extractedPublicDataItem) {
+    this.extractedPublicData.put(key, extractedPublicDataItem);
     return this;
   }
 
    /**
-   * Get extractedData
-   * @return extractedData
+   * Get extractedPublicData
+   * @return extractedPublicData
   **/
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "")
 
-  public Map<String, Object> getExtractedData() {
-    return extractedData;
+  public Map<String, Object> getExtractedPublicData() {
+    return extractedPublicData;
   }
 
 
-  public void setExtractedData(Map<String, Object> extractedData) {
-    this.extractedData = extractedData;
+  public void setExtractedPublicData(Map<String, Object> extractedPublicData) {
+    this.extractedPublicData = extractedPublicData;
   }
 
   /**
@@ -158,22 +158,22 @@ public class OAuthResData {
       return false;
     }
     OAuthResData oauthResData = (OAuthResData) o;
-    return Objects.equals(this.login, oauthResData.login) &&
-        Objects.equals(this.extractedData, oauthResData.extractedData)&&
+    return Objects.equals(this.extractedLogin, oauthResData.extractedLogin) &&
+        Objects.equals(this.extractedPublicData, oauthResData.extractedPublicData)&&
         Objects.equals(this.additionalProperties, oauthResData.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(login, extractedData, additionalProperties);
+    return Objects.hash(extractedLogin, extractedPublicData, additionalProperties);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class OAuthResData {\n");
-    sb.append("    login: ").append(toIndentedString(login)).append("\n");
-    sb.append("    extractedData: ").append(toIndentedString(extractedData)).append("\n");
+    sb.append("    extractedLogin: ").append(toIndentedString(extractedLogin)).append("\n");
+    sb.append("    extractedPublicData: ").append(toIndentedString(extractedPublicData)).append("\n");
     sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -197,13 +197,13 @@ public class OAuthResData {
   static {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
-    openapiFields.add("login");
-    openapiFields.add("extractedData");
+    openapiFields.add("extractedLogin");
+    openapiFields.add("extractedPublicData");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
-    openapiRequiredFields.add("login");
-    openapiRequiredFields.add("extractedData");
+    openapiRequiredFields.add("extractedLogin");
+    openapiRequiredFields.add("extractedPublicData");
   }
 
  /**
@@ -227,8 +227,8 @@ public class OAuthResData {
           throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonObj.toString()));
         }
       }
-      if ((jsonObj.get("login") != null && !jsonObj.get("login").isJsonNull()) && !jsonObj.get("login").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `login` to be a primitive type in the JSON string but got `%s`", jsonObj.get("login").toString()));
+      if ((jsonObj.get("extractedLogin") != null && !jsonObj.get("extractedLogin").isJsonNull()) && !jsonObj.get("extractedLogin").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `extractedLogin` to be a primitive type in the JSON string but got `%s`", jsonObj.get("extractedLogin").toString()));
       }
   }
 

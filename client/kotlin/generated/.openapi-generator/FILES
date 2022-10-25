@@ -14,7 +14,6 @@ docs/AnyErr.md
 docs/AppSecretAuthCfg.md
 docs/AppSecretReqData.md
 docs/AuthAppCfg.md
-docs/AuthCodeHandlerCfg.md
 docs/AuthData.md
 docs/AuthDataPublic.md
 docs/AuthExecRes.md
@@ -57,6 +56,7 @@ docs/EntryCfgAccessToken.md
 docs/Err.md
 docs/ErrAuthExecRes.md
 docs/ErrCode.md
+docs/ExchangeAuthCodeCfg.md
 docs/FindSessionsRes.md
 docs/HealthRes.md
 docs/HealthStatus.md
@@ -79,6 +79,8 @@ docs/NewSessionReq.md
 docs/NextFactor.md
 docs/NoAuthAvailableForFactor.md
 docs/OAuthCfg.md
+docs/OAuthCfgExchangeAuthCode.md
+docs/OAuthCfgUserInfo.md
 docs/OAuthReqData.md
 docs/OAuthResData.md
 docs/OkAuthExecRes.md
@@ -191,7 +193,6 @@ src/main/java/app/kntrl/client/generated/model/AnyErr.java
 src/main/java/app/kntrl/client/generated/model/AppSecretAuthCfg.java
 src/main/java/app/kntrl/client/generated/model/AppSecretReqData.java
 src/main/java/app/kntrl/client/generated/model/AuthAppCfg.java
-src/main/java/app/kntrl/client/generated/model/AuthCodeHandlerCfg.java
 src/main/java/app/kntrl/client/generated/model/AuthData.java
 src/main/java/app/kntrl/client/generated/model/AuthDataPublic.java
 src/main/java/app/kntrl/client/generated/model/AuthExecRes.java
@@ -233,6 +234,7 @@ src/main/java/app/kntrl/client/generated/model/EntryCfgAccessToken.java
 src/main/java/app/kntrl/client/generated/model/Err.java
 src/main/java/app/kntrl/client/generated/model/ErrAuthExecRes.java
 src/main/java/app/kntrl/client/generated/model/ErrCode.java
+src/main/java/app/kntrl/client/generated/model/ExchangeAuthCodeCfg.java
 src/main/java/app/kntrl/client/generated/model/FindSessionsRes.java
 src/main/java/app/kntrl/client/generated/model/HealthRes.java
 src/main/java/app/kntrl/client/generated/model/HealthStatus.java
@@ -255,6 +257,8 @@ src/main/java/app/kntrl/client/generated/model/NewSessionReq.java
 src/main/java/app/kntrl/client/generated/model/NextFactor.java
 src/main/java/app/kntrl/client/generated/model/NoAuthAvailableForFactor.java
 src/main/java/app/kntrl/client/generated/model/OAuthCfg.java
+src/main/java/app/kntrl/client/generated/model/OAuthCfgExchangeAuthCode.java
+src/main/java/app/kntrl/client/generated/model/OAuthCfgUserInfo.java
 src/main/java/app/kntrl/client/generated/model/OAuthReqData.java
 src/main/java/app/kntrl/client/generated/model/OAuthResData.java
 src/main/java/app/kntrl/client/generated/model/OkAuthExecRes.java
@@ -335,7 +339,6 @@ src/test/java/app/kntrl/client/generated/model/AnyErrTest.java
 src/test/java/app/kntrl/client/generated/model/AppSecretAuthCfgTest.java
 src/test/java/app/kntrl/client/generated/model/AppSecretReqDataTest.java
 src/test/java/app/kntrl/client/generated/model/AuthAppCfgTest.java
-src/test/java/app/kntrl/client/generated/model/AuthCodeHandlerCfgTest.java
 src/test/java/app/kntrl/client/generated/model/AuthDataPublicTest.java
 src/test/java/app/kntrl/client/generated/model/AuthDataTest.java
 src/test/java/app/kntrl/client/generated/model/AuthExecResResDataAnswersSavedAtTest.java
@@ -377,6 +380,7 @@ src/test/java/app/kntrl/client/generated/model/EntryCfgTest.java
 src/test/java/app/kntrl/client/generated/model/ErrAuthExecResTest.java
 src/test/java/app/kntrl/client/generated/model/ErrCodeTest.java
 src/test/java/app/kntrl/client/generated/model/ErrTest.java
+src/test/java/app/kntrl/client/generated/model/ExchangeAuthCodeCfgTest.java
 src/test/java/app/kntrl/client/generated/model/FindSessionsResTest.java
 src/test/java/app/kntrl/client/generated/model/HealthResTest.java
 src/test/java/app/kntrl/client/generated/model/HealthStatusResTest.java
@@ -398,7 +402,9 @@ src/test/java/app/kntrl/client/generated/model/MysqlCfgTest.java
 src/test/java/app/kntrl/client/generated/model/NewSessionReqTest.java
 src/test/java/app/kntrl/client/generated/model/NextFactorTest.java
 src/test/java/app/kntrl/client/generated/model/NoAuthAvailableForFactorTest.java
+src/test/java/app/kntrl/client/generated/model/OAuthCfgExchangeAuthCodeTest.java
 src/test/java/app/kntrl/client/generated/model/OAuthCfgTest.java
+src/test/java/app/kntrl/client/generated/model/OAuthCfgUserInfoTest.java
 src/test/java/app/kntrl/client/generated/model/OAuthReqDataTest.java
 src/test/java/app/kntrl/client/generated/model/OAuthResDataTest.java
 src/test/java/app/kntrl/client/generated/model/OkAuthExecResTest.java

@@ -52,7 +52,7 @@ import app.kntrl.client.generated.infra.JSON;
 public class AccessTokenCfg {
   public static final String SERIALIZED_NAME_COOKIE = "cookie";
   @SerializedName(SERIALIZED_NAME_COOKIE)
-  private Boolean cookie;
+  private Boolean cookie = false;
 
   /**
    * If not null - access token contains signed session data, so it&#39;s not required to request session database for access check.
@@ -107,11 +107,11 @@ public class AccessTokenCfg {
 
   public static final String SERIALIZED_NAME_CACHE_UNAUTHENTICATED = "cacheUnauthenticated";
   @SerializedName(SERIALIZED_NAME_CACHE_UNAUTHENTICATED)
-  private Boolean cacheUnauthenticated;
+  private Boolean cacheUnauthenticated = false;
 
   public static final String SERIALIZED_NAME_TTL = "ttl";
   @SerializedName(SERIALIZED_NAME_TTL)
-  private String ttl;
+  private String ttl = "1d";
 
   public AccessTokenCfg() {
   }

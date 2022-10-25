@@ -16,6 +16,8 @@ package app.kntrl.client.generated.model;
 import java.util.Objects;
 import java.util.Arrays;
 import app.kntrl.client.generated.model.CodeCfg;
+import app.kntrl.client.generated.model.OAuthCfgExchangeAuthCode;
+import app.kntrl.client.generated.model.OAuthCfgUserInfo;
 import app.kntrl.client.generated.model.PasswordHistoryCfg;
 import app.kntrl.client.generated.model.PasswordStrengthRequirements;
 import com.google.gson.TypeAdapter;
@@ -66,7 +68,7 @@ public class ShAppCfgAuthsValue {
 
   public static final String SERIALIZED_NAME_SKIP_ON_FAIL = "skipOnFail";
   @SerializedName(SERIALIZED_NAME_SKIP_ON_FAIL)
-  private Boolean skipOnFail;
+  private Boolean skipOnFail = false;
 
   public static final String SERIALIZED_NAME_RATE_LIMITER = "rateLimiter";
   @SerializedName(SERIALIZED_NAME_RATE_LIMITER)
@@ -74,7 +76,7 @@ public class ShAppCfgAuthsValue {
 
   public static final String SERIALIZED_NAME_BURN_QUOTA = "burnQuota";
   @SerializedName(SERIALIZED_NAME_BURN_QUOTA)
-  private Double burnQuota;
+  private Double burnQuota = 0.0d;
 
   public static final String SERIALIZED_NAME_QUERY = "query";
   @SerializedName(SERIALIZED_NAME_QUERY)
@@ -118,39 +120,23 @@ public class ShAppCfgAuthsValue {
 
   public static final String SERIALIZED_NAME_IP_BYTES_TO_IGNORE = "ipBytesToIgnore";
   @SerializedName(SERIALIZED_NAME_IP_BYTES_TO_IGNORE)
-  private Integer ipBytesToIgnore;
+  private Integer ipBytesToIgnore = 0;
 
   public static final String SERIALIZED_NAME_HISTORY_SIZE = "historySize";
   @SerializedName(SERIALIZED_NAME_HISTORY_SIZE)
-  private Integer historySize;
+  private Integer historySize = 10;
+
+  public static final String SERIALIZED_NAME_EXCHANGE_AUTH_CODE = "exchangeAuthCode";
+  @SerializedName(SERIALIZED_NAME_EXCHANGE_AUTH_CODE)
+  private OAuthCfgExchangeAuthCode exchangeAuthCode;
+
+  public static final String SERIALIZED_NAME_USER_INFO = "userInfo";
+  @SerializedName(SERIALIZED_NAME_USER_INFO)
+  private OAuthCfgUserInfo userInfo;
 
   public static final String SERIALIZED_NAME_EXTRACT_LOGIN = "extractLogin";
   @SerializedName(SERIALIZED_NAME_EXTRACT_LOGIN)
   private String extractLogin;
-
-  public static final String SERIALIZED_NAME_TOKEN_URL = "tokenUrl";
-  @SerializedName(SERIALIZED_NAME_TOKEN_URL)
-  private String tokenUrl;
-
-  public static final String SERIALIZED_NAME_CLIENT_ID = "clientId";
-  @SerializedName(SERIALIZED_NAME_CLIENT_ID)
-  private String clientId;
-
-  public static final String SERIALIZED_NAME_CLIENT_SECRET = "clientSecret";
-  @SerializedName(SERIALIZED_NAME_CLIENT_SECRET)
-  private String clientSecret;
-
-  public static final String SERIALIZED_NAME_USER_INFO_URL = "userInfoUrl";
-  @SerializedName(SERIALIZED_NAME_USER_INFO_URL)
-  private String userInfoUrl;
-
-  public static final String SERIALIZED_NAME_SEND_TOKEN_IN_QUERY = "sendTokenInQuery";
-  @SerializedName(SERIALIZED_NAME_SEND_TOKEN_IN_QUERY)
-  private String sendTokenInQuery;
-
-  public static final String SERIALIZED_NAME_SEND_TOKEN_IN_HEADER = "sendTokenInHeader";
-  @SerializedName(SERIALIZED_NAME_SEND_TOKEN_IN_HEADER)
-  private Boolean sendTokenInHeader;
 
   public static final String SERIALIZED_NAME_EXTRACT_PUBLIC_DATA = "extractPublicData";
   @SerializedName(SERIALIZED_NAME_EXTRACT_PUBLIC_DATA)
@@ -158,31 +144,31 @@ public class ShAppCfgAuthsValue {
 
   public static final String SERIALIZED_NAME_MAX_LENGTH = "maxLength";
   @SerializedName(SERIALIZED_NAME_MAX_LENGTH)
-  private Integer maxLength;
+  private Integer maxLength = 256;
 
   public static final String SERIALIZED_NAME_MIN_LENGTH = "minLength";
   @SerializedName(SERIALIZED_NAME_MIN_LENGTH)
-  private Integer minLength;
+  private Integer minLength = 3;
 
   public static final String SERIALIZED_NAME_REQUIRE_NUMBER = "requireNumber";
   @SerializedName(SERIALIZED_NAME_REQUIRE_NUMBER)
-  private Boolean requireNumber;
+  private Boolean requireNumber = false;
 
   public static final String SERIALIZED_NAME_REQUIRE_SYMBOL = "requireSymbol";
   @SerializedName(SERIALIZED_NAME_REQUIRE_SYMBOL)
-  private Boolean requireSymbol;
+  private Boolean requireSymbol = false;
 
   public static final String SERIALIZED_NAME_REQUIRE_UPPER_CASE = "requireUpperCase";
   @SerializedName(SERIALIZED_NAME_REQUIRE_UPPER_CASE)
-  private Boolean requireUpperCase;
+  private Boolean requireUpperCase = false;
 
   public static final String SERIALIZED_NAME_FORBID_COMMON_PASSWORDS = "forbidCommonPasswords";
   @SerializedName(SERIALIZED_NAME_FORBID_COMMON_PASSWORDS)
-  private Boolean forbidCommonPasswords;
+  private Boolean forbidCommonPasswords = false;
 
   public static final String SERIALIZED_NAME_FORBID_LOGIN_AS_PASSWORD = "forbidLoginAsPassword";
   @SerializedName(SERIALIZED_NAME_FORBID_LOGIN_AS_PASSWORD)
-  private Boolean forbidLoginAsPassword;
+  private Boolean forbidLoginAsPassword = false;
 
   public static final String SERIALIZED_NAME_FORBID_REUSING_PASSWORD = "forbidReusingPassword";
   @SerializedName(SERIALIZED_NAME_FORBID_REUSING_PASSWORD)
@@ -194,23 +180,23 @@ public class ShAppCfgAuthsValue {
 
   public static final String SERIALIZED_NAME_LOWERCASE = "lowercase";
   @SerializedName(SERIALIZED_NAME_LOWERCASE)
-  private Boolean lowercase;
+  private Boolean lowercase = true;
 
   public static final String SERIALIZED_NAME_REMOVE_SYMBOLS = "removeSymbols";
   @SerializedName(SERIALIZED_NAME_REMOVE_SYMBOLS)
-  private Boolean removeSymbols;
+  private Boolean removeSymbols = true;
 
   public static final String SERIALIZED_NAME_REMOVE_SPACES = "removeSpaces";
   @SerializedName(SERIALIZED_NAME_REMOVE_SPACES)
-  private Boolean removeSpaces;
+  private Boolean removeSpaces = true;
 
   public static final String SERIALIZED_NAME_ANSWERS_REQUIRED = "answersRequired";
   @SerializedName(SERIALIZED_NAME_ANSWERS_REQUIRED)
-  private Integer answersRequired;
+  private Integer answersRequired = 2;
 
   public static final String SERIALIZED_NAME_MAX_ANSWERS = "maxAnswers";
   @SerializedName(SERIALIZED_NAME_MAX_ANSWERS)
-  private Integer maxAnswers;
+  private Integer maxAnswers = 10;
 
   public ShAppCfgAuthsValue() {
   }
@@ -646,6 +632,52 @@ public class ShAppCfgAuthsValue {
   }
 
 
+  public ShAppCfgAuthsValue exchangeAuthCode(OAuthCfgExchangeAuthCode exchangeAuthCode) {
+    
+    this.exchangeAuthCode = exchangeAuthCode;
+    return this;
+  }
+
+   /**
+   * Get exchangeAuthCode
+   * @return exchangeAuthCode
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public OAuthCfgExchangeAuthCode getExchangeAuthCode() {
+    return exchangeAuthCode;
+  }
+
+
+  public void setExchangeAuthCode(OAuthCfgExchangeAuthCode exchangeAuthCode) {
+    this.exchangeAuthCode = exchangeAuthCode;
+  }
+
+
+  public ShAppCfgAuthsValue userInfo(OAuthCfgUserInfo userInfo) {
+    
+    this.userInfo = userInfo;
+    return this;
+  }
+
+   /**
+   * Get userInfo
+   * @return userInfo
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public OAuthCfgUserInfo getUserInfo() {
+    return userInfo;
+  }
+
+
+  public void setUserInfo(OAuthCfgUserInfo userInfo) {
+    this.userInfo = userInfo;
+  }
+
+
   public ShAppCfgAuthsValue extractLogin(String extractLogin) {
     
     this.extractLogin = extractLogin;
@@ -653,11 +685,11 @@ public class ShAppCfgAuthsValue {
   }
 
    /**
-   * Path for login in id-token or user-info endpoint response. e.g. &#x60;res.user.id&#x60; extracts user login from &#x60;{ \&quot;res\&quot;: { \&quot;user\&quot;: { \&quot;id\&quot;: \&quot;...\&quot; } } }&#x60;
+   * Json path for login in the exchangeAuthCode or userInfo endpoint response. e.g. &#x60;access_token.user.id&#x60; extracts user login from &#x60;{ \&quot;access_token\&quot;: { \&quot;user\&quot;: { \&quot;id\&quot;: \&quot;...\&quot; } } }&#x60; 
    * @return extractLogin
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Path for login in id-token or user-info endpoint response. e.g. `res.user.id` extracts user login from `{ \"res\": { \"user\": { \"id\": \"...\" } } }`")
+  @ApiModelProperty(example = "access_token.user_id", value = "Json path for login in the exchangeAuthCode or userInfo endpoint response. e.g. `access_token.user.id` extracts user login from `{ \"access_token\": { \"user\": { \"id\": \"...\" } } }` ")
 
   public String getExtractLogin() {
     return extractLogin;
@@ -666,144 +698,6 @@ public class ShAppCfgAuthsValue {
 
   public void setExtractLogin(String extractLogin) {
     this.extractLogin = extractLogin;
-  }
-
-
-  public ShAppCfgAuthsValue tokenUrl(String tokenUrl) {
-    
-    this.tokenUrl = tokenUrl;
-    return this;
-  }
-
-   /**
-   * Url to get access token by authorisation code.
-   * @return tokenUrl
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "Url to get access token by authorisation code.")
-
-  public String getTokenUrl() {
-    return tokenUrl;
-  }
-
-
-  public void setTokenUrl(String tokenUrl) {
-    this.tokenUrl = tokenUrl;
-  }
-
-
-  public ShAppCfgAuthsValue clientId(String clientId) {
-    
-    this.clientId = clientId;
-    return this;
-  }
-
-   /**
-   * OAuth client id. Client must be registered on OAuth provider (e.g. facebook, google)
-   * @return clientId
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "OAuth client id. Client must be registered on OAuth provider (e.g. facebook, google)")
-
-  public String getClientId() {
-    return clientId;
-  }
-
-
-  public void setClientId(String clientId) {
-    this.clientId = clientId;
-  }
-
-
-  public ShAppCfgAuthsValue clientSecret(String clientSecret) {
-    
-    this.clientSecret = clientSecret;
-    return this;
-  }
-
-   /**
-   * OAuth client secret.
-   * @return clientSecret
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "OAuth client secret.")
-
-  public String getClientSecret() {
-    return clientSecret;
-  }
-
-
-  public void setClientSecret(String clientSecret) {
-    this.clientSecret = clientSecret;
-  }
-
-
-  public ShAppCfgAuthsValue userInfoUrl(String userInfoUrl) {
-    
-    this.userInfoUrl = userInfoUrl;
-    return this;
-  }
-
-   /**
-   * If access token provided in request, app tries to extract user id from user-info endpoint.
-   * @return userInfoUrl
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "If access token provided in request, app tries to extract user id from user-info endpoint.")
-
-  public String getUserInfoUrl() {
-    return userInfoUrl;
-  }
-
-
-  public void setUserInfoUrl(String userInfoUrl) {
-    this.userInfoUrl = userInfoUrl;
-  }
-
-
-  public ShAppCfgAuthsValue sendTokenInQuery(String sendTokenInQuery) {
-    
-    this.sendTokenInQuery = sendTokenInQuery;
-    return this;
-  }
-
-   /**
-   * Send token in query param.
-   * @return sendTokenInQuery
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "Send token in query param.")
-
-  public String getSendTokenInQuery() {
-    return sendTokenInQuery;
-  }
-
-
-  public void setSendTokenInQuery(String sendTokenInQuery) {
-    this.sendTokenInQuery = sendTokenInQuery;
-  }
-
-
-  public ShAppCfgAuthsValue sendTokenInHeader(Boolean sendTokenInHeader) {
-    
-    this.sendTokenInHeader = sendTokenInHeader;
-    return this;
-  }
-
-   /**
-   * Send token in Authorisation header.
-   * @return sendTokenInHeader
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "Send token in Authorisation header.")
-
-  public Boolean getSendTokenInHeader() {
-    return sendTokenInHeader;
-  }
-
-
-  public void setSendTokenInHeader(Boolean sendTokenInHeader) {
-    this.sendTokenInHeader = sendTokenInHeader;
   }
 
 
@@ -822,11 +716,11 @@ public class ShAppCfgAuthsValue {
   }
 
    /**
-   * Can fill public data by a response of user-info or id-token.
+   * Can fill public data from the exchangeAuthCode or userInfo endpoint response. 
    * @return extractPublicData
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Can fill public data by a response of user-info or id-token.")
+  @ApiModelProperty(example = "{\"photoUrl:\":\"access_token.user_photo_url\",\"name\":\"access_token.full_name\"}", value = "Can fill public data from the exchangeAuthCode or userInfo endpoint response. ")
 
   public Map<String, String> getExtractPublicData() {
     return extractPublicData;
@@ -1230,13 +1124,9 @@ public class ShAppCfgAuthsValue {
         Objects.equals(this.templateParams, shAppCfgAuthsValue.templateParams) &&
         Objects.equals(this.ipBytesToIgnore, shAppCfgAuthsValue.ipBytesToIgnore) &&
         Objects.equals(this.historySize, shAppCfgAuthsValue.historySize) &&
+        Objects.equals(this.exchangeAuthCode, shAppCfgAuthsValue.exchangeAuthCode) &&
+        Objects.equals(this.userInfo, shAppCfgAuthsValue.userInfo) &&
         Objects.equals(this.extractLogin, shAppCfgAuthsValue.extractLogin) &&
-        Objects.equals(this.tokenUrl, shAppCfgAuthsValue.tokenUrl) &&
-        Objects.equals(this.clientId, shAppCfgAuthsValue.clientId) &&
-        Objects.equals(this.clientSecret, shAppCfgAuthsValue.clientSecret) &&
-        Objects.equals(this.userInfoUrl, shAppCfgAuthsValue.userInfoUrl) &&
-        Objects.equals(this.sendTokenInQuery, shAppCfgAuthsValue.sendTokenInQuery) &&
-        Objects.equals(this.sendTokenInHeader, shAppCfgAuthsValue.sendTokenInHeader) &&
         Objects.equals(this.extractPublicData, shAppCfgAuthsValue.extractPublicData) &&
         Objects.equals(this.maxLength, shAppCfgAuthsValue.maxLength) &&
         Objects.equals(this.minLength, shAppCfgAuthsValue.minLength) &&
@@ -1257,7 +1147,7 @@ public class ShAppCfgAuthsValue {
 
   @Override
   public int hashCode() {
-    return Objects.hash(remote, requiresAuth, skipOnFail, rateLimiter, burnQuota, query, headers, code, server, sender, username, password, confirmationUrl, templates, templateParams, ipBytesToIgnore, historySize, extractLogin, tokenUrl, clientId, clientSecret, userInfoUrl, sendTokenInQuery, sendTokenInHeader, extractPublicData, maxLength, minLength, requireNumber, requireSymbol, requireUpperCase, forbidCommonPasswords, forbidLoginAsPassword, forbidReusingPassword, strength, lowercase, removeSymbols, removeSpaces, answersRequired, maxAnswers, additionalProperties);
+    return Objects.hash(remote, requiresAuth, skipOnFail, rateLimiter, burnQuota, query, headers, code, server, sender, username, password, confirmationUrl, templates, templateParams, ipBytesToIgnore, historySize, exchangeAuthCode, userInfo, extractLogin, extractPublicData, maxLength, minLength, requireNumber, requireSymbol, requireUpperCase, forbidCommonPasswords, forbidLoginAsPassword, forbidReusingPassword, strength, lowercase, removeSymbols, removeSpaces, answersRequired, maxAnswers, additionalProperties);
   }
 
   @Override
@@ -1281,13 +1171,9 @@ public class ShAppCfgAuthsValue {
     sb.append("    templateParams: ").append(toIndentedString(templateParams)).append("\n");
     sb.append("    ipBytesToIgnore: ").append(toIndentedString(ipBytesToIgnore)).append("\n");
     sb.append("    historySize: ").append(toIndentedString(historySize)).append("\n");
+    sb.append("    exchangeAuthCode: ").append(toIndentedString(exchangeAuthCode)).append("\n");
+    sb.append("    userInfo: ").append(toIndentedString(userInfo)).append("\n");
     sb.append("    extractLogin: ").append(toIndentedString(extractLogin)).append("\n");
-    sb.append("    tokenUrl: ").append(toIndentedString(tokenUrl)).append("\n");
-    sb.append("    clientId: ").append(toIndentedString(clientId)).append("\n");
-    sb.append("    clientSecret: ").append(toIndentedString(clientSecret)).append("\n");
-    sb.append("    userInfoUrl: ").append(toIndentedString(userInfoUrl)).append("\n");
-    sb.append("    sendTokenInQuery: ").append(toIndentedString(sendTokenInQuery)).append("\n");
-    sb.append("    sendTokenInHeader: ").append(toIndentedString(sendTokenInHeader)).append("\n");
     sb.append("    extractPublicData: ").append(toIndentedString(extractPublicData)).append("\n");
     sb.append("    maxLength: ").append(toIndentedString(maxLength)).append("\n");
     sb.append("    minLength: ").append(toIndentedString(minLength)).append("\n");
@@ -1343,13 +1229,9 @@ public class ShAppCfgAuthsValue {
     openapiFields.add("templateParams");
     openapiFields.add("ipBytesToIgnore");
     openapiFields.add("historySize");
+    openapiFields.add("exchangeAuthCode");
+    openapiFields.add("userInfo");
     openapiFields.add("extractLogin");
-    openapiFields.add("tokenUrl");
-    openapiFields.add("clientId");
-    openapiFields.add("clientSecret");
-    openapiFields.add("userInfoUrl");
-    openapiFields.add("sendTokenInQuery");
-    openapiFields.add("sendTokenInHeader");
     openapiFields.add("extractPublicData");
     openapiFields.add("maxLength");
     openapiFields.add("minLength");
@@ -1413,23 +1295,16 @@ public class ShAppCfgAuthsValue {
       if ((jsonObj.get("confirmationUrl") != null && !jsonObj.get("confirmationUrl").isJsonNull()) && !jsonObj.get("confirmationUrl").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `confirmationUrl` to be a primitive type in the JSON string but got `%s`", jsonObj.get("confirmationUrl").toString()));
       }
+      // validate the optional field `exchangeAuthCode`
+      if (jsonObj.get("exchangeAuthCode") != null && !jsonObj.get("exchangeAuthCode").isJsonNull()) {
+        OAuthCfgExchangeAuthCode.validateJsonObject(jsonObj.getAsJsonObject("exchangeAuthCode"));
+      }
+      // validate the optional field `userInfo`
+      if (jsonObj.get("userInfo") != null && !jsonObj.get("userInfo").isJsonNull()) {
+        OAuthCfgUserInfo.validateJsonObject(jsonObj.getAsJsonObject("userInfo"));
+      }
       if ((jsonObj.get("extractLogin") != null && !jsonObj.get("extractLogin").isJsonNull()) && !jsonObj.get("extractLogin").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `extractLogin` to be a primitive type in the JSON string but got `%s`", jsonObj.get("extractLogin").toString()));
-      }
-      if ((jsonObj.get("tokenUrl") != null && !jsonObj.get("tokenUrl").isJsonNull()) && !jsonObj.get("tokenUrl").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `tokenUrl` to be a primitive type in the JSON string but got `%s`", jsonObj.get("tokenUrl").toString()));
-      }
-      if ((jsonObj.get("clientId") != null && !jsonObj.get("clientId").isJsonNull()) && !jsonObj.get("clientId").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `clientId` to be a primitive type in the JSON string but got `%s`", jsonObj.get("clientId").toString()));
-      }
-      if ((jsonObj.get("clientSecret") != null && !jsonObj.get("clientSecret").isJsonNull()) && !jsonObj.get("clientSecret").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `clientSecret` to be a primitive type in the JSON string but got `%s`", jsonObj.get("clientSecret").toString()));
-      }
-      if ((jsonObj.get("userInfoUrl") != null && !jsonObj.get("userInfoUrl").isJsonNull()) && !jsonObj.get("userInfoUrl").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `userInfoUrl` to be a primitive type in the JSON string but got `%s`", jsonObj.get("userInfoUrl").toString()));
-      }
-      if ((jsonObj.get("sendTokenInQuery") != null && !jsonObj.get("sendTokenInQuery").isJsonNull()) && !jsonObj.get("sendTokenInQuery").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `sendTokenInQuery` to be a primitive type in the JSON string but got `%s`", jsonObj.get("sendTokenInQuery").toString()));
       }
       // validate the optional field `forbidReusingPassword`
       if (jsonObj.get("forbidReusingPassword") != null && !jsonObj.get("forbidReusingPassword").isJsonNull()) {

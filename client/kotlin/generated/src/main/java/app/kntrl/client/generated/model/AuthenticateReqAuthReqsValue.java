@@ -75,6 +75,10 @@ public class AuthenticateReqAuthReqsValue {
   @SerializedName(SERIALIZED_NAME_AUTHORIZATION_CODE)
   private String authorizationCode;
 
+  public static final String SERIALIZED_NAME_REDIRECT_URI = "redirectUri";
+  @SerializedName(SERIALIZED_NAME_REDIRECT_URI)
+  private String redirectUri;
+
   public static final String SERIALIZED_NAME_PASSWORD = "password";
   @SerializedName(SERIALIZED_NAME_PASSWORD)
   private String password;
@@ -236,6 +240,29 @@ public class AuthenticateReqAuthReqsValue {
   }
 
 
+  public AuthenticateReqAuthReqsValue redirectUri(String redirectUri) {
+    
+    this.redirectUri = redirectUri;
+    return this;
+  }
+
+   /**
+   * Redirect uri used when requested user login.
+   * @return redirectUri
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Redirect uri used when requested user login.")
+
+  public String getRedirectUri() {
+    return redirectUri;
+  }
+
+
+  public void setRedirectUri(String redirectUri) {
+    this.redirectUri = redirectUri;
+  }
+
+
   public AuthenticateReqAuthReqsValue password(String password) {
     
     this.password = password;
@@ -364,6 +391,7 @@ public class AuthenticateReqAuthReqsValue {
         Objects.equals(this.templateParams, authenticateReqAuthReqsValue.templateParams) &&
         Objects.equals(this.accessToken, authenticateReqAuthReqsValue.accessToken) &&
         Objects.equals(this.authorizationCode, authenticateReqAuthReqsValue.authorizationCode) &&
+        Objects.equals(this.redirectUri, authenticateReqAuthReqsValue.redirectUri) &&
         Objects.equals(this.password, authenticateReqAuthReqsValue.password) &&
         Objects.equals(this.confirmPassword, authenticateReqAuthReqsValue.confirmPassword) &&
         Objects.equals(this.answers, authenticateReqAuthReqsValue.answers)&&
@@ -372,7 +400,7 @@ public class AuthenticateReqAuthReqsValue {
 
   @Override
   public int hashCode() {
-    return Objects.hash(secret, email, template, templateParams, accessToken, authorizationCode, password, confirmPassword, answers, additionalProperties);
+    return Objects.hash(secret, email, template, templateParams, accessToken, authorizationCode, redirectUri, password, confirmPassword, answers, additionalProperties);
   }
 
   @Override
@@ -385,6 +413,7 @@ public class AuthenticateReqAuthReqsValue {
     sb.append("    templateParams: ").append(toIndentedString(templateParams)).append("\n");
     sb.append("    accessToken: ").append(toIndentedString(accessToken)).append("\n");
     sb.append("    authorizationCode: ").append(toIndentedString(authorizationCode)).append("\n");
+    sb.append("    redirectUri: ").append(toIndentedString(redirectUri)).append("\n");
     sb.append("    password: ").append(toIndentedString(password)).append("\n");
     sb.append("    confirmPassword: ").append(toIndentedString(confirmPassword)).append("\n");
     sb.append("    answers: ").append(toIndentedString(answers)).append("\n");
@@ -417,6 +446,7 @@ public class AuthenticateReqAuthReqsValue {
     openapiFields.add("templateParams");
     openapiFields.add("accessToken");
     openapiFields.add("authorizationCode");
+    openapiFields.add("redirectUri");
     openapiFields.add("password");
     openapiFields.add("confirmPassword");
     openapiFields.add("answers");
@@ -453,6 +483,9 @@ public class AuthenticateReqAuthReqsValue {
       }
       if ((jsonObj.get("authorizationCode") != null && !jsonObj.get("authorizationCode").isJsonNull()) && !jsonObj.get("authorizationCode").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `authorizationCode` to be a primitive type in the JSON string but got `%s`", jsonObj.get("authorizationCode").toString()));
+      }
+      if ((jsonObj.get("redirectUri") != null && !jsonObj.get("redirectUri").isJsonNull()) && !jsonObj.get("redirectUri").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `redirectUri` to be a primitive type in the JSON string but got `%s`", jsonObj.get("redirectUri").toString()));
       }
       if ((jsonObj.get("password") != null && !jsonObj.get("password").isJsonNull()) && !jsonObj.get("password").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `password` to be a primitive type in the JSON string but got `%s`", jsonObj.get("password").toString()));

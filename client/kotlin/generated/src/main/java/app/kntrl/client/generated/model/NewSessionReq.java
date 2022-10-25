@@ -76,15 +76,15 @@ public class NewSessionReq {
 
   public static final String SERIALIZED_NAME_SIGN_IN = "signIn";
   @SerializedName(SERIALIZED_NAME_SIGN_IN)
-  private Boolean signIn;
+  private Boolean signIn = false;
 
   public static final String SERIALIZED_NAME_SIGN_UP = "signUp";
   @SerializedName(SERIALIZED_NAME_SIGN_UP)
-  private Boolean signUp;
+  private Boolean signUp = false;
 
   public static final String SERIALIZED_NAME_DRY_RUN = "dryRun";
   @SerializedName(SERIALIZED_NAME_DRY_RUN)
-  private Boolean dryRun;
+  private Boolean dryRun = false;
 
   public NewSessionReq() {
   }
@@ -220,11 +220,11 @@ public class NewSessionReq {
   }
 
    /**
-   * Get scopes
+   * OAuth scopes
    * @return scopes
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(value = "OAuth scopes")
 
   public List<String> getScopes() {
     return scopes;

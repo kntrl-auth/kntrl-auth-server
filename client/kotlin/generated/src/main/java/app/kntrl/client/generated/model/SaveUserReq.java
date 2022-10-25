@@ -66,7 +66,7 @@ public class SaveUserReq {
 
   public static final String SERIALIZED_NAME_DRY_RUN = "dryRun";
   @SerializedName(SERIALIZED_NAME_DRY_RUN)
-  private Boolean dryRun;
+  private Boolean dryRun = false;
 
   public SaveUserReq() {
   }

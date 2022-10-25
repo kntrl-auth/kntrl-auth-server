@@ -66,7 +66,7 @@ public class EditUserReq {
 
   public static final String SERIALIZED_NAME_DRY_RUN = "dryRun";
   @SerializedName(SERIALIZED_NAME_DRY_RUN)
-  private Boolean dryRun;
+  private Boolean dryRun = false;
 
   public static final String SERIALIZED_NAME_SYSTEM_ACCESS = "systemAccess";
   @SerializedName(SERIALIZED_NAME_SYSTEM_ACCESS)

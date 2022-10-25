@@ -62,7 +62,7 @@ public class PasswordAuthCfg {
 
   public static final String SERIALIZED_NAME_SKIP_ON_FAIL = "skipOnFail";
   @SerializedName(SERIALIZED_NAME_SKIP_ON_FAIL)
-  private Boolean skipOnFail;
+  private Boolean skipOnFail = false;
 
   public static final String SERIALIZED_NAME_RATE_LIMITER = "rateLimiter";
   @SerializedName(SERIALIZED_NAME_RATE_LIMITER)
@@ -70,35 +70,35 @@ public class PasswordAuthCfg {
 
   public static final String SERIALIZED_NAME_BURN_QUOTA = "burnQuota";
   @SerializedName(SERIALIZED_NAME_BURN_QUOTA)
-  private Double burnQuota;
+  private Double burnQuota = 0.0d;
 
   public static final String SERIALIZED_NAME_MAX_LENGTH = "maxLength";
   @SerializedName(SERIALIZED_NAME_MAX_LENGTH)
-  private Integer maxLength;
+  private Integer maxLength = 256;
 
   public static final String SERIALIZED_NAME_MIN_LENGTH = "minLength";
   @SerializedName(SERIALIZED_NAME_MIN_LENGTH)
-  private Integer minLength;
+  private Integer minLength = 6;
 
   public static final String SERIALIZED_NAME_REQUIRE_NUMBER = "requireNumber";
   @SerializedName(SERIALIZED_NAME_REQUIRE_NUMBER)
-  private Boolean requireNumber;
+  private Boolean requireNumber = false;
 
   public static final String SERIALIZED_NAME_REQUIRE_SYMBOL = "requireSymbol";
   @SerializedName(SERIALIZED_NAME_REQUIRE_SYMBOL)
-  private Boolean requireSymbol;
+  private Boolean requireSymbol = false;
 
   public static final String SERIALIZED_NAME_REQUIRE_UPPER_CASE = "requireUpperCase";
   @SerializedName(SERIALIZED_NAME_REQUIRE_UPPER_CASE)
-  private Boolean requireUpperCase;
+  private Boolean requireUpperCase = false;
 
   public static final String SERIALIZED_NAME_FORBID_COMMON_PASSWORDS = "forbidCommonPasswords";
   @SerializedName(SERIALIZED_NAME_FORBID_COMMON_PASSWORDS)
-  private Boolean forbidCommonPasswords;
+  private Boolean forbidCommonPasswords = false;
 
   public static final String SERIALIZED_NAME_FORBID_LOGIN_AS_PASSWORD = "forbidLoginAsPassword";
   @SerializedName(SERIALIZED_NAME_FORBID_LOGIN_AS_PASSWORD)
-  private Boolean forbidLoginAsPassword;
+  private Boolean forbidLoginAsPassword = false;
 
   public static final String SERIALIZED_NAME_FORBID_REUSING_PASSWORD = "forbidReusingPassword";
   @SerializedName(SERIALIZED_NAME_FORBID_REUSING_PASSWORD)

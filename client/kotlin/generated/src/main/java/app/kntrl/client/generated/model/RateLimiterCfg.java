@@ -52,15 +52,15 @@ import app.kntrl.client.generated.infra.JSON;
 public class RateLimiterCfg {
   public static final String SERIALIZED_NAME_USER_ID = "userId";
   @SerializedName(SERIALIZED_NAME_USER_ID)
-  private Boolean userId;
+  private Boolean userId = true;
 
   public static final String SERIALIZED_NAME_IP = "ip";
   @SerializedName(SERIALIZED_NAME_IP)
-  private Boolean ip;
+  private Boolean ip = false;
 
   public static final String SERIALIZED_NAME_QUOTA = "quota";
   @SerializedName(SERIALIZED_NAME_QUOTA)
-  private Double quota;
+  private Double quota = 1.0d;
 
   public static final String SERIALIZED_NAME_PERIOD = "period";
   @SerializedName(SERIALIZED_NAME_PERIOD)
@@ -68,7 +68,7 @@ public class RateLimiterCfg {
 
   public static final String SERIALIZED_NAME_ALIGN_LOAD = "alignLoad";
   @SerializedName(SERIALIZED_NAME_ALIGN_LOAD)
-  private Boolean alignLoad;
+  private Boolean alignLoad = false;
 
   public static final String SERIALIZED_NAME_PARENT = "parent";
   @SerializedName(SERIALIZED_NAME_PARENT)
@@ -88,7 +88,7 @@ public class RateLimiterCfg {
    * @return userId
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Create different rate limiters for different users. Enabled by default.")
+  @ApiModelProperty(value = "Create different rate limiters for different users.")
 
   public Boolean getUserId() {
     return userId;
@@ -107,11 +107,11 @@ public class RateLimiterCfg {
   }
 
    /**
-   * Create different rate limiters for different ips. Disabled by default.
+   * Create different rate limiters for different ips.
    * @return ip
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Create different rate limiters for different ips. Disabled by default.")
+  @ApiModelProperty(value = "Create different rate limiters for different ips.")
 
   public Boolean getIp() {
     return ip;

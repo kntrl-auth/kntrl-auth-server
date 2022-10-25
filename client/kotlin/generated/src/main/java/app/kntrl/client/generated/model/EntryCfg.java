@@ -77,7 +77,7 @@ public class EntryCfg {
 
   public static final String SERIALIZED_NAME_EDIT_ACCOUNT = "editAccount";
   @SerializedName(SERIALIZED_NAME_EDIT_ACCOUNT)
-  private Boolean editAccount;
+  private Boolean editAccount = false;
 
   public EntryCfg() {
   }

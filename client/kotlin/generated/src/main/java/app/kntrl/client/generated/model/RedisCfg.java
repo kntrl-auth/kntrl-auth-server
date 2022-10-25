@@ -57,7 +57,7 @@ public class RedisCfg {
 
   public static final String SERIALIZED_NAME_CLUSTER = "cluster";
   @SerializedName(SERIALIZED_NAME_CLUSTER)
-  private Boolean cluster;
+  private Boolean cluster = false;
 
   public static final String SERIALIZED_NAME_DATABASE = "database";
   @SerializedName(SERIALIZED_NAME_DATABASE)
@@ -73,11 +73,11 @@ public class RedisCfg {
 
   public static final String SERIALIZED_NAME_SSL = "ssl";
   @SerializedName(SERIALIZED_NAME_SSL)
-  private Boolean ssl;
+  private Boolean ssl = false;
 
   public static final String SERIALIZED_NAME_MAX_CONNECTIONS = "maxConnections";
   @SerializedName(SERIALIZED_NAME_MAX_CONNECTIONS)
-  private Integer maxConnections;
+  private Integer maxConnections = 100;
 
   public RedisCfg() {
   }

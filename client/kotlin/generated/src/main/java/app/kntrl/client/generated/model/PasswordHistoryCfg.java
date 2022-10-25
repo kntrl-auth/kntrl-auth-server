@@ -52,7 +52,7 @@ import app.kntrl.client.generated.infra.JSON;
 public class PasswordHistoryCfg {
   public static final String SERIALIZED_NAME_PASSWORD_HISTORY_SIZE = "passwordHistorySize";
   @SerializedName(SERIALIZED_NAME_PASSWORD_HISTORY_SIZE)
-  private Integer passwordHistorySize;
+  private Integer passwordHistorySize = 3;
 
   public static final String SERIALIZED_NAME_PASSWORD_HISTORY_TTL = "passwordHistoryTtl";
   @SerializedName(SERIALIZED_NAME_PASSWORD_HISTORY_TTL)

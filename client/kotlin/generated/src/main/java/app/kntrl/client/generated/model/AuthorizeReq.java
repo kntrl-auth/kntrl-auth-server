@@ -78,11 +78,11 @@ public class AuthorizeReq {
   }
 
    /**
-   * Get requireScopes
+   * Require OAuth scopes
    * @return requireScopes
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(value = "Require OAuth scopes")
 
   public List<String> getRequireScopes() {
     return requireScopes;

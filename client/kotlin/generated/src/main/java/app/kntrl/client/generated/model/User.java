@@ -83,11 +83,11 @@ public class User {
 
   public static final String SERIALIZED_NAME_NEW = "new";
   @SerializedName(SERIALIZED_NAME_NEW)
-  private Boolean _new;
+  private Boolean _new = false;
 
   public static final String SERIALIZED_NAME_SYSTEM_ACCESS = "systemAccess";
   @SerializedName(SERIALIZED_NAME_SYSTEM_ACCESS)
-  private Boolean systemAccess;
+  private Boolean systemAccess = false;
 
   public User() {
   }

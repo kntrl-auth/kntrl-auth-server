@@ -1077,7 +1077,7 @@ components:
     OAuthResData:
       type: object
       additionalProperties: true
-      x-order: -893636857-4
+      x-order: -893636857-5
       x-super: '#/components/schemas/AuthResData'
     Password:
       required:
@@ -1182,6 +1182,7 @@ components:
             systemAccess:
               type: boolean
               description: Allows to edit any user in the app.
+              default: false
           description: User loaded from database. Can be null if user isn't identified
             yet.
           x-nullable: true
@@ -1448,7 +1449,7 @@ components:
     OAuthReqData:
       type: object
       additionalProperties: true
-      x-order: -893636857-3
+      x-order: -893636857-4
       x-super: '#/components/schemas/AuthReqData'
     PasswordAuthReqData:
       type: object
@@ -1622,6 +1623,7 @@ components:
         systemAccess:
           type: boolean
           description: Allows to edit any user in the app.
+          default: false
       x-order: 276900135-0
     DryRunAuthData:
       type: object
@@ -2071,8 +2073,8 @@ components:
       enum:
       - emailSentTo
       - ipEncoded
-      - login
-      - extractedData
+      - extractedLogin
+      - extractedPublicData
       - password
       - strength
       - correct
@@ -2097,8 +2099,8 @@ components:
     OAuthResDataProps:
       type: string
       enum:
-      - login
-      - extractedData
+      - extractedLogin
+      - extractedPublicData
     PasswordHistoryProps:
       type: string
       enum:
@@ -2138,8 +2140,8 @@ components:
       enum:
       - emailSentTo
       - ipEncoded
-      - login
-      - extractedData
+      - extractedLogin
+      - extractedPublicData
       - password
       - strength
       - correct
@@ -2153,6 +2155,7 @@ components:
       - templateParams
       - accessToken
       - authorizationCode
+      - redirectUri
       - password
       - confirmPassword
       - answers
@@ -2173,6 +2176,7 @@ components:
       enum:
       - accessToken
       - authorizationCode
+      - redirectUri
     PasswordAuthReqDataProps:
       type: string
       enum:
@@ -2195,8 +2199,8 @@ components:
       enum:
       - emailSentTo
       - ipEncoded
-      - login
-      - extractedData
+      - extractedLogin
+      - extractedPublicData
       - password
       - strength
       - correct

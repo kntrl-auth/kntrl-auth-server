@@ -65,7 +65,7 @@ public class RemoteAuthCfg {
 
   public static final String SERIALIZED_NAME_SKIP_ON_FAIL = "skipOnFail";
   @SerializedName(SERIALIZED_NAME_SKIP_ON_FAIL)
-  private Boolean skipOnFail;
+  private Boolean skipOnFail = false;
 
   public static final String SERIALIZED_NAME_RATE_LIMITER = "rateLimiter";
   @SerializedName(SERIALIZED_NAME_RATE_LIMITER)
@@ -73,7 +73,7 @@ public class RemoteAuthCfg {
 
   public static final String SERIALIZED_NAME_BURN_QUOTA = "burnQuota";
   @SerializedName(SERIALIZED_NAME_BURN_QUOTA)
-  private Double burnQuota;
+  private Double burnQuota = 0.0d;
 
   public static final String SERIALIZED_NAME_QUERY = "query";
   @SerializedName(SERIALIZED_NAME_QUERY)

@@ -52,7 +52,7 @@ import app.kntrl.client.generated.infra.JSON;
 public class CodeCfg {
   public static final String SERIALIZED_NAME_LENGTH = "length";
   @SerializedName(SERIALIZED_NAME_LENGTH)
-  private Integer length;
+  private Integer length = 4;
 
   public static final String SERIALIZED_NAME_TTL = "ttl";
   @SerializedName(SERIALIZED_NAME_TTL)
@@ -64,11 +64,11 @@ public class CodeCfg {
 
   public static final String SERIALIZED_NAME_EASY_TO_REMEMBER = "easyToRemember";
   @SerializedName(SERIALIZED_NAME_EASY_TO_REMEMBER)
-  private Boolean easyToRemember;
+  private Boolean easyToRemember = true;
 
   public static final String SERIALIZED_NAME_MAX_ATTEMPTS = "maxAttempts";
   @SerializedName(SERIALIZED_NAME_MAX_ATTEMPTS)
-  private Integer maxAttempts;
+  private Integer maxAttempts = 3;
 
   public CodeCfg() {
   }

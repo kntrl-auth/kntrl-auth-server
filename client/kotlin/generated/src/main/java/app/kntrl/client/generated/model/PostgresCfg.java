@@ -51,19 +51,19 @@ import app.kntrl.client.generated.infra.JSON;
 public class PostgresCfg {
   public static final String SERIALIZED_NAME_POSTGRES = "postgres";
   @SerializedName(SERIALIZED_NAME_POSTGRES)
-  private String postgres;
+  private String postgres = "localhost:5432/";
 
   public static final String SERIALIZED_NAME_USERNAME = "username";
   @SerializedName(SERIALIZED_NAME_USERNAME)
-  private String username;
+  private String username = "postgres";
 
   public static final String SERIALIZED_NAME_MAX_CONNECTIONS = "maxConnections";
   @SerializedName(SERIALIZED_NAME_MAX_CONNECTIONS)
-  private Integer maxConnections;
+  private Integer maxConnections = 500;
 
   public static final String SERIALIZED_NAME_PASSWORD = "password";
   @SerializedName(SERIALIZED_NAME_PASSWORD)
-  private String password;
+  private String password = "postgres";
 
   public PostgresCfg() {
   }

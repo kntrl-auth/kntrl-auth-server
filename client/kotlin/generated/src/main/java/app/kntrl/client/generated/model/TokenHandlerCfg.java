@@ -49,9 +49,9 @@ import app.kntrl.client.generated.infra.JSON;
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class TokenHandlerCfg {
-  public static final String SERIALIZED_NAME_USER_INFO_URL = "userInfoUrl";
-  @SerializedName(SERIALIZED_NAME_USER_INFO_URL)
-  private String userInfoUrl;
+  public static final String SERIALIZED_NAME_URL = "url";
+  @SerializedName(SERIALIZED_NAME_URL)
+  private String url;
 
   public static final String SERIALIZED_NAME_SEND_TOKEN_IN_QUERY = "sendTokenInQuery";
   @SerializedName(SERIALIZED_NAME_SEND_TOKEN_IN_QUERY)
@@ -64,26 +64,26 @@ public class TokenHandlerCfg {
   public TokenHandlerCfg() {
   }
 
-  public TokenHandlerCfg userInfoUrl(String userInfoUrl) {
+  public TokenHandlerCfg url(String url) {
     
-    this.userInfoUrl = userInfoUrl;
+    this.url = url;
     return this;
   }
 
    /**
-   * If access token provided in request, app tries to extract user id from user-info endpoint.
-   * @return userInfoUrl
+   * If access token provided in request, app tries to extract user id from user-info endpoint. If null, user info will be extracted from access token 
+   * @return url
   **/
-  @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "If access token provided in request, app tries to extract user id from user-info endpoint.")
+  @javax.annotation.Nullable
+  @ApiModelProperty(example = "https://example.org/user-info", value = "If access token provided in request, app tries to extract user id from user-info endpoint. If null, user info will be extracted from access token ")
 
-  public String getUserInfoUrl() {
-    return userInfoUrl;
+  public String getUrl() {
+    return url;
   }
 
 
-  public void setUserInfoUrl(String userInfoUrl) {
-    this.userInfoUrl = userInfoUrl;
+  public void setUrl(String url) {
+    this.url = url;
   }
 
 
@@ -94,11 +94,11 @@ public class TokenHandlerCfg {
   }
 
    /**
-   * Send token in query param.
+   * While executing user-info request, access-token will be sent in query param.
    * @return sendTokenInQuery
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Send token in query param.")
+  @ApiModelProperty(value = "While executing user-info request, access-token will be sent in query param.")
 
   public String getSendTokenInQuery() {
     return sendTokenInQuery;
@@ -117,11 +117,11 @@ public class TokenHandlerCfg {
   }
 
    /**
-   * Send token in Authorisation header.
+   * While executing user-info request, access-token will be sent in Authorisation header.
    * @return sendTokenInHeader
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Send token in Authorisation header.")
+  @ApiModelProperty(value = "While executing user-info request, access-token will be sent in Authorisation header.")
 
   public Boolean getSendTokenInHeader() {
     return sendTokenInHeader;
@@ -178,7 +178,7 @@ public class TokenHandlerCfg {
       return false;
     }
     TokenHandlerCfg tokenHandlerCfg = (TokenHandlerCfg) o;
-    return Objects.equals(this.userInfoUrl, tokenHandlerCfg.userInfoUrl) &&
+    return Objects.equals(this.url, tokenHandlerCfg.url) &&
         Objects.equals(this.sendTokenInQuery, tokenHandlerCfg.sendTokenInQuery) &&
         Objects.equals(this.sendTokenInHeader, tokenHandlerCfg.sendTokenInHeader)&&
         Objects.equals(this.additionalProperties, tokenHandlerCfg.additionalProperties);
@@ -186,14 +186,14 @@ public class TokenHandlerCfg {
 
   @Override
   public int hashCode() {
-    return Objects.hash(userInfoUrl, sendTokenInQuery, sendTokenInHeader, additionalProperties);
+    return Objects.hash(url, sendTokenInQuery, sendTokenInHeader, additionalProperties);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class TokenHandlerCfg {\n");
-    sb.append("    userInfoUrl: ").append(toIndentedString(userInfoUrl)).append("\n");
+    sb.append("    url: ").append(toIndentedString(url)).append("\n");
     sb.append("    sendTokenInQuery: ").append(toIndentedString(sendTokenInQuery)).append("\n");
     sb.append("    sendTokenInHeader: ").append(toIndentedString(sendTokenInHeader)).append("\n");
     sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
@@ -219,13 +219,12 @@ public class TokenHandlerCfg {
   static {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
-    openapiFields.add("userInfoUrl");
+    openapiFields.add("url");
     openapiFields.add("sendTokenInQuery");
     openapiFields.add("sendTokenInHeader");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
-    openapiRequiredFields.add("userInfoUrl");
   }
 
  /**
@@ -242,15 +241,8 @@ public class TokenHandlerCfg {
           throw new IllegalArgumentException(String.format("The required field(s) %s in TokenHandlerCfg is not found in the empty JSON string", TokenHandlerCfg.openapiRequiredFields.toString()));
         }
       }
-
-      // check to make sure all required properties/fields are present in the JSON string
-      for (String requiredField : TokenHandlerCfg.openapiRequiredFields) {
-        if (jsonObj.get(requiredField) == null) {
-          throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonObj.toString()));
-        }
-      }
-      if ((jsonObj.get("userInfoUrl") != null && !jsonObj.get("userInfoUrl").isJsonNull()) && !jsonObj.get("userInfoUrl").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `userInfoUrl` to be a primitive type in the JSON string but got `%s`", jsonObj.get("userInfoUrl").toString()));
+      if ((jsonObj.get("url") != null && !jsonObj.get("url").isJsonNull()) && !jsonObj.get("url").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `url` to be a primitive type in the JSON string but got `%s`", jsonObj.get("url").toString()));
       }
       if ((jsonObj.get("sendTokenInQuery") != null && !jsonObj.get("sendTokenInQuery").isJsonNull()) && !jsonObj.get("sendTokenInQuery").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `sendTokenInQuery` to be a primitive type in the JSON string but got `%s`", jsonObj.get("sendTokenInQuery").toString()));

@@ -8,16 +8,19 @@
           "type": "integer",
           "description": "A port that the server will use to accept http requests\n",
           "format": "int32",
+          "default": 9876,
           "minimum": -2147483648,
           "maximum": 2147483647
         },
         "bind": {
           "type": "string",
-          "description": "IP address to bind to. Usually 0.0.0.0 to accept for any connection or 127.0.0.1 to accept only localhost\n"
+          "description": "IP address to bind to. Usually 0.0.0.0 to accept for any connection or 127.0.0.1 to accept only localhost\n",
+          "default": "0.0.0.0"
         },
         "proxy": {
           "type": "boolean",
-          "description": "If true, X-Forwarded-For header is used to get client's IP address"
+          "description": "If true, X-Forwarded-For header is used to get client's IP address",
+          "default": false
         }
       },
       "description": "Http server config",
@@ -87,7 +90,8 @@
               },
               "skipOnFail": {
                 "type": "boolean",
-                "description": "When this is set to true app will attempt next auth in case of error on current.\nIt's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be\nexecuted only when IP auth is failed.\nIf set to false any error on this auth will stop the whole request execution."
+                "description": "When this is set to true app will attempt next auth in case of error on current.\nIt's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be\nexecuted only when IP auth is failed.\nIf set to false any error on this auth will stop the whole request execution.",
+                "default": false
               },
               "rateLimiter": {
                 "type": "string",
@@ -98,6 +102,7 @@
                 "type": "number",
                 "description": "Every auth execution will burn this amount of quota. Takes place only when rate limiter is specified",
                 "format": "double",
+                "default": 0,
                 "minimum": -1.7976931348623157e+308,
                 "maximum": 1.7976931348623157e+308
               },
@@ -124,6 +129,7 @@
                     "type": "integer",
                     "description": "Length of code to be generated",
                     "format": "int32",
+                    "default": 4,
                     "minimum": -2147483648,
                     "maximum": 2147483647
                   },
@@ -137,12 +143,14 @@
                   },
                   "easyToRemember": {
                     "type": "boolean",
-                    "description": "If true, every second letter will be the same, that allows the codes to rhyme."
+                    "description": "If true, every second letter will be the same, that allows the codes to rhyme.",
+                    "default": true
                   },
                   "maxAttempts": {
                     "type": "integer",
                     "description": "Max attempts to enter the code.",
                     "format": "int32",
+                    "default": 3,
                     "minimum": -2147483648,
                     "maximum": 2147483647
                   }
@@ -185,7 +193,8 @@
               },
               "skipOnFail": {
                 "type": "boolean",
-                "description": "When this is set to true app will attempt next auth in case of error on current.\nIt's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be\nexecuted only when IP auth is failed.\nIf set to false any error on this auth will stop the whole request execution."
+                "description": "When this is set to true app will attempt next auth in case of error on current.\nIt's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be\nexecuted only when IP auth is failed.\nIf set to false any error on this auth will stop the whole request execution.",
+                "default": false
               },
               "rateLimiter": {
                 "type": "string",
@@ -196,6 +205,7 @@
                 "type": "number",
                 "description": "Every auth execution will burn this amount of quota. Takes place only when rate limiter is specified",
                 "format": "double",
+                "default": 0,
                 "minimum": -1.7976931348623157e+308,
                 "maximum": 1.7976931348623157e+308
               }
@@ -237,7 +247,8 @@
               },
               "skipOnFail": {
                 "type": "boolean",
-                "description": "When this is set to true app will attempt next auth in case of error on current.\nIt's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be\nexecuted only when IP auth is failed.\nIf set to false any error on this auth will stop the whole request execution."
+                "description": "When this is set to true app will attempt next auth in case of error on current.\nIt's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be\nexecuted only when IP auth is failed.\nIf set to false any error on this auth will stop the whole request execution.",
+                "default": false
               },
               "rateLimiter": {
                 "type": "string",
@@ -248,6 +259,7 @@
                 "type": "number",
                 "description": "Every auth execution will burn this amount of quota. Takes place only when rate limiter is specified",
                 "format": "double",
+                "default": 0,
                 "minimum": -1.7976931348623157e+308,
                 "maximum": 1.7976931348623157e+308
               },
@@ -297,6 +309,7 @@
                     "type": "integer",
                     "description": "Length of code to be generated",
                     "format": "int32",
+                    "default": 4,
                     "minimum": -2147483648,
                     "maximum": 2147483647
                   },
@@ -310,12 +323,14 @@
                   },
                   "easyToRemember": {
                     "type": "boolean",
-                    "description": "If true, every second letter will be the same, that allows the codes to rhyme."
+                    "description": "If true, every second letter will be the same, that allows the codes to rhyme.",
+                    "default": true
                   },
                   "maxAttempts": {
                     "type": "integer",
                     "description": "Max attempts to enter the code.",
                     "format": "int32",
+                    "default": 3,
                     "minimum": -2147483648,
                     "maximum": 2147483647
                   }
@@ -357,7 +372,8 @@
               },
               "skipOnFail": {
                 "type": "boolean",
-                "description": "When this is set to true app will attempt next auth in case of error on current.\nIt's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be\nexecuted only when IP auth is failed.\nIf set to false any error on this auth will stop the whole request execution."
+                "description": "When this is set to true app will attempt next auth in case of error on current.\nIt's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be\nexecuted only when IP auth is failed.\nIf set to false any error on this auth will stop the whole request execution.",
+                "default": false
               },
               "rateLimiter": {
                 "type": "string",
@@ -368,6 +384,7 @@
                 "type": "number",
                 "description": "Every auth execution will burn this amount of quota. Takes place only when rate limiter is specified",
                 "format": "double",
+                "default": 0,
                 "minimum": -1.7976931348623157e+308,
                 "maximum": 1.7976931348623157e+308
               },
@@ -375,6 +392,7 @@
                 "type": "integer",
                 "description": "This allows to drop last bytes of IP. So it allows to authenticate factor when ip has rough match, e.g.\nthe same country, same city, or same internet provider.",
                 "format": "int32",
+                "default": 0,
                 "minimum": -2147483648,
                 "maximum": 2147483647
               },
@@ -382,6 +400,7 @@
                 "type": "integer",
                 "description": "History of IP addresses user used to sign-in. Authenticated when user attempts to sign in with one of stored\nIPs.",
                 "format": "int32",
+                "default": 10,
                 "minimum": -2147483648,
                 "maximum": 2147483647
               }
@@ -422,7 +441,8 @@
               },
               "skipOnFail": {
                 "type": "boolean",
-                "description": "When this is set to true app will attempt next auth in case of error on current.\nIt's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be\nexecuted only when IP auth is failed.\nIf set to false any error on this auth will stop the whole request execution."
+                "description": "When this is set to true app will attempt next auth in case of error on current.\nIt's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be\nexecuted only when IP auth is failed.\nIf set to false any error on this auth will stop the whole request execution.",
+                "default": false
               },
               "rateLimiter": {
                 "type": "string",
@@ -433,45 +453,64 @@
                 "type": "number",
                 "description": "Every auth execution will burn this amount of quota. Takes place only when rate limiter is specified",
                 "format": "double",
+                "default": 0,
                 "minimum": -1.7976931348623157e+308,
                 "maximum": 1.7976931348623157e+308
               },
+              "exchangeAuthCode": {
+                "type": "object",
+                "properties": {
+                  "tokenUrl": {
+                    "type": "string",
+                    "description": "Url to get access token by authorisation code.\n"
+                  },
+                  "clientId": {
+                    "type": "string",
+                    "description": "OAuth client id. Client must be registered on OAuth provider (e.g. facebook, google)"
+                  },
+                  "clientSecret": {
+                    "type": "string",
+                    "description": "OAuth client secret.",
+                    "x-nullable": true
+                  }
+                },
+                "description": "If specified, app is able to handle authorizationCode from auth request; exchanges it for\n`access_token` or/and `id_token`",
+                "x-nullable": true,
+                "x-super": "#/components/schemas/ExchangeAuthCodeCfg"
+              },
+              "userInfo": {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "description": "If access token provided in request, app tries to extract user id from user-info endpoint.\nIf null, user info will be extracted from access token\n",
+                    "x-nullable": true
+                  },
+                  "sendTokenInQuery": {
+                    "type": "string",
+                    "description": "While executing user-info request, access-token will be sent in query param.",
+                    "x-nullable": true
+                  },
+                  "sendTokenInHeader": {
+                    "type": "boolean",
+                    "description": "While executing user-info request, access-token will be sent in Authorisation header."
+                  }
+                },
+                "description": "If specified, app will use received access token",
+                "x-nullable": true,
+                "x-super": "#/components/schemas/TokenHandlerCfg"
+              },
               "extractLogin": {
                 "type": "string",
-                "description": "Path for login in id-token or user-info endpoint response.\ne.g. `res.user.id` extracts user login from `{ \"res\": { \"user\": { \"id\": \"...\" } } }`"
-              },
-              "tokenUrl": {
-                "type": "string",
-                "description": "Url to get access token by authorisation code."
-              },
-              "clientId": {
-                "type": "string",
-                "description": "OAuth client id. Client must be registered on OAuth provider (e.g. facebook, google)"
-              },
-              "clientSecret": {
-                "type": "string",
-                "description": "OAuth client secret.",
-                "x-nullable": true
-              },
-              "userInfoUrl": {
-                "type": "string",
-                "description": "If access token provided in request, app tries to extract user id from user-info endpoint."
-              },
-              "sendTokenInQuery": {
-                "type": "string",
-                "description": "Send token in query param.",
-                "x-nullable": true
-              },
-              "sendTokenInHeader": {
-                "type": "boolean",
-                "description": "Send token in Authorisation header."
+                "description": "Json path for login in the exchangeAuthCode or userInfo endpoint response.\ne.g. `access_token.user.id` extracts user login from `{ \"access_token\": { \"user\": { \"id\": \"...\" } } }`\n"
               },
               "extractPublicData": {
                 "type": "object",
                 "additionalProperties": {
-                  "type": "string"
+                  "type": "string",
+                  "x-additionalPropertiesName": "public data key"
                 },
-                "description": "Can fill public data by a response of user-info or id-token."
+                "description": "Can fill public data from the exchangeAuthCode or userInfo endpoint response.\n"
               }
             },
             "x-order": "-1532051357-0",
@@ -507,7 +546,8 @@
               },
               "skipOnFail": {
                 "type": "boolean",
-                "description": "When this is set to true app will attempt next auth in case of error on current.\nIt's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be\nexecuted only when IP auth is failed.\nIf set to false any error on this auth will stop the whole request execution."
+                "description": "When this is set to true app will attempt next auth in case of error on current.\nIt's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be\nexecuted only when IP auth is failed.\nIf set to false any error on this auth will stop the whole request execution.",
+                "default": false
               },
               "rateLimiter": {
                 "type": "string",
@@ -518,6 +558,7 @@
                 "type": "number",
                 "description": "Every auth execution will burn this amount of quota. Takes place only when rate limiter is specified",
                 "format": "double",
+                "default": 0,
                 "minimum": -1.7976931348623157e+308,
                 "maximum": 1.7976931348623157e+308
               },
@@ -525,6 +566,7 @@
                 "type": "integer",
                 "description": "Max allowed Length of the password.",
                 "format": "int32",
+                "default": 256,
                 "minimum": -2147483648,
                 "maximum": 2147483647
               },
@@ -532,28 +574,34 @@
                 "type": "integer",
                 "description": "Minimal length of password",
                 "format": "int32",
+                "default": 6,
                 "minimum": -2147483648,
                 "maximum": 2147483647
               },
               "requireNumber": {
                 "type": "boolean",
-                "description": "Require password to contain at least one digit."
+                "description": "Require password to contain at least one digit.",
+                "default": false
               },
               "requireSymbol": {
                 "type": "boolean",
-                "description": "Require password to contain at least one symbol e.g. @, !, &..."
+                "description": "Require password to contain at least one symbol e.g. @, !, &...",
+                "default": false
               },
               "requireUpperCase": {
                 "type": "boolean",
-                "description": "This requires password to contain both lowercase and uppercase letters."
+                "description": "This requires password to contain both lowercase and uppercase letters.",
+                "default": false
               },
               "forbidCommonPasswords": {
                 "type": "boolean",
-                "description": "Password will be checked against table 1,000,000 of most overused passwords."
+                "description": "Password will be checked against table 1,000,000 of most overused passwords.",
+                "default": false
               },
               "forbidLoginAsPassword": {
                 "type": "boolean",
-                "description": "Rejects passwords that match username, email, anything that used as a login according to logins config."
+                "description": "Rejects passwords that match username, email, anything that used as a login according to logins config.",
+                "default": false
               },
               "forbidReusingPassword": {
                 "type": "object",
@@ -562,6 +610,7 @@
                     "type": "integer",
                     "description": "Number of current user passwords to store in database.",
                     "format": "int32",
+                    "default": 3,
                     "minimum": -2147483648,
                     "maximum": 2147483647
                   },
@@ -583,28 +632,34 @@
                       "type": "integer",
                       "description": "Minimal length of password",
                       "format": "int32",
+                      "default": 6,
                       "minimum": -2147483648,
                       "maximum": 2147483647
                     },
                     "requireNumber": {
                       "type": "boolean",
-                      "description": "Require password to contain at least one digit."
+                      "description": "Require password to contain at least one digit.",
+                      "default": false
                     },
                     "requireSymbol": {
                       "type": "boolean",
-                      "description": "Require password to contain at least one symbol e.g. @, !, &..."
+                      "description": "Require password to contain at least one symbol e.g. @, !, &...",
+                      "default": false
                     },
                     "requireUpperCase": {
                       "type": "boolean",
-                      "description": "This requires password to contain both lowercase and uppercase letters."
+                      "description": "This requires password to contain both lowercase and uppercase letters.",
+                      "default": false
                     },
                     "forbidCommonPasswords": {
                       "type": "boolean",
-                      "description": "Password will be checked against table 1,000,000 of most overused passwords."
+                      "description": "Password will be checked against table 1,000,000 of most overused passwords.",
+                      "default": false
                     },
                     "forbidLoginAsPassword": {
                       "type": "boolean",
-                      "description": "Rejects passwords that match username, email, anything that used as a login according to logins config."
+                      "description": "Rejects passwords that match username, email, anything that used as a login according to logins config.",
+                      "default": false
                     }
                   },
                   "description": "Requirements for password",
@@ -647,7 +702,8 @@
               },
               "skipOnFail": {
                 "type": "boolean",
-                "description": "When this is set to true app will attempt next auth in case of error on current.\nIt's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be\nexecuted only when IP auth is failed.\nIf set to false any error on this auth will stop the whole request execution."
+                "description": "When this is set to true app will attempt next auth in case of error on current.\nIt's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be\nexecuted only when IP auth is failed.\nIf set to false any error on this auth will stop the whole request execution.",
+                "default": false
               },
               "rateLimiter": {
                 "type": "string",
@@ -658,25 +714,30 @@
                 "type": "number",
                 "description": "Every auth execution will burn this amount of quota. Takes place only when rate limiter is specified",
                 "format": "double",
+                "default": 0,
                 "minimum": -1.7976931348623157e+308,
                 "maximum": 1.7976931348623157e+308
               },
               "lowercase": {
                 "type": "boolean",
-                "description": "Transform user answer to lowercase letters. This allows user still pass a check when he wrote name or city\nwith different cases. `false` means strict match, so \"John\" != \"john\""
+                "description": "Transform user answer to lowercase letters. This allows user still pass a check when he wrote name or city\nwith different cases. `false` means strict match, so \"John\" != \"john\"",
+                "default": true
               },
               "removeSymbols": {
                 "type": "boolean",
-                "description": "Remove all non-letters from user answer."
+                "description": "Remove all non-letters from user answer.",
+                "default": true
               },
               "removeSpaces": {
                 "type": "boolean",
-                "description": "Remove all spaces from user answer."
+                "description": "Remove all spaces from user answer.",
+                "default": true
               },
               "minLength": {
                 "type": "integer",
                 "description": "Min length of answer. Length are checked after all answer transformation.",
                 "format": "int32",
+                "default": 3,
                 "minimum": -2147483648,
                 "maximum": 2147483647
               },
@@ -684,6 +745,7 @@
                 "type": "integer",
                 "description": "Max length of answer.",
                 "format": "int32",
+                "default": 256,
                 "minimum": -2147483648,
                 "maximum": 2147483647
               },
@@ -691,6 +753,7 @@
                 "type": "integer",
                 "description": "Min number of answers required to pass this check.",
                 "format": "int32",
+                "default": 2,
                 "minimum": -2147483648,
                 "maximum": 2147483647
               },
@@ -698,6 +761,7 @@
                 "type": "integer",
                 "description": "Max answers that user can save.",
                 "format": "int32",
+                "default": 10,
                 "minimum": -2147483648,
                 "maximum": 2147483647
               }
@@ -791,7 +855,8 @@
           },
           "editAccount": {
             "type": "boolean",
-            "description": "Is this session allowed to add/remove new auth, enable/disable factors, etc.?"
+            "description": "Is this session allowed to add/remove new auth, enable/disable factors, etc.?",
+            "default": false
           }
         },
         "description": "Configuration for app entry.",
@@ -809,7 +874,8 @@
               "type": "object",
               "properties": {
                 "inMemory": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "default": true
                 }
               },
               "x-order": "1129812999-3",
@@ -819,7 +885,8 @@
               "type": "object",
               "properties": {
                 "inToken": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "default": true
                 }
               },
               "x-order": "-291817267-1",
@@ -859,7 +926,8 @@
                   ]
                 },
                 "cluster": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "default": false
                 },
                 "database": {
                   "type": "integer",
@@ -876,11 +944,13 @@
                   "x-nullable": true
                 },
                 "ssl": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "default": false
                 },
                 "maxConnections": {
                   "type": "integer",
                   "format": "int32",
+                  "default": 100,
                   "minimum": -2147483648,
                   "maximum": 2147483647
                 }
@@ -917,19 +987,23 @@
               "type": "object",
               "properties": {
                 "mysql": {
-                  "type": "string"
+                  "type": "string",
+                  "default": "localhost:3306"
                 },
                 "username": {
-                  "type": "string"
+                  "type": "string",
+                  "default": "mysql"
                 },
                 "maxConnections": {
                   "type": "integer",
                   "format": "int32",
+                  "default": 500,
                   "minimum": -2147483648,
                   "maximum": 2147483647
                 },
                 "password": {
-                  "type": "string"
+                  "type": "string",
+                  "default": "mysql"
                 }
               },
               "x-order": "-577347408-2",
@@ -939,19 +1013,23 @@
               "type": "object",
               "properties": {
                 "postgres": {
-                  "type": "string"
+                  "type": "string",
+                  "default": "localhost:5432/"
                 },
                 "username": {
-                  "type": "string"
+                  "type": "string",
+                  "default": "postgres"
                 },
                 "maxConnections": {
                   "type": "integer",
                   "format": "int32",
+                  "default": 500,
                   "minimum": -2147483648,
                   "maximum": 2147483647
                 },
                 "password": {
-                  "type": "string"
+                  "type": "string",
+                  "default": "postgres"
                 }
               },
               "x-order": "893841315-2",
@@ -961,19 +1039,23 @@
               "type": "object",
               "properties": {
                 "username": {
-                  "type": "string"
+                  "type": "string",
+                  "default": ""
                 },
                 "password": {
-                  "type": "string"
+                  "type": "string",
+                  "default": ""
                 },
                 "maxConnections": {
                   "type": "integer",
                   "format": "int32",
+                  "default": 500,
                   "minimum": -2147483648,
                   "maximum": 2147483647
                 },
                 "sqlite": {
-                  "type": "string"
+                  "type": "string",
+                  "default": "./sqlite"
                 }
               },
               "x-order": "-1872929936-3",
@@ -988,7 +1070,8 @@
               "type": "object",
               "properties": {
                 "inMemory": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "default": true
                 }
               },
               "x-order": "1129812999-3",
@@ -998,7 +1081,8 @@
               "type": "object",
               "properties": {
                 "inToken": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "default": true
                 }
               },
               "x-order": "-291817267-1",
@@ -1038,7 +1122,8 @@
                   ]
                 },
                 "cluster": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "default": false
                 },
                 "database": {
                   "type": "integer",
@@ -1055,11 +1140,13 @@
                   "x-nullable": true
                 },
                 "ssl": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "default": false
                 },
                 "maxConnections": {
                   "type": "integer",
                   "format": "int32",
+                  "default": 100,
                   "minimum": -2147483648,
                   "maximum": 2147483647
                 }
@@ -1096,19 +1183,23 @@
               "type": "object",
               "properties": {
                 "mysql": {
-                  "type": "string"
+                  "type": "string",
+                  "default": "localhost:3306"
                 },
                 "username": {
-                  "type": "string"
+                  "type": "string",
+                  "default": "mysql"
                 },
                 "maxConnections": {
                   "type": "integer",
                   "format": "int32",
+                  "default": 500,
                   "minimum": -2147483648,
                   "maximum": 2147483647
                 },
                 "password": {
-                  "type": "string"
+                  "type": "string",
+                  "default": "mysql"
                 }
               },
               "x-order": "-577347408-2",
@@ -1118,19 +1209,23 @@
               "type": "object",
               "properties": {
                 "postgres": {
-                  "type": "string"
+                  "type": "string",
+                  "default": "localhost:5432/"
                 },
                 "username": {
-                  "type": "string"
+                  "type": "string",
+                  "default": "postgres"
                 },
                 "maxConnections": {
                   "type": "integer",
                   "format": "int32",
+                  "default": 500,
                   "minimum": -2147483648,
                   "maximum": 2147483647
                 },
                 "password": {
-                  "type": "string"
+                  "type": "string",
+                  "default": "postgres"
                 }
               },
               "x-order": "893841315-2",
@@ -1140,19 +1235,23 @@
               "type": "object",
               "properties": {
                 "username": {
-                  "type": "string"
+                  "type": "string",
+                  "default": ""
                 },
                 "password": {
-                  "type": "string"
+                  "type": "string",
+                  "default": ""
                 },
                 "maxConnections": {
                   "type": "integer",
                   "format": "int32",
+                  "default": 500,
                   "minimum": -2147483648,
                   "maximum": 2147483647
                 },
                 "sqlite": {
-                  "type": "string"
+                  "type": "string",
+                  "default": "./sqlite"
                 }
               },
               "x-order": "-1872929936-3",
@@ -1167,7 +1266,8 @@
               "type": "object",
               "properties": {
                 "inMemory": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "default": true
                 }
               },
               "x-order": "1129812999-3",
@@ -1177,7 +1277,8 @@
               "type": "object",
               "properties": {
                 "inToken": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "default": true
                 }
               },
               "x-order": "-291817267-1",
@@ -1217,7 +1318,8 @@
                   ]
                 },
                 "cluster": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "default": false
                 },
                 "database": {
                   "type": "integer",
@@ -1234,11 +1336,13 @@
                   "x-nullable": true
                 },
                 "ssl": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "default": false
                 },
                 "maxConnections": {
                   "type": "integer",
                   "format": "int32",
+                  "default": 100,
                   "minimum": -2147483648,
                   "maximum": 2147483647
                 }
@@ -1275,19 +1379,23 @@
               "type": "object",
               "properties": {
                 "mysql": {
-                  "type": "string"
+                  "type": "string",
+                  "default": "localhost:3306"
                 },
                 "username": {
-                  "type": "string"
+                  "type": "string",
+                  "default": "mysql"
                 },
                 "maxConnections": {
                   "type": "integer",
                   "format": "int32",
+                  "default": 500,
                   "minimum": -2147483648,
                   "maximum": 2147483647
                 },
                 "password": {
-                  "type": "string"
+                  "type": "string",
+                  "default": "mysql"
                 }
               },
               "x-order": "-577347408-2",
@@ -1297,19 +1405,23 @@
               "type": "object",
               "properties": {
                 "postgres": {
-                  "type": "string"
+                  "type": "string",
+                  "default": "localhost:5432/"
                 },
                 "username": {
-                  "type": "string"
+                  "type": "string",
+                  "default": "postgres"
                 },
                 "maxConnections": {
                   "type": "integer",
                   "format": "int32",
+                  "default": 500,
                   "minimum": -2147483648,
                   "maximum": 2147483647
                 },
                 "password": {
-                  "type": "string"
+                  "type": "string",
+                  "default": "postgres"
                 }
               },
               "x-order": "893841315-2",
@@ -1319,19 +1431,23 @@
               "type": "object",
               "properties": {
                 "username": {
-                  "type": "string"
+                  "type": "string",
+                  "default": ""
                 },
                 "password": {
-                  "type": "string"
+                  "type": "string",
+                  "default": ""
                 },
                 "maxConnections": {
                   "type": "integer",
                   "format": "int32",
+                  "default": 500,
                   "minimum": -2147483648,
                   "maximum": 2147483647
                 },
                 "sqlite": {
-                  "type": "string"
+                  "type": "string",
+                  "default": "./sqlite"
                 }
               },
               "x-order": "-1872929936-3",
@@ -1351,7 +1467,8 @@
           "properties": {
             "cookie": {
               "type": "boolean",
-              "description": "Send token in `access_token` cookie"
+              "description": "Send token in `access_token` cookie",
+              "default": false
             },
             "cache": {
               "type": "string",
@@ -1365,11 +1482,13 @@
             },
             "cacheUnauthenticated": {
               "type": "boolean",
-              "description": "By default, unauthenticated sessions can't be cached."
+              "description": "By default, unauthenticated sessions can't be cached.",
+              "default": false
             },
             "ttl": {
               "type": "string",
-              "description": "Lifetime for access token. 1d, 30m, etc.\n"
+              "description": "Lifetime for access token. 1d, 30m, etc.\n",
+              "default": "1d"
             }
           },
           "description": "Short-living token used for authentication.",
@@ -1380,19 +1499,23 @@
           "properties": {
             "ttl": {
               "type": "string",
-              "description": "Lifetime for refresh token. 10d, 3M, etc.\n"
+              "description": "Lifetime for refresh token. 10d, 3M, etc.\n",
+              "default": "15d"
             },
             "maxTtl": {
               "type": "string",
-              "description": "Refresh token can be prolonged by refresh.\n"
+              "description": "Refresh token can be prolonged by refresh.\n",
+              "default": "3M"
             },
             "unauthenticatedTtl": {
               "type": "string",
-              "description": "Lifetime of token for unauthenticated session. Limits time that user has to sign in/up, restoring password etc.\n"
+              "description": "Lifetime of token for unauthenticated session. Limits time that user has to sign in/up, restoring password etc.\n",
+              "default": "1h"
             },
             "allowReuse": {
               "type": "boolean",
-              "description": "If false - one refresh token can't be used twice. New refresh token will be provided by refresh API."
+              "description": "If false - one refresh token can't be used twice. New refresh token will be provided by refresh API.",
+              "default": false
             }
           },
           "description": "Long-living token used for generation of new access token.\nThis is optional. You can set longer access-token lifetime instead.",
@@ -1400,7 +1523,8 @@
         },
         "sameUserAgent": {
           "type": "boolean",
-          "description": "Require all request to be made from the same device."
+          "description": "Require all request to be made from the same device.",
+          "default": true
         }
       },
       "description": "Token lifetime config.",
@@ -1414,16 +1538,19 @@
         "properties": {
           "userId": {
             "type": "boolean",
-            "description": "Create different rate limiters for different users.\nEnabled by default."
+            "description": "Create different rate limiters for different users.",
+            "default": true
           },
           "ip": {
             "type": "boolean",
-            "description": "Create different rate limiters for different ips.\nDisabled by default."
+            "description": "Create different rate limiters for different ips.",
+            "default": false
           },
           "quota": {
             "type": "number",
             "description": "Total quota available for time period. Quota means \"weight\" of a request. So quota 1.0 and period 1s\nallows 10 request with weight 0.1 per seconds or 5 request with weight 0.2 per second.",
             "format": "double",
+            "default": 1,
             "minimum": -1.7976931348623157e+308,
             "maximum": 1.7976931348623157e+308
           },
@@ -1433,7 +1560,8 @@
           },
           "alignLoad": {
             "type": "boolean",
-            "description": "Insert delays between requests if there are too many simultaneous requests."
+            "description": "Insert delays between requests if there are too many simultaneous requests.",
+            "default": false
           },
           "parent": {
             "type": "string",
@@ -1465,14 +1593,16 @@
         },
         "default": {
           "type": "string",
-          "description": "Default language to use.\n"
+          "description": "Default language to use.\n",
+          "default": "en"
         }
       },
       "description": "Configuration for localization of error messages, emails, etc.",
       "x-order": "-1723799702-4"
     },
     "$schema": {
-      "type": "string"
+      "type": "string",
+      "default": "./kntrl.schema.json"
     }
   },
   "x-order": "-1414553603-0",

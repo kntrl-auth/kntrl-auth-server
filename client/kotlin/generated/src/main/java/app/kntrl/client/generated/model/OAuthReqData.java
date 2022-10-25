@@ -57,6 +57,10 @@ public class OAuthReqData {
   @SerializedName(SERIALIZED_NAME_AUTHORIZATION_CODE)
   private String authorizationCode;
 
+  public static final String SERIALIZED_NAME_REDIRECT_URI = "redirectUri";
+  @SerializedName(SERIALIZED_NAME_REDIRECT_URI)
+  private String redirectUri;
+
   public OAuthReqData() {
   }
 
@@ -103,6 +107,29 @@ public class OAuthReqData {
 
   public void setAuthorizationCode(String authorizationCode) {
     this.authorizationCode = authorizationCode;
+  }
+
+
+  public OAuthReqData redirectUri(String redirectUri) {
+    
+    this.redirectUri = redirectUri;
+    return this;
+  }
+
+   /**
+   * Redirect uri used when requested user login.
+   * @return redirectUri
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Redirect uri used when requested user login.")
+
+  public String getRedirectUri() {
+    return redirectUri;
+  }
+
+
+  public void setRedirectUri(String redirectUri) {
+    this.redirectUri = redirectUri;
   }
 
   /**
@@ -152,13 +179,14 @@ public class OAuthReqData {
     }
     OAuthReqData oauthReqData = (OAuthReqData) o;
     return Objects.equals(this.accessToken, oauthReqData.accessToken) &&
-        Objects.equals(this.authorizationCode, oauthReqData.authorizationCode)&&
+        Objects.equals(this.authorizationCode, oauthReqData.authorizationCode) &&
+        Objects.equals(this.redirectUri, oauthReqData.redirectUri)&&
         Objects.equals(this.additionalProperties, oauthReqData.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(accessToken, authorizationCode, additionalProperties);
+    return Objects.hash(accessToken, authorizationCode, redirectUri, additionalProperties);
   }
 
   @Override
@@ -167,6 +195,7 @@ public class OAuthReqData {
     sb.append("class OAuthReqData {\n");
     sb.append("    accessToken: ").append(toIndentedString(accessToken)).append("\n");
     sb.append("    authorizationCode: ").append(toIndentedString(authorizationCode)).append("\n");
+    sb.append("    redirectUri: ").append(toIndentedString(redirectUri)).append("\n");
     sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -192,6 +221,7 @@ public class OAuthReqData {
     openapiFields = new HashSet<String>();
     openapiFields.add("accessToken");
     openapiFields.add("authorizationCode");
+    openapiFields.add("redirectUri");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -216,6 +246,9 @@ public class OAuthReqData {
       }
       if ((jsonObj.get("authorizationCode") != null && !jsonObj.get("authorizationCode").isJsonNull()) && !jsonObj.get("authorizationCode").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `authorizationCode` to be a primitive type in the JSON string but got `%s`", jsonObj.get("authorizationCode").toString()));
+      }
+      if ((jsonObj.get("redirectUri") != null && !jsonObj.get("redirectUri").isJsonNull()) && !jsonObj.get("redirectUri").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `redirectUri` to be a primitive type in the JSON string but got `%s`", jsonObj.get("redirectUri").toString()));
       }
   }
 

@@ -51,7 +51,7 @@ import app.kntrl.client.generated.infra.JSON;
 public class InTokenCfg {
   public static final String SERIALIZED_NAME_IN_TOKEN = "inToken";
   @SerializedName(SERIALIZED_NAME_IN_TOKEN)
-  private Boolean inToken;
+  private Boolean inToken = true;
 
   public InTokenCfg() {
   }

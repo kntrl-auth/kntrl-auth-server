@@ -7,12 +7,15 @@
 
     facebook: {
       builtin: "oauth",
-      clientId: "394838444474913",
-      clientSecret: "72b35c1226a6439f7f1a15db4d44ab26",
-      tokenUrl: "https://graph.facebook.com/v15.0/oauth/access_token",
+
+      exchangeAuthCode: {
+        tokenUrl: "https://graph.facebook.com/v15.0/oauth/access_token",
+        clientId: "394838444474913",
+        clientSecret: "72b35c1226a6439f7f1a15db4d44ab26",
+      },
 
       // Path to user id in access-token
-      extractLogin : "data.user_id"
+      extractLogin : "access_token.data.user_id"
     }
   },
 

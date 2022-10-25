@@ -51,19 +51,19 @@ import app.kntrl.client.generated.infra.JSON;
 public class SqliteCfg {
   public static final String SERIALIZED_NAME_USERNAME = "username";
   @SerializedName(SERIALIZED_NAME_USERNAME)
-  private String username;
+  private String username = "";
 
   public static final String SERIALIZED_NAME_PASSWORD = "password";
   @SerializedName(SERIALIZED_NAME_PASSWORD)
-  private String password;
+  private String password = "";
 
   public static final String SERIALIZED_NAME_MAX_CONNECTIONS = "maxConnections";
   @SerializedName(SERIALIZED_NAME_MAX_CONNECTIONS)
-  private Integer maxConnections;
+  private Integer maxConnections = 500;
 
   public static final String SERIALIZED_NAME_SQLITE = "sqlite";
   @SerializedName(SERIALIZED_NAME_SQLITE)
-  private String sqlite;
+  private String sqlite = "./sqlite";
 
   public SqliteCfg() {
   }

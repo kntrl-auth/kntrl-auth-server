@@ -62,7 +62,7 @@ public class TokenCfg {
 
   public static final String SERIALIZED_NAME_SAME_USER_AGENT = "sameUserAgent";
   @SerializedName(SERIALIZED_NAME_SAME_USER_AGENT)
-  private Boolean sameUserAgent;
+  private Boolean sameUserAgent = true;
 
   public TokenCfg() {
   }

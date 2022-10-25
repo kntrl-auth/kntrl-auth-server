@@ -56,11 +56,11 @@ import app.kntrl.client.generated.infra.JSON;
 public class ShDbsCfgUser {
   public static final String SERIALIZED_NAME_IN_MEMORY = "inMemory";
   @SerializedName(SERIALIZED_NAME_IN_MEMORY)
-  private Boolean inMemory;
+  private Boolean inMemory = true;
 
   public static final String SERIALIZED_NAME_IN_TOKEN = "inToken";
   @SerializedName(SERIALIZED_NAME_IN_TOKEN)
-  private Boolean inToken;
+  private Boolean inToken = true;
 
   public static final String SERIALIZED_NAME_MONGODB = "mongodb";
   @SerializedName(SERIALIZED_NAME_MONGODB)
@@ -76,7 +76,7 @@ public class ShDbsCfgUser {
 
   public static final String SERIALIZED_NAME_CLUSTER = "cluster";
   @SerializedName(SERIALIZED_NAME_CLUSTER)
-  private Boolean cluster;
+  private Boolean cluster = false;
 
   public static final String SERIALIZED_NAME_USER = "user";
   @SerializedName(SERIALIZED_NAME_USER)
@@ -84,15 +84,15 @@ public class ShDbsCfgUser {
 
   public static final String SERIALIZED_NAME_PASSWORD = "password";
   @SerializedName(SERIALIZED_NAME_PASSWORD)
-  private String password;
+  private String password = "";
 
   public static final String SERIALIZED_NAME_SSL = "ssl";
   @SerializedName(SERIALIZED_NAME_SSL)
-  private Boolean ssl;
+  private Boolean ssl = false;
 
   public static final String SERIALIZED_NAME_MAX_CONNECTIONS = "maxConnections";
   @SerializedName(SERIALIZED_NAME_MAX_CONNECTIONS)
-  private Integer maxConnections;
+  private Integer maxConnections = 500;
 
   public static final String SERIALIZED_NAME_REMOTE = "remote";
   @SerializedName(SERIALIZED_NAME_REMOTE)
@@ -108,19 +108,19 @@ public class ShDbsCfgUser {
 
   public static final String SERIALIZED_NAME_MYSQL = "mysql";
   @SerializedName(SERIALIZED_NAME_MYSQL)
-  private String mysql;
+  private String mysql = "localhost:3306";
 
   public static final String SERIALIZED_NAME_USERNAME = "username";
   @SerializedName(SERIALIZED_NAME_USERNAME)
-  private String username;
+  private String username = "";
 
   public static final String SERIALIZED_NAME_POSTGRES = "postgres";
   @SerializedName(SERIALIZED_NAME_POSTGRES)
-  private String postgres;
+  private String postgres = "localhost:5432/";
 
   public static final String SERIALIZED_NAME_SQLITE = "sqlite";
   @SerializedName(SERIALIZED_NAME_SQLITE)
-  private String sqlite;
+  private String sqlite = "./sqlite";
 
   public ShDbsCfgUser() {
   }

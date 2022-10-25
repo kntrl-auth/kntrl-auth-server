@@ -57,7 +57,7 @@ public class QuestionsAuthCfg {
 
   public static final String SERIALIZED_NAME_SKIP_ON_FAIL = "skipOnFail";
   @SerializedName(SERIALIZED_NAME_SKIP_ON_FAIL)
-  private Boolean skipOnFail;
+  private Boolean skipOnFail = false;
 
   public static final String SERIALIZED_NAME_RATE_LIMITER = "rateLimiter";
   @SerializedName(SERIALIZED_NAME_RATE_LIMITER)
@@ -65,35 +65,35 @@ public class QuestionsAuthCfg {
 
   public static final String SERIALIZED_NAME_BURN_QUOTA = "burnQuota";
   @SerializedName(SERIALIZED_NAME_BURN_QUOTA)
-  private Double burnQuota;
+  private Double burnQuota = 0.0d;
 
   public static final String SERIALIZED_NAME_LOWERCASE = "lowercase";
   @SerializedName(SERIALIZED_NAME_LOWERCASE)
-  private Boolean lowercase;
+  private Boolean lowercase = true;
 
   public static final String SERIALIZED_NAME_REMOVE_SYMBOLS = "removeSymbols";
   @SerializedName(SERIALIZED_NAME_REMOVE_SYMBOLS)
-  private Boolean removeSymbols;
+  private Boolean removeSymbols = true;
 
   public static final String SERIALIZED_NAME_REMOVE_SPACES = "removeSpaces";
   @SerializedName(SERIALIZED_NAME_REMOVE_SPACES)
-  private Boolean removeSpaces;
+  private Boolean removeSpaces = true;
 
   public static final String SERIALIZED_NAME_MIN_LENGTH = "minLength";
   @SerializedName(SERIALIZED_NAME_MIN_LENGTH)
-  private Integer minLength;
+  private Integer minLength = 3;
 
   public static final String SERIALIZED_NAME_MAX_LENGTH = "maxLength";
   @SerializedName(SERIALIZED_NAME_MAX_LENGTH)
-  private Integer maxLength;
+  private Integer maxLength = 256;
 
   public static final String SERIALIZED_NAME_ANSWERS_REQUIRED = "answersRequired";
   @SerializedName(SERIALIZED_NAME_ANSWERS_REQUIRED)
-  private Integer answersRequired;
+  private Integer answersRequired = 2;
 
   public static final String SERIALIZED_NAME_MAX_ANSWERS = "maxAnswers";
   @SerializedName(SERIALIZED_NAME_MAX_ANSWERS)
-  private Integer maxAnswers;
+  private Integer maxAnswers = 10;
 
   public QuestionsAuthCfg() {
   }

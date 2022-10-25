@@ -1343,9 +1343,9 @@ components:
                 \ will be partially hidden."
             ipEncoded:
               type: string
-            login:
+            extractedLogin:
               type: string
-            extractedData:
+            extractedPublicData:
               $ref: '#/components/schemas/OAuthPublicData'
             password:
               type: string
@@ -1447,16 +1447,16 @@ components:
       x-super: '#/components/schemas/AuthPublicData'
     OAuthResData:
       required:
-      - extractedData
-      - login
+      - extractedLogin
+      - extractedPublicData
       type: object
       properties:
-        login:
+        extractedLogin:
           type: string
-        extractedData:
+        extractedPublicData:
           $ref: '#/components/schemas/OAuthPublicData'
       additionalProperties: true
-      x-order: -893636857-4
+      x-order: -893636857-5
       x-super: '#/components/schemas/AuthResData'
     Password:
       required:
@@ -1593,9 +1593,9 @@ components:
                 \ will be partially hidden."
             ipEncoded:
               type: string
-            login:
+            extractedLogin:
               type: string
-            extractedData:
+            extractedPublicData:
               $ref: '#/components/schemas/OAuthPublicData'
             password:
               type: string
@@ -1669,6 +1669,7 @@ components:
             systemAccess:
               type: boolean
               description: Allows to edit any user in the app.
+              default: false
           description: User loaded from database. Can be null if user isn't identified
             yet.
           x-nullable: true
@@ -1854,6 +1855,10 @@ components:
               type: string
               description: If you have authorisation-code - app will exchange it for
                 access-token.
+              x-nullable: true
+            redirectUri:
+              type: string
+              description: Redirect uri used when requested user login.
               x-nullable: true
             password:
               type: string
@@ -2050,8 +2055,12 @@ components:
           type: string
           description: If you have authorisation-code - app will exchange it for access-token.
           x-nullable: true
+        redirectUri:
+          type: string
+          description: Redirect uri used when requested user login.
+          x-nullable: true
       additionalProperties: true
-      x-order: -893636857-3
+      x-order: -893636857-4
       x-super: '#/components/schemas/AuthReqData'
     PasswordAuthReqData:
       required:
@@ -2264,6 +2273,7 @@ components:
         systemAccess:
           type: boolean
           description: Allows to edit any user in the app.
+          default: false
       x-order: 276900135-0
     DryRunAuthData:
       type: object
@@ -2298,9 +2308,9 @@ components:
                 \ will be partially hidden."
             ipEncoded:
               type: string
-            login:
+            extractedLogin:
               type: string
-            extractedData:
+            extractedPublicData:
               $ref: '#/components/schemas/OAuthPublicData'
             password:
               type: string

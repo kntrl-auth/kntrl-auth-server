@@ -52,19 +52,19 @@ import app.kntrl.client.generated.infra.JSON;
 public class RefreshTokenCfg {
   public static final String SERIALIZED_NAME_TTL = "ttl";
   @SerializedName(SERIALIZED_NAME_TTL)
-  private String ttl;
+  private String ttl = "15d";
 
   public static final String SERIALIZED_NAME_MAX_TTL = "maxTtl";
   @SerializedName(SERIALIZED_NAME_MAX_TTL)
-  private String maxTtl;
+  private String maxTtl = "3M";
 
   public static final String SERIALIZED_NAME_UNAUTHENTICATED_TTL = "unauthenticatedTtl";
   @SerializedName(SERIALIZED_NAME_UNAUTHENTICATED_TTL)
-  private String unauthenticatedTtl;
+  private String unauthenticatedTtl = "1h";
 
   public static final String SERIALIZED_NAME_ALLOW_REUSE = "allowReuse";
   @SerializedName(SERIALIZED_NAME_ALLOW_REUSE)
-  private Boolean allowReuse;
+  private Boolean allowReuse = false;
 
   public RefreshTokenCfg() {
   }

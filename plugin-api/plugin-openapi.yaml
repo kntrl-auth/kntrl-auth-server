@@ -1010,19 +1010,19 @@ components:
       x-order: -893636857-2
     OAuthResData:
       required:
-      - extractedData
-      - login
+      - extractedLogin
+      - extractedPublicData
       type: object
       additionalProperties: true
       allOf:
       - $ref: '#/components/schemas/AuthResData'
       - type: object
         properties:
-          login:
+          extractedLogin:
             type: string
-          extractedData:
+          extractedPublicData:
             $ref: '#/components/schemas/OAuthPublicData'
-      x-order: -893636857-4
+      x-order: -893636857-5
     Password:
       required:
       - createdAt
@@ -1392,7 +1392,11 @@ components:
             description: If you have authorisation-code - app will exchange it for
               access-token.
             x-nullable: true
-      x-order: -893636857-3
+          redirectUri:
+            type: string
+            description: Redirect uri used when requested user login.
+            x-nullable: true
+      x-order: -893636857-4
     PasswordAuthReqData:
       required:
       - password
@@ -1614,6 +1618,7 @@ components:
         systemAccess:
           type: boolean
           description: Allows to edit any user in the app.
+          default: false
       x-order: 276900135-0
     DryRunAuthData:
       type: object

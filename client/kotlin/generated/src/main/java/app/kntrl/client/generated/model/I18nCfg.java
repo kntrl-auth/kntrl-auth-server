@@ -56,7 +56,7 @@ public class I18nCfg {
 
   public static final String SERIALIZED_NAME_DEFAULT = "default";
   @SerializedName(SERIALIZED_NAME_DEFAULT)
-  private String _default;
+  private String _default = "en";
 
   public I18nCfg() {
   }

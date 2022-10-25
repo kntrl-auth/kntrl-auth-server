@@ -106,7 +106,7 @@ public class ShAppCfg {
 
   public static final String SERIALIZED_NAME_$_SCHEMA = "$schema";
   @SerializedName(SERIALIZED_NAME_$_SCHEMA)
-  private String $schema;
+  private String $schema = "./kntrl.schema.json";
 
   public ShAppCfg() {
   }

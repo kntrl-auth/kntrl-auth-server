@@ -51,7 +51,7 @@ import app.kntrl.client.generated.infra.JSON;
 public class InMemoryCfg {
   public static final String SERIALIZED_NAME_IN_MEMORY = "inMemory";
   @SerializedName(SERIALIZED_NAME_IN_MEMORY)
-  private Boolean inMemory;
+  private Boolean inMemory = true;
 
   public InMemoryCfg() {
   }

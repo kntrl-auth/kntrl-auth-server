@@ -57,7 +57,7 @@ public class IpAuthCfg {
 
   public static final String SERIALIZED_NAME_SKIP_ON_FAIL = "skipOnFail";
   @SerializedName(SERIALIZED_NAME_SKIP_ON_FAIL)
-  private Boolean skipOnFail;
+  private Boolean skipOnFail = false;
 
   public static final String SERIALIZED_NAME_RATE_LIMITER = "rateLimiter";
   @SerializedName(SERIALIZED_NAME_RATE_LIMITER)
@@ -65,15 +65,15 @@ public class IpAuthCfg {
 
   public static final String SERIALIZED_NAME_BURN_QUOTA = "burnQuota";
   @SerializedName(SERIALIZED_NAME_BURN_QUOTA)
-  private Double burnQuota;
+  private Double burnQuota = 0.0d;
 
   public static final String SERIALIZED_NAME_IP_BYTES_TO_IGNORE = "ipBytesToIgnore";
   @SerializedName(SERIALIZED_NAME_IP_BYTES_TO_IGNORE)
-  private Integer ipBytesToIgnore;
+  private Integer ipBytesToIgnore = 0;
 
   public static final String SERIALIZED_NAME_HISTORY_SIZE = "historySize";
   @SerializedName(SERIALIZED_NAME_HISTORY_SIZE)
-  private Integer historySize;
+  private Integer historySize = 10;
 
   public IpAuthCfg() {
   }

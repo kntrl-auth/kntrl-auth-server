@@ -52,15 +52,15 @@ import app.kntrl.client.generated.infra.JSON;
 public class ShHttpCfg {
   public static final String SERIALIZED_NAME_PORT = "port";
   @SerializedName(SERIALIZED_NAME_PORT)
-  private Integer port;
+  private Integer port = 9876;
 
   public static final String SERIALIZED_NAME_BIND = "bind";
   @SerializedName(SERIALIZED_NAME_BIND)
-  private String bind;
+  private String bind = "0.0.0.0";
 
   public static final String SERIALIZED_NAME_PROXY = "proxy";
   @SerializedName(SERIALIZED_NAME_PROXY)
-  private Boolean proxy;
+  private Boolean proxy = false;
 
   public ShHttpCfg() {
   }

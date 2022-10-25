@@ -60,13 +60,13 @@ public class AuthExecResResData {
   @SerializedName(SERIALIZED_NAME_IP_ENCODED)
   private String ipEncoded;
 
-  public static final String SERIALIZED_NAME_LOGIN = "login";
-  @SerializedName(SERIALIZED_NAME_LOGIN)
-  private String login;
+  public static final String SERIALIZED_NAME_EXTRACTED_LOGIN = "extractedLogin";
+  @SerializedName(SERIALIZED_NAME_EXTRACTED_LOGIN)
+  private String extractedLogin;
 
-  public static final String SERIALIZED_NAME_EXTRACTED_DATA = "extractedData";
-  @SerializedName(SERIALIZED_NAME_EXTRACTED_DATA)
-  private Map<String, Object> extractedData = null;
+  public static final String SERIALIZED_NAME_EXTRACTED_PUBLIC_DATA = "extractedPublicData";
+  @SerializedName(SERIALIZED_NAME_EXTRACTED_PUBLIC_DATA)
+  private Map<String, Object> extractedPublicData = null;
 
   public static final String SERIALIZED_NAME_PASSWORD = "password";
   @SerializedName(SERIALIZED_NAME_PASSWORD)
@@ -133,57 +133,57 @@ public class AuthExecResResData {
   }
 
 
-  public AuthExecResResData login(String login) {
+  public AuthExecResResData extractedLogin(String extractedLogin) {
     
-    this.login = login;
+    this.extractedLogin = extractedLogin;
     return this;
   }
 
    /**
-   * Get login
-   * @return login
+   * Get extractedLogin
+   * @return extractedLogin
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
 
-  public String getLogin() {
-    return login;
+  public String getExtractedLogin() {
+    return extractedLogin;
   }
 
 
-  public void setLogin(String login) {
-    this.login = login;
+  public void setExtractedLogin(String extractedLogin) {
+    this.extractedLogin = extractedLogin;
   }
 
 
-  public AuthExecResResData extractedData(Map<String, Object> extractedData) {
+  public AuthExecResResData extractedPublicData(Map<String, Object> extractedPublicData) {
     
-    this.extractedData = extractedData;
+    this.extractedPublicData = extractedPublicData;
     return this;
   }
 
-  public AuthExecResResData putExtractedDataItem(String key, Object extractedDataItem) {
-    if (this.extractedData == null) {
-      this.extractedData = new HashMap<>();
+  public AuthExecResResData putExtractedPublicDataItem(String key, Object extractedPublicDataItem) {
+    if (this.extractedPublicData == null) {
+      this.extractedPublicData = new HashMap<>();
     }
-    this.extractedData.put(key, extractedDataItem);
+    this.extractedPublicData.put(key, extractedPublicDataItem);
     return this;
   }
 
    /**
-   * Get extractedData
-   * @return extractedData
+   * Get extractedPublicData
+   * @return extractedPublicData
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
 
-  public Map<String, Object> getExtractedData() {
-    return extractedData;
+  public Map<String, Object> getExtractedPublicData() {
+    return extractedPublicData;
   }
 
 
-  public void setExtractedData(Map<String, Object> extractedData) {
-    this.extractedData = extractedData;
+  public void setExtractedPublicData(Map<String, Object> extractedPublicData) {
+    this.extractedPublicData = extractedPublicData;
   }
 
 
@@ -334,8 +334,8 @@ public class AuthExecResResData {
     AuthExecResResData authExecResResData = (AuthExecResResData) o;
     return Objects.equals(this.emailSentTo, authExecResResData.emailSentTo) &&
         Objects.equals(this.ipEncoded, authExecResResData.ipEncoded) &&
-        Objects.equals(this.login, authExecResResData.login) &&
-        Objects.equals(this.extractedData, authExecResResData.extractedData) &&
+        Objects.equals(this.extractedLogin, authExecResResData.extractedLogin) &&
+        Objects.equals(this.extractedPublicData, authExecResResData.extractedPublicData) &&
         Objects.equals(this.password, authExecResResData.password) &&
         Objects.equals(this.strength, authExecResResData.strength) &&
         Objects.equals(this.correct, authExecResResData.correct) &&
@@ -345,7 +345,7 @@ public class AuthExecResResData {
 
   @Override
   public int hashCode() {
-    return Objects.hash(emailSentTo, ipEncoded, login, extractedData, password, strength, correct, answersSavedAt, additionalProperties);
+    return Objects.hash(emailSentTo, ipEncoded, extractedLogin, extractedPublicData, password, strength, correct, answersSavedAt, additionalProperties);
   }
 
   @Override
@@ -354,8 +354,8 @@ public class AuthExecResResData {
     sb.append("class AuthExecResResData {\n");
     sb.append("    emailSentTo: ").append(toIndentedString(emailSentTo)).append("\n");
     sb.append("    ipEncoded: ").append(toIndentedString(ipEncoded)).append("\n");
-    sb.append("    login: ").append(toIndentedString(login)).append("\n");
-    sb.append("    extractedData: ").append(toIndentedString(extractedData)).append("\n");
+    sb.append("    extractedLogin: ").append(toIndentedString(extractedLogin)).append("\n");
+    sb.append("    extractedPublicData: ").append(toIndentedString(extractedPublicData)).append("\n");
     sb.append("    password: ").append(toIndentedString(password)).append("\n");
     sb.append("    strength: ").append(toIndentedString(strength)).append("\n");
     sb.append("    correct: ").append(toIndentedString(correct)).append("\n");
@@ -385,8 +385,8 @@ public class AuthExecResResData {
     openapiFields = new HashSet<String>();
     openapiFields.add("emailSentTo");
     openapiFields.add("ipEncoded");
-    openapiFields.add("login");
-    openapiFields.add("extractedData");
+    openapiFields.add("extractedLogin");
+    openapiFields.add("extractedPublicData");
     openapiFields.add("password");
     openapiFields.add("strength");
     openapiFields.add("correct");
@@ -416,8 +416,8 @@ public class AuthExecResResData {
       if ((jsonObj.get("ipEncoded") != null && !jsonObj.get("ipEncoded").isJsonNull()) && !jsonObj.get("ipEncoded").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `ipEncoded` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ipEncoded").toString()));
       }
-      if ((jsonObj.get("login") != null && !jsonObj.get("login").isJsonNull()) && !jsonObj.get("login").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `login` to be a primitive type in the JSON string but got `%s`", jsonObj.get("login").toString()));
+      if ((jsonObj.get("extractedLogin") != null && !jsonObj.get("extractedLogin").isJsonNull()) && !jsonObj.get("extractedLogin").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `extractedLogin` to be a primitive type in the JSON string but got `%s`", jsonObj.get("extractedLogin").toString()));
       }
       if ((jsonObj.get("password") != null && !jsonObj.get("password").isJsonNull()) && !jsonObj.get("password").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `password` to be a primitive type in the JSON string but got `%s`", jsonObj.get("password").toString()));
