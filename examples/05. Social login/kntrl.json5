@@ -6,7 +6,7 @@
     // E.g. for facebook it's located here: https://developers.facebook.com/docs/facebook-login/guides/advanced/manual-flow
 
     facebook: {
-      builtin: "oauth/facebook",
+      builtin: "oauth/facebook/openid",
 
       exchangeAuthCode: {
         clientId: "<client-id>",
