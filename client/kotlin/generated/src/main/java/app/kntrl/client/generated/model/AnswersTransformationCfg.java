@@ -23,8 +23,6 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -47,46 +45,91 @@ import java.util.Set;
 import app.kntrl.client.generated.infra.JSON;
 
 /**
- * Date of last update
+ * AnswersTransformationCfg
  */
-@ApiModel(description = "Date of last update")
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
-public class AuthExecResResDataAnswersSavedAt {
-  public static final String SERIALIZED_NAME_QUESTIONS_SAVED_AT = "questionsSavedAt";
-  @SerializedName(SERIALIZED_NAME_QUESTIONS_SAVED_AT)
-  private Map<String, Long> questionsSavedAt = null;
+public class AnswersTransformationCfg {
+  public static final String SERIALIZED_NAME_LOWERCASE = "lowercase";
+  @SerializedName(SERIALIZED_NAME_LOWERCASE)
+  private Boolean lowercase = true;
 
-  public AuthExecResResDataAnswersSavedAt() {
+  public static final String SERIALIZED_NAME_REMOVE_SYMBOLS = "removeSymbols";
+  @SerializedName(SERIALIZED_NAME_REMOVE_SYMBOLS)
+  private Boolean removeSymbols = true;
+
+  public static final String SERIALIZED_NAME_REMOVE_SPACES = "removeSpaces";
+  @SerializedName(SERIALIZED_NAME_REMOVE_SPACES)
+  private Boolean removeSpaces = true;
+
+  public AnswersTransformationCfg() {
   }
 
-  public AuthExecResResDataAnswersSavedAt questionsSavedAt(Map<String, Long> questionsSavedAt) {
+  public AnswersTransformationCfg lowercase(Boolean lowercase) {
     
-    this.questionsSavedAt = questionsSavedAt;
-    return this;
-  }
-
-  public AuthExecResResDataAnswersSavedAt putQuestionsSavedAtItem(String key, Long questionsSavedAtItem) {
-    if (this.questionsSavedAt == null) {
-      this.questionsSavedAt = new HashMap<>();
-    }
-    this.questionsSavedAt.put(key, questionsSavedAtItem);
+    this.lowercase = lowercase;
     return this;
   }
 
    /**
-   * Get questionsSavedAt
-   * @return questionsSavedAt
+   * Transform user answer to lowercase letters. This allows user still pass a check when he wrote name or city with different cases. &#x60;false&#x60; means strict match, so \&quot;John\&quot; !&#x3D; \&quot;john\&quot;
+   * @return lowercase
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(value = "Transform user answer to lowercase letters. This allows user still pass a check when he wrote name or city with different cases. `false` means strict match, so \"John\" != \"john\"")
 
-  public Map<String, Long> getQuestionsSavedAt() {
-    return questionsSavedAt;
+  public Boolean getLowercase() {
+    return lowercase;
   }
 
 
-  public void setQuestionsSavedAt(Map<String, Long> questionsSavedAt) {
-    this.questionsSavedAt = questionsSavedAt;
+  public void setLowercase(Boolean lowercase) {
+    this.lowercase = lowercase;
+  }
+
+
+  public AnswersTransformationCfg removeSymbols(Boolean removeSymbols) {
+    
+    this.removeSymbols = removeSymbols;
+    return this;
+  }
+
+   /**
+   * Remove all non-letters from user answer.
+   * @return removeSymbols
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Remove all non-letters from user answer.")
+
+  public Boolean getRemoveSymbols() {
+    return removeSymbols;
+  }
+
+
+  public void setRemoveSymbols(Boolean removeSymbols) {
+    this.removeSymbols = removeSymbols;
+  }
+
+
+  public AnswersTransformationCfg removeSpaces(Boolean removeSpaces) {
+    
+    this.removeSpaces = removeSpaces;
+    return this;
+  }
+
+   /**
+   * Remove all spaces from user answer.
+   * @return removeSpaces
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Remove all spaces from user answer.")
+
+  public Boolean getRemoveSpaces() {
+    return removeSpaces;
+  }
+
+
+  public void setRemoveSpaces(Boolean removeSpaces) {
+    this.removeSpaces = removeSpaces;
   }
 
   /**
@@ -100,7 +143,7 @@ public class AuthExecResResDataAnswersSavedAt {
    * Set the additional (undeclared) property with the specified name and value.
    * If the property does not already exist, create it otherwise replace it.
    */
-  public AuthExecResResDataAnswersSavedAt putAdditionalProperty(String key, Object value) {
+  public AnswersTransformationCfg putAdditionalProperty(String key, Object value) {
     if (this.additionalProperties == null) {
         this.additionalProperties = new HashMap<String, Object>();
     }
@@ -134,21 +177,25 @@ public class AuthExecResResDataAnswersSavedAt {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    AuthExecResResDataAnswersSavedAt authExecResResDataAnswersSavedAt = (AuthExecResResDataAnswersSavedAt) o;
-    return Objects.equals(this.questionsSavedAt, authExecResResDataAnswersSavedAt.questionsSavedAt)&&
-        Objects.equals(this.additionalProperties, authExecResResDataAnswersSavedAt.additionalProperties);
+    AnswersTransformationCfg answersTransformationCfg = (AnswersTransformationCfg) o;
+    return Objects.equals(this.lowercase, answersTransformationCfg.lowercase) &&
+        Objects.equals(this.removeSymbols, answersTransformationCfg.removeSymbols) &&
+        Objects.equals(this.removeSpaces, answersTransformationCfg.removeSpaces)&&
+        Objects.equals(this.additionalProperties, answersTransformationCfg.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(questionsSavedAt, additionalProperties);
+    return Objects.hash(lowercase, removeSymbols, removeSpaces, additionalProperties);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class AuthExecResResDataAnswersSavedAt {\n");
-    sb.append("    questionsSavedAt: ").append(toIndentedString(questionsSavedAt)).append("\n");
+    sb.append("class AnswersTransformationCfg {\n");
+    sb.append("    lowercase: ").append(toIndentedString(lowercase)).append("\n");
+    sb.append("    removeSymbols: ").append(toIndentedString(removeSymbols)).append("\n");
+    sb.append("    removeSpaces: ").append(toIndentedString(removeSpaces)).append("\n");
     sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -172,7 +219,9 @@ public class AuthExecResResDataAnswersSavedAt {
   static {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
-    openapiFields.add("questionsSavedAt");
+    openapiFields.add("lowercase");
+    openapiFields.add("removeSymbols");
+    openapiFields.add("removeSpaces");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -182,14 +231,14 @@ public class AuthExecResResDataAnswersSavedAt {
   * Validates the JSON Object and throws an exception if issues found
   *
   * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to AuthExecResResDataAnswersSavedAt
+  * @throws IOException if the JSON Object is invalid with respect to AnswersTransformationCfg
   */
   public static void validateJsonObject(JsonObject jsonObj) throws IOException {
       if (jsonObj == null) {
-        if (AuthExecResResDataAnswersSavedAt.openapiRequiredFields.isEmpty()) {
+        if (AnswersTransformationCfg.openapiRequiredFields.isEmpty()) {
           return;
         } else { // has required fields
-          throw new IllegalArgumentException(String.format("The required field(s) %s in AuthExecResResDataAnswersSavedAt is not found in the empty JSON string", AuthExecResResDataAnswersSavedAt.openapiRequiredFields.toString()));
+          throw new IllegalArgumentException(String.format("The required field(s) %s in AnswersTransformationCfg is not found in the empty JSON string", AnswersTransformationCfg.openapiRequiredFields.toString()));
         }
       }
   }
@@ -198,16 +247,16 @@ public class AuthExecResResDataAnswersSavedAt {
     @SuppressWarnings("unchecked")
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!AuthExecResResDataAnswersSavedAt.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'AuthExecResResDataAnswersSavedAt' and its subtypes
+       if (!AnswersTransformationCfg.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'AnswersTransformationCfg' and its subtypes
        }
        final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<AuthExecResResDataAnswersSavedAt> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(AuthExecResResDataAnswersSavedAt.class));
+       final TypeAdapter<AnswersTransformationCfg> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(AnswersTransformationCfg.class));
 
-       return (TypeAdapter<T>) new TypeAdapter<AuthExecResResDataAnswersSavedAt>() {
+       return (TypeAdapter<T>) new TypeAdapter<AnswersTransformationCfg>() {
            @Override
-           public void write(JsonWriter out, AuthExecResResDataAnswersSavedAt value) throws IOException {
+           public void write(JsonWriter out, AnswersTransformationCfg value) throws IOException {
              JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
              obj.remove("additionalProperties");
              // serialize additonal properties
@@ -230,11 +279,11 @@ public class AuthExecResResDataAnswersSavedAt {
            }
 
            @Override
-           public AuthExecResResDataAnswersSavedAt read(JsonReader in) throws IOException {
+           public AnswersTransformationCfg read(JsonReader in) throws IOException {
              JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
              validateJsonObject(jsonObj);
              // store additional fields in the deserialized instance
-             AuthExecResResDataAnswersSavedAt instance = thisAdapter.fromJsonTree(jsonObj);
+             AnswersTransformationCfg instance = thisAdapter.fromJsonTree(jsonObj);
              for (Map.Entry<String, JsonElement> entry : jsonObj.entrySet()) {
                if (!openapiFields.contains(entry.getKey())) {
                  if (entry.getValue().isJsonPrimitive()) { // primitive type
@@ -259,18 +308,18 @@ public class AuthExecResResDataAnswersSavedAt {
   }
 
  /**
-  * Create an instance of AuthExecResResDataAnswersSavedAt given an JSON string
+  * Create an instance of AnswersTransformationCfg given an JSON string
   *
   * @param jsonString JSON string
-  * @return An instance of AuthExecResResDataAnswersSavedAt
-  * @throws IOException if the JSON string is invalid with respect to AuthExecResResDataAnswersSavedAt
+  * @return An instance of AnswersTransformationCfg
+  * @throws IOException if the JSON string is invalid with respect to AnswersTransformationCfg
   */
-  public static AuthExecResResDataAnswersSavedAt fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, AuthExecResResDataAnswersSavedAt.class);
+  public static AnswersTransformationCfg fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, AnswersTransformationCfg.class);
   }
 
  /**
-  * Convert an instance of AuthExecResResDataAnswersSavedAt to an JSON string
+  * Convert an instance of AnswersTransformationCfg to an JSON string
   *
   * @return JSON string
   */

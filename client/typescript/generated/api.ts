@@ -277,7 +277,7 @@ export interface AuthDataPublic {
      * @type {{ [key: string]: number; }}
      * @memberof AuthDataPublic
      */
-    'questionsSavedAt'?: { [key: string]: number; };
+    'answersSavedAt'?: { [key: string]: number; };
 }
 /**
  * 
@@ -370,24 +370,11 @@ export interface AuthExecResResData {
      */
     'correct'?: { [key: string]: boolean; };
     /**
-     * 
-     * @type {AuthExecResResDataAnswersSavedAt}
+     * Date of last update 
+     * @type {{ [key: string]: number; }}
      * @memberof AuthExecResResData
      */
-    'answersSavedAt'?: AuthExecResResDataAnswersSavedAt;
-}
-/**
- * Date of last update
- * @export
- * @interface AuthExecResResDataAnswersSavedAt
- */
-export interface AuthExecResResDataAnswersSavedAt {
-    /**
-     * 
-     * @type {{ [key: string]: number; }}
-     * @memberof AuthExecResResDataAnswersSavedAt
-     */
-    'questionsSavedAt'?: { [key: string]: number; };
+    'answersSavedAt'?: { [key: string]: number; };
 }
 /**
  * 
@@ -833,12 +820,6 @@ export interface ClientErr {
     'tooManyAnswers'?: boolean;
     /**
      * 
-     * @type {Array<string>}
-     * @memberof ClientErr
-     */
-    'scopes'?: Array<string>;
-    /**
-     * 
      * @type {number}
      * @memberof ClientErr
      */
@@ -888,16 +869,15 @@ export const ClientErrCode = {
     SignatureIsIncorrect: 'SIGNATURE_IS_INCORRECT',
     UserLoginIsInvalid: 'USER_LOGIN_IS_INVALID',
     UserLoginAlreadyTaken: 'USER_LOGIN_ALREADY_TAKEN',
-    Unauthenticated: 'UNAUTHENTICATED',
     TokenExpired: 'TOKEN_EXPIRED',
     TooManyReqs: 'TOO_MANY_REQS',
     AuthIsNotEnabled: 'AUTH_IS_NOT_ENABLED',
     AuthIsNotConfirmed: 'AUTH_IS_NOT_CONFIRMED',
-    ScopeNotFound: 'SCOPE_NOT_FOUND',
     AuthRequiresAnother: 'AUTH_REQUIRES_ANOTHER',
     CodeIsExpired: 'CODE_IS_EXPIRED',
     CodeTooManyAttempts: 'CODE_TOO_MANY_ATTEMPTS',
-    CodeIsIncorrect: 'CODE_IS_INCORRECT'
+    CodeIsIncorrect: 'CODE_IS_INCORRECT',
+    Unauthenticated: 'UNAUTHENTICATED'
 } as const;
 
 export type ClientErrCode = typeof ClientErrCode[keyof typeof ClientErrCode];
@@ -1649,12 +1629,6 @@ export interface Err {
     'tooManyAnswers'?: boolean;
     /**
      * 
-     * @type {Array<string>}
-     * @memberof Err
-     */
-    'scopes'?: Array<string>;
-    /**
-     * 
      * @type {number}
      * @memberof Err
      */
@@ -1739,17 +1713,16 @@ export const ErrCode = {
     SignatureIsIncorrect: 'SIGNATURE_IS_INCORRECT',
     UserLoginIsInvalid: 'USER_LOGIN_IS_INVALID',
     UserLoginAlreadyTaken: 'USER_LOGIN_ALREADY_TAKEN',
-    Unauthenticated: 'UNAUTHENTICATED',
     TokenExpired: 'TOKEN_EXPIRED',
     TooManyReqs: 'TOO_MANY_REQS',
     AuthIsNotEnabled: 'AUTH_IS_NOT_ENABLED',
     AuthIsNotConfirmed: 'AUTH_IS_NOT_CONFIRMED',
-    ScopeNotFound: 'SCOPE_NOT_FOUND',
     NoAuthAvailableForFactor: 'NO_AUTH_AVAILABLE_FOR_FACTOR',
     AuthRequiresAnother: 'AUTH_REQUIRES_ANOTHER',
     CodeIsExpired: 'CODE_IS_EXPIRED',
     CodeTooManyAttempts: 'CODE_TOO_MANY_ATTEMPTS',
     CodeIsIncorrect: 'CODE_IS_INCORRECT',
+    Unauthenticated: 'UNAUTHENTICATED',
     ServerErr: 'SERVER_ERR',
     IntegrationErr: 'INTEGRATION_ERR',
     AnyErr: 'ANY_ERR'
@@ -1775,7 +1748,7 @@ export interface ExchangeAuthCodeCfg {
      * @type {string}
      * @memberof ExchangeAuthCodeCfg
      */
-    'clientId': string;
+    'clientId'?: string;
     /**
      * OAuth client secret.
      * @type {string}
@@ -2347,7 +2320,7 @@ export interface OAuthCfgExchangeAuthCode {
      * @type {string}
      * @memberof OAuthCfgExchangeAuthCode
      */
-    'clientId': string;
+    'clientId'?: string;
     /**
      * OAuth client secret.
      * @type {string}
@@ -3178,7 +3151,7 @@ export interface QuestionsPrivateData {
      * @type {{ [key: string]: string; }}
      * @memberof QuestionsPrivateData
      */
-    'questions'?: { [key: string]: string; };
+    'answers'?: { [key: string]: string; };
 }
 /**
  * 
@@ -3193,7 +3166,7 @@ export interface QuestionsPublicData {
      * @type {{ [key: string]: number; }}
      * @memberof QuestionsPublicData
      */
-    'questionsSavedAt'?: { [key: string]: number; };
+    'answersSavedAt'?: { [key: string]: number; };
 }
 /**
  * 
@@ -3219,11 +3192,11 @@ export interface QuestionsUpdateResData {
     [key: string]: any;
 
     /**
-     * 
-     * @type {AuthExecResResDataAnswersSavedAt}
+     * Date of last update 
+     * @type {{ [key: string]: number; }}
      * @memberof QuestionsUpdateResData
      */
-    'answersSavedAt': AuthExecResResDataAnswersSavedAt;
+    'answersSavedAt': { [key: string]: number; };
 }
 /**
  * Rate limiter configuration
@@ -3532,37 +3505,6 @@ export interface SaveUserRes {
 /**
  * 
  * @export
- * @interface ScopeNotFound
- */
-export interface ScopeNotFound {
-    /**
-     * 
-     * @type {string}
-     * @memberof ScopeNotFound
-     */
-    'code': string;
-    /**
-     * Message for developers.
-     * @type {string}
-     * @memberof ScopeNotFound
-     */
-    'devMsg': string;
-    /**
-     * Localised message suitable for UI.
-     * @type {string}
-     * @memberof ScopeNotFound
-     */
-    'msg'?: string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ScopeNotFound
-     */
-    'scopes': Array<string>;
-}
-/**
- * 
- * @export
  * @interface ServerErr
  */
 export interface ServerErr {
@@ -3754,7 +3696,7 @@ export interface ShAppCfg {
      */
     'loginRequirements'?: { [key: string]: string; };
     /**
-     * List of auth names and auth configs  To use builtin auths (not a plugin or remote) follow the example: `\"password\": { ... }` or `\"anyAuthName\": { \"builtin\": \"password\", ... }` 
+     * List of auth names and auth configs  To use builtin auths (not a plugin or remote) follow the example: `\"password\": { ... }` or `\"anyAuthName\": { \"builtin\": \"password\", ... }`  Available built-in auths: - `password`, `email`, `questions`, `ip` - `oauth`, `oauth/facebook/openid`, `oauth/google/openid` - `appSecret`  
      * @type {{ [key: string]: ShAppCfgAuthsValue; }}
      * @memberof ShAppCfg
      */
@@ -4678,8 +4620,8 @@ export const UnauthenticatedCode = {
     SessionExpired: 'SESSION_EXPIRED',
     AccessDenied: 'ACCESS_DENIED',
     UserNotFound: 'USER_NOT_FOUND',
-    Unauthenticated: 'UNAUTHENTICATED',
-    TokenExpired: 'TOKEN_EXPIRED'
+    TokenExpired: 'TOKEN_EXPIRED',
+    Unauthenticated: 'UNAUTHENTICATED'
 } as const;
 
 export type UnauthenticatedCode = typeof UnauthenticatedCode[keyof typeof UnauthenticatedCode];

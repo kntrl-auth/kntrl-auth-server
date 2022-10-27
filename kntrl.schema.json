@@ -466,7 +466,8 @@
                   },
                   "clientId": {
                     "type": "string",
-                    "description": "OAuth client id. Client must be registered on OAuth provider (e.g. facebook, google)"
+                    "description": "OAuth client id. Client must be registered on OAuth provider (e.g. facebook, google)",
+                    "x-nullable": true
                   },
                   "clientSecret": {
                     "type": "string",
@@ -772,7 +773,7 @@
         ],
         "x-additionalPropertiesName": "auth"
       },
-      "description": "List of auth names and auth configs\n\nTo use builtin auths (not a plugin or remote) follow the example: `\"password\": { ... }` or\n`\"anyAuthName\": { \"builtin\": \"password\", ... }`\n"
+      "description": "List of auth names and auth configs\n\nTo use builtin auths (not a plugin or remote) follow the example: `\"password\": { ... }` or\n`\"anyAuthName\": { \"builtin\": \"password\", ... }`\n\nAvailable built-in auths:\n- `password`, `email`, `questions`, `ip`\n- `oauth`, `oauth/facebook/openid`, `oauth/google/openid`\n- `appSecret`\n\n"
     },
     "entries": {
       "type": "object",

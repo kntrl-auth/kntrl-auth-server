@@ -75,17 +75,16 @@ components:
           SIGNATURE_IS_INCORRECT: '#/components/schemas/SignatureIsIncorrect'
           USER_LOGIN_IS_INVALID: '#/components/schemas/UserLoginIsInvalid'
           USER_LOGIN_ALREADY_TAKEN: '#/components/schemas/UserLoginAlreadyTaken'
-          UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
           TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
           TOO_MANY_REQS: '#/components/schemas/TooManyReqs'
           AUTH_IS_NOT_ENABLED: '#/components/schemas/AuthIsNotEnabled'
           AUTH_IS_NOT_CONFIRMED: '#/components/schemas/AuthIsNotConfirmed'
-          SCOPE_NOT_FOUND: '#/components/schemas/ScopeNotFound'
           NO_AUTH_AVAILABLE_FOR_FACTOR: '#/components/schemas/NoAuthAvailableForFactor'
           AUTH_REQUIRES_ANOTHER: '#/components/schemas/AuthRequiresAnother'
           CODE_IS_EXPIRED: '#/components/schemas/CodeIsExpired'
           CODE_TOO_MANY_ATTEMPTS: '#/components/schemas/CodeTooManyAttempts'
           CODE_IS_INCORRECT: '#/components/schemas/CodeIsIncorrect'
+          UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
           SERVER_ERR: '#/components/schemas/ServerErr'
           INTEGRATION_ERR: '#/components/schemas/IntegrationErr'
           ANY_ERR: '#/components/schemas/AnyErr'
@@ -186,7 +185,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-6
+      x-order: -270554383-5
       x-super: '#/components/schemas/ClientErr'
     ClientErr:
       required:
@@ -219,16 +218,15 @@ components:
           SIGNATURE_IS_INCORRECT: '#/components/schemas/SignatureIsIncorrect'
           USER_LOGIN_IS_INVALID: '#/components/schemas/UserLoginIsInvalid'
           USER_LOGIN_ALREADY_TAKEN: '#/components/schemas/UserLoginAlreadyTaken'
-          UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
           TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
           TOO_MANY_REQS: '#/components/schemas/TooManyReqs'
           AUTH_IS_NOT_ENABLED: '#/components/schemas/AuthIsNotEnabled'
           AUTH_IS_NOT_CONFIRMED: '#/components/schemas/AuthIsNotConfirmed'
-          SCOPE_NOT_FOUND: '#/components/schemas/ScopeNotFound'
           AUTH_REQUIRES_ANOTHER: '#/components/schemas/AuthRequiresAnother'
           CODE_IS_EXPIRED: '#/components/schemas/CodeIsExpired'
           CODE_TOO_MANY_ATTEMPTS: '#/components/schemas/CodeTooManyAttempts'
           CODE_IS_INCORRECT: '#/components/schemas/CodeIsIncorrect'
+          UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
       x-order: 2025349183-4
       x-sealed: false
       x-super: '#/components/schemas/Err'
@@ -247,7 +245,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-7
+      x-order: -270554383-6
       x-super: '#/components/schemas/ClientErr'
     CodeIsIncorrect:
       required:
@@ -264,7 +262,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-9
+      x-order: -270554383-8
       x-super: '#/components/schemas/ClientErr'
     CodeTooManyAttempts:
       required:
@@ -281,7 +279,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-8
+      x-order: -270554383-7
       x-super: '#/components/schemas/ClientErr'
     EmailIsIncorrect:
       required:
@@ -371,7 +369,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-5
+      x-order: -270554383-4
       x-super: '#/components/schemas/IntegrationErr'
     PasswordIsIncorrect:
       required:
@@ -541,28 +539,6 @@ components:
           type: boolean
       x-order: -1279700867-8
       x-super: '#/components/schemas/ClientErr'
-    ScopeNotFound:
-      required:
-      - code
-      - devMsg
-      - scopes
-      type: object
-      properties:
-        code:
-          type: string
-        devMsg:
-          type: string
-          description: Message for developers.
-        msg:
-          type: string
-          description: Localised message suitable for UI.
-          x-nullable: true
-        scopes:
-          type: array
-          items:
-            type: string
-      x-order: -270554383-4
-      x-super: '#/components/schemas/ClientErr'
     ServerErr:
       required:
       - code
@@ -639,7 +615,7 @@ components:
           type: integer
           format: int64
           x-nullable: true
-      x-order: -270554383-12
+      x-order: -270554383-11
       x-super: '#/components/schemas/Unauthenticated'
     TooManyReqs:
       required:
@@ -668,7 +644,7 @@ components:
           type: integer
           format: int32
           x-nullable: true
-      x-order: -270554383-13
+      x-order: -270554383-12
       x-super: '#/components/schemas/ClientErr'
     Unauthenticated:
       required:
@@ -691,9 +667,9 @@ components:
           SESSION_EXPIRED: '#/components/schemas/SessionExpired'
           ACCESS_DENIED: '#/components/schemas/AccessDenied'
           USER_NOT_FOUND: '#/components/schemas/UserNotFound'
-          UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
           TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
-      x-order: -270554383-10
+          UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
+      x-order: -270554383-9
       x-sealed: false
       x-super: '#/components/schemas/ClientErr'
     UserLoginAlreadyTaken:
@@ -1115,7 +1091,6 @@ components:
       x-order: -842539141-0
     ExchangeAuthCodeCfg:
       required:
-      - clientId
       - tokenUrl
       type: object
       properties:
@@ -1128,11 +1103,12 @@ components:
           type: string
           description: "OAuth client id. Client must be registered on OAuth provider\
             \ (e.g. facebook, google)"
+          x-nullable: true
         clientSecret:
           type: string
           description: OAuth client secret.
           x-nullable: true
-      x-order: -1532051357-1
+      x-order: -1532051357-2
     I18nCfg:
       type: object
       properties:
@@ -1298,7 +1274,6 @@ components:
           default: 0.0
         exchangeAuthCode:
           required:
-          - clientId
           - tokenUrl
           type: object
           properties:
@@ -1311,6 +1286,7 @@ components:
               type: string
               description: "OAuth client id. Client must be registered on OAuth provider\
                 \ (e.g. facebook, google)"
+              x-nullable: true
             clientSecret:
               type: string
               description: OAuth client secret.
@@ -1789,11 +1765,17 @@ components:
             - $ref: '#/components/schemas/PasswordAuthCfg'
             - $ref: '#/components/schemas/QuestionsAuthCfg'
             x-additionalPropertiesName: auth
-          description: |
+          description: |+
             List of auth names and auth configs
 
             To use builtin auths (not a plugin or remote) follow the example: `"password": { ... }` or
             `"anyAuthName": { "builtin": "password", ... }`
+
+            Available built-in auths:
+            - `password`, `email`, `questions`, `ip`
+            - `oauth`, `oauth/facebook/openid`, `oauth/google/openid`
+            - `appSecret`
+
           example:
             email: {}
             password: {}
@@ -1954,7 +1936,7 @@ components:
           type: boolean
           description: "While executing user-info request, access-token will be sent\
             \ in Authorisation header."
-      x-order: -1532051357-2
+      x-order: -1532051357-3
     regex:
       type: string
 x-tagGroups: []

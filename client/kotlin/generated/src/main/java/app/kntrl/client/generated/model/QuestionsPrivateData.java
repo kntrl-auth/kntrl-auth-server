@@ -51,41 +51,41 @@ import app.kntrl.client.generated.infra.JSON;
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class QuestionsPrivateData {
-  public static final String SERIALIZED_NAME_QUESTIONS = "questions";
-  @SerializedName(SERIALIZED_NAME_QUESTIONS)
-  private Map<String, String> questions = null;
+  public static final String SERIALIZED_NAME_ANSWERS = "answers";
+  @SerializedName(SERIALIZED_NAME_ANSWERS)
+  private Map<String, String> answers = null;
 
   public QuestionsPrivateData() {
   }
 
-  public QuestionsPrivateData questions(Map<String, String> questions) {
+  public QuestionsPrivateData answers(Map<String, String> answers) {
     
-    this.questions = questions;
+    this.answers = answers;
     return this;
   }
 
-  public QuestionsPrivateData putQuestionsItem(String key, String questionsItem) {
-    if (this.questions == null) {
-      this.questions = new HashMap<>();
+  public QuestionsPrivateData putAnswersItem(String key, String answersItem) {
+    if (this.answers == null) {
+      this.answers = new HashMap<>();
     }
-    this.questions.put(key, questionsItem);
+    this.answers.put(key, answersItem);
     return this;
   }
 
    /**
-   * Get questions
-   * @return questions
+   * Get answers
+   * @return answers
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
 
-  public Map<String, String> getQuestions() {
-    return questions;
+  public Map<String, String> getAnswers() {
+    return answers;
   }
 
 
-  public void setQuestions(Map<String, String> questions) {
-    this.questions = questions;
+  public void setAnswers(Map<String, String> answers) {
+    this.answers = answers;
   }
 
   /**
@@ -134,20 +134,20 @@ public class QuestionsPrivateData {
       return false;
     }
     QuestionsPrivateData questionsPrivateData = (QuestionsPrivateData) o;
-    return Objects.equals(this.questions, questionsPrivateData.questions)&&
+    return Objects.equals(this.answers, questionsPrivateData.answers)&&
         Objects.equals(this.additionalProperties, questionsPrivateData.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(questions, additionalProperties);
+    return Objects.hash(answers, additionalProperties);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class QuestionsPrivateData {\n");
-    sb.append("    questions: ").append(toIndentedString(questions)).append("\n");
+    sb.append("    answers: ").append(toIndentedString(answers)).append("\n");
     sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -171,7 +171,7 @@ public class QuestionsPrivateData {
   static {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
-    openapiFields.add("questions");
+    openapiFields.add("answers");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();

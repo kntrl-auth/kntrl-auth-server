@@ -143,10 +143,6 @@ public class Err {
   @SerializedName(SERIALIZED_NAME_TOO_MANY_ANSWERS)
   private Boolean tooManyAnswers;
 
-  public static final String SERIALIZED_NAME_SCOPES = "scopes";
-  @SerializedName(SERIALIZED_NAME_SCOPES)
-  private List<String> scopes = null;
-
   public static final String SERIALIZED_NAME_WAIT_TIME_MS = "waitTimeMs";
   @SerializedName(SERIALIZED_NAME_WAIT_TIME_MS)
   private Integer waitTimeMs;
@@ -700,37 +696,6 @@ public class Err {
   }
 
 
-  public Err scopes(List<String> scopes) {
-    
-    this.scopes = scopes;
-    return this;
-  }
-
-  public Err addScopesItem(String scopesItem) {
-    if (this.scopes == null) {
-      this.scopes = new ArrayList<>();
-    }
-    this.scopes.add(scopesItem);
-    return this;
-  }
-
-   /**
-   * Get scopes
-   * @return scopes
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
-
-  public List<String> getScopes() {
-    return scopes;
-  }
-
-
-  public void setScopes(List<String> scopes) {
-    this.scopes = scopes;
-  }
-
-
   public Err waitTimeMs(Integer waitTimeMs) {
     
     this.waitTimeMs = waitTimeMs;
@@ -913,7 +878,6 @@ public class Err {
         Objects.equals(this.questionsNotFound, err.questionsNotFound) &&
         Objects.equals(this.invalidAnswers, err.invalidAnswers) &&
         Objects.equals(this.tooManyAnswers, err.tooManyAnswers) &&
-        Objects.equals(this.scopes, err.scopes) &&
         Objects.equals(this.waitTimeMs, err.waitTimeMs) &&
         Objects.equals(this.waitTimeSeconds, err.waitTimeSeconds) &&
         Objects.equals(this.waitTimeMinutes, err.waitTimeMinutes) &&
@@ -924,7 +888,7 @@ public class Err {
 
   @Override
   public int hashCode() {
-    return Objects.hash(code, devMsg, msg, changedAt, changedDaysAgo, tooLong, tooShort, missingNumber, missingSymbol, missingUpperCase, missingLowerCase, commonPassword, wasUsedBeforeAt, matchesLogin, passwordsMismatch, strength, wasUsedDaysAgo, incorrectAnswers, requiresMoreAnswers, questionsNotFound, invalidAnswers, tooManyAnswers, scopes, waitTimeMs, waitTimeSeconds, waitTimeMinutes, expiredAt, loginId, additionalProperties);
+    return Objects.hash(code, devMsg, msg, changedAt, changedDaysAgo, tooLong, tooShort, missingNumber, missingSymbol, missingUpperCase, missingLowerCase, commonPassword, wasUsedBeforeAt, matchesLogin, passwordsMismatch, strength, wasUsedDaysAgo, incorrectAnswers, requiresMoreAnswers, questionsNotFound, invalidAnswers, tooManyAnswers, waitTimeMs, waitTimeSeconds, waitTimeMinutes, expiredAt, loginId, additionalProperties);
   }
 
   @Override
@@ -953,7 +917,6 @@ public class Err {
     sb.append("    questionsNotFound: ").append(toIndentedString(questionsNotFound)).append("\n");
     sb.append("    invalidAnswers: ").append(toIndentedString(invalidAnswers)).append("\n");
     sb.append("    tooManyAnswers: ").append(toIndentedString(tooManyAnswers)).append("\n");
-    sb.append("    scopes: ").append(toIndentedString(scopes)).append("\n");
     sb.append("    waitTimeMs: ").append(toIndentedString(waitTimeMs)).append("\n");
     sb.append("    waitTimeSeconds: ").append(toIndentedString(waitTimeSeconds)).append("\n");
     sb.append("    waitTimeMinutes: ").append(toIndentedString(waitTimeMinutes)).append("\n");
@@ -1004,7 +967,6 @@ public class Err {
     openapiFields.add("questionsNotFound");
     openapiFields.add("invalidAnswers");
     openapiFields.add("tooManyAnswers");
-    openapiFields.add("scopes");
     openapiFields.add("waitTimeMs");
     openapiFields.add("waitTimeSeconds");
     openapiFields.add("waitTimeMinutes");
@@ -1061,10 +1023,6 @@ public class Err {
       // ensure the json data is an array
       if ((jsonObj.get("questionsNotFound") != null && !jsonObj.get("questionsNotFound").isJsonNull()) && !jsonObj.get("questionsNotFound").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `questionsNotFound` to be an array in the JSON string but got `%s`", jsonObj.get("questionsNotFound").toString()));
-      }
-      // ensure the json data is an array
-      if ((jsonObj.get("scopes") != null && !jsonObj.get("scopes").isJsonNull()) && !jsonObj.get("scopes").isJsonArray()) {
-        throw new IllegalArgumentException(String.format("Expected the field `scopes` to be an array in the JSON string but got `%s`", jsonObj.get("scopes").toString()));
       }
       // validate the optional field `loginId`
       if (jsonObj.get("loginId") != null && !jsonObj.get("loginId").isJsonNull()) {

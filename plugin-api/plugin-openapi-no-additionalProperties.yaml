@@ -465,7 +465,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-6
+      x-order: -270554383-5
       x-super: '#/components/schemas/ClientErr'
     ClientErr:
       type: object
@@ -488,7 +488,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-7
+      x-order: -270554383-6
       x-super: '#/components/schemas/ClientErr'
     CodeIsIncorrect:
       required:
@@ -505,7 +505,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-9
+      x-order: -270554383-8
       x-super: '#/components/schemas/ClientErr'
     CodeTooManyAttempts:
       required:
@@ -522,7 +522,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-8
+      x-order: -270554383-7
       x-super: '#/components/schemas/ClientErr'
     EmailIsIncorrect:
       required:
@@ -595,7 +595,7 @@ components:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-      x-order: -270554383-5
+      x-order: -270554383-4
       x-super: '#/components/schemas/IntegrationErr'
     PasswordIsIncorrect:
       required:
@@ -752,28 +752,6 @@ components:
           type: boolean
       x-order: -1279700867-8
       x-super: '#/components/schemas/ClientErr'
-    ScopeNotFound:
-      required:
-      - code
-      - devMsg
-      - scopes
-      type: object
-      properties:
-        code:
-          type: string
-        devMsg:
-          type: string
-          description: Message for developers.
-        msg:
-          type: string
-          description: Localised message suitable for UI.
-          x-nullable: true
-        scopes:
-          type: array
-          items:
-            type: string
-      x-order: -270554383-4
-      x-super: '#/components/schemas/ClientErr'
     ServerErr:
       type: object
       additionalProperties: true
@@ -833,7 +811,7 @@ components:
           type: integer
           format: int64
           x-nullable: true
-      x-order: -270554383-12
+      x-order: -270554383-11
       x-super: '#/components/schemas/Unauthenticated'
     TooManyReqs:
       required:
@@ -862,12 +840,12 @@ components:
           type: integer
           format: int32
           x-nullable: true
-      x-order: -270554383-13
+      x-order: -270554383-12
       x-super: '#/components/schemas/ClientErr'
     Unauthenticated:
       type: object
       additionalProperties: true
-      x-order: -270554383-10
+      x-order: -270554383-9
       x-sealed: false
       x-super: '#/components/schemas/ClientErr'
     UserLoginAlreadyTaken:
@@ -1073,7 +1051,6 @@ components:
       type: object
       additionalProperties: true
       x-order: -893636857-2
-      x-super: '#/components/schemas/AuthPublicData'
     OAuthResData:
       type: object
       additionalProperties: true
@@ -1893,8 +1870,8 @@ components:
       - SESSION_EXPIRED
       - ACCESS_DENIED
       - USER_NOT_FOUND
-      - UNAUTHENTICATED
       - TOKEN_EXPIRED
+      - UNAUTHENTICATED
     ClientErrCode:
       type: string
       enum:
@@ -1911,16 +1888,15 @@ components:
       - SIGNATURE_IS_INCORRECT
       - USER_LOGIN_IS_INVALID
       - USER_LOGIN_ALREADY_TAKEN
-      - UNAUTHENTICATED
       - TOKEN_EXPIRED
       - TOO_MANY_REQS
       - AUTH_IS_NOT_ENABLED
       - AUTH_IS_NOT_CONFIRMED
-      - SCOPE_NOT_FOUND
       - AUTH_REQUIRES_ANOTHER
       - CODE_IS_EXPIRED
       - CODE_TOO_MANY_ATTEMPTS
       - CODE_IS_INCORRECT
+      - UNAUTHENTICATED
     IntegrationErrCode:
       type: string
       enum:
@@ -1948,17 +1924,16 @@ components:
       - SIGNATURE_IS_INCORRECT
       - USER_LOGIN_IS_INVALID
       - USER_LOGIN_ALREADY_TAKEN
-      - UNAUTHENTICATED
       - TOKEN_EXPIRED
       - TOO_MANY_REQS
       - AUTH_IS_NOT_ENABLED
       - AUTH_IS_NOT_CONFIRMED
-      - SCOPE_NOT_FOUND
       - NO_AUTH_AVAILABLE_FOR_FACTOR
       - AUTH_REQUIRES_ANOTHER
       - CODE_IS_EXPIRED
       - CODE_TOO_MANY_ATTEMPTS
       - CODE_IS_INCORRECT
+      - UNAUTHENTICATED
       - SERVER_ERR
       - INTEGRATION_ERR
       - ANY_ERR
@@ -1987,7 +1962,6 @@ components:
       - questionsNotFound
       - invalidAnswers
       - tooManyAnswers
-      - scopes
       - waitTimeMs
       - waitTimeSeconds
       - waitTimeMinutes
@@ -2024,7 +1998,6 @@ components:
       - questionsNotFound
       - invalidAnswers
       - tooManyAnswers
-      - scopes
       - waitTimeMs
       - waitTimeSeconds
       - waitTimeMinutes
@@ -2060,14 +2033,14 @@ components:
       enum:
       - email
       - updatedAt
-      - questionsSavedAt
+      - answersSavedAt
     AuthDataPrivateProps:
       type: string
       enum:
       - encodedIps
       - passwords
       - changedAt
-      - questions
+      - answers
     AuthResResDataProps:
       type: string
       enum:
@@ -2122,11 +2095,11 @@ components:
     QuestionsPrivateDataProps:
       type: string
       enum:
-      - questions
+      - answers
     QuestionsPublicDataProps:
       type: string
       enum:
-      - questionsSavedAt
+      - answersSavedAt
     QuestionsUpdateResDataProps:
       type: string
       enum:

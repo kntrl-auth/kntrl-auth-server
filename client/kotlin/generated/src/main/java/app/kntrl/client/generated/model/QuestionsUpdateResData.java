@@ -15,7 +15,6 @@ package app.kntrl.client.generated.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import app.kntrl.client.generated.model.AuthExecResResDataAnswersSavedAt;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -24,6 +23,8 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -52,30 +53,35 @@ import app.kntrl.client.generated.infra.JSON;
 public class QuestionsUpdateResData {
   public static final String SERIALIZED_NAME_ANSWERS_SAVED_AT = "answersSavedAt";
   @SerializedName(SERIALIZED_NAME_ANSWERS_SAVED_AT)
-  private AuthExecResResDataAnswersSavedAt answersSavedAt;
+  private Map<String, Long> answersSavedAt = new HashMap<>();
 
   public QuestionsUpdateResData() {
   }
 
-  public QuestionsUpdateResData answersSavedAt(AuthExecResResDataAnswersSavedAt answersSavedAt) {
+  public QuestionsUpdateResData answersSavedAt(Map<String, Long> answersSavedAt) {
     
     this.answersSavedAt = answersSavedAt;
     return this;
   }
 
+  public QuestionsUpdateResData putAnswersSavedAtItem(String key, Long answersSavedAtItem) {
+    this.answersSavedAt.put(key, answersSavedAtItem);
+    return this;
+  }
+
    /**
-   * Get answersSavedAt
+   * Date of last update 
    * @return answersSavedAt
   **/
   @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @ApiModelProperty(required = true, value = "Date of last update ")
 
-  public AuthExecResResDataAnswersSavedAt getAnswersSavedAt() {
+  public Map<String, Long> getAnswersSavedAt() {
     return answersSavedAt;
   }
 
 
-  public void setAnswersSavedAt(AuthExecResResDataAnswersSavedAt answersSavedAt) {
+  public void setAnswersSavedAt(Map<String, Long> answersSavedAt) {
     this.answersSavedAt = answersSavedAt;
   }
 
@@ -189,10 +195,6 @@ public class QuestionsUpdateResData {
         if (jsonObj.get(requiredField) == null) {
           throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonObj.toString()));
         }
-      }
-      // validate the optional field `answersSavedAt`
-      if (jsonObj.get("answersSavedAt") != null && !jsonObj.get("answersSavedAt").isJsonNull()) {
-        AuthExecResResDataAnswersSavedAt.validateJsonObject(jsonObj.getAsJsonObject("answersSavedAt"));
       }
   }
 

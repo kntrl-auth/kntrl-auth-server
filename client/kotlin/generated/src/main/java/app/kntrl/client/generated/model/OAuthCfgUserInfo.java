@@ -23,8 +23,6 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -47,45 +45,92 @@ import java.util.Set;
 import app.kntrl.client.generated.infra.JSON;
 
 /**
- * QuestionsPublicData
+ * If specified, app will use received access token
  */
+@ApiModel(description = "If specified, app will use received access token")
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
-public class QuestionsPublicData {
-  public static final String SERIALIZED_NAME_ANSWERS_SAVED_AT = "answersSavedAt";
-  @SerializedName(SERIALIZED_NAME_ANSWERS_SAVED_AT)
-  private Map<String, Long> answersSavedAt = null;
+public class OAuthCfgUserInfo {
+  public static final String SERIALIZED_NAME_URL = "url";
+  @SerializedName(SERIALIZED_NAME_URL)
+  private String url;
 
-  public QuestionsPublicData() {
+  public static final String SERIALIZED_NAME_SEND_TOKEN_IN_QUERY = "sendTokenInQuery";
+  @SerializedName(SERIALIZED_NAME_SEND_TOKEN_IN_QUERY)
+  private String sendTokenInQuery;
+
+  public static final String SERIALIZED_NAME_SEND_TOKEN_IN_HEADER = "sendTokenInHeader";
+  @SerializedName(SERIALIZED_NAME_SEND_TOKEN_IN_HEADER)
+  private Boolean sendTokenInHeader;
+
+  public OAuthCfgUserInfo() {
   }
 
-  public QuestionsPublicData answersSavedAt(Map<String, Long> answersSavedAt) {
+  public OAuthCfgUserInfo url(String url) {
     
-    this.answersSavedAt = answersSavedAt;
-    return this;
-  }
-
-  public QuestionsPublicData putAnswersSavedAtItem(String key, Long answersSavedAtItem) {
-    if (this.answersSavedAt == null) {
-      this.answersSavedAt = new HashMap<>();
-    }
-    this.answersSavedAt.put(key, answersSavedAtItem);
+    this.url = url;
     return this;
   }
 
    /**
-   * Get answersSavedAt
-   * @return answersSavedAt
+   * If access token provided in request, app tries to extract user id from user-info endpoint. If null, user info will be extracted from access token 
+   * @return url
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(example = "https://example.org/user-info", value = "If access token provided in request, app tries to extract user id from user-info endpoint. If null, user info will be extracted from access token ")
 
-  public Map<String, Long> getAnswersSavedAt() {
-    return answersSavedAt;
+  public String getUrl() {
+    return url;
   }
 
 
-  public void setAnswersSavedAt(Map<String, Long> answersSavedAt) {
-    this.answersSavedAt = answersSavedAt;
+  public void setUrl(String url) {
+    this.url = url;
+  }
+
+
+  public OAuthCfgUserInfo sendTokenInQuery(String sendTokenInQuery) {
+    
+    this.sendTokenInQuery = sendTokenInQuery;
+    return this;
+  }
+
+   /**
+   * While executing user-info request, access-token will be sent in query param.
+   * @return sendTokenInQuery
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "While executing user-info request, access-token will be sent in query param.")
+
+  public String getSendTokenInQuery() {
+    return sendTokenInQuery;
+  }
+
+
+  public void setSendTokenInQuery(String sendTokenInQuery) {
+    this.sendTokenInQuery = sendTokenInQuery;
+  }
+
+
+  public OAuthCfgUserInfo sendTokenInHeader(Boolean sendTokenInHeader) {
+    
+    this.sendTokenInHeader = sendTokenInHeader;
+    return this;
+  }
+
+   /**
+   * While executing user-info request, access-token will be sent in Authorisation header.
+   * @return sendTokenInHeader
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "While executing user-info request, access-token will be sent in Authorisation header.")
+
+  public Boolean getSendTokenInHeader() {
+    return sendTokenInHeader;
+  }
+
+
+  public void setSendTokenInHeader(Boolean sendTokenInHeader) {
+    this.sendTokenInHeader = sendTokenInHeader;
   }
 
   /**
@@ -99,7 +144,7 @@ public class QuestionsPublicData {
    * Set the additional (undeclared) property with the specified name and value.
    * If the property does not already exist, create it otherwise replace it.
    */
-  public QuestionsPublicData putAdditionalProperty(String key, Object value) {
+  public OAuthCfgUserInfo putAdditionalProperty(String key, Object value) {
     if (this.additionalProperties == null) {
         this.additionalProperties = new HashMap<String, Object>();
     }
@@ -133,21 +178,25 @@ public class QuestionsPublicData {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    QuestionsPublicData questionsPublicData = (QuestionsPublicData) o;
-    return Objects.equals(this.answersSavedAt, questionsPublicData.answersSavedAt)&&
-        Objects.equals(this.additionalProperties, questionsPublicData.additionalProperties);
+    OAuthCfgUserInfo oauthCfgUserInfo = (OAuthCfgUserInfo) o;
+    return Objects.equals(this.url, oauthCfgUserInfo.url) &&
+        Objects.equals(this.sendTokenInQuery, oauthCfgUserInfo.sendTokenInQuery) &&
+        Objects.equals(this.sendTokenInHeader, oauthCfgUserInfo.sendTokenInHeader)&&
+        Objects.equals(this.additionalProperties, oauthCfgUserInfo.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(answersSavedAt, additionalProperties);
+    return Objects.hash(url, sendTokenInQuery, sendTokenInHeader, additionalProperties);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class QuestionsPublicData {\n");
-    sb.append("    answersSavedAt: ").append(toIndentedString(answersSavedAt)).append("\n");
+    sb.append("class OAuthCfgUserInfo {\n");
+    sb.append("    url: ").append(toIndentedString(url)).append("\n");
+    sb.append("    sendTokenInQuery: ").append(toIndentedString(sendTokenInQuery)).append("\n");
+    sb.append("    sendTokenInHeader: ").append(toIndentedString(sendTokenInHeader)).append("\n");
     sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -171,7 +220,9 @@ public class QuestionsPublicData {
   static {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
-    openapiFields.add("answersSavedAt");
+    openapiFields.add("url");
+    openapiFields.add("sendTokenInQuery");
+    openapiFields.add("sendTokenInHeader");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -181,15 +232,21 @@ public class QuestionsPublicData {
   * Validates the JSON Object and throws an exception if issues found
   *
   * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to QuestionsPublicData
+  * @throws IOException if the JSON Object is invalid with respect to OAuthCfgUserInfo
   */
   public static void validateJsonObject(JsonObject jsonObj) throws IOException {
       if (jsonObj == null) {
-        if (QuestionsPublicData.openapiRequiredFields.isEmpty()) {
+        if (OAuthCfgUserInfo.openapiRequiredFields.isEmpty()) {
           return;
         } else { // has required fields
-          throw new IllegalArgumentException(String.format("The required field(s) %s in QuestionsPublicData is not found in the empty JSON string", QuestionsPublicData.openapiRequiredFields.toString()));
+          throw new IllegalArgumentException(String.format("The required field(s) %s in OAuthCfgUserInfo is not found in the empty JSON string", OAuthCfgUserInfo.openapiRequiredFields.toString()));
         }
+      }
+      if ((jsonObj.get("url") != null && !jsonObj.get("url").isJsonNull()) && !jsonObj.get("url").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `url` to be a primitive type in the JSON string but got `%s`", jsonObj.get("url").toString()));
+      }
+      if ((jsonObj.get("sendTokenInQuery") != null && !jsonObj.get("sendTokenInQuery").isJsonNull()) && !jsonObj.get("sendTokenInQuery").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `sendTokenInQuery` to be a primitive type in the JSON string but got `%s`", jsonObj.get("sendTokenInQuery").toString()));
       }
   }
 
@@ -197,16 +254,16 @@ public class QuestionsPublicData {
     @SuppressWarnings("unchecked")
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!QuestionsPublicData.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'QuestionsPublicData' and its subtypes
+       if (!OAuthCfgUserInfo.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'OAuthCfgUserInfo' and its subtypes
        }
        final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<QuestionsPublicData> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(QuestionsPublicData.class));
+       final TypeAdapter<OAuthCfgUserInfo> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(OAuthCfgUserInfo.class));
 
-       return (TypeAdapter<T>) new TypeAdapter<QuestionsPublicData>() {
+       return (TypeAdapter<T>) new TypeAdapter<OAuthCfgUserInfo>() {
            @Override
-           public void write(JsonWriter out, QuestionsPublicData value) throws IOException {
+           public void write(JsonWriter out, OAuthCfgUserInfo value) throws IOException {
              JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
              obj.remove("additionalProperties");
              // serialize additonal properties
@@ -229,11 +286,11 @@ public class QuestionsPublicData {
            }
 
            @Override
-           public QuestionsPublicData read(JsonReader in) throws IOException {
+           public OAuthCfgUserInfo read(JsonReader in) throws IOException {
              JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
              validateJsonObject(jsonObj);
              // store additional fields in the deserialized instance
-             QuestionsPublicData instance = thisAdapter.fromJsonTree(jsonObj);
+             OAuthCfgUserInfo instance = thisAdapter.fromJsonTree(jsonObj);
              for (Map.Entry<String, JsonElement> entry : jsonObj.entrySet()) {
                if (!openapiFields.contains(entry.getKey())) {
                  if (entry.getValue().isJsonPrimitive()) { // primitive type
@@ -258,18 +315,18 @@ public class QuestionsPublicData {
   }
 
  /**
-  * Create an instance of QuestionsPublicData given an JSON string
+  * Create an instance of OAuthCfgUserInfo given an JSON string
   *
   * @param jsonString JSON string
-  * @return An instance of QuestionsPublicData
-  * @throws IOException if the JSON string is invalid with respect to QuestionsPublicData
+  * @return An instance of OAuthCfgUserInfo
+  * @throws IOException if the JSON string is invalid with respect to OAuthCfgUserInfo
   */
-  public static QuestionsPublicData fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, QuestionsPublicData.class);
+  public static OAuthCfgUserInfo fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, OAuthCfgUserInfo.class);
   }
 
  /**
-  * Convert an instance of QuestionsPublicData to an JSON string
+  * Convert an instance of OAuthCfgUserInfo to an JSON string
   *
   * @return JSON string
   */

@@ -23,8 +23,6 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -47,45 +45,91 @@ import java.util.Set;
 import app.kntrl.client.generated.infra.JSON;
 
 /**
- * QuestionsPublicData
+ * ExchangeAuthCodeCfg
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
-public class QuestionsPublicData {
-  public static final String SERIALIZED_NAME_ANSWERS_SAVED_AT = "answersSavedAt";
-  @SerializedName(SERIALIZED_NAME_ANSWERS_SAVED_AT)
-  private Map<String, Long> answersSavedAt = null;
+public class ExchangeAuthCodeCfg {
+  public static final String SERIALIZED_NAME_TOKEN_URL = "tokenUrl";
+  @SerializedName(SERIALIZED_NAME_TOKEN_URL)
+  private String tokenUrl;
 
-  public QuestionsPublicData() {
+  public static final String SERIALIZED_NAME_CLIENT_ID = "clientId";
+  @SerializedName(SERIALIZED_NAME_CLIENT_ID)
+  private String clientId;
+
+  public static final String SERIALIZED_NAME_CLIENT_SECRET = "clientSecret";
+  @SerializedName(SERIALIZED_NAME_CLIENT_SECRET)
+  private String clientSecret;
+
+  public ExchangeAuthCodeCfg() {
   }
 
-  public QuestionsPublicData answersSavedAt(Map<String, Long> answersSavedAt) {
+  public ExchangeAuthCodeCfg tokenUrl(String tokenUrl) {
     
-    this.answersSavedAt = answersSavedAt;
-    return this;
-  }
-
-  public QuestionsPublicData putAnswersSavedAtItem(String key, Long answersSavedAtItem) {
-    if (this.answersSavedAt == null) {
-      this.answersSavedAt = new HashMap<>();
-    }
-    this.answersSavedAt.put(key, answersSavedAtItem);
+    this.tokenUrl = tokenUrl;
     return this;
   }
 
    /**
-   * Get answersSavedAt
-   * @return answersSavedAt
+   * Url to get access token by authorisation code. 
+   * @return tokenUrl
   **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @javax.annotation.Nonnull
+  @ApiModelProperty(example = "https://example.org/token", required = true, value = "Url to get access token by authorisation code. ")
 
-  public Map<String, Long> getAnswersSavedAt() {
-    return answersSavedAt;
+  public String getTokenUrl() {
+    return tokenUrl;
   }
 
 
-  public void setAnswersSavedAt(Map<String, Long> answersSavedAt) {
-    this.answersSavedAt = answersSavedAt;
+  public void setTokenUrl(String tokenUrl) {
+    this.tokenUrl = tokenUrl;
+  }
+
+
+  public ExchangeAuthCodeCfg clientId(String clientId) {
+    
+    this.clientId = clientId;
+    return this;
+  }
+
+   /**
+   * OAuth client id. Client must be registered on OAuth provider (e.g. facebook, google)
+   * @return clientId
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "OAuth client id. Client must be registered on OAuth provider (e.g. facebook, google)")
+
+  public String getClientId() {
+    return clientId;
+  }
+
+
+  public void setClientId(String clientId) {
+    this.clientId = clientId;
+  }
+
+
+  public ExchangeAuthCodeCfg clientSecret(String clientSecret) {
+    
+    this.clientSecret = clientSecret;
+    return this;
+  }
+
+   /**
+   * OAuth client secret.
+   * @return clientSecret
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "OAuth client secret.")
+
+  public String getClientSecret() {
+    return clientSecret;
+  }
+
+
+  public void setClientSecret(String clientSecret) {
+    this.clientSecret = clientSecret;
   }
 
   /**
@@ -99,7 +143,7 @@ public class QuestionsPublicData {
    * Set the additional (undeclared) property with the specified name and value.
    * If the property does not already exist, create it otherwise replace it.
    */
-  public QuestionsPublicData putAdditionalProperty(String key, Object value) {
+  public ExchangeAuthCodeCfg putAdditionalProperty(String key, Object value) {
     if (this.additionalProperties == null) {
         this.additionalProperties = new HashMap<String, Object>();
     }
@@ -133,21 +177,25 @@ public class QuestionsPublicData {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    QuestionsPublicData questionsPublicData = (QuestionsPublicData) o;
-    return Objects.equals(this.answersSavedAt, questionsPublicData.answersSavedAt)&&
-        Objects.equals(this.additionalProperties, questionsPublicData.additionalProperties);
+    ExchangeAuthCodeCfg exchangeAuthCodeCfg = (ExchangeAuthCodeCfg) o;
+    return Objects.equals(this.tokenUrl, exchangeAuthCodeCfg.tokenUrl) &&
+        Objects.equals(this.clientId, exchangeAuthCodeCfg.clientId) &&
+        Objects.equals(this.clientSecret, exchangeAuthCodeCfg.clientSecret)&&
+        Objects.equals(this.additionalProperties, exchangeAuthCodeCfg.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(answersSavedAt, additionalProperties);
+    return Objects.hash(tokenUrl, clientId, clientSecret, additionalProperties);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class QuestionsPublicData {\n");
-    sb.append("    answersSavedAt: ").append(toIndentedString(answersSavedAt)).append("\n");
+    sb.append("class ExchangeAuthCodeCfg {\n");
+    sb.append("    tokenUrl: ").append(toIndentedString(tokenUrl)).append("\n");
+    sb.append("    clientId: ").append(toIndentedString(clientId)).append("\n");
+    sb.append("    clientSecret: ").append(toIndentedString(clientSecret)).append("\n");
     sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -171,25 +219,44 @@ public class QuestionsPublicData {
   static {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
-    openapiFields.add("answersSavedAt");
+    openapiFields.add("tokenUrl");
+    openapiFields.add("clientId");
+    openapiFields.add("clientSecret");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
+    openapiRequiredFields.add("tokenUrl");
   }
 
  /**
   * Validates the JSON Object and throws an exception if issues found
   *
   * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to QuestionsPublicData
+  * @throws IOException if the JSON Object is invalid with respect to ExchangeAuthCodeCfg
   */
   public static void validateJsonObject(JsonObject jsonObj) throws IOException {
       if (jsonObj == null) {
-        if (QuestionsPublicData.openapiRequiredFields.isEmpty()) {
+        if (ExchangeAuthCodeCfg.openapiRequiredFields.isEmpty()) {
           return;
         } else { // has required fields
-          throw new IllegalArgumentException(String.format("The required field(s) %s in QuestionsPublicData is not found in the empty JSON string", QuestionsPublicData.openapiRequiredFields.toString()));
+          throw new IllegalArgumentException(String.format("The required field(s) %s in ExchangeAuthCodeCfg is not found in the empty JSON string", ExchangeAuthCodeCfg.openapiRequiredFields.toString()));
         }
+      }
+
+      // check to make sure all required properties/fields are present in the JSON string
+      for (String requiredField : ExchangeAuthCodeCfg.openapiRequiredFields) {
+        if (jsonObj.get(requiredField) == null) {
+          throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonObj.toString()));
+        }
+      }
+      if ((jsonObj.get("tokenUrl") != null && !jsonObj.get("tokenUrl").isJsonNull()) && !jsonObj.get("tokenUrl").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `tokenUrl` to be a primitive type in the JSON string but got `%s`", jsonObj.get("tokenUrl").toString()));
+      }
+      if ((jsonObj.get("clientId") != null && !jsonObj.get("clientId").isJsonNull()) && !jsonObj.get("clientId").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `clientId` to be a primitive type in the JSON string but got `%s`", jsonObj.get("clientId").toString()));
+      }
+      if ((jsonObj.get("clientSecret") != null && !jsonObj.get("clientSecret").isJsonNull()) && !jsonObj.get("clientSecret").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `clientSecret` to be a primitive type in the JSON string but got `%s`", jsonObj.get("clientSecret").toString()));
       }
   }
 
@@ -197,16 +264,16 @@ public class QuestionsPublicData {
     @SuppressWarnings("unchecked")
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!QuestionsPublicData.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'QuestionsPublicData' and its subtypes
+       if (!ExchangeAuthCodeCfg.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'ExchangeAuthCodeCfg' and its subtypes
        }
        final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<QuestionsPublicData> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(QuestionsPublicData.class));
+       final TypeAdapter<ExchangeAuthCodeCfg> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(ExchangeAuthCodeCfg.class));
 
-       return (TypeAdapter<T>) new TypeAdapter<QuestionsPublicData>() {
+       return (TypeAdapter<T>) new TypeAdapter<ExchangeAuthCodeCfg>() {
            @Override
-           public void write(JsonWriter out, QuestionsPublicData value) throws IOException {
+           public void write(JsonWriter out, ExchangeAuthCodeCfg value) throws IOException {
              JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
              obj.remove("additionalProperties");
              // serialize additonal properties
@@ -229,11 +296,11 @@ public class QuestionsPublicData {
            }
 
            @Override
-           public QuestionsPublicData read(JsonReader in) throws IOException {
+           public ExchangeAuthCodeCfg read(JsonReader in) throws IOException {
              JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
              validateJsonObject(jsonObj);
              // store additional fields in the deserialized instance
-             QuestionsPublicData instance = thisAdapter.fromJsonTree(jsonObj);
+             ExchangeAuthCodeCfg instance = thisAdapter.fromJsonTree(jsonObj);
              for (Map.Entry<String, JsonElement> entry : jsonObj.entrySet()) {
                if (!openapiFields.contains(entry.getKey())) {
                  if (entry.getValue().isJsonPrimitive()) { // primitive type
@@ -258,18 +325,18 @@ public class QuestionsPublicData {
   }
 
  /**
-  * Create an instance of QuestionsPublicData given an JSON string
+  * Create an instance of ExchangeAuthCodeCfg given an JSON string
   *
   * @param jsonString JSON string
-  * @return An instance of QuestionsPublicData
-  * @throws IOException if the JSON string is invalid with respect to QuestionsPublicData
+  * @return An instance of ExchangeAuthCodeCfg
+  * @throws IOException if the JSON string is invalid with respect to ExchangeAuthCodeCfg
   */
-  public static QuestionsPublicData fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, QuestionsPublicData.class);
+  public static ExchangeAuthCodeCfg fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, ExchangeAuthCodeCfg.class);
   }
 
  /**
-  * Convert an instance of QuestionsPublicData to an JSON string
+  * Convert an instance of ExchangeAuthCodeCfg to an JSON string
   *
   * @return JSON string
   */

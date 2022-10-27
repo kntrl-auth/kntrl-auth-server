@@ -59,9 +59,9 @@ public class AuthDataPublic {
   @SerializedName(SERIALIZED_NAME_UPDATED_AT)
   private Long updatedAt;
 
-  public static final String SERIALIZED_NAME_QUESTIONS_SAVED_AT = "questionsSavedAt";
-  @SerializedName(SERIALIZED_NAME_QUESTIONS_SAVED_AT)
-  private Map<String, Long> questionsSavedAt = null;
+  public static final String SERIALIZED_NAME_ANSWERS_SAVED_AT = "answersSavedAt";
+  @SerializedName(SERIALIZED_NAME_ANSWERS_SAVED_AT)
+  private Map<String, Long> answersSavedAt = null;
 
   public AuthDataPublic() {
   }
@@ -112,34 +112,34 @@ public class AuthDataPublic {
   }
 
 
-  public AuthDataPublic questionsSavedAt(Map<String, Long> questionsSavedAt) {
+  public AuthDataPublic answersSavedAt(Map<String, Long> answersSavedAt) {
     
-    this.questionsSavedAt = questionsSavedAt;
+    this.answersSavedAt = answersSavedAt;
     return this;
   }
 
-  public AuthDataPublic putQuestionsSavedAtItem(String key, Long questionsSavedAtItem) {
-    if (this.questionsSavedAt == null) {
-      this.questionsSavedAt = new HashMap<>();
+  public AuthDataPublic putAnswersSavedAtItem(String key, Long answersSavedAtItem) {
+    if (this.answersSavedAt == null) {
+      this.answersSavedAt = new HashMap<>();
     }
-    this.questionsSavedAt.put(key, questionsSavedAtItem);
+    this.answersSavedAt.put(key, answersSavedAtItem);
     return this;
   }
 
    /**
-   * Get questionsSavedAt
-   * @return questionsSavedAt
+   * Get answersSavedAt
+   * @return answersSavedAt
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
 
-  public Map<String, Long> getQuestionsSavedAt() {
-    return questionsSavedAt;
+  public Map<String, Long> getAnswersSavedAt() {
+    return answersSavedAt;
   }
 
 
-  public void setQuestionsSavedAt(Map<String, Long> questionsSavedAt) {
-    this.questionsSavedAt = questionsSavedAt;
+  public void setAnswersSavedAt(Map<String, Long> answersSavedAt) {
+    this.answersSavedAt = answersSavedAt;
   }
 
   /**
@@ -190,13 +190,13 @@ public class AuthDataPublic {
     AuthDataPublic authDataPublic = (AuthDataPublic) o;
     return Objects.equals(this.email, authDataPublic.email) &&
         Objects.equals(this.updatedAt, authDataPublic.updatedAt) &&
-        Objects.equals(this.questionsSavedAt, authDataPublic.questionsSavedAt)&&
+        Objects.equals(this.answersSavedAt, authDataPublic.answersSavedAt)&&
         Objects.equals(this.additionalProperties, authDataPublic.additionalProperties);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(email, updatedAt, questionsSavedAt, additionalProperties);
+    return Objects.hash(email, updatedAt, answersSavedAt, additionalProperties);
   }
 
   @Override
@@ -205,7 +205,7 @@ public class AuthDataPublic {
     sb.append("class AuthDataPublic {\n");
     sb.append("    email: ").append(toIndentedString(email)).append("\n");
     sb.append("    updatedAt: ").append(toIndentedString(updatedAt)).append("\n");
-    sb.append("    questionsSavedAt: ").append(toIndentedString(questionsSavedAt)).append("\n");
+    sb.append("    answersSavedAt: ").append(toIndentedString(answersSavedAt)).append("\n");
     sb.append("    additionalProperties: ").append(toIndentedString(additionalProperties)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -231,7 +231,7 @@ public class AuthDataPublic {
     openapiFields = new HashSet<String>();
     openapiFields.add("email");
     openapiFields.add("updatedAt");
-    openapiFields.add("questionsSavedAt");
+    openapiFields.add("answersSavedAt");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();

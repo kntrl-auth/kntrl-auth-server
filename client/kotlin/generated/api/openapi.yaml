@@ -813,9 +813,6 @@ components:
             tooLong: true
         waitTimeMs: 1
         changedAt: 2
-        scopes:
-        - scopes
-        - scopes
         changedDaysAgo: 4
       properties:
         code:
@@ -879,10 +876,6 @@ components:
           type: object
         tooManyAnswers:
           type: boolean
-        scopes:
-          items:
-            type: string
-          type: array
         waitTimeMs:
           format: int32
           type: integer
@@ -1005,7 +998,7 @@ components:
       - code
       - devMsg
       type: object
-      x-order: -270554383-6
+      x-order: -270554383-5
       x-super: '#/components/schemas/ClientErr'
     ClientErr:
       additionalProperties: true
@@ -1071,10 +1064,6 @@ components:
           type: object
         tooManyAnswers:
           type: boolean
-        scopes:
-          items:
-            type: string
-          type: array
         waitTimeMs:
           format: int32
           type: integer
@@ -1115,7 +1104,7 @@ components:
       - code
       - devMsg
       type: object
-      x-order: -270554383-7
+      x-order: -270554383-6
       x-super: '#/components/schemas/ClientErr'
     CodeIsIncorrect:
       properties:
@@ -1132,7 +1121,7 @@ components:
       - code
       - devMsg
       type: object
-      x-order: -270554383-9
+      x-order: -270554383-8
       x-super: '#/components/schemas/ClientErr'
     CodeTooManyAttempts:
       properties:
@@ -1149,7 +1138,7 @@ components:
       - code
       - devMsg
       type: object
-      x-order: -270554383-8
+      x-order: -270554383-7
       x-super: '#/components/schemas/ClientErr'
     EmailIsIncorrect:
       properties:
@@ -1238,7 +1227,7 @@ components:
       - code
       - devMsg
       type: object
-      x-order: -270554383-5
+      x-order: -270554383-4
       x-super: '#/components/schemas/IntegrationErr'
     PasswordIsIncorrect:
       properties:
@@ -1408,28 +1397,6 @@ components:
       type: object
       x-order: -1279700867-8
       x-super: '#/components/schemas/ClientErr'
-    ScopeNotFound:
-      properties:
-        code:
-          type: string
-        devMsg:
-          description: Message for developers.
-          type: string
-        msg:
-          description: Localised message suitable for UI.
-          type: string
-          x-nullable: true
-        scopes:
-          items:
-            type: string
-          type: array
-      required:
-      - code
-      - devMsg
-      - scopes
-      type: object
-      x-order: -270554383-4
-      x-super: '#/components/schemas/ClientErr'
     ServerErr:
       additionalProperties: true
       properties:
@@ -1502,7 +1469,7 @@ components:
       - code
       - devMsg
       type: object
-      x-order: -270554383-12
+      x-order: -270554383-11
       x-super: '#/components/schemas/Unauthenticated'
     TooManyReqs:
       properties:
@@ -1531,7 +1498,7 @@ components:
       - code
       - devMsg
       type: object
-      x-order: -270554383-13
+      x-order: -270554383-12
       x-super: '#/components/schemas/ClientErr'
     Unauthenticated:
       additionalProperties: true
@@ -1553,7 +1520,7 @@ components:
       - code
       - devMsg
       type: object
-      x-order: -270554383-10
+      x-order: -270554383-9
       x-sealed: false
       x-super: '#/components/schemas/ClientErr'
     UserLoginAlreadyTaken:
@@ -2062,9 +2029,9 @@ components:
     AuthData:
       example:
         public:
-          email: email
-          questionsSavedAt:
+          answersSavedAt:
             key: 1
+          email: email
           updatedAt: 6
         login: login
       properties:
@@ -2127,16 +2094,12 @@ components:
               tooLong: true
           waitTimeMs: 1
           changedAt: 2
-          scopes:
-          - scopes
-          - scopes
           changedDaysAgo: 4
         resData:
           emailSentTo: emailSentTo
           password: password
           answersSavedAt:
-            questionsSavedAt:
-              key: 1
+            key: 1
           strength: strength
           correct:
             HOMETOWN: true
@@ -2180,9 +2143,9 @@ components:
       example:
         data:
           public:
-            email: email
-            questionsSavedAt:
+            answersSavedAt:
               key: 1
+            email: email
             updatedAt: 6
           login: login
         sentCodes:
@@ -2195,9 +2158,9 @@ components:
             sentAt: 5
           data:
             public:
-              email: email
-              questionsSavedAt:
+              answersSavedAt:
                 key: 1
+              email: email
               updatedAt: 6
             login: login
         - code:
@@ -2209,9 +2172,9 @@ components:
             sentAt: 5
           data:
             public:
-              email: email
-              questionsSavedAt:
+              answersSavedAt:
                 key: 1
+              email: email
               updatedAt: 6
             login: login
         confirmed: true
@@ -2292,9 +2255,9 @@ components:
             key:
               data:
                 public:
-                  email: email
-                  questionsSavedAt:
+                  answersSavedAt:
                     key: 1
+                  email: email
                   updatedAt: 6
                 login: login
               sentCodes:
@@ -2307,9 +2270,9 @@ components:
                   sentAt: 5
                 data:
                   public:
-                    email: email
-                    questionsSavedAt:
+                    answersSavedAt:
                       key: 1
+                    email: email
                     updatedAt: 6
                   login: login
               - code:
@@ -2321,9 +2284,9 @@ components:
                   sentAt: 5
                 data:
                   public:
-                    email: email
-                    questionsSavedAt:
+                    answersSavedAt:
                       key: 1
+                    email: email
                     updatedAt: 6
                   login: login
               confirmed: true
@@ -2388,16 +2351,12 @@ components:
                   tooLong: true
               waitTimeMs: 1
               changedAt: 2
-              scopes:
-              - scopes
-              - scopes
               changedDaysAgo: 4
             resData:
               emailSentTo: emailSentTo
               password: password
               answersSavedAt:
-                questionsSavedAt:
-                  key: 1
+                key: 1
               strength: strength
               correct:
                 HOMETOWN: true
@@ -2649,6 +2608,7 @@ components:
         correct:
           additionalProperties:
             type: boolean
+            x-additionalPropertiesName: question id
           description: |
             Shows is answer was correct.
           example:
@@ -2663,7 +2623,7 @@ components:
     QuestionsPrivateData:
       additionalProperties: true
       properties:
-        questions:
+        answers:
           additionalProperties:
             type: string
           type: object
@@ -2673,18 +2633,26 @@ components:
     QuestionsPublicData:
       additionalProperties: true
       properties:
-        questionsSavedAt:
+        answersSavedAt:
           additionalProperties:
             format: int64
             type: integer
+            x-additionalPropertiesName: question id
           type: object
       type: object
       x-order: -213229069-1
+      x-super: '#/components/schemas/AuthPublicData'
     QuestionsUpdateResData:
       additionalProperties: true
       properties:
         answersSavedAt:
-          $ref: '#/components/schemas/AuthExecRes_resData_answersSavedAt'
+          additionalProperties:
+            format: int64
+            type: integer
+            x-additionalPropertiesName: question id
+          description: |
+            Date of last update
+          type: object
       required:
       - answersSavedAt
       type: object
@@ -2716,9 +2684,9 @@ components:
           sentAt: 5
         data:
           public:
-            email: email
-            questionsSavedAt:
+            answersSavedAt:
               key: 1
+            email: email
             updatedAt: 6
           login: login
       properties:
@@ -2740,9 +2708,9 @@ components:
           key:
             data:
               public:
-                email: email
-                questionsSavedAt:
+                answersSavedAt:
                   key: 1
+                email: email
                 updatedAt: 6
               login: login
             sentCodes:
@@ -2755,9 +2723,9 @@ components:
                 sentAt: 5
               data:
                 public:
-                  email: email
-                  questionsSavedAt:
+                  answersSavedAt:
                     key: 1
+                  email: email
                   updatedAt: 6
                 login: login
             - code:
@@ -2769,9 +2737,9 @@ components:
                 sentAt: 5
               data:
                 public:
-                  email: email
-                  questionsSavedAt:
+                  answersSavedAt:
                     key: 1
+                  email: email
                   updatedAt: 6
                 login: login
             confirmed: true
@@ -3059,6 +3027,7 @@ components:
         answers:
           additionalProperties:
             type: string
+            x-additionalPropertiesName: question id
           description: |
             Given answers for questions.
           example:
@@ -3076,6 +3045,7 @@ components:
         answers:
           additionalProperties:
             type: string
+            x-additionalPropertiesName: question id
           description: |
             Answers to save. `null` as value removes answer
           example:
@@ -3241,9 +3211,9 @@ components:
             key:
               data:
                 public:
-                  email: email
-                  questionsSavedAt:
+                  answersSavedAt:
                     key: 1
+                  email: email
                   updatedAt: 6
                 login: login
               sentCodes:
@@ -3256,9 +3226,9 @@ components:
                   sentAt: 5
                 data:
                   public:
-                    email: email
-                    questionsSavedAt:
+                    answersSavedAt:
                       key: 1
+                    email: email
                     updatedAt: 6
                   login: login
               - code:
@@ -3270,9 +3240,9 @@ components:
                   sentAt: 5
                 data:
                   public:
-                    email: email
-                    questionsSavedAt:
+                    answersSavedAt:
                       key: 1
+                    email: email
                     updatedAt: 6
                   login: login
               confirmed: true
@@ -3337,16 +3307,12 @@ components:
                   tooLong: true
               waitTimeMs: 1
               changedAt: 2
-              scopes:
-              - scopes
-              - scopes
               changedDaysAgo: 4
             resData:
               emailSentTo: emailSentTo
               password: password
               answersSavedAt:
-                questionsSavedAt:
-                  key: 1
+                key: 1
               strength: strength
               correct:
                 HOMETOWN: true
@@ -3965,15 +3931,15 @@ components:
           description: "OAuth client id. Client must be registered on OAuth provider\
             \ (e.g. facebook, google)"
           type: string
+          x-nullable: true
         clientSecret:
           description: OAuth client secret.
           type: string
           x-nullable: true
       required:
-      - clientId
       - tokenUrl
       type: object
-      x-order: -1532051357-1
+      x-order: -1532051357-2
     I18nCfg:
       description: "Configuration for localization of error messages, emails, etc."
       example:
@@ -4719,11 +4685,17 @@ components:
         auths:
           additionalProperties:
             $ref: '#/components/schemas/ShAppCfg_auths_value'
-          description: |
+          description: |+
             List of auth names and auth configs
 
             To use builtin auths (not a plugin or remote) follow the example: `"password": { ... }` or
             `"anyAuthName": { "builtin": "password", ... }`
+
+            Available built-in auths:
+            - `password`, `email`, `questions`, `ip`
+            - `oauth`, `oauth/facebook/openid`, `oauth/google/openid`
+            - `appSecret`
+
           example:
             email: {}
             password: {}
@@ -4933,7 +4905,7 @@ components:
             \ in Authorisation header."
           type: boolean
       type: object
-      x-order: -1532051357-2
+      x-order: -1532051357-3
     regex:
       type: string
     UnauthenticatedCode:
@@ -4941,8 +4913,8 @@ components:
       - SESSION_EXPIRED
       - ACCESS_DENIED
       - USER_NOT_FOUND
-      - UNAUTHENTICATED
       - TOKEN_EXPIRED
+      - UNAUTHENTICATED
       type: string
     ClientErrCode:
       enum:
@@ -4959,16 +4931,15 @@ components:
       - SIGNATURE_IS_INCORRECT
       - USER_LOGIN_IS_INVALID
       - USER_LOGIN_ALREADY_TAKEN
-      - UNAUTHENTICATED
       - TOKEN_EXPIRED
       - TOO_MANY_REQS
       - AUTH_IS_NOT_ENABLED
       - AUTH_IS_NOT_CONFIRMED
-      - SCOPE_NOT_FOUND
       - AUTH_REQUIRES_ANOTHER
       - CODE_IS_EXPIRED
       - CODE_TOO_MANY_ATTEMPTS
       - CODE_IS_INCORRECT
+      - UNAUTHENTICATED
       type: string
     IntegrationErrCode:
       enum:
@@ -4996,17 +4967,16 @@ components:
       - SIGNATURE_IS_INCORRECT
       - USER_LOGIN_IS_INVALID
       - USER_LOGIN_ALREADY_TAKEN
-      - UNAUTHENTICATED
       - TOKEN_EXPIRED
       - TOO_MANY_REQS
       - AUTH_IS_NOT_ENABLED
       - AUTH_IS_NOT_CONFIRMED
-      - SCOPE_NOT_FOUND
       - NO_AUTH_AVAILABLE_FOR_FACTOR
       - AUTH_REQUIRES_ANOTHER
       - CODE_IS_EXPIRED
       - CODE_TOO_MANY_ATTEMPTS
       - CODE_IS_INCORRECT
+      - UNAUTHENTICATED
       - SERVER_ERR
       - INTEGRATION_ERR
       - ANY_ERR
@@ -5014,9 +4984,9 @@ components:
     AuthData_public:
       additionalProperties: true
       example:
-        email: email
-        questionsSavedAt:
+        answersSavedAt:
           key: 1
+        email: email
         updatedAt: 6
       properties:
         email:
@@ -5026,33 +4996,20 @@ components:
           description: Time when password was updated last time.
           format: int64
           type: integer
-        questionsSavedAt:
+        answersSavedAt:
           additionalProperties:
             format: int64
             type: integer
+            x-additionalPropertiesName: question id
           type: object
       type: object
-    AuthExecRes_resData_answersSavedAt:
-      description: Date of last update
-      example:
-        questionsSavedAt:
-          key: 1
-      properties:
-        questionsSavedAt:
-          additionalProperties:
-            format: int64
-            type: integer
-          type: object
-      type: object
-      x-super: '#/components/schemas/QuestionsPublicData'
     AuthExecRes_resData:
       additionalProperties: true
       example:
         emailSentTo: emailSentTo
         password: password
         answersSavedAt:
-          questionsSavedAt:
-            key: 1
+          key: 1
         strength: strength
         correct:
           HOMETOWN: true
@@ -5086,6 +5043,7 @@ components:
         correct:
           additionalProperties:
             type: boolean
+            x-additionalPropertiesName: question id
           description: |
             Shows is answer was correct.
           example:
@@ -5093,7 +5051,13 @@ components:
             MOTHER_NAME: false
           type: object
         answersSavedAt:
-          $ref: '#/components/schemas/AuthExecRes_resData_answersSavedAt'
+          additionalProperties:
+            format: int64
+            type: integer
+            x-additionalPropertiesName: question id
+          description: |
+            Date of last update
+          type: object
       type: object
     AuthenticateReq_authReqs_value:
       additionalProperties: true
@@ -5150,6 +5114,7 @@ components:
         answers:
           additionalProperties:
             type: string
+            x-additionalPropertiesName: question id
           description: |
             Answers to save. `null` as value removes answer
           example:
@@ -5188,12 +5153,12 @@ components:
           description: "OAuth client id. Client must be registered on OAuth provider\
             \ (e.g. facebook, google)"
           type: string
+          x-nullable: true
         clientSecret:
           description: OAuth client secret.
           type: string
           x-nullable: true
       required:
-      - clientId
       - tokenUrl
       type: object
       x-nullable: true

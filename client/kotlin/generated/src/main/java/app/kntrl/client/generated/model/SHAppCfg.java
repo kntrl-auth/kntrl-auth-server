@@ -211,11 +211,11 @@ public class ShAppCfg {
   }
 
    /**
-   * List of auth names and auth configs  To use builtin auths (not a plugin or remote) follow the example: &#x60;\&quot;password\&quot;: { ... }&#x60; or &#x60;\&quot;anyAuthName\&quot;: { \&quot;builtin\&quot;: \&quot;password\&quot;, ... }&#x60; 
+   * List of auth names and auth configs  To use builtin auths (not a plugin or remote) follow the example: &#x60;\&quot;password\&quot;: { ... }&#x60; or &#x60;\&quot;anyAuthName\&quot;: { \&quot;builtin\&quot;: \&quot;password\&quot;, ... }&#x60;  Available built-in auths: - &#x60;password&#x60;, &#x60;email&#x60;, &#x60;questions&#x60;, &#x60;ip&#x60; - &#x60;oauth&#x60;, &#x60;oauth/facebook/openid&#x60;, &#x60;oauth/google/openid&#x60; - &#x60;appSecret&#x60;  
    * @return auths
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "{\"email\":{},\"password\":{},\"facebook\":{\"builtin\":\"oauth\"}}", value = "List of auth names and auth configs  To use builtin auths (not a plugin or remote) follow the example: `\"password\": { ... }` or `\"anyAuthName\": { \"builtin\": \"password\", ... }` ")
+  @ApiModelProperty(example = "{\"email\":{},\"password\":{},\"facebook\":{\"builtin\":\"oauth\"}}", value = "List of auth names and auth configs  To use builtin auths (not a plugin or remote) follow the example: `\"password\": { ... }` or `\"anyAuthName\": { \"builtin\": \"password\", ... }`  Available built-in auths: - `password`, `email`, `questions`, `ip` - `oauth`, `oauth/facebook/openid`, `oauth/google/openid` - `appSecret`  ")
 
   public Map<String, ShAppCfgAuthsValue> getAuths() {
     return auths;
