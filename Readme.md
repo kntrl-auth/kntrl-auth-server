@@ -34,7 +34,7 @@ integration with existing database and codebase via plugins, action confirmation
 
 #### ☕ Option 1 - run Java app
 - Download the latest distribution from  [Releases](../../../releases)
-- Start application:
+- Start the application:
 ```shell
 java -jar kntrl.jar
 ```
@@ -63,7 +63,7 @@ restrict access to this endpoint.
 ### Configure
 
 #### Option 1 - Modify `kntrl.json5` file
-When started, the app creates the file `kntrl.json5` that contains app config and the `kntrl.schema.json` with json-schema 
+When started, the app creates a file `kntrl.json5` that contains app config and the `kntrl.schema.json` with json-schema 
 for that file in a working directory.
 If you're using docker, make sure you have specified volume:
 
