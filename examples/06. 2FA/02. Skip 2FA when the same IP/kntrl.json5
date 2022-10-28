@@ -1,0 +1,30 @@
+{
+  logins: [ "email" ],
+
+  auths: {
+    password: {
+      // use default config
+    },
+    email: {
+      server: "maildev:1025",
+      sender: "test@test.com",
+      code: {}
+    },
+    ip: {
+      // If it's a new IP - IP authenticator raises error,
+      // so this config will allow app to skip IP authenticator and try to use next ("email" in this example)
+      skipOnFail: true
+    }
+  },
+
+  entries: {
+    app: {
+      factorsRequired: {
+        first: [ "password" ]
+      },
+      factorsOptional: {
+        second: [ "ip", "email" ]
+      }
+    }
+  }
+}

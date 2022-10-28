@@ -1,0 +1,17 @@
+{
+  db: {
+    user: {
+      postgres: "localhost:5432/test",
+      username: 'test-user',
+      password: 'test-pass',
+    },
+    session: {
+      postgres: "localhost:5432/test",
+      username: 'test-user',
+      password: 'test-pass'
+    },
+    rateLimiter: {
+      // Rate limiter doesn't support postgres
+    }
+  }
+}

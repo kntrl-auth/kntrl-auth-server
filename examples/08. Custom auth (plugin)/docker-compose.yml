@@ -1,0 +1,15 @@
+version: "3"
+services:
+  kntrl:
+    image: kntrl/self-hosted:0.9
+    volumes:
+    - "./kntrl.json5:/kntrl/kntrl.json5"
+    depends_on:
+    - plugin-server
+    ports:
+    - "9876:9876"
+
+  plugin-server:
+    build: .plugin-server
+    ports:
+    - "9877:8080"

@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "target": "es6",
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "outDir": "./dist",
+    "sourceMap": true,
+    "lib": [ "dom" ],
+    "strictNullChecks": true,
+    "declaration": true
+  },
+  "include": [
+    "generated/**/*",
+    "src/**/*",
+    "index.ts",
+  ]
+}

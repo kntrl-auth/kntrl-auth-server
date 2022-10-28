@@ -1,0 +1,31 @@
+{
+  logins: [ "username" ],
+
+  auths: {
+    password: {},
+  },
+
+  entries: {
+    app: {
+      factorsRequired: {
+        first: [ "password" ]
+      }
+    },
+
+    // Creating new sessions will result in new access-token generation. This access-token can be used as API key
+    // for applications
+    apiKey: {
+      accessToken: {
+        // API key shouldn't expire, so we are choosing a long enough lifetime.
+        ttl: '10y',
+        // Disable caching to make the access token revocable at any time
+        cache: false,
+      },
+      // Access token can't overlive session so this value should be specified too
+      ttl: '10y',
+
+      // To generate new api-key, user must be already authenticated
+      requiresEntry: 'app'
+    }
+  }
+}

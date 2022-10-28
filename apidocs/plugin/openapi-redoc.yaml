@@ -1,0 +1,2284 @@
+openapi: 3.0.1
+info:
+  title: Kntrl plugin API
+  description: |+
+    This is the API that Kntrl server uses for integration with plugins.
+    To implement plugin you must add next http endpoints to your server
+
+  version: "0.9"
+  x-logo:
+    url: ./logo.png
+tags:
+- name: plugin/rate-limiter
+  x-displayName:
+  - Rate limiter API
+- name: plugin/auth
+  x-displayName:
+  - Auth plugin API
+- name: plugin/repo/session
+  x-displayName:
+  - Session repo API
+- name: plugin/repo/user
+  x-displayName:
+  - User repo API
+paths:
+  /plugin/rate-limiter/{id}/burn-quota:
+    post:
+      tags:
+      - plugin/rate-limiter
+      description: |-
+        Performs INCREMENT and GET operation.
+        Adds `quota` amount to stored rate-limiter by limiter-id and returns it.
+      operationId: burnQuota
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/RateLimiterStateId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BurnQuotaReq'
+        required: true
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimiterState'
+        "4XX":
+          description: Client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+        "5XX":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+      x-order: 1
+  /plugin/auth/authenticate/dry-run:
+    post:
+      tags:
+      - plugin/auth
+      summary: Authenticate dry-run
+      description: |
+        This is called before sign-in (or sign-up if user isn't identified). Performs validation of request.
+      operationId: authenticateDryRun
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthReq'
+        required: true
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DryRunAuthRes'
+        "4XX":
+          description: Client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+        "5XX":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+      x-order: 1
+  /plugin/repository/session/{id}:
+    get:
+      tags:
+      - plugin/repo/session
+      summary: Find session by id
+      description: |
+        Find single session
+      operationId: findSession
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindSessionRes'
+        "4XX":
+          description: Client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+        "5XX":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+      x-order: 1
+  /plugin/repository/user:
+    get:
+      tags:
+      - plugin/repo/user
+      summary: Find user
+      description: |
+        Finds user by login.
+      operationId: findUser
+      parameters:
+      - name: login-type
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: login
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindUserRes'
+        "4XX":
+          description: Client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+        "5XX":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+      x-order: 1
+    post:
+      tags:
+      - plugin/repo/user
+      summary: Find user
+      description: |
+        Saves users.
+        Be careful with order. To avoid potential "duplicated entry" problem, remove operation goes firs,
+        then update, then insert.
+      operationId: saveUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaveUserReq'
+        required: true
+      responses:
+        default:
+          description: Success
+          content:
+            application/json: {}
+        "4XX":
+          description: Client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+        "5XX":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+      x-order: 2
+  /plugin/auth/authenticate:
+    post:
+      tags:
+      - plugin/auth
+      summary: Authenticate
+      description: |
+        Called during sign-in (or sign-up if user isn't identified).
+      operationId: authenticate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthReq'
+        required: true
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthRes'
+        "4XX":
+          description: Client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+        "5XX":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+      security:
+      - access-token: []
+      x-order: 2
+  /plugin/repository/session:
+    get:
+      tags:
+      - plugin/repo/session
+      summary: Find sessions
+      description: |
+        Find all user sessions
+      operationId: findSessions
+      parameters:
+      - name: userId
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: entry
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindSessionsRes'
+        "4XX":
+          description: Client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+        "5XX":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+      x-order: 2
+    post:
+      tags:
+      - plugin/repo/session
+      summary: Save sessions
+      description: |
+        Save/update/remove sessions
+      operationId: saveSession
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaveSessionReq'
+        required: true
+      responses:
+        default:
+          description: Success
+          content:
+            application/json: {}
+        "4XX":
+          description: Client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+        "5XX":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+      x-order: 3
+  /plugin/auth/update/dry-run:
+    post:
+      tags:
+      - plugin/auth
+      summary: Update auth dry-run
+      description: |
+        This is called before sign-up or auth enabling. Performs validation of request.
+      operationId: updateAuthDryRun
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthReq'
+        required: true
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DryRunAuthRes'
+        "4XX":
+          description: Client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+        "5XX":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+      x-order: 3
+  /plugin/auth/update:
+    post:
+      tags:
+      - plugin/auth
+      summary: Update auth
+      description: |
+        This is called during sign-up or auth enabling.
+      operationId: updateAuth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthReq'
+        required: true
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthRes'
+        "4XX":
+          description: Client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+        "5XX":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+      x-order: 4
+components:
+  schemas:
+    Err:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      discriminator:
+        propertyName: code
+        mapping:
+          PLUGIN_ERR: '#/components/schemas/PluginErr'
+          PLUGIN_CLIENT_ERR: '#/components/schemas/PluginClientErr'
+          PASSWORD_IS_INCORRECT: '#/components/schemas/PasswordIsIncorrect'
+          PASSWORD_IS_INVALID: '#/components/schemas/PasswordIsInvalid'
+          EMAIL_IS_INCORRECT: '#/components/schemas/EmailIsIncorrect'
+          IP_NEW: '#/components/schemas/IpNew'
+          QUESTIONS_ANSWERS_INCORRECT: '#/components/schemas/QuestionsAnswersIncorrect'
+          QUESTIONS_ANSWERS_INVALID: '#/components/schemas/QuestionsAnswersInvalid'
+          SESSION_EXPIRED: '#/components/schemas/SessionExpired'
+          ACCESS_DENIED: '#/components/schemas/AccessDenied'
+          USER_NOT_FOUND: '#/components/schemas/UserNotFound'
+          SIGNATURE_IS_INCORRECT: '#/components/schemas/SignatureIsIncorrect'
+          USER_LOGIN_IS_INVALID: '#/components/schemas/UserLoginIsInvalid'
+          USER_LOGIN_ALREADY_TAKEN: '#/components/schemas/UserLoginAlreadyTaken'
+          TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
+          TOO_MANY_REQS: '#/components/schemas/TooManyReqs'
+          AUTH_IS_NOT_ENABLED: '#/components/schemas/AuthIsNotEnabled'
+          AUTH_IS_NOT_CONFIRMED: '#/components/schemas/AuthIsNotConfirmed'
+          NO_AUTH_AVAILABLE_FOR_FACTOR: '#/components/schemas/NoAuthAvailableForFactor'
+          AUTH_REQUIRES_ANOTHER: '#/components/schemas/AuthRequiresAnother'
+          CODE_IS_EXPIRED: '#/components/schemas/CodeIsExpired'
+          CODE_TOO_MANY_ATTEMPTS: '#/components/schemas/CodeTooManyAttempts'
+          CODE_IS_INCORRECT: '#/components/schemas/CodeIsIncorrect'
+          UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
+          SERVER_ERR: '#/components/schemas/ServerErr'
+          INTEGRATION_ERR: '#/components/schemas/IntegrationErr'
+          ANY_ERR: '#/components/schemas/AnyErr'
+      x-order: 2025349183-0
+      x-sealed: false
+    AccessDenied:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      x-order: -2065236468-1
+      x-super: '#/components/schemas/Unauthenticated'
+    AnswerErr:
+      required:
+      - tooLong
+      - tooShort
+      type: object
+      properties:
+        tooShort:
+          type: boolean
+        tooLong:
+          type: boolean
+      x-order: -1279700867-9
+    AnyErr:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      additionalProperties: true
+      x-order: 2025349183-5
+      x-super: '#/components/schemas/Err'
+    AuthIsNotConfirmed:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      x-order: -270554383-3
+      x-super: '#/components/schemas/ClientErr'
+    AuthIsNotEnabled:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      x-order: -270554383-2
+      x-super: '#/components/schemas/ClientErr'
+    AuthRequiresAnother:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      x-order: -270554383-5
+      x-super: '#/components/schemas/ClientErr'
+    ClientErr:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      discriminator:
+        propertyName: code
+        mapping:
+          PLUGIN_CLIENT_ERR: '#/components/schemas/PluginClientErr'
+          PASSWORD_IS_INCORRECT: '#/components/schemas/PasswordIsIncorrect'
+          PASSWORD_IS_INVALID: '#/components/schemas/PasswordIsInvalid'
+          EMAIL_IS_INCORRECT: '#/components/schemas/EmailIsIncorrect'
+          IP_NEW: '#/components/schemas/IpNew'
+          QUESTIONS_ANSWERS_INCORRECT: '#/components/schemas/QuestionsAnswersIncorrect'
+          QUESTIONS_ANSWERS_INVALID: '#/components/schemas/QuestionsAnswersInvalid'
+          SESSION_EXPIRED: '#/components/schemas/SessionExpired'
+          ACCESS_DENIED: '#/components/schemas/AccessDenied'
+          USER_NOT_FOUND: '#/components/schemas/UserNotFound'
+          SIGNATURE_IS_INCORRECT: '#/components/schemas/SignatureIsIncorrect'
+          USER_LOGIN_IS_INVALID: '#/components/schemas/UserLoginIsInvalid'
+          USER_LOGIN_ALREADY_TAKEN: '#/components/schemas/UserLoginAlreadyTaken'
+          TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
+          TOO_MANY_REQS: '#/components/schemas/TooManyReqs'
+          AUTH_IS_NOT_ENABLED: '#/components/schemas/AuthIsNotEnabled'
+          AUTH_IS_NOT_CONFIRMED: '#/components/schemas/AuthIsNotConfirmed'
+          AUTH_REQUIRES_ANOTHER: '#/components/schemas/AuthRequiresAnother'
+          CODE_IS_EXPIRED: '#/components/schemas/CodeIsExpired'
+          CODE_TOO_MANY_ATTEMPTS: '#/components/schemas/CodeTooManyAttempts'
+          CODE_IS_INCORRECT: '#/components/schemas/CodeIsIncorrect'
+          UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
+      x-order: 2025349183-4
+      x-sealed: false
+      x-super: '#/components/schemas/Err'
+    CodeIsExpired:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      x-order: -270554383-6
+      x-super: '#/components/schemas/ClientErr'
+    CodeIsIncorrect:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      x-order: -270554383-8
+      x-super: '#/components/schemas/ClientErr'
+    CodeTooManyAttempts:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      x-order: -270554383-7
+      x-super: '#/components/schemas/ClientErr'
+    EmailIsIncorrect:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      x-order: -1279700867-5
+      x-super: '#/components/schemas/ClientErr'
+    Instant:
+      type: integer
+      format: int64
+    IntegrationErr:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      discriminator:
+        propertyName: code
+        mapping:
+          NO_AUTH_AVAILABLE_FOR_FACTOR: '#/components/schemas/NoAuthAvailableForFactor'
+          INTEGRATION_ERR: '#/components/schemas/IntegrationErr'
+      x-order: 2025349183-3
+      x-sealed: false
+      x-super: '#/components/schemas/Err'
+    IpNew:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      x-order: -1279700867-6
+      x-super: '#/components/schemas/ClientErr'
+    LoginId:
+      required:
+      - login
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type of login
+        login:
+          type: string
+          description: "User unique identifier, email, username, etc."
+      x-order: -2010674509-2
+    NoAuthAvailableForFactor:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      x-order: -270554383-4
+      x-super: '#/components/schemas/IntegrationErr'
+    PasswordIsIncorrect:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+        changedAt:
+          type: integer
+          format: int64
+          x-nullable: true
+        changedDaysAgo:
+          type: integer
+          format: int64
+          x-nullable: true
+      x-order: -1279700867-3
+      x-super: '#/components/schemas/ClientErr'
+    PasswordIsInvalid:
+      required:
+      - code
+      - commonPassword
+      - devMsg
+      - missingLowerCase
+      - missingNumber
+      - missingSymbol
+      - missingUpperCase
+      - passwordsMismatch
+      - tooLong
+      - tooShort
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+        tooLong:
+          type: boolean
+        tooShort:
+          type: boolean
+        missingNumber:
+          type: boolean
+        missingSymbol:
+          type: boolean
+        missingUpperCase:
+          type: boolean
+        missingLowerCase:
+          type: boolean
+        commonPassword:
+          type: boolean
+        wasUsedBeforeAt:
+          type: integer
+          format: int64
+          x-nullable: true
+        matchesLogin:
+          $ref: '#/components/schemas/LoginId'
+        passwordsMismatch:
+          type: boolean
+        strength:
+          type: string
+          x-nullable: true
+        wasUsedDaysAgo:
+          type: integer
+          format: int64
+      x-order: -1279700867-4
+      x-super: '#/components/schemas/ClientErr'
+    PluginClientErr:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      additionalProperties: true
+      x-order: -1279700867-2
+      x-super: '#/components/schemas/ClientErr'
+    PluginErr:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      x-order: -1279700867-1
+      x-super: '#/components/schemas/ServerErr'
+    QuestionsAnswersIncorrect:
+      required:
+      - code
+      - devMsg
+      - incorrectAnswers
+      - questionsNotFound
+      - requiresMoreAnswers
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+        incorrectAnswers:
+          type: array
+          items:
+            type: string
+        requiresMoreAnswers:
+          type: boolean
+        questionsNotFound:
+          type: array
+          items:
+            type: string
+      x-order: -1279700867-7
+      x-super: '#/components/schemas/ClientErr'
+    QuestionsAnswersInvalid:
+      required:
+      - code
+      - devMsg
+      - invalidAnswers
+      - tooManyAnswers
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+        invalidAnswers:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/AnswerErr'
+        tooManyAnswers:
+          type: boolean
+      x-order: -1279700867-8
+      x-super: '#/components/schemas/ClientErr'
+    ServerErr:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      discriminator:
+        propertyName: code
+        mapping:
+          SERVER_ERR: '#/components/schemas/ServerErr'
+          PLUGIN_ERR: '#/components/schemas/PluginErr'
+      x-order: 2025349183-2
+      x-sealed: false
+      x-super: '#/components/schemas/Err'
+    SessionExpired:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      x-order: -2065236468-0
+      x-super: '#/components/schemas/Unauthenticated'
+    SignatureIsIncorrect:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      x-order: -2065236468-3
+      x-super: '#/components/schemas/ClientErr'
+    TokenExpired:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+        expiredAt:
+          type: integer
+          format: int64
+          x-nullable: true
+      x-order: -270554383-11
+      x-super: '#/components/schemas/Unauthenticated'
+    TooManyReqs:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+        waitTimeMs:
+          type: integer
+          format: int32
+          x-nullable: true
+        waitTimeSeconds:
+          type: integer
+          format: int32
+          x-nullable: true
+        waitTimeMinutes:
+          type: integer
+          format: int32
+          x-nullable: true
+      x-order: -270554383-12
+      x-super: '#/components/schemas/ClientErr'
+    Unauthenticated:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      discriminator:
+        propertyName: code
+        mapping:
+          SESSION_EXPIRED: '#/components/schemas/SessionExpired'
+          ACCESS_DENIED: '#/components/schemas/AccessDenied'
+          USER_NOT_FOUND: '#/components/schemas/UserNotFound'
+          TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
+          UNAUTHENTICATED: '#/components/schemas/Unauthenticated'
+      x-order: -270554383-9
+      x-sealed: false
+      x-super: '#/components/schemas/ClientErr'
+    UserLoginAlreadyTaken:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      x-order: -270554383-1
+      x-super: '#/components/schemas/ClientErr'
+    UserLoginIsInvalid:
+      required:
+      - code
+      - devMsg
+      - loginId
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+        loginId:
+          $ref: '#/components/schemas/LoginId'
+      x-order: -270554383-0
+      x-super: '#/components/schemas/ClientErr'
+    UserNotFound:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      x-order: -2065236468-2
+      x-super: '#/components/schemas/Unauthenticated'
+    RateLimiterState:
+      required:
+      - burntQuota
+      - id
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/RateLimiterStateId'
+        burntQuota:
+          type: number
+          format: double
+      x-order: 328297103-0
+    RateLimiterStateId:
+      required:
+      - rateLimiter
+      - user
+      - window
+      type: object
+      properties:
+        rateLimiter:
+          type: string
+        user:
+          $ref: '#/components/schemas/RateLimiterUser'
+        window:
+          $ref: '#/components/schemas/TimeWindow'
+      x-order: 328297103-2
+    RateLimiterUser:
+      type: object
+      properties:
+        userId:
+          type: string
+          x-nullable: true
+        ip:
+          type: string
+          x-nullable: true
+      x-order: 328297103-4
+    TimeWindow:
+      required:
+      - end
+      - start
+      type: object
+      properties:
+        start:
+          type: integer
+          format: int64
+        end:
+          type: integer
+          format: int64
+      x-order: 328297103-6
+    BurnQuotaReq:
+      required:
+      - quota
+      type: object
+      properties:
+        quota:
+          type: number
+          format: double
+      x-order: 1338599945-1
+    AuthData:
+      required:
+      - private
+      - public
+      type: object
+      properties:
+        public:
+          anyOf:
+          - $ref: '#/components/schemas/AuthPublicData'
+          - $ref: '#/components/schemas/EmailPublicData'
+          - $ref: '#/components/schemas/NoAuthPublicData'
+          - $ref: '#/components/schemas/PasswordPublicData'
+          - $ref: '#/components/schemas/QuestionsPublicData'
+        private:
+          anyOf:
+          - $ref: '#/components/schemas/AuthPrivateData'
+          - $ref: '#/components/schemas/IpPrivateData'
+          - $ref: '#/components/schemas/NoAuthPrivateData'
+          - $ref: '#/components/schemas/PasswordHistory'
+          - $ref: '#/components/schemas/QuestionsPrivateData'
+        login:
+          type: string
+          description: |-
+            If authenticator supports identification, it provides login here. This can be email, phone number,
+            facebook account id, etc.
+          x-nullable: true
+      x-order: 332570507-3
+    AuthPrivateData:
+      type: object
+      additionalProperties: true
+      x-order: 332570507-6
+    AuthPublicData:
+      type: object
+      additionalProperties: true
+      x-order: 332570507-4
+    AuthRes:
+      required:
+      - authData
+      type: object
+      properties:
+        authData:
+          required:
+          - private
+          - public
+          type: object
+          properties:
+            public:
+              anyOf:
+              - $ref: '#/components/schemas/AuthPublicData'
+              - $ref: '#/components/schemas/EmailPublicData'
+              - $ref: '#/components/schemas/NoAuthPublicData'
+              - $ref: '#/components/schemas/PasswordPublicData'
+              - $ref: '#/components/schemas/QuestionsPublicData'
+            private:
+              anyOf:
+              - $ref: '#/components/schemas/AuthPrivateData'
+              - $ref: '#/components/schemas/IpPrivateData'
+              - $ref: '#/components/schemas/NoAuthPrivateData'
+              - $ref: '#/components/schemas/PasswordHistory'
+              - $ref: '#/components/schemas/QuestionsPrivateData'
+            login:
+              type: string
+              description: |-
+                If authenticator supports identification, it provides login here. This can be email, phone number,
+                facebook account id, etc.
+              x-nullable: true
+          description: New auth data to save
+          x-super: '#/components/schemas/AuthData'
+        resData:
+          description: This data will be sent back to the client.
+          anyOf:
+          - $ref: '#/components/schemas/AuthResData'
+          - $ref: '#/components/schemas/EmailAuthResData'
+          - $ref: '#/components/schemas/IpAuthResData'
+          - $ref: '#/components/schemas/OAuthResData'
+          - $ref: '#/components/schemas/PasswordUpdateResData'
+          - $ref: '#/components/schemas/QuestionsAuthResData'
+          - $ref: '#/components/schemas/QuestionsUpdateResData'
+          x-nullable: true
+      x-order: -1249106462-9
+    AuthResData:
+      type: object
+      additionalProperties: true
+      x-order: -1249106462-10
+    EmailAuthResData:
+      type: object
+      properties:
+        emailSentTo:
+          type: string
+          description: "Shows user email, that was used to send a code. Email will\
+            \ be partially hidden."
+      additionalProperties: true
+      x-order: 1021533909-5
+      x-super: '#/components/schemas/AuthResData'
+    EmailPublicData:
+      required:
+      - email
+      - updatedAt
+      type: object
+      properties:
+        email:
+          type: string
+          description: User email.
+        updatedAt:
+          type: integer
+          description: Last time when email was changed.
+          format: int64
+      additionalProperties: true
+      x-order: 1021533909-2
+      x-super: '#/components/schemas/AuthPublicData'
+    IpAuthResData:
+      required:
+      - ipEncoded
+      type: object
+      properties:
+        ipEncoded:
+          type: string
+      additionalProperties: true
+      x-order: 2116983897-2
+      x-super: '#/components/schemas/AuthResData'
+    IpPrivateData:
+      type: object
+      properties:
+        encodedIps:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+      additionalProperties: true
+      x-order: 2116983897-1
+      x-super: '#/components/schemas/AuthPrivateData'
+    NoAuthPrivateData:
+      type: object
+      additionalProperties: true
+      x-order: 332570507-7
+      x-super: '#/components/schemas/AuthPrivateData'
+    NoAuthPublicData:
+      type: object
+      additionalProperties: true
+      x-order: 332570507-5
+      x-super: '#/components/schemas/AuthPublicData'
+    OAuthPublicData:
+      type: object
+      additionalProperties: true
+      x-order: -893636857-2
+    OAuthResData:
+      required:
+      - extractedLogin
+      - extractedPublicData
+      type: object
+      properties:
+        extractedLogin:
+          type: string
+        extractedPublicData:
+          $ref: '#/components/schemas/OAuthPublicData'
+      additionalProperties: true
+      x-order: -893636857-5
+      x-super: '#/components/schemas/AuthResData'
+    Password:
+      required:
+      - createdAt
+      - hash
+      type: object
+      properties:
+        hash:
+          type: string
+        createdAt:
+          type: integer
+          format: int64
+      x-order: 378192899-3
+    PasswordHistory:
+      type: object
+      properties:
+        passwords:
+          type: array
+          items:
+            $ref: '#/components/schemas/Password'
+        changedAt:
+          type: integer
+          format: int64
+          x-nullable: true
+      additionalProperties: true
+      x-order: 378192899-0
+      x-super: '#/components/schemas/AuthPrivateData'
+    PasswordPublicData:
+      required:
+      - updatedAt
+      type: object
+      properties:
+        updatedAt:
+          type: integer
+          description: Time when password was updated last time.
+          format: int64
+      additionalProperties: true
+      x-order: -266447761-2
+      x-super: '#/components/schemas/AuthPublicData'
+    PasswordUpdateResData:
+      required:
+      - password
+      type: object
+      properties:
+        password:
+          type: string
+          description: If password was generated by app this field contains generated
+            password.
+        strength:
+          type: string
+          description: Calculated strength of password. Null means that all checks
+            failed.
+          x-nullable: true
+      additionalProperties: true
+      x-order: -266447761-5
+      x-super: '#/components/schemas/AuthResData'
+    QuestionsAuthResData:
+      required:
+      - correct
+      type: object
+      properties:
+        correct:
+          type: object
+          additionalProperties:
+            type: boolean
+            x-additionalPropertiesName: question id
+          description: |
+            Shows is answer was correct.
+          example:
+            HOMETOWN: true
+            MOTHER_NAME: false
+      additionalProperties: true
+      x-order: -213229069-4
+      x-super: '#/components/schemas/AuthResData'
+    QuestionsPrivateData:
+      type: object
+      properties:
+        answers:
+          type: object
+          additionalProperties:
+            type: string
+      additionalProperties: true
+      x-order: -213229069-2
+      x-super: '#/components/schemas/AuthPrivateData'
+    QuestionsPublicData:
+      type: object
+      properties:
+        answersSavedAt:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+            x-additionalPropertiesName: question id
+      additionalProperties: true
+      x-order: -213229069-1
+      x-super: '#/components/schemas/AuthPublicData'
+    QuestionsUpdateResData:
+      required:
+      - answersSavedAt
+      type: object
+      properties:
+        answersSavedAt:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+            x-additionalPropertiesName: question id
+          description: |
+            Date of last update
+      additionalProperties: true
+      x-order: -213229069-6
+      x-super: '#/components/schemas/AuthResData'
+    AppSecretReqData:
+      required:
+      - secret
+      type: object
+      properties:
+        secret:
+          type: string
+      additionalProperties: true
+      x-order: 791325901-2
+      x-super: '#/components/schemas/AuthReqData'
+    AuthReq:
+      required:
+      - ctx
+      - reqData
+      type: object
+      properties:
+        dryRunAuthResData:
+          description: Response provided by dry-run execution
+          anyOf:
+          - $ref: '#/components/schemas/AuthResData'
+          - $ref: '#/components/schemas/EmailAuthResData'
+          - $ref: '#/components/schemas/IpAuthResData'
+          - $ref: '#/components/schemas/OAuthResData'
+          - $ref: '#/components/schemas/PasswordUpdateResData'
+          - $ref: '#/components/schemas/QuestionsAuthResData'
+          - $ref: '#/components/schemas/QuestionsUpdateResData'
+          x-nullable: true
+        user:
+          required:
+          - auths
+          - factors
+          - id
+          - logins
+          - signedUpAt
+          - updatedAt
+          type: object
+          properties:
+            id:
+              type: string
+              description: |
+                Generated user uuid
+              example: 2c24704f-198a-4bc4-9718-306ccc97bbdc
+            logins:
+              type: array
+              items:
+                $ref: '#/components/schemas/Login'
+            auths:
+              type: object
+              additionalProperties:
+                x-additionalPropertiesName: auth
+                $ref: '#/components/schemas/AuthUserCfg'
+              description: |
+                Public data of confirmed auths and sent codes for unconfirmed auths.
+            factors:
+              uniqueItems: true
+              type: array
+              description: Enabled factors
+              items:
+                type: string
+            signedUpAt:
+              type: integer
+              format: int64
+            updatedAt:
+              type: integer
+              format: int64
+            systemAccess:
+              type: boolean
+              description: Allows to edit any user in the app.
+              default: false
+          description: User loaded from database. Can be null if user isn't identified
+            yet.
+          x-nullable: true
+          x-super: '#/components/schemas/User'
+        session:
+          required:
+          - authenticatedBy
+          - device
+          - entry
+          - expiresAt
+          - id
+          - identifiedBy
+          - newUser
+          - nextFactors
+          - refreshedAt
+          - signedInAt
+          - systemAccess
+          - unconfirmedAuths
+          type: object
+          properties:
+            id:
+              type: string
+            entry:
+              type: string
+              description: Entry that authenticates this session
+            identifiedBy:
+              type: array
+              description: Login used to identify this user
+              items:
+                $ref: '#/components/schemas/LoginId'
+            userId:
+              type: string
+              x-nullable: true
+            authenticatedBy:
+              type: object
+              additionalProperties:
+                type: string
+                x-additionalPropertiesName: factor
+              description: |
+                Authenticator used for factors
+            unconfirmedAuths:
+              type: object
+              additionalProperties:
+                x-additionalPropertiesName: auth
+                $ref: '#/components/schemas/UnconfirmedAuth'
+              description: |
+                Auths that waiting for confirmation
+            nextFactors:
+              type: array
+              description: List of factors needed to authenticate this session
+              items:
+                $ref: '#/components/schemas/NextFactor'
+            signedInAt:
+              type: integer
+              format: int64
+            expiresAt:
+              type: integer
+              format: int64
+            refreshedAt:
+              type: integer
+              format: int64
+            newUser:
+              type: boolean
+            scopes:
+              type: array
+              description: App services list that this session is allowed to access.
+                Null if allowed to access any scope
+              items:
+                type: string
+              x-nullable: true
+            device:
+              $ref: '#/components/schemas/Device'
+            systemAccess:
+              type: boolean
+            authenticated:
+              type: boolean
+          description: "Current session, can be null if user edited by admin."
+          x-nullable: true
+          x-super: '#/components/schemas/Session'
+        authData:
+          required:
+          - private
+          - public
+          type: object
+          properties:
+            public:
+              anyOf:
+              - $ref: '#/components/schemas/AuthPublicData'
+              - $ref: '#/components/schemas/EmailPublicData'
+              - $ref: '#/components/schemas/NoAuthPublicData'
+              - $ref: '#/components/schemas/PasswordPublicData'
+              - $ref: '#/components/schemas/QuestionsPublicData'
+            private:
+              anyOf:
+              - $ref: '#/components/schemas/AuthPrivateData'
+              - $ref: '#/components/schemas/IpPrivateData'
+              - $ref: '#/components/schemas/NoAuthPrivateData'
+              - $ref: '#/components/schemas/PasswordHistory'
+              - $ref: '#/components/schemas/QuestionsPrivateData'
+            login:
+              type: string
+              description: |-
+                If authenticator supports identification, it provides login here. This can be email, phone number,
+                facebook account id, etc.
+              x-nullable: true
+          description: |-
+            Current session data. Null if auth wasn't enabled before. Otherwise, will contain current auth data during
+            authenticate and previous data during update-auth request.
+          x-nullable: true
+          x-super: '#/components/schemas/AuthData'
+        codeToSend:
+          required:
+          - attemptsLeft
+          - code
+          - codeHash
+          - sentAt
+          - usedAttempts
+          - validUntil
+          type: object
+          properties:
+            validUntil:
+              type: integer
+              format: int64
+            usedAttempts:
+              type: integer
+              format: int32
+            attemptsLeft:
+              type: integer
+              format: int32
+            codeHash:
+              type: string
+            sentAt:
+              type: integer
+              format: int64
+            code:
+              type: string
+          description: Generated code. Will be null if no code-config specified.
+          x-nullable: true
+          x-super: '#/components/schemas/Code'
+        reqData:
+          anyOf:
+          - $ref: '#/components/schemas/AppSecretReqData'
+          - $ref: '#/components/schemas/AuthReqData'
+          - $ref: '#/components/schemas/EmailAuthReqData'
+          - $ref: '#/components/schemas/EmailUpdateReqData'
+          - $ref: '#/components/schemas/NoAuthReqData'
+          - $ref: '#/components/schemas/OAuthReqData'
+          - $ref: '#/components/schemas/PasswordAuthReqData'
+          - $ref: '#/components/schemas/PasswordUpdateReqData'
+          - $ref: '#/components/schemas/QuestionsAuthReqData'
+          - $ref: '#/components/schemas/QuestionsUpdateReqData'
+        ctx:
+          $ref: '#/components/schemas/ReqCtx'
+      x-order: -1249106462-2
+    AuthReqData:
+      type: object
+      additionalProperties: true
+      x-order: -1249106462-4
+    AuthUserCfg:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AuthData'
+        sentCodes:
+          type: array
+          description: |
+            List of auths that wait for confirmation.
+          items:
+            $ref: '#/components/schemas/UnconfirmedAuthData'
+      x-order: 332570507-0
+    Code:
+      required:
+      - attemptsLeft
+      - code
+      - codeHash
+      - sentAt
+      - usedAttempts
+      - validUntil
+      type: object
+      properties:
+        validUntil:
+          type: integer
+          format: int64
+        usedAttempts:
+          type: integer
+          format: int32
+        attemptsLeft:
+          type: integer
+          format: int32
+        codeHash:
+          type: string
+        sentAt:
+          type: integer
+          format: int64
+        code:
+          type: string
+      x-order: -1249106462-3
+    CodeVerifier:
+      required:
+      - attemptsLeft
+      - codeHash
+      - sentAt
+      - usedAttempts
+      - validUntil
+      type: object
+      properties:
+        validUntil:
+          type: integer
+          format: int64
+        usedAttempts:
+          type: integer
+          format: int32
+        attemptsLeft:
+          type: integer
+          format: int32
+        codeHash:
+          type: string
+        sentAt:
+          type: integer
+          format: int64
+      x-order: 1113303910-0
+    Device:
+      required:
+      - mobile
+      - userAgent
+      type: object
+      properties:
+        mobile:
+          type: boolean
+        type:
+          type: string
+          x-nullable: true
+        browser:
+          type: string
+          x-nullable: true
+        userAgent:
+          type: string
+      x-order: 1837614569-0
+    EmailAuthReqData:
+      type: object
+      properties:
+        email:
+          type: string
+          description: |-
+            User email. If email is not null - auth allow identification by email (email auth also must be listed in
+            logins config). Otherwise, uses email of already identified user.
+          x-nullable: true
+        template:
+          type: string
+          description: Template to use.
+          x-nullable: true
+        templateParams:
+          type: object
+          additionalProperties:
+            type: object
+          description: Template params
+          x-nullable: true
+      additionalProperties: true
+      x-order: 1021533909-3
+      x-super: '#/components/schemas/AuthReqData'
+    EmailUpdateReqData:
+      required:
+      - email
+      type: object
+      properties:
+        email:
+          type: string
+          description: New email to set.
+        template:
+          type: string
+          description: Template to use.
+          x-nullable: true
+        templateParams:
+          type: object
+          additionalProperties:
+            type: object
+          description: Template params
+          x-nullable: true
+      additionalProperties: true
+      x-order: 1021533909-4
+      x-super: '#/components/schemas/AuthReqData'
+    Login:
+      required:
+      - login
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type of login
+        login:
+          type: string
+          description: "User unique identifier, email, username, etc."
+        unconfirmedLogin:
+          type: string
+          x-nullable: true
+      x-order: -2010674509-0
+    NextFactor:
+      required:
+      - factor
+      - supportedAuths
+      type: object
+      properties:
+        factor:
+          type: string
+        supportedAuths:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+      x-order: 1296788734-0
+    NoAuthReqData:
+      type: object
+      additionalProperties: true
+      x-order: -1249106462-5
+      x-super: '#/components/schemas/AuthReqData'
+    OAuthReqData:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          description: If you have access-token - put it here.
+          x-nullable: true
+        authorizationCode:
+          type: string
+          description: If you have authorisation-code - app will exchange it for access-token.
+          x-nullable: true
+        redirectUri:
+          type: string
+          description: Redirect uri used when requested user login.
+          x-nullable: true
+      additionalProperties: true
+      x-order: -893636857-4
+      x-super: '#/components/schemas/AuthReqData'
+    PasswordAuthReqData:
+      required:
+      - password
+      type: object
+      properties:
+        password:
+          type: string
+          description: User password.
+      additionalProperties: true
+      x-order: -266447761-3
+      x-super: '#/components/schemas/AuthReqData'
+    PasswordUpdateReqData:
+      type: object
+      properties:
+        password:
+          type: string
+          description: New password to set. If null app generates password automatically.
+          x-nullable: true
+        confirmPassword:
+          type: string
+          description: Password confirmation. If null app doesn't perform this check.
+          x-nullable: true
+      additionalProperties: true
+      x-order: -266447761-4
+      x-super: '#/components/schemas/AuthReqData'
+    QuestionsAuthReqData:
+      required:
+      - answers
+      type: object
+      properties:
+        answers:
+          type: object
+          additionalProperties:
+            type: string
+            x-additionalPropertiesName: question id
+          description: |
+            Given answers for questions.
+          example:
+            HOMETOWN: New-York
+            MOTHER_NAME: Emma
+      additionalProperties: true
+      x-order: -213229069-3
+      x-super: '#/components/schemas/AuthReqData'
+    QuestionsUpdateReqData:
+      required:
+      - answers
+      type: object
+      properties:
+        answers:
+          type: object
+          additionalProperties:
+            type: string
+            x-additionalPropertiesName: question id
+          description: |
+            Answers to save. `null` as value removes answer
+          example:
+            HOMETOWN: London
+            MOTHER_NAME: null
+      additionalProperties: true
+      x-order: -213229069-5
+      x-super: '#/components/schemas/AuthReqData'
+    ReqCtx:
+      required:
+      - device
+      - headers
+      - ip
+      type: object
+      properties:
+        lang:
+          type: string
+          x-nullable: true
+        ip:
+          type: string
+        device:
+          $ref: '#/components/schemas/Device'
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+      x-order: -418366826-0
+    Session:
+      required:
+      - authenticatedBy
+      - device
+      - entry
+      - expiresAt
+      - id
+      - identifiedBy
+      - newUser
+      - nextFactors
+      - refreshedAt
+      - signedInAt
+      - systemAccess
+      - unconfirmedAuths
+      type: object
+      properties:
+        id:
+          type: string
+        entry:
+          type: string
+          description: Entry that authenticates this session
+        identifiedBy:
+          type: array
+          description: Login used to identify this user
+          items:
+            $ref: '#/components/schemas/LoginId'
+        userId:
+          type: string
+          x-nullable: true
+        authenticatedBy:
+          type: object
+          additionalProperties:
+            type: string
+            x-additionalPropertiesName: factor
+          description: |
+            Authenticator used for factors
+        unconfirmedAuths:
+          type: object
+          additionalProperties:
+            x-additionalPropertiesName: auth
+            $ref: '#/components/schemas/UnconfirmedAuth'
+          description: |
+            Auths that waiting for confirmation
+        nextFactors:
+          type: array
+          description: List of factors needed to authenticate this session
+          items:
+            $ref: '#/components/schemas/NextFactor'
+        signedInAt:
+          type: integer
+          format: int64
+        expiresAt:
+          type: integer
+          format: int64
+        refreshedAt:
+          type: integer
+          format: int64
+        newUser:
+          type: boolean
+        scopes:
+          type: array
+          description: App services list that this session is allowed to access. Null
+            if allowed to access any scope
+          items:
+            type: string
+          x-nullable: true
+        device:
+          $ref: '#/components/schemas/Device'
+        systemAccess:
+          type: boolean
+        authenticated:
+          type: boolean
+      x-order: 2013237977-0
+    UnconfirmedAuth:
+      type: object
+      properties:
+        sentCodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/CodeVerifier'
+      x-order: 320227009-0
+    UnconfirmedAuthData:
+      required:
+      - code
+      - data
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AuthData'
+        code:
+          $ref: '#/components/schemas/CodeVerifier'
+      x-order: 332570507-8
+    User:
+      required:
+      - auths
+      - factors
+      - id
+      - logins
+      - signedUpAt
+      - updatedAt
+      type: object
+      properties:
+        id:
+          type: string
+          description: |
+            Generated user uuid
+          example: 2c24704f-198a-4bc4-9718-306ccc97bbdc
+        logins:
+          type: array
+          items:
+            $ref: '#/components/schemas/Login'
+        auths:
+          type: object
+          additionalProperties:
+            x-additionalPropertiesName: auth
+            $ref: '#/components/schemas/AuthUserCfg'
+          description: |
+            Public data of confirmed auths and sent codes for unconfirmed auths.
+        factors:
+          uniqueItems: true
+          type: array
+          description: Enabled factors
+          items:
+            type: string
+        signedUpAt:
+          type: integer
+          format: int64
+        updatedAt:
+          type: integer
+          format: int64
+        systemAccess:
+          type: boolean
+          description: Allows to edit any user in the app.
+          default: false
+      x-order: 276900135-0
+    DryRunAuthData:
+      type: object
+      properties:
+        login:
+          type: string
+          description: |-
+            If authenticator supports identification, it provides login here. This can be email, phone number,
+            facebook account id, etc.
+          x-nullable: true
+      x-order: -1249106462-8
+    DryRunAuthRes:
+      type: object
+      properties:
+        authData:
+          type: object
+          properties:
+            login:
+              type: string
+              description: |-
+                If authenticator supports identification, it provides login here. This can be email, phone number,
+                facebook account id, etc.
+              x-nullable: true
+          description: New auth data to save
+          x-nullable: true
+          x-super: '#/components/schemas/DryRunAuthData'
+        resData:
+          description: This data will be sent back to the client.
+          anyOf:
+          - $ref: '#/components/schemas/AuthResData'
+          - $ref: '#/components/schemas/EmailAuthResData'
+          - $ref: '#/components/schemas/IpAuthResData'
+          - $ref: '#/components/schemas/OAuthResData'
+          - $ref: '#/components/schemas/PasswordUpdateResData'
+          - $ref: '#/components/schemas/QuestionsAuthResData'
+          - $ref: '#/components/schemas/QuestionsUpdateResData'
+          x-nullable: true
+      x-order: -1249106462-7
+    FindSessionRes:
+      type: object
+      properties:
+        session:
+          $ref: '#/components/schemas/Session'
+      x-order: 400707106-2
+    FindSessionsRes:
+      required:
+      - sessions
+      type: object
+      properties:
+        sessions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Session'
+        tooManySessions:
+          type: boolean
+          description: True if number of sessions in database exceeds some limit
+      x-order: 400707106-4
+    SaveSessionReq:
+      required:
+      - removed
+      type: object
+      properties:
+        userId:
+          type: string
+          x-nullable: true
+        updated:
+          required:
+          - authenticatedBy
+          - device
+          - entry
+          - expiresAt
+          - id
+          - identifiedBy
+          - newUser
+          - nextFactors
+          - refreshedAt
+          - signedInAt
+          - systemAccess
+          - unconfirmedAuths
+          type: object
+          properties:
+            id:
+              type: string
+            entry:
+              type: string
+              description: Entry that authenticates this session
+            identifiedBy:
+              type: array
+              description: Login used to identify this user
+              items:
+                $ref: '#/components/schemas/LoginId'
+            userId:
+              type: string
+              x-nullable: true
+            authenticatedBy:
+              type: object
+              additionalProperties:
+                type: string
+                x-additionalPropertiesName: factor
+              description: |
+                Authenticator used for factors
+            unconfirmedAuths:
+              type: object
+              additionalProperties:
+                x-additionalPropertiesName: auth
+                $ref: '#/components/schemas/UnconfirmedAuth'
+              description: |
+                Auths that waiting for confirmation
+            nextFactors:
+              type: array
+              description: List of factors needed to authenticate this session
+              items:
+                $ref: '#/components/schemas/NextFactor'
+            signedInAt:
+              type: integer
+              format: int64
+            expiresAt:
+              type: integer
+              format: int64
+            refreshedAt:
+              type: integer
+              format: int64
+            newUser:
+              type: boolean
+            scopes:
+              type: array
+              description: App services list that this session is allowed to access.
+                Null if allowed to access any scope
+              items:
+                type: string
+              x-nullable: true
+            device:
+              $ref: '#/components/schemas/Device'
+            systemAccess:
+              type: boolean
+            authenticated:
+              type: boolean
+          description: Session to update.
+          x-nullable: true
+          x-super: '#/components/schemas/Session'
+        new:
+          required:
+          - authenticatedBy
+          - device
+          - entry
+          - expiresAt
+          - id
+          - identifiedBy
+          - newUser
+          - nextFactors
+          - refreshedAt
+          - signedInAt
+          - systemAccess
+          - unconfirmedAuths
+          type: object
+          properties:
+            id:
+              type: string
+            entry:
+              type: string
+              description: Entry that authenticates this session
+            identifiedBy:
+              type: array
+              description: Login used to identify this user
+              items:
+                $ref: '#/components/schemas/LoginId'
+            userId:
+              type: string
+              x-nullable: true
+            authenticatedBy:
+              type: object
+              additionalProperties:
+                type: string
+                x-additionalPropertiesName: factor
+              description: |
+                Authenticator used for factors
+            unconfirmedAuths:
+              type: object
+              additionalProperties:
+                x-additionalPropertiesName: auth
+                $ref: '#/components/schemas/UnconfirmedAuth'
+              description: |
+                Auths that waiting for confirmation
+            nextFactors:
+              type: array
+              description: List of factors needed to authenticate this session
+              items:
+                $ref: '#/components/schemas/NextFactor'
+            signedInAt:
+              type: integer
+              format: int64
+            expiresAt:
+              type: integer
+              format: int64
+            refreshedAt:
+              type: integer
+              format: int64
+            newUser:
+              type: boolean
+            scopes:
+              type: array
+              description: App services list that this session is allowed to access.
+                Null if allowed to access any scope
+              items:
+                type: string
+              x-nullable: true
+            device:
+              $ref: '#/components/schemas/Device'
+            systemAccess:
+              type: boolean
+            authenticated:
+              type: boolean
+          description: Session to insert
+          x-nullable: true
+          x-super: '#/components/schemas/Session'
+        removed:
+          type: array
+          description: Session ids to remove
+          items:
+            type: string
+      x-order: 400707106-3
+    FindUserRes:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+      x-order: -1537032784-1
+    SaveUserReq:
+      required:
+      - newLogins
+      - newUsers
+      - removedLogins
+      - updatedLogins
+      - updatedUsers
+      - updatedUsersOrLogins
+      type: object
+      properties:
+        removedLogins:
+          type: array
+          description: Login ids to remove.
+          items:
+            $ref: '#/components/schemas/LoginId'
+        updatedUsers:
+          type: array
+          description: User that must be updated. This list doesn't include users
+            that have new/updated/removed logins only.
+          items:
+            $ref: '#/components/schemas/User'
+        newUsers:
+          type: array
+          description: Users to insert
+          items:
+            $ref: '#/components/schemas/User'
+        updatedLogins:
+          type: array
+          description: Logins to update
+          items:
+            $ref: '#/components/schemas/Login'
+        newLogins:
+          type: array
+          description: Logins to insert
+          items:
+            $ref: '#/components/schemas/Login'
+        updatedUsersOrLogins:
+          type: array
+          description: "Alternative field, if users and logins stored withing single\
+            \ document - prefer this field + `newUsers`"
+          items:
+            $ref: '#/components/schemas/User'
+      x-order: -1537032784-2
+x-tagGroups:
+- name: Api
+  tags:
+  - plugin/auth
+  - plugin/repo/user
+  - plugin/repo/session
+  - plugin/rate-limiter

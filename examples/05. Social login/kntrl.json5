@@ -1,0 +1,34 @@
+{
+  logins: [ "facebook", "google" ],
+
+  auths: {
+    // Check corresponding auth provider to get these data.
+    // E.g. for facebook it's located here: https://developers.facebook.com/docs/facebook-login/guides/advanced/manual-flow
+
+    facebook: {
+      builtin: "oauth/facebook/openid",
+
+      exchangeAuthCode: {
+        clientId: "<client-id>",
+        clientSecret: "<client-secret>",
+      },
+    },
+
+    google: {
+      builtin: "oauth/google/openid",
+
+      exchangeAuthCode: {
+        clientId: "<client-id>",
+        clientSecret: "<client-secret>",
+      },
+    }
+  },
+
+  entries: {
+    app: {
+      factorsRequired: {
+        first: [ "facebook", "google" ]
+      },
+    }
+  }
+}

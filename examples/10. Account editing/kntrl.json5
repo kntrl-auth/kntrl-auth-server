@@ -1,0 +1,24 @@
+{
+  logins: [ "username", "email" ],
+
+  auths: {
+    email: {
+      server: "maildev:1025",
+      sender: "test@test.com",
+      code: {},
+    },
+    password: {}
+  },
+
+  entries: {
+    app: {
+      factorsRequired: {
+        first: [ "password" ]
+      },
+      factorsOptional: {
+        second: [ "email" ]
+      },
+      editAccount: true
+    }
+  }
+}

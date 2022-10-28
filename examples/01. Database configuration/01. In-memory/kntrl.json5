@@ -1,0 +1,14 @@
+{
+  db: {
+    user: {
+      // inMemory by default
+      inMemory: true
+    },
+    session: {
+      // inMemory by default
+    },
+    rateLimiter: {
+      // inMemory by default
+    }
+  }
+}

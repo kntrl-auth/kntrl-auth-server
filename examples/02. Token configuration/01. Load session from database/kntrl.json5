@@ -1,0 +1,9 @@
+{
+  token: {
+    access: {
+      cookie: true,
+      // Disable caching so session will always be loaded from database
+      cache: null,
+    },
+  }
+}

@@ -1,0 +1,12 @@
+{
+  token: {
+    access: {
+      cookie: true,
+      // Access token will be extracted from JWT
+      cache: "JWT",
+    },
+  },
+
+  // Public key for JWT will be generated with this secret
+  secret: 'test'
+}

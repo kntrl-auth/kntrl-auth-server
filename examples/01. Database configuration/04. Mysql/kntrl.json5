@@ -1,0 +1,17 @@
+{
+  db: {
+    user: {
+      mysql: "localhost:3306/test",
+      username: 'test-user',
+      password: 'test-pass',
+    },
+    session: {
+      mysql: "localhost:3306/test",
+      username: 'test-user',
+      password: 'test-pass'
+    },
+    rateLimiter: {
+      // Rate limiter doesn't support mysql
+    }
+  }
+}

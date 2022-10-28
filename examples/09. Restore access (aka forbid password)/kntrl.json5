@@ -1,0 +1,25 @@
+{
+  logins: [ "username" ],
+
+  auths: {
+    password: {},
+    questions: {
+      answersRequired: 2
+    }
+  },
+
+  entries: {
+    app: {
+      factorsRequired: {
+        first: [ "password" ]
+      }
+    },
+
+    forgotPassword: {
+      factorsRequired: {
+        first: [ "questions" ],
+      },
+      editAccount: true
+    }
+  }
+}

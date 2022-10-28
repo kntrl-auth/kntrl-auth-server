@@ -1,0 +1,8 @@
+{
+  PASSWORD_IS_INVALID: "Contraseña incorrecta.\
+    {{#if missingNumber}}Agrega un número.{{/if}}\
+    {{#if missingSymbol}}Agrega un símbolo.{{/if}}",
+
+  welcomeMsg: "Buenas!",
+  confirmationCodeTitle: "Código de verificación"
+}

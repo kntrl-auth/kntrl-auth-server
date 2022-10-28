@@ -1,0 +1,13 @@
+{
+  db: {
+    user: {
+      sqlite: './sqlite-db-file'
+    },
+    session: {
+      sqlite: './sqlite-db-file'
+    },
+    rateLimiter: {
+      // Rate limiter doesn't support sqlite
+    }
+  }
+}

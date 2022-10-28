@@ -1,0 +1,50 @@
+plugins {
+	id 'org.springframework.boot' version '2.7.4'
+	id 'io.spring.dependency-management' version '1.0.14.RELEASE'
+	id 'java'
+	id 'org.hidetake.swagger.generator' version '2.19.2'
+}
+
+group = 'kntrl.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.9'
+
+repositories {
+	mavenCentral()
+}
+
+sourceSets.main.java {
+	srcDirs 'generated/src/gen/java'
+	exclude 'ignored/**'
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	swaggerCodegen 'org.openapitools:openapi-generator-cli:6.2.0'
+	implementation 'com.fasterxml.jackson.core:jackson-databind'
+	implementation 'com.googlecode.libphonenumber:libphonenumber:8.12.57'
+}
+
+task generateOpenapiModels(type: GenerateSwaggerCode) {
+	group 'openapi'
+	language = 'jaxrs-spec'
+	inputFile = file('../../../plugin-api/plugin-openapi-no-additionalProperties.yaml')
+	outputDir = file('generated')
+	additionalProperties = [
+			'interfaceOnly': 'true',
+			'apiPackage': 'ignored.kntrl.example.generated.api',
+			'modelPackage': 'kntrl.example.generated.model',
+			'groupId': 'kntrl',
+			'artifactId': 'plugin-server-interface',
+			'artifactVersion': '0.1',
+			'disallowAdditionalPropertiesIfNotPresent': 'false',
+			'useSwaggerAnnotations': 'false',
+			'useBeanValidation': 'false'
+	]
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

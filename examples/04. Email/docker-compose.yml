@@ -1,0 +1,18 @@
+version: "3"
+services:
+  kntrl:
+    image: kntrl/self-hosted:0.9
+    depends_on:
+    - maildev
+    volumes:
+    - "./kntrl.json5:/kntrl/kntrl.json5"
+    - "./.templates:/kntrl/.templates"
+    - "./.i18n:/kntrl/.i18n"
+    ports:
+    - "9876:9876"
+
+  maildev:
+    image: maildev/maildev
+    ports:
+    - "1080:1080"
+    - "1025:1025"

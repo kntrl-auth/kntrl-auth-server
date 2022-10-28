@@ -1,0 +1,21 @@
+version: "3"
+services:
+  kntrl:
+    image: kntrl/self-hosted:0.9
+    volumes:
+    - "./kntrl.json5:/kntrl/kntrl.json5"
+    ports:
+    - "9876:9876"
+    depends_on:
+    - postgres
+
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_DB: test
+      POSTGRES_USER: test-user
+      POSTGRES_PASSWORD: test-pass
+    volumes:
+      - "./postgres:/var/lib/postgresql/data"
+    ports:
+      - "5432:5432"
