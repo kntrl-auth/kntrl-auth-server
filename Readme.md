@@ -33,7 +33,7 @@ integration with existing database and codebase via plugins, action confirmation
 ### Run
 
 #### ☕ Option 1 - run Java app
-- Download the latest distribution from  [Releases](../../../releases)
+- Download `kntrl.jar` from [Releases](../../releases)
 - Start the application:
 ```shell
 java -jar kntrl.jar
@@ -125,12 +125,12 @@ Then read the guide in [examples folder](examples). It contains configuration an
 ### Get/create Kntrl API client
 
 #### Option 1 - use existing SDK
-- [Java/Kotlin client](client/kotlin/Readme.md)
-- [JavaScript/TypeScript client](client/typescript/Readme.md)
+- [Java/Kotlin client](client/kotlin)
+- [JavaScript/TypeScript client](client/typescript)
 
 #### Option 2 - use OpenAPI generator
 Generate an HTTP client for any other language by any OpenApi generator (e.g. [this](https://openapi-generator.tech)).
-The OpenAPI specification is located in [client folder](client):
+The OpenAPI specification is located in the [client folder](client):
 
 - [openapi-no-polymorphism.yaml](client/openapi-no-polymorphism.yaml) - simplified specification (without inheritance and polymorphism). All generators should support this specification.
 - [openapi-no-additionalProperties.yaml](client/openapi-no-additionalProperties.yaml) - the same as one above, but with workaround for additionalProperties handling bug in some generators.
