@@ -2,6 +2,8 @@
   "name": "kntrl-client",
   "version": "0.9.0",
   "description": "JS/TS client for Kntrl authentication server",
+  "repository": "https://github.com/kntrl-auth/kntrl-auth-server/tree/master/client/typescript",
+  "homepage": "https://github.com/kntrl-auth/kntrl-auth-server",
   "scripts": {
     "generate-openapi-client": "openapi-generator-cli generate -i ../openapi-no-polymorphism.yaml -o ./generated -g typescript-axios",
     "build": "tsc"
