@@ -143,7 +143,7 @@ The OpenAPI specification is located in the [client folder](client):
 openapi-generator-cli generate -i ./client/openapi-no-polymorphism.yaml -g go -o ./generated/client
 ```
 **WARN**: it's strongly recommended to disable rejection of not-known fields. E.g. for java generator set 
-`disallowAdditionalPropertiesIfNotPresent` to `false`, or disable Jackson `FAIL_ON_UNKNOWN_PROPERTIES`.
+`disallowAdditionalPropertiesIfNotPresent` to `false`, or disable Jackson FAIL_ON_UNKNOWN_PROPERTIES.
 
 #### Option 3 - call HTTP API manually
 Check [API docs](https://kntrl-auth.github.io/kntrl-auth-server/apidocs) for HTTP API documentation.
