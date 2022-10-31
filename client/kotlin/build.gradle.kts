@@ -75,6 +75,7 @@ publishing {
             pom {
                 name.set("Kntrl client")
                 description.set("Java/Kotlin client for Kntrl authentication server")
+                url.set("https://github.com/kntrl-auth/kntrl-auth-server")
 
                 licenses {
                     license {
@@ -89,6 +90,11 @@ publishing {
                         name.set("Dmytro Barannik")
                         email.set("dmitryb.dev@gmail.com")
                     }
+                }
+                scm {
+                    connection.set("scm:git:git://github.com/kntrl-auth/kntrl-auth-server.git")
+                    developerConnection.set("scm:git:ssh://github.com/kntrl-auth/kntrl-auth-server.git")
+                    url.set("https://github.com/kntrl-auth/kntrl-auth-server")
                 }
             }
         }
