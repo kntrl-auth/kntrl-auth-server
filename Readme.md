@@ -126,7 +126,7 @@ Then read the guide in [examples folder](examples). It contains configuration an
 
 #### Option 1 - use existing SDK
 - [Java/Kotlin client](client/kotlin)
-- [JavaScript/TypeScript client](client/typescript)
+- [JavaScript/TypeScript client](https://www.npmjs.com/package/kntrl-client)
 
 #### Option 2 - use OpenAPI generator
 Generate an HTTP client for any other language by any OpenApi generator (e.g. [this](https://openapi-generator.tech)).

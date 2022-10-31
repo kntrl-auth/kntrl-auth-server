@@ -1,8 +1,8 @@
 package app.kntrl.client
 
-import app.kntrl.client.generated.infra.ApiClient
-import app.kntrl.client.generated.model.NewSessionReq
-import app.kntrl.client.generated.model.Tokens
+import app.kntrl.client.openapi.infra.ApiClient
+import app.kntrl.client.openapi.model.NewSessionReq
+import app.kntrl.client.openapi.model.Tokens
 
 class Kntrl(serverUrl: String = "http://localhost:9876") {
     private val client = ApiClient().apply {
@@ -11,7 +11,7 @@ class Kntrl(serverUrl: String = "http://localhost:9876") {
 
     fun newSession(
         entry: String,
-        logins: Map<String, String>? = null,
+        logins: Map<String, String>?,
         signIn: Boolean = false,
         signUp: Boolean = false,
     ) = Session(client, null, NewSessionReq().apply {

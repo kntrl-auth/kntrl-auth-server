@@ -1,11 +1,11 @@
 package app.kntrl.client
 
-import app.kntrl.client.generated.api.AuthorisationApi
-import app.kntrl.client.generated.api.SessionApi
-import app.kntrl.client.generated.api.TokenApi
-import app.kntrl.client.generated.infra.ApiClient
-import app.kntrl.client.generated.model.*
-import app.kntrl.client.generated.model.Session as SessionModel
+import app.kntrl.client.openapi.api.AuthorisationApi
+import app.kntrl.client.openapi.api.SessionApi
+import app.kntrl.client.openapi.api.TokenApi
+import app.kntrl.client.openapi.infra.ApiClient
+import app.kntrl.client.openapi.model.*
+import app.kntrl.client.openapi.model.Session as SessionModel
 
 class Session(
     private val client: ApiClient,

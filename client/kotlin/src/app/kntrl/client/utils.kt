@@ -1,8 +1,8 @@
 package app.kntrl.client
 
- import app.kntrl.client.generated.infra.ApiException
- import app.kntrl.client.generated.model.Err
- import app.kntrl.client.generated.model.ErrCode
+ import app.kntrl.client.openapi.infra.ApiException
+ import app.kntrl.client.openapi.model.Err
+ import app.kntrl.client.openapi.model.ErrCode
 
 fun <T> handleErr(
     retryOnExpiredTokenOn: Session? = null,

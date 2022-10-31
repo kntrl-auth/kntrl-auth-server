@@ -1,4 +1,4 @@
-# openapi-client
+# client-openapi
 
 Kntrl API
 - API version: 0.9
@@ -38,7 +38,7 @@ Add this dependency to your project's POM:
 ```xml
 <dependency>
   <groupId>app.kntrl</groupId>
-  <artifactId>openapi-client</artifactId>
+  <artifactId>client-openapi</artifactId>
   <version>0.9</version>
   <scope>compile</scope>
 </dependency>
@@ -50,12 +50,12 @@ Add this dependency to your project's build file:
 
 ```groovy
   repositories {
-    mavenCentral()     // Needed if the 'openapi-client' jar has been published to maven central.
-    mavenLocal()       // Needed if the 'openapi-client' jar has been published to the local maven repo.
+    mavenCentral()     // Needed if the 'client-openapi' jar has been published to maven central.
+    mavenLocal()       // Needed if the 'client-openapi' jar has been published to the local maven repo.
   }
 
   dependencies {
-     implementation "app.kntrl:openapi-client:0.9"
+     implementation "app.kntrl:client-openapi:0.9"
   }
 ```
 
@@ -69,7 +69,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/openapi-client-0.9.jar`
+* `target/client-openapi-0.9.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -79,12 +79,12 @@ Please follow the [installation](#installation) instruction and execute the foll
 ```java
 
 // Import classes:
-import app.kntrl.client.generated.infra.ApiClient;
-import app.kntrl.client.generated.infra.ApiException;
-import app.kntrl.client.generated.infra.Configuration;
-import app.kntrl.client.generated.infra.auth.*;
-import app.kntrl.client.generated.infra.models.*;
-import app.kntrl.client.generated.api.AuthorisationApi;
+import app.kntrl.client.openapi.infra.ApiClient;
+import app.kntrl.client.openapi.infra.ApiException;
+import app.kntrl.client.openapi.infra.Configuration;
+import app.kntrl.client.openapi.infra.auth.*;
+import app.kntrl.client.openapi.infra.models.*;
+import app.kntrl.client.openapi.api.AuthorisationApi;
 
 public class Example {
   public static void main(String[] args) {
