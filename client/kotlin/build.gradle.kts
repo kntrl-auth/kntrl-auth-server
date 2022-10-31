@@ -1,10 +1,12 @@
+@file:Suppress("UnstableApiUsage")
+
+import com.vanniktech.maven.publish.SonatypeHost
 import org.hidetake.gradle.swagger.generator.GenerateSwaggerCode
 
 plugins {
     kotlin("jvm") version "1.6.21"
     id("org.hidetake.swagger.generator") version "2.19.2"
-    `maven-publish`
-    signing
+    id("com.vanniktech.maven.publish") version "0.21.0"
 }
 
 group = "app.kntrl"
@@ -65,51 +67,28 @@ tasks.compileKotlin {
     }
 }
 
-java {
-    withSourcesJar()
-    withJavadocJar()
-}
-publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            from(components["java"])
-            pom {
-                name.set("Kntrl client")
-                description.set("Java/Kotlin client for Kntrl authentication server")
 
-                licenses {
-                    license {
-                        name.set("The Apache License, Version 2.0")
-                        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
-                    }
-                }
+mavenPublishing {
+    publishToMavenCentral(SonatypeHost.S01)
+    signAllPublications()
 
-                developers {
-                    developer {
-                        id.set("dmitryb.dev")
-                        name.set("Dmytro Barannik")
-                        email.set("dmitryb.dev@gmail.com")
-                    }
-                }
+    pom {
+        name.set("Kntrl client")
+        description.set("Java/Kotlin client for Kntrl authentication server")
+
+        licenses {
+            license {
+                name.set("The Apache License, Version 2.0")
+                url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+            }
+        }
+
+        developers {
+            developer {
+                id.set("dmitryb.dev")
+                name.set("Dmytro Barannik")
+                email.set("dmitryb.dev@gmail.com")
             }
         }
     }
-    repositories {
-        maven {
-            name = "OSSRH"
-//            url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots")
-            url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2")
-            credentials {
-                username = System.getenv("MAVEN_USERNAME")
-                password = System.getenv("MAVEN_PASSWORD")
-            }
-        }
-    }
-}
-signing {
-    sign(publishing.publications["maven"])
-    useInMemoryPgpKeys(System.getenv("JAR_SIGN_KEY"), System.getenv("JAR_SIGN_PASSWORD"))
-}
-tasks.javadoc {
-    (options as StandardJavadocDocletOptions).addStringOption("Xdoclint:none", "-quiet")
 }
