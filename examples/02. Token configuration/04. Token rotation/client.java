@@ -1,8 +1,8 @@
 import app.kntrl.client.AuthReq;
 import app.kntrl.client.Kntrl;
 import app.kntrl.client.Session;
-import app.kntrl.client.generated.model.AuthenticateRes;
-import app.kntrl.client.generated.model.Tokens;
+import app.kntrl.client.openapi.model.AuthenticateRes;
+import app.kntrl.client.openapi.model.Tokens;
 
 class Example0204 {
     public static void main(String[] args) {

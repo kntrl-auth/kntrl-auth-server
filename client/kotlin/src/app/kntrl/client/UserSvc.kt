@@ -1,11 +1,11 @@
 package app.kntrl.client
 
-import app.kntrl.client.generated.api.UserApi
-import app.kntrl.client.generated.model.AuthenticateReqAuthReqsValue
-import app.kntrl.client.generated.model.ConfirmUserAuthsReq
-import app.kntrl.client.generated.model.SaveUserRes
-import app.kntrl.client.generated.model.SaveUserReq as SaveUserReqModel
-import app.kntrl.client.generated.model.User as UserModel
+import app.kntrl.client.openapi.api.UserApi
+import app.kntrl.client.openapi.model.AuthenticateReqAuthReqsValue
+import app.kntrl.client.openapi.model.ConfirmUserAuthsReq
+import app.kntrl.client.openapi.model.SaveUserRes
+import app.kntrl.client.openapi.model.SaveUserReq as SaveUserReqModel
+import app.kntrl.client.openapi.model.User as UserModel
 
 class UserSvc(private val session: Session) {
     fun get(): UserModel = handleErr(session) { UserApi(session.authenticatedOpenapiClient()).user }

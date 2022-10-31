@@ -1,5 +1,5 @@
 import app.kntrl.client.Kntrl;
-import app.kntrl.client.generated.model.HealthRes;
+import app.kntrl.client.openapi.model.HealthRes;
 
 class Example0103 {
     public static void main(String[] args) {
