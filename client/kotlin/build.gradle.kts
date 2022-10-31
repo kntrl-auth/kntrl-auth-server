@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "app.kntrl"
-version = "0.9-SNAPSHOT"
+version = "0.9"
 
 sourceSets.main {
     // Include as sources to include only necessary dependencies and publish only single jar
@@ -55,6 +55,10 @@ tasks.register<GenerateSwaggerCode>("generateOpenapiClient") {
     }
 }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
 tasks.compileKotlin {
     kotlinOptions {
         jvmTarget = "1.8"
@@ -93,8 +97,8 @@ publishing {
     repositories {
         maven {
             name = "OSSRH"
-            url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots")
-//            url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2")
+//            url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots")
+            url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2")
             credentials {
                 username = System.getenv("MAVEN_USERNAME")
                 password = System.getenv("MAVEN_PASSWORD")
