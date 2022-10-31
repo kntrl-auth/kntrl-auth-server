@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "app.kntrl"
-version = "0.9"
+version = "0.9-SNAPSHOT"
 
 sourceSets.main {
     // Include as sources to include only necessary dependencies and publish only single jar
@@ -63,6 +63,7 @@ tasks.compileKotlin {
 
 java {
     withSourcesJar()
+    withJavadocJar()
 }
 publishing {
     publications {
@@ -100,4 +101,11 @@ publishing {
             }
         }
     }
+}
+signing {
+    sign(publishing.publications["maven"])
+    useInMemoryPgpKeys(System.getenv("JAR_SIGN_KEY"), System.getenv("JAR_SIGN_PASSWORD"))
+}
+tasks.javadoc {
+    (options as StandardJavadocDocletOptions).addStringOption("Xdoclint:none", "-quiet")
 }
