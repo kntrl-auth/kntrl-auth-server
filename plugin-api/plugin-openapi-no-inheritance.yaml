@@ -386,16 +386,13 @@ components:
       properties:
         code:
           type: string
-          example: null
         devMsg:
           type: string
           description: Message for developers.
-          example: null
         msg:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-          example: null
       discriminator:
         propertyName: code
         mapping:
@@ -429,7 +426,6 @@ components:
           ANY_ERR: '#/components/schemas/AnyErr'
       x-order: 2025349183-0
       x-sealed: false
-      example: null
     AccessDenied:
       required:
       - code
@@ -438,19 +434,15 @@ components:
       properties:
         code:
           type: string
-          example: null
         devMsg:
           type: string
           description: Message for developers.
-          example: null
         msg:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-          example: null
       x-order: -2065236468-1
       x-super: '#/components/schemas/Unauthenticated'
-      example: null
     AnswerErr:
       required:
       - tooLong
@@ -459,12 +451,9 @@ components:
       properties:
         tooShort:
           type: boolean
-          example: null
         tooLong:
           type: boolean
-          example: null
       x-order: -1279700867-9
-      example: null
     AnyErr:
       required:
       - code
@@ -473,20 +462,16 @@ components:
       properties:
         code:
           type: string
-          example: null
         devMsg:
           type: string
           description: Message for developers.
-          example: null
         msg:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-          example: null
       additionalProperties: true
       x-order: 2025349183-5
       x-super: '#/components/schemas/Err'
-      example: null
     AuthIsNotConfirmed:
       required:
       - code
@@ -495,19 +480,15 @@ components:
       properties:
         code:
           type: string
-          example: null
         devMsg:
           type: string
           description: Message for developers.
-          example: null
         msg:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-          example: null
       x-order: -270554383-3
       x-super: '#/components/schemas/ClientErr'
-      example: null
     AuthIsNotEnabled:
       required:
       - code
@@ -516,19 +497,15 @@ components:
       properties:
         code:
           type: string
-          example: null
         devMsg:
           type: string
           description: Message for developers.
-          example: null
         msg:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-          example: null
       x-order: -270554383-2
       x-super: '#/components/schemas/ClientErr'
-      example: null
     AuthRequiresAnother:
       required:
       - code
@@ -537,19 +514,15 @@ components:
       properties:
         code:
           type: string
-          example: null
         devMsg:
           type: string
           description: Message for developers.
-          example: null
         msg:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-          example: null
       x-order: -270554383-5
       x-super: '#/components/schemas/ClientErr'
-      example: null
     ClientErr:
       required:
       - code
@@ -558,16 +531,13 @@ components:
       properties:
         code:
           type: string
-          example: null
         devMsg:
           type: string
           description: Message for developers.
-          example: null
         msg:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-          example: null
       discriminator:
         propertyName: code
         mapping:
@@ -597,7 +567,6 @@ components:
       x-order: 2025349183-4
       x-sealed: false
       x-super: '#/components/schemas/Err'
-      example: null
     CodeIsExpired:
       required:
       - code
@@ -606,19 +575,15 @@ components:
       properties:
         code:
           type: string
-          example: null
         devMsg:
           type: string
           description: Message for developers.
-          example: null
         msg:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-          example: null
       x-order: -270554383-6
       x-super: '#/components/schemas/ClientErr'
-      example: null
     CodeIsIncorrect:
       required:
       - code
@@ -627,19 +592,15 @@ components:
       properties:
         code:
           type: string
-          example: null
         devMsg:
           type: string
           description: Message for developers.
-          example: null
         msg:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-          example: null
       x-order: -270554383-8
       x-super: '#/components/schemas/ClientErr'
-      example: null
     CodeTooManyAttempts:
       required:
       - code
@@ -648,19 +609,15 @@ components:
       properties:
         code:
           type: string
-          example: null
         devMsg:
           type: string
           description: Message for developers.
-          example: null
         msg:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-          example: null
       x-order: -270554383-7
       x-super: '#/components/schemas/ClientErr'
-      example: null
     EmailIsIncorrect:
       required:
       - code
@@ -669,19 +626,15 @@ components:
       properties:
         code:
           type: string
-          example: null
         devMsg:
           type: string
           description: Message for developers.
-          example: null
         msg:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-          example: null
       x-order: -1279700867-5
       x-super: '#/components/schemas/ClientErr'
-      example: null
     IncorrectTotpCode:
       required:
       - code
@@ -690,19 +643,15 @@ components:
       properties:
         code:
           type: string
-          example: null
         devMsg:
           type: string
           description: Message for developers.
-          example: null
         msg:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-          example: null
       x-order: -1279700867-10
       x-super: '#/components/schemas/ClientErr'
-      example: null
     Instant:
       type: integer
       format: int64
@@ -714,16 +663,13 @@ components:
       properties:
         code:
           type: string
-          example: null
         devMsg:
           type: string
           description: Message for developers.
-          example: null
         msg:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-          example: null
       discriminator:
         propertyName: code
         mapping:
@@ -732,7 +678,6 @@ components:
       x-order: 2025349183-3
       x-sealed: false
       x-super: '#/components/schemas/Err'
-      example: null
     IpNew:
       required:
       - code
@@ -741,19 +686,15 @@ components:
       properties:
         code:
           type: string
-          example: null
         devMsg:
           type: string
           description: Message for developers.
-          example: null
         msg:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-          example: null
       x-order: -1279700867-6
       x-super: '#/components/schemas/ClientErr'
-      example: null
     LoginId:
       required:
       - login
@@ -771,7 +712,6 @@ components:
             User unique identifier, email, username, etc. User can use it to sign-in.
           example: john@example.org
       x-order: -2010674509-2
-      example: null
     NoAuthAvailableForFactor:
       required:
       - code
@@ -780,19 +720,15 @@ components:
       properties:
         code:
           type: string
-          example: null
         devMsg:
           type: string
           description: Message for developers.
-          example: null
         msg:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-          example: null
       x-order: -270554383-4
       x-super: '#/components/schemas/IntegrationErr'
-      example: null
     OauthAppErr:
       required:
       - code
@@ -803,25 +739,19 @@ components:
       properties:
         code:
           type: string
-          example: null
         devMsg:
           type: string
           description: Message for developers.
-          example: null
         msg:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-          example: null
         incorrectRedirectUri:
           type: boolean
-          example: null
         incorrectSecret:
           type: boolean
-          example: null
       x-order: -1279700867-11
       x-super: '#/components/schemas/ClientErr'
-      example: null
     PasswordIsIncorrect:
       required:
       - code
@@ -830,29 +760,23 @@ components:
       properties:
         code:
           type: string
-          example: null
         devMsg:
           type: string
           description: Message for developers.
-          example: null
         msg:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-          example: null
         changedAt:
           type: integer
           format: int64
           x-nullable: true
-          example: null
         changedDaysAgo:
           type: integer
           format: int64
           x-nullable: true
-          example: null
       x-order: -1279700867-3
       x-super: '#/components/schemas/ClientErr'
-      example: null
     PasswordIsInvalid:
       required:
       - code
@@ -869,58 +793,43 @@ components:
       properties:
         code:
           type: string
-          example: null
         devMsg:
           type: string
           description: Message for developers.
-          example: null
         msg:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-          example: null
         tooLong:
           type: boolean
-          example: null
         tooShort:
           type: boolean
-          example: null
         missingNumber:
           type: boolean
-          example: null
         missingSymbol:
           type: boolean
-          example: null
         missingUpperCase:
           type: boolean
-          example: null
         missingLowerCase:
           type: boolean
-          example: null
         commonPassword:
           type: boolean
-          example: null
         wasUsedBeforeAt:
           type: integer
           format: int64
           x-nullable: true
-          example: null
         matchesLogin:
           $ref: '#/components/schemas/LoginId'
         passwordsMismatch:
           type: boolean
-          example: null
         strength:
           type: string
           x-nullable: true
-          example: null
         wasUsedDaysAgo:
           type: integer
           format: int64
-          example: null
       x-order: -1279700867-4
       x-super: '#/components/schemas/ClientErr'
-      example: null
     PluginClientErr:
       required:
       - code
@@ -929,20 +838,16 @@ components:
       properties:
         code:
           type: string
-          example: null
         devMsg:
           type: string
           description: Message for developers.
-          example: null
         msg:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-          example: null
       additionalProperties: true
       x-order: -1279700867-2
       x-super: '#/components/schemas/ClientErr'
-      example: null
     PluginErr:
       required:
       - code
@@ -951,19 +856,15 @@ components:
       properties:
         code:
           type: string
-          example: null
         devMsg:
           type: string
           description: Message for developers.
-          example: null
         msg:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-          example: null
       x-order: -1279700867-1
       x-super: '#/components/schemas/ServerErr'
-      example: null
     QuestionsAnswersIncorrect:
       required:
       - code
@@ -975,32 +876,25 @@ components:
       properties:
         code:
           type: string
-          example: null
         devMsg:
           type: string
           description: Message for developers.
-          example: null
         msg:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-          example: null
         incorrectAnswers:
           type: array
           items:
             type: string
-          example: null
         requiresMoreAnswers:
           type: boolean
-          example: null
         questionsNotFound:
           type: array
           items:
             type: string
-          example: null
       x-order: -1279700867-7
       x-super: '#/components/schemas/ClientErr'
-      example: null
     QuestionsAnswersInvalid:
       required:
       - code
@@ -1011,27 +905,21 @@ components:
       properties:
         code:
           type: string
-          example: null
         devMsg:
           type: string
           description: Message for developers.
-          example: null
         msg:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-          example: null
         invalidAnswers:
           type: object
           additionalProperties:
             $ref: '#/components/schemas/AnswerErr'
-          example: null
         tooManyAnswers:
           type: boolean
-          example: null
       x-order: -1279700867-8
       x-super: '#/components/schemas/ClientErr'
-      example: null
     ServerErr:
       required:
       - code
@@ -1040,16 +928,13 @@ components:
       properties:
         code:
           type: string
-          example: null
         devMsg:
           type: string
           description: Message for developers.
-          example: null
         msg:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-          example: null
       discriminator:
         propertyName: code
         mapping:
@@ -1058,7 +943,6 @@ components:
       x-order: 2025349183-2
       x-sealed: false
       x-super: '#/components/schemas/Err'
-      example: null
     SessionExpired:
       required:
       - code
@@ -1067,19 +951,15 @@ components:
       properties:
         code:
           type: string
-          example: null
         devMsg:
           type: string
           description: Message for developers.
-          example: null
         msg:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-          example: null
       x-order: -2065236468-0
       x-super: '#/components/schemas/Unauthenticated'
-      example: null
     TokenExpired:
       required:
       - code
@@ -1088,16 +968,13 @@ components:
       properties:
         code:
           type: string
-          example: null
         devMsg:
           type: string
           description: Message for developers.
-          example: null
         msg:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-          example: null
         expiredAt:
           type: integer
           description: |-
@@ -1105,10 +982,8 @@ components:
             May be caused by changed app-secret.
           format: int64
           x-nullable: true
-          example: null
       x-order: -270554383-11
       x-super: '#/components/schemas/Unauthenticated'
-      example: null
     TooManyReqs:
       required:
       - code
@@ -1117,34 +992,27 @@ components:
       properties:
         code:
           type: string
-          example: null
         devMsg:
           type: string
           description: Message for developers.
-          example: null
         msg:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-          example: null
         waitTimeMs:
           type: integer
           format: int32
           x-nullable: true
-          example: null
         waitTimeSeconds:
           type: integer
           format: int32
           x-nullable: true
-          example: null
         waitTimeMinutes:
           type: integer
           format: int32
           x-nullable: true
-          example: null
       x-order: -270554383-12
       x-super: '#/components/schemas/ClientErr'
-      example: null
     Unauthenticated:
       required:
       - code
@@ -1153,16 +1021,13 @@ components:
       properties:
         code:
           type: string
-          example: null
         devMsg:
           type: string
           description: Message for developers.
-          example: null
         msg:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-          example: null
       discriminator:
         propertyName: code
         mapping:
@@ -1174,7 +1039,6 @@ components:
       x-order: -270554383-9
       x-sealed: false
       x-super: '#/components/schemas/ClientErr'
-      example: null
     UserLoginAlreadyTaken:
       required:
       - code
@@ -1183,19 +1047,15 @@ components:
       properties:
         code:
           type: string
-          example: null
         devMsg:
           type: string
           description: Message for developers.
-          example: null
         msg:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-          example: null
       x-order: -270554383-1
       x-super: '#/components/schemas/ClientErr'
-      example: null
     UserLoginIsInvalid:
       required:
       - code
@@ -1205,21 +1065,17 @@ components:
       properties:
         code:
           type: string
-          example: null
         devMsg:
           type: string
           description: Message for developers.
-          example: null
         msg:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-          example: null
         loginId:
           $ref: '#/components/schemas/LoginId'
       x-order: -270554383-0
       x-super: '#/components/schemas/ClientErr'
-      example: null
     UserNotFound:
       required:
       - code
@@ -1228,19 +1084,15 @@ components:
       properties:
         code:
           type: string
-          example: null
         devMsg:
           type: string
           description: Message for developers.
-          example: null
         msg:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
-          example: null
       x-order: -2065236468-2
       x-super: '#/components/schemas/Unauthenticated'
-      example: null
     RateLimiterState:
       required:
       - burntQuota
@@ -1252,9 +1104,7 @@ components:
         burntQuota:
           type: number
           format: double
-          example: null
       x-order: 328297103-0
-      example: null
     RateLimiterStateId:
       required:
       - rateLimiter
@@ -1264,26 +1114,21 @@ components:
       properties:
         rateLimiter:
           type: string
-          example: null
         user:
           $ref: '#/components/schemas/RateLimiterUser'
         window:
           $ref: '#/components/schemas/TimeWindow'
       x-order: 328297103-2
-      example: null
     RateLimiterUser:
       type: object
       properties:
         userId:
           type: string
           x-nullable: true
-          example: null
         ip:
           type: string
           x-nullable: true
-          example: null
       x-order: 328297103-4
-      example: null
     TimeWindow:
       required:
       - end
@@ -1293,13 +1138,10 @@ components:
         start:
           type: integer
           format: int64
-          example: null
         end:
           type: integer
           format: int64
-          example: null
       x-order: 328297103-6
-      example: null
     BurnQuotaReq:
       required:
       - quota
@@ -1308,9 +1150,7 @@ components:
         quota:
           type: number
           format: double
-          example: null
       x-order: 1338599945-1
-      example: null
     AuthData:
       required:
       - private
@@ -1340,21 +1180,17 @@ components:
             If authenticator supports identification, it provides login here. This can be email, phone number,
             facebook account id, etc.
           x-nullable: true
-          example: null
       x-order: 332570507-3
-      example: null
     AuthPrivateData:
       type: object
       additionalProperties: true
       description: Data available only for authenticator.
       x-order: 332570507-6
-      example: null
     AuthPublicData:
       type: object
       additionalProperties: true
       description: Data that are available for API.
       x-order: 332570507-4
-      example: null
     AuthRes:
       required:
       - authData
@@ -1389,10 +1225,8 @@ components:
                 If authenticator supports identification, it provides login here. This can be email, phone number,
                 facebook account id, etc.
               x-nullable: true
-              example: null
           description: New auth data to save.
           x-super: '#/components/schemas/AuthData'
-          example: null
         resData:
           description: This data will be sent back to the client.
           anyOf:
@@ -1407,7 +1241,6 @@ components:
           - $ref: '#/components/schemas/QuestionsUpdateResData'
           - $ref: '#/components/schemas/TotpUpdateResData'
           x-nullable: true
-          example: null
         sessionData:
           description: Store any information in session.
           anyOf:
@@ -1415,14 +1248,11 @@ components:
           - $ref: '#/components/schemas/ScopesSessionData'
           - $ref: '#/components/schemas/SessionData'
           x-nullable: true
-          example: null
       x-order: -1249106462-9
-      example: null
     AuthResData:
       type: object
       additionalProperties: true
       x-order: -1249106462-10
-      example: null
     AuthorizationCodeSessionData:
       required:
       - agent
@@ -1433,16 +1263,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/LoginId'
-          example: null
         scopes:
           type: array
           items:
             type: string
-          example: null
       additionalProperties: true
       x-order: -1836982696-7
       x-super: '#/components/schemas/SessionData'
-      example: null
     AuthorizationCodeUpdateResData:
       required:
       - authorizationCode
@@ -1450,11 +1277,9 @@ components:
       properties:
         authorizationCode:
           type: string
-          example: null
       additionalProperties: true
       x-order: -1836982696-5
       x-super: '#/components/schemas/AuthResData'
-      example: null
     EmailAuthResData:
       type: object
       properties:
@@ -1462,11 +1287,9 @@ components:
           type: string
           description: "Shows user email, that was used to send a code. Email will\
             \ be partially hidden."
-          example: null
       additionalProperties: true
       x-order: 1021533909-5
       x-super: '#/components/schemas/AuthResData'
-      example: null
     EmailPublicData:
       required:
       - email
@@ -1476,17 +1299,14 @@ components:
         email:
           type: string
           description: User email.
-          example: null
         updatedAt:
           type: integer
           description: Last time when email was changed.
           format: int64
-          example: null
       additionalProperties: true
       description: Data that are available for API.
       x-order: 1021533909-2
       x-super: '#/components/schemas/AuthPublicData'
-      example: null
     IpAuthResData:
       required:
       - ipEncoded
@@ -1494,11 +1314,9 @@ components:
       properties:
         ipEncoded:
           type: string
-          example: null
       additionalProperties: true
       x-order: 2116983897-2
       x-super: '#/components/schemas/AuthResData'
-      example: null
     IpPrivateData:
       type: object
       properties:
@@ -1507,26 +1325,22 @@ components:
           additionalProperties:
             type: integer
             format: int64
-          example: null
       additionalProperties: true
       description: Data available only for authenticator.
       x-order: 2116983897-1
       x-super: '#/components/schemas/AuthPrivateData'
-      example: null
     NoAuthPrivateData:
       type: object
       additionalProperties: true
       description: Data available only for authenticator.
       x-order: 332570507-7
       x-super: '#/components/schemas/AuthPrivateData'
-      example: null
     NoAuthPublicData:
       type: object
       additionalProperties: true
       description: Data that are available for API.
       x-order: 332570507-5
       x-super: '#/components/schemas/AuthPublicData'
-      example: null
     OAuthAppPrivateData:
       required:
       - secretHash
@@ -1534,12 +1348,10 @@ components:
       properties:
         secretHash:
           type: string
-          example: null
       additionalProperties: true
       description: Data available only for authenticator.
       x-order: -1247144074-3
       x-super: '#/components/schemas/AuthPrivateData'
-      example: null
     OAuthAppPublicData:
       type: object
       properties:
@@ -1548,12 +1360,10 @@ components:
           items:
             type: string
           x-nullable: true
-          example: null
       additionalProperties: true
       description: Data that are available for API.
       x-order: -1247144074-2
       x-super: '#/components/schemas/AuthPublicData'
-      example: null
     OAuthAppUpdateResData:
       required:
       - clientId
@@ -1561,28 +1371,23 @@ components:
       properties:
         clientId:
           type: string
-          example: null
         redirectUris:
           type: array
           items:
             type: string
           x-nullable: true
-          example: null
         clientSecret:
           type: string
           description: Provided only when generated first time or generated again.
           x-nullable: true
-          example: null
       additionalProperties: true
       x-order: -1247144074-6
       x-super: '#/components/schemas/AuthResData'
-      example: null
     OAuthPublicData:
       type: object
       additionalProperties: true
       description: Data that are available for API.
       x-order: -893636857-2
-      example: null
     OAuthResData:
       required:
       - extractedLogin
@@ -1591,13 +1396,11 @@ components:
       properties:
         extractedLogin:
           type: string
-          example: null
         extractedPublicData:
           $ref: '#/components/schemas/OAuthPublicData'
       additionalProperties: true
       x-order: -893636857-5
       x-super: '#/components/schemas/AuthResData'
-      example: null
     Password:
       required:
       - createdAt
@@ -1606,13 +1409,10 @@ components:
       properties:
         hash:
           type: string
-          example: null
         createdAt:
           type: integer
           format: int64
-          example: null
       x-order: 378192899-3
-      example: null
     PasswordHistory:
       type: object
       properties:
@@ -1620,17 +1420,14 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Password'
-          example: null
         changedAt:
           type: integer
           format: int64
           x-nullable: true
-          example: null
       additionalProperties: true
       description: Data available only for authenticator.
       x-order: 378192899-0
       x-super: '#/components/schemas/AuthPrivateData'
-      example: null
     PasswordPublicData:
       required:
       - updatedAt
@@ -1640,12 +1437,10 @@ components:
           type: integer
           description: Time when password was updated last time.
           format: int64
-          example: null
       additionalProperties: true
       description: Data that are available for API.
       x-order: -266447761-2
       x-super: '#/components/schemas/AuthPublicData'
-      example: null
     PasswordUpdateResData:
       required:
       - password
@@ -1655,17 +1450,14 @@ components:
           type: string
           description: If password was generated by app this field contains generated
             password.
-          example: null
         strength:
           type: string
           description: Calculated strength of password. Null means that all checks
             failed.
           x-nullable: true
-          example: null
       additionalProperties: true
       x-order: -266447761-5
       x-super: '#/components/schemas/AuthResData'
-      example: null
     QuestionsAuthResData:
       required:
       - correct
@@ -1684,7 +1476,6 @@ components:
       additionalProperties: true
       x-order: -213229069-4
       x-super: '#/components/schemas/AuthResData'
-      example: null
     QuestionsPrivateData:
       type: object
       properties:
@@ -1692,12 +1483,10 @@ components:
           type: object
           additionalProperties:
             type: string
-          example: null
       additionalProperties: true
       description: Data available only for authenticator.
       x-order: -213229069-2
       x-super: '#/components/schemas/AuthPrivateData'
-      example: null
     QuestionsPublicData:
       type: object
       properties:
@@ -1707,12 +1496,10 @@ components:
             type: integer
             format: int64
             x-additionalPropertiesName: question id
-          example: null
       additionalProperties: true
       description: Data that are available for API.
       x-order: -213229069-1
       x-super: '#/components/schemas/AuthPublicData'
-      example: null
     QuestionsUpdateResData:
       required:
       - answersSavedAt
@@ -1726,11 +1513,9 @@ components:
             x-additionalPropertiesName: question id
           description: |
             Date of last update
-          example: null
       additionalProperties: true
       x-order: -213229069-6
       x-super: '#/components/schemas/AuthResData'
-      example: null
     ScopesSessionData:
       required:
       - scopes
@@ -1741,21 +1526,17 @@ components:
           items:
             $ref: '#/components/schemas/LoginId'
           x-nullable: true
-          example: null
         scopes:
           type: array
           items:
             type: string
-          example: null
       additionalProperties: true
       x-order: 2741601-4
       x-super: '#/components/schemas/SessionData'
-      example: null
     SessionData:
       type: object
       additionalProperties: true
       x-order: -255987249-0
-      example: null
     TotpPrivateDate:
       required:
       - secret
@@ -1763,12 +1544,10 @@ components:
       properties:
         secret:
           type: string
-          example: null
       additionalProperties: true
       description: Data available only for authenticator.
       x-order: 820555017-2
       x-super: '#/components/schemas/AuthPrivateData'
-      example: null
     TotpUpdateResData:
       required:
       - otpUrl
@@ -1779,24 +1558,19 @@ components:
         secret:
           type: string
           description: Base32 SHA-1 key.
-          example: null
         otpUrl:
           type: string
-          example: null
         otpUrlQrCode:
           type: string
           description: |-
             QR code URL. Use it like this:
             `<img style="image-rendering: pixelated;" width="200" src="<otpUrlQrCode>"/>`
-          example: null
       additionalProperties: true
       x-order: 820555017-5
       x-super: '#/components/schemas/AuthResData'
-      example: null
     AccessToken:
       type: string
       x-order: -2026363309-3
-      example: null
     AppSecretReqData:
       required:
       - secret
@@ -1804,11 +1578,9 @@ components:
       properties:
         secret:
           type: string
-          example: null
       additionalProperties: true
       x-order: 791325901-2
       x-super: '#/components/schemas/AuthReqData'
-      example: null
     AuthReq:
       required:
       - ctx
@@ -1829,7 +1601,6 @@ components:
           - $ref: '#/components/schemas/QuestionsUpdateResData'
           - $ref: '#/components/schemas/TotpUpdateResData'
           x-nullable: true
-          example: null
         user:
           required:
           - auths
@@ -1849,7 +1620,6 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/Login'
-              example: null
             auths:
               type: object
               additionalProperties:
@@ -1857,32 +1627,26 @@ components:
                 $ref: '#/components/schemas/AuthUserCfg'
               description: |
                 Data of confirmed auths and sent codes for unconfirmed auths.
-              example: null
             factors:
               type: array
               description: Enabled factors
               items:
                 type: string
-              example: null
             signedUpAt:
               type: integer
               format: int64
-              example: null
             updatedAt:
               type: integer
               format: int64
-              example: null
             systemAccess:
               type: boolean
               description: Allows to access backend-only APIs. Use `appSecret` auth
                 to obtain token with this access.
               default: false
-              example: null
           description: User loaded from database. Can be null if user isn't identified
             yet.
           x-nullable: true
           x-super: '#/components/schemas/User'
-          example: null
         session:
           required:
           - authenticatedBy
@@ -1902,21 +1666,17 @@ components:
           properties:
             id:
               type: string
-              example: null
             entry:
               type: string
               description: Entry that authenticates this session
-              example: null
             identifiedBy:
               type: array
               description: Login used to identify this user
               items:
                 $ref: '#/components/schemas/LoginId'
-              example: null
             userId:
               type: string
               x-nullable: true
-              example: null
             authenticatedBy:
               type: object
               additionalProperties:
@@ -1924,7 +1684,6 @@ components:
                 x-additionalPropertiesName: factor
               description: |
                 Authenticator used for factors
-              example: null
             unconfirmedAuths:
               type: object
               additionalProperties:
@@ -1932,33 +1691,26 @@ components:
                 $ref: '#/components/schemas/UnconfirmedAuth'
               description: |
                 Auths that waiting for confirmation
-              example: null
             nextFactors:
               type: array
               description: List of factors needed to authenticate this session
               items:
                 $ref: '#/components/schemas/NextFactor'
-              example: null
             signedInAt:
               type: integer
               format: int64
-              example: null
             expiresAt:
               type: integer
               format: int64
-              example: null
             refreshedAt:
               type: integer
               format: int64
-              example: null
             newUser:
               type: boolean
-              example: null
             device:
               $ref: '#/components/schemas/Device'
             systemAccess:
               type: boolean
-              example: null
             data:
               type: object
               additionalProperties:
@@ -1966,14 +1718,11 @@ components:
                 - $ref: '#/components/schemas/AuthorizationCodeSessionData'
                 - $ref: '#/components/schemas/ScopesSessionData'
                 - $ref: '#/components/schemas/SessionData'
-              example: null
             authenticated:
               type: boolean
-              example: null
           description: "Current session, can be null if user edited by admin."
           x-nullable: true
           x-super: '#/components/schemas/Session'
-          example: null
         authData:
           required:
           - private
@@ -2003,13 +1752,11 @@ components:
                 If authenticator supports identification, it provides login here. This can be email, phone number,
                 facebook account id, etc.
               x-nullable: true
-              example: null
           description: |-
             Current session data. Null if auth wasn't enabled before. Otherwise, will contain current auth data during
             authenticate and previous data during update-auth request.
           x-nullable: true
           x-super: '#/components/schemas/AuthData'
-          example: null
         codeToSend:
           required:
           - attemptsLeft
@@ -2023,29 +1770,22 @@ components:
             validUntil:
               type: integer
               format: int64
-              example: null
             usedAttempts:
               type: integer
               format: int32
-              example: null
             attemptsLeft:
               type: integer
               format: int32
-              example: null
             codeHash:
               type: string
-              example: null
             sentAt:
               type: integer
               format: int64
-              example: null
             code:
               type: string
-              example: null
           description: Generated code. Will be null if no code-config specified.
           x-nullable: true
           x-super: '#/components/schemas/Code'
-          example: null
         reqData:
           anyOf:
           - $ref: '#/components/schemas/AppSecretReqData'
@@ -2068,12 +1808,10 @@ components:
         ctx:
           $ref: '#/components/schemas/ReqCtx'
       x-order: -1249106462-2
-      example: null
     AuthReqData:
       type: object
       additionalProperties: true
       x-order: -1249106462-4
-      example: null
     AuthUserCfg:
       type: object
       properties:
@@ -2106,20 +1844,16 @@ components:
                 If authenticator supports identification, it provides login here. This can be email, phone number,
                 facebook account id, etc.
               x-nullable: true
-              example: null
           description: Data/State of this authenticator
           x-nullable: true
           x-super: '#/components/schemas/AuthData'
-          example: null
         sentCodes:
           type: array
           description: |
             List of auths that wait for confirmation.
           items:
             $ref: '#/components/schemas/UnconfirmedAuthData'
-          example: null
       x-order: 332570507-0
-      example: null
     AuthorizationCodeAuthReqData:
       required:
       - agentAccessToken
@@ -2129,17 +1863,14 @@ components:
         authorizationCode:
           type: string
           description: Authorization code provided by `authorizationCode` update request.
-          example: null
         agentAccessToken:
           type: string
           description: Access token of user that will be able to act of behalf of
             current user.
           x-order: -2026363309-3
-          example: null
       additionalProperties: true
       x-order: -1836982696-6
       x-super: '#/components/schemas/AuthReqData'
-      example: null
     AuthorizationCodeUpdateReqData:
       required:
       - agentLogins
@@ -2151,17 +1882,14 @@ components:
             be able to act of behalf of current user.
           items:
             $ref: '#/components/schemas/LoginId'
-          example: null
         scopes:
           type: array
           items:
             type: string
           x-nullable: true
-          example: null
       additionalProperties: true
       x-order: -1836982696-4
       x-super: '#/components/schemas/AuthReqData'
-      example: null
     Code:
       required:
       - attemptsLeft
@@ -2175,27 +1903,20 @@ components:
         validUntil:
           type: integer
           format: int64
-          example: null
         usedAttempts:
           type: integer
           format: int32
-          example: null
         attemptsLeft:
           type: integer
           format: int32
-          example: null
         codeHash:
           type: string
-          example: null
         sentAt:
           type: integer
           format: int64
-          example: null
         code:
           type: string
-          example: null
       x-order: -1249106462-3
-      example: null
     CodeVerifier:
       required:
       - attemptsLeft
@@ -2208,24 +1929,18 @@ components:
         validUntil:
           type: integer
           format: int64
-          example: null
         usedAttempts:
           type: integer
           format: int32
-          example: null
         attemptsLeft:
           type: integer
           format: int32
-          example: null
         codeHash:
           type: string
-          example: null
         sentAt:
           type: integer
           format: int64
-          example: null
       x-order: 1113303910-0
-      example: null
     Device:
       required:
       - mobile
@@ -2234,20 +1949,15 @@ components:
       properties:
         mobile:
           type: boolean
-          example: null
         type:
           type: string
           x-nullable: true
-          example: null
         browser:
           type: string
           x-nullable: true
-          example: null
         userAgent:
           type: string
-          example: null
       x-order: 1837614569-0
-      example: null
     EmailAuthReqData:
       type: object
       properties:
@@ -2257,23 +1967,19 @@ components:
             User email. If email is not null - auth allow identification by email (email auth also must be listed in
             logins config). Otherwise, uses email of already identified user.
           x-nullable: true
-          example: null
         template:
           type: string
           description: Template to use.
           x-nullable: true
-          example: null
         templateParams:
           type: object
           additionalProperties:
             type: object
           description: Template params
           x-nullable: true
-          example: null
       additionalProperties: true
       x-order: 1021533909-3
       x-super: '#/components/schemas/AuthReqData'
-      example: null
     EmailUpdateReqData:
       required:
       - email
@@ -2282,23 +1988,19 @@ components:
         email:
           type: string
           description: New email to set.
-          example: null
         template:
           type: string
           description: Template to use.
           x-nullable: true
-          example: null
         templateParams:
           type: object
           additionalProperties:
             type: object
           description: Template params
           x-nullable: true
-          example: null
       additionalProperties: true
       x-order: 1021533909-4
       x-super: '#/components/schemas/AuthReqData'
-      example: null
     Login:
       required:
       - login
@@ -2319,9 +2021,7 @@ components:
           type: string
           description: Login that waits for confirmation.
           x-nullable: true
-          example: null
       x-order: -2010674509-0
-      example: null
     NextFactor:
       required:
       - factor
@@ -2330,20 +2030,16 @@ components:
       properties:
         factor:
           type: string
-          example: null
         supportedAuths:
           type: array
           items:
             type: string
-          example: null
       x-order: 1296788734-0
-      example: null
     NoAuthReqData:
       type: object
       additionalProperties: true
       x-order: -1249106462-5
       x-super: '#/components/schemas/AuthReqData'
-      example: null
     OAuthAppAuthReqData:
       required:
       - clientId
@@ -2351,19 +2047,15 @@ components:
       properties:
         clientId:
           type: string
-          example: null
         clientSecret:
           type: string
           x-nullable: true
-          example: null
         redirectUri:
           type: string
           x-nullable: true
-          example: null
       additionalProperties: true
       x-order: -1247144074-4
       x-super: '#/components/schemas/AuthReqData'
-      example: null
     OAuthAppUpdateReqData:
       type: object
       properties:
@@ -2374,17 +2066,14 @@ components:
           items:
             type: string
           x-nullable: true
-          example: null
         newClientSecret:
           type: boolean
           description: "If previous secret lost or compromised, it allows to generate\
             \ a new one."
           default: false
-          example: null
       additionalProperties: true
       x-order: -1247144074-5
       x-super: '#/components/schemas/AuthReqData'
-      example: null
     OAuthReqData:
       type: object
       properties:
@@ -2392,21 +2081,17 @@ components:
           type: string
           description: If you have access-token - put it here.
           x-nullable: true
-          example: null
         authorizationCode:
           type: string
           description: If you have authorisation-code - app will exchange it for access-token.
           x-nullable: true
-          example: null
         redirectUri:
           type: string
           description: Redirect uri used when requested user login.
           x-nullable: true
-          example: null
       additionalProperties: true
       x-order: -893636857-4
       x-super: '#/components/schemas/AuthReqData'
-      example: null
     PasswordAuthReqData:
       required:
       - password
@@ -2415,11 +2100,9 @@ components:
         password:
           type: string
           description: User password.
-          example: null
       additionalProperties: true
       x-order: -266447761-3
       x-super: '#/components/schemas/AuthReqData'
-      example: null
     PasswordUpdateReqData:
       type: object
       properties:
@@ -2427,16 +2110,13 @@ components:
           type: string
           description: New password to set. If null app generates password automatically.
           x-nullable: true
-          example: null
         confirmPassword:
           type: string
           description: Password confirmation. If null app doesn't perform this check.
           x-nullable: true
-          example: null
       additionalProperties: true
       x-order: -266447761-4
       x-super: '#/components/schemas/AuthReqData'
-      example: null
     QuestionsAuthReqData:
       required:
       - answers
@@ -2455,7 +2135,6 @@ components:
       additionalProperties: true
       x-order: -213229069-3
       x-super: '#/components/schemas/AuthReqData'
-      example: null
     QuestionsUpdateReqData:
       required:
       - answers
@@ -2474,7 +2153,6 @@ components:
       additionalProperties: true
       x-order: -213229069-5
       x-super: '#/components/schemas/AuthReqData'
-      example: null
     ReqCtx:
       required:
       - device
@@ -2485,19 +2163,15 @@ components:
         lang:
           type: string
           x-nullable: true
-          example: null
         ip:
           type: string
-          example: null
         device:
           $ref: '#/components/schemas/Device'
         headers:
           type: object
           additionalProperties:
             type: string
-          example: null
       x-order: -418366826-0
-      example: null
     ScopesAuthReqData:
       type: object
       properties:
@@ -2508,17 +2182,14 @@ components:
           items:
             $ref: '#/components/schemas/LoginId'
           x-nullable: true
-          example: null
         scopes:
           type: array
           items:
             type: string
           x-nullable: true
-          example: null
       additionalProperties: true
       x-order: 2741601-3
       x-super: '#/components/schemas/AuthReqData'
-      example: null
     Session:
       required:
       - authenticatedBy
@@ -2538,21 +2209,17 @@ components:
       properties:
         id:
           type: string
-          example: null
         entry:
           type: string
           description: Entry that authenticates this session
-          example: null
         identifiedBy:
           type: array
           description: Login used to identify this user
           items:
             $ref: '#/components/schemas/LoginId'
-          example: null
         userId:
           type: string
           x-nullable: true
-          example: null
         authenticatedBy:
           type: object
           additionalProperties:
@@ -2560,7 +2227,6 @@ components:
             x-additionalPropertiesName: factor
           description: |
             Authenticator used for factors
-          example: null
         unconfirmedAuths:
           type: object
           additionalProperties:
@@ -2568,33 +2234,26 @@ components:
             $ref: '#/components/schemas/UnconfirmedAuth'
           description: |
             Auths that waiting for confirmation
-          example: null
         nextFactors:
           type: array
           description: List of factors needed to authenticate this session
           items:
             $ref: '#/components/schemas/NextFactor'
-          example: null
         signedInAt:
           type: integer
           format: int64
-          example: null
         expiresAt:
           type: integer
           format: int64
-          example: null
         refreshedAt:
           type: integer
           format: int64
-          example: null
         newUser:
           type: boolean
-          example: null
         device:
           $ref: '#/components/schemas/Device'
         systemAccess:
           type: boolean
-          example: null
         data:
           type: object
           additionalProperties:
@@ -2602,12 +2261,9 @@ components:
             - $ref: '#/components/schemas/AuthorizationCodeSessionData'
             - $ref: '#/components/schemas/ScopesSessionData'
             - $ref: '#/components/schemas/SessionData'
-          example: null
         authenticated:
           type: boolean
-          example: null
       x-order: 2013237977-0
-      example: null
     TotpAuthReqData:
       required:
       - code
@@ -2615,11 +2271,9 @@ components:
       properties:
         code:
           type: string
-          example: null
       additionalProperties: true
       x-order: 820555017-3
       x-super: '#/components/schemas/AuthReqData'
-      example: null
     TotpUpdateReqData:
       required:
       - accountName
@@ -2632,19 +2286,15 @@ components:
             Base32 SHA-1 key.
             If null, secret is generated automatically.
           x-nullable: true
-          example: null
         issuer:
           type: string
           description: Used only to generate `otpauth://` url.
-          example: null
         accountName:
           type: string
           description: Used only to generate `otpauth://` url.
-          example: null
       additionalProperties: true
       x-order: 820555017-4
       x-super: '#/components/schemas/AuthReqData'
-      example: null
     UnconfirmedAuth:
       type: object
       properties:
@@ -2652,9 +2302,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CodeVerifier'
-          example: null
       x-order: 320227009-0
-      example: null
     UnconfirmedAuthData:
       required:
       - code
@@ -2666,7 +2314,6 @@ components:
         code:
           $ref: '#/components/schemas/CodeVerifier'
       x-order: 332570507-8
-      example: null
     User:
       required:
       - auths
@@ -2686,7 +2333,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Login'
-          example: null
         auths:
           type: object
           additionalProperties:
@@ -2694,29 +2340,23 @@ components:
             $ref: '#/components/schemas/AuthUserCfg'
           description: |
             Data of confirmed auths and sent codes for unconfirmed auths.
-          example: null
         factors:
           type: array
           description: Enabled factors
           items:
             type: string
-          example: null
         signedUpAt:
           type: integer
           format: int64
-          example: null
         updatedAt:
           type: integer
           format: int64
-          example: null
         systemAccess:
           type: boolean
           description: Allows to access backend-only APIs. Use `appSecret` auth to
             obtain token with this access.
           default: false
-          example: null
       x-order: 276900135-0
-      example: null
     DryRunAuthData:
       type: object
       properties:
@@ -2726,9 +2366,7 @@ components:
             If authenticator supports identification, it provides login here. This can be email, phone number,
             facebook account id, etc.
           x-nullable: true
-          example: null
       x-order: -1249106462-8
-      example: null
     DryRunAuthRes:
       type: object
       properties:
@@ -2741,11 +2379,9 @@ components:
                 If authenticator supports identification, it provides login here. This can be email, phone number,
                 facebook account id, etc.
               x-nullable: true
-              example: null
           description: New auth data to save.
           x-nullable: true
           x-super: '#/components/schemas/DryRunAuthData'
-          example: null
         resData:
           description: This data will be sent back to the client.
           anyOf:
@@ -2760,16 +2396,13 @@ components:
           - $ref: '#/components/schemas/QuestionsUpdateResData'
           - $ref: '#/components/schemas/TotpUpdateResData'
           x-nullable: true
-          example: null
       x-order: -1249106462-7
-      example: null
     FindSessionRes:
       type: object
       properties:
         session:
           $ref: '#/components/schemas/Session'
       x-order: 400707106-2
-      example: null
     FindSessionsRes:
       required:
       - sessions
@@ -2779,13 +2412,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Session'
-          example: null
         tooManySessions:
           type: boolean
           description: True if number of sessions in database exceeds some limit
-          example: null
       x-order: 400707106-4
-      example: null
     SaveSessionReq:
       required:
       - removed
@@ -2794,7 +2424,6 @@ components:
         userId:
           type: string
           x-nullable: true
-          example: null
         updated:
           required:
           - authenticatedBy
@@ -2814,21 +2443,17 @@ components:
           properties:
             id:
               type: string
-              example: null
             entry:
               type: string
               description: Entry that authenticates this session
-              example: null
             identifiedBy:
               type: array
               description: Login used to identify this user
               items:
                 $ref: '#/components/schemas/LoginId'
-              example: null
             userId:
               type: string
               x-nullable: true
-              example: null
             authenticatedBy:
               type: object
               additionalProperties:
@@ -2836,7 +2461,6 @@ components:
                 x-additionalPropertiesName: factor
               description: |
                 Authenticator used for factors
-              example: null
             unconfirmedAuths:
               type: object
               additionalProperties:
@@ -2844,33 +2468,26 @@ components:
                 $ref: '#/components/schemas/UnconfirmedAuth'
               description: |
                 Auths that waiting for confirmation
-              example: null
             nextFactors:
               type: array
               description: List of factors needed to authenticate this session
               items:
                 $ref: '#/components/schemas/NextFactor'
-              example: null
             signedInAt:
               type: integer
               format: int64
-              example: null
             expiresAt:
               type: integer
               format: int64
-              example: null
             refreshedAt:
               type: integer
               format: int64
-              example: null
             newUser:
               type: boolean
-              example: null
             device:
               $ref: '#/components/schemas/Device'
             systemAccess:
               type: boolean
-              example: null
             data:
               type: object
               additionalProperties:
@@ -2878,14 +2495,11 @@ components:
                 - $ref: '#/components/schemas/AuthorizationCodeSessionData'
                 - $ref: '#/components/schemas/ScopesSessionData'
                 - $ref: '#/components/schemas/SessionData'
-              example: null
             authenticated:
               type: boolean
-              example: null
           description: Session to update.
           x-nullable: true
           x-super: '#/components/schemas/Session'
-          example: null
         new:
           required:
           - authenticatedBy
@@ -2905,21 +2519,17 @@ components:
           properties:
             id:
               type: string
-              example: null
             entry:
               type: string
               description: Entry that authenticates this session
-              example: null
             identifiedBy:
               type: array
               description: Login used to identify this user
               items:
                 $ref: '#/components/schemas/LoginId'
-              example: null
             userId:
               type: string
               x-nullable: true
-              example: null
             authenticatedBy:
               type: object
               additionalProperties:
@@ -2927,7 +2537,6 @@ components:
                 x-additionalPropertiesName: factor
               description: |
                 Authenticator used for factors
-              example: null
             unconfirmedAuths:
               type: object
               additionalProperties:
@@ -2935,33 +2544,26 @@ components:
                 $ref: '#/components/schemas/UnconfirmedAuth'
               description: |
                 Auths that waiting for confirmation
-              example: null
             nextFactors:
               type: array
               description: List of factors needed to authenticate this session
               items:
                 $ref: '#/components/schemas/NextFactor'
-              example: null
             signedInAt:
               type: integer
               format: int64
-              example: null
             expiresAt:
               type: integer
               format: int64
-              example: null
             refreshedAt:
               type: integer
               format: int64
-              example: null
             newUser:
               type: boolean
-              example: null
             device:
               $ref: '#/components/schemas/Device'
             systemAccess:
               type: boolean
-              example: null
             data:
               type: object
               additionalProperties:
@@ -2969,29 +2571,23 @@ components:
                 - $ref: '#/components/schemas/AuthorizationCodeSessionData'
                 - $ref: '#/components/schemas/ScopesSessionData'
                 - $ref: '#/components/schemas/SessionData'
-              example: null
             authenticated:
               type: boolean
-              example: null
           description: Session to insert
           x-nullable: true
           x-super: '#/components/schemas/Session'
-          example: null
         removed:
           type: array
           description: Session ids to remove
           items:
             type: string
-          example: null
       x-order: 400707106-3
-      example: null
     FindUserRes:
       type: object
       properties:
         user:
           $ref: '#/components/schemas/User'
       x-order: -1537032784-1
-      example: null
     SaveUserReq:
       required:
       - newLogins
@@ -3007,41 +2603,34 @@ components:
           description: Login ids to remove.
           items:
             $ref: '#/components/schemas/LoginId'
-          example: null
         updatedUsers:
           type: array
           description: User that must be updated. This list doesn't include users
             that have new/updated/removed logins only.
           items:
             $ref: '#/components/schemas/User'
-          example: null
         newUsers:
           type: array
           description: Users to insert
           items:
             $ref: '#/components/schemas/User'
-          example: null
         updatedLogins:
           type: array
           description: Logins to update
           items:
             $ref: '#/components/schemas/Login'
-          example: null
         newLogins:
           type: array
           description: Logins to insert
           items:
             $ref: '#/components/schemas/Login'
-          example: null
         updatedUsersOrLogins:
           type: array
           description: "Alternative approach, if users and logins stored within single\
             \ document - prefer using this field + `newUsers`"
           items:
             $ref: '#/components/schemas/User'
-          example: null
       x-order: -1537032784-2
-      example: null
 x-tagGroups:
 - name: Api
   tags:
