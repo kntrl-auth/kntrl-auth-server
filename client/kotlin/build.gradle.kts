@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "app.kntrl"
-version = "0.9"
+version = "0.10.0"
 
 sourceSets.main {
     // Include as sources to include only necessary dependencies and publish only single jar
@@ -45,7 +45,7 @@ tasks.register<GenerateSwaggerCode>("generateOpenapiClient") {
         "modelPackage" to "app.kntrl.client.openapi.model",
         "groupId" to "app.kntrl",
         "artifactId" to "client-openapi",
-        "artifactVersion" to "0.9",
+        "artifactVersion" to "0.10.0",
         "hideGenerationTimestamp" to "true",
         "disallowAdditionalPropertiesIfNotPresent" to "false",
         "useRuntimeException" to "true",

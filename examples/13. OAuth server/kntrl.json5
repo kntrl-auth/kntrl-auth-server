@@ -1,0 +1,49 @@
+{
+  logins: [ "username", "oauthApp", "authorizationCode" ],
+
+  auths: {
+    password: {},
+    // App auth. Allows to create new apps and verify clientId, clientSecret, redirectUrl
+    oauthApp: {},
+    authorizationCode : {
+      // Confidential client may have more allowed scopes
+      scopes: [ 'profile', 'edit-profile' ]
+    },
+    // Just add scopes to session
+    scopes: {
+      scopes: [ 'profile' ]
+    }
+  },
+
+  entries: {
+    app: {
+      factorsRequired: {
+        first: [ "password" ]
+      },
+      editAccount: true,
+    },
+
+    // Entry for validating clientId, clientSecret and redirectUri
+    oauthApp: {
+      factorsRequired: {
+        first: [ "oauthApp" ]
+      },
+      // No need to create sessions, just validate credentials.
+      ttl : "0"
+    },
+
+    authorizationCodeFlow: {
+      factorsRequired: {
+        first: [ "authorizationCode" ],
+      }
+    },
+    implicitFlow: {
+      // Require user to be authenticated
+      requiresEntry: 'app',
+      factorsRequired: {
+        // as next factor is requires, it's not needed to enabled explicitly.
+        addScopes: [ 'scopes' ]
+      }
+    }
+  }
+}

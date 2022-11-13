@@ -145,30 +145,17 @@ class Session(
     }
 
     class Factors : LinkedHashMap<String, String>() {
-        fun factor(factor: String, auth: String): Factors {
-            put(factor, auth)
-            return this
-        }
+        fun factor(factor: String, auth: String) = also { put(factor, auth) }
     }
 
     class AuthReqs : AuthenticateReq() {
-        fun req(auth: String, req: AuthenticateReqAuthReqsValue?): AuthReqs {
-            putAuthReqsItem(auth, req)
-            return this
-        }
-        fun req(auth: String, factor: String, req: AuthenticateReqAuthReqsValue?): AuthReqs {
+        fun req(auth: String, req: AuthenticateReqAuthReqsValue?) = also { putAuthReqsItem(auth, req) }
+        fun req(auth: String, factor: String, req: AuthenticateReqAuthReqsValue?) = also {
             putAuthReqsItem(auth, req)
             putFactorsItem(auth, factor)
-            return this
         }
-        fun enableFactor(factor: String): AuthReqs {
-            putFactorsItem(factor, null)
-            return this
-        }
-        fun dryRun(): AuthReqs {
-            dryRun(true)
-            return this
-        }
+        fun enableFactor(factor: String) = also { putFactorsItem(factor, null) }
+        fun dryRun() = also { dryRun(true) }
     }
 }
 

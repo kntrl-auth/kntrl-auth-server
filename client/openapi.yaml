@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Kntrl API
-  version: "0.9"
+  version: 0.10.0
   x-logo:
     url: ./logo.png
 tags:
@@ -24,11 +24,13 @@ tags:
 - name: authorisation
   x-displayName:
   - Authorization API
-- name: signature
-  description: |
-    Utilities for client side cache of data and validation.
+- name: custom-token
+  description: |+
+    Utilities for token creation. Can be used to implement checks that don't involve database interactions.
+    Also, it can be used to generate and check OpenID `id_token`.
+
   x-displayName:
-  - Signature
+  - Custom token
 paths:
   /api/server/health:
     get:
@@ -293,14 +295,21 @@ paths:
       security:
       - access-token: []
       x-order: 1
-  /api/signature/public-key:
-    get:
+  /api/tokens/custom/jwt:
+    post:
       tags:
-      - signature
-      summary: Get RSA public key
+      - custom-token
+      summary: (Backend API) Create JWT token
       description: |
-        Public key generated from app-secret from config used for signature validation.
-      operationId: getPublicKey
+        Creates JWT token signed with RSA256 key. RSA key is generated from app secret (specified in kntrl.json5)
+      operationId: createCustomJwtToken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+        required: true
       responses:
         default:
           description: Success
@@ -320,6 +329,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/IntegrationErr'
+      security:
+      - access-token: []
       x-order: 1
   /api/server/cfg:
     get:
@@ -450,26 +461,15 @@ paths:
       - access-token: []
       - {}
       x-order: 2
-  /api/signature/verify:
+  /api/tokens/custom/jwt/parse:
     post:
       tags:
-      - signature
-      summary: Validate signature
+      - custom-token
+      summary: Parse JWT token
       description: |
-        Validates data signature.
-        See /sign API for details.
-      operationId: verify
-      parameters:
-      - name: signature
-        in: query
-        required: true
-        schema:
-          type: string
-      - name: secret
-        in: query
-        required: false
-        schema:
-          type: string
+        Validates token signature, expiration time and extracts token data.
+        See /jwt API for details.
+      operationId: parseCustomJwtToken
       requestBody:
         content:
           application/json:
@@ -480,7 +480,9 @@ paths:
         default:
           description: Success
           content:
-            application/json: {}
+            application/json:
+              schema:
+                type: string
         "4XX":
           description: Client error
           content:
@@ -494,16 +496,73 @@ paths:
               schema:
                 $ref: '#/components/schemas/IntegrationErr'
       x-order: 2
-  /api/signature/sign:
+  /api/token/jwt/public-key:
+    get:
+      tags:
+      - token
+      summary: Get JWT public key
+      description: |
+        RSA256 public key that can be used to verify access jwt tokens locally.
+      operationId: getPublicKey
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: string
+        "4XX":
+          description: Client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+        "5XX":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+      x-order: 3
+  /api/tokens/custom/jwt/public-key:
+    get:
+      tags:
+      - custom-token
+      summary: Get JWT public key
+      description: |
+        RSA256 public key generated from app-secret from config used for signature validation.
+        Can be used to verify jwt tokens locally.
+      operationId: getCustomJwtPublicKey
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: string
+        "4XX":
+          description: Client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+        "5XX":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+      x-order: 3
+  /api/tokens/custom/binary:
     post:
       tags:
-      - signature
-      summary: (Backend API) sign data
+      - custom-token
+      summary: (Backend API) Create binary token
       description: |
-        Sign data using specified secret.
+        Creates binary token signed with specified secret.
         When secret is null - use app secret (specified in kntrl.json5) with SHA256withRSA algorithm.
-        Otherwise - use secret from query with HmacSHA256 algorithm.
-      operationId: sign
+        Otherwise - use secret from query and sign with HmacSHA256 algorithm.
+      operationId: createCustomBinaryToken
       parameters:
       - name: secret
         in: query
@@ -537,7 +596,48 @@ paths:
                 $ref: '#/components/schemas/IntegrationErr'
       security:
       - access-token: []
-      x-order: 3
+      x-order: 4
+  /api/tokens/custom/binary/parse:
+    post:
+      tags:
+      - custom-token
+      summary: Parse binary token
+      description: |
+        Validates token signature and extracts token data.
+        See /binary API for details.
+      operationId: parseCustomBinaryToken
+      parameters:
+      - name: secret
+        in: query
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+      responses:
+        default:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: string
+        "4XX":
+          description: Client error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+        "5XX":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+      x-order: 5
   /api/session/auth/confirm:
     post:
       tags:
@@ -652,7 +752,7 @@ paths:
     patch:
       tags:
       - user
-      summary: (Admin API) Edit user
+      summary: (Backend API) Edit user
       operationId: editUser
       parameters:
       - name: id
@@ -732,17 +832,22 @@ components:
       properties:
         code:
           type: string
+          example: null
         devMsg:
           type: string
           description: Message for developers.
+          example: null
         msg:
           type: string
           description: Localised message suitable for UI.
           x-nullable: true
+          example: null
       discriminator:
         propertyName: code
         mapping:
           PLUGIN_ERR: '#/components/schemas/PluginErr'
+          INCORRECT_TOTP_CODE: '#/components/schemas/IncorrectTotpCode'
+          OAUTH_APP_ERR: '#/components/schemas/OauthAppErr'
           PLUGIN_CLIENT_ERR: '#/components/schemas/PluginClientErr'
           PASSWORD_IS_INCORRECT: '#/components/schemas/PasswordIsIncorrect'
           PASSWORD_IS_INVALID: '#/components/schemas/PasswordIsInvalid'
@@ -753,7 +858,6 @@ components:
           SESSION_EXPIRED: '#/components/schemas/SessionExpired'
           ACCESS_DENIED: '#/components/schemas/AccessDenied'
           USER_NOT_FOUND: '#/components/schemas/UserNotFound'
-          SIGNATURE_IS_INCORRECT: '#/components/schemas/SignatureIsIncorrect'
           USER_LOGIN_IS_INVALID: '#/components/schemas/UserLoginIsInvalid'
           USER_LOGIN_ALREADY_TAKEN: '#/components/schemas/UserLoginAlreadyTaken'
           TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
@@ -772,11 +876,13 @@ components:
         x-explicitMappingOnly: true
       x-order: 2025349183-0
       x-sealed: false
+      example: null
     AccessDenied:
       type: object
       allOf:
       - $ref: '#/components/schemas/Unauthenticated'
       x-order: -2065236468-1
+      example: null
     AnswerErr:
       required:
       - tooLong
@@ -785,9 +891,12 @@ components:
       properties:
         tooShort:
           type: boolean
+          example: null
         tooLong:
           type: boolean
+          example: null
       x-order: -1279700867-9
+      example: null
     AnyErr:
       required:
       - devMsg
@@ -799,29 +908,36 @@ components:
         properties:
           code:
             type: string
+            example: null
           devMsg:
             type: string
             description: Message for developers.
+            example: null
           msg:
             type: string
             description: Localised message suitable for UI.
             x-nullable: true
+            example: null
       x-order: 2025349183-5
+      example: null
     AuthIsNotConfirmed:
       type: object
       allOf:
       - $ref: '#/components/schemas/ClientErr'
       x-order: -270554383-3
+      example: null
     AuthIsNotEnabled:
       type: object
       allOf:
       - $ref: '#/components/schemas/ClientErr'
       x-order: -270554383-2
+      example: null
     AuthRequiresAnother:
       type: object
       allOf:
       - $ref: '#/components/schemas/ClientErr'
       x-order: -270554383-5
+      example: null
     ClientErr:
       required:
       - code
@@ -830,6 +946,8 @@ components:
       discriminator:
         propertyName: code
         mapping:
+          INCORRECT_TOTP_CODE: '#/components/schemas/IncorrectTotpCode'
+          OAUTH_APP_ERR: '#/components/schemas/OauthAppErr'
           PLUGIN_CLIENT_ERR: '#/components/schemas/PluginClientErr'
           PASSWORD_IS_INCORRECT: '#/components/schemas/PasswordIsIncorrect'
           PASSWORD_IS_INVALID: '#/components/schemas/PasswordIsInvalid'
@@ -840,7 +958,6 @@ components:
           SESSION_EXPIRED: '#/components/schemas/SessionExpired'
           ACCESS_DENIED: '#/components/schemas/AccessDenied'
           USER_NOT_FOUND: '#/components/schemas/UserNotFound'
-          SIGNATURE_IS_INCORRECT: '#/components/schemas/SignatureIsIncorrect'
           USER_LOGIN_IS_INVALID: '#/components/schemas/UserLoginIsInvalid'
           USER_LOGIN_ALREADY_TAKEN: '#/components/schemas/UserLoginAlreadyTaken'
           TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
@@ -859,35 +976,49 @@ components:
         properties:
           code:
             type: string
+            example: null
           devMsg:
             type: string
             description: Message for developers.
+            example: null
           msg:
             type: string
             description: Localised message suitable for UI.
             x-nullable: true
+            example: null
       x-order: 2025349183-4
       x-sealed: false
+      example: null
     CodeIsExpired:
       type: object
       allOf:
       - $ref: '#/components/schemas/ClientErr'
       x-order: -270554383-6
+      example: null
     CodeIsIncorrect:
       type: object
       allOf:
       - $ref: '#/components/schemas/ClientErr'
       x-order: -270554383-8
+      example: null
     CodeTooManyAttempts:
       type: object
       allOf:
       - $ref: '#/components/schemas/ClientErr'
       x-order: -270554383-7
+      example: null
     EmailIsIncorrect:
       type: object
       allOf:
       - $ref: '#/components/schemas/ClientErr'
       x-order: -1279700867-5
+      example: null
+    IncorrectTotpCode:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ClientErr'
+      x-order: -1279700867-10
+      example: null
     Instant:
       type: integer
       format: int64
@@ -908,20 +1039,25 @@ components:
         properties:
           code:
             type: string
+            example: null
           devMsg:
             type: string
             description: Message for developers.
+            example: null
           msg:
             type: string
             description: Localised message suitable for UI.
             x-nullable: true
+            example: null
       x-order: 2025349183-3
       x-sealed: false
+      example: null
     IpNew:
       type: object
       allOf:
       - $ref: '#/components/schemas/ClientErr'
       x-order: -1279700867-6
+      example: null
     LoginId:
       required:
       - login
@@ -930,16 +1066,39 @@ components:
       properties:
         type:
           type: string
-          description: Type of login
+          description: |
+            Type of login
+          example: email
         login:
           type: string
-          description: "User unique identifier, email, username, etc."
+          description: |
+            User unique identifier, email, username, etc. User can use it to sign-in.
+          example: john@example.org
       x-order: -2010674509-2
+      example: null
     NoAuthAvailableForFactor:
       type: object
       allOf:
       - $ref: '#/components/schemas/IntegrationErr'
       x-order: -270554383-4
+      example: null
+    OauthAppErr:
+      required:
+      - incorrectRedirectUri
+      - incorrectSecret
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ClientErr'
+      - type: object
+        properties:
+          incorrectRedirectUri:
+            type: boolean
+            example: null
+          incorrectSecret:
+            type: boolean
+            example: null
+      x-order: -1279700867-11
+      example: null
     PasswordIsIncorrect:
       type: object
       allOf:
@@ -950,11 +1109,14 @@ components:
             type: integer
             format: int64
             x-nullable: true
+            example: null
           changedDaysAgo:
             type: integer
             format: int64
             x-nullable: true
+            example: null
       x-order: -1279700867-3
+      example: null
     PasswordIsInvalid:
       required:
       - commonPassword
@@ -972,44 +1134,58 @@ components:
         properties:
           tooLong:
             type: boolean
+            example: null
           tooShort:
             type: boolean
+            example: null
           missingNumber:
             type: boolean
+            example: null
           missingSymbol:
             type: boolean
+            example: null
           missingUpperCase:
             type: boolean
+            example: null
           missingLowerCase:
             type: boolean
+            example: null
           commonPassword:
             type: boolean
+            example: null
           wasUsedBeforeAt:
             type: integer
             format: int64
             x-nullable: true
+            example: null
           matchesLogin:
             $ref: '#/components/schemas/LoginId'
           passwordsMismatch:
             type: boolean
+            example: null
           strength:
             type: string
             x-nullable: true
+            example: null
           wasUsedDaysAgo:
             type: integer
             format: int64
+            example: null
       x-order: -1279700867-4
+      example: null
     PluginClientErr:
       type: object
       additionalProperties: true
       allOf:
       - $ref: '#/components/schemas/ClientErr'
       x-order: -1279700867-2
+      example: null
     PluginErr:
       type: object
       allOf:
       - $ref: '#/components/schemas/ServerErr'
       x-order: -1279700867-1
+      example: null
     QuestionsAnswersIncorrect:
       required:
       - incorrectAnswers
@@ -1024,13 +1200,17 @@ components:
             type: array
             items:
               type: string
+            example: null
           requiresMoreAnswers:
             type: boolean
+            example: null
           questionsNotFound:
             type: array
             items:
               type: string
+            example: null
       x-order: -1279700867-7
+      example: null
     QuestionsAnswersInvalid:
       required:
       - invalidAnswers
@@ -1045,9 +1225,12 @@ components:
             additionalProperties:
               anyOf:
               - $ref: '#/components/schemas/AnswerErr'
+            example: null
           tooManyAnswers:
             type: boolean
+            example: null
       x-order: -1279700867-8
+      example: null
     ServerErr:
       required:
       - code
@@ -1065,25 +1248,25 @@ components:
         properties:
           code:
             type: string
+            example: null
           devMsg:
             type: string
             description: Message for developers.
+            example: null
           msg:
             type: string
             description: Localised message suitable for UI.
             x-nullable: true
+            example: null
       x-order: 2025349183-2
       x-sealed: false
+      example: null
     SessionExpired:
       type: object
       allOf:
       - $ref: '#/components/schemas/Unauthenticated'
       x-order: -2065236468-0
-    SignatureIsIncorrect:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/ClientErr'
-      x-order: -2065236468-3
+      example: null
     TokenExpired:
       type: object
       allOf:
@@ -1092,9 +1275,14 @@ components:
         properties:
           expiredAt:
             type: integer
+            description: |-
+              Token expiration time. If null, token is incorrect (due to incorrect format or invalid signature).
+              May be caused by changed app-secret.
             format: int64
             x-nullable: true
+            example: null
       x-order: -270554383-11
+      example: null
     TooManyReqs:
       type: object
       allOf:
@@ -1105,15 +1293,19 @@ components:
             type: integer
             format: int32
             x-nullable: true
+            example: null
           waitTimeSeconds:
             type: integer
             format: int32
             x-nullable: true
+            example: null
           waitTimeMinutes:
             type: integer
             format: int32
             x-nullable: true
+            example: null
       x-order: -270554383-12
+      example: null
     Unauthenticated:
       required:
       - code
@@ -1131,11 +1323,13 @@ components:
       - $ref: '#/components/schemas/ClientErr'
       x-order: -270554383-9
       x-sealed: false
+      example: null
     UserLoginAlreadyTaken:
       type: object
       allOf:
       - $ref: '#/components/schemas/ClientErr'
       x-order: -270554383-1
+      example: null
     UserLoginIsInvalid:
       required:
       - loginId
@@ -1147,14 +1341,39 @@ components:
           loginId:
             $ref: '#/components/schemas/LoginId'
       x-order: -270554383-0
+      example: null
     UserNotFound:
       type: object
       allOf:
       - $ref: '#/components/schemas/Unauthenticated'
       x-order: -2065236468-2
+      example: null
     AccessToken:
       type: string
       x-order: -2026363309-3
+      example: null
+    AuthorizationCodeSessionData:
+      required:
+      - agent
+      - scopes
+      type: object
+      additionalProperties: true
+      allOf:
+      - $ref: '#/components/schemas/SessionData'
+      - type: object
+        properties:
+          agent:
+            type: array
+            items:
+              $ref: '#/components/schemas/LoginId'
+            example: null
+          scopes:
+            type: array
+            items:
+              type: string
+            example: null
+      x-order: -1836982696-7
+      example: null
     CodeVerifier:
       required:
       - attemptsLeft
@@ -1165,21 +1384,28 @@ components:
       properties:
         id:
           type: string
+          example: null
         validUntil:
           type: integer
           format: int64
+          example: null
         usedAttempts:
           type: integer
           format: int32
+          example: null
         attemptsLeft:
           type: integer
           format: int32
+          example: null
         sentAt:
           type: integer
           format: int64
+          example: null
         hasAttemptsLeft:
           type: boolean
+          example: null
       x-order: 1113303910-0
+      example: null
     Device:
       required:
       - mobile
@@ -1188,15 +1414,20 @@ components:
       properties:
         mobile:
           type: boolean
+          example: null
         type:
           type: string
           x-nullable: true
+          example: null
         browser:
           type: string
           x-nullable: true
+          example: null
         userAgent:
           type: string
+          example: null
       x-order: 1837614569-0
+      example: null
     NextFactor:
       required:
       - factor
@@ -1205,15 +1436,18 @@ components:
       properties:
         factor:
           type: string
+          example: null
         supportedAuths:
-          uniqueItems: true
           type: array
           items:
             type: string
+          example: null
       x-order: 1296788734-0
+      example: null
     RefreshToken:
       type: string
       x-order: -2026363309-5
+      example: null
     RefreshTokenRes:
       required:
       - session
@@ -1225,9 +1459,33 @@ components:
         session:
           $ref: '#/components/schemas/Session'
       x-order: 68856176-2
+      example: null
+    ScopesSessionData:
+      required:
+      - scopes
+      type: object
+      additionalProperties: true
+      allOf:
+      - $ref: '#/components/schemas/SessionData'
+      - type: object
+        properties:
+          agent:
+            type: array
+            items:
+              $ref: '#/components/schemas/LoginId'
+            x-nullable: true
+            example: null
+          scopes:
+            type: array
+            items:
+              type: string
+            example: null
+      x-order: 2741601-4
+      example: null
     Session:
       required:
       - authenticatedBy
+      - data
       - device
       - entry
       - expiresAt
@@ -1243,17 +1501,21 @@ components:
       properties:
         id:
           type: string
+          example: null
         entry:
           type: string
           description: Entry that authenticates this session
+          example: null
         identifiedBy:
           type: array
           description: Login used to identify this user
           items:
             $ref: '#/components/schemas/LoginId'
+          example: null
         userId:
           type: string
           x-nullable: true
+          example: null
         authenticatedBy:
           type: object
           additionalProperties:
@@ -1261,6 +1523,7 @@ components:
             x-additionalPropertiesName: factor
           description: |
             Authenticator used for factors
+          example: null
         unconfirmedAuths:
           type: object
           additionalProperties:
@@ -1269,38 +1532,54 @@ components:
             - $ref: '#/components/schemas/UnconfirmedAuth'
           description: |
             Auths that waiting for confirmation
+          example: null
         nextFactors:
           type: array
           description: List of factors needed to authenticate this session
           items:
             $ref: '#/components/schemas/NextFactor'
+          example: null
         signedInAt:
           type: integer
           format: int64
+          example: null
         expiresAt:
           type: integer
           format: int64
+          example: null
         refreshedAt:
           type: integer
           format: int64
+          example: null
         newUser:
           type: boolean
-        scopes:
-          type: array
-          description: App services list that this session is allowed to access. Null
-            if allowed to access any scope
-          items:
-            type: string
-          x-nullable: true
+          example: null
         device:
           $ref: '#/components/schemas/Device'
         systemAccess:
           type: boolean
+          example: null
+        data:
+          type: object
+          additionalProperties:
+            anyOf:
+            - $ref: '#/components/schemas/AuthorizationCodeSessionData'
+            - $ref: '#/components/schemas/ScopesSessionData'
+            - $ref: '#/components/schemas/SessionData'
+          example: null
         expired:
           type: boolean
+          example: null
         authenticated:
           type: boolean
+          example: null
       x-order: 2013237977-0
+      example: null
+    SessionData:
+      type: object
+      additionalProperties: true
+      x-order: -255987249-0
+      example: null
     Tokens:
       required:
       - access
@@ -1311,14 +1590,18 @@ components:
           description: Access token for authentication
           allOf:
           - $ref: '#/components/schemas/AccessToken'
+          example: null
         refresh:
           description: Refresh token for obtaining new access token
           allOf:
           - $ref: '#/components/schemas/RefreshToken'
+          example: null
         accessTokenExpiresAt:
           type: integer
           format: int64
+          example: null
       x-order: -2026363309-0
+      example: null
     UnconfirmedAuth:
       type: object
       properties:
@@ -1326,7 +1609,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CodeVerifier'
+          example: null
       x-order: 320227009-0
+      example: null
     RefreshTokenReq:
       required:
       - refreshToken
@@ -1335,6 +1620,7 @@ components:
         refreshToken:
           $ref: '#/components/schemas/RefreshToken'
       x-order: 68856176-1
+      example: null
     PublicCfgAuth:
       required:
       - auth
@@ -1343,9 +1629,12 @@ components:
       properties:
         auth:
           type: string
+          example: null
         authType:
           type: string
+          example: null
       x-order: -517526772-4
+      example: null
     PublicCfgRes:
       required:
       - auths
@@ -1357,15 +1646,19 @@ components:
           type: array
           items:
             type: string
+          example: null
         loginRequirements:
           type: object
           additionalProperties:
             type: string
+          example: null
         auths:
           type: array
           items:
             $ref: '#/components/schemas/PublicCfgAuth'
+          example: null
       x-order: -517526772-3
+      example: null
     DbHealthRes:
       required:
       - rateLimiter
@@ -1380,6 +1673,7 @@ components:
         rateLimiter:
           $ref: '#/components/schemas/HealthStatusRes'
       x-order: -517526772-2
+      example: null
     HealthRes:
       required:
       - auth
@@ -1395,12 +1689,15 @@ components:
             x-additionalPropertiesName: auth
             anyOf:
             - $ref: '#/components/schemas/HealthStatusRes'
+          example: null
         status:
           $ref: '#/components/schemas/HealthStatus'
         msg:
           type: string
           x-nullable: true
+          example: null
       x-order: -517526772-1
+      example: null
     HealthStatus:
       type: string
       enum:
@@ -1417,7 +1714,9 @@ components:
         msg:
           type: string
           x-nullable: true
+          example: null
       x-order: -814092127-1
+      example: null
     AuthData:
       required:
       - public
@@ -1428,6 +1727,7 @@ components:
           - $ref: '#/components/schemas/AuthPublicData'
           - $ref: '#/components/schemas/EmailPublicData'
           - $ref: '#/components/schemas/NoAuthPublicData'
+          - $ref: '#/components/schemas/OAuthAppPublicData'
           - $ref: '#/components/schemas/PasswordPublicData'
           - $ref: '#/components/schemas/QuestionsPublicData'
         login:
@@ -1436,7 +1736,9 @@ components:
             If authenticator supports identification, it provides login here. This can be email, phone number,
             facebook account id, etc.
           x-nullable: true
+          example: null
       x-order: 332570507-3
+      example: null
     AuthExecRes:
       required:
       - status
@@ -1455,32 +1757,44 @@ components:
         x-explicitMappingOnly: true
       x-order: -73723375-2
       x-sealed: true
+      example: null
     AuthPrivateData:
       type: object
       additionalProperties: true
+      description: Data available only for authenticator.
       x-order: 332570507-6
+      example: null
     AuthPublicData:
       type: object
       additionalProperties: true
+      description: Data that are available for API.
       x-order: 332570507-4
+      example: null
     AuthResData:
       type: object
       additionalProperties: true
       x-order: -1249106462-10
+      example: null
     AuthUserCfg:
       type: object
       properties:
         data:
-          $ref: '#/components/schemas/AuthData'
+          description: Data/State of this authenticator
+          allOf:
+          - $ref: '#/components/schemas/AuthData'
+          x-nullable: true
+          example: null
         sentCodes:
           type: array
           description: |
             List of auths that wait for confirmation.
           items:
             $ref: '#/components/schemas/UnconfirmedAuthData'
+          example: null
         confirmed:
           type: boolean
       x-order: 332570507-0
+      example: null
     AuthenticateRes:
       required:
       - authRes
@@ -1498,7 +1812,23 @@ components:
             anyOf:
             - $ref: '#/components/schemas/AuthExecRes'
             x-additionalPropertiesName: auth
+          example: null
       x-order: 2094520596-3
+      example: null
+    AuthorizationCodeUpdateResData:
+      required:
+      - authorizationCode
+      type: object
+      additionalProperties: true
+      allOf:
+      - $ref: '#/components/schemas/AuthResData'
+      - type: object
+        properties:
+          authorizationCode:
+            type: string
+            example: null
+      x-order: -1836982696-5
+      example: null
     Code:
       required:
       - attemptsLeft
@@ -1509,21 +1839,28 @@ components:
       properties:
         id:
           type: string
+          example: null
         validUntil:
           type: integer
           format: int64
+          example: null
         usedAttempts:
           type: integer
           format: int32
+          example: null
         attemptsLeft:
           type: integer
           format: int32
+          example: null
         sentAt:
           type: integer
           format: int64
+          example: null
         hasAttemptsLeft:
           type: boolean
+          example: null
       x-order: -1249106462-3
+      example: null
     EmailAuthResData:
       type: object
       additionalProperties: true
@@ -1535,13 +1872,16 @@ components:
             type: string
             description: "Shows user email, that was used to send a code. Email will\
               \ be partially hidden."
+            example: null
       x-order: 1021533909-5
+      example: null
     EmailPublicData:
       required:
       - email
       - updatedAt
       type: object
       additionalProperties: true
+      description: Data that are available for API.
       allOf:
       - $ref: '#/components/schemas/AuthPublicData'
       - type: object
@@ -1549,11 +1889,14 @@ components:
           email:
             type: string
             description: User email.
+            example: null
           updatedAt:
             type: integer
             description: Last time when email was changed.
             format: int64
+            example: null
       x-order: 1021533909-2
+      example: null
     ErrAuthExecRes:
       required:
       - err
@@ -1567,6 +1910,7 @@ components:
           err:
             $ref: '#/components/schemas/Err'
       x-order: -73723375-4
+      example: null
     IpAuthResData:
       required:
       - ipEncoded
@@ -1578,10 +1922,13 @@ components:
         properties:
           ipEncoded:
             type: string
+            example: null
       x-order: 2116983897-2
+      example: null
     IpPrivateData:
       type: object
       additionalProperties: true
+      description: Data available only for authenticator.
       allOf:
       - $ref: '#/components/schemas/AuthPrivateData'
       - type: object
@@ -1591,7 +1938,9 @@ components:
             additionalProperties:
               type: integer
               format: int64
+            example: null
       x-order: 2116983897-1
+      example: null
     Login:
       required:
       - login
@@ -1600,32 +1949,102 @@ components:
       properties:
         type:
           type: string
-          description: Type of login
+          description: |
+            Type of login
+          example: email
         login:
           type: string
-          description: "User unique identifier, email, username, etc."
+          description: |
+            User unique identifier, email, username, etc. User can use it to sign-in.
+          example: john@example.org
         unconfirmedLogin:
           type: string
+          description: Login that waits for confirmation.
           x-nullable: true
+          example: null
         confirmed:
           type: boolean
+          example: null
       x-order: -2010674509-0
+      example: null
     NoAuthPrivateData:
       type: object
       additionalProperties: true
+      description: Data available only for authenticator.
       allOf:
       - $ref: '#/components/schemas/AuthPrivateData'
       x-order: 332570507-7
+      example: null
     NoAuthPublicData:
       type: object
       additionalProperties: true
+      description: Data that are available for API.
       allOf:
       - $ref: '#/components/schemas/AuthPublicData'
       x-order: 332570507-5
+      example: null
+    OAuthAppPrivateData:
+      required:
+      - secretHash
+      type: object
+      additionalProperties: true
+      description: Data available only for authenticator.
+      allOf:
+      - $ref: '#/components/schemas/AuthPrivateData'
+      - type: object
+        properties:
+          secretHash:
+            type: string
+            example: null
+      x-order: -1247144074-3
+      example: null
+    OAuthAppPublicData:
+      type: object
+      additionalProperties: true
+      description: Data that are available for API.
+      allOf:
+      - $ref: '#/components/schemas/AuthPublicData'
+      - type: object
+        properties:
+          redirectUris:
+            type: array
+            items:
+              type: string
+            x-nullable: true
+            example: null
+      x-order: -1247144074-2
+      example: null
+    OAuthAppUpdateResData:
+      required:
+      - clientId
+      type: object
+      additionalProperties: true
+      allOf:
+      - $ref: '#/components/schemas/AuthResData'
+      - type: object
+        properties:
+          clientId:
+            type: string
+            example: null
+          redirectUris:
+            type: array
+            items:
+              type: string
+            x-nullable: true
+            example: null
+          clientSecret:
+            type: string
+            description: Provided only when generated first time or generated again.
+            x-nullable: true
+            example: null
+      x-order: -1247144074-6
+      example: null
     OAuthPublicData:
       type: object
       additionalProperties: true
+      description: Data that are available for API.
       x-order: -893636857-2
+      example: null
     OAuthResData:
       required:
       - extractedLogin
@@ -1638,9 +2057,11 @@ components:
         properties:
           extractedLogin:
             type: string
+            example: null
           extractedPublicData:
             $ref: '#/components/schemas/OAuthPublicData'
       x-order: -893636857-5
+      example: null
     OkAuthExecRes:
       type: object
       allOf:
@@ -1652,13 +2073,18 @@ components:
           resData:
             anyOf:
             - $ref: '#/components/schemas/AuthResData'
+            - $ref: '#/components/schemas/AuthorizationCodeUpdateResData'
             - $ref: '#/components/schemas/EmailAuthResData'
             - $ref: '#/components/schemas/IpAuthResData'
+            - $ref: '#/components/schemas/OAuthAppUpdateResData'
             - $ref: '#/components/schemas/OAuthResData'
             - $ref: '#/components/schemas/PasswordUpdateResData'
             - $ref: '#/components/schemas/QuestionsAuthResData'
             - $ref: '#/components/schemas/QuestionsUpdateResData'
+            - $ref: '#/components/schemas/TotpUpdateResData'
+            example: null
       x-order: -73723375-3
+      example: null
     Password:
       required:
       - createdAt
@@ -1667,13 +2093,17 @@ components:
       properties:
         hash:
           type: string
+          example: null
         createdAt:
           type: integer
           format: int64
+          example: null
       x-order: 378192899-3
+      example: null
     PasswordHistory:
       type: object
       additionalProperties: true
+      description: Data available only for authenticator.
       allOf:
       - $ref: '#/components/schemas/AuthPrivateData'
       - type: object
@@ -1682,16 +2112,20 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/Password'
+            example: null
           changedAt:
             type: integer
             format: int64
             x-nullable: true
+            example: null
       x-order: 378192899-0
+      example: null
     PasswordPublicData:
       required:
       - updatedAt
       type: object
       additionalProperties: true
+      description: Data that are available for API.
       allOf:
       - $ref: '#/components/schemas/AuthPublicData'
       - type: object
@@ -1700,7 +2134,9 @@ components:
             type: integer
             description: Time when password was updated last time.
             format: int64
+            example: null
       x-order: -266447761-2
+      example: null
     PasswordUpdateResData:
       required:
       - password
@@ -1714,12 +2150,15 @@ components:
             type: string
             description: If password was generated by app this field contains generated
               password.
+            example: null
           strength:
             type: string
             description: Calculated strength of password. Null means that all checks
               failed.
             x-nullable: true
+            example: null
       x-order: -266447761-5
+      example: null
     QuestionsAuthResData:
       required:
       - correct
@@ -1740,9 +2179,11 @@ components:
               HOMETOWN: true
               MOTHER_NAME: false
       x-order: -213229069-4
+      example: null
     QuestionsPrivateData:
       type: object
       additionalProperties: true
+      description: Data available only for authenticator.
       allOf:
       - $ref: '#/components/schemas/AuthPrivateData'
       - type: object
@@ -1751,10 +2192,13 @@ components:
             type: object
             additionalProperties:
               type: string
+            example: null
       x-order: -213229069-2
+      example: null
     QuestionsPublicData:
       type: object
       additionalProperties: true
+      description: Data that are available for API.
       allOf:
       - $ref: '#/components/schemas/AuthPublicData'
       - type: object
@@ -1765,7 +2209,9 @@ components:
               type: integer
               format: int64
               x-additionalPropertiesName: question id
+            example: null
       x-order: -213229069-1
+      example: null
     QuestionsUpdateResData:
       required:
       - answersSavedAt
@@ -1783,7 +2229,9 @@ components:
               x-additionalPropertiesName: question id
             description: |
               Date of last update
+            example: null
       x-order: -213229069-6
+      example: null
     SkippedAuthExecRes:
       type: object
       allOf:
@@ -1793,6 +2241,48 @@ components:
           sentCode:
             $ref: '#/components/schemas/Code'
       x-order: -73723375-5
+      example: null
+    TotpPrivateDate:
+      required:
+      - secret
+      type: object
+      additionalProperties: true
+      description: Data available only for authenticator.
+      allOf:
+      - $ref: '#/components/schemas/AuthPrivateData'
+      - type: object
+        properties:
+          secret:
+            type: string
+            example: null
+      x-order: 820555017-2
+      example: null
+    TotpUpdateResData:
+      required:
+      - otpUrl
+      - otpUrlQrCode
+      - secret
+      type: object
+      additionalProperties: true
+      allOf:
+      - $ref: '#/components/schemas/AuthResData'
+      - type: object
+        properties:
+          secret:
+            type: string
+            description: Base32 SHA-1 key.
+            example: null
+          otpUrl:
+            type: string
+            example: null
+          otpUrlQrCode:
+            type: string
+            description: |-
+              QR code URL. Use it like this:
+              `<img style="image-rendering: pixelated;" width="200" src="<otpUrlQrCode>"/>`
+            example: null
+      x-order: 820555017-5
+      example: null
     UnconfirmedAuthData:
       required:
       - code
@@ -1804,6 +2294,7 @@ components:
         code:
           $ref: '#/components/schemas/CodeVerifier'
       x-order: 332570507-8
+      example: null
     User:
       required:
       - auths
@@ -1817,12 +2308,13 @@ components:
         id:
           type: string
           description: |
-            Generated user uuid
-          example: 2c24704f-198a-4bc4-9718-306ccc97bbdc
+            Generated user id
+          example: fewfvc23f
         logins:
           type: array
           items:
             $ref: '#/components/schemas/Login'
+          example: null
         auths:
           type: object
           additionalProperties:
@@ -1830,27 +2322,34 @@ components:
             anyOf:
             - $ref: '#/components/schemas/AuthUserCfg'
           description: |
-            Public data of confirmed auths and sent codes for unconfirmed auths.
+            Data of confirmed auths and sent codes for unconfirmed auths.
+          example: null
         factors:
-          uniqueItems: true
           type: array
           description: Enabled factors
           items:
             type: string
+          example: null
         signedUpAt:
           type: integer
           format: int64
+          example: null
         updatedAt:
           type: integer
           format: int64
+          example: null
         new:
           type: boolean
           default: false
+          example: null
         systemAccess:
           type: boolean
-          description: Allows to edit any user in the app.
+          description: Allows to access backend-only APIs. Use `appSecret` auth to
+            obtain token with this access.
           default: false
+          example: null
       x-order: 276900135-0
+      example: null
     AppSecretReqData:
       required:
       - secret
@@ -1862,11 +2361,14 @@ components:
         properties:
           secret:
             type: string
+            example: null
       x-order: 791325901-2
+      example: null
     AuthReqData:
       type: object
       additionalProperties: true
       x-order: -1249106462-4
+      example: null
     AuthenticateReq:
       type: object
       properties:
@@ -1876,10 +2378,19 @@ components:
             type: string
             x-additionalPropertiesName: factor
           description: |
-            Forces specific auth to be used for factor.
-            Takes place only when multiple auths is provided within request and auth can be
-            assigned to several factors.
-            If used in sign-up mode, it just enables those factors.
+            If this field is not specified, server tries to execute and assign auth for the `next-factor`
+            (see `session` model). Otherwise, auths will be assigned to the factors specified in this field.
+
+            Useful when:
+            - "Retry mode". User didn't receive confirmation code and wants to retry.
+            In this case you should provide `authReq` for auth you want to retry and set it to the same factor.
+            - "Replace mode". User can't receive confirmation code and wants to try another auth. E.g. they lost email and
+            want to proceed with a secret-questions auth.
+            In this case you should provide `authReq` for auth you want to replace with and set it to the same factor.
+
+            If it's used in sign-up mode, it just enables those factors (so actual value is ignored and can be `null`).
+            E.g. `"factors": { "second": null }` will enable second factor during sign-up.
+          example: null
         authReqs:
           type: object
           additionalProperties:
@@ -1887,21 +2398,78 @@ components:
             anyOf:
             - $ref: '#/components/schemas/AppSecretReqData'
             - $ref: '#/components/schemas/AuthReqData'
+            - $ref: '#/components/schemas/AuthorizationCodeAuthReqData'
+            - $ref: '#/components/schemas/AuthorizationCodeUpdateReqData'
             - $ref: '#/components/schemas/EmailAuthReqData'
             - $ref: '#/components/schemas/EmailUpdateReqData'
             - $ref: '#/components/schemas/NoAuthReqData'
+            - $ref: '#/components/schemas/OAuthAppAuthReqData'
+            - $ref: '#/components/schemas/OAuthAppUpdateReqData'
             - $ref: '#/components/schemas/OAuthReqData'
             - $ref: '#/components/schemas/PasswordAuthReqData'
             - $ref: '#/components/schemas/PasswordUpdateReqData'
             - $ref: '#/components/schemas/QuestionsAuthReqData'
             - $ref: '#/components/schemas/QuestionsUpdateReqData'
+            - $ref: '#/components/schemas/ScopesAuthReqData'
+            - $ref: '#/components/schemas/TotpAuthReqData'
+            - $ref: '#/components/schemas/TotpUpdateReqData'
           description: |
             Request for authenticators
+          example: null
         dryRun:
           type: boolean
           description: Execute only validation ща authenticator requests.
           default: false
+          example: null
       x-order: 2094520596-2
+      example: null
+    AuthorizationCodeAuthReqData:
+      required:
+      - agentAccessToken
+      - authorizationCode
+      type: object
+      additionalProperties: true
+      allOf:
+      - $ref: '#/components/schemas/AuthReqData'
+      - type: object
+        properties:
+          authorizationCode:
+            type: string
+            description: Authorization code provided by `authorizationCode` update
+              request.
+            example: null
+          agentAccessToken:
+            type: string
+            description: Access token of user that will be able to act of behalf of
+              current user.
+            x-order: -2026363309-3
+            example: null
+      x-order: -1836982696-6
+      example: null
+    AuthorizationCodeUpdateReqData:
+      required:
+      - agentLogins
+      type: object
+      additionalProperties: true
+      allOf:
+      - $ref: '#/components/schemas/AuthReqData'
+      - type: object
+        properties:
+          agentLogins:
+            type: array
+            description: Login or logins of the user that will get access-token and
+              be able to act of behalf of current user.
+            items:
+              $ref: '#/components/schemas/LoginId'
+            example: null
+          scopes:
+            type: array
+            items:
+              type: string
+            x-nullable: true
+            example: null
+      x-order: -1836982696-4
+      example: null
     EmailAuthReqData:
       type: object
       additionalProperties: true
@@ -1915,17 +2483,21 @@ components:
               User email. If email is not null - auth allow identification by email (email auth also must be listed in
               logins config). Otherwise, uses email of already identified user.
             x-nullable: true
+            example: null
           template:
             type: string
             description: Template to use.
             x-nullable: true
+            example: null
           templateParams:
             type: object
             additionalProperties:
               type: object
             description: Template params
             x-nullable: true
+            example: null
       x-order: 1021533909-3
+      example: null
     EmailUpdateReqData:
       required:
       - email
@@ -1938,17 +2510,21 @@ components:
           email:
             type: string
             description: New email to set.
+            example: null
           template:
             type: string
             description: Template to use.
             x-nullable: true
+            example: null
           templateParams:
             type: object
             additionalProperties:
               type: object
             description: Template params
             x-nullable: true
+            example: null
       x-order: 1021533909-4
+      example: null
     NewSessionReq:
       required:
       - entry
@@ -1956,21 +2532,32 @@ components:
       properties:
         entry:
           type: string
+          example: null
         logins:
           type: object
           additionalProperties:
             type: string
             x-additionalPropertiesName: loginType
+          example: null
         factors:
           type: object
           additionalProperties:
             type: string
             x-additionalPropertiesName: factor
           description: |
-            Forces specific auth to be used for factor.
-            Takes place only when multiple auths is provided within request and auth can be
-            assigned to several factors.
-            If used in sign-up mode, it just enables those factors.
+            If this field is not specified, server tries to execute and assign auth for the `next-factor`
+            (see `session` model). Otherwise, auths will be assigned to the factors specified in this field.
+
+            Useful when:
+            - "Retry mode". User didn't receive confirmation code and wants to retry.
+            In this case you should provide `authReq` for auth you want to retry and set it to the same factor.
+            - "Replace mode". User can't receive confirmation code and wants to try another auth. E.g. they lost email and
+            want to proceed with a secret-questions auth.
+            In this case you should provide `authReq` for auth you want to replace with and set it to the same factor.
+
+            If it's used in sign-up mode, it just enables those factors (so actual value is ignored and can be `null`).
+            E.g. `"factors": { "second": null }` will enable second factor during sign-up.
+          example: null
         authReqs:
           type: object
           additionalProperties:
@@ -1978,39 +2565,91 @@ components:
             anyOf:
             - $ref: '#/components/schemas/AppSecretReqData'
             - $ref: '#/components/schemas/AuthReqData'
+            - $ref: '#/components/schemas/AuthorizationCodeAuthReqData'
+            - $ref: '#/components/schemas/AuthorizationCodeUpdateReqData'
             - $ref: '#/components/schemas/EmailAuthReqData'
             - $ref: '#/components/schemas/EmailUpdateReqData'
             - $ref: '#/components/schemas/NoAuthReqData'
+            - $ref: '#/components/schemas/OAuthAppAuthReqData'
+            - $ref: '#/components/schemas/OAuthAppUpdateReqData'
             - $ref: '#/components/schemas/OAuthReqData'
             - $ref: '#/components/schemas/PasswordAuthReqData'
             - $ref: '#/components/schemas/PasswordUpdateReqData'
             - $ref: '#/components/schemas/QuestionsAuthReqData'
             - $ref: '#/components/schemas/QuestionsUpdateReqData'
+            - $ref: '#/components/schemas/ScopesAuthReqData'
+            - $ref: '#/components/schemas/TotpAuthReqData'
+            - $ref: '#/components/schemas/TotpUpdateReqData'
           description: |
             Request for authenticators
-        scopes:
-          type: array
-          description: OAuth scopes
-          items:
-            type: string
-          x-nullable: true
+          example: null
         signIn:
           type: boolean
           default: false
+          example: null
         signUp:
           type: boolean
           default: false
+          example: null
         dryRun:
           type: boolean
           description: Execute only validation ща authenticator requests.
           default: false
+          example: null
       x-order: 2094520596-1
+      example: null
     NoAuthReqData:
       type: object
       additionalProperties: true
       allOf:
       - $ref: '#/components/schemas/AuthReqData'
       x-order: -1249106462-5
+      example: null
+    OAuthAppAuthReqData:
+      required:
+      - clientId
+      type: object
+      additionalProperties: true
+      allOf:
+      - $ref: '#/components/schemas/AuthReqData'
+      - type: object
+        properties:
+          clientId:
+            type: string
+            example: null
+          clientSecret:
+            type: string
+            x-nullable: true
+            example: null
+          redirectUri:
+            type: string
+            x-nullable: true
+            example: null
+      x-order: -1247144074-4
+      example: null
+    OAuthAppUpdateReqData:
+      type: object
+      additionalProperties: true
+      allOf:
+      - $ref: '#/components/schemas/AuthReqData'
+      - type: object
+        properties:
+          redirectUris:
+            type: array
+            description: "Null - don't validate redirectUrl, empty array will lead\
+              \ to all authenticate request fail."
+            items:
+              type: string
+            x-nullable: true
+            example: null
+          newClientSecret:
+            type: boolean
+            description: "If previous secret lost or compromised, it allows to generate\
+              \ a new one."
+            default: false
+            example: null
+      x-order: -1247144074-5
+      example: null
     OAuthReqData:
       type: object
       additionalProperties: true
@@ -2022,16 +2661,20 @@ components:
             type: string
             description: If you have access-token - put it here.
             x-nullable: true
+            example: null
           authorizationCode:
             type: string
             description: If you have authorisation-code - app will exchange it for
               access-token.
             x-nullable: true
+            example: null
           redirectUri:
             type: string
             description: Redirect uri used when requested user login.
             x-nullable: true
+            example: null
       x-order: -893636857-4
+      example: null
     PasswordAuthReqData:
       required:
       - password
@@ -2044,7 +2687,9 @@ components:
           password:
             type: string
             description: User password.
+            example: null
       x-order: -266447761-3
+      example: null
     PasswordUpdateReqData:
       type: object
       additionalProperties: true
@@ -2056,11 +2701,14 @@ components:
             type: string
             description: New password to set. If null app generates password automatically.
             x-nullable: true
+            example: null
           confirmPassword:
             type: string
             description: Password confirmation. If null app doesn't perform this check.
             x-nullable: true
+            example: null
       x-order: -266447761-4
+      example: null
     QuestionsAuthReqData:
       required:
       - answers
@@ -2081,6 +2729,7 @@ components:
               HOMETOWN: New-York
               MOTHER_NAME: Emma
       x-order: -213229069-3
+      example: null
     QuestionsUpdateReqData:
       required:
       - answers
@@ -2101,6 +2750,71 @@ components:
               HOMETOWN: London
               MOTHER_NAME: null
       x-order: -213229069-5
+      example: null
+    ScopesAuthReqData:
+      type: object
+      additionalProperties: true
+      allOf:
+      - $ref: '#/components/schemas/AuthReqData'
+      - type: object
+        properties:
+          agentLogins:
+            type: array
+            description: Login or logins of the user that will get access-token and
+              be able to act of behalf of current user.
+            items:
+              $ref: '#/components/schemas/LoginId'
+            x-nullable: true
+            example: null
+          scopes:
+            type: array
+            items:
+              type: string
+            x-nullable: true
+            example: null
+      x-order: 2741601-3
+      example: null
+    TotpAuthReqData:
+      required:
+      - code
+      type: object
+      additionalProperties: true
+      allOf:
+      - $ref: '#/components/schemas/AuthReqData'
+      - type: object
+        properties:
+          code:
+            type: string
+            example: null
+      x-order: 820555017-3
+      example: null
+    TotpUpdateReqData:
+      required:
+      - accountName
+      - issuer
+      type: object
+      additionalProperties: true
+      allOf:
+      - $ref: '#/components/schemas/AuthReqData'
+      - type: object
+        properties:
+          secret:
+            type: string
+            description: |-
+              Base32 SHA-1 key.
+              If null, secret is generated automatically.
+            x-nullable: true
+            example: null
+          issuer:
+            type: string
+            description: Used only to generate `otpauth://` url.
+            example: null
+          accountName:
+            type: string
+            description: Used only to generate `otpauth://` url.
+            example: null
+      x-order: 820555017-4
+      example: null
     ConfirmSessionAuthsReq:
       required:
       - receivedCodes
@@ -2112,6 +2826,7 @@ components:
             If null, session id will be extracted from access-token.
             Useful to confirm auth from another device where no access-token available.
           x-nullable: true
+          example: null
         receivedCodes:
           type: object
           additionalProperties:
@@ -2122,10 +2837,13 @@ components:
             x-additionalPropertiesName: auth
           description: |
             The code from authenticate/new-session response.
+          example: null
       x-order: 2094520596-4
+      example: null
     SignOutRes:
       type: object
       x-order: 2094520596-5
+      example: null
     FindSessionsRes:
       required:
       - sessions
@@ -2135,10 +2853,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Session'
+          example: null
         tooManySessions:
           type: boolean
           description: True if number of sessions in database exceeds some limit
+          example: null
       x-order: 400707106-4
+      example: null
     SaveUserRes:
       required:
       - authRes
@@ -2151,7 +2872,9 @@ components:
           additionalProperties:
             anyOf:
             - $ref: '#/components/schemas/AuthExecRes'
+          example: null
       x-order: -1847312442-2
+      example: null
     ConfirmUserAuthsReq:
       required:
       - receivedCodes
@@ -2163,6 +2886,7 @@ components:
             If null, user id will be extracted from access-token.
             Useful to confirm auth from another device where no access-token available.
           x-nullable: true
+          example: null
         receivedCodes:
           type: object
           additionalProperties:
@@ -2173,7 +2897,9 @@ components:
             x-additionalPropertiesName: auth
           description: |
             The code from save-user response.
+          example: null
       x-order: -1847312442-4
+      example: null
     EditUserReq:
       type: object
       allOf:
@@ -2188,11 +2914,13 @@ components:
             description: |
               Optional factors to enable/disable. If factor marked as required in config, it will be considered enabled
               by default and this request doesn't change this.
+            example: null
           logins:
             type: object
             additionalProperties:
               type: string
               x-additionalPropertiesName: loginType
+            example: null
           authReqs:
             type: object
             additionalProperties:
@@ -2200,21 +2928,32 @@ components:
               anyOf:
               - $ref: '#/components/schemas/AppSecretReqData'
               - $ref: '#/components/schemas/AuthReqData'
+              - $ref: '#/components/schemas/AuthorizationCodeAuthReqData'
+              - $ref: '#/components/schemas/AuthorizationCodeUpdateReqData'
               - $ref: '#/components/schemas/EmailAuthReqData'
               - $ref: '#/components/schemas/EmailUpdateReqData'
               - $ref: '#/components/schemas/NoAuthReqData'
+              - $ref: '#/components/schemas/OAuthAppAuthReqData'
+              - $ref: '#/components/schemas/OAuthAppUpdateReqData'
               - $ref: '#/components/schemas/OAuthReqData'
               - $ref: '#/components/schemas/PasswordAuthReqData'
               - $ref: '#/components/schemas/PasswordUpdateReqData'
               - $ref: '#/components/schemas/QuestionsAuthReqData'
               - $ref: '#/components/schemas/QuestionsUpdateReqData'
+              - $ref: '#/components/schemas/ScopesAuthReqData'
+              - $ref: '#/components/schemas/TotpAuthReqData'
+              - $ref: '#/components/schemas/TotpUpdateReqData'
+            example: null
           dryRun:
             type: boolean
             default: false
+            example: null
           systemAccess:
             type: boolean
             x-nullable: true
+            example: null
       x-order: -1847312442-3
+      example: null
     SaveUserReq:
       type: object
       properties:
@@ -2226,11 +2965,13 @@ components:
           description: |
             Optional factors to enable/disable. If factor marked as required in config, it will be considered enabled
             by default and this request doesn't change this.
+          example: null
         logins:
           type: object
           additionalProperties:
             type: string
             x-additionalPropertiesName: loginType
+          example: null
         authReqs:
           type: object
           additionalProperties:
@@ -2238,36 +2979,42 @@ components:
             anyOf:
             - $ref: '#/components/schemas/AppSecretReqData'
             - $ref: '#/components/schemas/AuthReqData'
+            - $ref: '#/components/schemas/AuthorizationCodeAuthReqData'
+            - $ref: '#/components/schemas/AuthorizationCodeUpdateReqData'
             - $ref: '#/components/schemas/EmailAuthReqData'
             - $ref: '#/components/schemas/EmailUpdateReqData'
             - $ref: '#/components/schemas/NoAuthReqData'
+            - $ref: '#/components/schemas/OAuthAppAuthReqData'
+            - $ref: '#/components/schemas/OAuthAppUpdateReqData'
             - $ref: '#/components/schemas/OAuthReqData'
             - $ref: '#/components/schemas/PasswordAuthReqData'
             - $ref: '#/components/schemas/PasswordUpdateReqData'
             - $ref: '#/components/schemas/QuestionsAuthReqData'
             - $ref: '#/components/schemas/QuestionsUpdateReqData'
+            - $ref: '#/components/schemas/ScopesAuthReqData'
+            - $ref: '#/components/schemas/TotpAuthReqData'
+            - $ref: '#/components/schemas/TotpUpdateReqData'
+          example: null
         dryRun:
           type: boolean
           default: false
+          example: null
       x-order: -1847312442-1
+      example: null
     AuthorizeRes:
       type: object
       properties:
         session:
           $ref: '#/components/schemas/Session'
       x-order: -2047680577-2
+      example: null
     AuthorizeReq:
       type: object
       properties:
-        requireScopes:
-          type: array
-          description: Require OAuth scopes
-          items:
-            type: string
-          x-nullable: true
         rateLimiter:
           $ref: '#/components/schemas/RateLimiterReq'
       x-order: -2047680577-1
+      example: null
     RateLimiterReq:
       required:
       - id
@@ -2276,10 +3023,16 @@ components:
       properties:
         id:
           type: string
+          example: null
         quotaToBurn:
           type: number
           format: double
+          example: null
       x-order: -2047680577-3
+      example: null
+    json:
+      type: object
+      additionalProperties: true
     AccessTokenCfg:
       type: object
       properties:
@@ -2287,6 +3040,7 @@ components:
           type: boolean
           description: Send token in `access_token` cookie
           default: false
+          example: null
         cache:
           description: |-
             If not null - access token contains signed session data, so it's not required to request session database for
@@ -2294,10 +3048,12 @@ components:
           allOf:
           - $ref: '#/components/schemas/Cache'
           x-nullable: true
+          example: null
         cacheUnauthenticated:
           type: boolean
           description: "By default, unauthenticated sessions can't be cached."
           default: false
+          example: null
         ttl:
           type: string
           description: |
@@ -2306,6 +3062,7 @@ components:
           default: 1d
       description: Short-living token used for authentication.
       x-order: -1195634750-1
+      example: null
     AnswersTransformationCfg:
       type: object
       properties:
@@ -2315,20 +3072,25 @@ components:
             Transform user answer to lowercase letters. This allows user still pass a check when he wrote name or city
             with different cases. `false` means strict match, so "John" != "john"
           default: true
+          example: null
         removeSymbols:
           type: boolean
           description: Remove all non-letters from user answer.
           default: true
+          example: null
         removeSpaces:
           type: boolean
           description: Remove all spaces from user answer.
           default: true
+          example: null
       x-order: 545691127-1
+      example: null
     AppSecretAuthCfg:
       type: object
       allOf:
       - $ref: '#/components/schemas/BuiltInAuthCfg'
       x-order: 791325901-3
+      example: null
     AuthAppCfg:
       type: object
       properties:
@@ -2344,6 +3106,7 @@ components:
             items:
               type: string
           x-nullable: true
+          example: null
         skipOnFail:
           type: boolean
           description: |-
@@ -2352,18 +3115,42 @@ components:
             executed only when IP auth is failed.
             If set to false any error on this auth will stop the whole request execution.
           default: false
+          example: null
         rateLimiter:
           type: string
           description: Apply rate limiter for this auth.
           x-nullable: true
+          example: null
         burnQuota:
           type: number
           description: Every auth execution will burn this amount of quota. Takes
             place only when rate limiter is specified
           format: double
           default: 0.0
+          example: null
       description: Authentication implementation config
       x-order: 377338786-0
+      example: null
+    AuthorizationCodeAuthCfg:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BuiltInAuthCfg'
+      - type: object
+        properties:
+          codeTtl:
+            type: string
+            description: |
+              Authorization code lifetime.
+            default: 10m
+            example: null
+          scopes:
+            type: array
+            description: Allowed oauth2 scopes.
+            items:
+              type: string
+            example: null
+      x-order: -1836982696-3
+      example: null
     BuiltInAuthCfg:
       type: object
       description: Authentication implementation config
@@ -2383,6 +3170,7 @@ components:
               items:
                 type: string
             x-nullable: true
+            example: null
           skipOnFail:
             type: boolean
             description: |-
@@ -2391,17 +3179,21 @@ components:
               executed only when IP auth is failed.
               If set to false any error on this auth will stop the whole request execution.
             default: false
+            example: null
           rateLimiter:
             type: string
             description: Apply rate limiter for this auth.
             x-nullable: true
+            example: null
           burnQuota:
             type: number
             description: Every auth execution will burn this amount of quota. Takes
               place only when rate limiter is specified
             format: double
             default: 0.0
+            example: null
       x-order: -824080721-0
+      example: null
     Cache:
       type: string
       enum:
@@ -2415,27 +3207,34 @@ components:
           description: Length of code to be generated
           format: int32
           default: 4
+          example: null
         ttl:
           type: string
           description: "Generated code lifetime. e.g. 1m, 60s, 1d, etc."
+          example: null
         alphabet:
           type: string
           description: Symbols used to generate a code. By default `a-z + A-Z + 0-9`.
+          example: null
         easyToRemember:
           type: boolean
           description: "If true, every second letter will be the same, that allows\
             \ the codes to rhyme."
           default: true
+          example: null
         maxAttempts:
           type: integer
           description: Max attempts to enter the code.
           format: int32
           default: 3
+          example: null
       description: If specified - app generates code and requires auth to be confirmed
       x-order: 377338786-1
+      example: null
     DbCfg:
       type: object
-      x-order: -1580107990-0
+      x-order: -195398693-0
+      example: null
     Duration:
       type: string
     EmailAuthCfg:
@@ -2450,23 +3249,28 @@ components:
           server:
             type: string
             description: Email server address/IP.
+            example: null
           sender:
             type: string
             description: Email address of sender.
+            example: null
           username:
             type: string
             description: SMTP username.
             x-nullable: true
+            example: null
           password:
             type: string
             description: SMTP password.
             x-nullable: true
+            example: null
           confirmationUrl:
             type: string
             description: |-
               If not null, server will create template param `confirmationUrl` that will contain query parameters with
               confirmation code, session id, etc.
             x-nullable: true
+            example: null
           templates:
             type: object
             additionalProperties:
@@ -2498,9 +3302,11 @@ components:
             description: |
               Additional params for templates that can be passed in request. Key - is a name of additional parameter, value - is
               a default value for this parameter (when no value present in request)
+            example: null
           code:
             $ref: '#/components/schemas/CodeCfg'
       x-order: -1025321515-0
+      example: null
     EntryAccessTokenCfg:
       type: object
       properties:
@@ -2508,11 +3314,14 @@ components:
           type: string
           description: Override access token ttl
           x-nullable: true
+          example: null
         cache:
           type: boolean
           description: Enable or disable client-side caching of access token
           x-nullable: true
+          example: null
       x-order: -842539141-1
+      example: null
     EntryCfg:
       type: object
       properties:
@@ -2558,10 +3367,12 @@ components:
             "payment" that requires confirmation by sms, requires user to be already signed in (e.g. with entry "app".
           items:
             type: string
+          example: null
         accessToken:
           description: Override access token lifetime for sessions of this entry.
           allOf:
           - $ref: '#/components/schemas/EntryAccessTokenCfg'
+          example: null
         ttl:
           type: string
           description: |
@@ -2573,8 +3384,10 @@ components:
           description: "Is this session allowed to add/remove new auth, enable/disable\
             \ factors, etc.?"
           default: false
+          example: null
       description: Configuration for app entry.
       x-order: -842539141-0
+      example: null
     ExchangeAuthCodeCfg:
       required:
       - tokenUrl
@@ -2590,11 +3403,14 @@ components:
           description: "OAuth client id. Client must be registered on OAuth provider\
             \ (e.g. facebook, google)"
           x-nullable: true
+          example: null
         clientSecret:
           type: string
           description: OAuth client secret.
           x-nullable: true
+          example: null
       x-order: -1532051357-2
+      example: null
     I18nCfg:
       type: object
       properties:
@@ -2613,6 +3429,7 @@ components:
           default: en
       description: "Configuration for localization of error messages, emails, etc."
       x-order: -1723799702-4
+      example: null
     InMemoryCfg:
       type: object
       allOf:
@@ -2622,7 +3439,9 @@ components:
           inMemory:
             type: boolean
             default: true
+            example: null
       x-order: 1129812999-3
+      example: null
     InTokenCfg:
       type: object
       allOf:
@@ -2632,7 +3451,9 @@ components:
           inToken:
             type: boolean
             default: true
-      x-order: -291817267-1
+            example: null
+      x-order: -291817267-2
+      example: null
     IpAuthCfg:
       type: object
       allOf:
@@ -2646,6 +3467,7 @@ components:
               the same country, same city, or same internet provider.
             format: int32
             default: 0
+            example: null
           historySize:
             type: integer
             description: |-
@@ -2653,7 +3475,9 @@ components:
               IPs.
             format: int32
             default: 10
+            example: null
       x-order: 2116983897-3
+      example: null
     JdbcCfg:
       type: object
       allOf:
@@ -2663,14 +3487,18 @@ components:
           username:
             type: string
             default: ""
+            example: null
           password:
             type: string
             default: ""
+            example: null
           maxConnections:
             type: integer
             format: int32
             default: 500
+            example: null
       x-order: -1497406623-0
+      example: null
     MongoCfg:
       required:
       - database
@@ -2682,9 +3510,12 @@ components:
         properties:
           mongodb:
             type: string
+            example: null
           database:
             type: string
+            example: null
       x-order: -592385449-0
+      example: null
     MysqlCfg:
       type: object
       allOf:
@@ -2694,17 +3525,28 @@ components:
           mysql:
             type: string
             default: localhost:3306
+            example: null
           username:
             type: string
             default: mysql
+            example: null
           maxConnections:
             type: integer
             format: int32
             default: 500
+            example: null
           password:
             type: string
             default: mysql
+            example: null
       x-order: -577347408-2
+      example: null
+    OAuthAppAuthCfg:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BuiltInAuthCfg'
+      x-order: -1247144074-1
+      example: null
     OAuthCfg:
       required:
       - extractLogin
@@ -2720,11 +3562,13 @@ components:
             allOf:
             - $ref: '#/components/schemas/ExchangeAuthCodeCfg'
             x-nullable: true
+            example: null
           userInfo:
             description: "If specified, app will use received access token"
             allOf:
             - $ref: '#/components/schemas/TokenHandlerCfg'
             x-nullable: true
+            example: null
           extractLogin:
             type: string
             description: |
@@ -2742,6 +3586,7 @@ components:
               'photoUrl:': access_token.user_photo_url
               name: access_token.full_name
       x-order: -1532051357-0
+      example: null
     PasswordAuthCfg:
       type: object
       description: "Password authentication. To enable this auth set auth name to\
@@ -2755,35 +3600,42 @@ components:
             description: Max allowed Length of the password.
             format: int32
             default: 256
+            example: null
           minLength:
             type: integer
             description: Minimal length of password
             format: int32
             default: 6
+            example: null
           requireNumber:
             type: boolean
             description: Require password to contain at least one digit.
             default: false
+            example: null
           requireSymbol:
             type: boolean
             description: "Require password to contain at least one symbol e.g. @,\
               \ !, &..."
             default: false
+            example: null
           requireUpperCase:
             type: boolean
             description: This requires password to contain both lowercase and uppercase
               letters.
             default: false
+            example: null
           forbidCommonPasswords:
             type: boolean
             description: "Password will be checked against table 1,000,000 of most\
               \ overused passwords."
             default: false
+            example: null
           forbidLoginAsPassword:
             type: boolean
             description: "Rejects passwords that match username, email, anything that\
               \ used as a login according to logins config."
             default: false
+            example: null
           forbidReusingPassword:
             $ref: '#/components/schemas/PasswordHistoryCfg'
           strength:
@@ -2795,7 +3647,9 @@ components:
             description: |
               Allows to calculate password strength based on mentioned criteria. Requirements will be checked one by one
               until first failed.
+            example: null
       x-order: -49430021-0
+      example: null
     PasswordHistoryCfg:
       type: object
       properties:
@@ -2804,13 +3658,16 @@ components:
           description: Number of current user passwords to store in database.
           format: int32
           default: 3
+          example: null
         passwordHistoryTtl:
           type: string
           description: "Lifetime for the password. Accepts time string e.g. 1y, 3m,\
             \ 2y 6m, etc."
+          example: null
       description: Forbids user to change password to the old one. Useful if you force
         user to change password regularly.
       x-order: 378192899-2
+      example: null
     PasswordStrengthRequirements:
       type: object
       properties:
@@ -2819,32 +3676,39 @@ components:
           description: Minimal length of password
           format: int32
           default: 6
+          example: null
         requireNumber:
           type: boolean
           description: Require password to contain at least one digit.
           default: false
+          example: null
         requireSymbol:
           type: boolean
           description: "Require password to contain at least one symbol e.g. @, !,\
             \ &..."
           default: false
+          example: null
         requireUpperCase:
           type: boolean
           description: This requires password to contain both lowercase and uppercase
             letters.
           default: false
+          example: null
         forbidCommonPasswords:
           type: boolean
           description: "Password will be checked against table 1,000,000 of most overused\
             \ passwords."
           default: false
+          example: null
         forbidLoginAsPassword:
           type: boolean
           description: "Rejects passwords that match username, email, anything that\
             \ used as a login according to logins config."
           default: false
+          example: null
       description: Requirements for password
       x-order: -49430021-1
+      example: null
     PostgresCfg:
       type: object
       allOf:
@@ -2854,17 +3718,22 @@ components:
           postgres:
             type: string
             default: localhost:5432/
+            example: null
           username:
             type: string
             default: postgres
+            example: null
           maxConnections:
             type: integer
             format: int32
             default: 500
+            example: null
           password:
             type: string
             default: postgres
+            example: null
       x-order: 893841315-2
+      example: null
     QuestionsAuthCfg:
       type: object
       allOf:
@@ -2877,36 +3746,44 @@ components:
               Transform user answer to lowercase letters. This allows user still pass a check when he wrote name or city
               with different cases. `false` means strict match, so "John" != "john"
             default: true
+            example: null
           removeSymbols:
             type: boolean
             description: Remove all non-letters from user answer.
             default: true
+            example: null
           removeSpaces:
             type: boolean
             description: Remove all spaces from user answer.
             default: true
+            example: null
           minLength:
             type: integer
             description: Min length of answer. Length are checked after all answer
               transformation.
             format: int32
             default: 3
+            example: null
           maxLength:
             type: integer
             description: Max length of answer.
             format: int32
             default: 256
+            example: null
           answersRequired:
             type: integer
             description: Min number of answers required to pass this check.
             format: int32
             default: 2
+            example: null
           maxAnswers:
             type: integer
             description: Max answers that user can save.
             format: int32
             default: 10
+            example: null
       x-order: 545691127-0
+      example: null
     RateLimiterCfg:
       type: object
       properties:
@@ -2914,10 +3791,12 @@ components:
           type: boolean
           description: Create different rate limiters for different users.
           default: true
+          example: null
         ip:
           type: boolean
           description: Create different rate limiters for different ips.
           default: false
+          example: null
         quota:
           type: number
           description: |-
@@ -2925,6 +3804,7 @@ components:
             allows 10 request with weight 0.1 per seconds or 5 request with weight 0.2 per second.
           format: double
           default: 1.0
+          example: null
         period:
           type: string
           description: |
@@ -2935,14 +3815,17 @@ components:
           description: Insert delays between requests if there are too many simultaneous
             requests.
           default: false
+          example: null
         parent:
           type: string
           description: |-
             Allows to combine rate limiters. Let's say rt1 allows 10 reqs per seconds, and rt2 allows 20 reqs per minute.
             If the rt1 has the rt2 as a parent, that means that rt1 allows 10 reqs per seconds but not more than 20 per minute.
           x-nullable: true
+          example: null
       description: Rate limiter configuration
       x-order: -1666811215-0
+      example: null
     RedisCfg:
       type: object
       allOf:
@@ -2953,26 +3836,34 @@ components:
             type: array
             items:
               type: string
+            example: null
           cluster:
             type: boolean
             default: false
+            example: null
           database:
             type: integer
             format: int32
+            example: null
           user:
             type: string
             x-nullable: true
+            example: null
           password:
             type: string
             x-nullable: true
+            example: null
           ssl:
             type: boolean
             default: false
+            example: null
           maxConnections:
             type: integer
             format: int32
             default: 100
+            example: null
       x-order: -2007275575-0
+      example: null
     RefreshTokenCfg:
       type: object
       properties:
@@ -2999,10 +3890,12 @@ components:
           description: If false - one refresh token can't be used twice. New refresh
             token will be provided by refresh API.
           default: false
+          example: null
       description: |-
         Long-living token used for generation of new access token.
         This is optional. You can set longer access-token lifetime instead.
       x-order: -1195634750-5
+      example: null
     RemoteAuthCfg:
       required:
       - remote
@@ -3015,6 +3908,7 @@ components:
           remote:
             type: string
             description: Path to the API that implements plugin.
+            example: null
           requiresAuth:
             type: array
             description: |-
@@ -3027,6 +3921,7 @@ components:
               items:
                 type: string
             x-nullable: true
+            example: null
           skipOnFail:
             type: boolean
             description: |-
@@ -3035,16 +3930,19 @@ components:
               executed only when IP auth is failed.
               If set to false any error on this auth will stop the whole request execution.
             default: false
+            example: null
           rateLimiter:
             type: string
             description: Apply rate limiter for this auth.
             x-nullable: true
+            example: null
           burnQuota:
             type: number
             description: Every auth execution will burn this amount of quota. Takes
               place only when rate limiter is specified
             format: double
             default: 0.0
+            example: null
           query:
             type: object
             additionalProperties:
@@ -3052,6 +3950,7 @@ components:
               x-additionalPropertiesName: queryParam
             description: |
               Add query params after `?` symbol in url.
+            example: null
           headers:
             type: object
             additionalProperties:
@@ -3059,9 +3958,11 @@ components:
               x-additionalPropertiesName: header
             description: |
               Add headers to request.
+            example: null
           code:
             $ref: '#/components/schemas/CodeCfg'
       x-order: 658063406-0
+      example: null
     RemoteDbCfg:
       required:
       - remote
@@ -3072,22 +3973,38 @@ components:
         properties:
           remote:
             type: string
+            example: null
           query:
             type: object
             additionalProperties:
               type: string
+            example: null
           headers:
             type: object
             additionalProperties:
               type: string
+            example: null
       x-order: 842893688-0
+      example: null
+    ScopesAuthCfg:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BuiltInAuthCfg'
+      - type: object
+        properties:
+          scopes:
+            type: array
+            items:
+              type: string
+            example: null
+      x-order: 2741601-2
+      example: null
     ShAppCfg:
       type: object
       properties:
         http:
           $ref: '#/components/schemas/ShHttpCfg'
         logins:
-          uniqueItems: true
           type: array
           description: |+
             Types of logins that can be used for identification.
@@ -3120,21 +4037,27 @@ components:
             anyOf:
             - $ref: '#/components/schemas/RemoteAuthCfg'
             - $ref: '#/components/schemas/AppSecretAuthCfg'
+            - $ref: '#/components/schemas/AuthorizationCodeAuthCfg'
             - $ref: '#/components/schemas/EmailAuthCfg'
             - $ref: '#/components/schemas/IpAuthCfg'
+            - $ref: '#/components/schemas/OAuthAppAuthCfg'
             - $ref: '#/components/schemas/OAuthCfg'
             - $ref: '#/components/schemas/PasswordAuthCfg'
             - $ref: '#/components/schemas/QuestionsAuthCfg'
+            - $ref: '#/components/schemas/ScopesAuthCfg'
+            - $ref: '#/components/schemas/TotpAuthCfg'
           description: |+
             List of auth names and auth configs
 
-            To use builtin auths (not a plugin or remote) follow the example: `"password": { ... }` or
-            `"anyAuthName": { "builtin": "password", ... }`
+            To use builtin auths (not a plugin or remote) follow the example:
+            - `"password": { ... }` or
+            - `"anyAuthName": { "builtin": "password", ... }`
 
             Available built-in auths:
-            - `password`, `email`, `questions`, `ip`
-            - `oauth`, `oauth/facebook/openid`, `oauth/google/openid`
-            - `appSecret`
+            - `password`, `email`, `questions`, `ip`, 'totp'
+            - (OAuth2 client) `oauth`, `oauth/facebook/openid`, `oauth/google/openid`
+            - (Backend integration) `appSecret`
+            - (OAuth2 server) 'authorizationCode', 'oauthApp', 'scopes'
 
           example:
             email: {}
@@ -3153,6 +4076,7 @@ components:
             - app: main entry that requests user login/email + password and 2fa (if enabled)
             - api: entry that allows user to generate API keys and connect third-party app
             - action: additional authentication (e.g. code from sms) requested before e.g. payment
+          example: null
         db:
           $ref: '#/components/schemas/ShDbsCfg'
         token:
@@ -3165,21 +4089,27 @@ components:
             - $ref: '#/components/schemas/RateLimiterCfg'
           description: |
             List of rate limiters
+          example: null
         secret:
           type: string
           description: |-
             The key that app uses for RSA certificate generation used for token signature.
             If `null` - app will generate secret automatically during startup.
+          default: <change_me>
+          example: null
         healthCheckKey:
           type: string
           description: Set this key if you want to restrict access to the health-check.
           x-nullable: true
+          example: null
         i18n:
           $ref: '#/components/schemas/I18nCfg'
         $schema:
           type: string
           default: ./kntrl.schema.json
+          example: null
       x-order: -1414553603-0
+      example: null
     ShDbsCfg:
       type: object
       properties:
@@ -3194,6 +4124,7 @@ components:
           - $ref: '#/components/schemas/MysqlCfg'
           - $ref: '#/components/schemas/PostgresCfg'
           - $ref: '#/components/schemas/SqliteCfg'
+          example: null
         session:
           description: |-
             Session database config.
@@ -3211,6 +4142,7 @@ components:
           - $ref: '#/components/schemas/MysqlCfg'
           - $ref: '#/components/schemas/PostgresCfg'
           - $ref: '#/components/schemas/SqliteCfg'
+          example: null
         rateLimiter:
           description: "Database for rate-limiters. If you don't use rate-limiter\
             \ leave this empty (`{}`)."
@@ -3223,8 +4155,10 @@ components:
           - $ref: '#/components/schemas/MysqlCfg'
           - $ref: '#/components/schemas/PostgresCfg'
           - $ref: '#/components/schemas/SqliteCfg'
+          example: null
       description: Database connection configs
       x-order: -1414553603-2
+      example: null
     ShHttpCfg:
       type: object
       properties:
@@ -3246,8 +4180,10 @@ components:
           description: "If true, X-Forwarded-For header is used to get client's IP\
             \ address"
           default: false
+          example: null
       description: Http server config
       x-order: -1414553603-1
+      example: null
     SqliteCfg:
       type: object
       allOf:
@@ -3257,17 +4193,22 @@ components:
           username:
             type: string
             default: ""
+            example: null
           password:
             type: string
             default: ""
+            example: null
           maxConnections:
             type: integer
             format: int32
             default: 500
+            example: null
           sqlite:
             type: string
             default: ./sqlite
+            example: null
       x-order: -1872929936-3
+      example: null
     TokenCfg:
       type: object
       properties:
@@ -3279,8 +4220,10 @@ components:
           type: boolean
           description: Require all request to be made from the same device.
           default: true
+          example: null
       description: Token lifetime config.
       x-order: -1195634750-0
+      example: null
     TokenHandlerCfg:
       type: object
       properties:
@@ -3296,11 +4239,26 @@ components:
           description: "While executing user-info request, access-token will be sent\
             \ in query param."
           x-nullable: true
+          example: null
         sendTokenInHeader:
           type: boolean
           description: "While executing user-info request, access-token will be sent\
             \ in Authorisation header."
+          example: null
       x-order: -1532051357-3
+      example: null
+    TotpAuthCfg:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/BuiltInAuthCfg'
+      - type: object
+        properties:
+          encryptKey:
+            type: string
+            default: <change_me>
+            example: null
+      x-order: 820555017-1
+      example: null
     regex:
       type: string
   securitySchemes:
@@ -3315,4 +4273,4 @@ x-tagGroups:
   - authorisation
   - user
   - server
-  - signature
+  - custom-token

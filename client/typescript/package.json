@@ -1,6 +1,6 @@
 {
   "name": "kntrl-client",
-  "version": "0.9.2",
+  "version": "0.10.0",
   "description": "JS/TS client for Kntrl authentication server",
   "repository": "https://github.com/kntrl-auth/kntrl-auth-server/tree/master/client/typescript",
   "homepage": "https://github.com/kntrl-auth/kntrl-auth-server",

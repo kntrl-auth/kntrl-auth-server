@@ -1,0 +1,23 @@
+{
+  logins: [ "username", "email" ],
+
+  auths: {
+    password: {
+      // use default config
+    },
+    totp: {
+      encryptKey: 'secret are encrypted'
+    },
+  },
+
+  entries: {
+    app: {
+      factorsRequired: {
+        first: [ "password" ],
+      },
+      factorsOptional: {
+        second: [ 'totp' ]
+      }
+    },
+  }
+}

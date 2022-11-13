@@ -4,6 +4,7 @@ import app.kntrl.client.openapi.api.UserApi
 import app.kntrl.client.openapi.model.AuthenticateReqAuthReqsValue
 import app.kntrl.client.openapi.model.ConfirmUserAuthsReq
 import app.kntrl.client.openapi.model.SaveUserRes
+import app.kntrl.client.openapi.model.EditUserReq as EditUserReqModel
 import app.kntrl.client.openapi.model.SaveUserReq as SaveUserReqModel
 import app.kntrl.client.openapi.model.User as UserModel
 
@@ -17,38 +18,34 @@ class UserSvc(private val session: Session) {
         UserApi(session.authenticatedOpenapiClient())
             .confirmUserAuths(ConfirmUserAuthsReq().userId(userId).receivedCodes(receivedCodes))
     }
+
+    fun edit(userId: String, req: EditUserReqModel): SaveUserRes = handleErr(session) {
+        UserApi(session.authenticatedOpenapiClient()).editUser(userId, req)
+    }
 }
 
 class SaveUserReq : SaveUserReqModel() {
-    fun enableFactor(factor: String): SaveUserReq {
-        putFactorsItem(factor, true)
-        return this
-    }
-    fun disableFactor(factor: String): SaveUserReq {
-        putFactorsItem(factor, false)
-        return this
-    }
+    fun enableFactor(factor: String) = also { putFactorsItem(factor, true) }
+    fun disableFactor(factor: String) = also { putFactorsItem(factor, false) }
 
-    fun saveLogin(type: String, login: String): SaveUserReq {
-        putLoginsItem(type, login)
-        return this
-    }
-    fun removeLogin(type: String): SaveUserReq {
-        putLoginsItem(type, null)
-        return this
-    }
+    fun saveLogin(type: String, login: String) = also { putLoginsItem(type, login) }
+    fun removeLogin(type: String) = also { putLoginsItem(type, null) }
 
-    fun enableAuth(auth: String, req: AuthenticateReqAuthReqsValue): SaveUserReq {
-        putAuthReqsItem(auth, req)
-        return this
-    }
-    fun disableAuth(auth: String): SaveUserReq {
-        putAuthReqsItem(auth, null)
-        return this
-    }
+    fun enableAuth(auth: String, req: AuthenticateReqAuthReqsValue) = also { putAuthReqsItem(auth, req) }
+    fun disableAuth(auth: String) = also { putAuthReqsItem(auth, null) }
 
-    fun dryRun(): SaveUserReq {
-        dryRun(true)
-        return this
-    }
+    fun dryRun() = also { dryRun(true) }
+}
+
+class EditUserReq : EditUserReqModel() {
+    fun enableFactor(factor: String) = also { putFactorsItem(factor, true) }
+    fun disableFactor(factor: String) = also { putFactorsItem(factor, false) }
+
+    fun saveLogin(type: String, login: String) = also { putLoginsItem(type, login) }
+    fun removeLogin(type: String) = also { putLoginsItem(type, null) }
+
+    fun enableAuth(auth: String, req: AuthenticateReqAuthReqsValue) = also { putAuthReqsItem(auth, req) }
+    fun disableAuth(auth: String) = also { putAuthReqsItem(auth, null) }
+
+    fun dryRun() = also { dryRun(true) }
 }
