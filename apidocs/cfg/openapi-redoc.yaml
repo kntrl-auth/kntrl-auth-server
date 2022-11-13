@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Kntrl configuration API
-  version: "0.9"
+  version: 0.10.0
   x-logo:
     url: ./logo.png
 tags:
@@ -62,6 +62,8 @@ components:
         propertyName: code
         mapping:
           PLUGIN_ERR: '#/components/schemas/PluginErr'
+          INCORRECT_TOTP_CODE: '#/components/schemas/IncorrectTotpCode'
+          OAUTH_APP_ERR: '#/components/schemas/OauthAppErr'
           PLUGIN_CLIENT_ERR: '#/components/schemas/PluginClientErr'
           PASSWORD_IS_INCORRECT: '#/components/schemas/PasswordIsIncorrect'
           PASSWORD_IS_INVALID: '#/components/schemas/PasswordIsInvalid'
@@ -72,7 +74,6 @@ components:
           SESSION_EXPIRED: '#/components/schemas/SessionExpired'
           ACCESS_DENIED: '#/components/schemas/AccessDenied'
           USER_NOT_FOUND: '#/components/schemas/UserNotFound'
-          SIGNATURE_IS_INCORRECT: '#/components/schemas/SignatureIsIncorrect'
           USER_LOGIN_IS_INVALID: '#/components/schemas/UserLoginIsInvalid'
           USER_LOGIN_ALREADY_TAKEN: '#/components/schemas/UserLoginAlreadyTaken'
           TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
@@ -205,6 +206,8 @@ components:
       discriminator:
         propertyName: code
         mapping:
+          INCORRECT_TOTP_CODE: '#/components/schemas/IncorrectTotpCode'
+          OAUTH_APP_ERR: '#/components/schemas/OauthAppErr'
           PLUGIN_CLIENT_ERR: '#/components/schemas/PluginClientErr'
           PASSWORD_IS_INCORRECT: '#/components/schemas/PasswordIsIncorrect'
           PASSWORD_IS_INVALID: '#/components/schemas/PasswordIsInvalid'
@@ -215,7 +218,6 @@ components:
           SESSION_EXPIRED: '#/components/schemas/SessionExpired'
           ACCESS_DENIED: '#/components/schemas/AccessDenied'
           USER_NOT_FOUND: '#/components/schemas/UserNotFound'
-          SIGNATURE_IS_INCORRECT: '#/components/schemas/SignatureIsIncorrect'
           USER_LOGIN_IS_INVALID: '#/components/schemas/UserLoginIsInvalid'
           USER_LOGIN_ALREADY_TAKEN: '#/components/schemas/UserLoginAlreadyTaken'
           TOKEN_EXPIRED: '#/components/schemas/TokenExpired'
@@ -298,6 +300,23 @@ components:
           x-nullable: true
       x-order: -1279700867-5
       x-super: '#/components/schemas/ClientErr'
+    IncorrectTotpCode:
+      required:
+      - code
+      - devMsg
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+      x-order: -1279700867-10
+      x-super: '#/components/schemas/ClientErr'
     Instant:
       type: integer
       format: int64
@@ -349,10 +368,14 @@ components:
       properties:
         type:
           type: string
-          description: Type of login
+          description: |
+            Type of login
+          example: email
         login:
           type: string
-          description: "User unique identifier, email, username, etc."
+          description: |
+            User unique identifier, email, username, etc. User can use it to sign-in.
+          example: john@example.org
       x-order: -2010674509-2
     NoAuthAvailableForFactor:
       required:
@@ -371,6 +394,29 @@ components:
           x-nullable: true
       x-order: -270554383-4
       x-super: '#/components/schemas/IntegrationErr'
+    OauthAppErr:
+      required:
+      - code
+      - devMsg
+      - incorrectRedirectUri
+      - incorrectSecret
+      type: object
+      properties:
+        code:
+          type: string
+        devMsg:
+          type: string
+          description: Message for developers.
+        msg:
+          type: string
+          description: Localised message suitable for UI.
+          x-nullable: true
+        incorrectRedirectUri:
+          type: boolean
+        incorrectSecret:
+          type: boolean
+      x-order: -1279700867-11
+      x-super: '#/components/schemas/ClientErr'
     PasswordIsIncorrect:
       required:
       - code
@@ -579,23 +625,6 @@ components:
           x-nullable: true
       x-order: -2065236468-0
       x-super: '#/components/schemas/Unauthenticated'
-    SignatureIsIncorrect:
-      required:
-      - code
-      - devMsg
-      type: object
-      properties:
-        code:
-          type: string
-        devMsg:
-          type: string
-          description: Message for developers.
-        msg:
-          type: string
-          description: Localised message suitable for UI.
-          x-nullable: true
-      x-order: -2065236468-3
-      x-super: '#/components/schemas/ClientErr'
     TokenExpired:
       required:
       - code
@@ -613,6 +642,9 @@ components:
           x-nullable: true
         expiredAt:
           type: integer
+          description: |-
+            Token expiration time. If null, token is incorrect (due to incorrect format or invalid signature).
+            May be caused by changed app-secret.
           format: int64
           x-nullable: true
       x-order: -270554383-11
@@ -843,6 +875,51 @@ components:
           default: 0.0
       description: Authentication implementation config
       x-order: 377338786-0
+    AuthorizationCodeAuthCfg:
+      type: object
+      properties:
+        requiresAuth:
+          type: array
+          description: |-
+            If this is not null, app forbids to add this auth until listed auth enabled.
+            - if this a string -> require specified auth to be enabled before this.
+            - array of strings -> require any of listed auths to be enabled
+            - array of arrays of strings -> works as `[ [ "auth1" and "auth2" ] or [ "auth1" and "auth2" ] ]`
+          items:
+            type: array
+            items:
+              type: string
+          x-nullable: true
+        skipOnFail:
+          type: boolean
+          description: |-
+            When this is set to true app will attempt next auth in case of error on current.
+            It's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be
+            executed only when IP auth is failed.
+            If set to false any error on this auth will stop the whole request execution.
+          default: false
+        rateLimiter:
+          type: string
+          description: Apply rate limiter for this auth.
+          x-nullable: true
+        burnQuota:
+          type: number
+          description: Every auth execution will burn this amount of quota. Takes
+            place only when rate limiter is specified
+          format: double
+          default: 0.0
+        codeTtl:
+          type: string
+          description: |
+            Authorization code lifetime.
+          default: 10m
+        scopes:
+          type: array
+          description: Allowed oauth2 scopes.
+          items:
+            type: string
+      x-order: -1836982696-3
+      x-super: '#/components/schemas/BuiltInAuthCfg'
     BuiltInAuthCfg:
       type: object
       properties:
@@ -912,7 +989,7 @@ components:
       x-order: 377338786-1
     DbCfg:
       type: object
-      x-order: -1580107990-0
+      x-order: -195398693-0
     Duration:
       type: string
     EmailAuthCfg:
@@ -1141,7 +1218,7 @@ components:
         inToken:
           type: boolean
           default: true
-      x-order: -291817267-1
+      x-order: -291817267-2
       x-super: '#/components/schemas/DbCfg'
     IpAuthCfg:
       type: object
@@ -1237,6 +1314,41 @@ components:
           default: mysql
       x-order: -577347408-2
       x-super: '#/components/schemas/JdbcCfg'
+    OAuthAppAuthCfg:
+      type: object
+      properties:
+        requiresAuth:
+          type: array
+          description: |-
+            If this is not null, app forbids to add this auth until listed auth enabled.
+            - if this a string -> require specified auth to be enabled before this.
+            - array of strings -> require any of listed auths to be enabled
+            - array of arrays of strings -> works as `[ [ "auth1" and "auth2" ] or [ "auth1" and "auth2" ] ]`
+          items:
+            type: array
+            items:
+              type: string
+          x-nullable: true
+        skipOnFail:
+          type: boolean
+          description: |-
+            When this is set to true app will attempt next auth in case of error on current.
+            It's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be
+            executed only when IP auth is failed.
+            If set to false any error on this auth will stop the whole request execution.
+          default: false
+        rateLimiter:
+          type: string
+          description: Apply rate limiter for this auth.
+          x-nullable: true
+        burnQuota:
+          type: number
+          description: Every auth execution will burn this amount of quota. Takes
+            place only when rate limiter is specified
+          format: double
+          default: 0.0
+      x-order: -1247144074-1
+      x-super: '#/components/schemas/BuiltInAuthCfg'
     OAuthCfg:
       required:
       - extractLogin
@@ -1721,13 +1833,51 @@ components:
             type: string
       x-order: 842893688-0
       x-super: '#/components/schemas/DbCfg'
+    ScopesAuthCfg:
+      type: object
+      properties:
+        requiresAuth:
+          type: array
+          description: |-
+            If this is not null, app forbids to add this auth until listed auth enabled.
+            - if this a string -> require specified auth to be enabled before this.
+            - array of strings -> require any of listed auths to be enabled
+            - array of arrays of strings -> works as `[ [ "auth1" and "auth2" ] or [ "auth1" and "auth2" ] ]`
+          items:
+            type: array
+            items:
+              type: string
+          x-nullable: true
+        skipOnFail:
+          type: boolean
+          description: |-
+            When this is set to true app will attempt next auth in case of error on current.
+            It's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be
+            executed only when IP auth is failed.
+            If set to false any error on this auth will stop the whole request execution.
+          default: false
+        rateLimiter:
+          type: string
+          description: Apply rate limiter for this auth.
+          x-nullable: true
+        burnQuota:
+          type: number
+          description: Every auth execution will burn this amount of quota. Takes
+            place only when rate limiter is specified
+          format: double
+          default: 0.0
+        scopes:
+          type: array
+          items:
+            type: string
+      x-order: 2741601-2
+      x-super: '#/components/schemas/BuiltInAuthCfg'
     ShAppCfg:
       type: object
       properties:
         http:
           $ref: '#/components/schemas/ShHttpCfg'
         logins:
-          uniqueItems: true
           type: array
           description: |+
             Types of logins that can be used for identification.
@@ -1759,22 +1909,28 @@ components:
             anyOf:
             - $ref: '#/components/schemas/RemoteAuthCfg'
             - $ref: '#/components/schemas/AppSecretAuthCfg'
+            - $ref: '#/components/schemas/AuthorizationCodeAuthCfg'
             - $ref: '#/components/schemas/EmailAuthCfg'
             - $ref: '#/components/schemas/IpAuthCfg'
+            - $ref: '#/components/schemas/OAuthAppAuthCfg'
             - $ref: '#/components/schemas/OAuthCfg'
             - $ref: '#/components/schemas/PasswordAuthCfg'
             - $ref: '#/components/schemas/QuestionsAuthCfg'
+            - $ref: '#/components/schemas/ScopesAuthCfg'
+            - $ref: '#/components/schemas/TotpAuthCfg'
             x-additionalPropertiesName: auth
           description: |+
             List of auth names and auth configs
 
-            To use builtin auths (not a plugin or remote) follow the example: `"password": { ... }` or
-            `"anyAuthName": { "builtin": "password", ... }`
+            To use builtin auths (not a plugin or remote) follow the example:
+            - `"password": { ... }` or
+            - `"anyAuthName": { "builtin": "password", ... }`
 
             Available built-in auths:
-            - `password`, `email`, `questions`, `ip`
-            - `oauth`, `oauth/facebook/openid`, `oauth/google/openid`
-            - `appSecret`
+            - `password`, `email`, `questions`, `ip`, 'totp'
+            - (OAuth2 client) `oauth`, `oauth/facebook/openid`, `oauth/google/openid`
+            - (Backend integration) `appSecret`
+            - (OAuth2 server) 'authorizationCode', 'oauthApp', 'scopes'
 
           example:
             email: {}
@@ -1808,6 +1964,7 @@ components:
           description: |-
             The key that app uses for RSA certificate generation used for token signature.
             If `null` - app will generate secret automatically during startup.
+          default: <change_me>
         healthCheckKey:
           type: string
           description: Set this key if you want to restrict access to the health-check.
@@ -1937,6 +2094,44 @@ components:
           description: "While executing user-info request, access-token will be sent\
             \ in Authorisation header."
       x-order: -1532051357-3
+    TotpAuthCfg:
+      type: object
+      properties:
+        requiresAuth:
+          type: array
+          description: |-
+            If this is not null, app forbids to add this auth until listed auth enabled.
+            - if this a string -> require specified auth to be enabled before this.
+            - array of strings -> require any of listed auths to be enabled
+            - array of arrays of strings -> works as `[ [ "auth1" and "auth2" ] or [ "auth1" and "auth2" ] ]`
+          items:
+            type: array
+            items:
+              type: string
+          x-nullable: true
+        skipOnFail:
+          type: boolean
+          description: |-
+            When this is set to true app will attempt next auth in case of error on current.
+            It's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be
+            executed only when IP auth is failed.
+            If set to false any error on this auth will stop the whole request execution.
+          default: false
+        rateLimiter:
+          type: string
+          description: Apply rate limiter for this auth.
+          x-nullable: true
+        burnQuota:
+          type: number
+          description: Every auth execution will burn this amount of quota. Takes
+            place only when rate limiter is specified
+          format: double
+          default: 0.0
+        encryptKey:
+          type: string
+          default: <change_me>
+      x-order: 820555017-1
+      x-super: '#/components/schemas/BuiltInAuthCfg'
     regex:
       type: string
 x-tagGroups: []

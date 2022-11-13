@@ -9,7 +9,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'app.kntrl:client:0.9'
+    implementation 'app.kntrl:client:0.10.0'
 }
 
 static Collection<File> exampleDirs(File root) {

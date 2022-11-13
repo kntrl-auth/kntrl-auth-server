@@ -1,9 +1,9 @@
 import app.kntrl.client.AuthReq;
 import app.kntrl.client.Kntrl;
 import app.kntrl.client.Session;
-import app.kntrl.client.generated.model.AuthExecRes;
-import app.kntrl.client.generated.model.AuthenticateRes;
-import app.kntrl.client.generated.model.ErrCode;
+import app.kntrl.client.openapi.model.AuthExecRes;
+import app.kntrl.client.openapi.model.AuthenticateRes;
+import app.kntrl.client.openapi.model.ErrCode;
 
 class Example03 {
     public static void main(String[] args) {

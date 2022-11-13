@@ -1,4 +1,4 @@
-import { ConfirmUserAuthsReq, SaveUserReq, SaveUserRes, User as UserModel, UserApi } from '../generated';
+import { ConfirmUserAuthsReq, EditUserReq, SaveUserReq, SaveUserRes, User as UserModel, UserApi } from '../generated';
 import { handleErr } from './utils';
 import { Session } from './session';
 
@@ -19,5 +19,9 @@ export class UserSvc {
 
     async confirmAuth(req: ConfirmUserAuthsReq): Promise<SaveUserRes> {
         return handleErr(this.api.confirmUserAuths(req, await this.session._authenticatedAxiosCfg()), this.session);
+    }
+
+    async edit(userId: string, req: EditUserReq): Promise<SaveUserRes> {
+        return handleErr(this.api.editUser(userId, req, await this.session._authenticatedAxiosCfg()), this.session);
     }
 }

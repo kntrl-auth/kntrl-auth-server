@@ -14,7 +14,7 @@ integration with existing database and codebase via plugins, action confirmation
 
 ## ⭐ Features
 
-- Authenticate by **password, email, IP, secret questions**, **Facebook** OAuth2, **Google** OAuth2, etc.
+- Authenticate by **password, email, TOTP, IP, secret questions**, **Facebook** OAuth2, **Google** OAuth2, etc.
 - **API key** management supported
 - Configurable **multifactor authentication**
 - **Action confirmation** (e.g. "enter the code from email to confirm payment")
@@ -33,7 +33,7 @@ integration with existing database and codebase via plugins, action confirmation
 ### Run
 
 #### ☕ Option 1 - run Java app
-- Download the latest distribution from  [Releases](../../../releases)
+- Download `kntrl.jar` from [Releases](../../releases)
 - Start the application:
 ```shell
 java -jar kntrl.jar
@@ -125,12 +125,12 @@ Then read the guide in [examples folder](examples). It contains configuration an
 ### Get/create Kntrl API client
 
 #### Option 1 - use existing SDK
-- [Java/Kotlin client](client/kotlin/Readme.md)
-- [JavaScript/TypeScript client](client/typescript/Readme.md)
+- [Java/Kotlin client](https://search.maven.org/artifact/app.kntrl/client)
+- [JavaScript/TypeScript client](https://www.npmjs.com/package/kntrl-client)
 
 #### Option 2 - use OpenAPI generator
 Generate an HTTP client for any other language by any OpenApi generator (e.g. [this](https://openapi-generator.tech)).
-The OpenAPI specification is located in [client folder](client):
+The OpenAPI specification is located in the [client folder](client):
 
 - [openapi-no-polymorphism.yaml](client/openapi-no-polymorphism.yaml) - simplified specification (without inheritance and polymorphism). All generators should support this specification.
 - [openapi-no-additionalProperties.yaml](client/openapi-no-additionalProperties.yaml) - the same as one above, but with workaround for additionalProperties handling bug in some generators.
@@ -143,7 +143,7 @@ The OpenAPI specification is located in [client folder](client):
 openapi-generator-cli generate -i ./client/openapi-no-polymorphism.yaml -g go -o ./generated/client
 ```
 **WARN**: it's strongly recommended to disable rejection of not-known fields. E.g. for java generator set 
-`disallowAdditionalPropertiesIfNotPresent` to `false`, or disable Jackson FAIL_ON_UNKNOWN_PROPERTIES.
+`disallowAdditionalPropertiesIfNotPresent` to `false`, or disable Jackson `FAIL_ON_UNKNOWN_PROPERTIES`.
 
 #### Option 3 - call HTTP API manually
 Check [API docs](https://kntrl-auth.github.io/kntrl-auth-server/apidocs) for HTTP API documentation.

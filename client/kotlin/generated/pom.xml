@@ -2,10 +2,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>app.kntrl</groupId>
-    <artifactId>openapi-client</artifactId>
+    <artifactId>client-openapi</artifactId>
     <packaging>jar</packaging>
-    <name>openapi-client</name>
-    <version>0.9</version>
+    <name>client-openapi</name>
+    <version>0.10.0</version>
     <url>https://github.com/openapitools/openapi-generator</url>
     <description>OpenAPI Java</description>
     <scm>

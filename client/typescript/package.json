@@ -1,14 +1,19 @@
 {
   "name": "kntrl-client",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.10.0",
+  "description": "JS/TS client for Kntrl authentication server",
+  "repository": "https://github.com/kntrl-auth/kntrl-auth-server/tree/master/client/typescript",
+  "homepage": "https://github.com/kntrl-auth/kntrl-auth-server",
+  "keywords": [ "kntrl", "authentication", "authorization", "2fa", "sign-in", "sign-up" ],
   "scripts": {
     "generate-openapi-client": "openapi-generator-cli generate -i ../openapi-no-polymorphism.yaml -o ./generated -g typescript-axios",
     "build": "tsc"
   },
   "main": "dist/index.js",
-  "keywords": [],
-  "author": "",
+  "author": {
+    "name" : "Dmytro Barannik",
+    "email" : "dmitryb.dev@gmail.com"
+  },
   "license": "ISC",
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "^2.5.1",

@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Kntrl API
-  version: "0.9"
+  version: 0.10.0
   x-logo:
     url: ./logo.png
 servers:
@@ -26,11 +26,13 @@ tags:
 - name: authorisation
   x-displayName:
   - Authorization API
-- description: |
-    Utilities for client side cache of data and validation.
-  name: signature
+- description: |+
+    Utilities for token creation. Can be used to implement checks that don't involve database interactions.
+    Also, it can be used to generate and check OpenID `id_token`.
+
+  name: custom-token
   x-displayName:
-  - Signature
+  - Custom token
 paths:
   /api/server/health:
     get:
@@ -309,11 +311,18 @@ paths:
       x-order: 1
       x-content-type: application/json
       x-accepts: application/json
-  /api/signature/public-key:
-    get:
+  /api/tokens/custom/jwt:
+    post:
       description: |
-        Public key generated from app-secret from config used for signature validation.
-      operationId: getPublicKey
+        Creates JWT token signed with RSA256 key. RSA key is generated from app secret (specified in kntrl.json5)
+      operationId: createCustomJwtToken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              additionalProperties: true
+              type: object
+        required: true
       responses:
         default:
           content:
@@ -333,10 +342,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/IntegrationErr'
           description: Server error
-      summary: Get RSA public key
+      security:
+      - access-token: []
+      summary: (Backend API) Create JWT token
       tags:
-      - signature
+      - custom-token
       x-order: 1
+      x-content-type: application/json
       x-accepts: application/json
   /api/server/cfg:
     get:
@@ -473,27 +485,12 @@ paths:
       x-order: 2
       x-content-type: application/json
       x-accepts: application/json
-  /api/signature/verify:
+  /api/tokens/custom/jwt/parse:
     post:
       description: |
-        Validates data signature.
-        See /sign API for details.
-      operationId: verify
-      parameters:
-      - explode: true
-        in: query
-        name: signature
-        required: true
-        schema:
-          type: string
-        style: form
-      - explode: true
-        in: query
-        name: secret
-        required: false
-        schema:
-          type: string
-        style: form
+        Validates token signature, expiration time and extracts token data.
+        See /jwt API for details.
+      operationId: parseCustomJwtToken
       requestBody:
         content:
           application/json:
@@ -503,7 +500,9 @@ paths:
       responses:
         default:
           content:
-            application/json: {}
+            application/json:
+              schema:
+                type: string
           description: Success
         "4XX":
           content:
@@ -517,19 +516,78 @@ paths:
               schema:
                 $ref: '#/components/schemas/IntegrationErr'
           description: Server error
-      summary: Validate signature
+      summary: Parse JWT token
       tags:
-      - signature
+      - custom-token
       x-order: 2
       x-content-type: application/json
       x-accepts: application/json
-  /api/signature/sign:
+  /api/token/jwt/public-key:
+    get:
+      description: |
+        RSA256 public key that can be used to verify access jwt tokens locally.
+      operationId: getPublicKey
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Success
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+          description: Client error
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+          description: Server error
+      summary: Get JWT public key
+      tags:
+      - token
+      x-order: 3
+      x-accepts: application/json
+  /api/tokens/custom/jwt/public-key:
+    get:
+      description: |
+        RSA256 public key generated from app-secret from config used for signature validation.
+        Can be used to verify jwt tokens locally.
+      operationId: getCustomJwtPublicKey
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Success
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+          description: Client error
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+          description: Server error
+      summary: Get JWT public key
+      tags:
+      - custom-token
+      x-order: 3
+      x-accepts: application/json
+  /api/tokens/custom/binary:
     post:
       description: |
-        Sign data using specified secret.
+        Creates binary token signed with specified secret.
         When secret is null - use app secret (specified in kntrl.json5) with SHA256withRSA algorithm.
-        Otherwise - use secret from query with HmacSHA256 algorithm.
-      operationId: sign
+        Otherwise - use secret from query and sign with HmacSHA256 algorithm.
+      operationId: createCustomBinaryToken
       parameters:
       - explode: true
         in: query
@@ -565,10 +623,55 @@ paths:
           description: Server error
       security:
       - access-token: []
-      summary: (Backend API) sign data
+      summary: (Backend API) Create binary token
       tags:
-      - signature
-      x-order: 3
+      - custom-token
+      x-order: 4
+      x-content-type: application/json
+      x-accepts: application/json
+  /api/tokens/custom/binary/parse:
+    post:
+      description: |
+        Validates token signature and extracts token data.
+        See /binary API for details.
+      operationId: parseCustomBinaryToken
+      parameters:
+      - explode: true
+        in: query
+        name: secret
+        required: false
+        schema:
+          type: string
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Success
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+          description: Client error
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+          description: Server error
+      summary: Parse binary token
+      tags:
+      - custom-token
+      x-order: 5
       x-content-type: application/json
       x-accepts: application/json
   /api/session/auth/confirm:
@@ -729,7 +832,7 @@ paths:
           description: Server error
       security:
       - access-token: []
-      summary: (Admin API) Edit user
+      summary: (Backend API) Edit user
       tags:
       - user
       x-order: 9
@@ -783,21 +886,23 @@ components:
         - incorrectAnswers
         code: code
         loginId:
-          type: type
-          login: login
+          type: email
+          login: john@example.org
         strength: strength
         devMsg: devMsg
         waitTimeMinutes: 6
         tooLong: true
         missingSymbol: true
         matchesLogin:
-          type: type
-          login: login
+          type: email
+          login: john@example.org
         expiredAt: 7
+        incorrectRedirectUri: true
         missingUpperCase: true
         commonPassword: true
         missingNumber: true
         tooManyAnswers: true
+        incorrectSecret: true
         questionsNotFound:
         - questionsNotFound
         - questionsNotFound
@@ -824,6 +929,10 @@ components:
           description: Localised message suitable for UI.
           type: string
           x-nullable: true
+        incorrectRedirectUri:
+          type: boolean
+        incorrectSecret:
+          type: boolean
         changedAt:
           format: int64
           type: integer
@@ -889,6 +998,9 @@ components:
           type: integer
           x-nullable: true
         expiredAt:
+          description: |-
+            Token expiration time. If null, token is incorrect (due to incorrect format or invalid signature).
+            May be caused by changed app-secret.
           format: int64
           type: integer
           x-nullable: true
@@ -1012,6 +1124,10 @@ components:
           description: Localised message suitable for UI.
           type: string
           x-nullable: true
+        incorrectRedirectUri:
+          type: boolean
+        incorrectSecret:
+          type: boolean
         changedAt:
           format: int64
           type: integer
@@ -1077,6 +1193,9 @@ components:
           type: integer
           x-nullable: true
         expiredAt:
+          description: |-
+            Token expiration time. If null, token is incorrect (due to incorrect format or invalid signature).
+            May be caused by changed app-secret.
           format: int64
           type: integer
           x-nullable: true
@@ -1157,6 +1276,23 @@ components:
       type: object
       x-order: -1279700867-5
       x-super: '#/components/schemas/ClientErr'
+    IncorrectTotpCode:
+      properties:
+        code:
+          type: string
+        devMsg:
+          description: Message for developers.
+          type: string
+        msg:
+          description: Localised message suitable for UI.
+          type: string
+          x-nullable: true
+      required:
+      - code
+      - devMsg
+      type: object
+      x-order: -1279700867-10
+      x-super: '#/components/schemas/ClientErr'
     Instant:
       format: int64
       type: integer
@@ -1198,14 +1334,18 @@ components:
       x-super: '#/components/schemas/ClientErr'
     LoginId:
       example:
-        type: type
-        login: login
+        type: email
+        login: john@example.org
       properties:
         type:
-          description: Type of login
+          description: |
+            Type of login
+          example: email
           type: string
         login:
-          description: "User unique identifier, email, username, etc."
+          description: |
+            User unique identifier, email, username, etc. User can use it to sign-in.
+          example: john@example.org
           type: string
       required:
       - login
@@ -1229,6 +1369,29 @@ components:
       type: object
       x-order: -270554383-4
       x-super: '#/components/schemas/IntegrationErr'
+    OauthAppErr:
+      properties:
+        code:
+          type: string
+        devMsg:
+          description: Message for developers.
+          type: string
+        msg:
+          description: Localised message suitable for UI.
+          type: string
+          x-nullable: true
+        incorrectRedirectUri:
+          type: boolean
+        incorrectSecret:
+          type: boolean
+      required:
+      - code
+      - devMsg
+      - incorrectRedirectUri
+      - incorrectSecret
+      type: object
+      x-order: -1279700867-11
+      x-super: '#/components/schemas/ClientErr'
     PasswordIsIncorrect:
       properties:
         code:
@@ -1433,23 +1596,6 @@ components:
       type: object
       x-order: -2065236468-0
       x-super: '#/components/schemas/Unauthenticated'
-    SignatureIsIncorrect:
-      properties:
-        code:
-          type: string
-        devMsg:
-          description: Message for developers.
-          type: string
-        msg:
-          description: Localised message suitable for UI.
-          type: string
-          x-nullable: true
-      required:
-      - code
-      - devMsg
-      type: object
-      x-order: -2065236468-3
-      x-super: '#/components/schemas/ClientErr'
     TokenExpired:
       properties:
         code:
@@ -1462,6 +1608,9 @@ components:
           type: string
           x-nullable: true
         expiredAt:
+          description: |-
+            Token expiration time. If null, token is incorrect (due to incorrect format or invalid signature).
+            May be caused by changed app-secret.
           format: int64
           type: integer
           x-nullable: true
@@ -1513,6 +1662,9 @@ components:
           type: string
           x-nullable: true
         expiredAt:
+          description: |-
+            Token expiration time. If null, token is incorrect (due to incorrect format or invalid signature).
+            May be caused by changed app-secret.
           format: int64
           type: integer
           x-nullable: true
@@ -1580,6 +1732,23 @@ components:
     AccessToken:
       type: string
       x-order: -2026363309-3
+    AuthorizationCodeSessionData:
+      additionalProperties: true
+      properties:
+        agent:
+          items:
+            $ref: '#/components/schemas/LoginId'
+          type: array
+        scopes:
+          items:
+            type: string
+          type: array
+      required:
+      - agent
+      - scopes
+      type: object
+      x-order: -1836982696-7
+      x-super: '#/components/schemas/SessionData'
     CodeVerifier:
       example:
         attemptsLeft: 1
@@ -1647,7 +1816,6 @@ components:
           items:
             type: string
           type: array
-          uniqueItems: true
       required:
       - factor
       - supportedAuths
@@ -1661,6 +1829,16 @@ components:
         session:
           authenticated: true
           systemAccess: true
+          data:
+            key:
+              agent:
+              - type: email
+                login: john@example.org
+              - type: email
+                login: john@example.org
+              scopes:
+              - scopes
+              - scopes
           signedInAt: 5
           userId: userId
           expiresAt: 2
@@ -1680,14 +1858,11 @@ components:
           newUser: true
           refreshedAt: 7
           id: id
-          scopes:
-          - scopes
-          - scopes
           identifiedBy:
-          - type: type
-            login: login
-          - type: type
-            login: login
+          - type: email
+            login: john@example.org
+          - type: email
+            login: john@example.org
           unconfirmedAuths:
             key:
               sentCodes:
@@ -1722,10 +1897,37 @@ components:
       - tokens
       type: object
       x-order: 68856176-2
+    ScopesSessionData:
+      additionalProperties: true
+      properties:
+        agent:
+          items:
+            $ref: '#/components/schemas/LoginId'
+          type: array
+          x-nullable: true
+        scopes:
+          items:
+            type: string
+          type: array
+      required:
+      - scopes
+      type: object
+      x-order: 2741601-4
+      x-super: '#/components/schemas/SessionData'
     Session:
       example:
         authenticated: true
         systemAccess: true
+        data:
+          key:
+            agent:
+            - type: email
+              login: john@example.org
+            - type: email
+              login: john@example.org
+            scopes:
+            - scopes
+            - scopes
         signedInAt: 5
         userId: userId
         expiresAt: 2
@@ -1745,14 +1947,11 @@ components:
         newUser: true
         refreshedAt: 7
         id: id
-        scopes:
-        - scopes
-        - scopes
         identifiedBy:
-        - type: type
-          login: login
-        - type: type
-          login: login
+        - type: email
+          login: john@example.org
+        - type: email
+          login: john@example.org
         unconfirmedAuths:
           key:
             sentCodes:
@@ -1816,23 +2015,21 @@ components:
           type: integer
         newUser:
           type: boolean
-        scopes:
-          description: App services list that this session is allowed to access. Null
-            if allowed to access any scope
-          items:
-            type: string
-          type: array
-          x-nullable: true
         device:
           $ref: '#/components/schemas/Device'
         systemAccess:
           type: boolean
+        data:
+          additionalProperties:
+            $ref: '#/components/schemas/Session_data_value'
+          type: object
         expired:
           type: boolean
         authenticated:
           type: boolean
       required:
       - authenticatedBy
+      - data
       - device
       - entry
       - expiresAt
@@ -1846,6 +2043,10 @@ components:
       - unconfirmedAuths
       type: object
       x-order: 2013237977-0
+    SessionData:
+      additionalProperties: true
+      type: object
+      x-order: -255987249-0
     Tokens:
       example:
         access: access
@@ -2031,6 +2232,9 @@ components:
         public:
           answersSavedAt:
             key: 1
+          redirectUris:
+          - redirectUris
+          - redirectUris
           email: email
           updatedAt: 6
         login: login
@@ -2064,21 +2268,23 @@ components:
           - incorrectAnswers
           code: code
           loginId:
-            type: type
-            login: login
+            type: email
+            login: john@example.org
           strength: strength
           devMsg: devMsg
           waitTimeMinutes: 6
           tooLong: true
           missingSymbol: true
           matchesLogin:
-            type: type
-            login: login
+            type: email
+            login: john@example.org
           expiredAt: 7
+          incorrectRedirectUri: true
           missingUpperCase: true
           commonPassword: true
           missingNumber: true
           tooManyAnswers: true
+          incorrectSecret: true
           questionsNotFound:
           - questionsNotFound
           - questionsNotFound
@@ -2097,16 +2303,25 @@ components:
           changedDaysAgo: 4
         resData:
           emailSentTo: emailSentTo
-          password: password
+          clientId: clientId
           answersSavedAt:
             key: 1
           strength: strength
           correct:
             HOMETOWN: true
             MOTHER_NAME: false
+          otpUrl: otpUrl
+          authorizationCode: authorizationCode
+          secret: secret
+          redirectUris:
+          - redirectUris
+          - redirectUris
+          password: password
           ipEncoded: ipEncoded
+          clientSecret: clientSecret
           extractedPublicData:
             key: ""
+          otpUrlQrCode: otpUrlQrCode
           extractedLogin: extractedLogin
         status: OK
       properties:
@@ -2129,10 +2344,12 @@ components:
       x-sealed: true
     AuthPrivateData:
       additionalProperties: true
+      description: Data available only for authenticator.
       type: object
       x-order: 332570507-6
     AuthPublicData:
       additionalProperties: true
+      description: Data that are available for API.
       type: object
       x-order: 332570507-4
     AuthResData:
@@ -2145,6 +2362,9 @@ components:
           public:
             answersSavedAt:
               key: 1
+            redirectUris:
+            - redirectUris
+            - redirectUris
             email: email
             updatedAt: 6
           login: login
@@ -2160,6 +2380,9 @@ components:
             public:
               answersSavedAt:
                 key: 1
+              redirectUris:
+              - redirectUris
+              - redirectUris
               email: email
               updatedAt: 6
             login: login
@@ -2174,13 +2397,16 @@ components:
             public:
               answersSavedAt:
                 key: 1
+              redirectUris:
+              - redirectUris
+              - redirectUris
               email: email
               updatedAt: 6
             login: login
         confirmed: true
       properties:
         data:
-          $ref: '#/components/schemas/AuthData'
+          $ref: '#/components/schemas/AuthUserCfg_data'
         sentCodes:
           description: |
             List of auths that wait for confirmation.
@@ -2196,6 +2422,16 @@ components:
         session:
           authenticated: true
           systemAccess: true
+          data:
+            key:
+              agent:
+              - type: email
+                login: john@example.org
+              - type: email
+                login: john@example.org
+              scopes:
+              - scopes
+              - scopes
           signedInAt: 5
           userId: userId
           expiresAt: 2
@@ -2215,14 +2451,11 @@ components:
           newUser: true
           refreshedAt: 7
           id: id
-          scopes:
-          - scopes
-          - scopes
           identifiedBy:
-          - type: type
-            login: login
-          - type: type
-            login: login
+          - type: email
+            login: john@example.org
+          - type: email
+            login: john@example.org
           unconfirmedAuths:
             key:
               sentCodes:
@@ -2257,6 +2490,9 @@ components:
                 public:
                   answersSavedAt:
                     key: 1
+                  redirectUris:
+                  - redirectUris
+                  - redirectUris
                   email: email
                   updatedAt: 6
                 login: login
@@ -2272,6 +2508,9 @@ components:
                   public:
                     answersSavedAt:
                       key: 1
+                    redirectUris:
+                    - redirectUris
+                    - redirectUris
                     email: email
                     updatedAt: 6
                   login: login
@@ -2286,19 +2525,22 @@ components:
                   public:
                     answersSavedAt:
                       key: 1
+                    redirectUris:
+                    - redirectUris
+                    - redirectUris
                     email: email
                     updatedAt: 6
                   login: login
               confirmed: true
-          id: 2c24704f-198a-4bc4-9718-306ccc97bbdc
+          id: fewfvc23f
           logins:
           - unconfirmedLogin: unconfirmedLogin
-            type: type
-            login: login
+            type: email
+            login: john@example.org
             confirmed: true
           - unconfirmedLogin: unconfirmedLogin
-            type: type
-            login: login
+            type: email
+            login: john@example.org
             confirmed: true
           factors:
           - factors
@@ -2321,21 +2563,23 @@ components:
               - incorrectAnswers
               code: code
               loginId:
-                type: type
-                login: login
+                type: email
+                login: john@example.org
               strength: strength
               devMsg: devMsg
               waitTimeMinutes: 6
               tooLong: true
               missingSymbol: true
               matchesLogin:
-                type: type
-                login: login
+                type: email
+                login: john@example.org
               expiredAt: 7
+              incorrectRedirectUri: true
               missingUpperCase: true
               commonPassword: true
               missingNumber: true
               tooManyAnswers: true
+              incorrectSecret: true
               questionsNotFound:
               - questionsNotFound
               - questionsNotFound
@@ -2354,16 +2598,25 @@ components:
               changedDaysAgo: 4
             resData:
               emailSentTo: emailSentTo
-              password: password
+              clientId: clientId
               answersSavedAt:
                 key: 1
               strength: strength
               correct:
                 HOMETOWN: true
                 MOTHER_NAME: false
+              otpUrl: otpUrl
+              authorizationCode: authorizationCode
+              secret: secret
+              redirectUris:
+              - redirectUris
+              - redirectUris
+              password: password
               ipEncoded: ipEncoded
+              clientSecret: clientSecret
               extractedPublicData:
                 key: ""
+              otpUrlQrCode: otpUrlQrCode
               extractedLogin: extractedLogin
             status: OK
       properties:
@@ -2381,6 +2634,16 @@ components:
       - authRes
       type: object
       x-order: 2094520596-3
+    AuthorizationCodeUpdateResData:
+      additionalProperties: true
+      properties:
+        authorizationCode:
+          type: string
+      required:
+      - authorizationCode
+      type: object
+      x-order: -1836982696-5
+      x-super: '#/components/schemas/AuthResData'
     Code:
       example:
         attemptsLeft: 9
@@ -2425,6 +2688,7 @@ components:
       x-super: '#/components/schemas/AuthResData'
     EmailPublicData:
       additionalProperties: true
+      description: Data that are available for API.
       properties:
         email:
           description: User email.
@@ -2469,6 +2733,7 @@ components:
       x-super: '#/components/schemas/AuthResData'
     IpPrivateData:
       additionalProperties: true
+      description: Data available only for authenticator.
       properties:
         encodedIps:
           additionalProperties:
@@ -2481,17 +2746,22 @@ components:
     Login:
       example:
         unconfirmedLogin: unconfirmedLogin
-        type: type
-        login: login
+        type: email
+        login: john@example.org
         confirmed: true
       properties:
         type:
-          description: Type of login
+          description: |
+            Type of login
+          example: email
           type: string
         login:
-          description: "User unique identifier, email, username, etc."
+          description: |
+            User unique identifier, email, username, etc. User can use it to sign-in.
+          example: john@example.org
           type: string
         unconfirmedLogin:
+          description: Login that waits for confirmation.
           type: string
           x-nullable: true
         confirmed:
@@ -2503,16 +2773,61 @@ components:
       x-order: -2010674509-0
     NoAuthPrivateData:
       additionalProperties: true
+      description: Data available only for authenticator.
       type: object
       x-order: 332570507-7
       x-super: '#/components/schemas/AuthPrivateData'
     NoAuthPublicData:
       additionalProperties: true
+      description: Data that are available for API.
       type: object
       x-order: 332570507-5
       x-super: '#/components/schemas/AuthPublicData'
+    OAuthAppPrivateData:
+      additionalProperties: true
+      description: Data available only for authenticator.
+      properties:
+        secretHash:
+          type: string
+      required:
+      - secretHash
+      type: object
+      x-order: -1247144074-3
+      x-super: '#/components/schemas/AuthPrivateData'
+    OAuthAppPublicData:
+      additionalProperties: true
+      description: Data that are available for API.
+      properties:
+        redirectUris:
+          items:
+            type: string
+          type: array
+          x-nullable: true
+      type: object
+      x-order: -1247144074-2
+      x-super: '#/components/schemas/AuthPublicData'
+    OAuthAppUpdateResData:
+      additionalProperties: true
+      properties:
+        clientId:
+          type: string
+        redirectUris:
+          items:
+            type: string
+          type: array
+          x-nullable: true
+        clientSecret:
+          description: Provided only when generated first time or generated again.
+          type: string
+          x-nullable: true
+      required:
+      - clientId
+      type: object
+      x-order: -1247144074-6
+      x-super: '#/components/schemas/AuthResData'
     OAuthPublicData:
       additionalProperties: true
+      description: Data that are available for API.
       type: object
       x-order: -893636857-2
     OAuthResData:
@@ -2522,6 +2837,7 @@ components:
           type: string
         extractedPublicData:
           additionalProperties: true
+          description: Data that are available for API.
           type: object
           x-order: -893636857-2
       required:
@@ -2561,6 +2877,7 @@ components:
       x-order: 378192899-3
     PasswordHistory:
       additionalProperties: true
+      description: Data available only for authenticator.
       properties:
         passwords:
           items:
@@ -2575,6 +2892,7 @@ components:
       x-super: '#/components/schemas/AuthPrivateData'
     PasswordPublicData:
       additionalProperties: true
+      description: Data that are available for API.
       properties:
         updatedAt:
           description: Time when password was updated last time.
@@ -2622,6 +2940,7 @@ components:
       x-super: '#/components/schemas/AuthResData'
     QuestionsPrivateData:
       additionalProperties: true
+      description: Data available only for authenticator.
       properties:
         answers:
           additionalProperties:
@@ -2632,6 +2951,7 @@ components:
       x-super: '#/components/schemas/AuthPrivateData'
     QuestionsPublicData:
       additionalProperties: true
+      description: Data that are available for API.
       properties:
         answersSavedAt:
           additionalProperties:
@@ -2673,6 +2993,37 @@ components:
       type: object
       x-order: -73723375-5
       x-super: '#/components/schemas/AuthExecRes'
+    TotpPrivateDate:
+      additionalProperties: true
+      description: Data available only for authenticator.
+      properties:
+        secret:
+          type: string
+      required:
+      - secret
+      type: object
+      x-order: 820555017-2
+      x-super: '#/components/schemas/AuthPrivateData'
+    TotpUpdateResData:
+      additionalProperties: true
+      properties:
+        secret:
+          description: Base32 SHA-1 key.
+          type: string
+        otpUrl:
+          type: string
+        otpUrlQrCode:
+          description: |-
+            QR code URL. Use it like this:
+            `<img style="image-rendering: pixelated;" width="200" src="<otpUrlQrCode>"/>`
+          type: string
+      required:
+      - otpUrl
+      - otpUrlQrCode
+      - secret
+      type: object
+      x-order: 820555017-5
+      x-super: '#/components/schemas/AuthResData'
     UnconfirmedAuthData:
       example:
         code:
@@ -2686,6 +3037,9 @@ components:
           public:
             answersSavedAt:
               key: 1
+            redirectUris:
+            - redirectUris
+            - redirectUris
             email: email
             updatedAt: 6
           login: login
@@ -2710,6 +3064,9 @@ components:
               public:
                 answersSavedAt:
                   key: 1
+                redirectUris:
+                - redirectUris
+                - redirectUris
                 email: email
                 updatedAt: 6
               login: login
@@ -2725,6 +3082,9 @@ components:
                 public:
                   answersSavedAt:
                     key: 1
+                  redirectUris:
+                  - redirectUris
+                  - redirectUris
                   email: email
                   updatedAt: 6
                 login: login
@@ -2739,19 +3099,22 @@ components:
                 public:
                   answersSavedAt:
                     key: 1
+                  redirectUris:
+                  - redirectUris
+                  - redirectUris
                   email: email
                   updatedAt: 6
                 login: login
             confirmed: true
-        id: 2c24704f-198a-4bc4-9718-306ccc97bbdc
+        id: fewfvc23f
         logins:
         - unconfirmedLogin: unconfirmedLogin
-          type: type
-          login: login
+          type: email
+          login: john@example.org
           confirmed: true
         - unconfirmedLogin: unconfirmedLogin
-          type: type
-          login: login
+          type: email
+          login: john@example.org
           confirmed: true
         factors:
         - factors
@@ -2760,8 +3123,8 @@ components:
       properties:
         id:
           description: |
-            Generated user uuid
-          example: 2c24704f-198a-4bc4-9718-306ccc97bbdc
+            Generated user id
+          example: fewfvc23f
           type: string
         logins:
           items:
@@ -2771,14 +3134,13 @@ components:
           additionalProperties:
             $ref: '#/components/schemas/AuthUserCfg'
           description: |
-            Public data of confirmed auths and sent codes for unconfirmed auths.
+            Data of confirmed auths and sent codes for unconfirmed auths.
           type: object
         factors:
           description: Enabled factors
           items:
             type: string
           type: array
-          uniqueItems: true
         signedUpAt:
           format: int64
           type: integer
@@ -2790,7 +3152,8 @@ components:
           type: boolean
         systemAccess:
           default: false
-          description: Allows to edit any user in the app.
+          description: Allows to access backend-only APIs. Use `appSecret` auth to
+            obtain token with this access.
           type: boolean
       required:
       - auths
@@ -2821,16 +3184,34 @@ components:
           key:
             template: template
             redirectUri: redirectUri
-            password: password
+            clientId: clientId
+            code: code
             authorizationCode: authorizationCode
+            accountName: accountName
+            newClientSecret: false
             answers:
               HOMETOWN: London
               MOTHER_NAME: null
+            agentLogins:
+            - type: email
+              login: john@example.org
+            - type: email
+              login: john@example.org
+            secret: secret
+            agentAccessToken: agentAccessToken
+            accessToken: accessToken
+            redirectUris:
+            - redirectUris
+            - redirectUris
+            issuer: issuer
+            password: password
             templateParams:
               key: "{}"
             confirmPassword: confirmPassword
-            secret: secret
-            accessToken: accessToken
+            clientSecret: clientSecret
+            scopes:
+            - scopes
+            - scopes
             email: email
         dryRun: false
         factors:
@@ -2841,10 +3222,18 @@ components:
             type: string
             x-additionalPropertiesName: factor
           description: |
-            Forces specific auth to be used for factor.
-            Takes place only when multiple auths is provided within request and auth can be
-            assigned to several factors.
-            If used in sign-up mode, it just enables those factors.
+            If this field is not specified, server tries to execute and assign auth for the `next-factor`
+            (see `session` model). Otherwise, auths will be assigned to the factors specified in this field.
+
+            Useful when:
+            - "Retry mode". User didn't receive confirmation code and wants to retry.
+            In this case you should provide `authReq` for auth you want to retry and set it to the same factor.
+            - "Replace mode". User can't receive confirmation code and wants to try another auth. E.g. they lost email and
+            want to proceed with a secret-questions auth.
+            In this case you should provide `authReq` for auth you want to replace with and set it to the same factor.
+
+            If it's used in sign-up mode, it just enables those factors (so actual value is ignored and can be `null`).
+            E.g. `"factors": { "second": null }` will enable second factor during sign-up.
           type: object
         authReqs:
           additionalProperties:
@@ -2858,6 +3247,42 @@ components:
           type: boolean
       type: object
       x-order: 2094520596-2
+    AuthorizationCodeAuthReqData:
+      additionalProperties: true
+      properties:
+        authorizationCode:
+          description: Authorization code provided by `authorizationCode` update request.
+          type: string
+        agentAccessToken:
+          description: Access token of user that will be able to act of behalf of
+            current user.
+          type: string
+          x-order: -2026363309-3
+      required:
+      - agentAccessToken
+      - authorizationCode
+      type: object
+      x-order: -1836982696-6
+      x-super: '#/components/schemas/AuthReqData'
+    AuthorizationCodeUpdateReqData:
+      additionalProperties: true
+      properties:
+        agentLogins:
+          description: Login or logins of the user that will get access-token and
+            be able to act of behalf of current user.
+          items:
+            $ref: '#/components/schemas/LoginId'
+          type: array
+        scopes:
+          items:
+            type: string
+          type: array
+          x-nullable: true
+      required:
+      - agentLogins
+      type: object
+      x-order: -1836982696-4
+      x-super: '#/components/schemas/AuthReqData'
     EmailAuthReqData:
       additionalProperties: true
       properties:
@@ -2907,23 +3332,38 @@ components:
           key:
             template: template
             redirectUri: redirectUri
-            password: password
+            clientId: clientId
+            code: code
             authorizationCode: authorizationCode
+            accountName: accountName
+            newClientSecret: false
             answers:
               HOMETOWN: London
               MOTHER_NAME: null
+            agentLogins:
+            - type: email
+              login: john@example.org
+            - type: email
+              login: john@example.org
+            secret: secret
+            agentAccessToken: agentAccessToken
+            accessToken: accessToken
+            redirectUris:
+            - redirectUris
+            - redirectUris
+            issuer: issuer
+            password: password
             templateParams:
               key: "{}"
             confirmPassword: confirmPassword
-            secret: secret
-            accessToken: accessToken
+            clientSecret: clientSecret
+            scopes:
+            - scopes
+            - scopes
             email: email
         entry: entry
         dryRun: false
         signIn: false
-        scopes:
-        - scopes
-        - scopes
         logins:
           key: logins
         signUp: false
@@ -2942,10 +3382,18 @@ components:
             type: string
             x-additionalPropertiesName: factor
           description: |
-            Forces specific auth to be used for factor.
-            Takes place only when multiple auths is provided within request and auth can be
-            assigned to several factors.
-            If used in sign-up mode, it just enables those factors.
+            If this field is not specified, server tries to execute and assign auth for the `next-factor`
+            (see `session` model). Otherwise, auths will be assigned to the factors specified in this field.
+
+            Useful when:
+            - "Retry mode". User didn't receive confirmation code and wants to retry.
+            In this case you should provide `authReq` for auth you want to retry and set it to the same factor.
+            - "Replace mode". User can't receive confirmation code and wants to try another auth. E.g. they lost email and
+            want to proceed with a secret-questions auth.
+            In this case you should provide `authReq` for auth you want to replace with and set it to the same factor.
+
+            If it's used in sign-up mode, it just enables those factors (so actual value is ignored and can be `null`).
+            E.g. `"factors": { "second": null }` will enable second factor during sign-up.
           type: object
         authReqs:
           additionalProperties:
@@ -2953,12 +3401,6 @@ components:
           description: |
             Request for authenticators
           type: object
-        scopes:
-          description: OAuth scopes
-          items:
-            type: string
-          type: array
-          x-nullable: true
         signIn:
           default: false
           type: boolean
@@ -2977,6 +3419,40 @@ components:
       additionalProperties: true
       type: object
       x-order: -1249106462-5
+      x-super: '#/components/schemas/AuthReqData'
+    OAuthAppAuthReqData:
+      additionalProperties: true
+      properties:
+        clientId:
+          type: string
+        clientSecret:
+          type: string
+          x-nullable: true
+        redirectUri:
+          type: string
+          x-nullable: true
+      required:
+      - clientId
+      type: object
+      x-order: -1247144074-4
+      x-super: '#/components/schemas/AuthReqData'
+    OAuthAppUpdateReqData:
+      additionalProperties: true
+      properties:
+        redirectUris:
+          description: "Null - don't validate redirectUrl, empty array will lead to\
+            \ all authenticate request fail."
+          items:
+            type: string
+          type: array
+          x-nullable: true
+        newClientSecret:
+          default: false
+          description: "If previous secret lost or compromised, it allows to generate\
+            \ a new one."
+          type: boolean
+      type: object
+      x-order: -1247144074-5
       x-super: '#/components/schemas/AuthReqData'
     OAuthReqData:
       additionalProperties: true
@@ -3057,6 +3533,55 @@ components:
       type: object
       x-order: -213229069-5
       x-super: '#/components/schemas/AuthReqData'
+    ScopesAuthReqData:
+      additionalProperties: true
+      properties:
+        agentLogins:
+          description: Login or logins of the user that will get access-token and
+            be able to act of behalf of current user.
+          items:
+            $ref: '#/components/schemas/LoginId'
+          type: array
+          x-nullable: true
+        scopes:
+          items:
+            type: string
+          type: array
+          x-nullable: true
+      type: object
+      x-order: 2741601-3
+      x-super: '#/components/schemas/AuthReqData'
+    TotpAuthReqData:
+      additionalProperties: true
+      properties:
+        code:
+          type: string
+      required:
+      - code
+      type: object
+      x-order: 820555017-3
+      x-super: '#/components/schemas/AuthReqData'
+    TotpUpdateReqData:
+      additionalProperties: true
+      properties:
+        secret:
+          description: |-
+            Base32 SHA-1 key.
+            If null, secret is generated automatically.
+          type: string
+          x-nullable: true
+        issuer:
+          description: Used only to generate `otpauth://` url.
+          type: string
+        accountName:
+          description: Used only to generate `otpauth://` url.
+          type: string
+      required:
+      - accountName
+      - issuer
+      type: object
+      x-order: 820555017-4
+      x-super: '#/components/schemas/AuthReqData'
     ConfirmSessionAuthsReq:
       example:
         receivedCodes:
@@ -3092,6 +3617,16 @@ components:
         sessions:
         - authenticated: true
           systemAccess: true
+          data:
+            key:
+              agent:
+              - type: email
+                login: john@example.org
+              - type: email
+                login: john@example.org
+              scopes:
+              - scopes
+              - scopes
           signedInAt: 5
           userId: userId
           expiresAt: 2
@@ -3111,14 +3646,11 @@ components:
           newUser: true
           refreshedAt: 7
           id: id
-          scopes:
-          - scopes
-          - scopes
           identifiedBy:
-          - type: type
-            login: login
-          - type: type
-            login: login
+          - type: email
+            login: john@example.org
+          - type: email
+            login: john@example.org
           unconfirmedAuths:
             key:
               sentCodes:
@@ -3141,6 +3673,16 @@ components:
             type: type
         - authenticated: true
           systemAccess: true
+          data:
+            key:
+              agent:
+              - type: email
+                login: john@example.org
+              - type: email
+                login: john@example.org
+              scopes:
+              - scopes
+              - scopes
           signedInAt: 5
           userId: userId
           expiresAt: 2
@@ -3160,14 +3702,11 @@ components:
           newUser: true
           refreshedAt: 7
           id: id
-          scopes:
-          - scopes
-          - scopes
           identifiedBy:
-          - type: type
-            login: login
-          - type: type
-            login: login
+          - type: email
+            login: john@example.org
+          - type: email
+            login: john@example.org
           unconfirmedAuths:
             key:
               sentCodes:
@@ -3213,6 +3752,9 @@ components:
                 public:
                   answersSavedAt:
                     key: 1
+                  redirectUris:
+                  - redirectUris
+                  - redirectUris
                   email: email
                   updatedAt: 6
                 login: login
@@ -3228,6 +3770,9 @@ components:
                   public:
                     answersSavedAt:
                       key: 1
+                    redirectUris:
+                    - redirectUris
+                    - redirectUris
                     email: email
                     updatedAt: 6
                   login: login
@@ -3242,19 +3787,22 @@ components:
                   public:
                     answersSavedAt:
                       key: 1
+                    redirectUris:
+                    - redirectUris
+                    - redirectUris
                     email: email
                     updatedAt: 6
                   login: login
               confirmed: true
-          id: 2c24704f-198a-4bc4-9718-306ccc97bbdc
+          id: fewfvc23f
           logins:
           - unconfirmedLogin: unconfirmedLogin
-            type: type
-            login: login
+            type: email
+            login: john@example.org
             confirmed: true
           - unconfirmedLogin: unconfirmedLogin
-            type: type
-            login: login
+            type: email
+            login: john@example.org
             confirmed: true
           factors:
           - factors
@@ -3277,21 +3825,23 @@ components:
               - incorrectAnswers
               code: code
               loginId:
-                type: type
-                login: login
+                type: email
+                login: john@example.org
               strength: strength
               devMsg: devMsg
               waitTimeMinutes: 6
               tooLong: true
               missingSymbol: true
               matchesLogin:
-                type: type
-                login: login
+                type: email
+                login: john@example.org
               expiredAt: 7
+              incorrectRedirectUri: true
               missingUpperCase: true
               commonPassword: true
               missingNumber: true
               tooManyAnswers: true
+              incorrectSecret: true
               questionsNotFound:
               - questionsNotFound
               - questionsNotFound
@@ -3310,16 +3860,25 @@ components:
               changedDaysAgo: 4
             resData:
               emailSentTo: emailSentTo
-              password: password
+              clientId: clientId
               answersSavedAt:
                 key: 1
               strength: strength
               correct:
                 HOMETOWN: true
                 MOTHER_NAME: false
+              otpUrl: otpUrl
+              authorizationCode: authorizationCode
+              secret: secret
+              redirectUris:
+              - redirectUris
+              - redirectUris
+              password: password
               ipEncoded: ipEncoded
+              clientSecret: clientSecret
               extractedPublicData:
                 key: ""
+              otpUrlQrCode: otpUrlQrCode
               extractedLogin: extractedLogin
             status: OK
       properties:
@@ -3366,16 +3925,34 @@ components:
           key:
             template: template
             redirectUri: redirectUri
-            password: password
+            clientId: clientId
+            code: code
             authorizationCode: authorizationCode
+            accountName: accountName
+            newClientSecret: false
             answers:
               HOMETOWN: London
               MOTHER_NAME: null
+            agentLogins:
+            - type: email
+              login: john@example.org
+            - type: email
+              login: john@example.org
+            secret: secret
+            agentAccessToken: agentAccessToken
+            accessToken: accessToken
+            redirectUris:
+            - redirectUris
+            - redirectUris
+            issuer: issuer
+            password: password
             templateParams:
               key: "{}"
             confirmPassword: confirmPassword
-            secret: secret
-            accessToken: accessToken
+            clientSecret: clientSecret
+            scopes:
+            - scopes
+            - scopes
             email: email
         dryRun: false
         systemAccess: true
@@ -3416,16 +3993,34 @@ components:
           key:
             template: template
             redirectUri: redirectUri
-            password: password
+            clientId: clientId
+            code: code
             authorizationCode: authorizationCode
+            accountName: accountName
+            newClientSecret: false
             answers:
               HOMETOWN: London
               MOTHER_NAME: null
+            agentLogins:
+            - type: email
+              login: john@example.org
+            - type: email
+              login: john@example.org
+            secret: secret
+            agentAccessToken: agentAccessToken
+            accessToken: accessToken
+            redirectUris:
+            - redirectUris
+            - redirectUris
+            issuer: issuer
+            password: password
             templateParams:
               key: "{}"
             confirmPassword: confirmPassword
-            secret: secret
-            accessToken: accessToken
+            clientSecret: clientSecret
+            scopes:
+            - scopes
+            - scopes
             email: email
         dryRun: false
         logins:
@@ -3460,6 +4055,16 @@ components:
         session:
           authenticated: true
           systemAccess: true
+          data:
+            key:
+              agent:
+              - type: email
+                login: john@example.org
+              - type: email
+                login: john@example.org
+              scopes:
+              - scopes
+              - scopes
           signedInAt: 5
           userId: userId
           expiresAt: 2
@@ -3479,14 +4084,11 @@ components:
           newUser: true
           refreshedAt: 7
           id: id
-          scopes:
-          - scopes
-          - scopes
           identifiedBy:
-          - type: type
-            login: login
-          - type: type
-            login: login
+          - type: email
+            login: john@example.org
+          - type: email
+            login: john@example.org
           unconfirmedAuths:
             key:
               sentCodes:
@@ -3517,16 +4119,7 @@ components:
         rateLimiter:
           quotaToBurn: 0.8008281904610115
           id: id
-        requireScopes:
-        - requireScopes
-        - requireScopes
       properties:
-        requireScopes:
-          description: Require OAuth scopes
-          items:
-            type: string
-          type: array
-          x-nullable: true
         rateLimiter:
           $ref: '#/components/schemas/RateLimiterReq'
       type: object
@@ -3546,6 +4139,9 @@ components:
       - quotaToBurn
       type: object
       x-order: -2047680577-3
+    json:
+      additionalProperties: true
+      type: object
     AccessTokenCfg:
       description: Short-living token used for authentication.
       example:
@@ -3668,6 +4264,51 @@ components:
           type: number
       type: object
       x-order: 377338786-0
+    AuthorizationCodeAuthCfg:
+      properties:
+        requiresAuth:
+          description: |-
+            If this is not null, app forbids to add this auth until listed auth enabled.
+            - if this a string -> require specified auth to be enabled before this.
+            - array of strings -> require any of listed auths to be enabled
+            - array of arrays of strings -> works as `[ [ "auth1" and "auth2" ] or [ "auth1" and "auth2" ] ]`
+          items:
+            items:
+              type: string
+            type: array
+          type: array
+          x-nullable: true
+        skipOnFail:
+          default: false
+          description: |-
+            When this is set to true app will attempt next auth in case of error on current.
+            It's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be
+            executed only when IP auth is failed.
+            If set to false any error on this auth will stop the whole request execution.
+          type: boolean
+        rateLimiter:
+          description: Apply rate limiter for this auth.
+          type: string
+          x-nullable: true
+        burnQuota:
+          default: 0.0
+          description: Every auth execution will burn this amount of quota. Takes
+            place only when rate limiter is specified
+          format: double
+          type: number
+        codeTtl:
+          default: 10m
+          description: |
+            Authorization code lifetime.
+          type: string
+        scopes:
+          description: Allowed oauth2 scopes.
+          items:
+            type: string
+          type: array
+      type: object
+      x-order: -1836982696-3
+      x-super: '#/components/schemas/BuiltInAuthCfg'
     BuiltInAuthCfg:
       description: Authentication implementation config
       properties:
@@ -3737,7 +4378,7 @@ components:
       x-order: 377338786-1
     DbCfg:
       type: object
-      x-order: -1580107990-0
+      x-order: -195398693-0
     Duration:
       type: string
     EmailAuthCfg:
@@ -3975,7 +4616,7 @@ components:
           default: true
           type: boolean
       type: object
-      x-order: -291817267-1
+      x-order: -291817267-2
       x-super: '#/components/schemas/DbCfg'
     IpAuthCfg:
       properties:
@@ -4071,6 +4712,41 @@ components:
       type: object
       x-order: -577347408-2
       x-super: '#/components/schemas/JdbcCfg'
+    OAuthAppAuthCfg:
+      properties:
+        requiresAuth:
+          description: |-
+            If this is not null, app forbids to add this auth until listed auth enabled.
+            - if this a string -> require specified auth to be enabled before this.
+            - array of strings -> require any of listed auths to be enabled
+            - array of arrays of strings -> works as `[ [ "auth1" and "auth2" ] or [ "auth1" and "auth2" ] ]`
+          items:
+            items:
+              type: string
+            type: array
+          type: array
+          x-nullable: true
+        skipOnFail:
+          default: false
+          description: |-
+            When this is set to true app will attempt next auth in case of error on current.
+            It's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be
+            executed only when IP auth is failed.
+            If set to false any error on this auth will stop the whole request execution.
+          type: boolean
+        rateLimiter:
+          description: Apply rate limiter for this auth.
+          type: string
+          x-nullable: true
+        burnQuota:
+          default: 0.0
+          description: Every auth execution will burn this amount of quota. Takes
+            place only when rate limiter is specified
+          format: double
+          type: number
+      type: object
+      x-order: -1247144074-1
+      x-super: '#/components/schemas/BuiltInAuthCfg'
     OAuthCfg:
       properties:
         requiresAuth:
@@ -4524,6 +5200,45 @@ components:
       type: object
       x-order: 842893688-0
       x-super: '#/components/schemas/DbCfg'
+    ScopesAuthCfg:
+      properties:
+        requiresAuth:
+          description: |-
+            If this is not null, app forbids to add this auth until listed auth enabled.
+            - if this a string -> require specified auth to be enabled before this.
+            - array of strings -> require any of listed auths to be enabled
+            - array of arrays of strings -> works as `[ [ "auth1" and "auth2" ] or [ "auth1" and "auth2" ] ]`
+          items:
+            items:
+              type: string
+            type: array
+          type: array
+          x-nullable: true
+        skipOnFail:
+          default: false
+          description: |-
+            When this is set to true app will attempt next auth in case of error on current.
+            It's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be
+            executed only when IP auth is failed.
+            If set to false any error on this auth will stop the whole request execution.
+          type: boolean
+        rateLimiter:
+          description: Apply rate limiter for this auth.
+          type: string
+          x-nullable: true
+        burnQuota:
+          default: 0.0
+          description: Every auth execution will burn this amount of quota. Takes
+            place only when rate limiter is specified
+          format: double
+          type: number
+        scopes:
+          items:
+            type: string
+          type: array
+      type: object
+      x-order: 2741601-2
+      x-super: '#/components/schemas/BuiltInAuthCfg'
     ShAppCfg:
       example:
         entries:
@@ -4565,7 +5280,7 @@ components:
             quota: 7.061401241503109
             alignLoad: false
             userId: true
-        secret: secret
+        secret: <change_me>
         logins:
         - username
         - facebook
@@ -4672,7 +5387,6 @@ components:
           items:
             type: string
           type: array
-          uniqueItems: true
         loginRequirements:
           additionalProperties:
             type: string
@@ -4688,13 +5402,15 @@ components:
           description: |+
             List of auth names and auth configs
 
-            To use builtin auths (not a plugin or remote) follow the example: `"password": { ... }` or
-            `"anyAuthName": { "builtin": "password", ... }`
+            To use builtin auths (not a plugin or remote) follow the example:
+            - `"password": { ... }` or
+            - `"anyAuthName": { "builtin": "password", ... }`
 
             Available built-in auths:
-            - `password`, `email`, `questions`, `ip`
-            - `oauth`, `oauth/facebook/openid`, `oauth/google/openid`
-            - `appSecret`
+            - `password`, `email`, `questions`, `ip`, 'totp'
+            - (OAuth2 client) `oauth`, `oauth/facebook/openid`, `oauth/google/openid`
+            - (Backend integration) `appSecret`
+            - (OAuth2 server) 'authorizationCode', 'oauthApp', 'scopes'
 
           example:
             email: {}
@@ -4723,6 +5439,7 @@ components:
             List of rate limiters
           type: object
         secret:
+          default: <change_me>
           description: |-
             The key that app uses for RSA certificate generation used for token signature.
             If `null` - app will generate secret automatically during startup.
@@ -4906,6 +5623,44 @@ components:
           type: boolean
       type: object
       x-order: -1532051357-3
+    TotpAuthCfg:
+      properties:
+        requiresAuth:
+          description: |-
+            If this is not null, app forbids to add this auth until listed auth enabled.
+            - if this a string -> require specified auth to be enabled before this.
+            - array of strings -> require any of listed auths to be enabled
+            - array of arrays of strings -> works as `[ [ "auth1" and "auth2" ] or [ "auth1" and "auth2" ] ]`
+          items:
+            items:
+              type: string
+            type: array
+          type: array
+          x-nullable: true
+        skipOnFail:
+          default: false
+          description: |-
+            When this is set to true app will attempt next auth in case of error on current.
+            It's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be
+            executed only when IP auth is failed.
+            If set to false any error on this auth will stop the whole request execution.
+          type: boolean
+        rateLimiter:
+          description: Apply rate limiter for this auth.
+          type: string
+          x-nullable: true
+        burnQuota:
+          default: 0.0
+          description: Every auth execution will burn this amount of quota. Takes
+            place only when rate limiter is specified
+          format: double
+          type: number
+        encryptKey:
+          default: <change_me>
+          type: string
+      type: object
+      x-order: 820555017-1
+      x-super: '#/components/schemas/BuiltInAuthCfg'
     regex:
       type: string
     UnauthenticatedCode:
@@ -4918,6 +5673,8 @@ components:
       type: string
     ClientErrCode:
       enum:
+      - INCORRECT_TOTP_CODE
+      - OAUTH_APP_ERR
       - PLUGIN_CLIENT_ERR
       - PASSWORD_IS_INCORRECT
       - PASSWORD_IS_INVALID
@@ -4928,7 +5685,6 @@ components:
       - SESSION_EXPIRED
       - ACCESS_DENIED
       - USER_NOT_FOUND
-      - SIGNATURE_IS_INCORRECT
       - USER_LOGIN_IS_INVALID
       - USER_LOGIN_ALREADY_TAKEN
       - TOKEN_EXPIRED
@@ -4954,6 +5710,8 @@ components:
     ErrCode:
       enum:
       - PLUGIN_ERR
+      - INCORRECT_TOTP_CODE
+      - OAUTH_APP_ERR
       - PLUGIN_CLIENT_ERR
       - PASSWORD_IS_INCORRECT
       - PASSWORD_IS_INVALID
@@ -4964,7 +5722,6 @@ components:
       - SESSION_EXPIRED
       - ACCESS_DENIED
       - USER_NOT_FOUND
-      - SIGNATURE_IS_INCORRECT
       - USER_LOGIN_IS_INVALID
       - USER_LOGIN_ALREADY_TAKEN
       - TOKEN_EXPIRED
@@ -4981,11 +5738,36 @@ components:
       - INTEGRATION_ERR
       - ANY_ERR
       type: string
+    Session_data_value:
+      additionalProperties: true
+      example:
+        agent:
+        - type: email
+          login: john@example.org
+        - type: email
+          login: john@example.org
+        scopes:
+        - scopes
+        - scopes
+      properties:
+        agent:
+          items:
+            $ref: '#/components/schemas/LoginId'
+          type: array
+          x-nullable: true
+        scopes:
+          items:
+            type: string
+          type: array
+      type: object
     AuthData_public:
       additionalProperties: true
       example:
         answersSavedAt:
           key: 1
+        redirectUris:
+        - redirectUris
+        - redirectUris
         email: email
         updatedAt: 6
       properties:
@@ -4996,6 +5778,11 @@ components:
           description: Time when password was updated last time.
           format: int64
           type: integer
+        redirectUris:
+          items:
+            type: string
+          type: array
+          x-nullable: true
         answersSavedAt:
           additionalProperties:
             format: int64
@@ -5007,28 +5794,51 @@ components:
       additionalProperties: true
       example:
         emailSentTo: emailSentTo
-        password: password
+        clientId: clientId
         answersSavedAt:
           key: 1
         strength: strength
         correct:
           HOMETOWN: true
           MOTHER_NAME: false
+        otpUrl: otpUrl
+        authorizationCode: authorizationCode
+        secret: secret
+        redirectUris:
+        - redirectUris
+        - redirectUris
+        password: password
         ipEncoded: ipEncoded
+        clientSecret: clientSecret
         extractedPublicData:
           key: ""
+        otpUrlQrCode: otpUrlQrCode
         extractedLogin: extractedLogin
       properties:
+        authorizationCode:
+          type: string
         emailSentTo:
           description: "Shows user email, that was used to send a code. Email will\
             \ be partially hidden."
           type: string
         ipEncoded:
           type: string
+        clientId:
+          type: string
+        redirectUris:
+          items:
+            type: string
+          type: array
+          x-nullable: true
+        clientSecret:
+          description: Provided only when generated first time or generated again.
+          type: string
+          x-nullable: true
         extractedLogin:
           type: string
         extractedPublicData:
           additionalProperties: true
+          description: Data that are available for API.
           type: object
           x-order: -893636857-2
         password:
@@ -5058,26 +5868,105 @@ components:
           description: |
             Date of last update
           type: object
+        secret:
+          description: Base32 SHA-1 key.
+          type: string
+        otpUrl:
+          type: string
+        otpUrlQrCode:
+          description: |-
+            QR code URL. Use it like this:
+            `<img style="image-rendering: pixelated;" width="200" src="<otpUrlQrCode>"/>`
+          type: string
       type: object
+    AuthUserCfg_data:
+      description: Data/State of this authenticator
+      example:
+        public:
+          answersSavedAt:
+            key: 1
+          redirectUris:
+          - redirectUris
+          - redirectUris
+          email: email
+          updatedAt: 6
+        login: login
+      properties:
+        public:
+          $ref: '#/components/schemas/AuthData_public'
+        login:
+          description: |-
+            If authenticator supports identification, it provides login here. This can be email, phone number,
+            facebook account id, etc.
+          type: string
+          x-nullable: true
+      required:
+      - public
+      type: object
+      x-nullable: true
+      x-super: '#/components/schemas/AuthData'
     AuthenticateReq_authReqs_value:
       additionalProperties: true
       example:
         template: template
         redirectUri: redirectUri
-        password: password
+        clientId: clientId
+        code: code
         authorizationCode: authorizationCode
+        accountName: accountName
+        newClientSecret: false
         answers:
           HOMETOWN: London
           MOTHER_NAME: null
+        agentLogins:
+        - type: email
+          login: john@example.org
+        - type: email
+          login: john@example.org
+        secret: secret
+        agentAccessToken: agentAccessToken
+        accessToken: accessToken
+        redirectUris:
+        - redirectUris
+        - redirectUris
+        issuer: issuer
+        password: password
         templateParams:
           key: "{}"
         confirmPassword: confirmPassword
-        secret: secret
-        accessToken: accessToken
+        clientSecret: clientSecret
+        scopes:
+        - scopes
+        - scopes
         email: email
       properties:
         secret:
+          description: |-
+            Base32 SHA-1 key.
+            If null, secret is generated automatically.
           type: string
+          x-nullable: true
+        authorizationCode:
+          description: If you have authorisation-code - app will exchange it for access-token.
+          type: string
+          x-nullable: true
+        agentAccessToken:
+          description: Access token of user that will be able to act of behalf of
+            current user.
+          type: string
+          x-order: -2026363309-3
+        agentLogins:
+          description: Login or logins of the user that will get access-token and
+            be able to act of behalf of current user.
+          items:
+            $ref: '#/components/schemas/LoginId'
+          type: array
+          x-nullable: true
+        scopes:
+          items:
+            type: string
+          type: array
+          x-nullable: true
         email:
           description: New email to set.
           type: string
@@ -5091,16 +5980,29 @@ components:
           description: Template params
           type: object
           x-nullable: true
-        accessToken:
-          description: If you have access-token - put it here.
+        clientId:
           type: string
-          x-nullable: true
-        authorizationCode:
-          description: If you have authorisation-code - app will exchange it for access-token.
+        clientSecret:
           type: string
           x-nullable: true
         redirectUri:
           description: Redirect uri used when requested user login.
+          type: string
+          x-nullable: true
+        redirectUris:
+          description: "Null - don't validate redirectUrl, empty array will lead to\
+            \ all authenticate request fail."
+          items:
+            type: string
+          type: array
+          x-nullable: true
+        newClientSecret:
+          default: false
+          description: "If previous secret lost or compromised, it allows to generate\
+            \ a new one."
+          type: boolean
+        accessToken:
+          description: If you have access-token - put it here.
           type: string
           x-nullable: true
         password:
@@ -5121,6 +6023,14 @@ components:
             HOMETOWN: London
             MOTHER_NAME: null
           type: object
+        code:
+          type: string
+        issuer:
+          description: Used only to generate `otpauth://` url.
+          type: string
+        accountName:
+          description: Used only to generate `otpauth://` url.
+          type: string
       type: object
       x-additionalPropertiesName: auth
     EntryCfg_accessToken:
@@ -5236,6 +6146,15 @@ components:
           type: object
         code:
           $ref: '#/components/schemas/CodeCfg'
+        codeTtl:
+          default: 10m
+          description: |
+            Authorization code lifetime.
+          type: string
+        scopes:
+          items:
+            type: string
+          type: array
         server:
           description: Email server address/IP.
           type: string
@@ -5388,6 +6307,9 @@ components:
           description: Max answers that user can save.
           format: int32
           type: integer
+        encryptKey:
+          default: <change_me>
+          type: string
       x-additionalPropertiesName: auth
     ShDbsCfg_user:
       description: User database config
@@ -5642,5 +6564,5 @@ x-tagGroups:
   - authorisation
   - user
   - server
-  - signature
+  - custom-token
 
