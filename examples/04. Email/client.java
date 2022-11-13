@@ -2,9 +2,9 @@ import app.kntrl.client.AuthReq;
 import app.kntrl.client.Kntrl;
 import app.kntrl.client.ReceivedCodes;
 import app.kntrl.client.Session;
-import app.kntrl.client.generated.model.AuthExecRes;
-import app.kntrl.client.generated.model.AuthenticateRes;
-import app.kntrl.client.generated.model.SaveUserRes;
+import app.kntrl.client.openapi.model.AuthExecRes;
+import app.kntrl.client.openapi.model.AuthenticateRes;
+import app.kntrl.client.openapi.model.SaveUserRes;
 
 import java.util.Scanner;
 

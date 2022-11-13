@@ -1,11 +1,11 @@
 package app.kntrl.client
 
-import app.kntrl.client.generated.api.AuthorisationApi
-import app.kntrl.client.generated.api.SessionApi
-import app.kntrl.client.generated.api.TokenApi
-import app.kntrl.client.generated.infra.ApiClient
-import app.kntrl.client.generated.model.*
-import app.kntrl.client.generated.model.Session as SessionModel
+import app.kntrl.client.openapi.api.AuthorisationApi
+import app.kntrl.client.openapi.api.SessionApi
+import app.kntrl.client.openapi.api.TokenApi
+import app.kntrl.client.openapi.infra.ApiClient
+import app.kntrl.client.openapi.model.*
+import app.kntrl.client.openapi.model.Session as SessionModel
 
 class Session(
     private val client: ApiClient,
@@ -145,30 +145,17 @@ class Session(
     }
 
     class Factors : LinkedHashMap<String, String>() {
-        fun factor(factor: String, auth: String): Factors {
-            put(factor, auth)
-            return this
-        }
+        fun factor(factor: String, auth: String) = also { put(factor, auth) }
     }
 
     class AuthReqs : AuthenticateReq() {
-        fun req(auth: String, req: AuthenticateReqAuthReqsValue?): AuthReqs {
-            putAuthReqsItem(auth, req)
-            return this
-        }
-        fun req(auth: String, factor: String, req: AuthenticateReqAuthReqsValue?): AuthReqs {
+        fun req(auth: String, req: AuthenticateReqAuthReqsValue?) = also { putAuthReqsItem(auth, req) }
+        fun req(auth: String, factor: String, req: AuthenticateReqAuthReqsValue?) = also {
             putAuthReqsItem(auth, req)
             putFactorsItem(auth, factor)
-            return this
         }
-        fun enableFactor(factor: String): AuthReqs {
-            putFactorsItem(factor, null)
-            return this
-        }
-        fun dryRun(): AuthReqs {
-            dryRun(true)
-            return this
-        }
+        fun enableFactor(factor: String) = also { putFactorsItem(factor, null) }
+        fun dryRun() = also { dryRun(true) }
     }
 }
 

@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Kntrl API
-  version: "0.9"
+  version: 0.10.0
   x-logo:
     url: ./logo.png
 servers:
@@ -26,11 +26,13 @@ tags:
 - name: authorisation
   x-displayName:
   - Authorization API
-- description: |
-    Utilities for client side cache of data and validation.
-  name: signature
+- description: |+
+    Utilities for token creation. Can be used to implement checks that don't involve database interactions.
+    Also, it can be used to generate and check OpenID `id_token`.
+
+  name: custom-token
   x-displayName:
-  - Signature
+  - Custom token
 paths:
   /api/server/health:
     get:
@@ -309,11 +311,18 @@ paths:
       x-order: 1
       x-content-type: application/json
       x-accepts: application/json
-  /api/signature/public-key:
-    get:
+  /api/tokens/custom/jwt:
+    post:
       description: |
-        Public key generated from app-secret from config used for signature validation.
-      operationId: getPublicKey
+        Creates JWT token signed with RSA256 key. RSA key is generated from app secret (specified in kntrl.json5)
+      operationId: createCustomJwtToken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              additionalProperties: true
+              type: object
+        required: true
       responses:
         default:
           content:
@@ -333,10 +342,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/IntegrationErr'
           description: Server error
-      summary: Get RSA public key
+      security:
+      - access-token: []
+      summary: (Backend API) Create JWT token
       tags:
-      - signature
+      - custom-token
       x-order: 1
+      x-content-type: application/json
       x-accepts: application/json
   /api/server/cfg:
     get:
@@ -473,27 +485,12 @@ paths:
       x-order: 2
       x-content-type: application/json
       x-accepts: application/json
-  /api/signature/verify:
+  /api/tokens/custom/jwt/parse:
     post:
       description: |
-        Validates data signature.
-        See /sign API for details.
-      operationId: verify
-      parameters:
-      - explode: true
-        in: query
-        name: signature
-        required: true
-        schema:
-          type: string
-        style: form
-      - explode: true
-        in: query
-        name: secret
-        required: false
-        schema:
-          type: string
-        style: form
+        Validates token signature, expiration time and extracts token data.
+        See /jwt API for details.
+      operationId: parseCustomJwtToken
       requestBody:
         content:
           application/json:
@@ -503,7 +500,9 @@ paths:
       responses:
         default:
           content:
-            application/json: {}
+            application/json:
+              schema:
+                type: string
           description: Success
         "4XX":
           content:
@@ -517,19 +516,78 @@ paths:
               schema:
                 $ref: '#/components/schemas/IntegrationErr'
           description: Server error
-      summary: Validate signature
+      summary: Parse JWT token
       tags:
-      - signature
+      - custom-token
       x-order: 2
       x-content-type: application/json
       x-accepts: application/json
-  /api/signature/sign:
+  /api/token/jwt/public-key:
+    get:
+      description: |
+        RSA256 public key that can be used to verify access jwt tokens locally.
+      operationId: getPublicKey
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Success
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+          description: Client error
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+          description: Server error
+      summary: Get JWT public key
+      tags:
+      - token
+      x-order: 3
+      x-accepts: application/json
+  /api/tokens/custom/jwt/public-key:
+    get:
+      description: |
+        RSA256 public key generated from app-secret from config used for signature validation.
+        Can be used to verify jwt tokens locally.
+      operationId: getCustomJwtPublicKey
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Success
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+          description: Client error
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+          description: Server error
+      summary: Get JWT public key
+      tags:
+      - custom-token
+      x-order: 3
+      x-accepts: application/json
+  /api/tokens/custom/binary:
     post:
       description: |
-        Sign data using specified secret.
+        Creates binary token signed with specified secret.
         When secret is null - use app secret (specified in kntrl.json5) with SHA256withRSA algorithm.
-        Otherwise - use secret from query with HmacSHA256 algorithm.
-      operationId: sign
+        Otherwise - use secret from query and sign with HmacSHA256 algorithm.
+      operationId: createCustomBinaryToken
       parameters:
       - explode: true
         in: query
@@ -565,10 +623,55 @@ paths:
           description: Server error
       security:
       - access-token: []
-      summary: (Backend API) sign data
+      summary: (Backend API) Create binary token
       tags:
-      - signature
-      x-order: 3
+      - custom-token
+      x-order: 4
+      x-content-type: application/json
+      x-accepts: application/json
+  /api/tokens/custom/binary/parse:
+    post:
+      description: |
+        Validates token signature and extracts token data.
+        See /binary API for details.
+      operationId: parseCustomBinaryToken
+      parameters:
+      - explode: true
+        in: query
+        name: secret
+        required: false
+        schema:
+          type: string
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                type: string
+          description: Success
+        "4XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientErr'
+          description: Client error
+        "5XX":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationErr'
+          description: Server error
+      summary: Parse binary token
+      tags:
+      - custom-token
+      x-order: 5
       x-content-type: application/json
       x-accepts: application/json
   /api/session/auth/confirm:
@@ -729,7 +832,7 @@ paths:
           description: Server error
       security:
       - access-token: []
-      summary: (Admin API) Edit user
+      summary: (Backend API) Edit user
       tags:
       - user
       x-order: 9
@@ -783,21 +886,23 @@ components:
         - incorrectAnswers
         code: code
         loginId:
-          type: type
-          login: login
+          type: email
+          login: john@example.org
         strength: strength
         devMsg: devMsg
         waitTimeMinutes: 6
         tooLong: true
         missingSymbol: true
         matchesLogin:
-          type: type
-          login: login
+          type: email
+          login: john@example.org
         expiredAt: 7
+        incorrectRedirectUri: true
         missingUpperCase: true
         commonPassword: true
         missingNumber: true
         tooManyAnswers: true
+        incorrectSecret: true
         questionsNotFound:
         - questionsNotFound
         - questionsNotFound
@@ -817,81 +922,115 @@ components:
       properties:
         code:
           type: string
+          example: null
         devMsg:
           description: Message for developers.
           type: string
+          example: null
         msg:
           description: Localised message suitable for UI.
           type: string
           x-nullable: true
+          example: null
+        incorrectRedirectUri:
+          type: boolean
+          example: null
+        incorrectSecret:
+          type: boolean
+          example: null
         changedAt:
           format: int64
           type: integer
           x-nullable: true
+          example: null
         changedDaysAgo:
           format: int64
           type: integer
           x-nullable: true
+          example: null
         tooLong:
           type: boolean
+          example: null
         tooShort:
           type: boolean
+          example: null
         missingNumber:
           type: boolean
+          example: null
         missingSymbol:
           type: boolean
+          example: null
         missingUpperCase:
           type: boolean
+          example: null
         missingLowerCase:
           type: boolean
+          example: null
         commonPassword:
           type: boolean
+          example: null
         wasUsedBeforeAt:
           format: int64
           type: integer
           x-nullable: true
+          example: null
         matchesLogin:
           $ref: '#/components/schemas/LoginId'
         passwordsMismatch:
           type: boolean
+          example: null
         strength:
           type: string
           x-nullable: true
+          example: null
         wasUsedDaysAgo:
           format: int64
           type: integer
+          example: null
         incorrectAnswers:
           items:
             type: string
           type: array
+          example: null
         requiresMoreAnswers:
           type: boolean
+          example: null
         questionsNotFound:
           items:
             type: string
           type: array
+          example: null
         invalidAnswers:
           additionalProperties:
             $ref: '#/components/schemas/AnswerErr'
           type: object
+          example: null
         tooManyAnswers:
           type: boolean
+          example: null
         waitTimeMs:
           format: int32
           type: integer
           x-nullable: true
+          example: null
         waitTimeSeconds:
           format: int32
           type: integer
           x-nullable: true
+          example: null
         waitTimeMinutes:
           format: int32
           type: integer
           x-nullable: true
+          example: null
         expiredAt:
+          description: |-
+            Token expiration time. If null, token is incorrect (due to incorrect format or invalid signature).
+            May be caused by changed app-secret.
           format: int64
           type: integer
           x-nullable: true
+          example: null
         loginId:
           $ref: '#/components/schemas/LoginId'
       required:
@@ -904,19 +1043,23 @@ components:
       properties:
         code:
           type: string
+          example: null
         devMsg:
           description: Message for developers.
           type: string
+          example: null
         msg:
           description: Localised message suitable for UI.
           type: string
           x-nullable: true
+          example: null
       required:
       - code
       - devMsg
       type: object
       x-order: -2065236468-1
       x-super: '#/components/schemas/Unauthenticated'
+      example: null
     AnswerErr:
       example:
         tooShort: true
@@ -924,8 +1067,10 @@ components:
       properties:
         tooShort:
           type: boolean
+          example: null
         tooLong:
           type: boolean
+          example: null
       required:
       - tooLong
       - tooShort
@@ -936,150 +1081,200 @@ components:
       properties:
         code:
           type: string
+          example: null
         devMsg:
           description: Message for developers.
           type: string
+          example: null
         msg:
           description: Localised message suitable for UI.
           type: string
           x-nullable: true
+          example: null
       required:
       - code
       - devMsg
       type: object
       x-order: 2025349183-5
       x-super: '#/components/schemas/Err'
+      example: null
     AuthIsNotConfirmed:
       properties:
         code:
           type: string
+          example: null
         devMsg:
           description: Message for developers.
           type: string
+          example: null
         msg:
           description: Localised message suitable for UI.
           type: string
           x-nullable: true
+          example: null
       required:
       - code
       - devMsg
       type: object
       x-order: -270554383-3
       x-super: '#/components/schemas/ClientErr'
+      example: null
     AuthIsNotEnabled:
       properties:
         code:
           type: string
+          example: null
         devMsg:
           description: Message for developers.
           type: string
+          example: null
         msg:
           description: Localised message suitable for UI.
           type: string
           x-nullable: true
+          example: null
       required:
       - code
       - devMsg
       type: object
       x-order: -270554383-2
       x-super: '#/components/schemas/ClientErr'
+      example: null
     AuthRequiresAnother:
       properties:
         code:
           type: string
+          example: null
         devMsg:
           description: Message for developers.
           type: string
+          example: null
         msg:
           description: Localised message suitable for UI.
           type: string
           x-nullable: true
+          example: null
       required:
       - code
       - devMsg
       type: object
       x-order: -270554383-5
       x-super: '#/components/schemas/ClientErr'
+      example: null
     ClientErr:
       additionalProperties: true
       properties:
         code:
           type: string
+          example: null
         devMsg:
           description: Message for developers.
           type: string
+          example: null
         msg:
           description: Localised message suitable for UI.
           type: string
           x-nullable: true
+          example: null
+        incorrectRedirectUri:
+          type: boolean
+          example: null
+        incorrectSecret:
+          type: boolean
+          example: null
         changedAt:
           format: int64
           type: integer
           x-nullable: true
+          example: null
         changedDaysAgo:
           format: int64
           type: integer
           x-nullable: true
+          example: null
         tooLong:
           type: boolean
+          example: null
         tooShort:
           type: boolean
+          example: null
         missingNumber:
           type: boolean
+          example: null
         missingSymbol:
           type: boolean
+          example: null
         missingUpperCase:
           type: boolean
+          example: null
         missingLowerCase:
           type: boolean
+          example: null
         commonPassword:
           type: boolean
+          example: null
         wasUsedBeforeAt:
           format: int64
           type: integer
           x-nullable: true
+          example: null
         matchesLogin:
           $ref: '#/components/schemas/LoginId'
         passwordsMismatch:
           type: boolean
+          example: null
         strength:
           type: string
           x-nullable: true
+          example: null
         wasUsedDaysAgo:
           format: int64
           type: integer
+          example: null
         incorrectAnswers:
           items:
             type: string
           type: array
+          example: null
         requiresMoreAnswers:
           type: boolean
+          example: null
         questionsNotFound:
           items:
             type: string
           type: array
+          example: null
         invalidAnswers:
           additionalProperties:
             $ref: '#/components/schemas/AnswerErr'
           type: object
+          example: null
         tooManyAnswers:
           type: boolean
+          example: null
         waitTimeMs:
           format: int32
           type: integer
           x-nullable: true
+          example: null
         waitTimeSeconds:
           format: int32
           type: integer
           x-nullable: true
+          example: null
         waitTimeMinutes:
           format: int32
           type: integer
           x-nullable: true
+          example: null
         expiredAt:
+          description: |-
+            Token expiration time. If null, token is incorrect (due to incorrect format or invalid signature).
+            May be caused by changed app-secret.
           format: int64
           type: integer
           x-nullable: true
+          example: null
         loginId:
           $ref: '#/components/schemas/LoginId'
       required:
@@ -1089,74 +1284,112 @@ components:
       x-order: 2025349183-4
       x-sealed: false
       x-super: '#/components/schemas/Err'
+      example: null
     CodeIsExpired:
       properties:
         code:
           type: string
+          example: null
         devMsg:
           description: Message for developers.
           type: string
+          example: null
         msg:
           description: Localised message suitable for UI.
           type: string
           x-nullable: true
+          example: null
       required:
       - code
       - devMsg
       type: object
       x-order: -270554383-6
       x-super: '#/components/schemas/ClientErr'
+      example: null
     CodeIsIncorrect:
       properties:
         code:
           type: string
+          example: null
         devMsg:
           description: Message for developers.
           type: string
+          example: null
         msg:
           description: Localised message suitable for UI.
           type: string
           x-nullable: true
+          example: null
       required:
       - code
       - devMsg
       type: object
       x-order: -270554383-8
       x-super: '#/components/schemas/ClientErr'
+      example: null
     CodeTooManyAttempts:
       properties:
         code:
           type: string
+          example: null
         devMsg:
           description: Message for developers.
           type: string
+          example: null
         msg:
           description: Localised message suitable for UI.
           type: string
           x-nullable: true
+          example: null
       required:
       - code
       - devMsg
       type: object
       x-order: -270554383-7
       x-super: '#/components/schemas/ClientErr'
+      example: null
     EmailIsIncorrect:
       properties:
         code:
           type: string
+          example: null
         devMsg:
           description: Message for developers.
           type: string
+          example: null
         msg:
           description: Localised message suitable for UI.
           type: string
           x-nullable: true
+          example: null
       required:
       - code
       - devMsg
       type: object
       x-order: -1279700867-5
       x-super: '#/components/schemas/ClientErr'
+      example: null
+    IncorrectTotpCode:
+      properties:
+        code:
+          type: string
+          example: null
+        devMsg:
+          description: Message for developers.
+          type: string
+          example: null
+        msg:
+          description: Localised message suitable for UI.
+          type: string
+          x-nullable: true
+          example: null
+      required:
+      - code
+      - devMsg
+      type: object
+      x-order: -1279700867-10
+      x-super: '#/components/schemas/ClientErr'
+      example: null
     Instant:
       format: int64
       type: integer
@@ -1165,13 +1398,16 @@ components:
       properties:
         code:
           type: string
+          example: null
         devMsg:
           description: Message for developers.
           type: string
+          example: null
         msg:
           description: Localised message suitable for UI.
           type: string
           x-nullable: true
+          example: null
       required:
       - code
       - devMsg
@@ -1179,33 +1415,42 @@ components:
       x-order: 2025349183-3
       x-sealed: false
       x-super: '#/components/schemas/Err'
+      example: null
     IpNew:
       properties:
         code:
           type: string
+          example: null
         devMsg:
           description: Message for developers.
           type: string
+          example: null
         msg:
           description: Localised message suitable for UI.
           type: string
           x-nullable: true
+          example: null
       required:
       - code
       - devMsg
       type: object
       x-order: -1279700867-6
       x-super: '#/components/schemas/ClientErr'
+      example: null
     LoginId:
       example:
-        type: type
-        login: login
+        type: email
+        login: john@example.org
       properties:
         type:
-          description: Type of login
+          description: |
+            Type of login
+          example: email
           type: string
         login:
-          description: "User unique identifier, email, username, etc."
+          description: |
+            User unique identifier, email, username, etc. User can use it to sign-in.
+          example: john@example.org
           type: string
       required:
       - login
@@ -1216,83 +1461,136 @@ components:
       properties:
         code:
           type: string
+          example: null
         devMsg:
           description: Message for developers.
           type: string
+          example: null
         msg:
           description: Localised message suitable for UI.
           type: string
           x-nullable: true
+          example: null
       required:
       - code
       - devMsg
       type: object
       x-order: -270554383-4
       x-super: '#/components/schemas/IntegrationErr'
-    PasswordIsIncorrect:
+      example: null
+    OauthAppErr:
       properties:
         code:
           type: string
+          example: null
         devMsg:
           description: Message for developers.
           type: string
+          example: null
         msg:
           description: Localised message suitable for UI.
           type: string
           x-nullable: true
+          example: null
+        incorrectRedirectUri:
+          type: boolean
+          example: null
+        incorrectSecret:
+          type: boolean
+          example: null
+      required:
+      - code
+      - devMsg
+      - incorrectRedirectUri
+      - incorrectSecret
+      type: object
+      x-order: -1279700867-11
+      x-super: '#/components/schemas/ClientErr'
+      example: null
+    PasswordIsIncorrect:
+      properties:
+        code:
+          type: string
+          example: null
+        devMsg:
+          description: Message for developers.
+          type: string
+          example: null
+        msg:
+          description: Localised message suitable for UI.
+          type: string
+          x-nullable: true
+          example: null
         changedAt:
           format: int64
           type: integer
           x-nullable: true
+          example: null
         changedDaysAgo:
           format: int64
           type: integer
           x-nullable: true
+          example: null
       required:
       - code
       - devMsg
       type: object
       x-order: -1279700867-3
       x-super: '#/components/schemas/ClientErr'
+      example: null
     PasswordIsInvalid:
       properties:
         code:
           type: string
+          example: null
         devMsg:
           description: Message for developers.
           type: string
+          example: null
         msg:
           description: Localised message suitable for UI.
           type: string
           x-nullable: true
+          example: null
         tooLong:
           type: boolean
+          example: null
         tooShort:
           type: boolean
+          example: null
         missingNumber:
           type: boolean
+          example: null
         missingSymbol:
           type: boolean
+          example: null
         missingUpperCase:
           type: boolean
+          example: null
         missingLowerCase:
           type: boolean
+          example: null
         commonPassword:
           type: boolean
+          example: null
         wasUsedBeforeAt:
           format: int64
           type: integer
           x-nullable: true
+          example: null
         matchesLogin:
           $ref: '#/components/schemas/LoginId'
         passwordsMismatch:
           type: boolean
+          example: null
         strength:
           type: string
           x-nullable: true
+          example: null
         wasUsedDaysAgo:
           format: int64
           type: integer
+          example: null
       required:
       - code
       - commonPassword
@@ -1307,62 +1605,77 @@ components:
       type: object
       x-order: -1279700867-4
       x-super: '#/components/schemas/ClientErr'
+      example: null
     PluginClientErr:
       additionalProperties: true
       properties:
         code:
           type: string
+          example: null
         devMsg:
           description: Message for developers.
           type: string
+          example: null
         msg:
           description: Localised message suitable for UI.
           type: string
           x-nullable: true
+          example: null
       required:
       - code
       - devMsg
       type: object
       x-order: -1279700867-2
       x-super: '#/components/schemas/ClientErr'
+      example: null
     PluginErr:
       properties:
         code:
           type: string
+          example: null
         devMsg:
           description: Message for developers.
           type: string
+          example: null
         msg:
           description: Localised message suitable for UI.
           type: string
           x-nullable: true
+          example: null
       required:
       - code
       - devMsg
       type: object
       x-order: -1279700867-1
       x-super: '#/components/schemas/ServerErr'
+      example: null
     QuestionsAnswersIncorrect:
       properties:
         code:
           type: string
+          example: null
         devMsg:
           description: Message for developers.
           type: string
+          example: null
         msg:
           description: Localised message suitable for UI.
           type: string
           x-nullable: true
+          example: null
         incorrectAnswers:
           items:
             type: string
           type: array
+          example: null
         requiresMoreAnswers:
           type: boolean
+          example: null
         questionsNotFound:
           items:
             type: string
           type: array
+          example: null
       required:
       - code
       - devMsg
@@ -1372,23 +1685,29 @@ components:
       type: object
       x-order: -1279700867-7
       x-super: '#/components/schemas/ClientErr'
+      example: null
     QuestionsAnswersInvalid:
       properties:
         code:
           type: string
+          example: null
         devMsg:
           description: Message for developers.
           type: string
+          example: null
         msg:
           description: Localised message suitable for UI.
           type: string
           x-nullable: true
+          example: null
         invalidAnswers:
           additionalProperties:
             $ref: '#/components/schemas/AnswerErr'
           type: object
+          example: null
         tooManyAnswers:
           type: boolean
+          example: null
       required:
       - code
       - devMsg
@@ -1397,18 +1716,22 @@ components:
       type: object
       x-order: -1279700867-8
       x-super: '#/components/schemas/ClientErr'
+      example: null
     ServerErr:
       additionalProperties: true
       properties:
         code:
           type: string
+          example: null
         devMsg:
           description: Message for developers.
           type: string
+          example: null
         msg:
           description: Localised message suitable for UI.
           type: string
           x-nullable: true
+          example: null
       required:
       - code
       - devMsg
@@ -1416,106 +1739,116 @@ components:
       x-order: 2025349183-2
       x-sealed: false
       x-super: '#/components/schemas/Err'
+      example: null
     SessionExpired:
       properties:
         code:
           type: string
+          example: null
         devMsg:
           description: Message for developers.
           type: string
+          example: null
         msg:
           description: Localised message suitable for UI.
           type: string
           x-nullable: true
+          example: null
       required:
       - code
       - devMsg
       type: object
       x-order: -2065236468-0
       x-super: '#/components/schemas/Unauthenticated'
-    SignatureIsIncorrect:
-      properties:
-        code:
-          type: string
-        devMsg:
-          description: Message for developers.
-          type: string
-        msg:
-          description: Localised message suitable for UI.
-          type: string
-          x-nullable: true
-      required:
-      - code
-      - devMsg
-      type: object
-      x-order: -2065236468-3
-      x-super: '#/components/schemas/ClientErr'
+      example: null
     TokenExpired:
       properties:
         code:
           type: string
+          example: null
         devMsg:
           description: Message for developers.
           type: string
+          example: null
         msg:
           description: Localised message suitable for UI.
           type: string
           x-nullable: true
+          example: null
         expiredAt:
+          description: |-
+            Token expiration time. If null, token is incorrect (due to incorrect format or invalid signature).
+            May be caused by changed app-secret.
           format: int64
           type: integer
           x-nullable: true
+          example: null
       required:
       - code
       - devMsg
       type: object
       x-order: -270554383-11
       x-super: '#/components/schemas/Unauthenticated'
+      example: null
     TooManyReqs:
       properties:
         code:
           type: string
+          example: null
         devMsg:
           description: Message for developers.
           type: string
+          example: null
         msg:
           description: Localised message suitable for UI.
           type: string
           x-nullable: true
+          example: null
         waitTimeMs:
           format: int32
           type: integer
           x-nullable: true
+          example: null
         waitTimeSeconds:
           format: int32
           type: integer
           x-nullable: true
+          example: null
         waitTimeMinutes:
           format: int32
           type: integer
           x-nullable: true
+          example: null
       required:
       - code
       - devMsg
       type: object
       x-order: -270554383-12
       x-super: '#/components/schemas/ClientErr'
+      example: null
     Unauthenticated:
       additionalProperties: true
       properties:
         code:
           type: string
+          example: null
         devMsg:
           description: Message for developers.
           type: string
+          example: null
         msg:
           description: Localised message suitable for UI.
           type: string
           x-nullable: true
+          example: null
         expiredAt:
+          description: |-
+            Token expiration time. If null, token is incorrect (due to incorrect format or invalid signature).
+            May be caused by changed app-secret.
           format: int64
           type: integer
           x-nullable: true
+          example: null
       required:
       - code
       - devMsg
@@ -1523,34 +1856,42 @@ components:
       x-order: -270554383-9
       x-sealed: false
       x-super: '#/components/schemas/ClientErr'
+      example: null
     UserLoginAlreadyTaken:
       properties:
         code:
           type: string
+          example: null
         devMsg:
           description: Message for developers.
           type: string
+          example: null
         msg:
           description: Localised message suitable for UI.
           type: string
           x-nullable: true
+          example: null
       required:
       - code
       - devMsg
       type: object
       x-order: -270554383-1
       x-super: '#/components/schemas/ClientErr'
+      example: null
     UserLoginIsInvalid:
       properties:
         code:
           type: string
+          example: null
         devMsg:
           description: Message for developers.
           type: string
+          example: null
         msg:
           description: Localised message suitable for UI.
           type: string
           x-nullable: true
+          example: null
         loginId:
           $ref: '#/components/schemas/LoginId'
       required:
@@ -1560,26 +1901,52 @@ components:
       type: object
       x-order: -270554383-0
       x-super: '#/components/schemas/ClientErr'
+      example: null
     UserNotFound:
       properties:
         code:
           type: string
+          example: null
         devMsg:
           description: Message for developers.
           type: string
+          example: null
         msg:
           description: Localised message suitable for UI.
           type: string
           x-nullable: true
+          example: null
       required:
       - code
       - devMsg
       type: object
       x-order: -2065236468-2
       x-super: '#/components/schemas/Unauthenticated'
+      example: null
     AccessToken:
       type: string
       x-order: -2026363309-3
+      example: null
+    AuthorizationCodeSessionData:
+      additionalProperties: true
+      properties:
+        agent:
+          items:
+            $ref: '#/components/schemas/LoginId'
+          type: array
+          example: null
+        scopes:
+          items:
+            type: string
+          type: array
+          example: null
+      required:
+      - agent
+      - scopes
+      type: object
+      x-order: -1836982696-7
+      x-super: '#/components/schemas/SessionData'
+      example: null
     CodeVerifier:
       example:
         attemptsLeft: 1
@@ -1591,20 +1958,26 @@ components:
       properties:
         id:
           type: string
+          example: null
         validUntil:
           format: int64
           type: integer
+          example: null
         usedAttempts:
           format: int32
           type: integer
+          example: null
         attemptsLeft:
           format: int32
           type: integer
+          example: null
         sentAt:
           format: int64
           type: integer
+          example: null
         hasAttemptsLeft:
           type: boolean
+          example: null
       required:
       - attemptsLeft
       - sentAt
@@ -1621,14 +1994,18 @@ components:
       properties:
         mobile:
           type: boolean
+          example: null
         type:
           type: string
           x-nullable: true
+          example: null
         browser:
           type: string
           x-nullable: true
+          example: null
         userAgent:
           type: string
+          example: null
       required:
       - mobile
       - userAgent
@@ -1643,11 +2020,12 @@ components:
       properties:
         factor:
           type: string
+          example: null
         supportedAuths:
           items:
             type: string
           type: array
-          uniqueItems: true
+          example: null
       required:
       - factor
       - supportedAuths
@@ -1656,11 +2034,22 @@ components:
     RefreshToken:
       type: string
       x-order: -2026363309-5
+      example: null
     RefreshTokenRes:
       example:
         session:
           authenticated: true
           systemAccess: true
+          data:
+            key:
+              agent:
+              - type: email
+                login: john@example.org
+              - type: email
+                login: john@example.org
+              scopes:
+              - scopes
+              - scopes
           signedInAt: 5
           userId: userId
           expiresAt: 2
@@ -1680,14 +2069,11 @@ components:
           newUser: true
           refreshedAt: 7
           id: id
-          scopes:
-          - scopes
-          - scopes
           identifiedBy:
-          - type: type
-            login: login
-          - type: type
-            login: login
+          - type: email
+            login: john@example.org
+          - type: email
+            login: john@example.org
           unconfirmedAuths:
             key:
               sentCodes:
@@ -1722,10 +2108,40 @@ components:
       - tokens
       type: object
       x-order: 68856176-2
+    ScopesSessionData:
+      additionalProperties: true
+      properties:
+        agent:
+          items:
+            $ref: '#/components/schemas/LoginId'
+          type: array
+          x-nullable: true
+          example: null
+        scopes:
+          items:
+            type: string
+          type: array
+          example: null
+      required:
+      - scopes
+      type: object
+      x-order: 2741601-4
+      x-super: '#/components/schemas/SessionData'
+      example: null
     Session:
       example:
         authenticated: true
         systemAccess: true
+        data:
+          key:
+            agent:
+            - type: email
+              login: john@example.org
+            - type: email
+              login: john@example.org
+            scopes:
+            - scopes
+            - scopes
         signedInAt: 5
         userId: userId
         expiresAt: 2
@@ -1745,14 +2161,11 @@ components:
         newUser: true
         refreshedAt: 7
         id: id
-        scopes:
-        - scopes
-        - scopes
         identifiedBy:
-        - type: type
-          login: login
-        - type: type
-          login: login
+        - type: email
+          login: john@example.org
+        - type: email
+          login: john@example.org
         unconfirmedAuths:
           key:
             sentCodes:
@@ -1776,17 +2189,21 @@ components:
       properties:
         id:
           type: string
+          example: null
         entry:
           description: Entry that authenticates this session
           type: string
+          example: null
         identifiedBy:
           description: Login used to identify this user
           items:
             $ref: '#/components/schemas/LoginId'
           type: array
+          example: null
         userId:
           type: string
           x-nullable: true
+          example: null
         authenticatedBy:
           additionalProperties:
             type: string
@@ -1794,45 +2211,54 @@ components:
           description: |
             Authenticator used for factors
           type: object
+          example: null
         unconfirmedAuths:
           additionalProperties:
             $ref: '#/components/schemas/UnconfirmedAuth'
           description: |
             Auths that waiting for confirmation
           type: object
+          example: null
         nextFactors:
           description: List of factors needed to authenticate this session
           items:
             $ref: '#/components/schemas/NextFactor'
           type: array
+          example: null
         signedInAt:
           format: int64
           type: integer
+          example: null
         expiresAt:
           format: int64
           type: integer
+          example: null
         refreshedAt:
           format: int64
           type: integer
+          example: null
         newUser:
           type: boolean
-        scopes:
-          description: App services list that this session is allowed to access. Null
-            if allowed to access any scope
-          items:
-            type: string
-          type: array
-          x-nullable: true
+          example: null
         device:
           $ref: '#/components/schemas/Device'
         systemAccess:
           type: boolean
+          example: null
+        data:
+          additionalProperties:
+            $ref: '#/components/schemas/Session_data_value'
+          type: object
+          example: null
         expired:
           type: boolean
+          example: null
         authenticated:
           type: boolean
+          example: null
       required:
       - authenticatedBy
+      - data
       - device
       - entry
       - expiresAt
@@ -1846,6 +2272,11 @@ components:
       - unconfirmedAuths
       type: object
       x-order: 2013237977-0
+    SessionData:
+      additionalProperties: true
+      type: object
+      x-order: -255987249-0
+      example: null
     Tokens:
       example:
         access: access
@@ -1856,13 +2287,16 @@ components:
           description: Access token for authentication
           type: string
           x-super: '#/components/schemas/AccessToken'
+          example: null
         refresh:
           description: Refresh token for obtaining new access token
           type: string
           x-super: '#/components/schemas/RefreshToken'
+          example: null
         accessTokenExpiresAt:
           format: int64
           type: integer
+          example: null
       required:
       - access
       - refresh
@@ -1888,6 +2322,7 @@ components:
           items:
             $ref: '#/components/schemas/CodeVerifier'
           type: array
+          example: null
       type: object
       x-order: 320227009-0
     RefreshTokenReq:
@@ -1897,6 +2332,7 @@ components:
         refreshToken:
           type: string
           x-order: -2026363309-5
+          example: null
       required:
       - refreshToken
       type: object
@@ -1908,8 +2344,10 @@ components:
       properties:
         auth:
           type: string
+          example: null
         authType:
           type: string
+          example: null
       required:
       - auth
       - authType
@@ -1932,14 +2370,17 @@ components:
           items:
             type: string
           type: array
+          example: null
         loginRequirements:
           additionalProperties:
             type: string
           type: object
+          example: null
         auths:
           items:
             $ref: '#/components/schemas/PublicCfgAuth'
           type: array
+          example: null
       required:
       - auths
       - loginRequirements
@@ -1995,11 +2436,13 @@ components:
           additionalProperties:
             $ref: '#/components/schemas/HealthStatusRes'
           type: object
+          example: null
         status:
           $ref: '#/components/schemas/HealthStatus'
         msg:
           type: string
           x-nullable: true
+          example: null
       required:
       - auth
       - db
@@ -2022,6 +2465,7 @@ components:
         msg:
           type: string
           x-nullable: true
+          example: null
       required:
       - status
       type: object
@@ -2031,6 +2475,9 @@ components:
         public:
           answersSavedAt:
             key: 1
+          redirectUris:
+          - redirectUris
+          - redirectUris
           email: email
           updatedAt: 6
         login: login
@@ -2043,6 +2490,7 @@ components:
             facebook account id, etc.
           type: string
           x-nullable: true
+          example: null
       required:
       - public
       type: object
@@ -2064,21 +2512,23 @@ components:
           - incorrectAnswers
           code: code
           loginId:
-            type: type
-            login: login
+            type: email
+            login: john@example.org
           strength: strength
           devMsg: devMsg
           waitTimeMinutes: 6
           tooLong: true
           missingSymbol: true
           matchesLogin:
-            type: type
-            login: login
+            type: email
+            login: john@example.org
           expiredAt: 7
+          incorrectRedirectUri: true
           missingUpperCase: true
           commonPassword: true
           missingNumber: true
           tooManyAnswers: true
+          incorrectSecret: true
           questionsNotFound:
           - questionsNotFound
           - questionsNotFound
@@ -2097,16 +2547,25 @@ components:
           changedDaysAgo: 4
         resData:
           emailSentTo: emailSentTo
-          password: password
+          clientId: clientId
           answersSavedAt:
             key: 1
           strength: strength
           correct:
             HOMETOWN: true
             MOTHER_NAME: false
+          otpUrl: otpUrl
+          authorizationCode: authorizationCode
+          secret: secret
+          redirectUris:
+          - redirectUris
+          - redirectUris
+          password: password
           ipEncoded: ipEncoded
+          clientSecret: clientSecret
           extractedPublicData:
             key: ""
+          otpUrlQrCode: otpUrlQrCode
           extractedLogin: extractedLogin
         status: OK
       properties:
@@ -2129,22 +2588,30 @@ components:
       x-sealed: true
     AuthPrivateData:
       additionalProperties: true
+      description: Data available only for authenticator.
       type: object
       x-order: 332570507-6
+      example: null
     AuthPublicData:
       additionalProperties: true
+      description: Data that are available for API.
       type: object
       x-order: 332570507-4
+      example: null
     AuthResData:
       additionalProperties: true
       type: object
       x-order: -1249106462-10
+      example: null
     AuthUserCfg:
       example:
         data:
           public:
             answersSavedAt:
               key: 1
+            redirectUris:
+            - redirectUris
+            - redirectUris
             email: email
             updatedAt: 6
           login: login
@@ -2160,6 +2627,9 @@ components:
             public:
               answersSavedAt:
                 key: 1
+              redirectUris:
+              - redirectUris
+              - redirectUris
               email: email
               updatedAt: 6
             login: login
@@ -2174,19 +2644,23 @@ components:
             public:
               answersSavedAt:
                 key: 1
+              redirectUris:
+              - redirectUris
+              - redirectUris
               email: email
               updatedAt: 6
             login: login
         confirmed: true
       properties:
         data:
-          $ref: '#/components/schemas/AuthData'
+          $ref: '#/components/schemas/AuthUserCfg_data'
         sentCodes:
           description: |
             List of auths that wait for confirmation.
           items:
             $ref: '#/components/schemas/UnconfirmedAuthData'
           type: array
+          example: null
         confirmed:
           type: boolean
       type: object
@@ -2196,6 +2670,16 @@ components:
         session:
           authenticated: true
           systemAccess: true
+          data:
+            key:
+              agent:
+              - type: email
+                login: john@example.org
+              - type: email
+                login: john@example.org
+              scopes:
+              - scopes
+              - scopes
           signedInAt: 5
           userId: userId
           expiresAt: 2
@@ -2215,14 +2699,11 @@ components:
           newUser: true
           refreshedAt: 7
           id: id
-          scopes:
-          - scopes
-          - scopes
           identifiedBy:
-          - type: type
-            login: login
-          - type: type
-            login: login
+          - type: email
+            login: john@example.org
+          - type: email
+            login: john@example.org
           unconfirmedAuths:
             key:
               sentCodes:
@@ -2257,6 +2738,9 @@ components:
                 public:
                   answersSavedAt:
                     key: 1
+                  redirectUris:
+                  - redirectUris
+                  - redirectUris
                   email: email
                   updatedAt: 6
                 login: login
@@ -2272,6 +2756,9 @@ components:
                   public:
                     answersSavedAt:
                       key: 1
+                    redirectUris:
+                    - redirectUris
+                    - redirectUris
                     email: email
                     updatedAt: 6
                   login: login
@@ -2286,19 +2773,22 @@ components:
                   public:
                     answersSavedAt:
                       key: 1
+                    redirectUris:
+                    - redirectUris
+                    - redirectUris
                     email: email
                     updatedAt: 6
                   login: login
               confirmed: true
-          id: 2c24704f-198a-4bc4-9718-306ccc97bbdc
+          id: fewfvc23f
           logins:
           - unconfirmedLogin: unconfirmedLogin
-            type: type
-            login: login
+            type: email
+            login: john@example.org
             confirmed: true
           - unconfirmedLogin: unconfirmedLogin
-            type: type
-            login: login
+            type: email
+            login: john@example.org
             confirmed: true
           factors:
           - factors
@@ -2321,21 +2811,23 @@ components:
               - incorrectAnswers
               code: code
               loginId:
-                type: type
-                login: login
+                type: email
+                login: john@example.org
               strength: strength
               devMsg: devMsg
               waitTimeMinutes: 6
               tooLong: true
               missingSymbol: true
               matchesLogin:
-                type: type
-                login: login
+                type: email
+                login: john@example.org
               expiredAt: 7
+              incorrectRedirectUri: true
               missingUpperCase: true
               commonPassword: true
               missingNumber: true
               tooManyAnswers: true
+              incorrectSecret: true
               questionsNotFound:
               - questionsNotFound
               - questionsNotFound
@@ -2354,16 +2846,25 @@ components:
               changedDaysAgo: 4
             resData:
               emailSentTo: emailSentTo
-              password: password
+              clientId: clientId
               answersSavedAt:
                 key: 1
               strength: strength
               correct:
                 HOMETOWN: true
                 MOTHER_NAME: false
+              otpUrl: otpUrl
+              authorizationCode: authorizationCode
+              secret: secret
+              redirectUris:
+              - redirectUris
+              - redirectUris
+              password: password
               ipEncoded: ipEncoded
+              clientSecret: clientSecret
               extractedPublicData:
                 key: ""
+              otpUrlQrCode: otpUrlQrCode
               extractedLogin: extractedLogin
             status: OK
       properties:
@@ -2377,10 +2878,23 @@ components:
           additionalProperties:
             $ref: '#/components/schemas/AuthExecRes'
           type: object
+          example: null
       required:
       - authRes
       type: object
       x-order: 2094520596-3
+    AuthorizationCodeUpdateResData:
+      additionalProperties: true
+      properties:
+        authorizationCode:
+          type: string
+          example: null
+      required:
+      - authorizationCode
+      type: object
+      x-order: -1836982696-5
+      x-super: '#/components/schemas/AuthResData'
+      example: null
     Code:
       example:
         attemptsLeft: 9
@@ -2392,20 +2906,26 @@ components:
       properties:
         id:
           type: string
+          example: null
         validUntil:
           format: int64
           type: integer
+          example: null
         usedAttempts:
           format: int32
           type: integer
+          example: null
         attemptsLeft:
           format: int32
           type: integer
+          example: null
         sentAt:
           format: int64
           type: integer
+          example: null
         hasAttemptsLeft:
           type: boolean
+          example: null
       required:
       - attemptsLeft
       - sentAt
@@ -2420,25 +2940,31 @@ components:
           description: "Shows user email, that was used to send a code. Email will\
             \ be partially hidden."
           type: string
+          example: null
       type: object
       x-order: 1021533909-5
       x-super: '#/components/schemas/AuthResData'
+      example: null
     EmailPublicData:
       additionalProperties: true
+      description: Data that are available for API.
       properties:
         email:
           description: User email.
           type: string
+          example: null
         updatedAt:
           description: Last time when email was changed.
           format: int64
           type: integer
+          example: null
       required:
       - email
       - updatedAt
       type: object
       x-order: 1021533909-2
       x-super: '#/components/schemas/AuthPublicData'
+      example: null
     ErrAuthExecRes:
       properties:
         status:
@@ -2457,45 +2983,58 @@ components:
       type: object
       x-order: -73723375-4
       x-super: '#/components/schemas/AuthExecRes'
+      example: null
     IpAuthResData:
       additionalProperties: true
       properties:
         ipEncoded:
           type: string
+          example: null
       required:
       - ipEncoded
       type: object
       x-order: 2116983897-2
       x-super: '#/components/schemas/AuthResData'
+      example: null
     IpPrivateData:
       additionalProperties: true
+      description: Data available only for authenticator.
       properties:
         encodedIps:
           additionalProperties:
             format: int64
             type: integer
           type: object
+          example: null
       type: object
       x-order: 2116983897-1
       x-super: '#/components/schemas/AuthPrivateData'
+      example: null
     Login:
       example:
         unconfirmedLogin: unconfirmedLogin
-        type: type
-        login: login
+        type: email
+        login: john@example.org
         confirmed: true
       properties:
         type:
-          description: Type of login
+          description: |
+            Type of login
+          example: email
           type: string
         login:
-          description: "User unique identifier, email, username, etc."
+          description: |
+            User unique identifier, email, username, etc. User can use it to sign-in.
+          example: john@example.org
           type: string
         unconfirmedLogin:
+          description: Login that waits for confirmation.
           type: string
           x-nullable: true
+          example: null
         confirmed:
           type: boolean
+          example: null
       required:
       - login
       - type
@@ -2503,33 +3042,93 @@ components:
       x-order: -2010674509-0
     NoAuthPrivateData:
       additionalProperties: true
+      description: Data available only for authenticator.
       type: object
       x-order: 332570507-7
       x-super: '#/components/schemas/AuthPrivateData'
+      example: null
     NoAuthPublicData:
       additionalProperties: true
+      description: Data that are available for API.
       type: object
       x-order: 332570507-5
       x-super: '#/components/schemas/AuthPublicData'
+      example: null
+    OAuthAppPrivateData:
+      additionalProperties: true
+      description: Data available only for authenticator.
+      properties:
+        secretHash:
+          type: string
+          example: null
+      required:
+      - secretHash
+      type: object
+      x-order: -1247144074-3
+      x-super: '#/components/schemas/AuthPrivateData'
+      example: null
+    OAuthAppPublicData:
+      additionalProperties: true
+      description: Data that are available for API.
+      properties:
+        redirectUris:
+          items:
+            type: string
+          type: array
+          x-nullable: true
+          example: null
+      type: object
+      x-order: -1247144074-2
+      x-super: '#/components/schemas/AuthPublicData'
+      example: null
+    OAuthAppUpdateResData:
+      additionalProperties: true
+      properties:
+        clientId:
+          type: string
+          example: null
+        redirectUris:
+          items:
+            type: string
+          type: array
+          x-nullable: true
+          example: null
+        clientSecret:
+          description: Provided only when generated first time or generated again.
+          type: string
+          x-nullable: true
+          example: null
+      required:
+      - clientId
+      type: object
+      x-order: -1247144074-6
+      x-super: '#/components/schemas/AuthResData'
+      example: null
     OAuthPublicData:
       additionalProperties: true
+      description: Data that are available for API.
       type: object
       x-order: -893636857-2
+      example: null
     OAuthResData:
       additionalProperties: true
       properties:
         extractedLogin:
           type: string
+          example: null
         extractedPublicData:
           additionalProperties: true
+          description: Data that are available for API.
           type: object
           x-order: -893636857-2
+          example: null
       required:
       - extractedLogin
       - extractedPublicData
       type: object
       x-order: -893636857-5
       x-super: '#/components/schemas/AuthResData'
+      example: null
     OkAuthExecRes:
       properties:
         status:
@@ -2547,44 +3146,55 @@ components:
       type: object
       x-order: -73723375-3
       x-super: '#/components/schemas/AuthExecRes'
+      example: null
     Password:
       properties:
         hash:
           type: string
+          example: null
         createdAt:
           format: int64
           type: integer
+          example: null
       required:
       - createdAt
       - hash
       type: object
       x-order: 378192899-3
+      example: null
     PasswordHistory:
       additionalProperties: true
+      description: Data available only for authenticator.
       properties:
         passwords:
           items:
             $ref: '#/components/schemas/Password'
           type: array
+          example: null
         changedAt:
           format: int64
           type: integer
           x-nullable: true
+          example: null
       type: object
       x-order: 378192899-0
       x-super: '#/components/schemas/AuthPrivateData'
+      example: null
     PasswordPublicData:
       additionalProperties: true
+      description: Data that are available for API.
       properties:
         updatedAt:
           description: Time when password was updated last time.
           format: int64
           type: integer
+          example: null
       required:
       - updatedAt
       type: object
       x-order: -266447761-2
       x-super: '#/components/schemas/AuthPublicData'
+      example: null
     PasswordUpdateResData:
       additionalProperties: true
       properties:
@@ -2592,16 +3202,19 @@ components:
           description: If password was generated by app this field contains generated
             password.
           type: string
+          example: null
         strength:
           description: Calculated strength of password. Null means that all checks
             failed.
           type: string
           x-nullable: true
+          example: null
       required:
       - password
       type: object
       x-order: -266447761-5
       x-super: '#/components/schemas/AuthResData'
+      example: null
     QuestionsAuthResData:
       additionalProperties: true
       properties:
@@ -2620,18 +3233,23 @@ components:
       type: object
       x-order: -213229069-4
       x-super: '#/components/schemas/AuthResData'
+      example: null
     QuestionsPrivateData:
       additionalProperties: true
+      description: Data available only for authenticator.
       properties:
         answers:
           additionalProperties:
             type: string
           type: object
+          example: null
       type: object
       x-order: -213229069-2
       x-super: '#/components/schemas/AuthPrivateData'
+      example: null
     QuestionsPublicData:
       additionalProperties: true
+      description: Data that are available for API.
       properties:
         answersSavedAt:
           additionalProperties:
@@ -2639,9 +3257,11 @@ components:
             type: integer
             x-additionalPropertiesName: question id
           type: object
+          example: null
       type: object
       x-order: -213229069-1
       x-super: '#/components/schemas/AuthPublicData'
+      example: null
     QuestionsUpdateResData:
       additionalProperties: true
       properties:
@@ -2653,11 +3273,13 @@ components:
           description: |
             Date of last update
           type: object
+          example: null
       required:
       - answersSavedAt
       type: object
       x-order: -213229069-6
       x-super: '#/components/schemas/AuthResData'
+      example: null
     SkippedAuthExecRes:
       properties:
         status:
@@ -2673,6 +3295,44 @@ components:
       type: object
       x-order: -73723375-5
       x-super: '#/components/schemas/AuthExecRes'
+      example: null
+    TotpPrivateDate:
+      additionalProperties: true
+      description: Data available only for authenticator.
+      properties:
+        secret:
+          type: string
+          example: null
+      required:
+      - secret
+      type: object
+      x-order: 820555017-2
+      x-super: '#/components/schemas/AuthPrivateData'
+      example: null
+    TotpUpdateResData:
+      additionalProperties: true
+      properties:
+        secret:
+          description: Base32 SHA-1 key.
+          type: string
+          example: null
+        otpUrl:
+          type: string
+          example: null
+        otpUrlQrCode:
+          description: |-
+            QR code URL. Use it like this:
+            `<img style="image-rendering: pixelated;" width="200" src="<otpUrlQrCode>"/>`
+          type: string
+          example: null
+      required:
+      - otpUrl
+      - otpUrlQrCode
+      - secret
+      type: object
+      x-order: 820555017-5
+      x-super: '#/components/schemas/AuthResData'
+      example: null
     UnconfirmedAuthData:
       example:
         code:
@@ -2686,6 +3346,9 @@ components:
           public:
             answersSavedAt:
               key: 1
+            redirectUris:
+            - redirectUris
+            - redirectUris
             email: email
             updatedAt: 6
           login: login
@@ -2710,6 +3373,9 @@ components:
               public:
                 answersSavedAt:
                   key: 1
+                redirectUris:
+                - redirectUris
+                - redirectUris
                 email: email
                 updatedAt: 6
               login: login
@@ -2725,6 +3391,9 @@ components:
                 public:
                   answersSavedAt:
                     key: 1
+                  redirectUris:
+                  - redirectUris
+                  - redirectUris
                   email: email
                   updatedAt: 6
                 login: login
@@ -2739,19 +3408,22 @@ components:
                 public:
                   answersSavedAt:
                     key: 1
+                  redirectUris:
+                  - redirectUris
+                  - redirectUris
                   email: email
                   updatedAt: 6
                 login: login
             confirmed: true
-        id: 2c24704f-198a-4bc4-9718-306ccc97bbdc
+        id: fewfvc23f
         logins:
         - unconfirmedLogin: unconfirmedLogin
-          type: type
-          login: login
+          type: email
+          login: john@example.org
           confirmed: true
         - unconfirmedLogin: unconfirmedLogin
-          type: type
-          login: login
+          type: email
+          login: john@example.org
           confirmed: true
         factors:
         - factors
@@ -2760,38 +3432,45 @@ components:
       properties:
         id:
           description: |
-            Generated user uuid
-          example: 2c24704f-198a-4bc4-9718-306ccc97bbdc
+            Generated user id
+          example: fewfvc23f
           type: string
         logins:
           items:
             $ref: '#/components/schemas/Login'
           type: array
+          example: null
         auths:
           additionalProperties:
             $ref: '#/components/schemas/AuthUserCfg'
           description: |
-            Public data of confirmed auths and sent codes for unconfirmed auths.
+            Data of confirmed auths and sent codes for unconfirmed auths.
           type: object
+          example: null
         factors:
           description: Enabled factors
           items:
             type: string
           type: array
-          uniqueItems: true
+          example: null
         signedUpAt:
           format: int64
           type: integer
+          example: null
         updatedAt:
           format: int64
           type: integer
+          example: null
         new:
           default: false
           type: boolean
+          example: null
         systemAccess:
           default: false
-          description: Allows to edit any user in the app.
+          description: Allows to access backend-only APIs. Use `appSecret` auth to
+            obtain token with this access.
           type: boolean
+          example: null
       required:
       - auths
       - factors
@@ -2806,31 +3485,52 @@ components:
       properties:
         secret:
           type: string
+          example: null
       required:
       - secret
       type: object
       x-order: 791325901-2
       x-super: '#/components/schemas/AuthReqData'
+      example: null
     AuthReqData:
       additionalProperties: true
       type: object
       x-order: -1249106462-4
+      example: null
     AuthenticateReq:
       example:
         authReqs:
           key:
             template: template
             redirectUri: redirectUri
-            password: password
+            clientId: clientId
+            code: code
             authorizationCode: authorizationCode
+            accountName: accountName
+            newClientSecret: false
             answers:
               HOMETOWN: London
               MOTHER_NAME: null
+            agentLogins:
+            - type: email
+              login: john@example.org
+            - type: email
+              login: john@example.org
+            secret: secret
+            agentAccessToken: agentAccessToken
+            accessToken: accessToken
+            redirectUris:
+            - redirectUris
+            - redirectUris
+            issuer: issuer
+            password: password
             templateParams:
               key: "{}"
             confirmPassword: confirmPassword
-            secret: secret
-            accessToken: accessToken
+            clientSecret: clientSecret
+            scopes:
+            - scopes
+            - scopes
             email: email
         dryRun: false
         factors:
@@ -2841,23 +3541,76 @@ components:
             type: string
             x-additionalPropertiesName: factor
           description: |
-            Forces specific auth to be used for factor.
-            Takes place only when multiple auths is provided within request and auth can be
-            assigned to several factors.
-            If used in sign-up mode, it just enables those factors.
+            If this field is not specified, server tries to execute and assign auth for the `next-factor`
+            (see `session` model). Otherwise, auths will be assigned to the factors specified in this field.
+
+            Useful when:
+            - "Retry mode". User didn't receive confirmation code and wants to retry.
+            In this case you should provide `authReq` for auth you want to retry and set it to the same factor.
+            - "Replace mode". User can't receive confirmation code and wants to try another auth. E.g. they lost email and
+            want to proceed with a secret-questions auth.
+            In this case you should provide `authReq` for auth you want to replace with and set it to the same factor.
+
+            If it's used in sign-up mode, it just enables those factors (so actual value is ignored and can be `null`).
+            E.g. `"factors": { "second": null }` will enable second factor during sign-up.
           type: object
+          example: null
         authReqs:
           additionalProperties:
             $ref: '#/components/schemas/AuthenticateReq_authReqs_value'
           description: |
             Request for authenticators
           type: object
+          example: null
         dryRun:
           default: false
           description: Execute only validation ща authenticator requests.
           type: boolean
+          example: null
       type: object
       x-order: 2094520596-2
+    AuthorizationCodeAuthReqData:
+      additionalProperties: true
+      properties:
+        authorizationCode:
+          description: Authorization code provided by `authorizationCode` update request.
+          type: string
+          example: null
+        agentAccessToken:
+          description: Access token of user that will be able to act of behalf of
+            current user.
+          type: string
+          x-order: -2026363309-3
+          example: null
+      required:
+      - agentAccessToken
+      - authorizationCode
+      type: object
+      x-order: -1836982696-6
+      x-super: '#/components/schemas/AuthReqData'
+      example: null
+    AuthorizationCodeUpdateReqData:
+      additionalProperties: true
+      properties:
+        agentLogins:
+          description: Login or logins of the user that will get access-token and
+            be able to act of behalf of current user.
+          items:
+            $ref: '#/components/schemas/LoginId'
+          type: array
+          example: null
+        scopes:
+          items:
+            type: string
+          type: array
+          x-nullable: true
+          example: null
+      required:
+      - agentLogins
+      type: object
+      x-order: -1836982696-4
+      x-super: '#/components/schemas/AuthReqData'
+      example: null
     EmailAuthReqData:
       additionalProperties: true
       properties:
@@ -2867,63 +3620,86 @@ components:
             logins config). Otherwise, uses email of already identified user.
           type: string
           x-nullable: true
+          example: null
         template:
           description: Template to use.
           type: string
           x-nullable: true
+          example: null
         templateParams:
           additionalProperties:
             type: object
           description: Template params
           type: object
           x-nullable: true
+          example: null
       type: object
       x-order: 1021533909-3
       x-super: '#/components/schemas/AuthReqData'
+      example: null
     EmailUpdateReqData:
       additionalProperties: true
       properties:
         email:
           description: New email to set.
           type: string
+          example: null
         template:
           description: Template to use.
           type: string
           x-nullable: true
+          example: null
         templateParams:
           additionalProperties:
             type: object
           description: Template params
           type: object
           x-nullable: true
+          example: null
       required:
       - email
       type: object
       x-order: 1021533909-4
       x-super: '#/components/schemas/AuthReqData'
+      example: null
     NewSessionReq:
       example:
         authReqs:
           key:
             template: template
             redirectUri: redirectUri
-            password: password
+            clientId: clientId
+            code: code
             authorizationCode: authorizationCode
+            accountName: accountName
+            newClientSecret: false
             answers:
               HOMETOWN: London
               MOTHER_NAME: null
+            agentLogins:
+            - type: email
+              login: john@example.org
+            - type: email
+              login: john@example.org
+            secret: secret
+            agentAccessToken: agentAccessToken
+            accessToken: accessToken
+            redirectUris:
+            - redirectUris
+            - redirectUris
+            issuer: issuer
+            password: password
             templateParams:
               key: "{}"
             confirmPassword: confirmPassword
-            secret: secret
-            accessToken: accessToken
+            clientSecret: clientSecret
+            scopes:
+            - scopes
+            - scopes
             email: email
         entry: entry
         dryRun: false
         signIn: false
-        scopes:
-        - scopes
-        - scopes
         logins:
           key: logins
         signUp: false
@@ -2932,43 +3708,52 @@ components:
       properties:
         entry:
           type: string
+          example: null
         logins:
           additionalProperties:
             type: string
             x-additionalPropertiesName: loginType
           type: object
+          example: null
         factors:
           additionalProperties:
             type: string
             x-additionalPropertiesName: factor
           description: |
-            Forces specific auth to be used for factor.
-            Takes place only when multiple auths is provided within request and auth can be
-            assigned to several factors.
-            If used in sign-up mode, it just enables those factors.
+            If this field is not specified, server tries to execute and assign auth for the `next-factor`
+            (see `session` model). Otherwise, auths will be assigned to the factors specified in this field.
+
+            Useful when:
+            - "Retry mode". User didn't receive confirmation code and wants to retry.
+            In this case you should provide `authReq` for auth you want to retry and set it to the same factor.
+            - "Replace mode". User can't receive confirmation code and wants to try another auth. E.g. they lost email and
+            want to proceed with a secret-questions auth.
+            In this case you should provide `authReq` for auth you want to replace with and set it to the same factor.
+
+            If it's used in sign-up mode, it just enables those factors (so actual value is ignored and can be `null`).
+            E.g. `"factors": { "second": null }` will enable second factor during sign-up.
           type: object
+          example: null
         authReqs:
           additionalProperties:
             $ref: '#/components/schemas/AuthenticateReq_authReqs_value'
           description: |
             Request for authenticators
           type: object
-        scopes:
-          description: OAuth scopes
-          items:
-            type: string
-          type: array
-          x-nullable: true
+          example: null
         signIn:
           default: false
           type: boolean
+          example: null
         signUp:
           default: false
           type: boolean
+          example: null
         dryRun:
           default: false
           description: Execute only validation ща authenticator requests.
           type: boolean
+          example: null
       required:
       - entry
       type: object
@@ -2978,6 +3763,48 @@ components:
       type: object
       x-order: -1249106462-5
       x-super: '#/components/schemas/AuthReqData'
+      example: null
+    OAuthAppAuthReqData:
+      additionalProperties: true
+      properties:
+        clientId:
+          type: string
+          example: null
+        clientSecret:
+          type: string
+          x-nullable: true
+          example: null
+        redirectUri:
+          type: string
+          x-nullable: true
+          example: null
+      required:
+      - clientId
+      type: object
+      x-order: -1247144074-4
+      x-super: '#/components/schemas/AuthReqData'
+      example: null
+    OAuthAppUpdateReqData:
+      additionalProperties: true
+      properties:
+        redirectUris:
+          description: "Null - don't validate redirectUrl, empty array will lead to\
+            \ all authenticate request fail."
+          items:
+            type: string
+          type: array
+          x-nullable: true
+          example: null
+        newClientSecret:
+          default: false
+          description: "If previous secret lost or compromised, it allows to generate\
+            \ a new one."
+          type: boolean
+          example: null
+      type: object
+      x-order: -1247144074-5
+      x-super: '#/components/schemas/AuthReqData'
+      example: null
     OAuthReqData:
       additionalProperties: true
       properties:
@@ -2985,28 +3812,34 @@ components:
           description: If you have access-token - put it here.
           type: string
           x-nullable: true
+          example: null
         authorizationCode:
           description: If you have authorisation-code - app will exchange it for access-token.
           type: string
           x-nullable: true
+          example: null
         redirectUri:
           description: Redirect uri used when requested user login.
           type: string
           x-nullable: true
+          example: null
       type: object
       x-order: -893636857-4
       x-super: '#/components/schemas/AuthReqData'
+      example: null
     PasswordAuthReqData:
       additionalProperties: true
       properties:
         password:
           description: User password.
           type: string
+          example: null
       required:
       - password
       type: object
       x-order: -266447761-3
       x-super: '#/components/schemas/AuthReqData'
+      example: null
     PasswordUpdateReqData:
       additionalProperties: true
       properties:
@@ -3014,13 +3847,16 @@ components:
           description: New password to set. If null app generates password automatically.
           type: string
           x-nullable: true
+          example: null
         confirmPassword:
           description: Password confirmation. If null app doesn't perform this check.
           type: string
           x-nullable: true
+          example: null
       type: object
       x-order: -266447761-4
       x-super: '#/components/schemas/AuthReqData'
+      example: null
     QuestionsAuthReqData:
       additionalProperties: true
       properties:
@@ -3039,6 +3875,7 @@ components:
       type: object
       x-order: -213229069-3
       x-super: '#/components/schemas/AuthReqData'
+      example: null
     QuestionsUpdateReqData:
       additionalProperties: true
       properties:
@@ -3057,6 +3894,65 @@ components:
       type: object
       x-order: -213229069-5
       x-super: '#/components/schemas/AuthReqData'
+      example: null
+    ScopesAuthReqData:
+      additionalProperties: true
+      properties:
+        agentLogins:
+          description: Login or logins of the user that will get access-token and
+            be able to act of behalf of current user.
+          items:
+            $ref: '#/components/schemas/LoginId'
+          type: array
+          x-nullable: true
+          example: null
+        scopes:
+          items:
+            type: string
+          type: array
+          x-nullable: true
+          example: null
+      type: object
+      x-order: 2741601-3
+      x-super: '#/components/schemas/AuthReqData'
+      example: null
+    TotpAuthReqData:
+      additionalProperties: true
+      properties:
+        code:
+          type: string
+          example: null
+      required:
+      - code
+      type: object
+      x-order: 820555017-3
+      x-super: '#/components/schemas/AuthReqData'
+      example: null
+    TotpUpdateReqData:
+      additionalProperties: true
+      properties:
+        secret:
+          description: |-
+            Base32 SHA-1 key.
+            If null, secret is generated automatically.
+          type: string
+          x-nullable: true
+          example: null
+        issuer:
+          description: Used only to generate `otpauth://` url.
+          type: string
+          example: null
+        accountName:
+          description: Used only to generate `otpauth://` url.
+          type: string
+          example: null
+      required:
+      - accountName
+      - issuer
+      type: object
+      x-order: 820555017-4
+      x-super: '#/components/schemas/AuthReqData'
+      example: null
     ConfirmSessionAuthsReq:
       example:
         receivedCodes:
@@ -3070,6 +3966,7 @@ components:
             Useful to confirm auth from another device where no access-token available.
           type: string
           x-nullable: true
+          example: null
         receivedCodes:
           additionalProperties:
             additionalProperties:
@@ -3080,6 +3977,7 @@ components:
           description: |
             The code from authenticate/new-session response.
           type: object
+          example: null
       required:
       - receivedCodes
       type: object
@@ -3087,11 +3985,22 @@ components:
     SignOutRes:
       type: object
       x-order: 2094520596-5
+      example: null
     FindSessionsRes:
       example:
         sessions:
         - authenticated: true
           systemAccess: true
+          data:
+            key:
+              agent:
+              - type: email
+                login: john@example.org
+              - type: email
+                login: john@example.org
+              scopes:
+              - scopes
+              - scopes
           signedInAt: 5
           userId: userId
           expiresAt: 2
@@ -3111,14 +4020,11 @@ components:
           newUser: true
           refreshedAt: 7
           id: id
-          scopes:
-          - scopes
-          - scopes
           identifiedBy:
-          - type: type
-            login: login
-          - type: type
-            login: login
+          - type: email
+            login: john@example.org
+          - type: email
+            login: john@example.org
           unconfirmedAuths:
             key:
               sentCodes:
@@ -3141,6 +4047,16 @@ components:
             type: type
         - authenticated: true
           systemAccess: true
+          data:
+            key:
+              agent:
+              - type: email
+                login: john@example.org
+              - type: email
+                login: john@example.org
+              scopes:
+              - scopes
+              - scopes
           signedInAt: 5
           userId: userId
           expiresAt: 2
@@ -3160,14 +4076,11 @@ components:
           newUser: true
           refreshedAt: 7
           id: id
-          scopes:
-          - scopes
-          - scopes
           identifiedBy:
-          - type: type
-            login: login
-          - type: type
-            login: login
+          - type: email
+            login: john@example.org
+          - type: email
+            login: john@example.org
           unconfirmedAuths:
             key:
               sentCodes:
@@ -3194,9 +4107,11 @@ components:
           items:
             $ref: '#/components/schemas/Session'
           type: array
+          example: null
         tooManySessions:
           description: True if number of sessions in database exceeds some limit
           type: boolean
+          example: null
       required:
       - sessions
       type: object
@@ -3213,6 +4128,9 @@ components:
                 public:
                   answersSavedAt:
                     key: 1
+                  redirectUris:
+                  - redirectUris
+                  - redirectUris
                   email: email
                   updatedAt: 6
                 login: login
@@ -3228,6 +4146,9 @@ components:
                   public:
                     answersSavedAt:
                       key: 1
+                    redirectUris:
+                    - redirectUris
+                    - redirectUris
                     email: email
                     updatedAt: 6
                   login: login
@@ -3242,19 +4163,22 @@ components:
                   public:
                     answersSavedAt:
                       key: 1
+                    redirectUris:
+                    - redirectUris
+                    - redirectUris
                     email: email
                     updatedAt: 6
                   login: login
               confirmed: true
-          id: 2c24704f-198a-4bc4-9718-306ccc97bbdc
+          id: fewfvc23f
           logins:
           - unconfirmedLogin: unconfirmedLogin
-            type: type
-            login: login
+            type: email
+            login: john@example.org
             confirmed: true
           - unconfirmedLogin: unconfirmedLogin
-            type: type
-            login: login
+            type: email
+            login: john@example.org
             confirmed: true
           factors:
           - factors
@@ -3277,21 +4201,23 @@ components:
               - incorrectAnswers
               code: code
               loginId:
-                type: type
-                login: login
+                type: email
+                login: john@example.org
               strength: strength
               devMsg: devMsg
               waitTimeMinutes: 6
               tooLong: true
               missingSymbol: true
               matchesLogin:
-                type: type
-                login: login
+                type: email
+                login: john@example.org
               expiredAt: 7
+              incorrectRedirectUri: true
               missingUpperCase: true
               commonPassword: true
               missingNumber: true
               tooManyAnswers: true
+              incorrectSecret: true
               questionsNotFound:
               - questionsNotFound
               - questionsNotFound
@@ -3310,16 +4236,25 @@ components:
               changedDaysAgo: 4
             resData:
               emailSentTo: emailSentTo
-              password: password
+              clientId: clientId
               answersSavedAt:
                 key: 1
               strength: strength
               correct:
                 HOMETOWN: true
                 MOTHER_NAME: false
+              otpUrl: otpUrl
+              authorizationCode: authorizationCode
+              secret: secret
+              redirectUris:
+              - redirectUris
+              - redirectUris
+              password: password
               ipEncoded: ipEncoded
+              clientSecret: clientSecret
               extractedPublicData:
                 key: ""
+              otpUrlQrCode: otpUrlQrCode
               extractedLogin: extractedLogin
             status: OK
       properties:
@@ -3329,6 +4264,7 @@ components:
           additionalProperties:
             $ref: '#/components/schemas/AuthExecRes'
           type: object
+          example: null
       required:
       - authRes
       type: object
@@ -3346,6 +4282,7 @@ components:
             Useful to confirm auth from another device where no access-token available.
           type: string
           x-nullable: true
+          example: null
         receivedCodes:
           additionalProperties:
             additionalProperties:
@@ -3356,6 +4293,7 @@ components:
           description: |
             The code from save-user response.
           type: object
+          example: null
       required:
       - receivedCodes
       type: object
@@ -3366,16 +4304,34 @@ components:
           key:
             template: template
             redirectUri: redirectUri
-            password: password
+            clientId: clientId
+            code: code
             authorizationCode: authorizationCode
+            accountName: accountName
+            newClientSecret: false
             answers:
               HOMETOWN: London
               MOTHER_NAME: null
+            agentLogins:
+            - type: email
+              login: john@example.org
+            - type: email
+              login: john@example.org
+            secret: secret
+            agentAccessToken: agentAccessToken
+            accessToken: accessToken
+            redirectUris:
+            - redirectUris
+            - redirectUris
+            issuer: issuer
+            password: password
             templateParams:
               key: "{}"
             confirmPassword: confirmPassword
-            secret: secret
-            accessToken: accessToken
+            clientSecret: clientSecret
+            scopes:
+            - scopes
+            - scopes
             email: email
         dryRun: false
         systemAccess: true
@@ -3392,21 +4348,26 @@ components:
             Optional factors to enable/disable. If factor marked as required in config, it will be considered enabled
             by default and this request doesn't change this.
           type: object
+          example: null
         logins:
           additionalProperties:
             type: string
             x-additionalPropertiesName: loginType
           type: object
+          example: null
         authReqs:
           additionalProperties:
             $ref: '#/components/schemas/AuthenticateReq_authReqs_value'
           type: object
+          example: null
         dryRun:
           default: false
           type: boolean
+          example: null
         systemAccess:
           type: boolean
           x-nullable: true
+          example: null
       type: object
       x-order: -1847312442-3
       x-super: '#/components/schemas/SaveUserReq'
@@ -3416,16 +4377,34 @@ components:
           key:
             template: template
             redirectUri: redirectUri
-            password: password
+            clientId: clientId
+            code: code
             authorizationCode: authorizationCode
+            accountName: accountName
+            newClientSecret: false
             answers:
               HOMETOWN: London
               MOTHER_NAME: null
+            agentLogins:
+            - type: email
+              login: john@example.org
+            - type: email
+              login: john@example.org
+            secret: secret
+            agentAccessToken: agentAccessToken
+            accessToken: accessToken
+            redirectUris:
+            - redirectUris
+            - redirectUris
+            issuer: issuer
+            password: password
             templateParams:
               key: "{}"
             confirmPassword: confirmPassword
-            secret: secret
-            accessToken: accessToken
+            clientSecret: clientSecret
+            scopes:
+            - scopes
+            - scopes
             email: email
         dryRun: false
         logins:
@@ -3441,18 +4420,22 @@ components:
             Optional factors to enable/disable. If factor marked as required in config, it will be considered enabled
             by default and this request doesn't change this.
           type: object
+          example: null
         logins:
           additionalProperties:
             type: string
             x-additionalPropertiesName: loginType
           type: object
+          example: null
         authReqs:
           additionalProperties:
             $ref: '#/components/schemas/AuthenticateReq_authReqs_value'
           type: object
+          example: null
         dryRun:
           default: false
           type: boolean
+          example: null
       type: object
       x-order: -1847312442-1
     AuthorizeRes:
@@ -3460,6 +4443,16 @@ components:
         session:
           authenticated: true
           systemAccess: true
+          data:
+            key:
+              agent:
+              - type: email
+                login: john@example.org
+              - type: email
+                login: john@example.org
+              scopes:
+              - scopes
+              - scopes
           signedInAt: 5
           userId: userId
           expiresAt: 2
@@ -3479,14 +4472,11 @@ components:
           newUser: true
           refreshedAt: 7
           id: id
-          scopes:
-          - scopes
-          - scopes
           identifiedBy:
-          - type: type
-            login: login
-          - type: type
-            login: login
+          - type: email
+            login: john@example.org
+          - type: email
+            login: john@example.org
           unconfirmedAuths:
             key:
               sentCodes:
@@ -3517,16 +4507,7 @@ components:
         rateLimiter:
           quotaToBurn: 0.8008281904610115
           id: id
-        requireScopes:
-        - requireScopes
-        - requireScopes
       properties:
-        requireScopes:
-          description: Require OAuth scopes
-          items:
-            type: string
-          type: array
-          x-nullable: true
         rateLimiter:
           $ref: '#/components/schemas/RateLimiterReq'
       type: object
@@ -3538,14 +4519,19 @@ components:
       properties:
         id:
           type: string
+          example: null
         quotaToBurn:
           format: double
           type: number
+          example: null
       required:
       - id
       - quotaToBurn
       type: object
       x-order: -2047680577-3
+    json:
+      additionalProperties: true
+      type: object
     AccessTokenCfg:
       description: Short-living token used for authentication.
       example:
@@ -3558,6 +4544,7 @@ components:
           default: false
           description: Send token in `access_token` cookie
           type: boolean
+          example: null
         cache:
           description: |-
             If not null - access token contains signed session data, so it's not required to request session database for
@@ -3568,10 +4555,12 @@ components:
           type: string
           x-nullable: true
           x-super: '#/components/schemas/Cache'
+          example: null
         cacheUnauthenticated:
           default: false
           description: "By default, unauthenticated sessions can't be cached."
           type: boolean
+          example: null
         ttl:
           default: 1d
           description: |
@@ -3588,16 +4577,20 @@ components:
             Transform user answer to lowercase letters. This allows user still pass a check when he wrote name or city
             with different cases. `false` means strict match, so "John" != "john"
           type: boolean
+          example: null
         removeSymbols:
           default: true
           description: Remove all non-letters from user answer.
           type: boolean
+          example: null
         removeSpaces:
           default: true
           description: Remove all spaces from user answer.
           type: boolean
+          example: null
       type: object
       x-order: 545691127-1
+      example: null
     AppSecretAuthCfg:
       properties:
         requiresAuth:
@@ -3612,6 +4605,7 @@ components:
             type: array
           type: array
           x-nullable: true
+          example: null
         skipOnFail:
           default: false
           description: |-
@@ -3620,19 +4614,23 @@ components:
             executed only when IP auth is failed.
             If set to false any error on this auth will stop the whole request execution.
           type: boolean
+          example: null
         rateLimiter:
           description: Apply rate limiter for this auth.
           type: string
           x-nullable: true
+          example: null
         burnQuota:
           default: 0.0
           description: Every auth execution will burn this amount of quota. Takes
             place only when rate limiter is specified
           format: double
           type: number
+          example: null
       type: object
       x-order: 791325901-3
       x-super: '#/components/schemas/BuiltInAuthCfg'
+      example: null
     AuthAppCfg:
       description: Authentication implementation config
       properties:
@@ -3648,6 +4646,7 @@ components:
             type: array
           type: array
           x-nullable: true
+          example: null
         skipOnFail:
           default: false
           description: |-
@@ -3656,18 +4655,74 @@ components:
             executed only when IP auth is failed.
             If set to false any error on this auth will stop the whole request execution.
           type: boolean
+          example: null
         rateLimiter:
           description: Apply rate limiter for this auth.
           type: string
           x-nullable: true
+          example: null
         burnQuota:
           default: 0.0
           description: Every auth execution will burn this amount of quota. Takes
             place only when rate limiter is specified
           format: double
           type: number
+          example: null
       type: object
       x-order: 377338786-0
+      example: null
+    AuthorizationCodeAuthCfg:
+      properties:
+        requiresAuth:
+          description: |-
+            If this is not null, app forbids to add this auth until listed auth enabled.
+            - if this a string -> require specified auth to be enabled before this.
+            - array of strings -> require any of listed auths to be enabled
+            - array of arrays of strings -> works as `[ [ "auth1" and "auth2" ] or [ "auth1" and "auth2" ] ]`
+          items:
+            items:
+              type: string
+            type: array
+          type: array
+          x-nullable: true
+          example: null
+        skipOnFail:
+          default: false
+          description: |-
+            When this is set to true app will attempt next auth in case of error on current.
+            It's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be
+            executed only when IP auth is failed.
+            If set to false any error on this auth will stop the whole request execution.
+          type: boolean
+          example: null
+        rateLimiter:
+          description: Apply rate limiter for this auth.
+          type: string
+          x-nullable: true
+          example: null
+        burnQuota:
+          default: 0.0
+          description: Every auth execution will burn this amount of quota. Takes
+            place only when rate limiter is specified
+          format: double
+          type: number
+          example: null
+        codeTtl:
+          default: 10m
+          description: |
+            Authorization code lifetime.
+          type: string
+          example: null
+        scopes:
+          description: Allowed oauth2 scopes.
+          items:
+            type: string
+          type: array
+          example: null
+      type: object
+      x-order: -1836982696-3
+      x-super: '#/components/schemas/BuiltInAuthCfg'
+      example: null
     BuiltInAuthCfg:
       description: Authentication implementation config
       properties:
@@ -3683,6 +4738,7 @@ components:
             type: array
           type: array
           x-nullable: true
+          example: null
         skipOnFail:
           default: false
           description: |-
@@ -3691,19 +4747,23 @@ components:
             executed only when IP auth is failed.
             If set to false any error on this auth will stop the whole request execution.
           type: boolean
+          example: null
         rateLimiter:
           description: Apply rate limiter for this auth.
           type: string
           x-nullable: true
+          example: null
         burnQuota:
           default: 0.0
           description: Every auth execution will burn this amount of quota. Takes
             place only when rate limiter is specified
           format: double
           type: number
+          example: null
       type: object
       x-order: -824080721-0
       x-super: '#/components/schemas/AuthAppCfg'
+      example: null
     Cache:
       enum:
       - JWT
@@ -3717,27 +4777,34 @@ components:
           description: Length of code to be generated
           format: int32
           type: integer
+          example: null
         ttl:
           description: "Generated code lifetime. e.g. 1m, 60s, 1d, etc."
           type: string
+          example: null
         alphabet:
           description: Symbols used to generate a code. By default `a-z + A-Z + 0-9`.
           type: string
+          example: null
         easyToRemember:
           default: true
           description: "If true, every second letter will be the same, that allows\
             \ the codes to rhyme."
           type: boolean
+          example: null
         maxAttempts:
           default: 3
           description: Max attempts to enter the code.
           format: int32
           type: integer
+          example: null
       type: object
       x-order: 377338786-1
+      example: null
     DbCfg:
       type: object
-      x-order: -1580107990-0
+      x-order: -195398693-0
+      example: null
     Duration:
       type: string
     EmailAuthCfg:
@@ -3754,6 +4821,7 @@ components:
             type: array
           type: array
           x-nullable: true
+          example: null
         skipOnFail:
           default: false
           description: |-
@@ -3762,36 +4830,44 @@ components:
             executed only when IP auth is failed.
             If set to false any error on this auth will stop the whole request execution.
           type: boolean
+          example: null
         rateLimiter:
           description: Apply rate limiter for this auth.
           type: string
           x-nullable: true
+          example: null
         burnQuota:
           default: 0.0
           description: Every auth execution will burn this amount of quota. Takes
             place only when rate limiter is specified
           format: double
           type: number
+          example: null
         server:
           description: Email server address/IP.
           type: string
+          example: null
         sender:
           description: Email address of sender.
           type: string
+          example: null
         username:
           description: SMTP username.
           type: string
           x-nullable: true
+          example: null
         password:
           description: SMTP password.
           type: string
           x-nullable: true
+          example: null
         confirmationUrl:
           description: |-
             If not null, server will create template param `confirmationUrl` that will contain query parameters with
             confirmation code, session id, etc.
           type: string
           x-nullable: true
+          example: null
         templates:
           additionalProperties:
             type: string
@@ -3823,6 +4899,7 @@ components:
             Additional params for templates that can be passed in request. Key - is a name of additional parameter, value - is
             a default value for this parameter (when no value present in request)
           type: object
+          example: null
         code:
           $ref: '#/components/schemas/CodeCfg'
       required:
@@ -3831,18 +4908,22 @@ components:
       type: object
       x-order: -1025321515-0
       x-super: '#/components/schemas/BuiltInAuthCfg'
+      example: null
     EntryAccessTokenCfg:
       properties:
         ttl:
           description: Override access token ttl
           type: string
           x-nullable: true
+          example: null
         cache:
           description: Enable or disable client-side caching of access token
           type: boolean
           x-nullable: true
+          example: null
       type: object
       x-order: -842539141-1
+      example: null
     EntryCfg:
       description: Configuration for app entry.
       example:
@@ -3905,6 +4986,7 @@ components:
           items:
             type: string
           type: array
+          example: null
         accessToken:
           $ref: '#/components/schemas/EntryCfg_accessToken'
         ttl:
@@ -3918,6 +5000,7 @@ components:
           description: "Is this session allowed to add/remove new auth, enable/disable\
             \ factors, etc.?"
           type: boolean
+          example: null
       type: object
       x-order: -842539141-0
     ExchangeAuthCodeCfg:
@@ -3932,14 +5015,17 @@ components:
             \ (e.g. facebook, google)"
           type: string
           x-nullable: true
+          example: null
         clientSecret:
           description: OAuth client secret.
           type: string
           x-nullable: true
+          example: null
       required:
       - tokenUrl
       type: object
       x-order: -1532051357-2
+      example: null
     I18nCfg:
       description: "Configuration for localization of error messages, emails, etc."
       example:
@@ -3966,17 +5052,21 @@ components:
         inMemory:
           default: true
           type: boolean
+          example: null
       type: object
       x-order: 1129812999-3
       x-super: '#/components/schemas/DbCfg'
+      example: null
     InTokenCfg:
       properties:
         inToken:
           default: true
           type: boolean
+          example: null
       type: object
-      x-order: -291817267-1
+      x-order: -291817267-2
       x-super: '#/components/schemas/DbCfg'
+      example: null
     IpAuthCfg:
       properties:
         requiresAuth:
@@ -3991,6 +5081,7 @@ components:
             type: array
           type: array
           x-nullable: true
+          example: null
         skipOnFail:
           default: false
           description: |-
@@ -3999,16 +5090,19 @@ components:
             executed only when IP auth is failed.
             If set to false any error on this auth will stop the whole request execution.
           type: boolean
+          example: null
         rateLimiter:
           description: Apply rate limiter for this auth.
           type: string
           x-nullable: true
+          example: null
         burnQuota:
           default: 0.0
           description: Every auth execution will burn this amount of quota. Takes
             place only when rate limiter is specified
           format: double
           type: number
+          example: null
         ipBytesToIgnore:
           default: 0
           description: |-
@@ -4016,6 +5110,7 @@ components:
             the same country, same city, or same internet provider.
           format: int32
           type: integer
+          example: null
         historySize:
           default: 10
           description: |-
@@ -4023,54 +5118,108 @@ components:
             IPs.
           format: int32
           type: integer
+          example: null
       type: object
       x-order: 2116983897-3
       x-super: '#/components/schemas/BuiltInAuthCfg'
+      example: null
     JdbcCfg:
       properties:
         username:
           default: ""
           type: string
+          example: null
         password:
           default: ""
           type: string
+          example: null
         maxConnections:
           default: 500
           format: int32
           type: integer
+          example: null
       type: object
       x-order: -1497406623-0
       x-super: '#/components/schemas/DbCfg'
+      example: null
     MongoCfg:
       properties:
         mongodb:
           type: string
+          example: null
         database:
           type: string
+          example: null
       required:
       - database
       - mongodb
       type: object
       x-order: -592385449-0
       x-super: '#/components/schemas/DbCfg'
+      example: null
     MysqlCfg:
       properties:
         mysql:
           default: localhost:3306
           type: string
+          example: null
         username:
           default: mysql
           type: string
+          example: null
         maxConnections:
           default: 500
           format: int32
           type: integer
+          example: null
         password:
           default: mysql
           type: string
+          example: null
       type: object
       x-order: -577347408-2
       x-super: '#/components/schemas/JdbcCfg'
+      example: null
+    OAuthAppAuthCfg:
+      properties:
+        requiresAuth:
+          description: |-
+            If this is not null, app forbids to add this auth until listed auth enabled.
+            - if this a string -> require specified auth to be enabled before this.
+            - array of strings -> require any of listed auths to be enabled
+            - array of arrays of strings -> works as `[ [ "auth1" and "auth2" ] or [ "auth1" and "auth2" ] ]`
+          items:
+            items:
+              type: string
+            type: array
+          type: array
+          x-nullable: true
+          example: null
+        skipOnFail:
+          default: false
+          description: |-
+            When this is set to true app will attempt next auth in case of error on current.
+            It's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be
+            executed only when IP auth is failed.
+            If set to false any error on this auth will stop the whole request execution.
+          type: boolean
+          example: null
+        rateLimiter:
+          description: Apply rate limiter for this auth.
+          type: string
+          x-nullable: true
+          example: null
+        burnQuota:
+          default: 0.0
+          description: Every auth execution will burn this amount of quota. Takes
+            place only when rate limiter is specified
+          format: double
+          type: number
+          example: null
+      type: object
+      x-order: -1247144074-1
+      x-super: '#/components/schemas/BuiltInAuthCfg'
+      example: null
     OAuthCfg:
       properties:
         requiresAuth:
@@ -4085,6 +5234,7 @@ components:
             type: array
           type: array
           x-nullable: true
+          example: null
         skipOnFail:
           default: false
           description: |-
@@ -4093,16 +5243,19 @@ components:
             executed only when IP auth is failed.
             If set to false any error on this auth will stop the whole request execution.
           type: boolean
+          example: null
         rateLimiter:
           description: Apply rate limiter for this auth.
           type: string
           x-nullable: true
+          example: null
         burnQuota:
           default: 0.0
           description: Every auth execution will burn this amount of quota. Takes
             place only when rate limiter is specified
           format: double
           type: number
+          example: null
         exchangeAuthCode:
           $ref: '#/components/schemas/OAuthCfg_exchangeAuthCode'
         userInfo:
@@ -4128,6 +5281,7 @@ components:
       type: object
       x-order: -1532051357-0
       x-super: '#/components/schemas/BuiltInAuthCfg'
+      example: null
     PasswordAuthCfg:
       description: "Password authentication. To enable this auth set auth name to\
         \ \"password\" or use \"builtin\": \"password\" param."
@@ -4144,6 +5298,7 @@ components:
             type: array
           type: array
           x-nullable: true
+          example: null
         skipOnFail:
           default: false
           description: |-
@@ -4152,50 +5307,60 @@ components:
             executed only when IP auth is failed.
             If set to false any error on this auth will stop the whole request execution.
           type: boolean
+          example: null
         rateLimiter:
           description: Apply rate limiter for this auth.
           type: string
           x-nullable: true
+          example: null
         burnQuota:
           default: 0.0
           description: Every auth execution will burn this amount of quota. Takes
             place only when rate limiter is specified
           format: double
           type: number
+          example: null
         maxLength:
           default: 256
           description: Max allowed Length of the password.
           format: int32
           type: integer
+          example: null
         minLength:
           default: 6
           description: Minimal length of password
           format: int32
           type: integer
+          example: null
         requireNumber:
           default: false
           description: Require password to contain at least one digit.
           type: boolean
+          example: null
         requireSymbol:
           default: false
           description: "Require password to contain at least one symbol e.g. @, !,\
             \ &..."
           type: boolean
+          example: null
         requireUpperCase:
           default: false
           description: This requires password to contain both lowercase and uppercase
             letters.
           type: boolean
+          example: null
         forbidCommonPasswords:
           default: false
           description: "Password will be checked against table 1,000,000 of most overused\
             \ passwords."
           type: boolean
+          example: null
         forbidLoginAsPassword:
           default: false
           description: "Rejects passwords that match username, email, anything that\
             \ used as a login according to logins config."
           type: boolean
+          example: null
         forbidReusingPassword:
           $ref: '#/components/schemas/PasswordHistoryCfg'
         strength:
@@ -4205,9 +5370,11 @@ components:
             Allows to calculate password strength based on mentioned criteria. Requirements will be checked one by one
             until first failed.
           type: object
+          example: null
       type: object
       x-order: -49430021-0
       x-super: '#/components/schemas/BuiltInAuthCfg'
+      example: null
     PasswordHistoryCfg:
       description: Forbids user to change password to the old one. Useful if you force
         user to change password regularly.
@@ -4217,12 +5384,15 @@ components:
           description: Number of current user passwords to store in database.
           format: int32
           type: integer
+          example: null
         passwordHistoryTtl:
           description: "Lifetime for the password. Accepts time string e.g. 1y, 3m,\
             \ 2y 6m, etc."
           type: string
+          example: null
       type: object
       x-order: 378192899-2
+      example: null
     PasswordStrengthRequirements:
       description: Requirements for password
       properties:
@@ -4231,50 +5401,62 @@ components:
           description: Minimal length of password
           format: int32
           type: integer
+          example: null
         requireNumber:
           default: false
           description: Require password to contain at least one digit.
           type: boolean
+          example: null
         requireSymbol:
           default: false
           description: "Require password to contain at least one symbol e.g. @, !,\
             \ &..."
           type: boolean
+          example: null
         requireUpperCase:
           default: false
           description: This requires password to contain both lowercase and uppercase
             letters.
           type: boolean
+          example: null
         forbidCommonPasswords:
           default: false
           description: "Password will be checked against table 1,000,000 of most overused\
             \ passwords."
           type: boolean
+          example: null
         forbidLoginAsPassword:
           default: false
           description: "Rejects passwords that match username, email, anything that\
             \ used as a login according to logins config."
           type: boolean
+          example: null
       type: object
       x-order: -49430021-1
+      example: null
     PostgresCfg:
       properties:
         postgres:
           default: localhost:5432/
           type: string
+          example: null
         username:
           default: postgres
           type: string
+          example: null
         maxConnections:
           default: 500
           format: int32
           type: integer
+          example: null
         password:
           default: postgres
           type: string
+          example: null
       type: object
       x-order: 893841315-2
       x-super: '#/components/schemas/JdbcCfg'
+      example: null
     QuestionsAuthCfg:
       properties:
         requiresAuth:
@@ -4289,6 +5471,7 @@ components:
             type: array
           type: array
           x-nullable: true
+          example: null
         skipOnFail:
           default: false
           description: |-
@@ -4297,53 +5480,64 @@ components:
             executed only when IP auth is failed.
             If set to false any error on this auth will stop the whole request execution.
           type: boolean
+          example: null
         rateLimiter:
           description: Apply rate limiter for this auth.
           type: string
           x-nullable: true
+          example: null
         burnQuota:
           default: 0.0
           description: Every auth execution will burn this amount of quota. Takes
             place only when rate limiter is specified
           format: double
           type: number
+          example: null
         lowercase:
           default: true
           description: |-
             Transform user answer to lowercase letters. This allows user still pass a check when he wrote name or city
             with different cases. `false` means strict match, so "John" != "john"
           type: boolean
+          example: null
         removeSymbols:
           default: true
           description: Remove all non-letters from user answer.
           type: boolean
+          example: null
         removeSpaces:
           default: true
           description: Remove all spaces from user answer.
           type: boolean
+          example: null
         minLength:
           default: 3
           description: Min length of answer. Length are checked after all answer transformation.
           format: int32
           type: integer
+          example: null
         maxLength:
           default: 256
           description: Max length of answer.
           format: int32
           type: integer
+          example: null
         answersRequired:
           default: 2
           description: Min number of answers required to pass this check.
           format: int32
           type: integer
+          example: null
         maxAnswers:
           default: 10
           description: Max answers that user can save.
           format: int32
           type: integer
+          example: null
       type: object
       x-order: 545691127-0
       x-super: '#/components/schemas/BuiltInAuthCfg'
+      example: null
     RateLimiterCfg:
       description: Rate limiter configuration
       example:
@@ -4358,10 +5552,12 @@ components:
           default: true
           description: Create different rate limiters for different users.
           type: boolean
+          example: null
         ip:
           default: false
           description: Create different rate limiters for different ips.
           type: boolean
+          example: null
         quota:
           default: 1.0
           description: |-
@@ -4369,6 +5565,7 @@ components:
             allows 10 request with weight 0.1 per seconds or 5 request with weight 0.2 per second.
           format: double
           type: number
+          example: null
         period:
           description: |
             Quota restoring period
@@ -4379,12 +5576,14 @@ components:
           description: Insert delays between requests if there are too many simultaneous
             requests.
           type: boolean
+          example: null
         parent:
           description: |-
             Allows to combine rate limiters. Let's say rt1 allows 10 reqs per seconds, and rt2 allows 20 reqs per minute.
             If the rt1 has the rt2 as a parent, that means that rt1 allows 10 reqs per seconds but not more than 20 per minute.
           type: string
           x-nullable: true
+          example: null
       type: object
       x-order: -1666811215-0
     RedisCfg:
@@ -4393,28 +5592,36 @@ components:
           items:
             type: string
           type: array
+          example: null
         cluster:
           default: false
           type: boolean
+          example: null
         database:
           format: int32
           type: integer
+          example: null
         user:
           type: string
           x-nullable: true
+          example: null
         password:
           type: string
           x-nullable: true
+          example: null
         ssl:
           default: false
           type: boolean
+          example: null
         maxConnections:
           default: 100
           format: int32
           type: integer
+          example: null
       type: object
       x-order: -2007275575-0
       x-super: '#/components/schemas/DbCfg'
+      example: null
     RefreshTokenCfg:
       description: |-
         Long-living token used for generation of new access token.
@@ -4448,6 +5655,7 @@ components:
           description: If false - one refresh token can't be used twice. New refresh
             token will be provided by refresh API.
           type: boolean
+          example: null
       type: object
       x-order: -1195634750-5
     RemoteAuthCfg:
@@ -4456,6 +5664,7 @@ components:
         remote:
           description: Path to the API that implements plugin.
           type: string
+          example: null
         requiresAuth:
           description: |-
             If this is not null, app forbids to add this auth until listed auth enabled.
@@ -4468,6 +5677,7 @@ components:
             type: array
           type: array
           x-nullable: true
+          example: null
         skipOnFail:
           default: false
           description: |-
@@ -4476,16 +5686,19 @@ components:
             executed only when IP auth is failed.
             If set to false any error on this auth will stop the whole request execution.
           type: boolean
+          example: null
         rateLimiter:
           description: Apply rate limiter for this auth.
           type: string
           x-nullable: true
+          example: null
         burnQuota:
           default: 0.0
           description: Every auth execution will burn this amount of quota. Takes
             place only when rate limiter is specified
           format: double
           type: number
+          example: null
         query:
           additionalProperties:
             type: string
@@ -4493,6 +5706,7 @@ components:
           description: |
             Add query params after `?` symbol in url.
           type: object
+          example: null
         headers:
           additionalProperties:
             type: string
@@ -4500,6 +5714,7 @@ components:
           description: |
             Add headers to request.
           type: object
+          example: null
         code:
           $ref: '#/components/schemas/CodeCfg'
       required:
@@ -4507,23 +5722,73 @@ components:
       type: object
       x-order: 658063406-0
       x-super: '#/components/schemas/AuthAppCfg'
+      example: null
     RemoteDbCfg:
       properties:
         remote:
           type: string
+          example: null
         query:
           additionalProperties:
             type: string
           type: object
+          example: null
         headers:
           additionalProperties:
             type: string
           type: object
+          example: null
       required:
       - remote
       type: object
       x-order: 842893688-0
       x-super: '#/components/schemas/DbCfg'
+      example: null
+    ScopesAuthCfg:
+      properties:
+        requiresAuth:
+          description: |-
+            If this is not null, app forbids to add this auth until listed auth enabled.
+            - if this a string -> require specified auth to be enabled before this.
+            - array of strings -> require any of listed auths to be enabled
+            - array of arrays of strings -> works as `[ [ "auth1" and "auth2" ] or [ "auth1" and "auth2" ] ]`
+          items:
+            items:
+              type: string
+            type: array
+          type: array
+          x-nullable: true
+          example: null
+        skipOnFail:
+          default: false
+          description: |-
+            When this is set to true app will attempt next auth in case of error on current.
+            It's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be
+            executed only when IP auth is failed.
+            If set to false any error on this auth will stop the whole request execution.
+          type: boolean
+          example: null
+        rateLimiter:
+          description: Apply rate limiter for this auth.
+          type: string
+          x-nullable: true
+          example: null
+        burnQuota:
+          default: 0.0
+          description: Every auth execution will burn this amount of quota. Takes
+            place only when rate limiter is specified
+          format: double
+          type: number
+          example: null
+        scopes:
+          items:
+            type: string
+          type: array
+          example: null
+      type: object
+      x-order: 2741601-2
+      x-super: '#/components/schemas/BuiltInAuthCfg'
+      example: null
     ShAppCfg:
       example:
         entries:
@@ -4565,7 +5830,7 @@ components:
             quota: 7.061401241503109
             alignLoad: false
             userId: true
-        secret: secret
+        secret: <change_me>
         logins:
         - username
         - facebook
@@ -4672,7 +5937,6 @@ components:
           items:
             type: string
           type: array
-          uniqueItems: true
         loginRequirements:
           additionalProperties:
             type: string
@@ -4688,13 +5952,15 @@ components:
           description: |+
             List of auth names and auth configs
 
-            To use builtin auths (not a plugin or remote) follow the example: `"password": { ... }` or
-            `"anyAuthName": { "builtin": "password", ... }`
+            To use builtin auths (not a plugin or remote) follow the example:
+            - `"password": { ... }` or
+            - `"anyAuthName": { "builtin": "password", ... }`
 
             Available built-in auths:
-            - `password`, `email`, `questions`, `ip`
-            - `oauth`, `oauth/facebook/openid`, `oauth/google/openid`
-            - `appSecret`
+            - `password`, `email`, `questions`, `ip`, 'totp'
+            - (OAuth2 client) `oauth`, `oauth/facebook/openid`, `oauth/google/openid`
+            - (Backend integration) `appSecret`
+            - (OAuth2 server) 'authorizationCode', 'oauthApp', 'scopes'
 
           example:
             email: {}
@@ -4712,6 +5978,7 @@ components:
             - api: entry that allows user to generate API keys and connect third-party app
             - action: additional authentication (e.g. code from sms) requested before e.g. payment
           type: object
+          example: null
         db:
           $ref: '#/components/schemas/ShDbsCfg'
         token:
@@ -4722,20 +5989,25 @@ components:
           description: |
             List of rate limiters
           type: object
+          example: null
         secret:
+          default: <change_me>
           description: |-
             The key that app uses for RSA certificate generation used for token signature.
             If `null` - app will generate secret automatically during startup.
           type: string
+          example: null
         healthCheckKey:
           description: Set this key if you want to restrict access to the health-check.
           type: string
           x-nullable: true
+          example: null
         i18n:
           $ref: '#/components/schemas/I18nCfg'
         $schema:
           default: ./kntrl.schema.json
           type: string
+          example: null
       type: object
       x-order: -1414553603-0
     ShDbsCfg:
@@ -4841,6 +6113,7 @@ components:
           description: "If true, X-Forwarded-For header is used to get client's IP\
             \ address"
           type: boolean
+          example: null
       type: object
       x-order: -1414553603-1
     SqliteCfg:
@@ -4848,19 +6121,24 @@ components:
         username:
           default: ""
           type: string
+          example: null
         password:
           default: ""
           type: string
+          example: null
         maxConnections:
           default: 500
           format: int32
           type: integer
+          example: null
         sqlite:
           default: ./sqlite
           type: string
+          example: null
       type: object
       x-order: -1872929936-3
       x-super: '#/components/schemas/JdbcCfg'
+      example: null
     TokenCfg:
       description: Token lifetime config.
       example:
@@ -4884,6 +6162,7 @@ components:
           default: true
           description: Require all request to be made from the same device.
           type: boolean
+          example: null
       type: object
       x-order: -1195634750-0
     TokenHandlerCfg:
@@ -4900,12 +6179,59 @@ components:
             \ in query param."
           type: string
           x-nullable: true
+          example: null
         sendTokenInHeader:
           description: "While executing user-info request, access-token will be sent\
             \ in Authorisation header."
           type: boolean
+          example: null
       type: object
       x-order: -1532051357-3
+      example: null
+    TotpAuthCfg:
+      properties:
+        requiresAuth:
+          description: |-
+            If this is not null, app forbids to add this auth until listed auth enabled.
+            - if this a string -> require specified auth to be enabled before this.
+            - array of strings -> require any of listed auths to be enabled
+            - array of arrays of strings -> works as `[ [ "auth1" and "auth2" ] or [ "auth1" and "auth2" ] ]`
+          items:
+            items:
+              type: string
+            type: array
+          type: array
+          x-nullable: true
+          example: null
+        skipOnFail:
+          default: false
+          description: |-
+            When this is set to true app will attempt next auth in case of error on current.
+            It's works good with IP auth. User can provide both IP auth request and SMS auth request. And SMS will be
+            executed only when IP auth is failed.
+            If set to false any error on this auth will stop the whole request execution.
+          type: boolean
+          example: null
+        rateLimiter:
+          description: Apply rate limiter for this auth.
+          type: string
+          x-nullable: true
+          example: null
+        burnQuota:
+          default: 0.0
+          description: Every auth execution will burn this amount of quota. Takes
+            place only when rate limiter is specified
+          format: double
+          type: number
+          example: null
+        encryptKey:
+          default: <change_me>
+          type: string
+          example: null
+      type: object
+      x-order: 820555017-1
+      x-super: '#/components/schemas/BuiltInAuthCfg'
+      example: null
     regex:
       type: string
     UnauthenticatedCode:
@@ -4918,6 +6244,8 @@ components:
       type: string
     ClientErrCode:
       enum:
+      - INCORRECT_TOTP_CODE
+      - OAUTH_APP_ERR
       - PLUGIN_CLIENT_ERR
       - PASSWORD_IS_INCORRECT
       - PASSWORD_IS_INVALID
@@ -4928,7 +6256,6 @@ components:
       - SESSION_EXPIRED
       - ACCESS_DENIED
       - USER_NOT_FOUND
-      - SIGNATURE_IS_INCORRECT
       - USER_LOGIN_IS_INVALID
       - USER_LOGIN_ALREADY_TAKEN
       - TOKEN_EXPIRED
@@ -4954,6 +6281,8 @@ components:
     ErrCode:
       enum:
       - PLUGIN_ERR
+      - INCORRECT_TOTP_CODE
+      - OAUTH_APP_ERR
       - PLUGIN_CLIENT_ERR
       - PASSWORD_IS_INCORRECT
       - PASSWORD_IS_INVALID
@@ -4964,7 +6293,6 @@ components:
       - SESSION_EXPIRED
       - ACCESS_DENIED
       - USER_NOT_FOUND
-      - SIGNATURE_IS_INCORRECT
       - USER_LOGIN_IS_INVALID
       - USER_LOGIN_ALREADY_TAKEN
       - TOKEN_EXPIRED
@@ -4981,65 +6309,134 @@ components:
       - INTEGRATION_ERR
       - ANY_ERR
       type: string
+    Session_data_value:
+      additionalProperties: true
+      example:
+        agent:
+        - type: email
+          login: john@example.org
+        - type: email
+          login: john@example.org
+        scopes:
+        - scopes
+        - scopes
+      properties:
+        agent:
+          items:
+            $ref: '#/components/schemas/LoginId'
+          type: array
+          x-nullable: true
+          example: null
+        scopes:
+          items:
+            type: string
+          type: array
+          example: null
+      type: object
     AuthData_public:
       additionalProperties: true
       example:
         answersSavedAt:
           key: 1
+        redirectUris:
+        - redirectUris
+        - redirectUris
         email: email
         updatedAt: 6
       properties:
         email:
           description: User email.
           type: string
+          example: null
         updatedAt:
           description: Time when password was updated last time.
           format: int64
           type: integer
+          example: null
+        redirectUris:
+          items:
+            type: string
+          type: array
+          x-nullable: true
+          example: null
         answersSavedAt:
           additionalProperties:
             format: int64
             type: integer
             x-additionalPropertiesName: question id
           type: object
+          example: null
       type: object
     AuthExecRes_resData:
       additionalProperties: true
       example:
         emailSentTo: emailSentTo
-        password: password
+        clientId: clientId
         answersSavedAt:
           key: 1
         strength: strength
         correct:
           HOMETOWN: true
           MOTHER_NAME: false
+        otpUrl: otpUrl
+        authorizationCode: authorizationCode
+        secret: secret
+        redirectUris:
+        - redirectUris
+        - redirectUris
+        password: password
         ipEncoded: ipEncoded
+        clientSecret: clientSecret
         extractedPublicData:
           key: ""
+        otpUrlQrCode: otpUrlQrCode
         extractedLogin: extractedLogin
       properties:
+        authorizationCode:
+          type: string
+          example: null
         emailSentTo:
           description: "Shows user email, that was used to send a code. Email will\
             \ be partially hidden."
           type: string
+          example: null
         ipEncoded:
           type: string
+          example: null
+        clientId:
+          type: string
+          example: null
+        redirectUris:
+          items:
+            type: string
+          type: array
+          x-nullable: true
+          example: null
+        clientSecret:
+          description: Provided only when generated first time or generated again.
+          type: string
+          x-nullable: true
+          example: null
         extractedLogin:
           type: string
+          example: null
         extractedPublicData:
           additionalProperties: true
+          description: Data that are available for API.
           type: object
           x-order: -893636857-2
+          example: null
         password:
           description: If password was generated by app this field contains generated
             password.
           type: string
+          example: null
         strength:
           description: Calculated strength of password. Null means that all checks
             failed.
           type: string
           x-nullable: true
+          example: null
         correct:
           additionalProperties:
             type: boolean
@@ -5058,59 +6455,172 @@ components:
           description: |
             Date of last update
           type: object
+          example: null
+        secret:
+          description: Base32 SHA-1 key.
+          type: string
+          example: null
+        otpUrl:
+          type: string
+          example: null
+        otpUrlQrCode:
+          description: |-
+            QR code URL. Use it like this:
+            `<img style="image-rendering: pixelated;" width="200" src="<otpUrlQrCode>"/>`
+          type: string
+          example: null
       type: object
+    AuthUserCfg_data:
+      description: Data/State of this authenticator
+      example:
+        public:
+          answersSavedAt:
+            key: 1
+          redirectUris:
+          - redirectUris
+          - redirectUris
+          email: email
+          updatedAt: 6
+        login: login
+      properties:
+        public:
+          $ref: '#/components/schemas/AuthData_public'
+        login:
+          description: |-
+            If authenticator supports identification, it provides login here. This can be email, phone number,
+            facebook account id, etc.
+          type: string
+          x-nullable: true
+          example: null
+      required:
+      - public
+      type: object
+      x-nullable: true
+      x-super: '#/components/schemas/AuthData'
     AuthenticateReq_authReqs_value:
       additionalProperties: true
       example:
         template: template
         redirectUri: redirectUri
-        password: password
+        clientId: clientId
+        code: code
         authorizationCode: authorizationCode
+        accountName: accountName
+        newClientSecret: false
         answers:
           HOMETOWN: London
           MOTHER_NAME: null
+        agentLogins:
+        - type: email
+          login: john@example.org
+        - type: email
+          login: john@example.org
+        secret: secret
+        agentAccessToken: agentAccessToken
+        accessToken: accessToken
+        redirectUris:
+        - redirectUris
+        - redirectUris
+        issuer: issuer
+        password: password
         templateParams:
           key: "{}"
         confirmPassword: confirmPassword
-        secret: secret
-        accessToken: accessToken
+        clientSecret: clientSecret
+        scopes:
+        - scopes
+        - scopes
         email: email
       properties:
         secret:
+          description: |-
+            Base32 SHA-1 key.
+            If null, secret is generated automatically.
           type: string
+          x-nullable: true
+          example: null
+        authorizationCode:
+          description: If you have authorisation-code - app will exchange it for access-token.
+          type: string
+          x-nullable: true
+          example: null
+        agentAccessToken:
+          description: Access token of user that will be able to act of behalf of
+            current user.
+          type: string
+          x-order: -2026363309-3
+          example: null
+        agentLogins:
+          description: Login or logins of the user that will get access-token and
+            be able to act of behalf of current user.
+          items:
+            $ref: '#/components/schemas/LoginId'
+          type: array
+          x-nullable: true
+          example: null
+        scopes:
+          items:
+            type: string
+          type: array
+          x-nullable: true
+          example: null
         email:
           description: New email to set.
           type: string
+          example: null
         template:
           description: Template to use.
           type: string
           x-nullable: true
+          example: null
         templateParams:
           additionalProperties:
             type: object
           description: Template params
           type: object
           x-nullable: true
-        accessToken:
-          description: If you have access-token - put it here.
+          example: null
+        clientId:
+          type: string
+          example: null
+        clientSecret:
           type: string
           x-nullable: true
-        authorizationCode:
-          description: If you have authorisation-code - app will exchange it for access-token.
-          type: string
-          x-nullable: true
+          example: null
         redirectUri:
           description: Redirect uri used when requested user login.
           type: string
           x-nullable: true
+          example: null
+        redirectUris:
+          description: "Null - don't validate redirectUrl, empty array will lead to\
+            \ all authenticate request fail."
+          items:
+            type: string
+          type: array
+          x-nullable: true
+          example: null
+        newClientSecret:
+          default: false
+          description: "If previous secret lost or compromised, it allows to generate\
+            \ a new one."
+          type: boolean
+          example: null
+        accessToken:
+          description: If you have access-token - put it here.
+          type: string
+          x-nullable: true
+          example: null
         password:
           description: New password to set. If null app generates password automatically.
           type: string
           x-nullable: true
+          example: null
         confirmPassword:
           description: Password confirmation. If null app doesn't perform this check.
           type: string
           x-nullable: true
+          example: null
         answers:
           additionalProperties:
             type: string
@@ -5121,6 +6631,17 @@ components:
             HOMETOWN: London
             MOTHER_NAME: null
           type: object
+        code:
+          type: string
+          example: null
+        issuer:
+          description: Used only to generate `otpauth://` url.
+          type: string
+          example: null
+        accountName:
+          description: Used only to generate `otpauth://` url.
+          type: string
+          example: null
       type: object
       x-additionalPropertiesName: auth
     EntryCfg_accessToken:
@@ -5133,10 +6654,12 @@ components:
           description: Override access token ttl
           type: string
           x-nullable: true
+          example: null
         cache:
           description: Enable or disable client-side caching of access token
           type: boolean
           x-nullable: true
+          example: null
       type: object
       x-super: '#/components/schemas/EntryAccessTokenCfg'
     OAuthCfg_exchangeAuthCode:
@@ -5154,15 +6677,18 @@ components:
             \ (e.g. facebook, google)"
           type: string
           x-nullable: true
+          example: null
         clientSecret:
           description: OAuth client secret.
           type: string
           x-nullable: true
+          example: null
       required:
       - tokenUrl
       type: object
       x-nullable: true
       x-super: '#/components/schemas/ExchangeAuthCodeCfg'
+      example: null
     OAuthCfg_userInfo:
       description: "If specified, app will use received access token"
       properties:
@@ -5178,18 +6704,22 @@ components:
             \ in query param."
           type: string
           x-nullable: true
+          example: null
         sendTokenInHeader:
           description: "While executing user-info request, access-token will be sent\
             \ in Authorisation header."
           type: boolean
+          example: null
       type: object
       x-nullable: true
       x-super: '#/components/schemas/TokenHandlerCfg'
+      example: null
     ShAppCfg_auths_value:
       properties:
         remote:
           description: Path to the API that implements plugin.
           type: string
+          example: null
         requiresAuth:
           description: |-
             If this is not null, app forbids to add this auth until listed auth enabled.
@@ -5202,6 +6732,7 @@ components:
             type: array
           type: array
           x-nullable: true
+          example: null
         skipOnFail:
           default: false
           description: |-
@@ -5210,16 +6741,19 @@ components:
             executed only when IP auth is failed.
             If set to false any error on this auth will stop the whole request execution.
           type: boolean
+          example: null
         rateLimiter:
           description: Apply rate limiter for this auth.
           type: string
           x-nullable: true
+          example: null
         burnQuota:
           default: 0.0
           description: Every auth execution will burn this amount of quota. Takes
             place only when rate limiter is specified
           format: double
           type: number
+          example: null
         query:
           additionalProperties:
             type: string
@@ -5227,6 +6761,7 @@ components:
           description: |
             Add query params after `?` symbol in url.
           type: object
+          example: null
         headers:
           additionalProperties:
             type: string
@@ -5234,28 +6769,45 @@ components:
           description: |
             Add headers to request.
           type: object
+          example: null
         code:
           $ref: '#/components/schemas/CodeCfg'
+        codeTtl:
+          default: 10m
+          description: |
+            Authorization code lifetime.
+          type: string
+          example: null
+        scopes:
+          items:
+            type: string
+          type: array
+          example: null
         server:
           description: Email server address/IP.
           type: string
+          example: null
         sender:
           description: Email address of sender.
           type: string
+          example: null
         username:
           description: SMTP username.
           type: string
           x-nullable: true
+          example: null
         password:
           description: SMTP password.
           type: string
           x-nullable: true
+          example: null
         confirmationUrl:
           description: |-
             If not null, server will create template param `confirmationUrl` that will contain query parameters with
             confirmation code, session id, etc.
           type: string
           x-nullable: true
+          example: null
         templates:
           additionalProperties:
             type: string
@@ -5287,6 +6839,7 @@ components:
             Additional params for templates that can be passed in request. Key - is a name of additional parameter, value - is
             a default value for this parameter (when no value present in request)
           type: object
+          example: null
         ipBytesToIgnore:
           default: 0
           description: |-
@@ -5294,6 +6847,7 @@ components:
             the same country, same city, or same internet provider.
           format: int32
           type: integer
+          example: null
         historySize:
           default: 10
           description: |-
@@ -5301,6 +6855,7 @@ components:
             IPs.
           format: int32
           type: integer
+          example: null
         exchangeAuthCode:
           $ref: '#/components/schemas/OAuthCfg_exchangeAuthCode'
         userInfo:
@@ -5326,35 +6881,42 @@ components:
           description: Max length of answer.
           format: int32
           type: integer
+          example: null
         minLength:
           default: 3
           description: Min length of answer. Length are checked after all answer transformation.
           format: int32
           type: integer
+          example: null
         requireNumber:
           default: false
           description: Require password to contain at least one digit.
           type: boolean
+          example: null
         requireSymbol:
           default: false
           description: "Require password to contain at least one symbol e.g. @, !,\
             \ &..."
           type: boolean
+          example: null
         requireUpperCase:
           default: false
           description: This requires password to contain both lowercase and uppercase
             letters.
           type: boolean
+          example: null
         forbidCommonPasswords:
           default: false
           description: "Password will be checked against table 1,000,000 of most overused\
             \ passwords."
           type: boolean
+          example: null
         forbidLoginAsPassword:
           default: false
           description: "Rejects passwords that match username, email, anything that\
             \ used as a login according to logins config."
           type: boolean
+          example: null
         forbidReusingPassword:
           $ref: '#/components/schemas/PasswordHistoryCfg'
         strength:
@@ -5364,30 +6926,40 @@ components:
             Allows to calculate password strength based on mentioned criteria. Requirements will be checked one by one
             until first failed.
           type: object
+          example: null
         lowercase:
           default: true
           description: |-
             Transform user answer to lowercase letters. This allows user still pass a check when he wrote name or city
             with different cases. `false` means strict match, so "John" != "john"
           type: boolean
+          example: null
         removeSymbols:
           default: true
           description: Remove all non-letters from user answer.
           type: boolean
+          example: null
         removeSpaces:
           default: true
           description: Remove all spaces from user answer.
           type: boolean
+          example: null
         answersRequired:
           default: 2
           description: Min number of answers required to pass this check.
           format: int32
           type: integer
+          example: null
         maxAnswers:
           default: 10
           description: Max answers that user can save.
           format: int32
           type: integer
+          example: null
+        encryptKey:
+          default: <change_me>
+          type: string
+          example: null
       x-additionalPropertiesName: auth
     ShDbsCfg_user:
       description: User database config
@@ -5417,56 +6989,73 @@ components:
         inMemory:
           default: true
           type: boolean
+          example: null
         inToken:
           default: true
           type: boolean
+          example: null
         mongodb:
           type: string
+          example: null
         database:
           format: int32
           type: integer
+          example: null
         redis:
           items:
             type: string
           type: array
+          example: null
         cluster:
           default: false
           type: boolean
+          example: null
         user:
           type: string
           x-nullable: true
+          example: null
         password:
           default: ""
           type: string
+          example: null
         ssl:
           default: false
           type: boolean
+          example: null
         maxConnections:
           default: 500
           format: int32
           type: integer
+          example: null
         remote:
           type: string
+          example: null
         query:
           additionalProperties:
             type: string
           type: object
+          example: null
         headers:
           additionalProperties:
             type: string
           type: object
+          example: null
         mysql:
           default: localhost:3306
           type: string
+          example: null
         username:
           default: ""
           type: string
+          example: null
         postgres:
           default: localhost:5432/
           type: string
+          example: null
         sqlite:
           default: ./sqlite
           type: string
+          example: null
     ShDbsCfg_session:
       description: |-
         Session database config.
@@ -5501,56 +7090,73 @@ components:
         inMemory:
           default: true
           type: boolean
+          example: null
         inToken:
           default: true
           type: boolean
+          example: null
         mongodb:
           type: string
+          example: null
         database:
           format: int32
           type: integer
+          example: null
         redis:
           items:
             type: string
           type: array
+          example: null
         cluster:
           default: false
           type: boolean
+          example: null
         user:
           type: string
           x-nullable: true
+          example: null
         password:
           default: ""
           type: string
+          example: null
         ssl:
           default: false
           type: boolean
+          example: null
         maxConnections:
           default: 500
           format: int32
           type: integer
+          example: null
         remote:
           type: string
+          example: null
         query:
           additionalProperties:
             type: string
           type: object
+          example: null
         headers:
           additionalProperties:
             type: string
           type: object
+          example: null
         mysql:
           default: localhost:3306
           type: string
+          example: null
         username:
           default: ""
           type: string
+          example: null
         postgres:
           default: localhost:5432/
           type: string
+          example: null
         sqlite:
           default: ./sqlite
           type: string
+          example: null
     ShDbsCfg_rateLimiter:
       description: "Database for rate-limiters. If you don't use rate-limiter leave\
         \ this empty (`{}`)."
@@ -5580,56 +7186,73 @@ components:
         inMemory:
           default: true
           type: boolean
+          example: null
         inToken:
           default: true
           type: boolean
+          example: null
         mongodb:
           type: string
+          example: null
         database:
           format: int32
           type: integer
+          example: null
         redis:
           items:
             type: string
           type: array
+          example: null
         cluster:
           default: false
           type: boolean
+          example: null
         user:
           type: string
           x-nullable: true
+          example: null
         password:
           default: ""
           type: string
+          example: null
         ssl:
           default: false
           type: boolean
+          example: null
         maxConnections:
           default: 500
           format: int32
           type: integer
+          example: null
         remote:
           type: string
+          example: null
         query:
           additionalProperties:
             type: string
           type: object
+          example: null
         headers:
           additionalProperties:
             type: string
           type: object
+          example: null
         mysql:
           default: localhost:3306
           type: string
+          example: null
         username:
           default: ""
           type: string
+          example: null
         postgres:
           default: localhost:5432/
           type: string
+          example: null
         sqlite:
           default: ./sqlite
           type: string
+          example: null
   securitySchemes:
     access-token:
       scheme: Bearer
@@ -5642,5 +7265,5 @@ x-tagGroups:
   - authorisation
   - user
   - server
-  - signature
+  - custom-token
 

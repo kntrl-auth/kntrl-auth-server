@@ -4,6 +4,7 @@
   ],
   "dependencies": {
     "kntrl-client": "file:../../client/typescript/dist",
-    "prompt-sync": "^4.2.0"
+    "prompt-sync": "^4.2.0",
+    "totp-generator": "^0.0.14"
   }
 }

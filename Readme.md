@@ -14,7 +14,7 @@ integration with existing database and codebase via plugins, action confirmation
 
 ## ⭐ Features
 
-- Authenticate by **password, email, IP, secret questions**, **Facebook** OAuth2, **Google** OAuth2, etc.
+- Authenticate by **password, email, TOTP, IP, secret questions**, **Facebook** OAuth2, **Google** OAuth2, etc.
 - **API key** management supported
 - Configurable **multifactor authentication**
 - **Action confirmation** (e.g. "enter the code from email to confirm payment")
@@ -125,8 +125,8 @@ Then read the guide in [examples folder](examples). It contains configuration an
 ### Get/create Kntrl API client
 
 #### Option 1 - use existing SDK
-- [Java/Kotlin client](client/kotlin)
-- [JavaScript/TypeScript client](client/typescript)
+- [Java/Kotlin client](https://search.maven.org/artifact/app.kntrl/client)
+- [JavaScript/TypeScript client](https://www.npmjs.com/package/kntrl-client)
 
 #### Option 2 - use OpenAPI generator
 Generate an HTTP client for any other language by any OpenApi generator (e.g. [this](https://openapi-generator.tech)).

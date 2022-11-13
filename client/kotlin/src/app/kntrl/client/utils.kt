@@ -1,8 +1,8 @@
 package app.kntrl.client
 
- import app.kntrl.client.generated.infra.ApiException
- import app.kntrl.client.generated.model.Err
- import app.kntrl.client.generated.model.ErrCode
+ import app.kntrl.client.openapi.infra.ApiException
+ import app.kntrl.client.openapi.model.Err
+ import app.kntrl.client.openapi.model.ErrCode
 
 fun <T> handleErr(
     retryOnExpiredTokenOn: Session? = null,
@@ -35,8 +35,7 @@ class KntrlException(val data: Err) : RuntimeException("Kntrl API error (${data.
 }
 
 class ReceivedCodes : LinkedHashMap<String, MutableMap<String, String>>() {
-    fun received(auth: String, codeId: String, code: String): ReceivedCodes {
+    fun received(auth: String, codeId: String, code: String) = also {
         computeIfAbsent(auth) { LinkedHashMap() }[codeId] = code
-        return this
     }
 }

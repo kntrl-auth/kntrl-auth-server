@@ -13,7 +13,7 @@ import {
     NextFactor,
     RefreshTokenRes,
     Session as SessionModel,
-    SessionApi,
+    SessionApi, SessionDataValue,
     TokenApi,
     Tokens,
     UnconfirmedAuth,
@@ -46,6 +46,7 @@ export class Session implements SessionModel {
         readonly device: Device = { userAgent: '', mobile: false },
         readonly refreshedAt: number = 0,
         readonly systemAccess: boolean = false,
+        readonly data: { [key: string]: SessionDataValue } = {},
     ) {
         this.api = new SessionApi(kntrl._serverCfg());
         this.user = new UserSvc(this);
